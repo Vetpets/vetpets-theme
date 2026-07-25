@@ -1,0 +1,282 @@
+{% comment %}
+  Section: Reviews Slider — Auto-scrolling social proof
+  Weight: MEDIUM | Mandatory section
+{% endcomment %}
+
+{%- style -%}
+#rev-{{ section.id }} {
+  --rv-bg: {{ section.settings.bg_color }};
+  --rv-hl-color: {{ section.settings.headline_color }};
+  --rv-accent: {{ section.settings.accent_color }};
+  --rv-sub-color: {{ section.settings.subheadline_color }};
+  --rv-card-bg: {{ section.settings.card_bg }};
+  --rv-card-border: {{ section.settings.card_border }};
+  --rv-name-color: {{ section.settings.name_color }};
+  --rv-quote-color: {{ section.settings.quote_color }};
+  --rv-star-color: {{ section.settings.star_color }};
+  --rv-verified: {{ section.settings.verified_color }};
+  --rv-hl-m: {{ section.settings.headline_size_mobile }}px;
+  --rv-hl-d: {{ section.settings.headline_size_desktop }}px;
+  --rv-pad-m: {{ section.settings.padding_mobile }}px;
+  --rv-pad-d: {{ section.settings.padding_desktop }}px;
+  --rv-card-w-m: {{ section.settings.card_width_mobile }}px;
+  --rv-card-w-d: {{ section.settings.card_width_desktop }}px;
+  --rv-speed: {{ section.settings.scroll_speed }}s;
+}
+
+#rev-{{ section.id }} {
+  background-color: var(--rv-bg) !important;
+  padding: var(--rv-pad-m) 0 !important;
+  overflow: hidden;
+}
+
+#rev-{{ section.id }} .rv-header {
+  text-align: center;
+  padding: 0 16px;
+  margin-bottom: 24px;
+}
+
+#rev-{{ section.id }} .rv-rating-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+#rev-{{ section.id }} .rv-stars-lg {
+  color: var(--rv-star-color) !important;
+  font-size: 16px !important;
+  letter-spacing: 2px;
+}
+
+#rev-{{ section.id }} .rv-rating-text {
+  color: var(--rv-sub-color) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+}
+
+#rev-{{ section.id }} .rv-headline {
+  color: var(--rv-hl-color) !important;
+  font-size: var(--rv-hl-m) !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+#rev-{{ section.id }} .rv-headline .rv-acc { color: var(--rv-accent) !important; }
+
+/* Track */
+#rev-{{ section.id }} .rv-track-wrap {
+  -webkit-mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+}
+
+#rev-{{ section.id }} .rv-track {
+  display: flex;
+  gap: 12px;
+  width: max-content;
+  animation: rvSlide-{{ section.id }} var(--rv-speed) linear infinite;
+}
+
+#rev-{{ section.id }} .rv-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes rvSlide-{{ section.id }} {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+#rev-{{ section.id }} .rv-card {
+  flex-shrink: 0;
+  width: var(--rv-card-w-m);
+  background-color: var(--rv-card-bg) !important;
+  border: 1px solid var(--rv-card-border) !important;
+  border-radius: 12px;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+#rev-{{ section.id }} .rv-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+#rev-{{ section.id }} .rv-card-stars {
+  color: var(--rv-star-color) !important;
+  font-size: 14px !important;
+  letter-spacing: 2px;
+}
+
+#rev-{{ section.id }} .rv-card-quote {
+  color: var(--rv-quote-color) !important;
+  font-size: 13px !important;
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+#rev-{{ section.id }} .rv-card-bottom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#rev-{{ section.id }} .rv-card-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+#rev-{{ section.id }} .rv-card-avatar-ph {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #374151, #4b5563);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0;
+}
+
+#rev-{{ section.id }} .rv-card-name {
+  color: var(--rv-name-color) !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+}
+
+#rev-{{ section.id }} .rv-card-verified {
+  color: var(--rv-verified) !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+}
+
+/* Animation */
+#rev-{{ section.id }} .rv-a {
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+#rev-{{ section.id }} .rv-a.rv-v { opacity: 1; transform: translateY(0); }
+
+@media (min-width: 750px) {
+  #rev-{{ section.id }} { padding: var(--rv-pad-d) 0 !important; }
+  #rev-{{ section.id }} .rv-headline { font-size: var(--rv-hl-d) !important; }
+  #rev-{{ section.id }} .rv-card { width: var(--rv-card-w-d); }
+  #rev-{{ section.id }} .rv-card-quote { font-size: 14px !important; }
+  #rev-{{ section.id }} .rv-track { gap: 16px; }
+}
+{%- endstyle -%}
+
+<div id="rev-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="rv-header">
+    <div class="rv-rating-row rv-a">
+      <span class="rv-stars-lg">★★★★★</span>
+      <span class="rv-rating-text">{{ section.settings.rating_text }}</span>
+    </div>
+    <h2 class="rv-headline rv-a">
+      {{ section.settings.headline_p1 }} <span class="rv-acc">{{ section.settings.headline_acc }}</span> {{ section.settings.headline_p2 }}
+    </h2>
+  </div>
+
+  <div class="rv-track-wrap rv-a">
+    <div class="rv-track" id="rv-track-{{ section.id }}">
+      {%- for i in (1..2) -%}
+        {% for block in section.blocks %}
+          {% if block.type == 'review_card' %}
+            <div class="rv-card" {% if i == 1 %}{{ block.shopify_attributes }}{% else %}aria-hidden="true"{% endif %}>
+              <div class="rv-card-stars">★★★★★</div>
+              <p class="rv-card-quote">{{ block.settings.quote }}</p>
+              <div class="rv-card-bottom">
+                {% if block.settings.avatar != blank %}
+                  <img class="rv-card-avatar" src="{{ block.settings.avatar | image_url: width: 64 }}" alt="{{ block.settings.name }}" loading="lazy">
+                {% else %}
+                  <div class="rv-card-avatar-ph">👤</div>
+                {% endif %}
+                <div>
+                  <div class="rv-card-name">{{ block.settings.name }}</div>
+                  <div class="rv-card-verified">✓ Verified Buyer</div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var els = document.querySelectorAll('#rev-{{ section.id }} .rv-a');
+  if(!els.length)return;
+  var obs = new IntersectionObserver(function(en){
+    en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('rv-v');obs.unobserve(e.target);}});
+  },{threshold:0.1});
+  els.forEach(function(el){obs.observe(el);});
+  var track = document.getElementById('rv-track-{{ section.id }}');
+  if(!track)return;
+  track.addEventListener('touchstart',function(){track.style.animationPlayState='paused';},{passive:true});
+  track.addEventListener('touchend',function(){setTimeout(function(){track.style.animationPlayState='running';},3000);},{passive:true});
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Rocky - Reviews Slider",
+  "tag": "section",
+  "settings": [
+    { "type": "header", "content": "─── Headlines ───" },
+    { "type": "text", "id": "headline_p1", "label": "Headline Part 1", "default": "What" },
+    { "type": "text", "id": "headline_acc", "label": "Headline Accent", "default": "3,274 Listeners" },
+    { "type": "text", "id": "headline_p2", "label": "Headline Part 2", "default": "Said After Switching" },
+    { "type": "text", "id": "rating_text", "label": "Rating Text", "default": "4.9 / 5 from 3,274 reviews" },
+    { "type": "header", "content": "─── Text Colors ───" },
+    { "type": "color", "id": "headline_color", "label": "Headline", "default": "#ffffff" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#fbbf24" },
+    { "type": "color", "id": "subheadline_color", "label": "Rating Text", "default": "#a0a0a0" },
+    { "type": "color", "id": "quote_color", "label": "Quote Text", "default": "#d4d4d4" },
+    { "type": "color", "id": "name_color", "label": "Name", "default": "#ffffff" },
+    { "type": "color", "id": "star_color", "label": "Stars", "default": "#fbbf24" },
+    { "type": "color", "id": "verified_color", "label": "Verified Badge", "default": "#4ade80" },
+    { "type": "header", "content": "─── Backgrounds ───" },
+    { "type": "color", "id": "bg_color", "label": "Section Background", "default": "#111111" },
+    { "type": "color", "id": "card_bg", "label": "Card Background", "default": "#1a1a1a" },
+    { "type": "color", "id": "card_border", "label": "Card Border", "default": "#2a2a2a" },
+    { "type": "header", "content": "─── Card Sizing ───" },
+    { "type": "range", "id": "card_width_mobile", "label": "Card Width Mobile", "min": 220, "max": 340, "step": 5, "default": 280, "unit": "px" },
+    { "type": "range", "id": "card_width_desktop", "label": "Card Width Desktop", "min": 280, "max": 420, "step": 5, "default": 340, "unit": "px" },
+    { "type": "range", "id": "headline_size_mobile", "label": "Headline Mobile", "min": 20, "max": 42, "step": 1, "default": 26, "unit": "px" },
+    { "type": "range", "id": "headline_size_desktop", "label": "Headline Desktop", "min": 28, "max": 56, "step": 1, "default": 38, "unit": "px" },
+    { "type": "header", "content": "─── Spacing & Speed ───" },
+    { "type": "range", "id": "padding_mobile", "label": "Padding Mobile", "min": 24, "max": 80, "step": 4, "default": 48, "unit": "px" },
+    { "type": "range", "id": "padding_desktop", "label": "Padding Desktop", "min": 40, "max": 120, "step": 4, "default": 72, "unit": "px" },
+    { "type": "range", "id": "scroll_speed", "label": "Scroll Speed", "min": 20, "max": 80, "step": 5, "default": 40, "unit": "s" }
+  ],
+  "blocks": [
+    {
+      "type": "review_card",
+      "name": "⭐ Review",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Name", "default": "Happy Customer" },
+        { "type": "textarea", "id": "quote", "label": "Review Text", "default": "This changed how I listen to music. Pure sound, zero distractions." },
+        { "type": "image_picker", "id": "avatar", "label": "Avatar (optional)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rocky - Reviews Slider",
+      "blocks": [
+        { "type": "review_card", "settings": { "name": "Sarah M.", "quote": "Didn't realize how much I missed just listening to music without messages popping up every second. Battery lasts forever too!" }},
+        { "type": "review_card", "settings": { "name": "Jason R.", "quote": "Honestly didn't expect much at this price, but wow. The sound is super clear, the buttons feel nice, and I've been using it every day at the gym." }},
+        { "type": "review_card", "settings": { "name": "Tom H.", "quote": "Perfect for long flights. I load up my playlists, throw on my headphones, and I'm good for hours. No Wi-Fi, no ads, just music." }},
+        { "type": "review_card", "settings": { "name": "Mia L.", "quote": "So simple and refreshing. I didn't want another screen full of apps, just something that plays my songs. Exactly what I needed." }},
+        { "type": "review_card", "settings": { "name": "Marcus J.", "quote": "This thing made me fall in love with music again. No distractions, no scrolling, just pure focus. Worth every penny." }},
+        { "type": "review_card", "settings": { "name": "Olivia D.", "quote": "Bought it on a whim and now I use it daily. The sound quality is surprisingly good. Bluetooth connects instantly too." }},
+        { "type": "review_card", "settings": { "name": "Daniel P.", "quote": "I use it for audiobooks on my commute. Super easy to bookmark where I left off and the battery lasts all week." }},
+        { "type": "review_card", "settings": { "name": "Chloe S.", "quote": "Feels nostalgic but new at the same time. Love scrolling through songs with the wheel. Brings back memories but works way smoother." }}
+      ]
+    }
+  ]
+}
+{% endschema %}

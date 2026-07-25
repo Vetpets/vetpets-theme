@@ -1,0 +1,416 @@
+{% comment %}
+  Section: Setup Simplicity — 3 step plug & play
+  Weight: LIGHT | Removes friction objection "is it hard to use?"
+{% endcomment %}
+
+{%- style -%}
+#setup-{{ section.id }} {
+  --su-bg: {{ section.settings.bg_color }};
+  --su-hl-color: {{ section.settings.headline_color }};
+  --su-accent: {{ section.settings.accent_color }};
+  --su-sub-color: {{ section.settings.subheadline_color }};
+  --su-num-color: {{ section.settings.number_color }};
+  --su-num-bg: {{ section.settings.number_bg }};
+  --su-step-title: {{ section.settings.step_title_color }};
+  --su-step-desc: {{ section.settings.step_desc_color }};
+  --su-line-color: {{ section.settings.line_color }};
+  --su-card-bg: {{ section.settings.card_bg }};
+  --su-card-border: {{ section.settings.card_border }};
+  --su-hl-m: {{ section.settings.headline_size_mobile }}px;
+  --su-hl-d: {{ section.settings.headline_size_desktop }}px;
+  --su-pad-m: {{ section.settings.padding_mobile }}px;
+  --su-pad-d: {{ section.settings.padding_desktop }}px;
+  --su-icon-size: {{ section.settings.icon_size }}px;
+  --su-img-size-m: {{ section.settings.image_size_mobile }}px;
+  --su-img-size-d: {{ section.settings.image_size_desktop }}px;
+  --su-img-radius: {{ section.settings.image_radius }}px;
+}
+
+#setup-{{ section.id }} {
+  background-color: var(--su-bg) !important;
+  padding: var(--su-pad-m) 0 !important;
+  overflow: hidden;
+}
+
+#setup-{{ section.id }} .su-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+#setup-{{ section.id }} .su-headline {
+  color: var(--su-hl-color) !important;
+  font-size: var(--su-hl-m) !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+  text-align: center;
+  margin: 0 0 6px;
+  letter-spacing: -0.03em;
+}
+#setup-{{ section.id }} .su-headline .su-acc { color: var(--su-accent) !important; }
+
+#setup-{{ section.id }} .su-sub {
+  color: var(--su-sub-color) !important;
+  font-size: 16px !important;
+  text-align: center;
+  margin: 0 auto 28px;
+  max-width: 480px;
+  line-height: 1.5;
+}
+
+/* ── MOBILE CAROUSEL ── */
+#setup-{{ section.id }} .su-carousel-wrap {
+  position: relative;
+  width: 100%;
+}
+
+#setup-{{ section.id }} .su-carousel {
+  display: flex;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  gap: 0;
+  padding: 0 16px 16px;
+  box-sizing: border-box;
+}
+#setup-{{ section.id }} .su-carousel::-webkit-scrollbar { display: none; }
+
+#setup-{{ section.id }} .su-slide {
+  scroll-snap-align: center;
+  flex: 0 0 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 8px;
+  box-sizing: border-box;
+}
+
+#setup-{{ section.id }} .su-slide-img {
+  width: var(--su-img-size-m);
+  height: var(--su-img-size-m);
+  border-radius: var(--su-img-radius);
+  object-fit: cover;
+  margin-bottom: 16px;
+  display: block;
+}
+
+#setup-{{ section.id }} .su-slide-icon {
+  font-size: var(--su-icon-size);
+  margin-bottom: 8px;
+  display: block;
+}
+
+#setup-{{ section.id }} .su-step-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--su-num-bg) !important;
+  color: var(--su-num-color) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--su-accent) !important;
+  margin: 0 auto 12px;
+  flex-shrink: 0;
+}
+
+#setup-{{ section.id }} .su-step-title {
+  color: var(--su-step-title) !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  margin: 0 0 6px;
+  line-height: 1.3;
+}
+
+#setup-{{ section.id }} .su-step-desc {
+  color: var(--su-step-desc) !important;
+  font-size: 15px !important;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 280px;
+}
+
+/* Dots */
+#setup-{{ section.id }} .su-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 4px;
+  padding-bottom: 4px;
+}
+
+#setup-{{ section.id }} .su-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--su-line-color);
+  transition: background-color 0.3s, transform 0.3s;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+
+#setup-{{ section.id }} .su-dot.active {
+  background-color: var(--su-accent);
+  transform: scale(1.3);
+}
+
+/* ── DESKTOP ── */
+#setup-{{ section.id }} .su-steps-desktop { display: none; }
+
+/* Animations */
+#setup-{{ section.id }} .su-a {
+  opacity: 0; transform: translateY(18px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+#setup-{{ section.id }} .su-a.su-v { opacity: 1; transform: translateY(0); }
+
+@media (min-width: 750px) {
+  #setup-{{ section.id }} { padding: var(--su-pad-d) 40px !important; }
+  #setup-{{ section.id }} .su-inner { padding: 0; }
+  #setup-{{ section.id }} .su-headline { font-size: var(--su-hl-d) !important; }
+  #setup-{{ section.id }} .su-sub { font-size: 16px !important; }
+
+  /* Hide mobile carousel on desktop */
+  #setup-{{ section.id }} .su-carousel-wrap { display: none; }
+
+  /* Show desktop layout */
+  #setup-{{ section.id }} .su-steps-desktop {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+  }
+
+  #setup-{{ section.id }} .su-steps-desktop.has-images::before { display: none; }
+
+  #setup-{{ section.id }} .su-steps-desktop::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    top: 22px; bottom: auto;
+    width: auto; height: 2px;
+    background: linear-gradient(to right, transparent, var(--su-accent), var(--su-line-color), transparent);
+    border-radius: 1px;
+  }
+
+  #setup-{{ section.id }} .su-step-d {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+    max-width: 280px;
+    padding: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  #setup-{{ section.id }} .su-step-d-img {
+    display: block;
+    width: var(--su-img-size-d);
+    height: var(--su-img-size-d);
+    border-radius: var(--su-img-radius);
+    object-fit: cover;
+    margin: 0 auto 16px;
+  }
+
+  #setup-{{ section.id }} .su-step-d .su-step-num {
+    margin: 0 auto 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  #setup-{{ section.id }} .su-step-d:hover .su-step-num {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px color-mix(in srgb, var(--su-accent) 30%, transparent);
+  }
+
+  #setup-{{ section.id }} .su-step-d .su-step-title { font-size: 20px !important; }
+  #setup-{{ section.id }} .su-step-d .su-step-desc { font-size: 16px !important; max-width: none; }
+  #setup-{{ section.id }} .su-step-d .su-step-desc { padding: 0 8px; }
+
+  #setup-{{ section.id }} .su-a-d {
+    opacity: 0; transform: translateY(18px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  #setup-{{ section.id }} .su-a-d.su-v { opacity: 1; transform: translateY(0); }
+}
+{%- endstyle -%}
+
+{%- liquid
+  assign any_image = false
+  for block in section.blocks
+    if block.type == 'step' and block.settings.image != blank
+      assign any_image = true
+    endif
+  endfor
+  assign step_count = 0
+  for block in section.blocks
+    if block.type == 'step'
+      assign step_count = step_count | plus: 1
+    endif
+  endfor
+-%}
+
+<div id="setup-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="su-inner">
+    <h2 class="su-headline su-a">
+      {{ section.settings.headline_p1 }} <span class="su-acc">{{ section.settings.headline_acc }}</span> {{ section.settings.headline_p2 }}
+    </h2>
+    {% if section.settings.subheadline != blank %}
+      <p class="su-sub su-a">{{ section.settings.subheadline }}</p>
+    {% endif %}
+  </div>
+
+  <!-- MOBILE CAROUSEL -->
+  <div class="su-carousel-wrap su-a">
+    <div class="su-carousel" id="su-carousel-{{ section.id }}">
+      {%- assign step_i = 0 -%}
+      {% for block in section.blocks %}
+        {% if block.type == 'step' %}
+          {%- assign step_i = step_i | plus: 1 -%}
+          <div class="su-slide" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              {{- block.settings.image | image_url: width: 300 | image_tag: class: 'su-slide-img', alt: block.settings.title, loading: 'lazy' -}}
+            {%- elsif block.settings.icon != blank -%}
+              <span class="su-slide-icon">{{ block.settings.icon }}</span>
+            {%- endif -%}
+            <div class="su-step-num">{{ step_i }}</div>
+            <h3 class="su-step-title">{{ block.settings.title }}</h3>
+            <p class="su-step-desc">{{ block.settings.description }}</p>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% if step_count > 1 %}
+      <div class="su-dots" id="su-dots-{{ section.id }}">
+        {%- for i in (1..step_count) -%}
+          <button class="su-dot{% if forloop.first %} active{% endif %}" data-index="{{ forloop.index0 }}"></button>
+        {%- endfor -%}
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- DESKTOP STEPS -->
+  <div class="su-inner">
+    <div class="su-steps-desktop{% if any_image %} has-images{% endif %}">
+      {%- assign step_j = 0 -%}
+      {% for block in section.blocks %}
+        {% if block.type == 'step' %}
+          {%- assign step_j = step_j | plus: 1 -%}
+          <div class="su-step-d su-a-d" style="transition-delay:{{ step_j | times: 150 }}ms" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              {{- block.settings.image | image_url: width: 400 | image_tag: class: 'su-step-d-img', alt: block.settings.title, loading: 'lazy' -}}
+            {%- elsif block.settings.icon != blank -%}
+              <span class="su-slide-icon">{{ block.settings.icon }}</span>
+            {%- endif -%}
+            <div class="su-step-num">{{ step_j }}</div>
+            <h3 class="su-step-title">{{ block.settings.title }}</h3>
+            <p class="su-step-desc">{{ block.settings.description }}</p>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // Scroll animations
+  var els = document.querySelectorAll('#setup-{{ section.id }} .su-a, #setup-{{ section.id }} .su-a-d');
+  if(els.length){
+    var obs = new IntersectionObserver(function(en){
+      en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('su-v');obs.unobserve(e.target);}});
+    },{threshold:0.1});
+    els.forEach(function(el){obs.observe(el);});
+  }
+
+  // Carousel dots
+  var carousel = document.getElementById('su-carousel-{{ section.id }}');
+  var dotsWrap = document.getElementById('su-dots-{{ section.id }}');
+  if(!carousel || !dotsWrap) return;
+
+  var dots = dotsWrap.querySelectorAll('.su-dot');
+
+  function updateDots(){
+    var idx = Math.round(carousel.scrollLeft / carousel.offsetWidth);
+    dots.forEach(function(d,i){ d.classList.toggle('active', i === idx); });
+  }
+
+  carousel.addEventListener('scroll', updateDots, {passive:true});
+
+  dots.forEach(function(dot){
+    dot.addEventListener('click', function(){
+      var idx = parseInt(dot.dataset.index);
+      carousel.scrollTo({ left: idx * carousel.offsetWidth, behavior: 'smooth' });
+    });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Rocky - Transformation",
+  "tag": "section",
+  "settings": [
+    { "type": "header", "content": "─── Headlines ───" },
+    { "type": "text", "id": "headline_p1", "label": "Part 1", "default": "Plug In. Drag. Drop." },
+    { "type": "text", "id": "headline_acc", "label": "Accent", "default": "Listening in 90 Seconds." },
+    { "type": "text", "id": "headline_p2", "label": "Part 2", "default": " Headline " },
+    { "type": "textarea", "id": "subheadline", "label": "Subheadline", "default": "No apps. No accounts. No syncing headaches. Connect via USB-C and your music is ready." },
+    { "type": "header", "content": "─── Text Colors ───" },
+    { "type": "color", "id": "headline_color", "label": "Headline", "default": "#111111" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#2563eb" },
+    { "type": "color", "id": "subheadline_color", "label": "Subheadline", "default": "#6b7280" },
+    { "type": "color", "id": "number_color", "label": "Step Number", "default": "#2563eb" },
+    { "type": "color", "id": "number_bg", "label": "Step Number Bg", "default": "#eff6ff" },
+    { "type": "color", "id": "step_title_color", "label": "Step Title", "default": "#111111" },
+    { "type": "color", "id": "step_desc_color", "label": "Step Description", "default": "#6b7280" },
+    { "type": "color", "id": "line_color", "label": "Connecting Line / Dot Inactive", "default": "#e5e7eb" },
+    { "type": "header", "content": "─── Backgrounds ───" },
+    { "type": "color", "id": "bg_color", "label": "Section Background", "default": "#f9fafb" },
+    { "type": "color", "id": "card_bg", "label": "Card Background", "default": "#ffffff" },
+    { "type": "color", "id": "card_border", "label": "Card Border", "default": "#e5e7eb" },
+    { "type": "header", "content": "─── Image Settings ───" },
+    { "type": "range", "id": "image_size_mobile", "label": "Image Size Mobile", "min": 80, "max": 240, "step": 4, "default": 160, "unit": "px" },
+    { "type": "range", "id": "image_size_desktop", "label": "Image Size Desktop", "min": 80, "max": 280, "step": 4, "default": 160, "unit": "px" },
+    { "type": "range", "id": "image_radius", "label": "Image Border Radius", "min": 0, "max": 40, "step": 2, "default": 12, "unit": "px" },
+    { "type": "header", "content": "─── Sizing ───" },
+    { "type": "range", "id": "icon_size", "label": "Step Icon Size", "min": 18, "max": 40, "step": 2, "default": 24, "unit": "px" },
+    { "type": "range", "id": "headline_size_mobile", "label": "Headline Mobile", "min": 20, "max": 42, "step": 1, "default": 26, "unit": "px" },
+    { "type": "range", "id": "headline_size_desktop", "label": "Headline Desktop", "min": 28, "max": 56, "step": 1, "default": 38, "unit": "px" },
+    { "type": "header", "content": "─── Spacing ───" },
+    { "type": "range", "id": "padding_mobile", "label": "Padding Mobile", "min": 24, "max": 80, "step": 4, "default": 44, "unit": "px" },
+    { "type": "range", "id": "padding_desktop", "label": "Padding Desktop", "min": 40, "max": 120, "step": 4, "default": 64, "unit": "px" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "📍 Step",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Step Image" },
+        { "type": "text", "id": "icon", "label": "Icon/Emoji (shown if no image)", "default": "🔌" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Connect via USB-C" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Plug into any computer. No special software needed." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rocky - Transformation",
+      "blocks": [
+        { "type": "step", "settings": { "icon": "🔌", "title": "Connect via USB-C", "description": "Plug into any computer. No special software, no accounts, no setup wizards." }},
+        { "type": "step", "settings": { "icon": "📁", "title": "Drag & Drop Your Music", "description": "Copy your files like a flash drive. MP3, FLAC, WAV — it plays them all." }},
+        { "type": "step", "settings": { "icon": "🎧", "title": "Press Play", "description": "Unplug and go. Your entire library, organized and ready to listen." }}
+      ]
+    }
+  ]
+}
+{% endschema %}

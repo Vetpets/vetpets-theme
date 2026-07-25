@@ -1,0 +1,1764 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "a6eb81db-40e4-43e0-972f-32db010a4a56": {
+          "type": "rating_stars",
+          "settings": {
+            "rating": 4.8,
+            "star_color": "#ffcc00",
+            "bg_stars_style": "full",
+            "bg_star_color": "#ececec",
+            "label": "4.81/5 Based on 10,000+ Reviews",
+            "size": 13,
+            "alignment": "flex-start",
+            "scroll_id": "#shopify-section-template--25278803345675__testimonials_6ncqrm",
+            "margin_top": 6,
+            "margin_bottom": 3
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "text_size": "h2",
+            "title_alignment": "left",
+            "uppercase_title": false,
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "price": {
+          "type": "price",
+          "disabled": true,
+          "settings": {
+            "layout": "price_first",
+            "price_color": "accent-1",
+            "compare_price_color": "text",
+            "displayed_badge": "sale",
+            "icon_scale": 140,
+            "custom_badge_text": "[icon_1] SPECIAL OFFER",
+            "icon_1": "redeem",
+            "filled_icon_1": false,
+            "icon_2": "check_circle",
+            "filled_icon_2": false,
+            "margin_top": 9,
+            "margin_bottom": 15
+          }
+        },
+        "text_cn7XQg": {
+          "type": "text",
+          "settings": {
+            "mobile_text_size": 13,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "text_color": "#121212",
+            "text_1": "Gently removes tear stains & bacteria",
+            "text_2": "Prevents buildup & regrowth",
+            "text_3": "Hypoallergenic & fragrance-free",
+            "icon_scale": 140,
+            "icon_color": "#47b5e9",
+            "icon_1": "pets",
+            "filled_icon_1": true,
+            "icon_2": "pets",
+            "filled_icon_2": true,
+            "icon_3": "pets",
+            "filled_icon_3": true,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 5,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "text_DUGGLq": {
+          "type": "text",
+          "settings": {
+            "mobile_text_size": 13,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "text_color": "#121212",
+            "text_1": "Safe for daily use on all dogs & cats",
+            "text_2": "",
+            "text_3": "",
+            "icon_scale": 140,
+            "icon_color": "#47b5e9",
+            "icon_1": "pets",
+            "filled_icon_1": false,
+            "icon_2": "pets",
+            "filled_icon_2": true,
+            "icon_3": "check_circle",
+            "filled_icon_3": false,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 5,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "inventory_TFawNK": {
+          "type": "inventory",
+          "disabled": true,
+          "settings": {
+            "text_style": "body",
+            "inventory_threshold": 10,
+            "show_inventory_quantity": true,
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "kaching_bundles_app_block_zdmRpa": {
+          "type": "shopify://apps/kaching-bundles/blocks/app-block/6c637362-a106-4a32-94ac-94dcfd68cdb8",
+          "settings": {
+            "product": "{{product}}",
+            "manual_deal_block_id": ""
+          }
+        },
+        "custom_liquid_bgawBg": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<!-- Snippet: stock-status.liquid -->\n<div class=\"stock-status-wrapper\">\n  <span class=\"stock-status-dot\"></span>\n  <span class=\"stock-status-text\">{{ 'stock_status.almost_sold_out' | t }}</span>\n\n</div>\n\n<style>\n  .stock-status-wrapper {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n  }\n\n  .stock-status-dot {\n    width: 14px;\n    height: 14px;\n    background-color: #ff9900;\n    border-radius: 50%;\n    animation: stockPulse 1.5s ease-in-out infinite;\n    display: inline-block;\n  }\n\n  .stock-status-text {\n    color: #ff9900;\n    font-weight: 700;\n    font-size: 14px;\n  }\n\n  @keyframes stockPulse {\n    0% { transform: scale(1); opacity: 1; }\n    50% { transform: scale(1.3); opacity: 0.7; }\n    100% { transform: scale(1); opacity: 1; }\n  }\n</style>"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "skip_cart": false,
+            "uppercase_text": true,
+            "icon_scale": 120,
+            "icon_spacing": 10,
+            "atc_custom_label": "",
+            "display_price": false,
+            "enable_custom_color": true,
+            "custom_color": "#47b5e9",
+            "enable_secondary_btn": false,
+            "secondary_btn_label": "Buy It Now",
+            "secondary_btn_enable_custom_color": false,
+            "secondary_btn_custom_color": "#dd1d1d",
+            "margin_top": 12,
+            "margin_bottom": 24
+          }
+        },
+        "5fcc0428-e768-4cb7-bea3-eb0274198dd1": {
+          "type": "variant_picker",
+          "disabled": true,
+          "settings": {
+            "picker_types": "dropdown, dropdown",
+            "custom_labels": "[name] - [selected]",
+            "skip_unavailable": false,
+            "swatches_size": "medium",
+            "swatches_custom_colors": "disabled",
+            "swatches_custom_colors_list": "#000000, #6D388B, #0000FF, #FFCC00",
+            "full_width_dropdowns": false,
+            "breaks_style": "normal",
+            "breaks_headline": "BUNDLE & SAVE",
+            "breaks_display_selected_indicator": true,
+            "breaks_border_radius": 10,
+            "breaks_border_width": 2,
+            "breaks_color_scheme": "accent-1",
+            "breaks_badges": "[empty], Most popular, [empty]",
+            "breaks_badge_style": "1",
+            "breaks_badge_color": "accent-1",
+            "breaks_displayed_images": "variant_images",
+            "breaks_custom_images": "",
+            "breaks_image_width": 70,
+            "breaks_space_images": true,
+            "breaks_vertical_images_position": "top",
+            "breaks_vertical_prices_layout": "vertical",
+            "breaks_labels": "[name], [name], [name]",
+            "breaks_benefits": "[empty], Free Shipping, Free Shipping",
+            "breaks_benefit_position": "top",
+            "breaks_benefit_style": "outlined",
+            "breaks_benefit_color": "accent-1",
+            "breaks_captions": "Variant 1 caption, Variant 2 caption, Variant 3 caption",
+            "breaks_price_texts": "[price], [price], [price]",
+            "breaks_compare_price_texts": "[compare_price], [compare_price], [compare_price]",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "04ba004e-2f54-4936-8b1c-8bcadf6573f6": {
+          "type": "quantity_selector",
+          "disabled": true,
+          "settings": {
+            "full_width_classic": false,
+            "atc_append": "none",
+            "atc_append_heights": "stretch-quantity",
+            "enable_quantity_discounts": false,
+            "style": "normal",
+            "headline": "☀️ SUMMER OFFERS ☀️",
+            "preselected": "option_1",
+            "display_selected_indicator": true,
+            "border_radius": 10,
+            "border_width": 2,
+            "color_scheme": "accent-1",
+            "enable_variant_selectors": true,
+            "enable_variant_selectors_on_quantity_of_1": false,
+            "update_prices": false,
+            "skip_unavailable": false,
+            "full_width_pickers": false,
+            "hide_pickers_overlay": true,
+            "pickers_label": "",
+            "image_width": 70,
+            "space_images": true,
+            "vertical_images_position": "top",
+            "vertical_prices_layout": "vertical",
+            "option_1_quantity": 1,
+            "option_1_badge": "",
+            "option_1_badge_style": "1",
+            "option_1_badge_color": "accent-1",
+            "option_1_label": "1x ClearSwipe",
+            "option_1_benefit": "Save 40%",
+            "option_1_benefit_position": "top",
+            "option_1_benefit_style": "solid",
+            "option_1_benefit_color": "accent-2",
+            "option_1_caption": "Free E-book + 2 Free Microfibre covers",
+            "option_1_percentage_off_text": "0",
+            "option_1_fixed_amount_off": "0",
+            "option_1_price_text": "[price]",
+            "option_1_compare_price": "compare_price",
+            "option_1_compare_price_text": "[compare_price]",
+            "option_2_quantity": 2,
+            "option_2_badge": "Buy 1 Get 1 Free",
+            "option_2_badge_style": "1",
+            "option_2_badge_color": "accent-2",
+            "option_2_label": "2x ClearSwipe",
+            "option_2_benefit": "Save 50%",
+            "option_2_benefit_position": "top",
+            "option_2_benefit_style": "solid",
+            "option_2_benefit_color": "accent-2",
+            "option_2_caption": "Free E-book + 2 Free Microfibre covers",
+            "option_2_percentage_off_text": "0",
+            "option_2_fixed_amount_off": "12.99",
+            "option_2_price_text": "[price]",
+            "option_2_compare_price": "compare_price",
+            "option_2_compare_price_text": "[compare_price]",
+            "option_3_quantity": 3,
+            "option_3_badge": "Our best offer!",
+            "option_3_badge_style": "1",
+            "option_3_badge_color": "accent-2",
+            "option_3_label": "3x ClearSwipe",
+            "option_3_benefit": "Save 53%",
+            "option_3_benefit_position": "top",
+            "option_3_benefit_style": "solid",
+            "option_3_benefit_color": "accent-2",
+            "option_3_caption": "Free E-book + 2 Free Microfibre covers",
+            "option_3_percentage_off_text": "0",
+            "option_3_fixed_amount_off": "24.98",
+            "option_3_price_text": "[price]",
+            "option_3_compare_price": "compare_price",
+            "option_3_compare_price_text": "[compare_price]",
+            "option_4_quantity": 0,
+            "option_4_badge": "",
+            "option_4_badge_style": "1",
+            "option_4_badge_color": "accent-1",
+            "option_4_label": "Buy [quantity]",
+            "option_4_benefit": "",
+            "option_4_benefit_position": "top",
+            "option_4_benefit_style": "outlined",
+            "option_4_benefit_color": "accent-1",
+            "option_4_caption": "You save [amount_saved]",
+            "option_4_percentage_off_text": "0",
+            "option_4_fixed_amount_off": "0",
+            "option_4_price_text": "[price]",
+            "option_4_compare_price": "compare_price",
+            "option_4_compare_price_text": "[compare_price]",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "custom_liquid_Qm9dDJ": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <style>\n    .custom-shipping-container {\n      display: flex;\n      padding: 6px 16px;\n      justify-content: space-between;\n      align-items: center;\n      background-color: #f6f6f6;\n      border-radius: 20px;\n      margin-top: 10px;\n    }\n\n    .custom-shipping-item {\n      display: flex;\n      align-items: center;\n      gap: 6px;\n    }\n\n    .text-block-shipping {\n      font-size: 12px;\n      color: #000;\n    }\n\n    .shipping-date {\n      font-weight: bold;\n    }\n\n    .shipping-worldwide {\n      font-size: 12px;\n      color: #000;\n    }\n\n    .shipping-worldwide .bold {\n      font-weight: bold;\n    }\n\n    .green-circle {\n      animation: fade 1s ease-in-out infinite;\n    }\n\n    @keyframes fade {\n      0%, 100% { opacity: 1; }\n      50% { opacity: 0.5; }\n    }\n\n    .flags-container {\n      display: flex;\n      gap: 6px;\n      align-items: center;\n    }\n    \n    .custom-icon {\n      width: 16px;\n      height: 12px;\n    }\n  </style>\n  <script>\n    document.addEventListener(\"DOMContentLoaded\", function() {\n      function getNextWeekday(date) {\n        var day = date.getDay();\n        var daysToAdd = (day === 5) ? 3 : (day === 6) ? 2 : 1;\n        return new Date(date.setDate(date.getDate() + daysToAdd));\n      }\n\n      var today = new Date();\n      var shipDate = getNextWeekday(today);\n      \n      // Format date to have short month (e.g., \"Thu, Feb 22\")\n      var options = { weekday: 'short', month: 'short', day: 'numeric' };\n      var formattedDate = shipDate.toLocaleDateString('en-US', options);\n      document.getElementById('shipping-date').textContent = formattedDate;\n\n      // Fetch country data using GeoJS API\n      fetch('https://get.geojs.io/v1/ip/geo.json')\n        .then(response => response.json())\n        .then(data => {\n          console.log(\"Geolocation API Response:\", data); // Debugging log\n\n          if (!data || !data.country_code) {\n            throw new Error(\"Invalid data from API\");\n          }\n          \n          var countryCode = data.country_code.toUpperCase(); // Get country code (e.g., \"GB\", \"US\")\n          var flagUrl = `https://flagcdn.com/w40/${countryCode.toLowerCase()}.png`;\n\n          // Set flag and country code\n          document.getElementById('country-flag').src = flagUrl;\n          document.getElementById('country-flag').alt = countryCode + \" Flag\";\n          document.getElementById('country-flag').style.display = \"inline\";\n          document.getElementById('country-text').innerHTML = `Fast <span class=\"bold\">${countryCode}</span> Shipping`;\n        })\n        .catch(error => {\n          console.error('Error fetching the IP information:', error);\n          document.getElementById('country-flag').style.display = \"none\"; \n          document.getElementById('country-text').innerHTML = \"Fast Worldwide Shipping\";\n        });\n    });\n  </script>\n</head>\n<body>\n  <div class=\"custom-shipping-container\">\n    <div class=\"custom-shipping-item\">\n      <svg class=\"green-circle\" xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"13\" viewBox=\"0 0 12 13\" fill=\"none\">\n        <circle cx=\"6\" cy=\"6.5\" r=\"6\" fill=\"#137333\"/>\n      </svg>\n      <div class=\"text-block-shipping\">Ships by <span id=\"shipping-date\" class=\"shipping-date\"></span></div>\n    </div>\n    <div class=\"custom-shipping-item flags-container\">\n      <img id=\"country-flag\" class=\"custom-icon\" src=\"\" alt=\"Country Flag\" style=\"display: none;\">\n      <div id=\"country-text\" class=\"shipping-worldwide\">Loading...</div>\n    </div>\n  </div>\n</body>\n</html>"
+          }
+        },
+        "payment_badges_XtWzKz": {
+          "type": "payment_badges",
+          "settings": {
+            "enabled_payment_types": "",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "custom_liquid_LKLHHz": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<style>\n  .custom-money-back {\n    background: #FFFFFF;\n    border: 2px solid #2E7FD9;\n    border-radius: 7px;\n    padding: 10px 12px;\n    margin: 10px auto 0 auto;\n    max-width: 100%;\n    display: flex;\n    align-items: center;\n    gap: 8px;\n    overflow: hidden;\n  }\n  \n  .custom-money-back__badge {\n    flex-shrink: 0;\n    width: 40px;\n    height: 40px;\n  }\n  \n  .custom-money-back__badge img {\n    width: 100%;\n    height: 100%;\n    object-fit: contain;\n  }\n  \n  .custom-money-back__content {\n    flex: 1;\n    min-width: 0;\n  }\n  \n  .custom-money-back__title {\n    color: #000000;\n    font-family: 'Poppins', sans-serif;\n    font-size: 12px;\n    font-weight: 700;\n    margin-bottom: 4px;\n    line-height: 1.2;\n    letter-spacing: -0.02em;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n  }\n  \n  .custom-money-back__text {\n    color: #000000;\n    font-family: 'Poppins', sans-serif;\n    font-size: 9px;\n    font-weight: 400;\n    line-height: 1.3;\n    letter-spacing: 0;\n  }\n  \n  @media (min-width: 769px) {\n    .custom-money-back {\n      padding: 15px 20px;\n      gap: 18px;\n    }\n    .custom-money-back__badge {\n      width: 60px;\n      height: 60px;\n    }\n    .custom-money-back__title {\n      font-size: 16px;\n      margin-bottom: 6px;\n      letter-spacing: 0;\n    }\n    .custom-money-back__text {\n      font-size: 13px;\n      line-height: 1.5;\n    }\n  }\n</style>\n\n<div class=\"custom-money-back\">\n  <div class=\"custom-money-back__badge\">\n    <img src=\"https://cdn.shopify.com/s/files/1/0735/4833/3323/files/Namnlos_design_44.svg?v=1771204616\" alt=\"Money Back Guarantee\">\n  </div>\n  <div class=\"custom-money-back__content\">\n    <div class=\"custom-money-back__title\">\n      No clearer eyes? Get your money back.\n    </div>\n    <div class=\"custom-money-back__text\">\n      Try the \"Build the Habit Kit\" — if those brown stains don't fade with daily use, we'll refund you. No clearer eyes, no payment. No questions asked.\n    </div>\n  </div>\n</div>"
+          }
+        },
+        "text_gthwXP": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "text_color": "#121212",
+            "text_1": "100-Day Money-Back Guarantee",
+            "text_2": "Over 20,000 satisfied pet owners",
+            "text_3": "Free E-book included in every order",
+            "icon_scale": 120,
+            "icon_color": "#47b5e9",
+            "icon_1": "new_releases",
+            "filled_icon_1": true,
+            "icon_2": "favorite",
+            "filled_icon_2": true,
+            "icon_3": "book_2",
+            "filled_icon_3": true,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 3,
+            "enable_bg": true,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "collapsible_tab_TbykFk": {
+          "type": "collapsible_tab",
+          "disabled": true,
+          "settings": {
+            "heading": "Free e-book included with your order",
+            "heading_size": "medium",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "",
+            "page": "e-bok-hunden-din-kan-lide-uten-at-du-merker-det",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "collapsible_tab_Twba9n": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "The SHORT VetPets Guide to Dog Eye Health",
+            "heading_size": "small",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "",
+            "page": "the-short-veterinary-guide-to-dog-eye-health",
+            "margin_top": 12,
+            "margin_bottom": 0
+          }
+        },
+        "collapsible_tab_QQED4b": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "100-Day Money-Back Guarantee",
+            "heading_size": "small",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p>We firmly believe that EyeWipes will make a difference – for both you and your dog.<br/><br/>That's why we offer a <strong>100-day money-back guarantee.</strong><br/><br/>You can try the product at home at your leisure.<br/><br/>Not completely satisfied? Then you'll get your money back – no questions asked.<br/><br/>For us, it's more important that your dog gets the right care than that you keep something you don't love.</p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "collapsible_tab_UnzmDD": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Ingredients",
+            "heading_size": "small",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p><strong>EDI-purified water </strong>– base solution<br/><br/><strong>Aloe Vera (Aloe Barbadensis)</strong> – soothes and moisturizes the skin around the eyes<br/><br/><strong>Chamomile (Chamomilla Recutita)</strong> – known for its mild, anti-inflammatory properties<br/><br/><strong>Glycerin </strong>– binds moisture and protects the skin<br/><br/><strong>Ethylhexylglycerin</strong> – gentle preservation and antibacterial effect<br/><br/><strong>Decyl Glucoside</strong> – mild cleansing surfactant from plants<br/><br/><strong>Polyhexamethylene Biguanide Hydrochloride</strong> – antibacterial, counteracts irritation<br/><br/><strong>Vitamin E</strong> – strengthens and protects sensitive skin<br/><br/>✔️ pH-balanced & fragrance-free<br/><br/>✔️ Not tested on animals (cruelty-free)<br/><br/>✔️ Free from alcohol, parabens & sulfates</p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "collapsible_tab_VQzpeP": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Payment & Delivery",
+            "heading_size": "small",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<h4><strong>Payment</strong></h4><p>You can safely pay with Klarna, credit card, or bank transfer – choose what works best for you.<br/></p><h4><strong>Shipping</strong></h4><p><br/>We offer different rates for the UK and the Rest of the World:</p><ul><li><strong>United Kingdom (UK): </strong>Standard Shipping: <strong>£2.00</strong> (Free on orders £37 and over)Priority Shipping: <strong>£4.50</strong></li><li><strong>Rest of the World: </strong>Standard Shipping: <strong>$2.95</strong> (Free on orders $49 and over)Priority Shipping: <strong>$6.00</strong></li></ul><p><strong>Delivery Time</strong><br/><br/>As our UK warehouse is temporarily out of stock, your order will be shipped from our international warehouse.<br/>We offer two shipping options at checkout:</p><ul><li><strong>Standard Shipping:</strong> 1–2 days handling + 5–10 days shipping time</li><li><strong>Priority Shipping:</strong> 1–2 days handling + 4–7 days shipping time</li></ul><p>A tracking number will be sent by email as soon as your order leaves the warehouse.</p><p><strong>Questions?</strong><br/>Email us at <strong>info@shopvetpets.com</strong> – we always reply within 24 hours on weekdays.</p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "complementary_f8gYeW": {
+          "type": "complementary",
+          "settings": {
+            "block_heading": "Bundle & Save: Complete Care Kit",
+            "make_collapsible_row": false,
+            "icon": "price_tag",
+            "product_list_limit": 10,
+            "products_per_page": 3,
+            "pagination_style": "counter",
+            "image_ratio": "square",
+            "enable_quick_add": true,
+            "margin_top": 6,
+            "margin_bottom": 6
+          }
+        },
+        "e7a28cbe-03cb-4c9d-a2c4-0e3e76ffb3e5": {
+          "type": "sticky_atc",
+          "settings": {
+            "function": "add_to_cart",
+            "display_when": "after_scroll",
+            "button_label": "ADD TO CART",
+            "enable_custom_btn_color": false,
+            "custom_btn_color": "#dd1d1d",
+            "color_scheme": "background-1",
+            "star_color": "#ffcc00",
+            "stars_label": "4.81/5 Based on 10.000+ Reviews",
+            "picker_type": "combined",
+            "desktop_show_image": true,
+            "desktop_show_title": true,
+            "desktop_rating_stars": false,
+            "desktop_show_price": true,
+            "desktop_show_sale_badge": true,
+            "desktop_variant_picker": true,
+            "desktop_full_button_width": false,
+            "desktop_show_price_in_button": false,
+            "desktop_transparent_bg": false,
+            "mobile_show_image": false,
+            "mobile_show_title": true,
+            "mobile_rating_stars": true,
+            "mobile_show_price": false,
+            "mobile_show_sale_badge": false,
+            "mobile_variant_picker": false,
+            "mobile_full_button_width": true,
+            "mobile_show_price_in_button": false,
+            "mobile_transparent_bg": false
+          }
+        },
+        "description": {
+          "type": "description",
+          "disabled": true,
+          "settings": {
+            "margin_top": 24,
+            "margin_bottom": 24
+          }
+        },
+        "reviews_8UgFbe": {
+          "type": "reviews",
+          "disabled": true,
+          "settings": {
+            "color_scheme": "background-1",
+            "show_custom_bg": false,
+            "custom_bg_color": "#f2f2f2",
+            "corner_radius": 12,
+            "border_width": 0,
+            "border_color": "#b7b7b7",
+            "avatar_alignment": "top",
+            "avatar_corner_radius": 40,
+            "star_color": "#ffcc00",
+            "stars_translate": 0,
+            "checkmark_color": "#6d388b",
+            "checkmark_icon_color": "#ffffff",
+            "slider_type": "slide",
+            "autoplay": false,
+            "autoplay_speed": 5,
+            "display_arrows": false,
+            "display_dots": true,
+            "author_1": "Anna Müller, Germany [stars]",
+            "image_1": "shopify://shop_images/Profilbild_21_6774d488-3bc3-405d-b134-5d5f0598af50.webp",
+            "text_1": "<p>ClearSwipe has transformed my cleaning routine. With just one swipe, my windows are spotless and streak-free. It's incredibly easy to use and saves me so much time.</p>",
+            "author_2": "Luca Rossi, Italy [stars]",
+            "image_2": "shopify://shop_images/Profilbild_32.webp",
+            "text_2": "<p>I was skeptical at first, but ClearSwipe exceeded my expectations. It's durable, eco-friendly, and leaves my mirrors and glass surfaces gleaming. Highly recommended!</p>",
+            "author_3": "Sophie Dubois, France [stars]",
+            "image_3": "shopify://shop_images/Profilbild111.webp",
+            "text_3": "<p>I've tried various window cleaners, but ClearSwipe stands out. It cleans efficiently without leaving any streaks or drips. Plus, it's made from recycled materials, which I appreciate.</p>",
+            "margin_top": 24,
+            "margin_bottom": 24
+          }
+        }
+      },
+      "block_order": [
+        "a6eb81db-40e4-43e0-972f-32db010a4a56",
+        "title",
+        "price",
+        "text_cn7XQg",
+        "text_DUGGLq",
+        "inventory_TFawNK",
+        "kaching_bundles_app_block_zdmRpa",
+        "custom_liquid_bgawBg",
+        "buy_buttons",
+        "5fcc0428-e768-4cb7-bea3-eb0274198dd1",
+        "04ba004e-2f54-4936-8b1c-8bcadf6573f6",
+        "custom_liquid_Qm9dDJ",
+        "payment_badges_XtWzKz",
+        "custom_liquid_LKLHHz",
+        "text_gthwXP",
+        "collapsible_tab_TbykFk",
+        "collapsible_tab_Twba9n",
+        "collapsible_tab_QQED4b",
+        "collapsible_tab_UnzmDD",
+        "collapsible_tab_VQzpeP",
+        "complementary_f8gYeW",
+        "e7a28cbe-03cb-4c9d-a2c4-0e3e76ffb3e5",
+        "description",
+        "reviews_8UgFbe"
+      ],
+      "custom_css": [],
+      "settings": {
+        "display_id": false,
+        "enable_sticky_info": true,
+        "display_variant_image_first": false,
+        "disable_prepend": true,
+        "hide_variants": false,
+        "variant_image_filtering": "none",
+        "image_zoom": "none",
+        "thumbnails_ratio": "square",
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": false,
+        "dots_color_scheme": "inverse",
+        "video_player": "play_btn",
+        "enable_video_looping": false,
+        "autoplay_videos_pause_btn": false,
+        "video_sound_btn": false,
+        "video_timeline": false,
+        "play_btn_color_scheme": "accent-1",
+        "sound_btn_color_scheme": "inverse",
+        "timeline_color": "accent-1",
+        "media_size": "medium",
+        "media_position": "left",
+        "gallery_layout": "thumbnail_slider",
+        "desktop_thumbnails_position": "bottom",
+        "desktop_thumbnails_count": 5,
+        "desktop_vertical_thumbnails_width": 16,
+        "desktop_vertical_thumbnails_hide_arrows": false,
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "desktop_arrows_position": "hidden",
+        "mobile_media_corner_radius": 0,
+        "mobile_spacing_pixels": 0,
+        "mobile_arrows_position": "sides",
+        "mobile_pagination": "hidden",
+        "mobile_thumbnails_position": "bottom",
+        "mobile_thumbnails_count": 5,
+        "mobile_vertical_thumbnails_width": 22,
+        "mobile_vertical_thumbnails_hide_arrows": true,
+        "mobile_scroll_padding_percentage": 0,
+        "mobile_scroll_padding_pixels": 2,
+        "enable_mobile_outher_spacing": false,
+        "mobile_slides_container_width": 100,
+        "mobile_slides_inner_width": 100,
+        "trust_badge_position": "top-right",
+        "trust_badge_size": "medium",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36
+      }
+    },
+    "horizontal_ticker_jGJgCd": {
+      "type": "horizontal-ticker",
+      "blocks": {
+        "text_KiVDtd": {
+          "type": "text",
+          "settings": {
+            "title": "70% OFF + FREE GIFTS"
+          }
+        },
+        "text_aJwyR9": {
+          "type": "text",
+          "settings": {
+            "title": "LIMITED STOCK AVAILABLE"
+          }
+        },
+        "text_YU9gDT": {
+          "type": "text",
+          "settings": {
+            "title": "100-DAY MONEY-BACK GUARANTEE"
+          }
+        }
+      },
+      "block_order": [
+        "text_KiVDtd",
+        "text_aJwyR9",
+        "text_YU9gDT"
+      ],
+      "name": "Horizontal Ticker",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "speed": 3.5,
+        "direction": "normal",
+        "stop_on_hover": false,
+        "mobile_spacing": 60,
+        "desktop_spacing": 100,
+        "color_scheme": "custom",
+        "mobile_text_size": 16,
+        "desktop_text_size": 18,
+        "italic_text": false,
+        "uppercase_text": true,
+        "bold_text": true,
+        "mobile_image_height": 26,
+        "desktop_image_height": 40,
+        "mobile_reviews_width": 300,
+        "desktop_reviews_width": 400,
+        "hidden_products": "",
+        "enable_specific_display": false,
+        "displayed_products": "",
+        "mobile_padding_top": 12,
+        "mobile_padding_bottom": 12,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "custom_colors_background": "#47b5e9",
+        "custom_gradient_background": "linear-gradient(46deg, rgba(71, 181, 233, 1) 13%, rgba(19, 182, 181, 1) 90%)",
+        "custom_colors_text": "#ffffff"
+      }
+    },
+    "image_slider_TpMDHt": {
+      "type": "image-slider",
+      "blocks": {
+        "image_slide_KrApCq": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Ai_AVATARS_5.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_Ti4nBi": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Ai_AVATARS_7.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_KiBEXq": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Ai_AVATARS_8.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_XnNUAR": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Ai_AVATARS_9.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_NfAPJi": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Ai_AVATARS_10.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_4yKxca": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Generated_Image_December_28_2025_-_7_46PM.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_9tAa8q": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Generated_Image_December_28_2025_-_7_54PM.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_jLG9eD": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Generated_Image_December_28_2025_-_7_56PM.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_KQJFi8": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Generated_Image_December_28_2025_-_7_40PM.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        }
+      },
+      "block_order": [
+        "image_slide_KrApCq",
+        "image_slide_Ti4nBi",
+        "image_slide_KiBEXq",
+        "image_slide_XnNUAR",
+        "image_slide_NfAPJi",
+        "image_slide_4yKxca",
+        "image_slide_9tAa8q",
+        "image_slide_jLG9eD",
+        "image_slide_KQJFi8"
+      ],
+      "name": "Image/Video Slider",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "<strong>Join</strong> <strong>45 000+ Dog Owners</strong> Who've Said Goodbye to Tear Stains",
+        "title_highlight_color": "#47b5e9",
+        "heading_size": "h2",
+        "color_scheme": "background-2",
+        "type": "slide",
+        "drag": "enabled",
+        "autoplay": false,
+        "autoplay_speed": 2.5,
+        "center_mode": false,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": false,
+        "dots_color_scheme": "inverse",
+        "desktop_page_width": "normal",
+        "desktop_border_radius": 20,
+        "slides_desktop": 5,
+        "per_move_desktop": 1,
+        "desktop_spacing": 28,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "sides",
+        "mobile_full_page": false,
+        "mobile_border_radius": 24,
+        "slides_mobile": 2,
+        "per_move_mobile": 1,
+        "mobile_spacing": 12,
+        "mobile_side_padding": 0,
+        "mobile_padding_calc": true,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "sides",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#121212"
+      }
+    },
+    "section_divider_tM8EJE": {
+      "type": "section-divider",
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "custom",
+        "custom_shape_color": "#d5f7ff",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_with_text_EeGtey": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_JmVVwF": {
+          "type": "heading",
+          "settings": {
+            "title": "Those Tear Stains Aren't Just Cosmetic—<strong>They're a Sign Your Dog Needs Help</strong>",
+            "title_highlight_color": "#47b5e9",
+            "heading_size": "h2"
+          }
+        },
+        "text_3Qterz": {
+          "type": "text",
+          "settings": {
+            "text": "<p>That crusty buildup you see every morning? <strong>It's bacteria accumulating around your dog's eyes.</strong><br/><br/>And every day you don't remove it, <strong>the problem gets worse.</strong><br/><br/>Baby wipes don't work—they just spread bacteria around. Grooming is temporary. Supplements take months.<br/><br/><strong>But VetPets EyeWipes</strong> actually remove the bacteria causing the buildup.<br/><br/>Textured surface lifts it away. <strong>Aloe and chamomile prevent regrowth.</strong><br/><br/><strong>30 seconds a day. Clean eyes in 2-3 weeks. No more guilt.</strong></p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_JmVVwF",
+        "text_3Qterz"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/Eyewipes_69.jpg",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "custom",
+        "section_color_scheme": "custom",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "image_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#d5f7ff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#121212",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#d5f7ff",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "section_divider_iBPJkM": {
+      "type": "section-divider",
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_1",
+        "flip_horizontal": false,
+        "flip_vertical": true,
+        "shape_color": "custom",
+        "custom_shape_color": "#d5f7ff",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_with_text_9C7JND": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_QhkgxR": {
+          "type": "heading",
+          "settings": {
+            "title": "Why Tear Stains <strong>Keep Coming Back</strong>",
+            "title_highlight_color": "#47b5e9",
+            "heading_size": "h1"
+          }
+        },
+        "text_7U78iH": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Most owners wipe their dog's face daily. But the stains keep coming back every morning...<br/><br/>Here's the problem: most wipes only clean the surface. They can't remove the bacterial buildup causing the staining.<br/><br/>Baby wipes are smooth—they spread bacteria around instead of lifting it away. That's why you're cleaning <strong>constantly but seeing no improvement.</strong><br/><br/>VetPets EyeWipes work differently. The textured surface <strong>physically grabs and removes bacterial debris</strong>. Antibacterial ingredients <strong>prevent regrowth overnight.</strong><br/><br/>30 seconds a day removes bacteria at the source. <strong>No bacteria, no staining, no coming back.</strong><br/><br/>Requires daily use for best results.</p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_QhkgxR",
+        "text_7U78iH"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/Eyewipes_73.jpg",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "background-1",
+        "section_color_scheme": "background-1",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "text_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#2e2a39",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#ffffff",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#ffffff",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "custom_columns_pL3TMQ": {
+      "type": "custom-columns",
+      "blocks": {
+        "heading_RaNMjT": {
+          "type": "heading",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "heading": "From Crusty Morning Discharge <strong>to Clear, Bright Eyes</strong>",
+            "title_highlight_color": "#47b5e9",
+            "heading_size": "h1",
+            "alignment": "center",
+            "mobile_alignment": "mobile-center",
+            "margin_top": 20,
+            "margin_bottom": 20
+          }
+        },
+        "rating_stars_cLXpYH": {
+          "type": "rating_stars",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "rating": 4.8,
+            "star_color": "#ffcc00",
+            "bg_stars_style": "full",
+            "bg_star_color": "#ececec",
+            "label": "4.81/5 Based on 10,000+ Reviews",
+            "size": 13,
+            "alignment": "center",
+            "scroll_id": "#shopify-section-template--25278803345675__testimonials_6ncqrm",
+            "margin_top": 20,
+            "margin_bottom": 20
+          }
+        },
+        "richtext_qFFiKR": {
+          "type": "richtext",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "text": "",
+            "text_style": "body",
+            "alignment": "center",
+            "mobile_alignment": "mobile-center",
+            "margin_top": 20,
+            "margin_bottom": 20
+          }
+        },
+        "icon_with_text_EEjnkh": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_2",
+            "visibility": "always-display",
+            "icon": "pets",
+            "filled_icon": false,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h3",
+            "icon_text_alignment": "left",
+            "title": "Textured Surface Removes Bacterial Buildup",
+            "text": "<p>Textured wipes lift tear stain debris away—not just wipe the surface.</p>",
+            "margin_top": 20,
+            "margin_bottom": 30
+          }
+        },
+        "icon_with_text_yhKEa8": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_2",
+            "visibility": "always-display",
+            "icon": "pets",
+            "filled_icon": false,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h3",
+            "icon_text_alignment": "left",
+            "title": "Prevents Tear Stains From Coming Back",
+            "text": "<p>Aloe and chamomile create a protective barrier that stops bacterial regrowth overnight.</p>",
+            "margin_top": 20,
+            "margin_bottom": 20
+          }
+        },
+        "image_f3jq8b": {
+          "type": "image",
+          "settings": {
+            "column": "col_3",
+            "visibility": "always-display",
+            "image": "shopify://shop_images/Eyewipes_70.jpg",
+            "width": 100,
+            "alignment": "center",
+            "mobile_alignment": "center",
+            "border_radius": 16,
+            "margin_top": 20,
+            "margin_bottom": 20
+          }
+        },
+        "icon_with_text_BnLbe6": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_4",
+            "visibility": "always-display",
+            "icon": "pets",
+            "filled_icon": false,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h3",
+            "icon_text_alignment": "left",
+            "title": "Safe for Puppies & Sensitive Eyes",
+            "text": "<p>pH-balanced, hypoallergenic, safe for puppies and sensitive eyes.</p>",
+            "margin_top": 20,
+            "margin_bottom": 30
+          }
+        },
+        "icon_with_text_QMikah": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_4",
+            "visibility": "always-display",
+            "icon": "pets",
+            "filled_icon": false,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h3",
+            "icon_text_alignment": "left",
+            "title": "Takes 30 Seconds a Day",
+            "text": "<p>One wipe per eye, every morning. Simple routine you'll actually keep up with.</p>",
+            "margin_top": 20,
+            "margin_bottom": 20
+          }
+        }
+      },
+      "block_order": [
+        "heading_RaNMjT",
+        "rating_stars_cLXpYH",
+        "richtext_qFFiKR",
+        "icon_with_text_EEjnkh",
+        "icon_with_text_yhKEa8",
+        "image_f3jq8b",
+        "icon_with_text_BnLbe6",
+        "icon_with_text_QMikah"
+      ],
+      "name": "Custom columns",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "color_scheme": "background-1",
+        "columns_count": 4,
+        "desktop_page_width": "normal",
+        "column_gap_desktop": 40,
+        "row_gap_desktop": 40,
+        "desktop_vertical_alignment": "center",
+        "mobile_full_page": false,
+        "column_gap_mobile": 20,
+        "row_gap_mobile": 30,
+        "mobile_vertical_alignment": "flex-start",
+        "col_1_desktop_width": 12,
+        "col_1_mobile_width": 4,
+        "col_1_visibility": "always-display",
+        "col_2_desktop_width": 4,
+        "col_2_mobile_width": 4,
+        "col_2_visibility": "always-display",
+        "col_3_desktop_width": 4,
+        "col_3_mobile_width": 4,
+        "col_3_visibility": "always-display",
+        "col_4_desktop_width": 4,
+        "col_4_mobile_width": 4,
+        "col_4_visibility": "always-display",
+        "col_5_desktop_width": 3,
+        "col_5_mobile_width": 4,
+        "col_5_visibility": "always-display",
+        "col_6_desktop_width": 3,
+        "col_6_mobile_width": 4,
+        "col_6_visibility": "always-display",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d"
+      }
+    },
+    "section_divider_9whq9k": {
+      "type": "section-divider",
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "custom",
+        "custom_shape_color": "#d5f7ff",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_with_text_KqKJ4G": {
+      "type": "image-with-text",
+      "blocks": {
+        "caption_eyQd6B": {
+          "type": "caption",
+          "settings": {
+            "caption": "See how easy it is – completely stress-free",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "heading_ddrPwT": {
+          "type": "heading",
+          "settings": {
+            "title": "You Know Your Dog is Healthy But Those <strong>Tear Stains Tell a Different Story</strong>",
+            "title_highlight_color": "#47b5e9",
+            "heading_size": "h2"
+          }
+        },
+        "text_7qAqC8": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Dark streaks around the eyes make <strong>even the best-cared-for dogs look sick.</strong><br/><br/>And when strangers see those stains at the park,<strong> they assume neglect.</strong><br/><br/>You know that's not true. But the guilt is still there.<br/><br/><strong>EyeWipes clears those stains in 2-3 weeks.</strong> One wipe per eye. 30 seconds a day.<br/><br/>No more side-eyes from other dog owners. No more guilt when you look at your dog.<br/><br/><strong>Just clean eyes and the confidence that comes with them.</strong></p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "caption_eyQd6B",
+        "heading_ddrPwT",
+        "text_7qAqC8"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "video": "shopify://files/videos/Lander(20).mp4",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "custom",
+        "section_color_scheme": "custom",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "text_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#d5f7ff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#121212",
+        "custom_colors_solid_button_background": "#47b5e9",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#47b5e9",
+        "custom_section_colors_background": "#d5f7ff",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "section_divider_gaLYVH": {
+      "type": "section-divider",
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_1",
+        "flip_horizontal": false,
+        "flip_vertical": true,
+        "shape_color": "custom",
+        "custom_shape_color": "#d5f7ff",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "testimonials_6ncqrm": {
+      "type": "testimonials",
+      "blocks": {
+        "column_iG9w8C": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "No more crusty mornings",
+            "text": "<p>My Bichon used to wake up with those brown stains every single day. I tried everything - baby wipes, damp cloths, nothing worked properly. These actually remove the gunk and it doesn't come back as quickly. Takes about a week to see real improvement but now her eyes look so much cleaner. Finally something that works.</p>",
+            "author": "Sophie H., 43 | Bichon Frise - 2025-10-28"
+          }
+        },
+        "column_pDtzVn": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Safe for sensitive eyes",
+            "text": "<p>We have a 3-year-old at home and the dog is constantly around him. I wanted something gentle that wouldn't irritate if it got in his eyes. These are natural and work really well. Takes 2 minutes in the evening. His eye area looks so much cleaner now and no more redness. Great not to have to worry.</p>",
+            "author": "Sarah E., 39 | Golden Retriever - 2025-10-03"
+          }
+        },
+        "column_zAqp9B": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Getting better each time",
+            "text": "<p>My dog wasn't fond of it at first. But now it's going better. Works. I can actually get the tear stains cleaned properly now 😊 Worth every penny.</p>",
+            "author": "Christina B. | Maltese - 2025-09-21"
+          }
+        },
+        "column_pFJKgM": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Finally something that actually works",
+            "text": "<p>Really good. I've tried different eye wipes, homemade solutions, everything possible. Nothing worked until the stains were really bad. These wipes actually remove the buildup, you see it directly on the wipe. Takes max 2 minutes and I can do it while watching TV. Should've bought these ages ago</p>",
+            "author": "Emily K., 41 | Cocker Spaniel - 2025-09-15"
+          }
+        },
+        "column_9XrHtL": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Cleaner eyes, no more comments",
+            "text": "<p>People used to point out the tear stains on my dog. Now they compliment how clean she looks. I finally don't feel embarrassed at the park anymore</p>",
+            "author": "Laura M., 52 | Maltese - 2025-08-19"
+          }
+        },
+        "column_fNxHWR": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "I can sleep well now",
+            "text": "<p>I always felt guilty seeing the crusty buildup around his eyes but didn't know what to do. Vet said it wasn't urgent but I knew it wasn't right. These wipes are so simple - 30 seconds a day and his eyes are clear. I finally feel like I'm doing something that actually helps him.</p>",
+            "author": "Anna T., 56 | Bichon Frise - 2025-07-22"
+          }
+        }
+      },
+      "block_order": [
+        "column_iG9w8C",
+        "column_pDtzVn",
+        "column_zAqp9B",
+        "column_pFJKgM",
+        "column_9XrHtL",
+        "column_fNxHWR"
+      ],
+      "name": "Testimonials",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Verified Reviews",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "text": "<p><strong>45 000+ dog owners</strong> are keeping eyes clean without the struggle</p>",
+        "color_scheme": "background-1",
+        "image_width": "full",
+        "image_ratio": "square",
+        "column_alignment": "center",
+        "show_stars": true,
+        "inactive_stars_style": "solid",
+        "star_color": "#ffcc00",
+        "bg_star_color": "#ececec",
+        "show_quotes": true,
+        "quotes_color_scheme": "accent-1",
+        "cards_color_scheme": "bg-overlay",
+        "type": "loop",
+        "autoplay": true,
+        "autoplay_speed": 12.5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": false,
+        "dots_color_scheme": "inverse",
+        "desktop_full_page": true,
+        "columns_desktop": 4,
+        "slider_desktop": true,
+        "per_move_desktop": 1,
+        "desktop_spacing": 40,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "sides",
+        "slider_mobile": true,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "under",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_text": "#2e2a39"
+      }
+    },
+    "section_divider_WTNfTG": {
+      "type": "section-divider",
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "background-2",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_with_text_JdMRPV": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_DWdACi": {
+          "type": "heading",
+          "settings": {
+            "title": "Gentle care <strong>for sensitive eyes</strong>",
+            "title_highlight_color": "#47b5e9",
+            "heading_size": "h1"
+          }
+        },
+        "text_pJKKnm": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Eyewipes are designed with the sensitive eyes of dogs and cats in mind.<br/><br/>Our formula is <strong>free from harsh chemicals </strong>and developed to be safe for everyday use.<br/><br/>Each wipe is pH-balanced and gentle, while <strong>effectively removing dirt, tear stains, and bacteria.</strong><br/><br/><strong>Naturally nourishing ingredients:<br/></strong><br/><strong>Aloe vera </strong>– soothes and moisturizes the skin around the eyes.<br/><br/><strong>Chamomile</strong> – known for its mild, anti-inflammatory properties.<br/><br/><strong>Vitamin E</strong> – strengthens and protects sensitive skin.<br/><br/>Together, they provide cleansing that both cares for and prevents problems – so your dog can keep its healthy, clear eyes.</p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_DWdACi",
+        "text_pJKKnm"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/Eyewipes_71.jpg",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "custom",
+        "section_color_scheme": "custom",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "image_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#d5f7ff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#d5f7ff",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "section_divider_MckDnr": {
+      "type": "section-divider",
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "background-1",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-2",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "collapsible_content_3qj3hn": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_qGe3Vx": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How soon will I see results?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Most dog parents notice brighter, cleaner eyes within <strong>7–10 days</strong> of daily use. For deeper, long-standing stains, expect <strong>2–3 weeks</strong> for full improvement. Consistency is key - the routine works best when done daily.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_nFVraE": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Is it safe for my dog's eyes?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Yes, absolutely. VetPets EyeWipes are <strong>ophthalmologist-tested</strong> and formulated specifically for the delicate eye area. The pH-balanced, hypoallergenic formula contains soothing ingredients like Aloe Vera and Chamomile. They're gentle enough for daily use, even on puppies and dogs with sensitive eyes.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_x8Gbyi": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Will this help old, stubborn tear stains?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Yes. While fresh stains respond quickly (7–10 days), stubborn tear stains that have built up over months may take <strong>2–3 weeks</strong> of consistent daily use to fade significantly. The key is removing the bacteria causing new staining while the old discoloration gradually lightens. Patience and daily use make the difference.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_rmaE7E": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How often should I use it?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p><strong>Once daily</strong> is ideal for most dogs. Use one wipe per eye, gently cleaning from the inner corner outward. For dogs prone to heavy discharge or during allergy season, you can use them twice daily (morning and evening). Consistency matters more than frequency.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_traqqd": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How long does one container last?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Each container has <strong>100 wipes</strong>. For daily use (one wipe per eye), one container lasts approximately <strong>6–7 weeks</strong> for one dog. Most customers choose the Value Pack (4 months for one dog) or Family Pack (6 months for one dog). Have multiple dogs? The Family Pack is our most popular choice.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_imM4tj": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Will the stains come back?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Tear staining is caused by bacteria and moisture buildup, which is ongoing for many dogs. The stains won't return <em>as long as you maintain the daily routine</em>. If you stop using the wipes, bacteria can accumulate again and stains may gradually reappear. Think of it like brushing teeth - consistency prevents problems from coming back.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_f67TaQ": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What's the difference between these and baby wipes?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Baby wipes often contain fragrances, lotions, and harsh preservatives that can irritate the sensitive eye area. VetPets EyeWipes are specifically formulated for dogs' eyes - <strong>hypoallergenic, fragrance-free, pH-balanced</strong>, and contain antibacterial ingredients that actually prevent regrowth. They don't just wipe the surface; they address the root cause.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_Yr4DNV": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can I use these on cats too?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Yes! VetPets EyeWipes are safe for both dogs and cats. Cats can also develop tear staining and eye discharge, especially flat-faced breeds like Persians. Use the same technique - one wipe per eye, gently cleaning from inner corner outward.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_pGRcRX": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "My dog hates having their eyes touched. Will this work?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Many dogs are initially hesitant. Start slowly - let them sniff the wipe first, offer treats, and keep sessions short (30 seconds max). Most dogs adjust within a few days once they realize it's quick and gentle. Some customers find it easier right after walks when dogs are calmer, or during cuddle time on the couch.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_cnB8mR": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Do I need to rinse after using?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>No rinsing needed. The wipes are designed to be used and discarded. Just gently wipe the eye area, discard the wipe, and you're done. The formula is safe to leave on and will continue working to prevent bacterial regrowth.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_qGe3Vx",
+        "collapsible_row_nFVraE",
+        "collapsible_row_x8Gbyi",
+        "collapsible_row_rmaE7E",
+        "collapsible_row_traqqd",
+        "collapsible_row_imM4tj",
+        "collapsible_row_f67TaQ",
+        "collapsible_row_Yr4DNV",
+        "collapsible_row_pGRcRX",
+        "collapsible_row_cnB8mR"
+      ],
+      "name": "t:sections.collapsible_content.presets.name",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "caption": "",
+        "title": "Frequently Asked Questions",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "row",
+        "color_scheme": "background-1",
+        "container_color_scheme": "background-2",
+        "open_first_collapsible_row": false,
+        "video_muted_autoplay": true,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "row_heading_size": "medium",
+        "collapse_icon": "carret",
+        "display_top_border": true,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_contaner_colors_background": "#ffffff",
+        "custom_container_gradient_background": "",
+        "custom_contaner_colors_text": "#2e2a39"
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "disabled": true,
+      "settings": {
+        "display_id": false,
+        "title": "You may also like",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "stretch_cards": false,
+        "columns_desktop": 4,
+        "color_scheme": "background-1",
+        "image_ratio": "adapt",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "columns_mobile": "2",
+        "padding_top": 36,
+        "padding_bottom": 24
+      }
+    },
+    "featured_collection_MRf9GU": {
+      "type": "featured-collection",
+      "disabled": true,
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "You may also like:",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "color_scheme": "background-1",
+        "collection": "frontpage",
+        "products_to_show": 4,
+        "stretch_cards": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "cards_color_scheme": "background-1",
+        "image_ratio": "adapt",
+        "show_secondary_image": false,
+        "badges": "regular",
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "swatches_option_name": "",
+        "swatches_position": "top",
+        "swatches_desktop_size": 36,
+        "swatches_mobile_size": 24,
+        "type": "slide",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_full_page": false,
+        "columns_desktop": 4,
+        "slider_desktop": false,
+        "per_move_desktop": 1,
+        "desktop_spacing": 40,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "sides",
+        "columns_mobile": "1",
+        "slider_mobile": true,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "under",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff"
+      }
+    },
+    "icon_bar_FXDFLd": {
+      "type": "icon-bar",
+      "blocks": {
+        "column_Vjy7DA": {
+          "type": "column",
+          "settings": {
+            "icon": "favorite",
+            "filled_icon": true,
+            "title": "OVER 45 000 SATISFIED CUSTOMERS",
+            "text": "<p>Loved by dog owners and their pets across the world.</p>"
+          }
+        },
+        "column_WFdFKH": {
+          "type": "column",
+          "settings": {
+            "icon": "new_releases",
+            "filled_icon": true,
+            "title": "100-DAY MONEY-BACK GUARANTEE",
+            "text": "<p>Not satisfied? Just contact us within 100 days of your purchase – we’ll make it right.</p>"
+          }
+        },
+        "column_phDGHY": {
+          "type": "column",
+          "settings": {
+            "icon": "support_agent",
+            "filled_icon": false,
+            "title": "SUPPORT MONDAY–FRIDAY",
+            "text": "<p>Need help? Reach out to us – we respond within 24 hours on weekdays.</p><p></p><p></p>"
+          }
+        }
+      },
+      "block_order": [
+        "column_Vjy7DA",
+        "column_WFdFKH",
+        "column_phDGHY"
+      ],
+      "name": "Icon Bar",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "text": "",
+        "color_scheme": "background-2",
+        "icon_layout": "vertical",
+        "icon_size": "medium",
+        "icon_color": "accent-1",
+        "cards_color_scheme": "background-2",
+        "type": "slide",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_full_page": false,
+        "columns_desktop": 3,
+        "slider_desktop": false,
+        "per_move_desktop": 1,
+        "desktop_spacing": 40,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "sides",
+        "columns_mobile": "1",
+        "slider_mobile": true,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "under",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_cards_colors_background": "#ffffff",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_text": "#2e2a39"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "horizontal_ticker_jGJgCd",
+    "image_slider_TpMDHt",
+    "section_divider_tM8EJE",
+    "image_with_text_EeGtey",
+    "section_divider_iBPJkM",
+    "image_with_text_9C7JND",
+    "custom_columns_pL3TMQ",
+    "section_divider_9whq9k",
+    "image_with_text_KqKJ4G",
+    "section_divider_gaLYVH",
+    "testimonials_6ncqrm",
+    "section_divider_WTNfTG",
+    "image_with_text_JdMRPV",
+    "section_divider_MckDnr",
+    "collapsible_content_3qj3hn",
+    "related-products",
+    "featured_collection_MRf9GU",
+    "icon_bar_FXDFLd"
+  ]
+}

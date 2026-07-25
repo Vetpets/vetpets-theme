@@ -1,0 +1,887 @@
+{% comment %} CG - Image with Text {% endcomment %}
+
+{%- liquid
+  assign img_position   = section.settings.image_position
+  assign content_align  = section.settings.content_align
+  assign content_align_mobile = section.settings.content_align_mobile
+  assign mobile_order   = section.settings.mobile_order
+-%}
+
+<style>
+  /* ── ROOT VARIABLES ── */
+  #cg-iwt-{{ section.id }} {
+    --iwt-section-bg:      {{ section.settings.section_bg }};
+    --iwt-content-bg:      {{ section.settings.content_bg }};
+    --iwt-max-width:       {{ section.settings.max_width }}px;
+    --iwt-col-gap:         {{ section.settings.col_gap }}px;
+    --iwt-img-pct:         {{ section.settings.image_width }}%;
+    --iwt-img-radius:      {{ section.settings.image_radius }}px;
+    --iwt-content-radius:  {{ section.settings.content_radius }}px;
+    --iwt-content-pv:      {{ section.settings.content_pv }}px;
+    --iwt-content-ph:      {{ section.settings.content_ph }}px;
+    --iwt-block-gap:       {{ section.settings.block_gap }}px;
+  }
+
+  /* ── SECTION SHELL ── */
+  #cg-iwt-{{ section.id }} {
+    display: block;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  #cg-iwt-{{ section.id }} .iwt-outer {
+    background: var(--iwt-section-bg);
+    padding: {{ section.settings.padding_top }}px {{ section.settings.padding_sides }}rem {{ section.settings.padding_bottom }}px;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  #cg-iwt-{{ section.id }} .iwt-inner {
+    max-width: var(--iwt-max-width);
+    margin: 0 auto;
+    display: flex;
+    align-items: {{ section.settings.vertical_align }};
+    gap: var(--iwt-col-gap);
+    flex-direction: {% if img_position == 'right' %}row{% else %}row-reverse{% endif %};
+    width: 100%;
+  }
+
+  /* ── MEDIA COLUMN ── */
+  #cg-iwt-{{ section.id }} .iwt-media {
+    flex: 0 0 var(--iwt-img-pct);
+    width: var(--iwt-img-pct);
+    max-width: var(--iwt-img-pct);
+    min-width: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #cg-iwt-{{ section.id }} .iwt-media img,
+  #cg-iwt-{{ section.id }} .iwt-media video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--iwt-img-radius);
+    object-fit: cover;
+  }
+
+  {%- unless section.settings.image_aspect == 'auto' -%}
+  #cg-iwt-{{ section.id }} .iwt-media img,
+  #cg-iwt-{{ section.id }} .iwt-media video {
+    aspect-ratio: {{ section.settings.image_aspect }};
+  }
+  {%- endunless -%}
+
+  /* ── CONTENT COLUMN ── */
+  #cg-iwt-{{ section.id }} .iwt-content {
+    flex: 1 1 0;
+    min-width: 0;
+    width: 0; /* force flex shrink on small screens */
+    background: var(--iwt-content-bg);
+    padding: var(--iwt-content-pv) var(--iwt-content-ph);
+    border-radius: var(--iwt-content-radius);
+    text-align: {{ content_align }};
+    display: flex;
+    flex-direction: column;
+    gap: var(--iwt-block-gap);
+    /* inherit theme fonts — no font-family override */
+  }
+
+  /* ── EYEBROW ── */
+  #cg-iwt-{{ section.id }} .iwt-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    line-height: 1.2;
+    {% if content_align == 'center' %}justify-content: center;{% elsif content_align == 'right' %}justify-content: flex-end;{% else %}justify-content: flex-start;{% endif %}
+  }
+  #cg-iwt-{{ section.id }} .iwt-eyebrow-line {
+    flex-shrink: 0;
+    height: 2px;
+    width: 20px;
+    border-radius: 2px;
+    background: currentColor;
+  }
+
+  /* ── HEADLINE ── */
+  #cg-iwt-{{ section.id }} .iwt-headline {
+    margin: 0;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* ── SUBHEADLINE ── */
+  #cg-iwt-{{ section.id }} .iwt-subheadline {
+    margin: 0;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* ── BODY TEXT ── */
+  #cg-iwt-{{ section.id }} .iwt-body {
+    line-height: 1.7;
+    margin: 0;
+  }
+  #cg-iwt-{{ section.id }} .iwt-body p { margin: 0 0 0.75em; }
+  #cg-iwt-{{ section.id }} .iwt-body p:last-child { margin-bottom: 0; }
+  #cg-iwt-{{ section.id }} .iwt-body * { max-width: 100%; }
+
+  /* ── USP LIST ── */
+  #cg-iwt-{{ section.id }} .iwt-usp-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  #cg-iwt-{{ section.id }} .iwt-usp-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    text-align: left;
+  }
+  #cg-iwt-{{ section.id }} .iwt-usp-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  #cg-iwt-{{ section.id }} .iwt-usp-text {
+    flex: 1;
+    min-width: 0;
+    line-height: 1.45;
+    word-break: break-word;
+  }
+  #cg-iwt-{{ section.id }} .iwt-usp-label { font-weight: 700; display: block; }
+  #cg-iwt-{{ section.id }} .iwt-usp-desc  { display: block; opacity: 0.75; margin-top: 2px; }
+
+  /* ── STEPS LIST ── */
+  #cg-iwt-{{ section.id }} .iwt-steps-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  #cg-iwt-{{ section.id }} .iwt-step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    text-align: left;
+  }
+  #cg-iwt-{{ section.id }} .iwt-step-num {
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+  }
+  #cg-iwt-{{ section.id }} .iwt-step-text {
+    flex: 1;
+    min-width: 0;
+    line-height: 1.5;
+    padding-top: 4px;
+    word-break: break-word;
+  }
+
+  /* ── STAT ROW ── */
+  #cg-iwt-{{ section.id }} .iwt-stat-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    {% if content_align == 'center' %}justify-content: center;{% elsif content_align == 'right' %}justify-content: flex-end;{% else %}justify-content: flex-start;{% endif %}
+  }
+  #cg-iwt-{{ section.id }} .iwt-stat-item {
+    display: flex;
+    flex-direction: column;
+  }
+  #cg-iwt-{{ section.id }} .iwt-stat-number { font-weight: 900; line-height: 1; }
+  #cg-iwt-{{ section.id }} .iwt-stat-label  { font-size: 13px; opacity: 0.7; margin-top: 3px; }
+
+  /* ── PILLS ── */
+  #cg-iwt-{{ section.id }} .iwt-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    {% if content_align == 'center' %}justify-content: center;{% elsif content_align == 'right' %}justify-content: flex-end;{% else %}justify-content: flex-start;{% endif %}
+  }
+  #cg-iwt-{{ section.id }} .iwt-pill {
+    display: inline-block;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  /* ── BUTTON ── */
+  #cg-iwt-{{ section.id }} .iwt-btn-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    {% if content_align == 'center' %}justify-content: center;{% elsif content_align == 'right' %}justify-content: flex-end;{% else %}justify-content: flex-start;{% endif %}
+  }
+  #cg-iwt-{{ section.id }} .iwt-btn {
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.2;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    white-space: nowrap;
+  }
+  #cg-iwt-{{ section.id }} .iwt-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  /* ── GUARANTEE ── */
+  #cg-iwt-{{ section.id }} .iwt-guarantee {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+  }
+  #cg-iwt-{{ section.id }} .iwt-guarantee-icon { flex-shrink: 0; }
+  #cg-iwt-{{ section.id }} .iwt-guarantee-text { flex: 1; min-width: 0; line-height: 1.4; }
+  #cg-iwt-{{ section.id }} .iwt-guarantee-title { font-weight: 700; display: block; }
+  #cg-iwt-{{ section.id }} .iwt-guarantee-desc  { display: block; opacity: 0.7; margin-top: 2px; }
+
+  /* ── STAR RATING ── */
+  #cg-iwt-{{ section.id }} .iwt-stars {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    {% if content_align == 'center' %}justify-content: center;{% elsif content_align == 'right' %}justify-content: flex-end;{% else %}justify-content: flex-start;{% endif %}
+  }
+  #cg-iwt-{{ section.id }} .iwt-stars-icons { display: flex; gap: 2px; flex-shrink: 0; }
+  #cg-iwt-{{ section.id }} .iwt-stars-text  { line-height: 1.2; }
+
+  /* ── DIVIDER ── */
+  #cg-iwt-{{ section.id }} .iwt-divider {
+    border: none;
+    margin: 0;
+    width: 100%;
+  }
+
+  /* ── IMAGE CAPTION ── */
+  #cg-iwt-{{ section.id }} .iwt-caption {
+    font-size: 12px;
+    opacity: 0.55;
+    text-align: center;
+    margin-top: 8px;
+    word-break: break-word;
+  }
+
+  /* ── VIDEO EMBED WRAPPER ── */
+  #cg-iwt-{{ section.id }} .iwt-video-embed {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    border-radius: var(--iwt-img-radius);
+    overflow: hidden;
+  }
+  #cg-iwt-{{ section.id }} .iwt-video-embed iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  /* ── MOBILE ── */
+  @media screen and (max-width: 749px) {
+    #cg-iwt-{{ section.id }} .iwt-outer {
+      padding: {{ section.settings.padding_top_mobile }}px {{ section.settings.padding_sides_mobile }}rem {{ section.settings.padding_bottom_mobile }}px;
+    }
+
+    #cg-iwt-{{ section.id }} .iwt-inner {
+      flex-direction: {% if mobile_order == 'image_first' %}column{% else %}column-reverse{% endif %};
+      gap: {{ section.settings.mobile_gap }}px;
+      align-items: stretch;
+    }
+
+    /* media: full width, no fixed percentage */
+    #cg-iwt-{{ section.id }} .iwt-media {
+      flex: none;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    /* content: full width */
+    #cg-iwt-{{ section.id }} .iwt-content {
+      flex: none;
+      width: 100%;
+      min-width: 0;
+      padding: {{ section.settings.content_pv_mobile }}px {{ section.settings.content_ph_mobile }}px;
+      gap: {{ section.settings.block_gap_mobile }}px;
+      text-align: {{ content_align_mobile }};
+    }
+
+    /* re-align flex items to match mobile content alignment */
+    #cg-iwt-{{ section.id }} .iwt-eyebrow {
+      {% if content_align_mobile == 'center' %}justify-content: center;{% elsif content_align_mobile == 'right' %}justify-content: flex-end;{% else %}justify-content: flex-start;{% endif %}
+    }
+    #cg-iwt-{{ section.id }} .iwt-btn-wrap {
+      {% if content_align_mobile == 'center' %}justify-content: center;{% elsif content_align_mobile == 'right' %}justify-content: flex-end;{% else %}justify-content: flex-start;{% endif %}
+    }
+    #cg-iwt-{{ section.id }} .iwt-pills {
+      {% if content_align_mobile == 'center' %}justify-content: center;{% elsif content_align_mobile == 'right' %}justify-content: flex-end;{% else %}justify-content: flex-start;{% endif %}
+    }
+    #cg-iwt-{{ section.id }} .iwt-stat-row {
+      {% if content_align_mobile == 'center' %}justify-content: center;{% elsif content_align_mobile == 'right' %}justify-content: flex-end;{% else %}justify-content: flex-start;{% endif %}
+      gap: 16px;
+    }
+    #cg-iwt-{{ section.id }} .iwt-stars {
+      {% if content_align_mobile == 'center' %}justify-content: center;{% elsif content_align_mobile == 'right' %}justify-content: flex-end;{% else %}justify-content: flex-start;{% endif %}
+    }
+
+    /* stat numbers slightly smaller on mobile */
+    #cg-iwt-{{ section.id }} .iwt-stat-number { font-size: 28px !important; }
+  }
+</style>
+
+<div id="cg-iwt-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="iwt-outer">
+    <div class="iwt-inner">
+
+      {%- comment -%} ── MEDIA ── {%- endcomment -%}
+      <div class="iwt-media">
+        {%- if section.settings.video_url != blank -%}
+          <div class="iwt-video-embed">
+            <iframe src="{{ section.settings.video_url }}" allow="autoplay; fullscreen" loading="lazy"></iframe>
+          </div>
+        {%- elsif section.settings.video != blank -%}
+          {{- section.settings.video | video_tag:
+              autoplay: true,
+              loop: true,
+              muted: true,
+              playsinline: true,
+              style: 'width:100%;height:auto;display:block;border-radius:var(--iwt-img-radius);object-fit:cover;'
+          -}}
+        {%- elsif section.settings.image != blank -%}
+          {{- section.settings.image | image_url: width: 1200 | image_tag:
+              loading: 'lazy',
+              style: 'width:100%;height:auto;display:block;border-radius:var(--iwt-img-radius);object-fit:cover;'
+          -}}
+        {%- else -%}
+          <div style="background:#e5e7eb;aspect-ratio:1/1;border-radius:var(--iwt-img-radius);display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:13px;">No image selected</div>
+        {%- endif -%}
+        {%- if section.settings.image_caption != blank -%}
+          <p class="iwt-caption">{{ section.settings.image_caption }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} ── CONTENT ── {%- endcomment -%}
+      <div class="iwt-content">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+
+            {%- when 'eyebrow' -%}
+              <div class="iwt-eyebrow"
+                {{ block.shopify_attributes }}
+                style="color:{{ block.settings.color }};font-size:{{ block.settings.size }}px;"
+              >
+                {%- if block.settings.show_lines -%}<span class="iwt-eyebrow-line"></span>{%- endif -%}
+                {{- block.settings.text -}}
+                {%- if block.settings.show_lines -%}<span class="iwt-eyebrow-line"></span>{%- endif -%}
+              </div>
+
+            {%- when 'headline' -%}
+              <{{ block.settings.tag }} class="iwt-headline"
+                {{ block.shopify_attributes }}
+                style="font-size:clamp({{ block.settings.size_mobile }}px,4vw,{{ block.settings.size }}px);font-weight:{{ block.settings.weight }};color:{{ block.settings.color }};text-transform:{{ block.settings.transform }};line-height:{{ block.settings.line_height | divided_by: 100.0 }};"
+              >{{ block.settings.text }}</{{ block.settings.tag }}>
+
+            {%- when 'subheadline' -%}
+              <{{ block.settings.tag }} class="iwt-subheadline"
+                {{ block.shopify_attributes }}
+                style="font-size:clamp({{ block.settings.size_mobile }}px,3vw,{{ block.settings.size }}px);font-weight:{{ block.settings.weight }};color:{{ block.settings.color }};"
+              >{{ block.settings.text }}</{{ block.settings.tag }}>
+
+            {%- when 'body_text' -%}
+              <div class="iwt-body rte"
+                {{ block.shopify_attributes }}
+                style="font-size:{{ block.settings.size }}px;color:{{ block.settings.color }};"
+              >{{ block.settings.text }}</div>
+
+            {%- when 'usp_list' -%}
+              <ul class="iwt-usp-list"
+                {{ block.shopify_attributes }}
+                style="gap:{{ block.settings.gap }}px;"
+              >
+                {%- for i in (1..5) -%}
+                  {%- assign item_key  = 'item_'  | append: i -%}
+                  {%- assign label_key = 'label_' | append: i -%}
+                  {%- assign icon_key  = 'icon_'  | append: i -%}
+                  {%- if block.settings[item_key] != blank or block.settings[label_key] != blank -%}
+                    <li class="iwt-usp-item">
+                      <div class="iwt-usp-icon" style="width:{{ block.settings.icon_size }}px;height:{{ block.settings.icon_size }}px;background:{{ block.settings.icon_bg }};min-width:{{ block.settings.icon_size }}px;">
+                        {%- if block.settings[icon_key] != blank -%}
+                          {{- block.settings[icon_key] | image_url: width: 80 | image_tag:
+                              loading: 'lazy',
+                              style: 'width:' | append: block.settings.icon_size | append: 'px;height:auto;'
+                          -}}
+                        {%- else -%}
+                          <svg width="{{ block.settings.icon_size | times: 0.5 }}" height="{{ block.settings.icon_size | times: 0.5 }}" viewBox="0 0 20 20" fill="{{ block.settings.icon_color }}"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                        {%- endif -%}
+                      </div>
+                      <div class="iwt-usp-text" style="font-size:{{ block.settings.text_size }}px;color:{{ block.settings.text_color }};">
+                        {%- if block.settings[label_key] != blank -%}<span class="iwt-usp-label">{{ block.settings[label_key] }}</span>{%- endif -%}
+                        {%- if block.settings[item_key] != blank -%}<span class="iwt-usp-desc">{{ block.settings[item_key] }}</span>{%- endif -%}
+                      </div>
+                    </li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+
+            {%- when 'steps_list' -%}
+              {%- assign step_num = 0 -%}
+              <ol class="iwt-steps-list"
+                {{ block.shopify_attributes }}
+                style="gap:{{ block.settings.gap }}px;"
+              >
+                {%- for i in (1..5) -%}
+                  {%- assign step_key = 'step_' | append: i -%}
+                  {%- if block.settings[step_key] != blank -%}
+                    {%- assign step_num = step_num | plus: 1 -%}
+                    <li class="iwt-step-item">
+                      <div class="iwt-step-num" style="width:{{ block.settings.num_size }}px;height:{{ block.settings.num_size }}px;min-width:{{ block.settings.num_size }}px;background:{{ block.settings.num_bg }};color:{{ block.settings.num_color }};font-size:{{ block.settings.num_font_size }}px;">{{ step_num }}</div>
+                      <div class="iwt-step-text" style="font-size:{{ block.settings.text_size }}px;color:{{ block.settings.text_color }};">{{ block.settings[step_key] }}</div>
+                    </li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ol>
+
+            {%- when 'stat_row' -%}
+              <div class="iwt-stat-row"
+                {{ block.shopify_attributes }}
+                style="gap:{{ block.settings.gap }}px;"
+              >
+                {%- for i in (1..4) -%}
+                  {%- assign num_key = 'num_' | append: i -%}
+                  {%- assign lbl_key = 'lbl_' | append: i -%}
+                  {%- if block.settings[num_key] != blank -%}
+                    <div class="iwt-stat-item">
+                      <span class="iwt-stat-number" style="font-size:{{ block.settings.num_size }}px;color:{{ block.settings.num_color }};">{{ block.settings[num_key] }}</span>
+                      {%- if block.settings[lbl_key] != blank -%}
+                        <span class="iwt-stat-label" style="color:{{ block.settings.lbl_color }};">{{ block.settings[lbl_key] }}</span>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+
+            {%- when 'pills' -%}
+              <div class="iwt-pills" {{ block.shopify_attributes }}>
+                {%- for i in (1..6) -%}
+                  {%- assign pill_key = 'pill_' | append: i -%}
+                  {%- if block.settings[pill_key] != blank -%}
+                    <span class="iwt-pill" style="background:{{ block.settings.bg }};color:{{ block.settings.color }};font-size:{{ block.settings.size }}px;border-radius:{{ block.settings.radius }}px;padding:{{ block.settings.pv }}px {{ block.settings.ph }}px;">{{ block.settings[pill_key] }}</span>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+
+            {%- when 'button' -%}
+              <div class="iwt-btn-wrap" {{ block.shopify_attributes }}>
+                <a
+                  href="{{ block.settings.url | default: '#' }}"
+                  class="iwt-btn"
+                  style="background:{{ block.settings.bg }};color:{{ block.settings.color }};border:{{ block.settings.border_width }}px solid {{ block.settings.border_color }};border-radius:{{ block.settings.radius }}px;padding:{{ block.settings.pv }}px {{ block.settings.ph }}px;font-size:{{ block.settings.size }}px;"
+                  {% if block.settings.new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+                >{{ block.settings.label }}</a>
+              </div>
+
+            {%- when 'guarantee' -%}
+              <div class="iwt-guarantee" {{ block.shopify_attributes }}>
+                <div class="iwt-guarantee-icon">
+                  {%- if block.settings.icon != blank -%}
+                    <img src="{{ block.settings.icon | image_url: width: 80 }}" 
+     width="{{ block.settings.icon_size }}" 
+     height="{{ block.settings.icon_size }}" 
+     style="width:{{ block.settings.icon_size }}px;height:auto;display:block;" 
+     loading="lazy" alt="">
+                  {%- else -%}
+                    <svg width="{{ block.settings.icon_size }}" height="{{ block.settings.icon_size }}" viewBox="0 0 24 24" fill="none" stroke="{{ block.settings.icon_color }}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  {%- endif -%}
+                </div>
+                <div class="iwt-guarantee-text" style="color:{{ block.settings.text_color }};font-size:{{ block.settings.size }}px;">
+                  {%- if block.settings.title != blank -%}<span class="iwt-guarantee-title">{{ block.settings.title }}</span>{%- endif -%}
+                  {%- if block.settings.desc != blank -%}<span class="iwt-guarantee-desc">{{ block.settings.desc }}</span>{%- endif -%}
+                </div>
+              </div>
+
+            {%- when 'star_rating' -%}
+              <div class="iwt-stars" {{ block.shopify_attributes }}>
+                <div class="iwt-stars-icons">
+                  {%- for i in (1..5) -%}
+                    <svg width="{{ block.settings.star_size }}" height="{{ block.settings.star_size }}" viewBox="0 0 20 20" fill="{{ block.settings.star_color }}"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  {%- endfor -%}
+                </div>
+                {%- if block.settings.text != blank -%}
+                  <span class="iwt-stars-text" style="color:{{ block.settings.text_color }};font-size:{{ block.settings.text_size }}px;">{{ block.settings.text }}</span>
+                {%- endif -%}
+              </div>
+
+            {%- when 'divider' -%}
+              <hr class="iwt-divider"
+                {{ block.shopify_attributes }}
+                style="border-top:{{ block.settings.thickness }}px {{ block.settings.style }} {{ block.settings.color }};opacity:{{ block.settings.opacity }};"
+              >
+
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Rocky - Image with Text",
+  "tag": "section",
+  "settings": [
+    { "type": "header", "content": "── Media ──" },
+    { "type": "image_picker", "id": "image",        "label": "Image" },
+    { "type": "video",        "id": "video",         "label": "Video file (overrides image)" },
+    { "type": "text",         "id": "video_url",     "label": "Video embed URL (YouTube / Vimeo)", "info": "Paste the embed src URL. Overrides both image and uploaded video." },
+    { "type": "text",         "id": "image_caption", "label": "Caption below media" },
+    {
+      "type": "select", "id": "image_aspect", "label": "Aspect ratio",
+      "options": [
+        { "value": "auto",   "label": "Auto (natural height)" },
+        { "value": "1 / 1",  "label": "Square 1:1" },
+        { "value": "4 / 3",  "label": "Landscape 4:3" },
+        { "value": "3 / 4",  "label": "Portrait 3:4" },
+        { "value": "16 / 9", "label": "Wide 16:9" },
+        { "value": "3 / 2",  "label": "Photo 3:2" }
+      ],
+      "default": "auto"
+    },
+    { "type": "range", "id": "image_width",  "label": "Image column width (desktop)", "min": 20, "max": 70, "step": 2,   "unit": "%",  "default": 50 },
+    { "type": "range", "id": "image_radius", "label": "Image border radius",           "min": 0,  "max": 48, "step": 2,   "unit": "px", "default": 0  },
+
+    { "type": "header", "content": "── Layout ──" },
+    {
+      "type": "select", "id": "image_position", "label": "Image position (desktop)",
+      "options": [
+        { "value": "right", "label": "Image left, content right" },
+        { "value": "left",  "label": "Image right, content left" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "select", "id": "mobile_order", "label": "Mobile stack order",
+      "options": [
+        { "value": "image_first",   "label": "Image top, content bottom" },
+        { "value": "content_first", "label": "Content top, image bottom" }
+      ],
+      "default": "image_first"
+    },
+    {
+      "type": "select", "id": "vertical_align", "label": "Vertical alignment (desktop)",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center",     "label": "Center" },
+        { "value": "flex-end",   "label": "Bottom" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select", "id": "content_align", "label": "Content alignment (desktop)",
+      "options": [
+        { "value": "left",   "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right",  "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select", "id": "content_align_mobile", "label": "Content alignment (mobile)",
+      "options": [
+        { "value": "left",   "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right",  "label": "Right" }
+      ],
+      "default": "left"
+    },
+    { "type": "range", "id": "col_gap",         "label": "Column gap (desktop)", "min": 0,  "max": 120, "step": 4,   "unit": "px",  "default": 60 },
+    { "type": "range", "id": "mobile_gap",      "label": "Column gap (mobile)",  "min": 0,  "max": 60,  "step": 4,   "unit": "px",  "default": 24 },
+    { "type": "range", "id": "block_gap",       "label": "Block gap (desktop)",  "min": 0,  "max": 60,  "step": 2,   "unit": "px",  "default": 16 },
+    { "type": "range", "id": "block_gap_mobile","label": "Block gap (mobile)",   "min": 0,  "max": 40,  "step": 2,   "unit": "px",  "default": 12 },
+
+    { "type": "header", "content": "── Content Box ──" },
+    { "type": "color",  "id": "content_bg",        "label": "Content background",         "default": "rgba(0,0,0,0)" },
+    { "type": "range",  "id": "content_radius",    "label": "Content border radius",      "min": 0, "max": 32, "step": 2, "unit": "px", "default": 0 },
+    { "type": "range",  "id": "content_pv",        "label": "Content padding top/bottom", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range",  "id": "content_ph",        "label": "Content padding sides",      "min": 0, "max": 80, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range",  "id": "content_pv_mobile", "label": "Content padding top/bottom (mobile)", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range",  "id": "content_ph_mobile", "label": "Content padding sides (mobile)",      "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 },
+
+    { "type": "header", "content": "── Section Background ──" },
+    { "type": "color",  "id": "section_bg", "label": "Section background", "default": "#ffffff" },
+
+    { "type": "header", "content": "── Section Spacing ──" },
+    { "type": "range", "id": "max_width",             "label": "Max width",              "min": 600,  "max": 1600, "step": 20,  "unit": "px",  "default": 1200 },
+    { "type": "range", "id": "padding_top",           "label": "Padding top",            "min": 0,    "max": 160,  "step": 4,   "unit": "px",  "default": 60   },
+    { "type": "range", "id": "padding_bottom",        "label": "Padding bottom",         "min": 0,    "max": 160,  "step": 4,   "unit": "px",  "default": 60   },
+    { "type": "range", "id": "padding_sides",         "label": "Padding sides",          "min": 0,    "max": 10,   "step": 0.5, "unit": "rem", "default": 2    },
+    { "type": "range", "id": "padding_top_mobile",    "label": "Padding top (mobile)",   "min": 0,    "max": 100,  "step": 4,   "unit": "px",  "default": 40   },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom (mobile)","min": 0,    "max": 100,  "step": 4,   "unit": "px",  "default": 40   },
+    { "type": "range", "id": "padding_sides_mobile",  "label": "Padding sides (mobile)", "min": 0,    "max": 6,    "step": 0.5, "unit": "rem", "default": 1    }
+  ],
+  "blocks": [
+    {
+      "type": "eyebrow",
+      "name": "👁 Eyebrow",
+      "settings": [
+        { "type": "text",     "id": "text",       "label": "Text",             "default": "80% of people are dehydrated" },
+        { "type": "color",    "id": "color",      "label": "Color",            "default": "#FF0000" },
+        { "type": "range",    "id": "size",       "label": "Font size",        "min": 8,  "max": 18, "step": 1, "unit": "px", "default": 11 },
+        { "type": "checkbox", "id": "show_lines", "label": "Show side lines",  "default": false }
+      ]
+    },
+    {
+      "type": "headline",
+      "name": "📰 Headline",
+      "settings": [
+        { "type": "textarea", "id": "text",       "label": "Text",                  "default": "Most people are dehydrated. Even if they drink water." },
+        {
+          "type": "select", "id": "tag", "label": "HTML tag",
+          "options": [
+            { "value": "h1", "label": "H1" }, { "value": "h2", "label": "H2" },
+            { "value": "h3", "label": "H3" }, { "value": "h4", "label": "H4" },
+            { "value": "p",  "label": "Paragraph" }
+          ],
+          "default": "h2"
+        },
+        { "type": "color",  "id": "color",       "label": "Color",                 "default": "#111111" },
+        { "type": "range",  "id": "size",        "label": "Font size (desktop)",   "min": 18, "max": 90, "step": 2, "unit": "px", "default": 40 },
+        { "type": "range",  "id": "size_mobile", "label": "Font size (mobile)",    "min": 16, "max": 60, "step": 2, "unit": "px", "default": 28 },
+        { "type": "range",  "id": "line_height", "label": "Line height (%)",       "min": 80, "max": 140,"step": 2, "unit": "%",  "default": 100 },
+        {
+          "type": "select", "id": "weight", "label": "Font weight",
+          "options": [
+            { "value": "400", "label": "Regular" }, { "value": "600", "label": "Semi-bold" },
+            { "value": "700", "label": "Bold" },    { "value": "800", "label": "Extra bold" },
+            { "value": "900", "label": "Black" }
+          ],
+          "default": "800"
+        },
+        {
+          "type": "select", "id": "transform", "label": "Text transform",
+          "options": [
+            { "value": "none",      "label": "None" },
+            { "value": "uppercase", "label": "Uppercase" },
+            { "value": "capitalize","label": "Capitalize" }
+          ],
+          "default": "none"
+        }
+      ]
+    },
+    {
+      "type": "subheadline",
+      "name": "📄 Subheadline",
+      "settings": [
+        { "type": "textarea", "id": "text",       "label": "Text",                "default": "Water alone does not hydrate you." },
+        {
+          "type": "select", "id": "tag", "label": "HTML tag",
+          "options": [
+            { "value": "h2", "label": "H2" }, { "value": "h3", "label": "H3" },
+            { "value": "h4", "label": "H4" }, { "value": "p",  "label": "Paragraph" }
+          ],
+          "default": "h3"
+        },
+        { "type": "color", "id": "color",       "label": "Color",               "default": "#333333" },
+        { "type": "range", "id": "size",        "label": "Font size (desktop)", "min": 14, "max": 60, "step": 2, "unit": "px", "default": 24 },
+        { "type": "range", "id": "size_mobile", "label": "Font size (mobile)",  "min": 14, "max": 40, "step": 2, "unit": "px", "default": 20 },
+        {
+          "type": "select", "id": "weight", "label": "Font weight",
+          "options": [
+            { "value": "400", "label": "Regular" }, { "value": "600", "label": "Semi-bold" },
+            { "value": "700", "label": "Bold" },    { "value": "800", "label": "Extra bold" }
+          ],
+          "default": "600"
+        }
+      ]
+    },
+    {
+      "type": "body_text",
+      "name": "📋 Body Text",
+      "settings": [
+        { "type": "richtext", "id": "text",  "label": "Text",      "default": "<p>Water alone does not hydrate you. Hydration requires electrolytes. Sodium moves water into cells. Potassium supports muscle and nerve function.</p>" },
+        { "type": "color",    "id": "color", "label": "Color",     "default": "#444444" },
+        { "type": "range",    "id": "size",  "label": "Font size", "min": 12, "max": 22, "step": 1, "unit": "px", "default": 15 }
+      ]
+    },
+    {
+      "type": "usp_list",
+      "name": "⚡ USP List",
+      "settings": [
+        { "type": "header", "content": "── Item 1 ──" },
+        { "type": "image_picker", "id": "icon_1",  "label": "Custom icon" },
+        { "type": "text",         "id": "label_1", "label": "Bold label",  "default": "No hangovers" },
+        { "type": "text",         "id": "item_1",  "label": "Description", "default": "Clean ingredients, no regrets the next day." },
+        { "type": "header", "content": "── Item 2 ──" },
+        { "type": "image_picker", "id": "icon_2",  "label": "Custom icon" },
+        { "type": "text",         "id": "label_2", "label": "Bold label",  "default": "Fast acting" },
+        { "type": "text",         "id": "item_2",  "label": "Description", "default": "Works in under 5 minutes." },
+        { "type": "header", "content": "── Item 3 ──" },
+        { "type": "image_picker", "id": "icon_3",  "label": "Custom icon" },
+        { "type": "text",         "id": "label_3", "label": "Bold label",  "default": "-" },
+        { "type": "text",         "id": "item_3",  "label": "Description", "default": "-" },
+        { "type": "header", "content": "── Item 4 ──" },
+        { "type": "image_picker", "id": "icon_4",  "label": "Custom icon" },
+        { "type": "text",         "id": "label_4", "label": "Bold label",  "default": "-" },
+        { "type": "text",         "id": "item_4",  "label": "Description", "default": "-" },
+        { "type": "header", "content": "── Item 5 ──" },
+        { "type": "image_picker", "id": "icon_5",  "label": "Custom icon" },
+        { "type": "text",         "id": "label_5", "label": "Bold label",  "default": "-" },
+        { "type": "text",         "id": "item_5",  "label": "Description", "default": "-" },
+        { "type": "header", "content": "── Icon Style ──" },
+        { "type": "color",  "id": "icon_bg",    "label": "Icon background",           "default": "#f3f4f6" },
+        { "type": "color",  "id": "icon_color", "label": "Icon color (checkmark)",    "default": "#111111" },
+        { "type": "range",  "id": "icon_size",  "label": "Icon size",                 "min": 20, "max": 56, "step": 2, "unit": "px", "default": 32 },
+        { "type": "header", "content": "── Text Style ──" },
+        { "type": "color",  "id": "text_color", "label": "Text color",                "default": "#111111" },
+        { "type": "range",  "id": "text_size",  "label": "Text size",                 "min": 12, "max": 20, "step": 1, "unit": "px", "default": 14 },
+        { "type": "range",  "id": "gap",        "label": "Gap between items",         "min": 4,  "max": 40, "step": 2, "unit": "px", "default": 14 }
+      ]
+    },
+    {
+      "type": "steps_list",
+      "name": "🔢 Steps List",
+      "settings": [
+        { "type": "text", "id": "step_1", "label": "Step 1", "default": "Fill your cup with 8–16 oz of water or milk." },
+        { "type": "text", "id": "step_2", "label": "Step 2", "default": "Mix in 1–2 scoops." },
+        { "type": "text", "id": "step_3", "label": "Step 3", "default": "Top with your favourite creamer or topping. Enjoy!" },
+        { "type": "text", "id": "step_4", "label": "Step 4", "default": "-" },
+        { "type": "text", "id": "step_5", "label": "Step 5", "default": "-" },
+        { "type": "header", "content": "── Number Style ──" },
+        { "type": "color", "id": "num_bg",        "label": "Circle background", "default": "#111111" },
+        { "type": "color", "id": "num_color",     "label": "Number color",      "default": "#ffffff" },
+        { "type": "range", "id": "num_size",      "label": "Circle size",       "min": 24, "max": 56, "step": 2, "unit": "px", "default": 32 },
+        { "type": "range", "id": "num_font_size", "label": "Number font size",  "min": 10, "max": 24, "step": 1, "unit": "px", "default": 14 },
+        { "type": "header", "content": "── Text Style ──" },
+        { "type": "color", "id": "text_color", "label": "Text color", "default": "#111111" },
+        { "type": "range", "id": "text_size",  "label": "Text size",  "min": 12, "max": 20, "step": 1, "unit": "px", "default": 14 },
+        { "type": "range", "id": "gap",        "label": "Gap between steps", "min": 4, "max": 40, "step": 2, "unit": "px", "default": 16 }
+      ]
+    },
+    {
+      "type": "stat_row",
+      "name": "📊 Stat Row",
+      "settings": [
+        { "type": "text", "id": "num_1", "label": "Stat 1 number", "default": "5x"   },
+        { "type": "text", "id": "lbl_1", "label": "Stat 1 label",  "default": "Faster absorption" },
+        { "type": "text", "id": "num_2", "label": "Stat 2 number", "default": "60mg" },
+        { "type": "text", "id": "lbl_2", "label": "Stat 2 label",  "default": "Clean caffeine" },
+        { "type": "text", "id": "num_3", "label": "Stat 3 number", "default": "0g"   },
+        { "type": "text", "id": "lbl_3", "label": "Stat 3 label",  "default": "Sugar" },
+        { "type": "text", "id": "num_4", "label": "Stat 4 number", "default": "-" },
+        { "type": "text", "id": "lbl_4", "label": "Stat 4 label",  "default": "-" },
+        { "type": "color", "id": "num_color", "label": "Number color", "default": "#111111" },
+        { "type": "color", "id": "lbl_color", "label": "Label color",  "default": "#666666" },
+        { "type": "range", "id": "num_size",  "label": "Number size",  "min": 20, "max": 72, "step": 2, "unit": "px", "default": 36 },
+        { "type": "range", "id": "gap",       "label": "Gap",          "min": 8,  "max": 60, "step": 4, "unit": "px", "default": 32 }
+      ]
+    },
+    {
+      "type": "pills",
+      "name": "🏷️ Pills",
+      "settings": [
+        { "type": "text",  "id": "pill_1", "label": "Pill 1", "default": "Sugar free" },
+        { "type": "text",  "id": "pill_2", "label": "Pill 2", "default": "Vegan" },
+        { "type": "text",  "id": "pill_3", "label": "Pill 3", "default": "Lab tested" },
+        { "type": "text",  "id": "pill_4", "label": "Pill 4", "default": "-" },
+        { "type": "text",  "id": "pill_5", "label": "Pill 5", "default": "-" },
+        { "type": "text",  "id": "pill_6", "label": "Pill 6", "default": "-" },
+        { "type": "color", "id": "bg",     "label": "Background", "default": "#111111" },
+        { "type": "color", "id": "color",  "label": "Text color", "default": "#ffffff" },
+        { "type": "range", "id": "size",   "label": "Font size",  "min": 9,  "max": 16, "step": 1, "unit": "px", "default": 11 },
+        { "type": "range", "id": "radius", "label": "Radius",     "min": 0,  "max": 40, "step": 2, "unit": "px", "default": 4  },
+        { "type": "range", "id": "pv",     "label": "Padding top/bottom", "min": 2, "max": 16, "step": 1, "unit": "px", "default": 4 },
+        { "type": "range", "id": "ph",     "label": "Padding sides",      "min": 4, "max": 32, "step": 1, "unit": "px", "default": 10 }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "🔘 Button",
+      "settings": [
+        { "type": "text",     "id": "label",        "label": "Label",             "default": "Get Me Hydrated" },
+        { "type": "url",      "id": "url",           "label": "Link" },
+        { "type": "checkbox", "id": "new_tab",       "label": "Open in new tab",  "default": false },
+        { "type": "color",    "id": "bg",            "label": "Background",       "default": "#FF0000" },
+        { "type": "color",    "id": "color",         "label": "Text color",       "default": "#ffffff" },
+        { "type": "color",    "id": "border_color",  "label": "Border color",     "default": "#FF0000" },
+        { "type": "range",    "id": "border_width",  "label": "Border width",     "min": 0, "max": 4,  "step": 1, "unit": "px", "default": 0  },
+        { "type": "range",    "id": "radius",        "label": "Border radius",    "min": 0, "max": 60, "step": 2, "unit": "px", "default": 6  },
+        { "type": "range",    "id": "pv",            "label": "Padding vertical", "min": 8, "max": 32, "step": 2, "unit": "px", "default": 14 },
+        { "type": "range",    "id": "ph",            "label": "Padding sides",    "min": 12,"max": 80, "step": 2, "unit": "px", "default": 32 },
+        { "type": "range",    "id": "size",          "label": "Font size",        "min": 10,"max": 22, "step": 1, "unit": "px", "default": 14 }
+      ]
+    },
+    {
+      "type": "guarantee",
+      "name": "🛡️ Guarantee",
+      "settings": [
+        { "type": "image_picker", "id": "icon",       "label": "Custom icon (optional)" },
+        { "type": "text",         "id": "title",      "label": "Title",       "default": "30-Day Money Back Guarantee" },
+        { "type": "text",         "id": "desc",       "label": "Description", "default": "Not satisfied? Full refund, no questions asked." },
+        { "type": "color",        "id": "icon_color", "label": "Icon color (default shield)", "default": "#111111" },
+        { "type": "color",        "id": "text_color", "label": "Text color",  "default": "#111111" },
+        { "type": "range",        "id": "icon_size",  "label": "Icon size",   "min": 20, "max": 64, "step": 2, "unit": "px", "default": 36 },
+        { "type": "range",        "id": "size",       "label": "Text size",   "min": 12, "max": 18, "step": 1, "unit": "px", "default": 14 }
+      ]
+    },
+    {
+      "type": "star_rating",
+      "name": "⭐ Star Rating",
+      "settings": [
+        { "type": "text",  "id": "text",       "label": "Text",       "default": "4.9/5 · 2,400 reviews" },
+        { "type": "color", "id": "star_color", "label": "Star color", "default": "#f59e0b" },
+        { "type": "color", "id": "text_color", "label": "Text color", "default": "#666666" },
+        { "type": "range", "id": "star_size",  "label": "Star size",  "min": 12, "max": 32, "step": 2, "unit": "px", "default": 18 },
+        { "type": "range", "id": "text_size",  "label": "Text size",  "min": 11, "max": 18, "step": 1, "unit": "px", "default": 13 }
+      ]
+    },
+    {
+      "type": "divider",
+      "name": "〰️ Divider",
+      "settings": [
+        { "type": "color",  "id": "color",     "label": "Color",     "default": "#e5e7eb" },
+        { "type": "range",  "id": "thickness", "label": "Thickness", "min": 1, "max": 4, "step": 1, "unit": "px", "default": 1 },
+        { "type": "range",  "id": "opacity",   "label": "Opacity",   "min": 0.1, "max": 1, "step": 0.1, "default": 1 },
+        {
+          "type": "select", "id": "style", "label": "Line style",
+          "options": [
+            { "value": "solid",  "label": "Solid" },
+            { "value": "dashed", "label": "Dashed" },
+            { "value": "dotted", "label": "Dotted" }
+          ],
+          "default": "solid"
+        }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Rocky - Image with Text",
+    "blocks": [
+      { "type": "eyebrow",   "settings": { "text": "80% of people are dehydrated", "color": "#FF0000" } },
+      { "type": "headline",  "settings": { "text": "Most people are dehydrated. Even if they drink water.", "size": 40, "size_mobile": 28, "weight": "800" } },
+      { "type": "body_text", "settings": { "text": "<p>Water alone does not hydrate you. Hydration requires electrolytes. Sodium moves water into cells. Potassium supports muscle and nerve function.</p>" } },
+      { "type": "usp_list",  "settings": { "label_1": "No hangovers & no regrets", "item_1": "Clean formula, feel great the next day.", "label_2": "Fast acting & short lasting", "item_2": "Works in under 5 minutes.", "label_3": "Approachable & stackable", "item_3": "Dial in exactly what you need." } },
+      { "type": "button",    "settings": { "label": "Get Me Hydrated", "bg": "#FF0000", "color": "#ffffff" } }
+    ]
+  }]
+}
+{% endschema %}

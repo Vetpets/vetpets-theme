@@ -1,0 +1,47 @@
+.cart__checkout-button.button {
+  line-height: 31px;
+  padding: 1.5rem 3rem;
+  font-size: 21px;
+}
+.cart__contents:after {
+  border-bottom: 1px solid rgba(var(--color-foreground),.08);
+  content: "";
+  height: 1px;
+  left: -1.5rem;
+  position: absolute;
+  bottom: 0;
+  right: -1.5rem;
+}
+.cart__contents {
+  position: relative;
+  padding-bottom: 1.5rem;
+}
+.upsell--btn-under .upsell__add-btn {
+  height: 36px;
+  font-size: 15px;
+  font-weight: 500;
+}
+.upsell__container button {
+  color: rgb(var(--color-button));
+  background-color: transparent;
+}
+.upsell__container button:after{
+  background-color: transparent !important;
+}
+@media screen and (min-width:749px){
+    .cart-drawer-upsells-container.upsells-container {
+    margin-top: auto;
+    margin-bottom: 0;
+  }
+  .cart-drawer__body {
+    display: flex;
+    flex-direction: column;
+  }
+  .upsell.cart-drawer-upsell-cart-drawer {
+    margin: 1.5rem auto;
+    padding: 1.5rem;
+  }
+  .upsell--btn-under .upsell__add-btn {
+    font-size: 14px;
+  }
+}

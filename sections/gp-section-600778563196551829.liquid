@@ -1,0 +1,438 @@
+
+    
+    
+    <style {% if section.settings.section_preload == "false" %} class="gps-link gps-style" type="text/disabled-css" {% endif %}>.gps-600778563196551829.gps.gpsil [style*="--bg:"]{background:var(--bg)}.gps-600778563196551829.gps.gpsil [style*="--bga:"]{background-attachment:var(--bga)}.gps-600778563196551829.gps.gpsil [style*="--bgc:"]{background-color:var(--bgc)}.gps-600778563196551829.gps.gpsil [style*="--bgi:"]{background-image:var(--bgi)}.gps-600778563196551829.gps.gpsil [style*="--bgp:"]{background-position:var(--bgp)}.gps-600778563196551829.gps.gpsil [style*="--bgr:"]{background-repeat:var(--bgr)}.gps-600778563196551829.gps.gpsil [style*="--bgs:"]{background-size:var(--bgs)}.gps-600778563196551829.gps.gpsil [style*="--b:"]{border:var(--b)}.gps-600778563196551829.gps.gpsil [style*="--bb:"]{border-bottom:var(--bb)}.gps-600778563196551829.gps.gpsil [style*="--bc:"]{border-color:var(--bc)}.gps-600778563196551829.gps.gpsil [style*="--bblr:"]{border-bottom-left-radius:var(--bblr)}.gps-600778563196551829.gps.gpsil [style*="--bbrr:"]{border-bottom-right-radius:var(--bbrr)}.gps-600778563196551829.gps.gpsil [style*="--bl:"]{border-left:var(--bl)}.gps-600778563196551829.gps.gpsil [style*="--bs:"]{border-style:var(--bs)}.gps-600778563196551829.gps.gpsil [style*="--bt:"]{border-top:var(--bt)}.gps-600778563196551829.gps.gpsil [style*="--btlr:"]{border-top-left-radius:var(--btlr)}.gps-600778563196551829.gps.gpsil [style*="--btrr:"]{border-top-right-radius:var(--btrr)}.gps-600778563196551829.gps.gpsil [style*="--bw:"]{border-width:var(--bw)}.gps-600778563196551829.gps.gpsil [style*="--shadow:"]{box-shadow:var(--shadow)}.gps-600778563196551829.gps.gpsil [style*="--c:"]{color:var(--c)}.gps-600778563196551829.gps.gpsil [style*="--cg:"]{-moz-column-gap:var(--cg);column-gap:var(--cg)}.gps-600778563196551829.gps.gpsil [style*="--ff:"]{font-family:var(--ff)}.gps-600778563196551829.gps.gpsil [style*="--size:"]{font-size:var(--size)}.gps-600778563196551829.gps.gpsil [style*="--weight:"]{font-weight:var(--weight)}.gps-600778563196551829.gps.gpsil [style*="--fs:"]{font-style:var(--fs)}.gps-600778563196551829.gps.gpsil [style*="--gtc:"]{grid-template-columns:var(--gtc)}.gps-600778563196551829.gps.gpsil [style*="--h:"]{height:var(--h)}.gps-600778563196551829.gps.gpsil [style*="--jc:"]{justify-content:var(--jc)}.gps-600778563196551829.gps.gpsil [style*="--ls:"]{letter-spacing:var(--ls)}.gps-600778563196551829.gps.gpsil [style*="--lh:"]{line-height:var(--lh)}.gps-600778563196551829.gps.gpsil [style*="--tdt:"]{text-decoration-thickness:var(--tdt)}.gps-600778563196551829.gps.gpsil [style*="--tdl:"]{text-decoration-line:var(--tdl)}.gps-600778563196551829.gps.gpsil [style*="--m:"]{margin:var(--m)}.gps-600778563196551829.gps.gpsil [style*="--mb:"]{margin-bottom:var(--mb)}.gps-600778563196551829.gps.gpsil [style*="--op:"]{opacity:var(--op)}.gps-600778563196551829.gps.gpsil [style*="--o:"]{order:var(--o)}.gps-600778563196551829.gps.gpsil [style*="--pc:"]{place-content:var(--pc)}.gps-600778563196551829.gps.gpsil [style*="--p:"]{padding:var(--p)}.gps-600778563196551829.gps.gpsil [style*="--pb:"]{padding-bottom:var(--pb)}.gps-600778563196551829.gps.gpsil [style*="--pl:"]{padding-left:var(--pl)}.gps-600778563196551829.gps.gpsil [style*="--pr:"]{padding-right:var(--pr)}.gps-600778563196551829.gps.gpsil [style*="--pt:"]{padding-top:var(--pt)}.gps-600778563196551829.gps.gpsil [style*="--rg:"]{row-gap:var(--rg)}.gps-600778563196551829.gps.gpsil [style*="--ta:"]{text-align:var(--ta)}.gps-600778563196551829.gps.gpsil [style*="--ts:"]{text-shadow:var(--ts)}.gps-600778563196551829.gps.gpsil [style*="--t:"]{transform:var(--t)}.gps-600778563196551829.gps.gpsil [style*="--w:"]{width:var(--w)}@media only screen and (max-width:1024px){.gps-600778563196551829.gps.gpsil [style*="--size-tablet:"]{font-size:var(--size-tablet)}.gps-600778563196551829.gps.gpsil [style*="--h-tablet:"]{height:var(--h-tablet)}.gps-600778563196551829.gps.gpsil [style*="--lh-tablet:"]{line-height:var(--lh-tablet)}.gps-600778563196551829.gps.gpsil [style*="--mb-tablet:"]{margin-bottom:var(--mb-tablet)}.gps-600778563196551829.gps.gpsil [style*="--pb-tablet:"]{padding-bottom:var(--pb-tablet)}.gps-600778563196551829.gps.gpsil [style*="--pl-tablet:"]{padding-left:var(--pl-tablet)}.gps-600778563196551829.gps.gpsil [style*="--pr-tablet:"]{padding-right:var(--pr-tablet)}.gps-600778563196551829.gps.gpsil [style*="--pt-tablet:"]{padding-top:var(--pt-tablet)}.gps-600778563196551829.gps.gpsil [style*="--ta-tablet:"]{text-align:var(--ta-tablet)}.gps-600778563196551829.gps.gpsil [style*="--w-tablet:"]{width:var(--w-tablet)}}@media only screen and (max-width:767px){.gps-600778563196551829.gps.gpsil [style*="--cg-mobile:"]{-moz-column-gap:var(--cg-mobile);column-gap:var(--cg-mobile)}.gps-600778563196551829.gps.gpsil [style*="--size-mobile:"]{font-size:var(--size-mobile)}.gps-600778563196551829.gps.gpsil [style*="--gtc-mobile:"]{grid-template-columns:var(--gtc-mobile)}.gps-600778563196551829.gps.gpsil [style*="--h-mobile:"]{height:var(--h-mobile)}.gps-600778563196551829.gps.gpsil [style*="--lh-mobile:"]{line-height:var(--lh-mobile)}.gps-600778563196551829.gps.gpsil [style*="--mb-mobile:"]{margin-bottom:var(--mb-mobile)}.gps-600778563196551829.gps.gpsil [style*="--pb-mobile:"]{padding-bottom:var(--pb-mobile)}.gps-600778563196551829.gps.gpsil [style*="--pl-mobile:"]{padding-left:var(--pl-mobile)}.gps-600778563196551829.gps.gpsil [style*="--pr-mobile:"]{padding-right:var(--pr-mobile)}.gps-600778563196551829.gps.gpsil [style*="--pt-mobile:"]{padding-top:var(--pt-mobile)}.gps-600778563196551829.gps.gpsil [style*="--rg-mobile:"]{row-gap:var(--rg-mobile)}.gps-600778563196551829.gps.gpsil [style*="--ta-mobile:"]{text-align:var(--ta-mobile)}.gps-600778563196551829.gps.gpsil [style*="--w-mobile:"]{width:var(--w-mobile)}}.gps-600778563196551829 .gp-relative{position:relative}.gps-600778563196551829 .gp-mx-auto{margin-left:auto;margin-right:auto}.gps-600778563196551829 .gp-mb-0{margin-bottom:0}.gps-600778563196551829 .gp-flex{display:flex}.gps-600778563196551829 .gp-inline-flex{display:inline-flex}.gps-600778563196551829 .gp-grid{display:grid}.gps-600778563196551829 .\!gp-hidden{display:none!important}.gps-600778563196551829 .gp-hidden{display:none}.gps-600778563196551829 .gp-h-full{height:100%}.gps-600778563196551829 .gp-max-w-full{max-width:100%}.gps-600778563196551829 .gp-grid-rows-\[1fr\]{grid-template-rows:1fr}.gps-600778563196551829 .gp-flex-col{flex-direction:column}.gps-600778563196551829 .gp-items-center{align-items:center}.gps-600778563196551829 .gp-justify-center{justify-content:center}.gps-600778563196551829 .gp-overflow-hidden{overflow:hidden}.gps-600778563196551829 .gp-break-words{overflow-wrap:break-word}.gps-600778563196551829 .gp-text-center{text-align:center}.gps-600778563196551829 .gp-text-g-text-3{color:var(--g-c-text-3)}.gps-600778563196551829 .gp-no-underline{text-decoration-line:none}.gps-600778563196551829 .gp-transition-colors{transition-duration:.15s;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1)}.gps-600778563196551829 .gp-duration-200{transition-duration:.2s}.gps-600778563196551829 .gp-ease-in-out{transition-timing-function:cubic-bezier(.4,0,.2,1)}.gps-600778563196551829 .disabled\:gp-btn-disabled:disabled{cursor:default}.gps-600778563196551829 .disabled\:gp-opacity-30:disabled{opacity:.3}.gps-600778563196551829 .gp-group\/button:active .group-active\/button\:\!gp-text-inherit{color:inherit!important}.gps-600778563196551829 .gp-group[data-state=loading] .group-data-\[state\=loading\]\:gp-invisible{visibility:hidden}@media (max-width:1024px){.gps-600778563196551829 .tablet\:\!gp-hidden{display:none!important}.gps-600778563196551829 .tablet\:gp-hidden{display:none}}@media (max-width:767px){.gps-600778563196551829 .mobile\:\!gp-hidden{display:none!important}.gps-600778563196551829 .mobile\:gp-hidden{display:none}}.gps-600778563196551829 .\[\&_\*\]\:gp-max-w-full *{max-width:100%}.gps-600778563196551829 .\[\&_p\]\:gp-whitespace-pre-line p{white-space:pre-line}</style>
+    <style {% if section.settings.section_preload == "false" %} class="gps-link" type="text/disabled-css" {% endif %}>@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/l/font?kit=gyBhhwUxId8gMGYQMKR3pzfaWI_RnOMImpnc&skey=70a816dcd17c8a3c&v=v4) format('woff');
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/l/font?kit=gyBhhwUxId8gMGYQMKR3pzfaWI_RnOMInpnc6VEdtaiLqoA&skey=70a816dcd17c8a3c&v=v4) format('woff');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/l/font?kit=gyBhhwUxId8gMGYQMKR3pzfaWI_RnOMIlJnc6VEdtaiLqoA&skey=70a816dcd17c8a3c&v=v4) format('woff');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/l/font?kit=gyBhhwUxId8gMGYQMKR3pzfaWI_RnOMImpnc6VEdtaiL&skey=70a816dcd17c8a3c&v=v4) format('woff');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+</style>
+  
+    
+    
+    
+
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+
+    
+        <section
+          class="gp-mx-auto gp-max-w-full [&_*]:gp-max-w-full {% if section.settings.section_preload == "false" %}gps-lazy {% endif %}"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--pl:none;--pl-tablet:none;--pl-mobile:none;--pr:none;--pr-tablet:none;--pr-mobile:none"
+        >
+          
+    <gp-row gp-data='{"background":{"desktop":{"attachment":"scroll","color":"#D5F7FF","image":{"height":0,"src":"","width":0},"position":{"x":50,"y":50},"preload":false,"repeat":"no-repeat","size":"cover","type":"color","video":"","videoHtml5":""}},"uid":"gBML7qrY9D"}' data-id="gBML7qrY9D" id="gBML7qrY9D" data-same-height-subgrid-container class="gBML7qrY9D gp-relative gp-mx-auto gp-mb-0 gp-grid gp-max-w-full gp-transition-colors gp-duration-200 gp-ease-in-out [&_*]:gp-max-w-full gp-grid-rows-[1fr]" style="--blockPadding:base;--bs:none;--bw:1px 1px 1px 1px;--bc:#121212;--shadow:none;--d:grid;--d-mobile:grid;--d-tablet:grid;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--pt:500px;--pl:0px;--pb:500px;--pr:0px;--mb-mobile:0px;--pt-mobile:500px;--pl-mobile:7px;--pb-mobile:700px;--pr-mobile:7px;--pt-tablet:500px;--pl-tablet:0px;--pb-tablet:500px;--pr-tablet:0px;--cg:32px;--gtc:minmax(0, auto);--gtc-mobile:minmax(0, auto);--w:100%;--w-tablet:100%;--w-mobile:100%;--bgc:#D5F7FF;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;--pc:center">
+      
+
+      <div
+      data-same-height-display-contents
+      style="--jc:start"
+      class="gHmk8U3_zG gp-relative gp-flex gp-flex-col"
+    >
+      
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id="g4Dqz8_WL7"
+        class="g4Dqz8_WL7"
+        style="--ta:left;--bs:none;--bw:1px 1px 1px 1px;--bc:#121212;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--mb:40px;--mb-mobile:20px;--pl-mobile:5px;--pr-mobile:5px;--dynamic-source-color:#F4F4F4"
+      >
+      <div class="gp-flex" style="--jc:left">
+        <h2
+          data-gp-text
+          class=" gp-text-instant gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--tdt:auto;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--ts:none;--ta:center;--ta-tablet:center;--ta-mobile:center;--fs:normal;--ff:var(--g-font-Geist, 'Geist'), var(--g-font-heading, heading);--size:62px;--size-tablet:54px;--size-mobile:31px;--lh:130%;--lh-tablet:130%;--lh-mobile:130%;--ls:-1px;--weight:bold;--c:var(--g-c-text-2, text-2);word-break:break-word;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;overflow:hidden;--tdl:"
+        >
+          {{ section.settings.gg4Dqz8_WL7_text | replace: '$locationOrigin', locationOrigin }}
+        </h2>
+      </div>
+    </div>
+    
+    
+
+    
+
+    
+    <gp-row gp-data='{"background":{"desktop":{"attachment":"scroll","color":"transparent","image":{"height":0,"src":"","width":0},"position":{"x":50,"y":50},"repeat":"no-repeat","size":"cover","type":"color"}},"uid":"gjbg-7k0tv"}' data-id="gjbg-7k0tv" id="gjbg-7k0tv" data-same-height-subgrid-container class="gjbg-7k0tv gp-relative gp-mx-auto gp-mb-0 gp-grid gp-max-w-full gp-transition-colors gp-duration-200 gp-ease-in-out [&_*]:gp-max-w-full gp-grid-rows-[1fr]" style="--bs:none;--bw:1px 1px 1px 1px;--bc:#121212;--shadow:none;--d:grid;--d-mobile:grid;--d-tablet:grid;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--mb:27px;--mb-mobile:27px;--mb-tablet:27px;--cg:20px;--cg-mobile:16px;--rg-mobile:16px;--gtc:minmax(0, auto) minmax(0, auto);--gtc-mobile:minmax(0, 6fr) minmax(0, 6fr);--w:1500px;--w-tablet:var(--g-ct-w, 100%);--w-mobile:var(--g-ct-w, 100%);--h:auto;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;--pc:center">
+      
+
+      <div
+      data-same-height-display-contents
+      style="--jc:center;--o:0"
+      class="gOesVEPnpe gp-relative gp-flex gp-flex-col"
+    >
+      
+    <gp-button
+      gp-data='{"btnLink":{"link":"https://shopvetpets.com/fi-fi/products/freshwipe-kit-beskytter-mot-tannproblemer-copy","selectedTab":"products","type":"open-page"}}'
+      
+      class="gp-flex gp-flex-col"
+    >
+      <div style="--bs:none;--bw:1px 1px 1px 1px;--bc:#121212;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--mb:30px;--mb-mobile:20px;--ta:center" >
+        <style>[data-id="gSyAaiOraP"].gp-button-base::before, [data-id="gSyAaiOraP-interaction"].gp-button-base::before {
+      
+    content: "";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    border-style: none;
+  border-width: 1px 1px 1px 1px;
+  
+  
+    
+      border-bottom-left-radius: 999999px;
+      border-bottom-right-radius: 999999px;
+      border-top-left-radius: 999999px;
+      border-top-right-radius: 999999px;
+      
+  
+    }
+  
+      
+  [data-id="gSyAaiOraP"]:hover::before, [data-id="gSyAaiOraP-interaction"]:hover::before {
+    
+    
+  }</style>
+        
+        <a
+          data-id="gSyAaiOraP" dataId="gSyAaiOraP" data-state="idle" aria-label="<p>Pahanhajuinen hengitys</p>"
+          
+          href="https://shopvetpets.com/fi-fi/products/freshwipe-kit-beskytter-mot-tannproblemer-copy" target
+          style="--w:Auto;--w-tablet:Auto;--w-mobile:Auto;--h:Auto;--h-tablet:Auto;--h-mobile:Auto;--pl:120px;--pr:120px;--pt:12px;--pb:12px;--pl-mobile:12px;--pr-mobile:12px;--pt-mobile:2px;--pb-mobile:2px;--bblr:999999px;--bbrr:999999px;--btlr:999999px;--btrr:999999px;--shadow:none;--bgi:;--bg:#000000;--c:var(--g-c-text-3, text-3);--fs:normal;--ff:var(--g-font-Geist, 'Geist'), var(--g-font-body, body);--size:29px;--size-tablet:40px;--size-mobile:15px;--lh:140%;--lh-tablet:180%;--lh-mobile:180%;--ls:-1px;--weight:bold"
+          class="gSyAaiOraP gp-text-center gp-button-base gp-group gp-relative gp-inline-flex gp-max-w-full gp-items-center gp-justify-center gp-no-underline gp-transition-colors gp-duration-200 disabled:gp-btn-disabled disabled:gp-opacity-30 gp-text-g-text-3 "
+        >
+        
+        <div class="gp-inline-flex">
+          
+          
+    <span
+      data-gp-text
+      style="--fs:normal;--ff:var(--g-font-Geist, 'Geist'), var(--g-font-body, body);--size:29px;--size-tablet:40px;--size-mobile:15px;--lh:140%;--lh-tablet:180%;--lh-mobile:180%;--ls:-1px;--weight:bold;--ts:none;word-break:break-word"
+      class="gp-content-product-button group-active/button:!gp-text-inherit gp-relative gp-flex gp-h-full gp-items-center gp-overflow-hidden gp-break-words group-data-[state=loading]:gp-invisible [&_p]:gp-whitespace-pre-line gp-text button-text"
+    >
+      {{ section.settings.ggSyAaiOraP_label }}
+    </span>
+        </div>
+        
+        </a>
+      </div>
+      <script {% if section.settings.section_preload == "false" %}class="gps-link" delay {% else %}src{% endif %}="https://assets.gemcommerce.com/assets-v2/gp-button-v7-5.js?v={{ shop.metafields.GEMPAGES.ASSETS_VERSION }}" defer="defer"></script>
+    </gp-button>
+  
+    <gp-button
+      gp-data='{"btnLink":{"link":"https://shopvetpets.com/fi-fi/products/freshwipe-kit-beskytter-mot-tannproblemer-copy","selectedTab":"products","type":"open-page"}}'
+      
+      class="gp-flex gp-flex-col"
+    >
+      <div style="--bs:none;--bw:1px 1px 1px 1px;--bc:#121212;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--mb:30px;--mb-mobile:20px;--ta:center" >
+        <style>[data-id="gGtxFCuoMV"].gp-button-base::before, [data-id="gGtxFCuoMV-interaction"].gp-button-base::before {
+      
+    content: "";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    border-style: none;
+  border-width: 1px 1px 1px 1px;
+  
+  
+    
+      border-bottom-left-radius: 999999px;
+      border-bottom-right-radius: 999999px;
+      border-top-left-radius: 999999px;
+      border-top-right-radius: 999999px;
+      
+  
+    }
+  
+      
+  [data-id="gGtxFCuoMV"]:hover::before, [data-id="gGtxFCuoMV-interaction"]:hover::before {
+    
+    
+  }</style>
+        
+        <a
+          data-id="gGtxFCuoMV" dataId="gGtxFCuoMV" data-state="idle" aria-label="<p>Punaiset tai herkät ikenet</p><p>&nbsp;</p><p><br>&nbsp;</p>"
+          
+          href="https://shopvetpets.com/fi-fi/products/freshwipe-kit-beskytter-mot-tannproblemer-copy" target
+          style="--w:Auto;--w-tablet:Auto;--w-mobile:Auto;--h:Auto;--h-tablet:Auto;--h-mobile:Auto;--pl:120px;--pr:120px;--pt:12px;--pb:12px;--pl-mobile:12px;--pr-mobile:12px;--pt-mobile:2px;--pb-mobile:2px;--bblr:999999px;--bbrr:999999px;--btlr:999999px;--btrr:999999px;--shadow:none;--bgi:;--bg:#000000;--c:var(--g-c-text-3, text-3);--fs:normal;--ff:var(--g-font-Geist, 'Geist'), var(--g-font-body, body);--size:29px;--size-tablet:40px;--size-mobile:15px;--lh:140%;--lh-tablet:180%;--lh-mobile:120%;--ls:-1px;--weight:bold"
+          class="gGtxFCuoMV gp-text-center gp-button-base gp-group gp-relative gp-inline-flex gp-max-w-full gp-items-center gp-justify-center gp-no-underline gp-transition-colors gp-duration-200 disabled:gp-btn-disabled disabled:gp-opacity-30 gp-text-g-text-3 "
+        >
+        
+        <div class="gp-inline-flex">
+          
+          
+    <span
+      data-gp-text
+      style="--fs:normal;--ff:var(--g-font-Geist, 'Geist'), var(--g-font-body, body);--size:29px;--size-tablet:40px;--size-mobile:15px;--lh:140%;--lh-tablet:180%;--lh-mobile:120%;--ls:-1px;--weight:bold;--ts:none;word-break:break-word"
+      class="gp-content-product-button group-active/button:!gp-text-inherit gp-relative gp-flex gp-h-full gp-items-center gp-overflow-hidden gp-break-words group-data-[state=loading]:gp-invisible [&_p]:gp-whitespace-pre-line gp-text button-text"
+    >
+      {{ section.settings.ggGtxFCuoMV_label }}
+    </span>
+        </div>
+        
+        </a>
+      </div>
+      <script {% if section.settings.section_preload == "false" %}class="gps-link" delay {% else %}src{% endif %}="https://assets.gemcommerce.com/assets-v2/gp-button-v7-5.js?v={{ shop.metafields.GEMPAGES.ASSETS_VERSION }}" defer="defer"></script>
+    </gp-button>
+  
+    </div><div
+      data-same-height-display-contents
+      style="--jc:center;--o:0"
+      class="gLqeUnMwQq gp-relative gp-flex gp-flex-col"
+    >
+      
+    <gp-button
+      gp-data='{"btnLink":{"link":"https://shopvetpets.com/fi-fi/products/freshwipe-kit-beskytter-mot-tannproblemer-copy","selectedTab":"products","type":"open-page"}}'
+      
+      class="gp-flex gp-flex-col"
+    >
+      <div style="--bs:none;--bw:1px 1px 1px 1px;--bc:#121212;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--mb:30px;--mb-mobile:20px;--ta:center" >
+        <style>[data-id="g_JRegzJ7T"].gp-button-base::before, [data-id="g_JRegzJ7T-interaction"].gp-button-base::before {
+      
+    content: "";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    border-style: none;
+  border-width: 1px 1px 1px 1px;
+  
+  
+    
+      border-bottom-left-radius: 999999px;
+      border-bottom-right-radius: 999999px;
+      border-top-left-radius: 999999px;
+      border-top-right-radius: 999999px;
+      
+  
+    }
+  
+      
+  [data-id="g_JRegzJ7T"]:hover::before, [data-id="g_JRegzJ7T-interaction"]:hover::before {
+    
+    
+  }</style>
+        
+        <a
+          data-id="g_JRegzJ7T" dataId="g_JRegzJ7T" data-state="idle" aria-label="<p>Keltainen tai ruskea kertymä hampaissa</p>"
+          
+          href="https://shopvetpets.com/fi-fi/products/freshwipe-kit-beskytter-mot-tannproblemer-copy" target
+          style="--w:Auto;--w-tablet:Auto;--w-mobile:Auto;--h:Auto;--h-tablet:Auto;--h-mobile:Auto;--pl:120px;--pr:120px;--pt:12px;--pb:12px;--pl-mobile:12px;--pr-mobile:12px;--pt-mobile:2px;--pb-mobile:2px;--bblr:999999px;--bbrr:999999px;--btlr:999999px;--btrr:999999px;--shadow:none;--bgi:;--bg:#000000;--c:var(--g-c-text-3, text-3);--fs:normal;--ff:var(--g-font-Geist, 'Geist'), var(--g-font-body, body);--size:29px;--size-tablet:40px;--size-mobile:15px;--lh:140%;--lh-tablet:180%;--lh-mobile:120%;--ls:-1px;--weight:bold"
+          class="g_JRegzJ7T gp-text-center gp-button-base gp-group gp-relative gp-inline-flex gp-max-w-full gp-items-center gp-justify-center gp-no-underline gp-transition-colors gp-duration-200 disabled:gp-btn-disabled disabled:gp-opacity-30 gp-text-g-text-3 "
+        >
+        
+        <div class="gp-inline-flex">
+          
+          
+    <span
+      data-gp-text
+      style="--fs:normal;--ff:var(--g-font-Geist, 'Geist'), var(--g-font-body, body);--size:29px;--size-tablet:40px;--size-mobile:15px;--lh:140%;--lh-tablet:180%;--lh-mobile:120%;--ls:-1px;--weight:bold;--ts:none;word-break:break-word"
+      class="gp-content-product-button group-active/button:!gp-text-inherit gp-relative gp-flex gp-h-full gp-items-center gp-overflow-hidden gp-break-words group-data-[state=loading]:gp-invisible [&_p]:gp-whitespace-pre-line gp-text button-text"
+    >
+      {{ section.settings.gg_JRegzJ7T_label }}
+    </span>
+        </div>
+        
+        </a>
+      </div>
+      <script {% if section.settings.section_preload == "false" %}class="gps-link" delay {% else %}src{% endif %}="https://assets.gemcommerce.com/assets-v2/gp-button-v7-5.js?v={{ shop.metafields.GEMPAGES.ASSETS_VERSION }}" defer="defer"></script>
+    </gp-button>
+  
+    <gp-button
+      gp-data='{"btnLink":{"link":"https://shopvetpets.com/fi-fi/products/freshwipe-kit-beskytter-mot-tannproblemer-copy","selectedTab":"products","type":"open-page"}}'
+      
+      class="gp-flex gp-flex-col"
+    >
+      <div style="--bs:none;--bw:1px 1px 1px 1px;--bc:#121212;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--mb:30px;--mb-mobile:20px;--ta:center" >
+        <style>[data-id="gQwxLEe9I6"].gp-button-base::before, [data-id="gQwxLEe9I6-interaction"].gp-button-base::before {
+      
+    content: "";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    border-style: none;
+  border-width: 1px 1px 1px 1px;
+  
+  
+    
+      border-bottom-left-radius: 999999px;
+      border-bottom-right-radius: 999999px;
+      border-top-left-radius: 999999px;
+      border-top-right-radius: 999999px;
+      
+  
+    }
+  
+      
+  [data-id="gQwxLEe9I6"]:hover::before, [data-id="gQwxLEe9I6-interaction"]:hover::before {
+    
+    
+  }</style>
+        
+        <a
+          data-id="gQwxLEe9I6" dataId="gQwxLEe9I6" data-state="idle" aria-label="<p>Vetäytyy pois, kun suuhun kosketaan</p>"
+          
+          href="https://shopvetpets.com/fi-fi/products/freshwipe-kit-beskytter-mot-tannproblemer-copy" target
+          style="--w:Auto;--w-tablet:Auto;--w-mobile:Auto;--h:Auto;--h-tablet:Auto;--h-mobile:Auto;--pl:120px;--pr:120px;--pt:12px;--pb:12px;--pl-mobile:12px;--pr-mobile:12px;--pt-mobile:2px;--pb-mobile:2px;--bblr:999999px;--bbrr:999999px;--btlr:999999px;--btrr:999999px;--shadow:none;--bgi:;--bg:#000000;--c:var(--g-c-text-3, text-3);--fs:normal;--ff:var(--g-font-Geist, 'Geist'), var(--g-font-body, body);--size:29px;--size-tablet:40px;--size-mobile:15px;--lh:140%;--lh-tablet:180%;--lh-mobile:120%;--ls:-1px;--weight:bold"
+          class="gQwxLEe9I6 gp-text-center gp-button-base gp-group gp-relative gp-inline-flex gp-max-w-full gp-items-center gp-justify-center gp-no-underline gp-transition-colors gp-duration-200 disabled:gp-btn-disabled disabled:gp-opacity-30 gp-text-g-text-3 "
+        >
+        
+        <div class="gp-inline-flex">
+          
+          
+    <span
+      data-gp-text
+      style="--fs:normal;--ff:var(--g-font-Geist, 'Geist'), var(--g-font-body, body);--size:29px;--size-tablet:40px;--size-mobile:15px;--lh:140%;--lh-tablet:180%;--lh-mobile:120%;--ls:-1px;--weight:bold;--ts:none;word-break:break-word"
+      class="gp-content-product-button group-active/button:!gp-text-inherit gp-relative gp-flex gp-h-full gp-items-center gp-overflow-hidden gp-break-words group-data-[state=loading]:gp-invisible [&_p]:gp-whitespace-pre-line gp-text button-text"
+    >
+      {{ section.settings.ggQwxLEe9I6_label }}
+    </span>
+        </div>
+        
+        </a>
+      </div>
+      <script {% if section.settings.section_preload == "false" %}class="gps-link" delay {% else %}src{% endif %}="https://assets.gemcommerce.com/assets-v2/gp-button-v7-5.js?v={{ shop.metafields.GEMPAGES.ASSETS_VERSION }}" defer="defer"></script>
+    </gp-button>
+  
+    </div>
+
+      
+    </gp-row>
+  
+  
+    
+
+    
+
+    
+    <gp-row gp-data='{"background":{},"uid":"g8090Md2tr"}' data-id="g8090Md2tr" id="g8090Md2tr" data-same-height-subgrid-container class="g8090Md2tr gp-relative gp-mx-auto gp-mb-0 gp-grid gp-max-w-full gp-transition-colors gp-duration-200 gp-ease-in-out [&_*]:gp-max-w-full gp-grid-rows-[1fr]" style="--bs:none;--bw:1px 1px 1px 1px;--bc:var(--g-c-line-3, line-3);--d:grid;--d-mobile:grid;--d-tablet:grid;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--pt:var(--g-s-l);--pl:var(--g-s-l);--pb:var(--g-s-l);--pr:var(--g-s-l);--cg:16px;--rg:0px;--gtc:minmax(0, 12fr);--w:var(--g-ct-w, 1200px);--h:auto;--pc:start">
+      
+
+      <div
+      data-same-height-display-contents
+      style="--jc:start"
+      class="gRBSkjO3We gp-relative gp-flex gp-flex-col"
+    >
+      
+    <gp-button
+      gp-data='{"btnLink":{"link":"https://shopvetpets.com/fi-fi/products/freshwipe-kit-beskytter-mot-tannproblemer-copy","selectedTab":"products","type":"open-page"}}'
+      
+      class="gp-flex gp-flex-col"
+    >
+      <div style="--bs:none;--bw:1px 1px 1px 1px;--bc:#121212;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--mb:30px;--mb-mobile:20px;--ta:center" >
+        <style>[data-id="gKAUOmX7f5"].gp-button-base::before, [data-id="gKAUOmX7f5-interaction"].gp-button-base::before {
+      
+    content: "";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    border-style: none;
+  border-width: 1px 1px 1px 1px;
+  
+  
+    
+      border-bottom-left-radius: 999999px;
+      border-bottom-right-radius: 999999px;
+      border-top-left-radius: 999999px;
+      border-top-right-radius: 999999px;
+      
+  
+    }
+  
+      
+  [data-id="gKAUOmX7f5"]:hover::before, [data-id="gKAUOmX7f5-interaction"]:hover::before {
+    
+    
+  }</style>
+        
+        <a
+          data-id="gKAUOmX7f5" dataId="gKAUOmX7f5" data-state="idle" aria-label="<p>Ei mitään näistä (vielä)</p>"
+          
+          href="https://shopvetpets.com/fi-fi/products/freshwipe-kit-beskytter-mot-tannproblemer-copy" target
+          style="--w:Auto;--w-tablet:Auto;--w-mobile:Auto;--h:Auto;--h-tablet:Auto;--h-mobile:Auto;--pl:120px;--pr:120px;--pt:12px;--pb:12px;--pl-mobile:50px;--pr-mobile:50px;--pt-mobile:2px;--pb-mobile:2px;--bblr:999999px;--bbrr:999999px;--btlr:999999px;--btrr:999999px;--shadow:none;--bgi:;--bg:#47B5E9;--c:var(--g-c-text-3, text-3);--fs:normal;--ff:var(--g-font-Geist, 'Geist'), var(--g-font-body, body);--size:29px;--size-tablet:40px;--size-mobile:19px;--lh:140%;--lh-tablet:180%;--lh-mobile:180%;--ls:-1px;--weight:bold"
+          class="gKAUOmX7f5 gp-text-center gp-button-base gp-group gp-relative gp-inline-flex gp-max-w-full gp-items-center gp-justify-center gp-no-underline gp-transition-colors gp-duration-200 disabled:gp-btn-disabled disabled:gp-opacity-30 gp-text-g-text-3 "
+        >
+        
+        <div class="gp-inline-flex">
+          
+          
+    <span
+      data-gp-text
+      style="--fs:normal;--ff:var(--g-font-Geist, 'Geist'), var(--g-font-body, body);--size:29px;--size-tablet:40px;--size-mobile:19px;--lh:140%;--lh-tablet:180%;--lh-mobile:180%;--ls:-1px;--weight:bold;--ts:none;word-break:break-word"
+      class="gp-content-product-button group-active/button:!gp-text-inherit gp-relative gp-flex gp-h-full gp-items-center gp-overflow-hidden gp-break-words group-data-[state=loading]:gp-invisible [&_p]:gp-whitespace-pre-line gp-text button-text"
+    >
+      {{ section.settings.ggKAUOmX7f5_label }}
+    </span>
+        </div>
+        
+        </a>
+      </div>
+      <script {% if section.settings.section_preload == "false" %}class="gps-link" delay {% else %}src{% endif %}="https://assets.gemcommerce.com/assets-v2/gp-button-v7-5.js?v={{ shop.metafields.GEMPAGES.ASSETS_VERSION }}" defer="defer"></script>
+    </gp-button>
+  
+    </div>
+
+      
+    </gp-row>
+  
+  
+    </div>
+
+      
+    </gp-row>
+  
+        </section>
+      
+  
+    
+{% schema %}
+  {
+    
+    "name": "Section 11",
+    "tag": "section",
+    "class": "gps-600778563196551829 gps gpsil",
+    "settings": [{"type":"paragraph","content":"Section design by GemPages. [Click here to start design](https://admin.shopify.com/store/c80c08-d3/apps/gempages-cro/app/shopify/edit?pageType=GP_STATIC&editorId=600778563062334101&sectionId=600778563196551829)"},{"type":"select","label":"Section Preload","id":"section_preload","options":[{"label":"On","value":"true"},{"label":"Off","value":"false"},{"label":"Off Lazy Script","value":"off_lazy_script"}],"default":"false"},{"type":"text","label":"Checksum","id":"checksum"},{"type":"html","id":"gg4Dqz8_WL7_text","label":"gg4Dqz8_WL7_text","default":"Oletko huomannut mitään näistä merkeistä?"},{"type":"html","id":"ggSyAaiOraP_label","label":"ggSyAaiOraP_label","default":"<p>Pahanhajuinen hengitys</p>"},{"type":"html","id":"ggGtxFCuoMV_label","label":"ggGtxFCuoMV_label","default":"<p>Punaiset tai herkät ikenet</p><p>&nbsp;</p><p><br>&nbsp;</p>"},{"type":"html","id":"gg_JRegzJ7T_label","label":"gg_JRegzJ7T_label","default":"<p>Keltainen tai ruskea kertymä hampaissa</p>"},{"type":"html","id":"ggQwxLEe9I6_label","label":"ggQwxLEe9I6_label","default":"<p>Vetäytyy pois, kun suuhun kosketaan</p>"},{"type":"html","id":"ggKAUOmX7f5_label","label":"ggKAUOmX7f5_label","default":"<p>Ei mitään näistä (vielä)</p>"}],
+    "blocks": [{"type": "@app"}],
+    "locales": {}
+  }
+{% endschema %}

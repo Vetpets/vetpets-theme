@@ -1,0 +1,2423 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "a6eb81db-40e4-43e0-972f-32db010a4a56": {
+          "type": "rating_stars",
+          "settings": {
+            "rating": 4.8,
+            "star_color": "#ffcc00",
+            "bg_stars_style": "full",
+            "bg_star_color": "#ececec",
+            "label": "4.86/5 Based on 20,000+ Reviews",
+            "size": 13,
+            "alignment": "flex-start",
+            "scroll_id": "",
+            "margin_top": 6,
+            "margin_bottom": 9
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "text_size": "h2",
+            "title_alignment": "left",
+            "uppercase_title": false,
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "price": {
+          "type": "price",
+          "disabled": true,
+          "settings": {
+            "layout": "price_first",
+            "price_color": "accent-1",
+            "compare_price_color": "text",
+            "displayed_badge": "sale",
+            "icon_scale": 140,
+            "custom_badge_text": "[icon_1] SPECIAL OFFER",
+            "icon_1": "redeem",
+            "filled_icon_1": false,
+            "icon_2": "check_circle",
+            "filled_icon_2": false,
+            "margin_top": 9,
+            "margin_bottom": 15
+          }
+        },
+        "divider_i9d8VK": {
+          "type": "divider",
+          "settings": {
+            "color": "#e1e1e1",
+            "height": 1,
+            "width": 100,
+            "Full_mobile_width": false,
+            "alignment": "center",
+            "border_radius": 0,
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "text_cn7XQg": {
+          "type": "text",
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "text_color": "#121212",
+            "text_1": "Textured surface lifts away plaque",
+            "text_2": "Antibacterial ingredients stop buildup",
+            "text_3": "Gentle on gums – no toothbrush needed",
+            "icon_scale": 140,
+            "icon_color": "#47b5e9",
+            "icon_1": "pets",
+            "filled_icon_1": true,
+            "icon_2": "pets",
+            "filled_icon_2": true,
+            "icon_3": "pets",
+            "filled_icon_3": true,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 5,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#47b5e9",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "text_kEd4Nj": {
+          "type": "text",
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "text_color": "#121212",
+            "text_1": "30-second routine – results that last",
+            "text_2": "",
+            "text_3": "",
+            "icon_scale": 140,
+            "icon_color": "#47b5e9",
+            "icon_1": "pets",
+            "filled_icon_1": true,
+            "icon_2": "check_circle",
+            "filled_icon_2": true,
+            "icon_3": "check_circle",
+            "filled_icon_3": true,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 4,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 3,
+            "margin_bottom": 15
+          }
+        },
+        "text_UtRpPJ": {
+          "type": "text",
+          "settings": {
+            "mobile_text_size": 10,
+            "desktop_text_size": 14,
+            "alignment": "left",
+            "text_color": "#121212",
+            "text_1": "<em>More than one pet? We suggest the Long-term Relief Plan – to make sure they all get healthy, clean teeth.</em>",
+            "text_2": "",
+            "text_3": "",
+            "icon_scale": 120,
+            "icon_color": "#47b5e9",
+            "icon_1": "pets",
+            "filled_icon_1": false,
+            "icon_2": "check_circle",
+            "filled_icon_2": false,
+            "icon_3": "check_circle",
+            "filled_icon_3": false,
+            "width": "100%",
+            "direction": "horizontal",
+            "column_gap": 3,
+            "enable_bg": true,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 1,
+            "border_color": "#47b5e9",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "5fcc0428-e768-4cb7-bea3-eb0274198dd1": {
+          "type": "variant_picker",
+          "disabled": true,
+          "settings": {
+            "picker_types": "swatches, dropdown, dropdown",
+            "custom_labels": "[name] - [selected]",
+            "skip_unavailable": false,
+            "swatches_size": "medium",
+            "swatches_custom_colors": "disabled",
+            "swatches_custom_colors_list": "#000000, #6D388B, #0000FF, #FFCC00",
+            "full_width_dropdowns": false,
+            "breaks_style": "normal",
+            "breaks_headline": "BUNDLE & SAVE",
+            "breaks_display_selected_indicator": true,
+            "breaks_border_radius": 10,
+            "breaks_border_width": 2,
+            "breaks_color_scheme": "accent-1",
+            "breaks_badges": "[empty], Most popular, [empty]",
+            "breaks_badge_style": "1",
+            "breaks_badge_color": "accent-1",
+            "breaks_displayed_images": "variant_images",
+            "breaks_custom_images": "",
+            "breaks_image_width": 70,
+            "breaks_space_images": true,
+            "breaks_vertical_images_position": "top",
+            "breaks_vertical_prices_layout": "vertical",
+            "breaks_labels": "[name], [name], [name]",
+            "breaks_benefits": "[empty], Free Shipping, Free Shipping",
+            "breaks_benefit_position": "top",
+            "breaks_benefit_style": "outlined",
+            "breaks_benefit_color": "accent-1",
+            "breaks_captions": "Variant 1 caption, Variant 2 caption, Variant 3 caption",
+            "breaks_price_texts": "[price], [price], [price]",
+            "breaks_compare_price_texts": "[compare_price], [compare_price], [compare_price]",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "kaching_bundles_app_block_f8NfBp": {
+          "type": "shopify://apps/kaching-bundles/blocks/app-block/6c637362-a106-4a32-94ac-94dcfd68cdb8",
+          "settings": {
+            "product": "{{product}}",
+            "manual_deal_block_id": ""
+          }
+        },
+        "04ba004e-2f54-4936-8b1c-8bcadf6573f6": {
+          "type": "quantity_selector",
+          "settings": {
+            "full_width_classic": false,
+            "atc_append": "none",
+            "atc_append_heights": "stretch-quantity",
+            "enable_quantity_discounts": false,
+            "style": "normal",
+            "headline": "Sommersalg – Gratis frakt",
+            "preselected": "option_2",
+            "display_selected_indicator": true,
+            "border_radius": 10,
+            "border_width": 2,
+            "color_scheme": "accent-1",
+            "enable_variant_selectors": true,
+            "enable_variant_selectors_on_quantity_of_1": false,
+            "update_prices": false,
+            "skip_unavailable": false,
+            "full_width_pickers": false,
+            "hide_pickers_overlay": true,
+            "pickers_label": "",
+            "image_width": 70,
+            "space_images": true,
+            "vertical_images_position": "top",
+            "vertical_prices_layout": "vertical",
+            "option_1_quantity": 1,
+            "option_1_badge": "",
+            "option_1_badge_style": "1",
+            "option_1_badge_color": "accent-1",
+            "option_1_label": "1-Pakning – 50 stk",
+            "option_1_benefit": "Spar 40 %",
+            "option_1_benefit_position": "top",
+            "option_1_benefit_style": "solid",
+            "option_1_benefit_color": "accent-2",
+            "option_1_caption": "5 kr per bruk",
+            "option_1_percentage_off_text": "0",
+            "option_1_fixed_amount_off": "0",
+            "option_1_price_text": "[price]",
+            "option_1_compare_price": "compare_price",
+            "option_1_compare_price_text": "[compare_price]",
+            "option_2_quantity": 2,
+            "option_2_badge": "Kjøp 2 Få 50 % Rabatt",
+            "option_2_badge_style": "1",
+            "option_2_badge_color": "accent-2",
+            "option_2_label": "2-Pakning – 100 stk",
+            "option_2_benefit": "Spar 50 %",
+            "option_2_benefit_position": "top",
+            "option_2_benefit_style": "solid",
+            "option_2_benefit_color": "accent-2",
+            "option_2_caption": "4 kr per bruk",
+            "option_2_percentage_off_text": "0",
+            "option_2_fixed_amount_off": "99",
+            "option_2_price_text": "[price]",
+            "option_2_compare_price": "compare_price",
+            "option_2_compare_price_text": "[compare_price]",
+            "option_3_quantity": 4,
+            "option_3_badge": "Gjelder denne uken",
+            "option_3_badge_style": "1",
+            "option_3_badge_color": "accent-2",
+            "option_3_label": "4-Pakning – 200 stk",
+            "option_3_benefit": "Spar 60 %",
+            "option_3_benefit_position": "top",
+            "option_3_benefit_style": "solid",
+            "option_3_benefit_color": "accent-2",
+            "option_3_caption": "3 kr per bruk",
+            "option_3_percentage_off_text": "0",
+            "option_3_fixed_amount_off": "397",
+            "option_3_price_text": "[price]",
+            "option_3_compare_price": "compare_price",
+            "option_3_compare_price_text": "[compare_price]",
+            "option_4_quantity": 0,
+            "option_4_badge": "",
+            "option_4_badge_style": "1",
+            "option_4_badge_color": "accent-1",
+            "option_4_label": "Buy [quantity]",
+            "option_4_benefit": "",
+            "option_4_benefit_position": "top",
+            "option_4_benefit_style": "outlined",
+            "option_4_benefit_color": "accent-1",
+            "option_4_caption": "You save [amount_saved]",
+            "option_4_percentage_off_text": "0",
+            "option_4_fixed_amount_off": "0",
+            "option_4_price_text": "[price]",
+            "option_4_compare_price": "compare_price",
+            "option_4_compare_price_text": "[compare_price]",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "text_F7RwtY": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "mobile_text_size": 15,
+            "desktop_text_size": 18,
+            "alignment": "left",
+            "text_color": "#f7941d",
+            "text_1": "Almost sold out due to Halloween sale",
+            "text_2": "",
+            "text_3": "",
+            "icon_scale": 140,
+            "icon_color": "#118fcb",
+            "icon_1": "pets",
+            "filled_icon_1": true,
+            "custom_icon_1": "shopify://shop_images/Namnlos_design_-_2025-10-01T144230.866.png",
+            "icon_2": "check_circle",
+            "filled_icon_2": true,
+            "icon_3": "check_circle",
+            "filled_icon_3": true,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 5,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "custom_liquid_qmqTUE": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<div class=\"stock-status-wrapper\">\n  <span class=\"stock-status-dot\"></span>\n  <span class=\"stock-status-text\">{{ 'stock_status.almost_sold_out' | t }}</span>\n</div>\n\n<style>\n  .promo-nudge {\n    font-size: 15px;\n    font-weight: 750;\n    color: #13B6B5 ;\n    margin-bottom: 6px;\n    display: block;\n  }\n\n  .stock-status-wrapper {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n  }\n\n  .stock-status-dot {\n    width: 14px;\n    height: 14px;\n    background-color: #ff9900;\n    border-radius: 50%;\n    animation: stockPulse 1.5s ease-in-out infinite;\n    display: inline-block;\n  }\n\n  .stock-status-text {\n    color: #ff9900;\n    font-weight: 700;\n    font-size: 14px;\n  }\n\n  @keyframes stockPulse {\n    0% { transform: scale(1); opacity: 1; }\n    50% { transform: scale(1.3); opacity: 0.7; }\n    100% { transform: scale(1); opacity: 1; }\n  }\n</style>"
+          }
+        },
+        "urgency_g8jXaf": {
+          "type": "urgency",
+          "disabled": true,
+          "settings": {
+            "urgency": "🎁 Unlock up to 70% OFF — exclusive deals waiting in your cart",
+            "color_scheme": "accent-2",
+            "margin_top": 0,
+            "margin_bottom": 15
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "skip_cart": false,
+            "uppercase_text": true,
+            "icon_scale": 120,
+            "icon_spacing": 10,
+            "atc_custom_label": "",
+            "display_price": false,
+            "enable_custom_color": false,
+            "custom_color": "#53af01",
+            "enable_secondary_btn": false,
+            "secondary_btn_label": "Buy It Now",
+            "secondary_btn_enable_custom_color": false,
+            "secondary_btn_custom_color": "#dd1d1d",
+            "margin_top": 12,
+            "margin_bottom": 24
+          }
+        },
+        "custom_liquid_8TN4AP": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <style>\n    .custom-shipping-container {\n      display: flex;\n      padding: 6px 16px;\n      justify-content: space-between;\n      align-items: center;\n      background-color: #f6f6f6;\n      border-radius: 20px;\n      margin-top: 10px;\n    }\n\n    .custom-shipping-item {\n      display: flex;\n      align-items: center;\n      gap: 6px;\n    }\n\n    .text-block-shipping {\n      font-size: 12px;\n      color: #000;\n    }\n\n    .shipping-date {\n      font-weight: bold;\n    }\n\n    .shipping-worldwide {\n      font-size: 12px;\n      color: #000;\n    }\n\n    .shipping-worldwide .bold {\n      font-weight: bold;\n    }\n\n    .green-circle {\n      animation: fade 1s ease-in-out infinite;\n    }\n\n    @keyframes fade {\n      0%, 100% { opacity: 1; }\n      50% { opacity: 0.5; }\n    }\n\n    .flags-container {\n      display: flex;\n      gap: 6px;\n      align-items: center;\n    }\n    \n    .custom-icon {\n      width: 16px;\n      height: 12px;\n    }\n  </style>\n  <script>\n    document.addEventListener(\"DOMContentLoaded\", function() {\n      function getNextWeekday(date) {\n        var day = date.getDay();\n        var daysToAdd = (day === 5) ? 3 : (day === 6) ? 2 : 1;\n        return new Date(date.setDate(date.getDate() + daysToAdd));\n      }\n\n      var today = new Date();\n      var shipDate = getNextWeekday(today);\n      \n      // Format date to have short month (e.g., \"Thu, Feb 22\")\n      var options = { weekday: 'short', month: 'short', day: 'numeric' };\n      var formattedDate = shipDate.toLocaleDateString('en-US', options);\n      document.getElementById('shipping-date').textContent = formattedDate;\n\n      // Fetch country data using GeoJS API\n      fetch('https://get.geojs.io/v1/ip/geo.json')\n        .then(response => response.json())\n        .then(data => {\n          console.log(\"Geolocation API Response:\", data); // Debugging log\n\n          if (!data || !data.country_code) {\n            throw new Error(\"Invalid data from API\");\n          }\n          \n          var countryCode = data.country_code.toUpperCase(); // Get country code (e.g., \"GB\", \"US\")\n          var flagUrl = `https://flagcdn.com/w40/${countryCode.toLowerCase()}.png`;\n\n          // Set flag and country code\n          document.getElementById('country-flag').src = flagUrl;\n          document.getElementById('country-flag').alt = countryCode + \" Flag\";\n          document.getElementById('country-flag').style.display = \"inline\";\n          document.getElementById('country-text').innerHTML = `Fast <span class=\"bold\">${countryCode}</span> Shipping`;\n        })\n        .catch(error => {\n          console.error('Error fetching the IP information:', error);\n          document.getElementById('country-flag').style.display = \"none\"; \n          document.getElementById('country-text').innerHTML = \"Fast Worldwide Shipping\";\n        });\n    });\n  </script>\n</head>\n<body>\n  <div class=\"custom-shipping-container\">\n    <div class=\"custom-shipping-item\">\n      <svg class=\"green-circle\" xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"13\" viewBox=\"0 0 12 13\" fill=\"none\">\n        <circle cx=\"6\" cy=\"6.5\" r=\"6\" fill=\"#137333\"/>\n      </svg>\n      <div class=\"text-block-shipping\">Ships by <span id=\"shipping-date\" class=\"shipping-date\"></span></div>\n    </div>\n    <div class=\"custom-shipping-item flags-container\">\n      <img id=\"country-flag\" class=\"custom-icon\" src=\"\" alt=\"Country Flag\" style=\"display: none;\">\n      <div id=\"country-text\" class=\"shipping-worldwide\">Loading...</div>\n    </div>\n  </div>\n</body>\n</html>"
+          }
+        },
+        "payment_badges_XtWzKz": {
+          "type": "payment_badges",
+          "settings": {
+            "enabled_payment_types": "",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "custom_liquid_Migg8c": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<style>\n  .custom-money-back {\n    background: #FFFFFF;\n    border: 2px solid #47B5E9;\n    border-radius: 7px;\n    padding: 10px 12px;\n    margin: 10px auto 0 auto;\n    max-width: 100%;\n    display: flex;\n    align-items: center;\n    gap: 8px;\n    overflow: hidden;\n  }\n  \n  .custom-money-back__badge {\n    flex-shrink: 0;\n    width: 35px;\n    height: 35px;\n  }\n  \n  .custom-money-back__badge img {\n    width: 100%;\n    height: 100%;\n    object-fit: contain;\n  }\n  \n  .custom-money-back__content {\n    flex: 1;\n    min-width: 0;\n  }\n  \n  .custom-money-back__title {\n    color: #000000;\n    font-family: 'Poppins', sans-serif;\n    font-size: 10px;\n    font-weight: 700;\n    margin-bottom: 3px;\n    line-height: 1.2;\n    letter-spacing: -0.03em;\n    white-space: nowrap;\n  }\n  \n  .custom-money-back__text {\n    color: #000000;\n    font-family: 'Poppins', sans-serif;\n    font-size: 8px;\n    font-weight: 400;\n    line-height: 1.3;\n    letter-spacing: 0;\n  }\n  \n  @media (min-width: 769px) {\n    .custom-money-back {\n      padding: 15px 20px;\n      gap: 18px;\n    }\n    .custom-money-back__badge {\n      width: 60px;\n      height: 60px;\n    }\n    .custom-money-back__title {\n      font-size: 18px;\n      margin-bottom: 6px;\n      letter-spacing: 0;\n    }\n    .custom-money-back__text {\n      font-size: 13px;\n      line-height: 1.5;\n    }\n  }\n</style>\n\n<div class=\"custom-money-back\">\n  <div class=\"custom-money-back__badge\">\n    <img src=\"https://cdn.shopify.com/s/files/1/0735/4833/3323/files/Namnlos_design_44.svg?v=1771204616\" alt=\"Money Back Guarantee\">\n  </div>\n  <div class=\"custom-money-back__content\">\n    <div class=\"custom-money-back__title\">\n      No more plaque buildup OR your money back\n    </div>\n    <div class=\"custom-money-back__text\">\n      Try the \"Dental Care Habit Kit\" – if you don't see plaque being removed with consistent use, we'll refund you. No improvement, no payment. No questions asked.\n    </div>\n  </div>\n</div>"
+          }
+        },
+        "text_rerK7N": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "text_color": "#121212",
+            "text_1": "100-Day Money-back Guarantee",
+            "text_2": "Over 20,000 Happy Customers",
+            "text_3": "Vetpets Full Dental Care Guide included with every order",
+            "icon_scale": 140,
+            "icon_color": "#47b5e9",
+            "icon_1": "new_releases",
+            "filled_icon_1": true,
+            "icon_2": "favorite",
+            "filled_icon_2": true,
+            "icon_3": "book_2",
+            "filled_icon_3": true,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 5,
+            "enable_bg": true,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "e7a28cbe-03cb-4c9d-a2c4-0e3e76ffb3e5": {
+          "type": "sticky_atc",
+          "settings": {
+            "function": "add_to_cart",
+            "display_when": "after_scroll",
+            "button_label": "ADD TO CART",
+            "enable_custom_btn_color": false,
+            "custom_btn_color": "#dd1d1d",
+            "color_scheme": "background-1",
+            "star_color": "#ffcc00",
+            "stars_label": "4.86/5 Based on 20,000+ Reviews",
+            "picker_type": "combined",
+            "desktop_show_image": false,
+            "desktop_show_title": true,
+            "desktop_rating_stars": true,
+            "desktop_show_price": true,
+            "desktop_show_sale_badge": true,
+            "desktop_variant_picker": true,
+            "desktop_full_button_width": true,
+            "desktop_show_price_in_button": false,
+            "desktop_transparent_bg": false,
+            "mobile_show_image": false,
+            "mobile_show_title": true,
+            "mobile_rating_stars": true,
+            "mobile_show_price": false,
+            "mobile_show_sale_badge": false,
+            "mobile_variant_picker": false,
+            "mobile_full_button_width": true,
+            "mobile_show_price_in_button": false,
+            "mobile_transparent_bg": false
+          }
+        },
+        "description": {
+          "type": "description",
+          "disabled": true,
+          "settings": {
+            "margin_top": 24,
+            "margin_bottom": 24
+          }
+        },
+        "collapsible_tab_t3jLVn": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Vetpets Full Dental Care Guide",
+            "heading_size": "medium",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "",
+            "page": "vetpets-full-dental-care-guide",
+            "margin_top": 15,
+            "margin_bottom": 0
+          }
+        },
+        "de158e68-5d0d-4819-a625-e2dabdff87d1": {
+          "type": "collapsible_tab",
+          "disabled": true,
+          "settings": {
+            "heading": "100-Day Money-Back Guarantee",
+            "heading_size": "medium",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p>We truly believe FreshWipes will make a difference – for both you and your dog.<br/><br/>That’s why we offer a <strong>100-day money-backguarantee</strong>.</p><p>You can try the product at home, in your own time.<br/><br/>Not completely satisfied? Then you’ll get your money back – no stress, no hassle.</p><p>For us, it’s more important that your dog gets the care they deserve than that you keep something you don’t love.</p><p><strong>You can read more about our satisfaction guarantee here.<br/></strong><a href=\"/pages/100-dagers-fornoydgaranti\" title=\"100-Day Satisfaction Guarantee\">100-Day Satisfaction Guarantee</a></p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "collapsible_tab_EGhYxC": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Ingredients",
+            "heading_size": "medium",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p>•  <strong>EDI-purified water</strong> – base solution<br/><br/>• <strong>Glycerin</strong> – adds moisture<br/><br/>• <strong>Citric acid</strong> – balances pH<br/><br/>• <strong>Cetylpyridinium chloride monohydrate</strong> – antibacterial effect<br/><br/>• <strong>Tea polyphenols</strong> – freshens breath<br/><br/>• <strong>Allantoin</strong> – soothing<br/><br/>• <strong>Green tea extract</strong> – natural antibacterial & protective</p><p>✔️ pH-balanced and fragrance-free<br/><br/>✔️ Not tested on animals (cruelty-free)<br/><br/>✔️ Free from alcohol, fluoride, and harsh chemicals</p>",
+            "page": "free-e-book-the-secret-to-a-sparkling-home-in-just-15-minutes-a-day",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "collapsible_tab_aFAiwA": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Payment & Delivery",
+            "heading_size": "medium",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<h4><strong>Payment</strong></h4><p>You can safely pay with Klarna, credit card, or bank transfer – choose what works best for you.<br/></p><h4><strong>Shipping</strong></h4><p><br/>We offer different rates for the UK and the Rest of the World:</p><ul><li><strong>United Kingdom (UK): </strong>Standard Shipping: <strong>£2.00</strong> (Free on orders £37 and over)Priority Shipping: <strong>£4.50</strong></li><li><strong>Rest of the World:</strong>Standard Shipping: <strong>$2.95</strong> (Free on orders $49 and over)Priority Shipping: <strong>$6.00</strong></li></ul><p><strong>Delivery Time</strong><br/><br/>As our UK warehouse is temporarily out of stock, your order will be shipped from our international warehouse.<br/>We offer two shipping options at checkout:</p><ul><li><strong>Standard Shipping:</strong> 1–2 days handling + 5–10 days shipping time</li><li><strong>Priority Shipping:</strong> 1–2 days handling + 4–7 days shipping time</li></ul><p>A tracking number will be sent by email as soon as your order leaves the warehouse.</p><p><strong>Questions?</strong><br/>Email us at <strong>info@shopvetpets.com</strong> – we always reply within 24 hours on weekdays.</p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "complementary_CMbqgx": {
+          "type": "complementary",
+          "settings": {
+            "block_heading": "Bundle & Save: Complete Care Kit",
+            "make_collapsible_row": false,
+            "icon": "price_tag",
+            "product_list_limit": 10,
+            "products_per_page": 3,
+            "pagination_style": "counter",
+            "image_ratio": "square",
+            "enable_quick_add": false,
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "reviews_8UgFbe": {
+          "type": "reviews",
+          "disabled": true,
+          "settings": {
+            "color_scheme": "background-1",
+            "show_custom_bg": false,
+            "custom_bg_color": "#f2f2f2",
+            "corner_radius": 12,
+            "border_width": 0,
+            "border_color": "#b7b7b7",
+            "avatar_alignment": "top",
+            "avatar_corner_radius": 40,
+            "star_color": "#ffcc00",
+            "stars_translate": 0,
+            "checkmark_color": "#6d388b",
+            "checkmark_icon_color": "#ffffff",
+            "slider_type": "slide",
+            "autoplay": false,
+            "autoplay_speed": 5,
+            "display_arrows": false,
+            "display_dots": true,
+            "author_1": "– Anna, 34 år [stars]",
+            "image_1": "shopify://shop_images/Profilbild_3.jpg",
+            "text_1": "<p>Har brukt FreshWipes i omtrent en uke og ble overrasket over hvor lett det gikk. Hunden vår er vanligvis skeptisk, men lot meg faktisk rengjøre uten problemer.</p>",
+            "author_2": "– Mats, 52 år [stars]",
+            "image_2": "shopify://shop_images/Profilbild5_1a47da8b-0488-41c4-af0b-4e3b8857192b.webp",
+            "text_2": "<p>Etter to måneder er pusten mye friskere og misfargingene har blitt redusert. Vi har det som en fast rutine på søndager – og det fungerer kjempebra.</p>",
+            "author_3": "– Sofia, 41 år [stars]",
+            "image_3": "shopify://shop_images/Profilbild111.webp",
+            "text_3": "<p>Vi har brukt dem i over ett år nå. Vår labrador har ikke trengt noe veterinærbesøk for tennene siden. Enkelt å ta med, og det føles trygt.</p>",
+            "margin_top": 24,
+            "margin_bottom": 24
+          }
+        }
+      },
+      "block_order": [
+        "a6eb81db-40e4-43e0-972f-32db010a4a56",
+        "title",
+        "price",
+        "divider_i9d8VK",
+        "text_cn7XQg",
+        "text_kEd4Nj",
+        "text_UtRpPJ",
+        "5fcc0428-e768-4cb7-bea3-eb0274198dd1",
+        "kaching_bundles_app_block_f8NfBp",
+        "04ba004e-2f54-4936-8b1c-8bcadf6573f6",
+        "text_F7RwtY",
+        "custom_liquid_qmqTUE",
+        "urgency_g8jXaf",
+        "buy_buttons",
+        "custom_liquid_8TN4AP",
+        "payment_badges_XtWzKz",
+        "custom_liquid_Migg8c",
+        "text_rerK7N",
+        "e7a28cbe-03cb-4c9d-a2c4-0e3e76ffb3e5",
+        "description",
+        "collapsible_tab_t3jLVn",
+        "de158e68-5d0d-4819-a625-e2dabdff87d1",
+        "collapsible_tab_EGhYxC",
+        "collapsible_tab_aFAiwA",
+        "complementary_CMbqgx",
+        "reviews_8UgFbe"
+      ],
+      "custom_css": [],
+      "settings": {
+        "display_id": false,
+        "enable_sticky_info": true,
+        "display_variant_image_first": false,
+        "disable_prepend": true,
+        "hide_variants": false,
+        "variant_image_filtering": "none",
+        "image_zoom": "none",
+        "thumbnails_ratio": "square",
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": false,
+        "dots_color_scheme": "inverse",
+        "video_player": "play_btn",
+        "enable_video_looping": false,
+        "autoplay_videos_pause_btn": false,
+        "video_sound_btn": false,
+        "video_timeline": false,
+        "play_btn_color_scheme": "accent-1",
+        "sound_btn_color_scheme": "inverse",
+        "timeline_color": "accent-1",
+        "media_size": "medium",
+        "media_position": "left",
+        "gallery_layout": "thumbnail_slider",
+        "desktop_thumbnails_position": "bottom",
+        "desktop_thumbnails_count": 5,
+        "desktop_vertical_thumbnails_width": 16,
+        "desktop_vertical_thumbnails_hide_arrows": false,
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "desktop_arrows_position": "hidden",
+        "mobile_media_corner_radius": 0,
+        "mobile_spacing_pixels": 0,
+        "mobile_arrows_position": "sides",
+        "mobile_pagination": "hidden",
+        "mobile_thumbnails_position": "bottom",
+        "mobile_thumbnails_count": 5,
+        "mobile_vertical_thumbnails_width": 22,
+        "mobile_vertical_thumbnails_hide_arrows": true,
+        "mobile_scroll_padding_percentage": 0,
+        "mobile_scroll_padding_pixels": 2,
+        "enable_mobile_outher_spacing": false,
+        "mobile_slides_container_width": 100,
+        "mobile_slides_inner_width": 100,
+        "trust_badge_position": "top-right",
+        "trust_badge_size": "medium",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "disabled": true,
+      "settings": {
+        "display_id": false,
+        "title": "You may also like",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "stretch_cards": false,
+        "columns_desktop": 4,
+        "color_scheme": "background-1",
+        "image_ratio": "adapt",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "columns_mobile": "2",
+        "padding_top": 36,
+        "padding_bottom": 24
+      }
+    },
+    "image_slider_8HnbpY": {
+      "type": "image-slider",
+      "blocks": {
+        "video_slide_pYXTW3": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/Produktvideos reviews.mov",
+            "loop": true,
+            "muted_autoplay": true,
+            "display_play_btn": true,
+            "btn_animation": false,
+            "btn_color_scheme": "accent-1",
+            "display_sound_btn": false,
+            "sound_btn_color_scheme": "inverse",
+            "display_timeline": false,
+            "timeline_color": "accent-1",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "video_slide_4LLCQV": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/Produktvideo review 4.mov",
+            "loop": true,
+            "muted_autoplay": true,
+            "display_play_btn": true,
+            "btn_animation": false,
+            "btn_color_scheme": "accent-1",
+            "display_sound_btn": false,
+            "sound_btn_color_scheme": "inverse",
+            "display_timeline": false,
+            "timeline_color": "accent-1",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "video_slide_brtX4E": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/Produktvideo review 3.mov",
+            "loop": true,
+            "muted_autoplay": true,
+            "display_play_btn": true,
+            "btn_animation": false,
+            "btn_color_scheme": "accent-1",
+            "display_sound_btn": false,
+            "sound_btn_color_scheme": "inverse",
+            "display_timeline": false,
+            "timeline_color": "accent-1",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "video_slide_LYFhDt": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/Produktvideo review 5.mov",
+            "loop": true,
+            "muted_autoplay": true,
+            "display_play_btn": true,
+            "btn_animation": false,
+            "btn_color_scheme": "accent-1",
+            "display_sound_btn": false,
+            "sound_btn_color_scheme": "inverse",
+            "display_timeline": false,
+            "timeline_color": "accent-1",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "video_slide_HWhYJw": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/Produktvideo review 2.mov",
+            "loop": true,
+            "muted_autoplay": true,
+            "display_play_btn": true,
+            "btn_animation": false,
+            "btn_color_scheme": "accent-1",
+            "display_sound_btn": false,
+            "sound_btn_color_scheme": "inverse",
+            "display_timeline": false,
+            "timeline_color": "accent-1",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        }
+      },
+      "block_order": [
+        "video_slide_pYXTW3",
+        "video_slide_4LLCQV",
+        "video_slide_brtX4E",
+        "video_slide_LYFhDt",
+        "video_slide_HWhYJw"
+      ],
+      "disabled": true,
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Tusenvis av fornøyde <strong>hunder og kjæledyreiere!</strong>",
+        "title_highlight_color": "#118fcb",
+        "heading_size": "h2",
+        "color_scheme": "background-2",
+        "type": "slide",
+        "drag": "enabled",
+        "autoplay": true,
+        "autoplay_speed": 3,
+        "center_mode": false,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_page_width": "normal",
+        "desktop_border_radius": 16,
+        "slides_desktop": 3,
+        "per_move_desktop": 1,
+        "desktop_spacing": 28,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "hidden",
+        "mobile_full_page": false,
+        "mobile_border_radius": 0,
+        "slides_mobile": 2,
+        "per_move_mobile": 1,
+        "mobile_spacing": 12,
+        "mobile_side_padding": 0,
+        "mobile_padding_calc": true,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "hidden",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#121212"
+      }
+    },
+    "image_slider_X8iFJF": {
+      "type": "image-slider",
+      "blocks": {
+        "image_slide_fDQd63": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_35.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_YPPbRJ": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Review_tackkort.png",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_r9DHFr": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/META_ADS_4.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_LeBfnC": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/META_ADS_3_4607e2fa-34d4-4f4e-9628-12d88855ac29.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_FQxDQg": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Reviews_hundhalsan_freshwipes_19.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_KqCyQa": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Reviews_hundhalsan_freshwipes_17.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_AW8tMc": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Reviews_hundhalsan_freshwipes_20.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_x8JVWg": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Reviews_hundhalsan_freshwipes_16.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_LfXJit": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Skarmavbild_2025-06-20_kl._12.41.33_7db4482a-3a46-4fe6-9a4d-2bb59749859d.webp",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_hrJR8i": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Skarmavbild_2025-06-20_kl._12.36.03_58fcab1c-8e81-4125-90db-87d075584004.webp",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_HzrYwH": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_34.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_pRnbPQ": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_8.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_GN7c44": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_9.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_hgi3nY": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_12.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_U3dWYb": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_11.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_nD4Rb9": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_13.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_jKFGxn": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_10.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        }
+      },
+      "block_order": [
+        "image_slide_fDQd63",
+        "image_slide_YPPbRJ",
+        "image_slide_r9DHFr",
+        "image_slide_LeBfnC",
+        "image_slide_FQxDQg",
+        "image_slide_KqCyQa",
+        "image_slide_AW8tMc",
+        "image_slide_x8JVWg",
+        "image_slide_LfXJit",
+        "image_slide_hrJR8i",
+        "image_slide_HzrYwH",
+        "image_slide_pRnbPQ",
+        "image_slide_GN7c44",
+        "image_slide_hgi3nY",
+        "image_slide_U3dWYb",
+        "image_slide_nD4Rb9",
+        "image_slide_jKFGxn"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Thousands of happy <strong>dogs and dog owners!</strong>",
+        "title_highlight_color": "#47b5e9",
+        "heading_size": "h2",
+        "color_scheme": "background-2",
+        "type": "slide",
+        "drag": "enabled",
+        "autoplay": true,
+        "autoplay_speed": 6,
+        "center_mode": false,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_page_width": "normal",
+        "desktop_border_radius": 16,
+        "slides_desktop": 3,
+        "per_move_desktop": 1,
+        "desktop_spacing": 28,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "hidden",
+        "mobile_full_page": false,
+        "mobile_border_radius": 16,
+        "slides_mobile": 2,
+        "per_move_mobile": 1,
+        "mobile_spacing": 12,
+        "mobile_side_padding": 0,
+        "mobile_padding_calc": true,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "hidden",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#121212"
+      }
+    },
+    "section_divider_iXCmE9": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "custom",
+        "custom_shape_color": "#118fcb",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_with_text_LkDiE9": {
+      "type": "image-with-text",
+      "blocks": {
+        "caption_NgwaCz": {
+          "type": "caption",
+          "settings": {
+            "caption": "PROTECTS YOUR DOG FROM DENTAL PROBLEMS!",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "heading_KC4Cfi": {
+          "type": "heading",
+          "settings": {
+            "title": "Your dog doesn’t always show <strong>when they’re in pain</strong>",
+            "title_highlight_color": "#121212",
+            "heading_size": "h2"
+          }
+        },
+        "text_wgGMJL": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Discolored teeth and bad breath aren't just unpleasant – they can be signs of tartar, plaque, and inflammation.</p><p>And just like you want to protect your child, you want to protect your dog.</p><p>But unlike children, most dogs don’t show when they’re in pain.</p><p><strong>FreshWipes from VetPets give you an easy way to care for your dog’s oral health – without vet visits, stress, or uncertainty.</strong></p>",
+            "text_style": "body"
+          }
+        },
+        "atc_button_gaJYEw": {
+          "type": "atc_button",
+          "settings": {
+            "button_label": "ADD TO CART",
+            "atc_product": "freshwipes-kit-protects-against-dental-diseases",
+            "atc_skip_cart": false
+          }
+        },
+        "text_with_icon_WALDYm": {
+          "type": "text_with_icon",
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "mobile_alignment": "left",
+            "text_color": "#d5f7ff",
+            "text_1": "100-Day Money-Back Guarantee",
+            "text_2": "",
+            "text_3": "",
+            "icon_scale": 120,
+            "icon_color": "#d5f7ff",
+            "icon_1": "new_releases",
+            "filled_icon_1": true,
+            "icon_2": "check_circle",
+            "filled_icon_2": false,
+            "icon_3": "check_circle",
+            "filled_icon_3": false,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 3,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7"
+          }
+        }
+      },
+      "block_order": [
+        "caption_NgwaCz",
+        "heading_KC4Cfi",
+        "text_wgGMJL",
+        "atc_button_gaJYEw",
+        "text_with_icon_WALDYm"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/Dental_Wipes_1.webp",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "custom",
+        "section_color_scheme": "custom",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "image_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#118fcb",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#ffffff",
+        "custom_colors_solid_button_background": "#d5f7ff",
+        "custom_colors_solid_button_text": "#47b5e9",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#118fcb",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "section_divider_MjaRJC": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": true,
+        "shape_color": "custom",
+        "custom_shape_color": "#118fcb",
+        "background_color": "background-1",
+        "custom_background_color": "#d6fdfd",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_with_text_erCy8G": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_YKVyXP": {
+          "type": "heading",
+          "settings": {
+            "title": "Why Plaque<strong> Keeps Getting Worse</strong>",
+            "title_highlight_color": "#47b5e9",
+            "heading_size": "h1"
+          }
+        },
+        "text_Kdzny8": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Most owners try dental treats, powders, or water additives. But the plaque keeps building up...</p><p><br/><strong>Here's the problem: most solutions only clean the surface</strong>. They can't remove the bacterial plaque before it hardens into tartar.</p><p><br/>Treats? Dogs bite and swallow—<strong>they don't scrub.</strong> Powders and liquids? <strong>They can't physically remove plaque.</strong><br/></p><p>FreshWipes work differently. The textured surface physically scrubs plaque off. Antibacterial ingredients prevent regrowth.<br/><strong>30 seconds a day</strong> removes bacteria at the source. No bacteria, no plaque.<br/></p><p>Requires daily use for best results.</p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_YKVyXP",
+        "text_Kdzny8"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_7.png",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "background-1",
+        "section_color_scheme": "background-1",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "text_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#2e2a39",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#ffffff",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#ffffff",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "image_with_text_kiAL7m": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_bXGAFf": {
+          "type": "heading",
+          "settings": {
+            "title": "Get <strong>vet-level results</strong> at home",
+            "title_highlight_color": "#47b5e9",
+            "heading_size": "h2"
+          }
+        },
+        "text_GjNNAg": {
+          "type": "text",
+          "settings": {
+            "text": "<p>FreshWipes gently clean your dog’s teeth and gums.</p><p><strong>Removes plaque, freshens breath, and prevents inflammation.</strong></p><p>All in one small, simple wipe you slip on your finger.</p><p><strong>No toothbrush, no mess, no stress.</strong></p>",
+            "text_style": "body"
+          }
+        },
+        "atc_button_hWcc4i": {
+          "type": "atc_button",
+          "settings": {
+            "button_label": "ADD TO CART",
+            "atc_product": "freshwipes-kit-protects-against-dental-diseases",
+            "atc_skip_cart": false
+          }
+        },
+        "text_with_icon_BajHgE": {
+          "type": "text_with_icon",
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "mobile_alignment": "left",
+            "text_color": "#121212",
+            "text_1": "100-Day Money-Back Guarantee",
+            "text_2": "",
+            "text_3": "",
+            "icon_scale": 120,
+            "icon_color": "#47b5e9",
+            "icon_1": "new_releases",
+            "filled_icon_1": true,
+            "icon_2": "check_circle",
+            "filled_icon_2": false,
+            "icon_3": "check_circle",
+            "filled_icon_3": false,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 3,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7"
+          }
+        }
+      },
+      "block_order": [
+        "heading_bXGAFf",
+        "text_GjNNAg",
+        "atc_button_hWcc4i",
+        "text_with_icon_BajHgE"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/Gif_1.gif",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "background-1",
+        "section_color_scheme": "background-1",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "image_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#2e2a39",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#ffffff",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#ffffff",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "section_divider_kAW6L6": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "custom",
+        "custom_shape_color": "#d5f7ff",
+        "background_color": "background-1",
+        "custom_background_color": "#d5f7ff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_with_text_jpGEnV": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_xgchUK": {
+          "type": "heading",
+          "settings": {
+            "title": "A simple habit that <strong>makes a big difference</strong>",
+            "title_highlight_color": "#47b5e9",
+            "heading_size": "h2"
+          }
+        },
+        "text_jBQGVq": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Many dog owners think dental care has to be complicated.</p><p>But with FreshWipes, it’s so easy that you’ll actually use them.</p><p>1–2 times a week is all it takes to prevent painful problems in the future.</p><h4><strong>Fresh breath, stronger teeth, happier dog</strong></h4><p>A healthy mouth affects the whole body.</p><p>With FreshWipes, your dog not only gets fresher breath and whiter teeth –<br/><br/>they’ll also feel better and have more energy.</p><p><strong>Fewer infections. More play. More joy.</strong></p>",
+            "text_style": "body"
+          }
+        },
+        "atc_button_3Pb78r": {
+          "type": "atc_button",
+          "settings": {
+            "button_label": "ADD TO CART",
+            "atc_product": "freshwipes-kit-protects-against-dental-diseases",
+            "atc_skip_cart": false
+          }
+        },
+        "text_with_icon_HTFYqw": {
+          "type": "text_with_icon",
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "mobile_alignment": "left",
+            "text_color": "#121212",
+            "text_1": "100-Day Money-Back Guarantee",
+            "text_2": "",
+            "text_3": "",
+            "icon_scale": 120,
+            "icon_color": "#47b5e9",
+            "icon_1": "new_releases",
+            "filled_icon_1": true,
+            "icon_2": "check_circle",
+            "filled_icon_2": false,
+            "icon_3": "check_circle",
+            "filled_icon_3": false,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 3,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7"
+          }
+        }
+      },
+      "block_order": [
+        "heading_xgchUK",
+        "text_jBQGVq",
+        "atc_button_3Pb78r",
+        "text_with_icon_HTFYqw"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/Gif_2.gif",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "custom",
+        "section_color_scheme": "custom",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "text_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#d5f7ff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#000000",
+        "custom_colors_solid_button_background": "#47b5e9",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#d5f7ff",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "section_divider_BJPHP4": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": true,
+        "shape_color": "custom",
+        "custom_shape_color": "#d5f7ff",
+        "background_color": "background-1",
+        "custom_background_color": "#d5f7ff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "comparison_table_3cEUpF": {
+      "type": "comparison-table",
+      "blocks": {
+        "row_pXRb8b": {
+          "type": "row",
+          "settings": {
+            "benefit": "Direct contact with plaque",
+            "us": true,
+            "others": true,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "row_7XbabX": {
+          "type": "row",
+          "settings": {
+            "benefit": "Most dogs accept it",
+            "us": true,
+            "others": false,
+            "others_2": true,
+            "others_3": false
+          }
+        },
+        "row_KXhrxU": {
+          "type": "row",
+          "settings": {
+            "benefit": "You can see it working",
+            "us": true,
+            "others": true,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "row_bkwGBC": {
+          "type": "row",
+          "settings": {
+            "benefit": "Stress-free solution",
+            "us": true,
+            "others": false,
+            "others_2": true,
+            "others_3": false
+          }
+        },
+        "row_EdwjdU": {
+          "type": "row",
+          "settings": {
+            "benefit": "Effective on the gumline",
+            "us": true,
+            "others": true,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "row_Xq8LPP": {
+          "type": "row",
+          "settings": {
+            "benefit": "100-Day Money-Back Guarantee",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        }
+      },
+      "block_order": [
+        "row_pXRb8b",
+        "row_7XbabX",
+        "row_KXhrxU",
+        "row_bkwGBC",
+        "row_EdwjdU",
+        "row_Xq8LPP"
+      ],
+      "name": "Comparison table",
+      "settings": {
+        "display_id": false,
+        "visibility": "mobile-hidden",
+        "title": "<em><strong>FreshWipes</strong></em>  vs. \"the other internet solutions\"",
+        "title_highlight_color": "#47b5e9",
+        "heading_size": "h1",
+        "text": "<p>Brushing <em>should</em> be the answer —<br/>until your dog won’t let you anywhere near their mouth.</p><p>And powders or water additives are easy —<br/>but it’s hard to trust something you can’t see working.</p>",
+        "button_label": "",
+        "link": "",
+        "button_style_secondary": false,
+        "atc_button_label": "",
+        "atc_product": "",
+        "atc_skip_cart": false,
+        "desktop_alignment": "center",
+        "mobile_alignment": "center",
+        "color_scheme": "background-1",
+        "layout": "table_first",
+        "style": "classic",
+        "corner_radius": 20,
+        "number_of_competitors": 2,
+        "us_label": "[shop_name]",
+        "us_label_size": 18,
+        "logo": "shopify://shop_images/Kaching-Bundles-Din_Hunds_Leende_spelar_ocksa_roll_47_e9be6223-8740-485d-9ad6-b3a5c54302ef.png",
+        "logo_width": 120,
+        "mobile_logo_width": 60,
+        "others_label": "Toothbrush + paste",
+        "others_label_size": 14,
+        "others_logo_width": 90,
+        "others_mobile_logo_width": 60,
+        "others_2_label": "Dental Powders",
+        "others_2_label_size": 14,
+        "others_2_logo_width": 90,
+        "others_2_mobile_logo_width": 60,
+        "others_3_label": "Competitor 3",
+        "others_3_label_size": 18,
+        "others_3_logo_width": 90,
+        "others_3_mobile_logo_width": 60,
+        "checkmark_style": "regular",
+        "checkmark_color": "#53af01",
+        "checkmark_bg_color": "#53af01",
+        "x_style": "regular",
+        "x_color": "#121212",
+        "x_bg_color": "#dbdbdb",
+        "opposite_icon_colors": "original",
+        "highlighted_color_scheme": "accent-1",
+        "highlighted_separator_opacity": 0,
+        "highlighted_overlay_opacity": 0,
+        "other_cells_color_scheme": "background-1",
+        "regular_separator_opacity": 10,
+        "regular_overlay_opacity": 0,
+        "minimalistic_border_opacity": 16,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_colors_highlighted_background": "#2e2a39",
+        "custom_colors_highlighted_text": "#ffffff",
+        "custom_colors_others_background": "#ffffff",
+        "custom_colors_others_text": "#2e2a39"
+      }
+    },
+    "image_with_text_zpzP4w": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_p8UPgK": {
+          "type": "heading",
+          "settings": {
+            "title": "Dental care <strong>shouldn't be a luxury</strong>",
+            "title_highlight_color": "#47b5e9",
+            "heading_size": "h2"
+          }
+        },
+        "text_EgwQE8": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Veterinary cleaning for tartar can cost thousands of dollars and often requires anesthesia.</p><p>FreshWipes cost a fraction – and are completely risk-free to use</p><p>For us, it’s not about making money – it's about helping dogs feel better.</p><h4><strong>Gentle. Safe. Developed for your dog.</strong></h4><p>Our wipes are fragrance-free, pH-balanced, and designed for safe use in the mouth.</p><p>They fit all dog breeds and are easy to bring on walks, trips, or holidays.</p><p><strong>Dental care should never be a barrier.</strong></p>",
+            "text_style": "body"
+          }
+        },
+        "atc_button_TNLfrm": {
+          "type": "atc_button",
+          "settings": {
+            "button_label": "ADD TO CART",
+            "atc_product": "freshwipes-kit-protects-against-dental-diseases",
+            "atc_skip_cart": false
+          }
+        },
+        "text_with_icon_HMEMmm": {
+          "type": "text_with_icon",
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "mobile_alignment": "left",
+            "text_color": "#121212",
+            "text_1": "100-Day Money-Back Guarantee",
+            "text_2": "",
+            "text_3": "",
+            "icon_scale": 120,
+            "icon_color": "#47b5e9",
+            "icon_1": "new_releases",
+            "filled_icon_1": true,
+            "icon_2": "check_circle",
+            "filled_icon_2": false,
+            "icon_3": "check_circle",
+            "filled_icon_3": false,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 3,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7"
+          }
+        }
+      },
+      "block_order": [
+        "heading_p8UPgK",
+        "text_EgwQE8",
+        "atc_button_TNLfrm",
+        "text_with_icon_HMEMmm"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/Engelska_23.jpg",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "background-1",
+        "section_color_scheme": "background-1",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "text_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#2e2a39",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#ffffff",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#ffffff",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "multicolumn_r3Fa8U": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_bKkKHH": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Namnlos_design_14.svg",
+            "muted_autoplay": true,
+            "title": "Tea Polyphenols",
+            "text": "<p>Tea polyphenols are natural antioxidants that help reduce bacteria in the mouth, freshen breath, and protect the gums from inflammation.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_yXWzdC": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Namnlos_design_12.svg",
+            "muted_autoplay": true,
+            "title": "Glycerin",
+            "text": "<p>Glycerin moisturizes the oral mucosa and gums – reducing the risk of irritation and providing gentler cleaning..</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_c9FKpR": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Namnlos_design_13.svg",
+            "muted_autoplay": true,
+            "title": "Citric Acid",
+            "text": "<p>Citric acid helps balance the pH level in the mouth – which protects tissues and prevents bad breath.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_QCjHRw": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Namnlos_design_15.svg",
+            "muted_autoplay": true,
+            "title": "Allantoin",
+            "text": "<p>Allantoin protects and soothes sensitive gums. Helps reduce irritation and promotes healing.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_zLHyXq": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/assets_task_01jwzy13s9efnbfcxbccj3f6tg_1749123413_img_0.webp",
+            "muted_autoplay": true,
+            "title": "Cetylpyridinium Chloride",
+            "text": "<p>A well-known antibacterial ingredient used in oral care. Helps reduce plaque, bacteria, and bad breath.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_deznN8": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/540f0b38-c0db-4b70-a19d-8781871e78f7.png",
+            "muted_autoplay": true,
+            "title": "Sodium Benzoate",
+            "text": "<p>A gentle and safe preservative that extends shelf life without affecting the mouth’s sensitive environment.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_bKkKHH",
+        "column_yXWzdC",
+        "column_c9FKpR",
+        "column_QCjHRw",
+        "column_zLHyXq",
+        "column_deznN8"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Safe and carefully <strong>selected ingredients</strong>",
+        "title_highlight_color": "#118fcb",
+        "heading_size": "h1",
+        "button_label": "",
+        "button_link": "",
+        "atc_button_label": "",
+        "atc_product": "",
+        "atc_skip_cart": false,
+        "color_scheme": "background-1",
+        "cards_color_scheme": "bg-overlay",
+        "cards_corner_radius": 20,
+        "stretch_cards": false,
+        "stretched_cards_content_alignment": "center",
+        "image_width": "half",
+        "image_ratio": "square",
+        "media_position": "top",
+        "column_alignment": "center",
+        "desktop_heading_size": 24,
+        "mobile_heading_size": 22,
+        "desktop_text_size": 16,
+        "mobile_text_size": 15,
+        "desktop_text_top_margin": 10,
+        "mobile_text_top_margin": 10,
+        "desktop_container_padding_y": 24,
+        "desktop_container_padding_x": 24,
+        "mobile_container_padding_y": 24,
+        "mobile_container_padding_x": 24,
+        "type": "slide",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_full_page": false,
+        "columns_desktop": 6,
+        "slider_desktop": true,
+        "per_move_desktop": 1,
+        "desktop_spacing": 40,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "sides",
+        "columns_mobile": "1",
+        "slider_mobile": true,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "under",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_heading": "#222126",
+        "custom_cards_colors_text": "#2e2a39"
+      }
+    },
+    "image_banner_Jkg3ye": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_hbj7Ji": {
+          "type": "heading",
+          "settings": {
+            "title": "<strong>A risk-free investment</strong> in your dog's health",
+            "title_highlight_color": "#47b5e9",
+            "heading_size": "h1"
+          }
+        },
+        "text_WEzjkg": {
+          "type": "text",
+          "settings": {
+            "text": "FreshWipes is a simple and safe solution for your dog’s oral health.We want both you and your dog to be satisfied – that's why we offer a 100-day money-back guarantee.Our wipes are designed to be both effective and gentle, and they slip onto your finger for easy use.Give your dog a pain-free future with a product you can trust – completely risk-free!",
+            "text_style": "body"
+          }
+        },
+        "buttons_tViWYx": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "100-Day Money-Back Guarantee",
+            "button_link_1": "shopify://pages/100-day-money-back-guarantee",
+            "button_style_secondary_1": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        },
+        "atc_button_FCrBJM": {
+          "type": "atc_button",
+          "settings": {
+            "button_label": "ADD TO CART",
+            "atc_product": "",
+            "atc_skip_cart": false
+          }
+        },
+        "rating_stars_hpmwWq": {
+          "type": "rating_stars",
+          "settings": {
+            "rating": 4.8,
+            "star_color": "#ffcc00",
+            "bg_stars_style": "full",
+            "bg_star_color": "#ececec",
+            "label": "4.86/5 Based on 20,000+ Reviews",
+            "size": 11,
+            "scroll_id": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_hbj7Ji",
+        "text_WEzjkg",
+        "buttons_tViWYx",
+        "atc_button_FCrBJM",
+        "rating_stars_hpmwWq"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/irish-setter-dog-close-up.jpg",
+        "image_1_visibility": "always-display",
+        "image_2_visibility": "always-display",
+        "image_overlay_opacity": 10,
+        "image_height": "large",
+        "url": "",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-2",
+        "transparent_container_color": "white",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
+    },
+    "55bd100e-3bbd-426c-a5cf-eed7b2a3706f": {
+      "type": "testimonials",
+      "blocks": {
+        "column_zJ6zMR": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "So much easier than brushing",
+            "text": "<p>I've really tried to brush my spaniel's teeth for several years but she gets so stressed every time. With these it goes so much smoother, she doesn't seem to mind as much. Takes maybe a minute in the evening and the wipe gets dirty afterwards which gives me hope that it works. Her breath has gotten a bit better too, not as bad as before when she comes to give kisses.</p>",
+            "author": "Jennifer M, 58 - 2025-11-12"
+          }
+        },
+        "column_qUghpJ": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Vet said do something - this works",
+            "text": "<p>Talked to my vet about dental care and she said the most important thing is to do SOMETHING regularly, even if you can't brush. These wipes have made it so much easier for me to keep the routine. My 11-year-old dachshund has noticeably whiter teeth and I feel safe using the natural ingredients. Takes barely a minute a day. Highly recommend!</p>",
+            "author": "Anne B, 57 - 2025-11-09"
+          }
+        },
+        "column_FGVAjz": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Finally something that actually works",
+            "text": "<p>Really good. I've tried chew toys, water additives, everything possible. Nothing worked and my dog's breath was TERRIBLE. These wipes actually remove the dirt, you see it directly on the wipe. Takes max 2 minutes and I can do it while watching TV. Should've bought these ages ago.</p>",
+            "author": "Sophie H, 43 - 2025-10-28"
+          }
+        },
+        "column_8RKF7m": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Safe for the whole family",
+            "text": "<p>We have a 3-year-old at home and the dog licks him constantly. I wanted something for the dog's breath that isn't dangerous if the kids get it on them. These are natural and work really well. Takes 2 minutes in the evening when the kids are asleep. The dog sits calmly and his breath is so much fresher now. Great not to have to worry when he kisses the kids!</p>",
+            "author": "Sarah E, 39 - 2025-10-03"
+          }
+        },
+        "column_ya4rpx": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Getting better each time",
+            "text": "<p>My dog wasn't fond of it at first. But now it's going better. It works.</p>",
+            "author": "Christine B - 2025-09-21"
+          }
+        },
+        "column_R3wwEK": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Worth every penny",
+            "text": "<p>I can actually get through with my dog's dental care now 😊 Worth every penny.</p>",
+            "author": "Emily R, 41 - 2025-09-15"
+          }
+        },
+        "column_gCBCNY": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Works really well on bad breath",
+            "text": "<p>My French bulldog had terrible breath that was hard to deal with as well as her dog's teeth. Works really well!</p>",
+            "author": "Jessica T, 36 - 2025-09-15"
+          }
+        },
+        "column_89igQU": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Teeth much whiter now",
+            "text": "<p>My puppy is 9 years old and has always been difficult to get to cooperate like he should. The teeth look much whiter after a couple of weeks. Recommend!</p>",
+            "author": "Susan M, 47 - 2025-09-02"
+          }
+        },
+        "column_8ANdnq": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Our new evening routine",
+            "text": "<p>Every evening after the last walk we put on a 'finger sock' on our teeth. It has become my and my dog's routine for both of us. The teeth look a bit cleaner now after a few weeks. Feel good about doing something instead for not doing anything at all like the vet said.</p>",
+            "author": "Karen A, 61 - 2025-08-29"
+          }
+        },
+        "template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-1": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Highly recommended!!",
+            "text": "<p>My dog has always been afraid of toothbrushing, which made it difficult to keep his teeth clean.<br/><br/>But after we started using these wipes, he’s become completely calm.<br/><br/>It’s amazing to see that he no longer runs away or gets anxious when it’s time to clean his teeth.</p>",
+            "author_avatar": "shopify://shop_images/Profilbild1_b3680c3c-3c9b-4f7c-aaa0-1c5e71863e67.webp",
+            "author": "– Erik A"
+          }
+        },
+        "template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-2": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "He’s completely fearless now!",
+            "text": "<p>Brushing my dog’s teeth has been a struggle for years because he was so scared.<br/><br/>But these wipes changed everything.<br/><br/>He’s now completely fearless and lets me clean his teeth without any problems.<br/><br/>This has truly improved our dental care routine.</p>",
+            "author_avatar": "shopify://shop_images/Profilbild1_78735bd1-dd93-45c0-b80c-27246ca5802d.webp",
+            "author": "– Johan E"
+          }
+        },
+        "template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-3": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Highly recommend to all dog owners",
+            "text": "<p>I’ve always had a hard time brushing my dog’s teeth because he was afraid.<br/><br/>With these wipes, he’s now completely calm.<br/><br/>It’s such a huge relief to be able to clean his teeth without having to fight with him.<br/><br/><strong>Highly recommend this to all dog owners.</strong></p>",
+            "author_avatar": "shopify://shop_images/Profilbild_3.webp",
+            "author": "– Sara Johansen"
+          }
+        },
+        "column_7KVQn9": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "I’m very satisfied",
+            "text": "<p>I’ve used this product on my dog for a few weeks now, and I’m very satisfied.<br/><br/>His teeth look much cleaner, and his breath has noticeably improved.<br/><br/>It’s also very easy to use, which is a big plus.</p>",
+            "author_avatar": "shopify://shop_images/Profilbild1.webp",
+            "author": "– Simen Kristoffersen"
+          }
+        },
+        "column_UHg797": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "His teeth is much better now!",
+            "text": "<p>I’ve used this product daily on my dog and I’m seeing real results.<br/><br/>His teeth look much cleaner and his breath is better.<br/><br/>It feels safe to use something made with natural ingredients.</p>",
+            "author_avatar": "shopify://shop_images/Profilbild344.webp",
+            "author": "– Lene Karlsen"
+          }
+        },
+        "column_Ri7g3K": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "A great product that really makes a difference",
+            "text": "<p>A great product that really makes a difference. I’ve noticed that my dog’s tartar has significantly reduced and his breath is much fresher.<br/><br/>Plus, it’s very easy to use.</p>",
+            "author_avatar": "shopify://shop_images/profilbild.webp",
+            "author": "– Oskar Johansrud"
+          }
+        },
+        "column_NmmfXF": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Delivers great results",
+            "text": "<p>My dog likes it, and it’s easy to use every day.<br/><br/>Delivers great results.<br/>Gir gode resultater.</p>",
+            "author_avatar": "shopify://shop_images/Profilbild1.jpg",
+            "author": "– Sofie Nilsen"
+          }
+        },
+        "column_GNBeVt": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Jeg ser en forbedring i munnhelsen hans",
+            "text": "<p>Hunden min ser ut til å like det, og jeg ser en forbedring i munnhelsen hans.</p>",
+            "author_avatar": "shopify://shop_images/Profilbild3_98453ffc-28e5-4418-89bd-9cc2393e092a.webp",
+            "author": "– Ingrid Thorsen"
+          }
+        }
+      },
+      "block_order": [
+        "column_zJ6zMR",
+        "column_qUghpJ",
+        "column_FGVAjz",
+        "column_8RKF7m",
+        "column_ya4rpx",
+        "column_R3wwEK",
+        "column_gCBCNY",
+        "column_89igQU",
+        "column_8ANdnq",
+        "template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-1",
+        "template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-2",
+        "template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-3",
+        "column_7KVQn9",
+        "column_UHg797",
+        "column_Ri7g3K",
+        "column_NmmfXF",
+        "column_GNBeVt"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Verified Reviews",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "text": "<p><strong>45 000 + dog owners </strong>are keeping teeth clean without the brush battle</p>",
+        "color_scheme": "background-1",
+        "image_width": "full",
+        "image_ratio": "square",
+        "column_alignment": "center",
+        "show_stars": true,
+        "inactive_stars_style": "solid",
+        "star_color": "#ffcc00",
+        "bg_star_color": "#ececec",
+        "show_quotes": true,
+        "quotes_color_scheme": "accent-1",
+        "cards_color_scheme": "bg-overlay",
+        "type": "slide",
+        "autoplay": true,
+        "autoplay_speed": 7,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_full_page": true,
+        "columns_desktop": 4,
+        "slider_desktop": true,
+        "per_move_desktop": 1,
+        "desktop_spacing": 40,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "sides",
+        "slider_mobile": true,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "under",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_text": "#2e2a39"
+      }
+    },
+    "section_divider_pFE63Q": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "background-2",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "collapsible_content_TbfYVV": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_tR8CwM": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Is this 100% safe for my pet?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>✅ <strong>Yes! The wipes are made to be as gentle as they are effective.</strong></p><p>They are free from:</p><ul><li>❌ Alcohol<br/><br/></li><li>❌ Parabens<br/><br/></li><li>❌ Essential oils (which can irritate some pets)<br/><br/></li><li>❌ Harsh chemicals or artificial fragrances<br/><br/></li></ul><p>Our formula is developed with veterinary insight to ensure safety for both dogs and cats – even those with sensitive gums or skin.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_wWEXkL": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How do I use the product?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Slip the wipe over your finger.</p><ol><li>Gently rub along your pet’s teeth and gums in circular motions.<br/><br/></li><li>Focus especially on the gum line and any areas with visible plaque or discoloration.<br/></li></ol><p>No toothbrush. No mess. No stress.</p><p>Use daily or 1–2 times a week for best results.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_3fRqLL": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Is this a substitute for toothbrushing?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>For most pet owners: yes.</p><p>Brushing is best – but often unrealistic in everyday life.</p><p><strong>FreshWipes provides a simple and reliable way to care for your pet’s oral health – without the struggle.</strong></p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_4GGYLx": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What’s in the formula?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Only what your pet needs – nothing more. Every ingredient is carefully selected to support safe and effective oral care:</p><ul><li><strong>EDI-purified water</strong> – gentle base solution</li><li><strong>Cetylpyridinium chloride monohydrate</strong> – proven antibacterial used in human oral care</li><li><strong>Allantoin</strong> – soothes and protects sensitive gums</li><li><strong>Glycerin</strong> – moisturizes gums and oral tissue</li><li><strong>Citric acid</strong> – balances pH to prevent bacterial growth</li><li><strong>Tea polyphenols</strong> – freshens breath naturally</li><li><strong>Green tea extract</strong> – natural antibacterial & protective</li></ul><p>✔️ <strong>pH-balanced & alcohol-free</strong> – safe for daily use<br/><br/>✔️ <strong>No fluoride or harsh chemicals</strong><br/><br/>✔️ <strong>Not tested on animals</strong> (cruelty-free development)</p><p><em>Just safe, simple, and effective dental care – in every wipe.</em></p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_X6j8jm": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "When can I expect results?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p><strong>🦷 Fresh breath? In just a few days.</strong><br/><br/>🦷 Cleaner teeth and healthier gums? 2–3 weeks with regular use.</p><p><strong>Hold tight – your pet’s mouth will thank you!</strong></p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_DDddPH": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Is FreshWipes suitable for all breeds and sizes?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Yes, the wipes are flexible and work well for everything from small toy breeds to large dogs – and for cats.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_MXzfid": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Do the wipes help with bad breath?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Yes! Antibacterial ingredients and natural breath-fresheners help reduce plaque and bad odor.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_xUbf8N": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How should I store FreshWipes?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Store the container in a cool, dry place. Avoid direct sunlight to maintain moisture in the wipes.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_pA7czt": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What happens if I’m not satisfied?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>We stand behind our product with a <strong>100-Day Money-Back Guarantee</strong>.</p><p>If you don’t see a visible difference – or if it simply doesn’t work for your pet – just reach out.<br/><br/>You’ll get a <strong>full refund</strong>, no questions asked.</p><p><strong>No stress. No hassle. Just peace of mind.</strong></p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_tR8CwM",
+        "collapsible_row_wWEXkL",
+        "collapsible_row_3fRqLL",
+        "collapsible_row_4GGYLx",
+        "collapsible_row_X6j8jm",
+        "collapsible_row_DDddPH",
+        "collapsible_row_MXzfid",
+        "collapsible_row_xUbf8N",
+        "collapsible_row_pA7czt"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "caption": "",
+        "title": "Frequently Asked Questions",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "row",
+        "color_scheme": "background-2",
+        "container_color_scheme": "accent-1",
+        "open_first_collapsible_row": false,
+        "video_muted_autoplay": true,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "row_heading_size": "medium",
+        "collapse_icon": "carret",
+        "display_top_border": true,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_contaner_colors_background": "#ffffff",
+        "custom_container_gradient_background": "",
+        "custom_contaner_colors_text": "#2e2a39"
+      }
+    },
+    "section_divider_HfUqqg": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "background-1",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-2",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "icon_bar_KHKwKc": {
+      "type": "icon-bar",
+      "blocks": {
+        "column_QHckr6": {
+          "type": "column",
+          "settings": {
+            "icon": "favorite",
+            "filled_icon": true,
+            "title": "OVER 45 000 SATISFIED CUSTOMERS",
+            "text": "<p>We’ve made dog owners and dogs across the world happy!</p>"
+          }
+        },
+        "column_tPk8Rq": {
+          "type": "column",
+          "settings": {
+            "icon": "new_releases",
+            "filled_icon": true,
+            "title": "100-DAY MONEY-BACK GUARANTEE",
+            "text": "<p>Not satisfied? Just contact us within 365 days of purchase, and we’ll take care of it for you.</p>"
+          }
+        },
+        "column_FkbetQ": {
+          "type": "column",
+          "settings": {
+            "icon": "support_agent",
+            "filled_icon": true,
+            "title": "SUPPORT MONDAY–FRIDAY",
+            "text": "<p>Questions? Don’t hesitate to reach out – we’ll respond within 24 hours!</p>"
+          }
+        }
+      },
+      "block_order": [
+        "column_QHckr6",
+        "column_tPk8Rq",
+        "column_FkbetQ"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "text": "",
+        "color_scheme": "background-1",
+        "icon_layout": "vertical",
+        "icon_size": "medium",
+        "icon_color": "accent-1",
+        "cards_color_scheme": "background-1",
+        "type": "slide",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_full_page": false,
+        "columns_desktop": 3,
+        "slider_desktop": false,
+        "per_move_desktop": 1,
+        "desktop_spacing": 40,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "sides",
+        "columns_mobile": "1",
+        "slider_mobile": true,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "under",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_text": "#2e2a39"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "related-products",
+    "image_slider_8HnbpY",
+    "image_slider_X8iFJF",
+    "section_divider_iXCmE9",
+    "image_with_text_LkDiE9",
+    "section_divider_MjaRJC",
+    "image_with_text_erCy8G",
+    "image_with_text_kiAL7m",
+    "section_divider_kAW6L6",
+    "image_with_text_jpGEnV",
+    "section_divider_BJPHP4",
+    "comparison_table_3cEUpF",
+    "image_with_text_zpzP4w",
+    "multicolumn_r3Fa8U",
+    "image_banner_Jkg3ye",
+    "55bd100e-3bbd-426c-a5cf-eed7b2a3706f",
+    "section_divider_pFE63Q",
+    "collapsible_content_TbfYVV",
+    "section_divider_HfUqqg",
+    "icon_bar_KHKwKc"
+  ]
+}

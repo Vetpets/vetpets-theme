@@ -1,0 +1,278 @@
+{% comment %}Section: Guarantee — Risk removal with CTA{% endcomment %}
+
+{%- style -%}
+#guar-{{ section.id }} {
+  --gr-bg: {{ section.settings.bg_color }};
+  --gr-card-bg: {{ section.settings.card_bg }};
+  --gr-card-border: {{ section.settings.card_border }};
+  --gr-hl-color: {{ section.settings.headline_color }};
+  --gr-accent: {{ section.settings.accent_color }};
+  --gr-body-color: {{ section.settings.body_color }};
+  --gr-badge-color: {{ section.settings.badge_color }};
+  --gr-btn-bg: {{ section.settings.button_bg }};
+  --gr-btn-text: {{ section.settings.button_text_color }};
+  --gr-btn-glow: {{ section.settings.button_glow }};
+  --gr-shield-color: {{ section.settings.shield_color }};
+  --gr-shield-bg: {{ section.settings.shield_bg }};
+  --gr-hl-m: {{ section.settings.headline_size_mobile }}px;
+  --gr-hl-d: {{ section.settings.headline_size_desktop }}px;
+  --gr-pad-m: {{ section.settings.padding_mobile }}px;
+  --gr-pad-d: {{ section.settings.padding_desktop }}px;
+}
+
+#guar-{{ section.id }} {
+  background-color: var(--gr-bg) !important;
+  padding: var(--gr-pad-m) 16px !important;
+}
+
+#guar-{{ section.id }} .gr-card {
+  max-width: 640px;
+  margin: 0 auto;
+  background-color: var(--gr-card-bg) !important;
+  border: 1px solid var(--gr-card-border) !important;
+  border-radius: 20px;
+  padding: 40px 24px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ambient glow behind card */
+#guar-{{ section.id }} .gr-card::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(ellipse, color-mix(in srgb, var(--gr-accent) 10%, transparent), transparent 70%);
+  pointer-events: none;
+}
+
+/* Shield icon */
+#guar-{{ section.id }} .gr-shield {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--gr-shield-bg) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  position: relative;
+  box-shadow: 0 0 30px color-mix(in srgb, var(--gr-accent) 20%, transparent);
+}
+
+#guar-{{ section.id }} .gr-shield svg {
+  width: 28px;
+  height: 28px;
+  fill: none;
+  stroke: var(--gr-shield-color);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Headline */
+#guar-{{ section.id }} .gr-headline {
+  color: var(--gr-hl-color) !important;
+  font-size: var(--gr-hl-m) !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+  position: relative;
+}
+
+#guar-{{ section.id }} .gr-headline .gr-acc {
+  color: var(--gr-accent) !important;
+  font-style: italic;
+}
+
+/* Body */
+#guar-{{ section.id }} .gr-body {
+  color: var(--gr-body-color) !important;
+  font-size: 14px !important;
+  line-height: 1.55;
+  margin: 0 auto 28px;
+  max-width: 440px;
+  position: relative;
+}
+
+/* CTA Button */
+#guar-{{ section.id }} .gr-btn {
+  display: inline-block;
+  padding: 16px 48px;
+  background: linear-gradient(135deg, var(--gr-btn-bg), color-mix(in srgb, var(--gr-btn-bg) 70%, #000)) !important;
+  color: var(--gr-btn-text) !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: none !important;
+  border-radius: 50px;
+  cursor: pointer;
+  text-decoration: none;
+  position: relative;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--gr-btn-glow) 30%, transparent);
+}
+
+#guar-{{ section.id }} .gr-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 32px color-mix(in srgb, var(--gr-btn-glow) 45%, transparent);
+}
+
+#guar-{{ section.id }} .gr-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Trust badges row */
+#guar-{{ section.id }} .gr-badges {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+#guar-{{ section.id }} .gr-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--gr-badge-color) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+}
+
+#guar-{{ section.id }} .gr-badge-check {
+  color: var(--gr-accent) !important;
+  font-size: 14px !important;
+}
+
+/* Animation */
+#guar-{{ section.id }} .gr-a {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+#guar-{{ section.id }} .gr-a.gr-v {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (min-width: 750px) {
+  #guar-{{ section.id }} { padding: var(--gr-pad-d) 40px !important; }
+  #guar-{{ section.id }} .gr-card { padding: 52px 40px 40px; }
+  #guar-{{ section.id }} .gr-headline { font-size: var(--gr-hl-d) !important; }
+  #guar-{{ section.id }} .gr-body { font-size: 15px !important; }
+  #guar-{{ section.id }} .gr-btn { padding: 18px 56px; font-size: 16px !important; }
+  #guar-{{ section.id }} .gr-badge { font-size: 13px !important; }
+}
+{%- endstyle -%}
+
+<div id="guar-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="gr-card gr-a">
+
+    <!-- Shield -->
+    <div class="gr-shield">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        <path d="M9 12l2 2 4-4" stroke-width="2.5"/>
+      </svg>
+    </div>
+
+    <!-- Headline -->
+    <h2 class="gr-headline">
+      <span class="gr-acc">{{ section.settings.headline_accent }}</span> {{ section.settings.headline_bold }}
+    </h2>
+
+    <!-- Body -->
+    <p class="gr-body">{{ section.settings.body_text }}</p>
+
+    <!-- CTA -->
+    {% if section.settings.button_text != blank %}
+      <a href="{{ section.settings.button_link }}" class="gr-btn">{{ section.settings.button_text }}</a>
+    {% endif %}
+
+    <!-- Trust badges -->
+    <div class="gr-badges">
+      {% for block in section.blocks %}
+        {% if block.type == 'badge' %}
+          <div class="gr-badge" {{ block.shopify_attributes }}>
+            <span class="gr-badge-check">✓</span>
+            <span>{{ block.settings.text }}</span>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  var el=document.querySelector('#guar-{{ section.id }} .gr-a');
+  if(!el)return;
+  var obs=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('gr-v');obs.unobserve(e.target)}})},{threshold:0.15});
+  obs.observe(el);
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Rocky - Guarantee",
+  "tag": "section",
+  "settings": [
+    {"type":"header","content":"─── Content ───"},
+    {"type":"text","id":"headline_accent","label":"Headline Italic Part","default":"30-Day Money-Back"},
+    {"type":"text","id":"headline_bold","label":"Headline Bold Part","default":"Guarantee."},
+    {"type":"textarea","id":"body_text","label":"Body Text","default":"Not sure if it's for you? Try it risk-free for 30 days. If you don't love it, send it back — full refund, no questions asked."},
+    {"type":"text","id":"button_text","label":"Button Text","default":"TRY IT RISK-FREE"},
+    {"type":"url","id":"button_link","label":"Button Link"},
+    {"type":"header","content":"─── Text Colors ───"},
+    {"type":"color","id":"headline_color","label":"Headline","default":"#EEEAF6"},
+    {"type":"color","id":"accent_color","label":"Accent / Italic","default":"#818CF8"},
+    {"type":"color","id":"body_color","label":"Body Text","default":"#9B93AD"},
+    {"type":"color","id":"badge_color","label":"Badge Text","default":"#9B93AD"},
+    {"type":"color","id":"shield_color","label":"Shield Icon","default":"#818CF8"},
+    {"type":"color","id":"shield_bg","label":"Shield Background","default":"#1E1B27"},
+    {"type":"header","content":"─── Button ───"},
+    {"type":"color","id":"button_bg","label":"Button Background","default":"#818CF8"},
+    {"type":"color","id":"button_text_color","label":"Button Text","default":"#ffffff"},
+    {"type":"color","id":"button_glow","label":"Button Glow","default":"#818CF8"},
+    {"type":"header","content":"─── Backgrounds ───"},
+    {"type":"color","id":"bg_color","label":"Section Background","default":"#0D0B12"},
+    {"type":"color","id":"card_bg","label":"Card Background","default":"#1A1721"},
+    {"type":"color","id":"card_border","label":"Card Border","default":"#3A3548"},
+    {"type":"header","content":"─── Typography ───"},
+    {"type":"range","id":"headline_size_mobile","label":"Headline Mobile","min":22,"max":42,"step":1,"default":28,"unit":"px"},
+    {"type":"range","id":"headline_size_desktop","label":"Headline Desktop","min":28,"max":56,"step":1,"default":36,"unit":"px"},
+    {"type":"header","content":"─── Spacing ───"},
+    {"type":"range","id":"padding_mobile","label":"Padding Mobile","min":24,"max":80,"step":4,"default":48,"unit":"px"},
+    {"type":"range","id":"padding_desktop","label":"Padding Desktop","min":40,"max":120,"step":4,"default":72,"unit":"px"}
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "✓ Trust Badge",
+      "settings": [
+        {"type":"text","id":"text","label":"Badge Text","default":"100% Satisfaction"}
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rocky - Guarantee",
+      "blocks": [
+        {"type":"badge","settings":{"text":"100% Satisfaction"}},
+        {"type":"badge","settings":{"text":"Fast Shipping"}},
+        {"type":"badge","settings":{"text":"Easy Returns"}}
+      ]
+    }
+  ]
+}
+{% endschema %}

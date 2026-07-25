@@ -1,0 +1,838 @@
+
+    
+    <style {% if section.settings.section_preload == "false" %} class="gps-link gps-style" type="text/disabled-css" {% endif %}>.gps-578147854816707514.gps.gpsil [style*="--ai:"]{align-items:var(--ai)}.gps-578147854816707514.gps.gpsil [style*="--bg:"]{background:var(--bg)}.gps-578147854816707514.gps.gpsil [style*="--hvr-bg:"]:hover{background:var(--hvr-bg)}.gps-578147854816707514.gps.gpsil [style*="--bga:"]{background-attachment:var(--bga)}.gps-578147854816707514.gps.gpsil [style*="--bgc:"]{background-color:var(--bgc)}.gps-578147854816707514.gps.gpsil [style*="--hvr-bgc:"]:hover{background-color:var(--hvr-bgc)}.gps-578147854816707514.gps.gpsil [style*="--bgi:"]{background-image:var(--bgi)}.gps-578147854816707514.gps.gpsil [style*="--bgp:"]{background-position:var(--bgp)}.gps-578147854816707514.gps.gpsil [style*="--bgr:"]{background-repeat:var(--bgr)}.gps-578147854816707514.gps.gpsil [style*="--bgs:"]{background-size:var(--bgs)}.gps-578147854816707514.gps.gpsil [style*="--b:"]{border:var(--b)}.gps-578147854816707514.gps.gpsil [style*="--hvr-b:"]:hover{border:var(--hvr-b)}.gps-578147854816707514.gps.gpsil [style*="--bb:"]{border-bottom:var(--bb)}.gps-578147854816707514.gps.gpsil [style*="--bc:"]{border-color:var(--bc)}.gps-578147854816707514.gps.gpsil [style*="--hvr-bc:"]:hover{border-color:var(--hvr-bc)}.gps-578147854816707514.gps.gpsil [style*="--bblr:"]{border-bottom-left-radius:var(--bblr)}.gps-578147854816707514.gps.gpsil [style*="--bbrr:"]{border-bottom-right-radius:var(--bbrr)}.gps-578147854816707514.gps.gpsil [style*="--bs:"]{border-style:var(--bs)}.gps-578147854816707514.gps.gpsil [style*="--hvr-bs:"]:hover{border-style:var(--hvr-bs)}.gps-578147854816707514.gps.gpsil [style*="--bt:"]{border-top:var(--bt)}.gps-578147854816707514.gps.gpsil [style*="--btlr:"]{border-top-left-radius:var(--btlr)}.gps-578147854816707514.gps.gpsil [style*="--btrr:"]{border-top-right-radius:var(--btrr)}.gps-578147854816707514.gps.gpsil [style*="--bw:"]{border-width:var(--bw)}.gps-578147854816707514.gps.gpsil [style*="--hvr-bw:"]:hover{border-width:var(--hvr-bw)}.gps-578147854816707514.gps.gpsil [style*="--shadow:"]{box-shadow:var(--shadow)}.gps-578147854816707514.gps.gpsil [style*="--c:"]{color:var(--c)}.gps-578147854816707514.gps.gpsil [style*="--cg:"]{-moz-column-gap:var(--cg);column-gap:var(--cg)}.gps-578147854816707514.gps.gpsil [style*="--fd:"]{flex-direction:var(--fd)}.gps-578147854816707514.gps.gpsil [style*="--ff:"]{font-family:var(--ff)}.gps-578147854816707514.gps.gpsil [style*="--size:"]{font-size:var(--size)}.gps-578147854816707514.gps.gpsil [style*="--weight:"]{font-weight:var(--weight)}.gps-578147854816707514.gps.gpsil [style*="--fs:"]{font-style:var(--fs)}.gps-578147854816707514.gps.gpsil [style*="--gg:"]{grid-gap:var(--gg)}.gps-578147854816707514.gps.gpsil [style*="--gtc:"]{grid-template-columns:var(--gtc)}.gps-578147854816707514.gps.gpsil [style*="--h:"]{height:var(--h)}.gps-578147854816707514.gps.gpsil [style*="--jc:"]{justify-content:var(--jc)}.gps-578147854816707514.gps.gpsil [style*="--lh:"]{line-height:var(--lh)}.gps-578147854816707514.gps.gpsil [style*="--tdt:"]{text-decoration-thickness:var(--tdt)}.gps-578147854816707514.gps.gpsil [style*="--tdl:"]{text-decoration-line:var(--tdl)}.gps-578147854816707514.gps.gpsil [style*="--m:"]{margin:var(--m)}.gps-578147854816707514.gps.gpsil [style*="--mb:"]{margin-bottom:var(--mb)}.gps-578147854816707514.gps.gpsil [style*="--op:"]{opacity:var(--op)}.gps-578147854816707514.gps.gpsil [style*="--o:"]{order:var(--o)}.gps-578147854816707514.gps.gpsil [style*="--pc:"]{place-content:var(--pc)}.gps-578147854816707514.gps.gpsil [style*="--p:"]{padding:var(--p)}.gps-578147854816707514.gps.gpsil [style*="--pb:"]{padding-bottom:var(--pb)}.gps-578147854816707514.gps.gpsil [style*="--pl:"]{padding-left:var(--pl)}.gps-578147854816707514.gps.gpsil [style*="--pr:"]{padding-right:var(--pr)}.gps-578147854816707514.gps.gpsil [style*="--pt:"]{padding-top:var(--pt)}.gps-578147854816707514.gps.gpsil [style*="--ta:"]{text-align:var(--ta)}.gps-578147854816707514.gps.gpsil [style*="--ts:"]{text-shadow:var(--ts)}.gps-578147854816707514.gps.gpsil [style*="--tt:"]{text-transform:var(--tt)}.gps-578147854816707514.gps.gpsil [style*="--t:"]{transform:var(--t)}.gps-578147854816707514.gps.gpsil [style*="--w:"]{width:var(--w)}.gps-578147854816707514.gps.gpsil [style*="--line-clamp:"]{-webkit-box-orient:vertical;-webkit-line-clamp:var(--line-clamp);display:-webkit-box;overflow:hidden}@media only screen and (max-width:1024px){.gps-578147854816707514.gps.gpsil [style*="--size-tablet:"]{font-size:var(--size-tablet)}.gps-578147854816707514.gps.gpsil [style*="--h-tablet:"]{height:var(--h-tablet)}.gps-578147854816707514.gps.gpsil [style*="--lh-tablet:"]{line-height:var(--lh-tablet)}.gps-578147854816707514.gps.gpsil [style*="--mb-tablet:"]{margin-bottom:var(--mb-tablet)}.gps-578147854816707514.gps.gpsil [style*="--pb-tablet:"]{padding-bottom:var(--pb-tablet)}.gps-578147854816707514.gps.gpsil [style*="--pl-tablet:"]{padding-left:var(--pl-tablet)}.gps-578147854816707514.gps.gpsil [style*="--pr-tablet:"]{padding-right:var(--pr-tablet)}.gps-578147854816707514.gps.gpsil [style*="--pt-tablet:"]{padding-top:var(--pt-tablet)}.gps-578147854816707514.gps.gpsil [style*="--ta-tablet:"]{text-align:var(--ta-tablet)}.gps-578147854816707514.gps.gpsil [style*="--w-tablet:"]{width:var(--w-tablet)}.gps-578147854816707514.gps.gpsil [style*="--line-clamp-tablet:"]{-webkit-box-orient:vertical;-webkit-line-clamp:var(--line-clamp-tablet);display:-webkit-box;overflow:hidden}}@media only screen and (max-width:767px){.gps-578147854816707514.gps.gpsil [style*="--size-mobile:"]{font-size:var(--size-mobile)}.gps-578147854816707514.gps.gpsil [style*="--gg-mobile:"]{grid-gap:var(--gg-mobile)}.gps-578147854816707514.gps.gpsil [style*="--gtc-mobile:"]{grid-template-columns:var(--gtc-mobile)}.gps-578147854816707514.gps.gpsil [style*="--h-mobile:"]{height:var(--h-mobile)}.gps-578147854816707514.gps.gpsil [style*="--lh-mobile:"]{line-height:var(--lh-mobile)}.gps-578147854816707514.gps.gpsil [style*="--mb-mobile:"]{margin-bottom:var(--mb-mobile)}.gps-578147854816707514.gps.gpsil [style*="--pb-mobile:"]{padding-bottom:var(--pb-mobile)}.gps-578147854816707514.gps.gpsil [style*="--pl-mobile:"]{padding-left:var(--pl-mobile)}.gps-578147854816707514.gps.gpsil [style*="--pr-mobile:"]{padding-right:var(--pr-mobile)}.gps-578147854816707514.gps.gpsil [style*="--pt-mobile:"]{padding-top:var(--pt-mobile)}.gps-578147854816707514.gps.gpsil [style*="--ta-mobile:"]{text-align:var(--ta-mobile)}.gps-578147854816707514.gps.gpsil [style*="--w-mobile:"]{width:var(--w-mobile)}.gps-578147854816707514.gps.gpsil [style*="--line-clamp-mobile:"]{-webkit-box-orient:vertical;-webkit-line-clamp:var(--line-clamp-mobile);display:-webkit-box;overflow:hidden}}.gps-578147854816707514 .-gp-rotate-90,.gps-578147854816707514 .gp-rotate-180,.gps-578147854816707514 .gp-rotate-90{--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1}.gps-578147854816707514 .gp-relative{position:relative}.gps-578147854816707514 .gp-mx-auto{margin-left:auto;margin-right:auto}.gps-578147854816707514 .gp-mb-0{margin-bottom:0}.gps-578147854816707514 .gp-flex{display:flex}.gps-578147854816707514 .gp-inline-flex{display:inline-flex}.gps-578147854816707514 .gp-grid{display:grid}.gps-578147854816707514 .\!gp-hidden{display:none!important}.gps-578147854816707514 .gp-hidden{display:none}.gps-578147854816707514 .gp-min-h-0{min-height:0}.gps-578147854816707514 .gp-w-full{width:100%}.gps-578147854816707514 .gp-max-w-full{max-width:100%}.gps-578147854816707514 .-gp-rotate-90{--tw-rotate:-90deg}.gps-578147854816707514 .-gp-rotate-90,.gps-578147854816707514 .gp-rotate-180{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.gps-578147854816707514 .gp-rotate-180{--tw-rotate:180deg}.gps-578147854816707514 .gp-rotate-90{--tw-rotate:90deg;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.gps-578147854816707514 .gp-cursor-pointer{cursor:pointer}.gps-578147854816707514 .gp-grid-rows-\[0fr\]{grid-template-rows:0fr}.gps-578147854816707514 .gp-grid-rows-\[1fr\]{grid-template-rows:1fr}.gps-578147854816707514 .gp-flex-col{flex-direction:column}.gps-578147854816707514 .gp-items-center{align-items:center}.gps-578147854816707514 .gp-justify-center{justify-content:center}.gps-578147854816707514 .gp-gap-\[16px\]{gap:16px}.gps-578147854816707514 .gp-overflow-hidden{overflow:hidden}.gps-578147854816707514 .gp-overflow-clip{overflow:clip}.gps-578147854816707514 .gp-break-all{word-break:break-all}.gps-578147854816707514 .gp-transition-all{transition-duration:.15s;transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1)}.gps-578147854816707514 .gp-transition-colors{transition-duration:.15s;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1)}.gps-578147854816707514 .gp-duration-200{transition-duration:.2s}.gps-578147854816707514 .gp-duration-500{transition-duration:.5s}.gps-578147854816707514 .gp-ease-in-out{transition-timing-function:cubic-bezier(.4,0,.2,1)}@media (hover:hover) and (pointer:fine){.gps-578147854816707514 .gp-group:hover .group-hover\:\[color\:var\(--icon-expand-hover-color\)\]{color:var(--icon-expand-hover-color)}.gps-578147854816707514 .gp-group:hover .group-hover\:\[color\:var\(--text-hover-color\)\!important\]{color:var(--text-hover-color)!important}}@media (max-width:1024px){.gps-578147854816707514 .tablet\:\!gp-hidden{display:none!important}.gps-578147854816707514 .tablet\:gp-hidden{display:none}}@media (max-width:767px){.gps-578147854816707514 .mobile\:\!gp-hidden{display:none!important}.gps-578147854816707514 .mobile\:gp-hidden{display:none}}.gps-578147854816707514 .\[\&\>svg\]\:\!gp-h-\[var\(--height-iconCollapseSize\)\]>svg{height:var(--height-iconCollapseSize)!important}.gps-578147854816707514 .\[\&\>svg\]\:\!gp-w-full>svg{width:100%!important}.gps-578147854816707514 .\[\&_\*\]\:gp-max-w-full *{max-width:100%}</style>
+    
+    
+    
+
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+
+    
+        <section
+          class="gp-mx-auto gp-max-w-full [&_*]:gp-max-w-full {% if section.settings.section_preload == "false" %}gps-lazy {% endif %}"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--pl:none;--pl-tablet:none;--pl-mobile:none;--pr:none;--pr-tablet:none;--pr-mobile:none"
+        >
+          
+    <gp-row gp-data='{"background":{"desktop":{"attachment":"scroll","color":"#D5F7FF","image":{"height":0,"src":"","width":0},"position":{"x":50,"y":50},"preload":false,"repeat":"no-repeat","size":"cover","type":"color"}},"uid":"gJhZbQLzSy"}' data-id="gJhZbQLzSy" id="gJhZbQLzSy" data-same-height-subgrid-container class="gJhZbQLzSy gp-relative gp-mx-auto gp-mb-0 gp-grid gp-max-w-full gp-transition-colors gp-duration-200 gp-ease-in-out [&_*]:gp-max-w-full gp-grid-rows-[1fr]" style="--bs:none;--bw:1px 1px 1px 1px;--bc:#121212;--shadow:none;--d:grid;--d-mobile:grid;--d-tablet:grid;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--mb:0px;--pt:80px;--pl:20px;--pb:80px;--pr:20px;--pt-mobile:70px;--pl-mobile:20px;--pb-mobile:70px;--pr-mobile:20px;--mb-tablet:0px;--pt-tablet:80px;--pl-tablet:20px;--pb-tablet:80px;--pr-tablet:20px;--cg:32px;--gtc:minmax(0, 12fr);--w:100%;--w-tablet:100%;--w-mobile:100%;--bgc:#D5F7FF;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;--pc:start">
+      
+
+      <div
+      data-same-height-display-contents
+      style="--jc:start"
+      class="gYF5XO7DwZ gp-relative gp-flex gp-flex-col"
+    >
+      
+    
+
+    
+
+    
+    <gp-row gp-data='{"background":{"desktop":{"attachment":"scroll","color":"transparent","image":{"height":0,"src":"","width":0},"position":{"x":50,"y":50},"repeat":"no-repeat","size":"cover","type":"color"}},"uid":"gimvQ2yo8-"}' data-id="gimvQ2yo8-" id="gimvQ2yo8-" data-same-height-subgrid-container class="gimvQ2yo8- gp-relative gp-mx-auto gp-mb-0 gp-grid gp-max-w-full gp-transition-colors gp-duration-200 gp-ease-in-out [&_*]:gp-max-w-full gp-grid-rows-[1fr]" style="--bs:none;--bw:1px 1px 1px 1px;--bc:#121212;--shadow:none;--d:grid;--d-mobile:grid;--d-tablet:grid;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--pt:0px;--pl:0px;--pb:40px;--pr:0px;--mb-mobile:0px;--pt-mobile:0px;--pl-mobile:0px;--pb-mobile:40px;--pr-mobile:0px;--mb-tablet:0px;--pt-tablet:0px;--pl-tablet:0px;--pb-tablet:40px;--pr-tablet:0px;--cg:30px;--gtc:minmax(0, 4fr) minmax(0, 8fr);--gtc-mobile:minmax(0, 12fr);--w:var(--g-ct-w, 1200px);--w-tablet:var(--g-ct-w, 100%);--w-mobile:var(--g-ct-w, 100%);--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;--pc:start">
+      
+
+      <div
+      data-same-height-display-contents
+      style="--jc:start"
+      class="gvc5djVy7q gp-relative gp-flex gp-flex-col"
+    >
+      
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id="gL23hJ4dsa"
+        class="gL23hJ4dsa"
+        style="--ta:left;--bs:solid;--bw:0px;--bc:#121212;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--mb:10px;--pt:0px;--pl:0px;--pb:0px;--pr:0px;--mb-mobile:8px;--pt-mobile:0px;--pl-mobile:0px;--pb-mobile:0px;--pr-mobile:0px;--mb-tablet:10px;--pt-tablet:0px;--pl-tablet:0px;--pb-tablet:0px;--pr-tablet:0px;--dynamic-source-color:#F4F4F4"
+        data-test-force-publish="1761036464106"
+      >
+      <div class="gp-flex" style="--jc:left">
+        <h2
+          data-gp-text
+          class=" gp-text-instant gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--tdt:auto;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--ts:none;--ta:left;--ta-tablet:left;--ta-mobile:center;--fs:normal;--ff:var(--g-font-Fredoka, 'Fredoka'), var(--g-font-heading, heading);--size:59px;--size-tablet:38px;--size-mobile:40px;--lh:130%;--lh-tablet:130%;--lh-mobile:130%;--weight:bold;--c:#242424;word-break:break-word;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;overflow:hidden;--tdl:"
+        >
+          {{ section.settings.ggL23hJ4dsa_text | replace: '$locationOrigin', locationOrigin }}
+        </h2>
+      </div>
+    </div>
+    
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id="gQwByvQyPd"
+        class="gQwByvQyPd"
+        style="--ta:left;--bs:solid;--bw:0px;--bc:#121212;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--mb:32px;--mb-mobile:28px;--dynamic-source-color:#F4F4F4"
+        data-test-force-publish="1761036464107"
+      >
+      <div class="gp-flex" style="--jc:left">
+        <div
+          data-gp-text
+          class=" gp-text-instant gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--tdt:auto;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--ta:left;--ta-mobile:center;--line-clamp:unset;--line-clamp-tablet:unset;--line-clamp-mobile:unset;--fs:normal;--ff:var(--g-font-body, body);--weight:400;--size:19px;--size-tablet:19px;--size-mobile:17px;--lh:130%;--lh-tablet:130%;--lh-mobile:130%;--c:#242424;word-break:break-word;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;overflow:hidden;--tdl:"
+        >
+          {{ section.settings.ggQwByvQyPd_text | replace: '$locationOrigin', locationOrigin }}
+        </div>
+      </div>
+    </div>
+    
+    </div><div
+      data-same-height-display-contents
+      style="--jc:start"
+      class="gKHlvK4KZT gp-relative gp-flex gp-flex-col"
+    >
+      <div gp-el-wrapper style="--bs:solid;--bw:0px;--bc:#121212;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px" class="gOPOL5CF7q ">
+      
+    <gp-accordion data-id="gOPOL5CF7q" class="gp-flex gp-flex-col gp-w-full" style="--gg:16px;--gg-mobile:14px;border-radius:inherit"
+      gp-data='{"uid":"gOPOL5CF7q","setting":{"iconSvg":"<svg width=\"17\" height=\"16\" viewBox=\"0 0 17 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                  <path d=\"M5.64645 2.64645C5.84171 2.45118 6.15829 2.45118 6.35355 2.64645L11.3536 7.64645C11.5488 7.84171 11.5488 8.15829 11.3536 8.35355L6.35355 13.3536C6.15829 13.5488 5.84171 13.5488 5.64645 13.3536C5.45118 13.1583 5.45118 12.8417 5.64645 12.6464L10.2929 8L5.64645 3.35355C5.45118 3.15829 5.45118 2.84171 5.64645 2.64645Z\" fill=\"currentColor\"/>\n                  </svg>","isIconPlus":false,"activeKey":"1","expanded":false,"expandItem":false,"iconPosition":"right","iconGlobalSize":{"desktop":{"gap":"16px"}},"iconCollapse":"<svg height=\"20\" width=\"20\" xmlns=\"http://www.w3.org/2000/svg\"  viewBox=\"0 0 256 256\" fill=\"currentColor\" data-id=\"508817587901825384\">\n              <path fill=\"currentColor\" strokeLinecap=\"round\" strokeLinejoin=\"round\" fill=\"currentColor\" d=\"M228,128a12,12,0,0,1-12,12H140v76a12,12,0,0,1-24,0V140H40a12,12,0,0,1,0-24h76V40a12,12,0,0,1,24,0v76h76A12,12,0,0,1,228,128Z\" /></svg>","iconExpand":"<svg height=\"20\" width=\"20\" xmlns=\"http://www.w3.org/2000/svg\"  viewBox=\"0 0 256 256\" fill=\"currentColor\" data-id=\"508817584339812712\">\n              <path fill=\"currentColor\" strokeLinecap=\"round\" strokeLinejoin=\"round\" fill=\"currentColor\" d=\"M228,128a12,12,0,0,1-12,12H40a12,12,0,0,1,0-24H216A12,12,0,0,1,228,128Z\" /></svg>","iconCollapseSize":14,"layoutHeader":"text-only","expandedMode":"single","configIconSize":16,"parentUid":"gOPOL5CF7q","childListNumber":[],"chidlrenUid":["gbD4ls9ezX","gF79_CsfTZ","g1f-cQPpGB","gYx74CPr-t","gQeHozXN2G","gEIeA0JeGl","g4OYVnUpoL","7IGZ09fwwQ","MEqfpH89KX"]},"styles":{"bgColor":{"active":"transparent","hover":"transparent","normal":"transparent"},"color":{"active":"#FFFFFF","hover":"#FFFFFF","normal":"#FFFFFF"},"headerBorder":{"active":{"border":"none","borderWidth":"Mixed","color":"#121212","isCustom":true,"position":"bottom","width":"0px 0px 1px 0px"},"hover":{"border":"none","borderWidth":"Mixed","color":"#121212","isCustom":true,"position":"bottom","width":"0px 0px 1px 0px"},"normal":{"border":"none","borderWidth":"Mixed","color":"#121212","isCustom":true,"position":"bottom","width":"0px 0px 1px 0px"}},"textColor":{"active":"#FFFFFF","hover":"#FFFFFF","normal":"#FFFFFF"},"iconColor":{"active":"#FFFFFF","hover":"#FFFFFF","normal":"#121212"},"contentSizePadding":{"desktop":{"gap":"16px","padding":{"bottom":"16px","left":"16px","right":"16px","top":"0px","type":"custom"}},"mobile":{"customShapeValue":"","gap":"14px","height":"","padding":{"bottom":"14px","left":"14px","right":"14px","top":"0px","type":"custom"},"shape":"","shapeValue":"","width":""}},"headerContentPadding":{"desktop":{"gap":"","padding":{"bottom":"16px","left":"16px","right":"16px","top":"16px","type":"custom"}},"mobile":{"customShapeValue":"","gap":"","height":"","padding":{"bottom":"14px","left":"14px","right":"14px","top":"14px","type":"custom"},"shape":"","shapeValue":"","width":""}},"widthHeightSize":{"desktop":{"height":"auto","width":"100%"}}}}'
+        >
+        <div class=" gp-hidden gp-rotate-90 -gp-rotate-90 gp-rotate-180"></div>
+      
+          <div class="gp-flex" style="--jc:center">
+            
+  <div class="gp-overflow-clip gp-group" style="--text-hover-color:#FFFFFF;--icon-expand-hover-color:#FFFFFF;--icon-expand-active-color:#FFFFFF;--icon-active-color:#FFFFFF;--icon-hover-color:#FFFFFF;--w:100%;--w-tablet:100%;--w-mobile:100%;--bs:none;--bw:1px 1px 1px 1px;--bc:#000000;--bg:#118FCB;--shadow:none;--bblr:16px;--bbrr:16px;--btlr:16px;--btrr:16px">
+    <div data-index="0" class="gOPOL5CF7q gp-overflow-hidden gp-child-item-gOPOL5CF7q gp-accordion-item">
+      <div aria-hidden uid="gbD4ls9ezX" id="gbD4ls9ezX" data-index="0"
+        class="gp-flex gp-accordion-item_header gp-cursor-pointer gp-items-center gp-gap-[16px] gOPOL5CF7q gp-accordion-item-gOPOL5CF7q-0" style="--pl:16px;--pr:16px;--pt:16px;--pb:16px;--pl-mobile:14px;--pr-mobile:14px;--pt-mobile:14px;--pb-mobile:14px;--h:auto;--h-tablet:auto;--h-mobile:auto;--fd:row-reverse;--jc:space-between;--hvr-bgc:transparent;--bgc:transparent;--bs:none;--hvr-bs:none;--bw:0px 0px 1px 0px;--hvr-bw:0px 0px 1px 0px;--bc:#121212;--hvr-bc:#121212">
+        
+          <div class="gp-inline-flex">
+            <span style="--c:#FFFFFF;width:14px;height:14px"
+            data-index="0"
+            class="group-hover:[color:var(--icon-expand-hover-color)] gp-collapsible-icon gp-accordion-item_icon gp-inline-flex gp-items-center gp-justify-center gp-overflow-hidden gp-transition-all gp-duration-200 [&>svg]:!gp-h-[var(--height-iconCollapseSize)] [&>svg]:!gp-w-full">
+              <svg height="20" width="20" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 256 256" fill="currentColor" data-id="508817587901825384">
+              <path fill="currentColor" strokeLinecap="round" strokeLinejoin="round" fill="currentColor" d="M228,128a12,12,0,0,1-12,12H140v76a12,12,0,0,1-24,0V140H40a12,12,0,0,1,0-24h76V40a12,12,0,0,1,24,0v76h76A12,12,0,0,1,228,128Z" /></svg>
+            </span>
+          </div>
+          
+        <div class="gp-flex gp-w-full gp-items-center gp-break-all" style="--gg:16px;--jc:left">
+          
+          
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id
+        
+        style="--c:#FFFFFF;--dynamic-source-color:#F4F4F4"
+        data-test-force-publish="1761036464109"
+      >
+      <div  >
+        <div
+          data-gp-text
+          class="gp-overflow-hidden gp-accordion-text-content group-hover:[color:var(--text-hover-color)!important]  gp-text-instant"
+          style="--w:100%;--tdt:auto;--ts:none;--fs:normal;--ff:var(--g-font-Fredoka, 'Fredoka'), var(--g-font-body, body);--size:19px;--size-tablet:16px;--size-mobile:14px;--lh:130%;--lh-tablet:130%;--lh-mobile:130%;--weight:bold;word-break:break-word;overflow:hidden;--tdl:"
+        >
+          {{ section.settings.ggOPOL5CF7q_childItem_0 }}
+        </div>
+      </div>
+    </div>
+    
+          
+        </div>
+      </div>
+      <div data-index="0" data-show="false" class="gp-accordion-item_body gp-transition-all gp-grid gp-duration-500 gp-overflow-hidden gp-grid-rows-[0fr]" style="grid-template-rows:0fr;grid-template-columns:minmax(auto, 100%)">
+        <div data-index="0" class="gp-accordion-item_body-inner gp-transition-all gp-duration-500 gp-min-h-0" style="--pl:16px;--pr:16px;--pl-mobile:14px;--pr-mobile:14px">
+          <div
+      data-same-height-display-contents
+      
+      class="gaRRyN8orm gp-relative gp-flex gp-flex-col"
+    >
+      
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id="g-gSoihG-2"
+        class="g-gSoihG-2"
+        style="--ta:left;--bs:solid;--bw:0px;--bc:#121212;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--dynamic-source-color:#F4F4F4"
+        data-test-force-publish="1761036464110"
+      >
+      <div class="gp-flex" style="--jc:left">
+        <div
+          data-gp-text
+          class=" gp-text-instant gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--tdt:auto;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--ts:none;--ta:left;--line-clamp:unset;--line-clamp-tablet:unset;--line-clamp-mobile:unset;--fs:normal;--ff:var(--g-font-Poppins, 'Poppins'), var(--g-font-body, body);--weight:400;--size:16px;--size-tablet:16px;--size-mobile:15px;--lh:150%;--lh-tablet:150%;--lh-mobile:150%;--c:#FFFFFF;word-break:break-word;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;overflow:hidden;--tdl:"
+        >
+          {{ section.settings.gg-gSoihG-2_text | replace: '$locationOrigin', locationOrigin }}
+        </div>
+      </div>
+    </div>
+    
+    </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+          </div>
+            
+          <div class="gp-flex" style="--jc:center">
+            
+  <div class="gp-overflow-clip gp-group" style="--text-hover-color:#FFFFFF;--icon-expand-hover-color:#FFFFFF;--icon-expand-active-color:#FFFFFF;--icon-active-color:#FFFFFF;--icon-hover-color:#FFFFFF;--w:100%;--w-tablet:100%;--w-mobile:100%;--bs:none;--bw:1px 1px 1px 1px;--bc:#000000;--bg:#118FCB;--shadow:none;--bblr:16px;--bbrr:16px;--btlr:16px;--btrr:16px">
+    <div data-index="1" class="gOPOL5CF7q gp-overflow-hidden gp-child-item-gOPOL5CF7q gp-accordion-item">
+      <div aria-hidden uid="gF79_CsfTZ" id="gF79_CsfTZ" data-index="1"
+        class="gp-flex gp-accordion-item_header gp-cursor-pointer gp-items-center gp-gap-[16px] gOPOL5CF7q gp-accordion-item-gOPOL5CF7q-1" style="--pl:16px;--pr:16px;--pt:16px;--pb:16px;--pl-mobile:14px;--pr-mobile:14px;--pt-mobile:14px;--pb-mobile:14px;--h:auto;--h-tablet:auto;--h-mobile:auto;--fd:row-reverse;--jc:space-between;--hvr-bgc:transparent;--bgc:transparent;--bs:none;--hvr-bs:none;--bw:0px 0px 1px 0px;--hvr-bw:0px 0px 1px 0px;--bc:#121212;--hvr-bc:#121212">
+        
+          <div class="gp-inline-flex">
+            <span style="--c:#FFFFFF;width:14px;height:14px"
+            data-index="1"
+            class="group-hover:[color:var(--icon-expand-hover-color)] gp-collapsible-icon gp-accordion-item_icon gp-inline-flex gp-items-center gp-justify-center gp-overflow-hidden gp-transition-all gp-duration-200 [&>svg]:!gp-h-[var(--height-iconCollapseSize)] [&>svg]:!gp-w-full">
+              <svg height="20" width="20" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 256 256" fill="currentColor" data-id="508817587901825384">
+              <path fill="currentColor" strokeLinecap="round" strokeLinejoin="round" fill="currentColor" d="M228,128a12,12,0,0,1-12,12H140v76a12,12,0,0,1-24,0V140H40a12,12,0,0,1,0-24h76V40a12,12,0,0,1,24,0v76h76A12,12,0,0,1,228,128Z" /></svg>
+            </span>
+          </div>
+          
+        <div class="gp-flex gp-w-full gp-items-center gp-break-all" style="--gg:16px;--jc:left">
+          
+          
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id
+        
+        style="--c:#FFFFFF;--dynamic-source-color:#F4F4F4"
+        data-test-force-publish="1761036464112"
+      >
+      <div  >
+        <div
+          data-gp-text
+          class="gp-overflow-hidden gp-accordion-text-content group-hover:[color:var(--text-hover-color)!important]  gp-text-instant"
+          style="--w:100%;--tdt:auto;--ts:none;--fs:normal;--ff:var(--g-font-Fredoka, 'Fredoka'), var(--g-font-body, body);--size:19px;--size-tablet:16px;--size-mobile:14px;--lh:130%;--lh-tablet:130%;--lh-mobile:130%;--weight:bold;word-break:break-word;overflow:hidden;--tdl:"
+        >
+          {{ section.settings.ggOPOL5CF7q_childItem_1 }}
+        </div>
+      </div>
+    </div>
+    
+          
+        </div>
+      </div>
+      <div data-index="1" data-show="false" class="gp-accordion-item_body gp-transition-all gp-grid gp-duration-500 gp-overflow-hidden gp-grid-rows-[0fr]" style="grid-template-rows:0fr;grid-template-columns:minmax(auto, 100%)">
+        <div data-index="1" class="gp-accordion-item_body-inner gp-transition-all gp-duration-500 gp-min-h-0" style="--pl:16px;--pr:16px;--pl-mobile:14px;--pr-mobile:14px">
+          <div
+      data-same-height-display-contents
+      
+      class="ga0cSvPKzA gp-relative gp-flex gp-flex-col"
+    >
+      
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id="g9ogdxg3hD"
+        class="g9ogdxg3hD"
+        style="--ta:left;--bs:solid;--bw:0px;--bc:#121212;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--dynamic-source-color:#F4F4F4"
+        data-test-force-publish="1761036464123"
+      >
+      <div class="gp-flex" style="--jc:left">
+        <div
+          data-gp-text
+          class=" gp-text-instant gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--tdt:auto;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--ts:none;--ta:left;--line-clamp:unset;--line-clamp-tablet:unset;--line-clamp-mobile:unset;--fs:normal;--ff:var(--g-font-Poppins, 'Poppins'), var(--g-font-body, body);--weight:400;--size:16px;--size-tablet:16px;--size-mobile:15px;--lh:150%;--lh-tablet:150%;--lh-mobile:150%;--c:#FFFFFF;word-break:break-word;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;overflow:hidden;--tdl:"
+        >
+          {{ section.settings.gg9ogdxg3hD_text | replace: '$locationOrigin', locationOrigin }}
+        </div>
+      </div>
+    </div>
+    
+    </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+          </div>
+            
+          <div class="gp-flex" style="--jc:center">
+            
+  <div class="gp-overflow-clip gp-group" style="--text-hover-color:#FFFFFF;--icon-expand-hover-color:#FFFFFF;--icon-expand-active-color:#FFFFFF;--icon-active-color:#FFFFFF;--icon-hover-color:#FFFFFF;--w:100%;--w-tablet:100%;--w-mobile:100%;--bs:none;--bw:1px 1px 1px 1px;--bc:#000000;--bg:#118FCB;--shadow:none;--bblr:16px;--bbrr:16px;--btlr:16px;--btrr:16px">
+    <div data-index="2" class="gOPOL5CF7q gp-overflow-hidden gp-child-item-gOPOL5CF7q gp-accordion-item">
+      <div aria-hidden uid="g1f-cQPpGB" id="g1f-cQPpGB" data-index="2"
+        class="gp-flex gp-accordion-item_header gp-cursor-pointer gp-items-center gp-gap-[16px] gOPOL5CF7q gp-accordion-item-gOPOL5CF7q-2" style="--pl:16px;--pr:16px;--pt:16px;--pb:16px;--pl-mobile:14px;--pr-mobile:14px;--pt-mobile:14px;--pb-mobile:14px;--h:auto;--h-tablet:auto;--h-mobile:auto;--fd:row-reverse;--jc:space-between;--hvr-bgc:transparent;--bgc:transparent;--bs:none;--hvr-bs:none;--bw:0px 0px 1px 0px;--hvr-bw:0px 0px 1px 0px;--bc:#121212;--hvr-bc:#121212">
+        
+          <div class="gp-inline-flex">
+            <span style="--c:#FFFFFF;width:14px;height:14px"
+            data-index="2"
+            class="group-hover:[color:var(--icon-expand-hover-color)] gp-collapsible-icon gp-accordion-item_icon gp-inline-flex gp-items-center gp-justify-center gp-overflow-hidden gp-transition-all gp-duration-200 [&>svg]:!gp-h-[var(--height-iconCollapseSize)] [&>svg]:!gp-w-full">
+              <svg height="20" width="20" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 256 256" fill="currentColor" data-id="508817587901825384">
+              <path fill="currentColor" strokeLinecap="round" strokeLinejoin="round" fill="currentColor" d="M228,128a12,12,0,0,1-12,12H140v76a12,12,0,0,1-24,0V140H40a12,12,0,0,1,0-24h76V40a12,12,0,0,1,24,0v76h76A12,12,0,0,1,228,128Z" /></svg>
+            </span>
+          </div>
+          
+        <div class="gp-flex gp-w-full gp-items-center gp-break-all" style="--gg:16px;--jc:left">
+          
+          
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id
+        
+        style="--c:#FFFFFF;--dynamic-source-color:#F4F4F4"
+        data-test-force-publish="1761036464125"
+      >
+      <div  >
+        <div
+          data-gp-text
+          class="gp-overflow-hidden gp-accordion-text-content group-hover:[color:var(--text-hover-color)!important]  gp-text-instant"
+          style="--w:100%;--tdt:auto;--ts:none;--fs:normal;--ff:var(--g-font-Fredoka, 'Fredoka'), var(--g-font-body, body);--size:19px;--size-tablet:16px;--size-mobile:14px;--lh:130%;--lh-tablet:130%;--lh-mobile:130%;--weight:bold;word-break:break-word;overflow:hidden;--tdl:"
+        >
+          {{ section.settings.ggOPOL5CF7q_childItem_2 }}
+        </div>
+      </div>
+    </div>
+    
+          
+        </div>
+      </div>
+      <div data-index="2" data-show="false" class="gp-accordion-item_body gp-transition-all gp-grid gp-duration-500 gp-overflow-hidden gp-grid-rows-[0fr]" style="grid-template-rows:0fr;grid-template-columns:minmax(auto, 100%)">
+        <div data-index="2" class="gp-accordion-item_body-inner gp-transition-all gp-duration-500 gp-min-h-0" style="--pl:16px;--pr:16px;--pl-mobile:14px;--pr-mobile:14px">
+          <div
+      data-same-height-display-contents
+      
+      class="gwVYsrPqU4 gp-relative gp-flex gp-flex-col"
+    >
+      
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id="gTNC_0Y-QC"
+        class="gTNC_0Y-QC"
+        style="--ta:left;--bs:solid;--bw:0px;--bc:#121212;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--dynamic-source-color:#F4F4F4"
+        data-test-force-publish="1761036464127"
+      >
+      <div class="gp-flex" style="--jc:left">
+        <div
+          data-gp-text
+          class=" gp-text-instant gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--tdt:auto;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--ts:none;--ta:left;--line-clamp:unset;--line-clamp-tablet:unset;--line-clamp-mobile:unset;--fs:normal;--ff:var(--g-font-Poppins, 'Poppins'), var(--g-font-body, body);--weight:400;--size:16px;--size-tablet:16px;--size-mobile:15px;--lh:150%;--lh-tablet:150%;--lh-mobile:150%;--c:#FFFFFF;word-break:break-word;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;overflow:hidden;--tdl:"
+        >
+          {{ section.settings.ggTNC_0Y-QC_text | replace: '$locationOrigin', locationOrigin }}
+        </div>
+      </div>
+    </div>
+    
+    </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+          </div>
+            
+          <div class="gp-flex" style="--jc:center">
+            
+  <div class="gp-overflow-clip gp-group" style="--text-hover-color:#FFFFFF;--icon-expand-hover-color:#FFFFFF;--icon-expand-active-color:#FFFFFF;--icon-active-color:#FFFFFF;--icon-hover-color:#FFFFFF;--w:100%;--w-tablet:100%;--w-mobile:100%;--bs:none;--bw:1px 1px 1px 1px;--bc:#000000;--bg:#118FCB;--shadow:none;--bblr:16px;--bbrr:16px;--btlr:16px;--btrr:16px">
+    <div data-index="3" class="gOPOL5CF7q gp-overflow-hidden gp-child-item-gOPOL5CF7q gp-accordion-item">
+      <div aria-hidden uid="gYx74CPr-t" id="gYx74CPr-t" data-index="3"
+        class="gp-flex gp-accordion-item_header gp-cursor-pointer gp-items-center gp-gap-[16px] gOPOL5CF7q gp-accordion-item-gOPOL5CF7q-3" style="--pl:16px;--pr:16px;--pt:16px;--pb:16px;--pl-mobile:14px;--pr-mobile:14px;--pt-mobile:14px;--pb-mobile:14px;--h:auto;--h-tablet:auto;--h-mobile:auto;--fd:row-reverse;--jc:space-between;--hvr-bgc:transparent;--bgc:transparent;--bs:none;--hvr-bs:none;--bw:0px 0px 1px 0px;--hvr-bw:0px 0px 1px 0px;--bc:#121212;--hvr-bc:#121212">
+        
+          <div class="gp-inline-flex">
+            <span style="--c:#FFFFFF;width:14px;height:14px"
+            data-index="3"
+            class="group-hover:[color:var(--icon-expand-hover-color)] gp-collapsible-icon gp-accordion-item_icon gp-inline-flex gp-items-center gp-justify-center gp-overflow-hidden gp-transition-all gp-duration-200 [&>svg]:!gp-h-[var(--height-iconCollapseSize)] [&>svg]:!gp-w-full">
+              <svg height="20" width="20" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 256 256" fill="currentColor" data-id="508817587901825384">
+              <path fill="currentColor" strokeLinecap="round" strokeLinejoin="round" fill="currentColor" d="M228,128a12,12,0,0,1-12,12H140v76a12,12,0,0,1-24,0V140H40a12,12,0,0,1,0-24h76V40a12,12,0,0,1,24,0v76h76A12,12,0,0,1,228,128Z" /></svg>
+            </span>
+          </div>
+          
+        <div class="gp-flex gp-w-full gp-items-center gp-break-all" style="--gg:16px;--jc:left">
+          
+          
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id
+        
+        style="--c:#FFFFFF;--dynamic-source-color:#F4F4F4"
+        data-test-force-publish="1761036464128"
+      >
+      <div  >
+        <div
+          data-gp-text
+          class="gp-overflow-hidden gp-accordion-text-content group-hover:[color:var(--text-hover-color)!important]  gp-text-instant"
+          style="--w:100%;--tdt:auto;--ts:none;--fs:normal;--ff:var(--g-font-Fredoka, 'Fredoka'), var(--g-font-body, body);--size:19px;--size-tablet:16px;--size-mobile:14px;--lh:130%;--lh-tablet:130%;--lh-mobile:130%;--weight:bold;word-break:break-word;overflow:hidden;--tdl:"
+        >
+          {{ section.settings.ggOPOL5CF7q_childItem_3 }}
+        </div>
+      </div>
+    </div>
+    
+          
+        </div>
+      </div>
+      <div data-index="3" data-show="false" class="gp-accordion-item_body gp-transition-all gp-grid gp-duration-500 gp-overflow-hidden gp-grid-rows-[0fr]" style="grid-template-rows:0fr;grid-template-columns:minmax(auto, 100%)">
+        <div data-index="3" class="gp-accordion-item_body-inner gp-transition-all gp-duration-500 gp-min-h-0" style="--pl:16px;--pr:16px;--pl-mobile:14px;--pr-mobile:14px">
+          <div
+      data-same-height-display-contents
+      style="--ai:normal;--jc:normal;--o:0"
+      class="gsnBNZpz9U gp-relative gp-flex gp-flex-col"
+    >
+      
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id="gLuoTHdNsW"
+        class="gLuoTHdNsW"
+        style="--ta:left;--bs:solid;--bw:0px;--bc:#121212;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--dynamic-source-color:#F4F4F4"
+        data-test-force-publish="1761036464129"
+      >
+      <div class="gp-flex" style="--jc:left">
+        <div
+          data-gp-text
+          class=" gp-text-instant gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--tdt:auto;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--ts:none;--ta:left;--line-clamp:unset;--line-clamp-tablet:unset;--line-clamp-mobile:unset;--fs:normal;--ff:var(--g-font-Poppins, 'Poppins'), var(--g-font-body, body);--weight:400;--size:16px;--size-tablet:16px;--size-mobile:15px;--lh:150%;--lh-tablet:150%;--lh-mobile:150%;--c:#FFFFFF;word-break:break-word;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;overflow:hidden;--tdl:"
+        >
+          {{ section.settings.ggLuoTHdNsW_text | replace: '$locationOrigin', locationOrigin }}
+        </div>
+      </div>
+    </div>
+    
+    </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+          </div>
+            
+          <div class="gp-flex" style="--jc:center">
+            
+  <div class="gp-overflow-clip gp-group" style="--text-hover-color:#FFFFFF;--icon-expand-hover-color:#FFFFFF;--icon-expand-active-color:#FFFFFF;--icon-active-color:#FFFFFF;--icon-hover-color:#FFFFFF;--w:100%;--w-tablet:100%;--w-mobile:100%;--bs:none;--bw:1px 1px 1px 1px;--bc:#000000;--bg:#118FCB;--shadow:none;--bblr:16px;--bbrr:16px;--btlr:16px;--btrr:16px">
+    <div data-index="4" class="gOPOL5CF7q gp-overflow-hidden gp-child-item-gOPOL5CF7q gp-accordion-item">
+      <div aria-hidden uid="gQeHozXN2G" id="gQeHozXN2G" data-index="4"
+        class="gp-flex gp-accordion-item_header gp-cursor-pointer gp-items-center gp-gap-[16px] gOPOL5CF7q gp-accordion-item-gOPOL5CF7q-4" style="--pl:16px;--pr:16px;--pt:16px;--pb:16px;--pl-mobile:14px;--pr-mobile:14px;--pt-mobile:14px;--pb-mobile:14px;--h:auto;--h-tablet:auto;--h-mobile:auto;--fd:row-reverse;--jc:space-between;--hvr-bgc:transparent;--bgc:transparent;--bs:none;--hvr-bs:none;--bw:0px 0px 1px 0px;--hvr-bw:0px 0px 1px 0px;--bc:#121212;--hvr-bc:#121212">
+        
+          <div class="gp-inline-flex">
+            <span style="--c:#FFFFFF;width:14px;height:14px"
+            data-index="4"
+            class="group-hover:[color:var(--icon-expand-hover-color)] gp-collapsible-icon gp-accordion-item_icon gp-inline-flex gp-items-center gp-justify-center gp-overflow-hidden gp-transition-all gp-duration-200 [&>svg]:!gp-h-[var(--height-iconCollapseSize)] [&>svg]:!gp-w-full">
+              <svg height="20" width="20" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 256 256" fill="currentColor" data-id="508817587901825384">
+              <path fill="currentColor" strokeLinecap="round" strokeLinejoin="round" fill="currentColor" d="M228,128a12,12,0,0,1-12,12H140v76a12,12,0,0,1-24,0V140H40a12,12,0,0,1,0-24h76V40a12,12,0,0,1,24,0v76h76A12,12,0,0,1,228,128Z" /></svg>
+            </span>
+          </div>
+          
+        <div class="gp-flex gp-w-full gp-items-center gp-break-all" style="--gg:16px;--jc:left">
+          
+          
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id
+        
+        style="--c:#FFFFFF;--dynamic-source-color:#F4F4F4"
+        data-test-force-publish="1761036464130"
+      >
+      <div  >
+        <div
+          data-gp-text
+          class="gp-overflow-hidden gp-accordion-text-content group-hover:[color:var(--text-hover-color)!important]  gp-text-instant"
+          style="--w:100%;--tdt:auto;--ts:none;--fs:normal;--ff:var(--g-font-Fredoka, 'Fredoka'), var(--g-font-body, body);--size:19px;--size-tablet:16px;--size-mobile:14px;--lh:130%;--lh-tablet:130%;--lh-mobile:130%;--weight:bold;word-break:break-word;overflow:hidden;--tdl:"
+        >
+          {{ section.settings.ggOPOL5CF7q_childItem_4 }}
+        </div>
+      </div>
+    </div>
+    
+          
+        </div>
+      </div>
+      <div data-index="4" data-show="false" class="gp-accordion-item_body gp-transition-all gp-grid gp-duration-500 gp-overflow-hidden gp-grid-rows-[0fr]" style="grid-template-rows:0fr;grid-template-columns:minmax(auto, 100%)">
+        <div data-index="4" class="gp-accordion-item_body-inner gp-transition-all gp-duration-500 gp-min-h-0" style="--pl:16px;--pr:16px;--pl-mobile:14px;--pr-mobile:14px">
+          <div
+      data-same-height-display-contents
+      style="--ai:normal;--jc:normal;--o:0"
+      class="gehauhOHr_ gp-relative gp-flex gp-flex-col"
+    >
+      
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id="gyK-Z3aqQA"
+        class="gyK-Z3aqQA"
+        style="--ta:left;--bs:solid;--bw:0px;--bc:#121212;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--dynamic-source-color:#F4F4F4"
+        data-test-force-publish="1761036464132"
+      >
+      <div class="gp-flex" style="--jc:left">
+        <div
+          data-gp-text
+          class=" gp-text-instant gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--tdt:auto;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--ts:none;--ta:left;--line-clamp:unset;--line-clamp-tablet:unset;--line-clamp-mobile:unset;--fs:normal;--ff:var(--g-font-Poppins, 'Poppins'), var(--g-font-body, body);--weight:400;--size:16px;--size-tablet:16px;--size-mobile:15px;--lh:150%;--lh-tablet:150%;--lh-mobile:150%;--c:#FFFFFF;word-break:break-word;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;overflow:hidden;--tdl:"
+        >
+          {{ section.settings.ggyK-Z3aqQA_text | replace: '$locationOrigin', locationOrigin }}
+        </div>
+      </div>
+    </div>
+    
+    </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+          </div>
+            
+          <div class="gp-flex" style="--jc:center">
+            
+  <div class="gp-overflow-clip gp-group" style="--text-hover-color:#FFFFFF;--icon-expand-hover-color:#FFFFFF;--icon-expand-active-color:#FFFFFF;--icon-active-color:#FFFFFF;--icon-hover-color:#FFFFFF;--w:100%;--w-tablet:100%;--w-mobile:100%;--bs:none;--bw:1px 1px 1px 1px;--bc:#000000;--bg:#118FCB;--shadow:none;--bblr:16px;--bbrr:16px;--btlr:16px;--btrr:16px">
+    <div data-index="5" class="gOPOL5CF7q gp-overflow-hidden gp-child-item-gOPOL5CF7q gp-accordion-item">
+      <div aria-hidden uid="gEIeA0JeGl" id="gEIeA0JeGl" data-index="5"
+        class="gp-flex gp-accordion-item_header gp-cursor-pointer gp-items-center gp-gap-[16px] gOPOL5CF7q gp-accordion-item-gOPOL5CF7q-5" style="--pl:16px;--pr:16px;--pt:16px;--pb:16px;--pl-mobile:14px;--pr-mobile:14px;--pt-mobile:14px;--pb-mobile:14px;--h:auto;--h-tablet:auto;--h-mobile:auto;--fd:row-reverse;--jc:space-between;--hvr-bgc:transparent;--bgc:transparent;--bs:none;--hvr-bs:none;--bw:0px 0px 1px 0px;--hvr-bw:0px 0px 1px 0px;--bc:#121212;--hvr-bc:#121212">
+        
+          <div class="gp-inline-flex">
+            <span style="--c:#FFFFFF;width:14px;height:14px"
+            data-index="5"
+            class="group-hover:[color:var(--icon-expand-hover-color)] gp-collapsible-icon gp-accordion-item_icon gp-inline-flex gp-items-center gp-justify-center gp-overflow-hidden gp-transition-all gp-duration-200 [&>svg]:!gp-h-[var(--height-iconCollapseSize)] [&>svg]:!gp-w-full">
+              <svg height="20" width="20" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 256 256" fill="currentColor" data-id="508817587901825384">
+              <path fill="currentColor" strokeLinecap="round" strokeLinejoin="round" fill="currentColor" d="M228,128a12,12,0,0,1-12,12H140v76a12,12,0,0,1-24,0V140H40a12,12,0,0,1,0-24h76V40a12,12,0,0,1,24,0v76h76A12,12,0,0,1,228,128Z" /></svg>
+            </span>
+          </div>
+          
+        <div class="gp-flex gp-w-full gp-items-center gp-break-all" style="--gg:16px;--jc:left">
+          
+          
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id
+        
+        style="--c:#FFFFFF;--dynamic-source-color:#F4F4F4"
+        data-test-force-publish="1761036464133"
+      >
+      <div  >
+        <div
+          data-gp-text
+          class="gp-overflow-hidden gp-accordion-text-content group-hover:[color:var(--text-hover-color)!important]  gp-text-instant"
+          style="--w:100%;--tdt:auto;--ts:none;--fs:normal;--ff:var(--g-font-Fredoka, 'Fredoka'), var(--g-font-body, body);--size:19px;--size-tablet:16px;--size-mobile:14px;--lh:130%;--lh-tablet:130%;--lh-mobile:130%;--weight:bold;word-break:break-word;overflow:hidden;--tdl:"
+        >
+          {{ section.settings.ggOPOL5CF7q_childItem_5 }}
+        </div>
+      </div>
+    </div>
+    
+          
+        </div>
+      </div>
+      <div data-index="5" data-show="false" class="gp-accordion-item_body gp-transition-all gp-grid gp-duration-500 gp-overflow-hidden gp-grid-rows-[0fr]" style="grid-template-rows:0fr;grid-template-columns:minmax(auto, 100%)">
+        <div data-index="5" class="gp-accordion-item_body-inner gp-transition-all gp-duration-500 gp-min-h-0" style="--pl:16px;--pr:16px;--pl-mobile:14px;--pr-mobile:14px">
+          <div
+      data-same-height-display-contents
+      style="--ai:normal;--jc:normal;--o:0"
+      class="gQvT9DEPi2 gp-relative gp-flex gp-flex-col"
+    >
+      
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id="gGpthg5G3D"
+        class="gGpthg5G3D"
+        style="--ta:left;--bs:solid;--bw:0px;--bc:#121212;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--dynamic-source-color:#F4F4F4"
+        data-test-force-publish="1761036464134"
+      >
+      <div class="gp-flex" style="--jc:left">
+        <div
+          data-gp-text
+          class=" gp-text-instant gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--tdt:auto;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--ts:none;--ta:left;--line-clamp:unset;--line-clamp-tablet:unset;--line-clamp-mobile:unset;--fs:normal;--ff:var(--g-font-Poppins, 'Poppins'), var(--g-font-body, body);--weight:400;--size:16px;--size-tablet:16px;--size-mobile:15px;--lh:150%;--lh-tablet:150%;--lh-mobile:150%;--c:#FFFFFF;word-break:break-word;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;overflow:hidden;--tdl:"
+        >
+          {{ section.settings.ggGpthg5G3D_text | replace: '$locationOrigin', locationOrigin }}
+        </div>
+      </div>
+    </div>
+    
+    </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+          </div>
+            
+          <div class="gp-flex" style="--jc:center">
+            
+  <div class="gp-overflow-clip gp-group" style="--text-hover-color:#FFFFFF;--icon-expand-hover-color:#FFFFFF;--icon-expand-active-color:#FFFFFF;--icon-active-color:#FFFFFF;--icon-hover-color:#FFFFFF;--w:100%;--w-tablet:100%;--w-mobile:100%;--bs:none;--bw:1px 1px 1px 1px;--bc:#000000;--bg:#118FCB;--shadow:none;--bblr:16px;--bbrr:16px;--btlr:16px;--btrr:16px">
+    <div data-index="6" class="gOPOL5CF7q gp-overflow-hidden gp-child-item-gOPOL5CF7q gp-accordion-item">
+      <div aria-hidden uid="g4OYVnUpoL" id="g4OYVnUpoL" data-index="6"
+        class="gp-flex gp-accordion-item_header gp-cursor-pointer gp-items-center gp-gap-[16px] gOPOL5CF7q gp-accordion-item-gOPOL5CF7q-6" style="--pl:16px;--pr:16px;--pt:16px;--pb:16px;--pl-mobile:14px;--pr-mobile:14px;--pt-mobile:14px;--pb-mobile:14px;--h:auto;--h-tablet:auto;--h-mobile:auto;--fd:row-reverse;--jc:space-between;--hvr-bgc:transparent;--bgc:transparent;--bs:none;--hvr-bs:none;--bw:0px 0px 1px 0px;--hvr-bw:0px 0px 1px 0px;--bc:#121212;--hvr-bc:#121212">
+        
+          <div class="gp-inline-flex">
+            <span style="--c:#FFFFFF;width:14px;height:14px"
+            data-index="6"
+            class="group-hover:[color:var(--icon-expand-hover-color)] gp-collapsible-icon gp-accordion-item_icon gp-inline-flex gp-items-center gp-justify-center gp-overflow-hidden gp-transition-all gp-duration-200 [&>svg]:!gp-h-[var(--height-iconCollapseSize)] [&>svg]:!gp-w-full">
+              <svg height="20" width="20" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 256 256" fill="currentColor" data-id="508817587901825384">
+              <path fill="currentColor" strokeLinecap="round" strokeLinejoin="round" fill="currentColor" d="M228,128a12,12,0,0,1-12,12H140v76a12,12,0,0,1-24,0V140H40a12,12,0,0,1,0-24h76V40a12,12,0,0,1,24,0v76h76A12,12,0,0,1,228,128Z" /></svg>
+            </span>
+          </div>
+          
+        <div class="gp-flex gp-w-full gp-items-center gp-break-all" style="--gg:16px;--jc:left">
+          
+          
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id
+        
+        style="--c:#FFFFFF;--dynamic-source-color:#F4F4F4"
+        data-test-force-publish="1761036464135"
+      >
+      <div  >
+        <div
+          data-gp-text
+          class="gp-overflow-hidden gp-accordion-text-content group-hover:[color:var(--text-hover-color)!important]  gp-text-instant"
+          style="--w:100%;--tdt:auto;--ts:none;--fs:normal;--ff:var(--g-font-Fredoka, 'Fredoka'), var(--g-font-body, body);--size:19px;--size-tablet:16px;--size-mobile:14px;--lh:130%;--lh-tablet:130%;--lh-mobile:130%;--weight:bold;word-break:break-word;overflow:hidden;--tdl:"
+        >
+          {{ section.settings.ggOPOL5CF7q_childItem_6 }}
+        </div>
+      </div>
+    </div>
+    
+          
+        </div>
+      </div>
+      <div data-index="6" data-show="false" class="gp-accordion-item_body gp-transition-all gp-grid gp-duration-500 gp-overflow-hidden gp-grid-rows-[0fr]" style="grid-template-rows:0fr;grid-template-columns:minmax(auto, 100%)">
+        <div data-index="6" class="gp-accordion-item_body-inner gp-transition-all gp-duration-500 gp-min-h-0" style="--pl:16px;--pr:16px;--pl-mobile:14px;--pr-mobile:14px">
+          <div
+      data-same-height-display-contents
+      style="--ai:normal;--jc:normal;--o:0"
+      class="gngfO9V3-h gp-relative gp-flex gp-flex-col"
+    >
+      
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id="giJmeIB0Kt"
+        class="giJmeIB0Kt"
+        style="--ta:left;--bs:solid;--bw:0px;--bc:#121212;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--dynamic-source-color:#F4F4F4"
+        data-test-force-publish="1761036464136"
+      >
+      <div class="gp-flex" style="--jc:left">
+        <div
+          data-gp-text
+          class=" gp-text-instant gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--tdt:auto;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--ts:none;--ta:left;--line-clamp:unset;--line-clamp-tablet:unset;--line-clamp-mobile:unset;--fs:normal;--ff:var(--g-font-Poppins, 'Poppins'), var(--g-font-body, body);--weight:400;--size:16px;--size-tablet:16px;--size-mobile:15px;--lh:150%;--lh-tablet:150%;--lh-mobile:150%;--c:#FFFFFF;word-break:break-word;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;overflow:hidden;--tdl:"
+        >
+          {{ section.settings.ggiJmeIB0Kt_text | replace: '$locationOrigin', locationOrigin }}
+        </div>
+      </div>
+    </div>
+    
+    </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+          </div>
+            
+          <div class="gp-flex" style="--jc:center">
+            
+  <div class="gp-overflow-clip gp-group" style="--text-hover-color:#FFFFFF;--icon-expand-hover-color:#FFFFFF;--icon-expand-active-color:#FFFFFF;--icon-active-color:#FFFFFF;--icon-hover-color:#FFFFFF;--w:100%;--w-tablet:100%;--w-mobile:100%;--bs:none;--bw:1px 1px 1px 1px;--bc:#000000;--bg:#118FCB;--shadow:none;--bblr:16px;--bbrr:16px;--btlr:16px;--btrr:16px">
+    <div data-index="7" class="gOPOL5CF7q gp-overflow-hidden gp-child-item-gOPOL5CF7q gp-accordion-item">
+      <div aria-hidden uid="7IGZ09fwwQ" id="7IGZ09fwwQ" data-index="7"
+        class="gp-flex gp-accordion-item_header gp-cursor-pointer gp-items-center gp-gap-[16px] gOPOL5CF7q gp-accordion-item-gOPOL5CF7q-7" style="--pl:16px;--pr:16px;--pt:16px;--pb:16px;--pl-mobile:14px;--pr-mobile:14px;--pt-mobile:14px;--pb-mobile:14px;--h:auto;--h-tablet:auto;--h-mobile:auto;--fd:row-reverse;--jc:space-between;--hvr-bgc:transparent;--bgc:transparent;--bs:none;--hvr-bs:none;--bw:0px 0px 1px 0px;--hvr-bw:0px 0px 1px 0px;--bc:#121212;--hvr-bc:#121212">
+        
+          <div class="gp-inline-flex">
+            <span style="--c:#FFFFFF;width:14px;height:14px"
+            data-index="7"
+            class="group-hover:[color:var(--icon-expand-hover-color)] gp-collapsible-icon gp-accordion-item_icon gp-inline-flex gp-items-center gp-justify-center gp-overflow-hidden gp-transition-all gp-duration-200 [&>svg]:!gp-h-[var(--height-iconCollapseSize)] [&>svg]:!gp-w-full">
+              <svg height="20" width="20" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 256 256" fill="currentColor" data-id="508817587901825384">
+              <path fill="currentColor" strokeLinecap="round" strokeLinejoin="round" fill="currentColor" d="M228,128a12,12,0,0,1-12,12H140v76a12,12,0,0,1-24,0V140H40a12,12,0,0,1,0-24h76V40a12,12,0,0,1,24,0v76h76A12,12,0,0,1,228,128Z" /></svg>
+            </span>
+          </div>
+          
+        <div class="gp-flex gp-w-full gp-items-center gp-break-all" style="--gg:16px;--jc:left">
+          
+          
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id
+        
+        style="--c:#FFFFFF;--dynamic-source-color:#F4F4F4"
+        data-test-force-publish="1761036464138"
+      >
+      <div  >
+        <div
+          data-gp-text
+          class="gp-overflow-hidden gp-accordion-text-content group-hover:[color:var(--text-hover-color)!important]  gp-text-instant"
+          style="--w:100%;--tdt:auto;--ts:none;--fs:normal;--ff:var(--g-font-Fredoka, 'Fredoka'), var(--g-font-body, body);--size:19px;--size-tablet:16px;--size-mobile:14px;--lh:130%;--lh-tablet:130%;--lh-mobile:130%;--weight:bold;word-break:break-word;overflow:hidden;--tdl:"
+        >
+          {{ section.settings.ggOPOL5CF7q_childItem_7 }}
+        </div>
+      </div>
+    </div>
+    
+          
+        </div>
+      </div>
+      <div data-index="7" data-show="false" class="gp-accordion-item_body gp-transition-all gp-grid gp-duration-500 gp-overflow-hidden gp-grid-rows-[0fr]" style="grid-template-rows:0fr;grid-template-columns:minmax(auto, 100%)">
+        <div data-index="7" class="gp-accordion-item_body-inner gp-transition-all gp-duration-500 gp-min-h-0" style="--pl:16px;--pr:16px;--pl-mobile:14px;--pr-mobile:14px">
+          <div
+      data-same-height-display-contents
+      style="--ai:normal;--jc:normal;--o:0"
+      class="TcYUmow41- gp-relative gp-flex gp-flex-col"
+    >
+      
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id="guEn3Wh4GN"
+        class="guEn3Wh4GN"
+        style="--ta:left;--bs:none;--bw:1px 1px 1px 1px;--bc:var(--g-c-line-3, line-3);--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--dynamic-source-color:#F4F4F4"
+        data-test-force-publish="1761036464139"
+      >
+      <div class="gp-flex" style="--jc:left">
+        <div
+          data-gp-text
+          class=" gp-text-instant gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--tdt:auto;--b:none;--bc:#121212;--bw:1px 1px 1px 1px;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--shadow:none;--ts:none;--ta:left;--line-clamp:unset;--line-clamp-tablet:unset;--line-clamp-mobile:unset;--ff:var(--g-font-Poppins, 'Poppins'), var(--g-font-body, body);--weight:400;--size:16px;--size-tablet:16px;--size-mobile:15px;--lh:180%;--lh-tablet:180%;--lh-mobile:180%;--c:#FFFFFF;--tt:none;word-break:break-word;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;overflow:hidden;--tdl:"
+        >
+          {{ section.settings.gguEn3Wh4GN_text | replace: '$locationOrigin', locationOrigin }}
+        </div>
+      </div>
+    </div>
+    
+    </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+          </div>
+            
+          <div class="gp-flex" style="--jc:center">
+            
+  <div class="gp-overflow-clip gp-group" style="--text-hover-color:#FFFFFF;--icon-expand-hover-color:#FFFFFF;--icon-expand-active-color:#FFFFFF;--icon-active-color:#FFFFFF;--icon-hover-color:#FFFFFF;--w:100%;--w-tablet:100%;--w-mobile:100%;--bs:none;--bw:1px 1px 1px 1px;--bc:#000000;--bg:#118FCB;--shadow:none;--bblr:16px;--bbrr:16px;--btlr:16px;--btrr:16px">
+    <div data-index="8" class="gOPOL5CF7q gp-overflow-hidden gp-child-item-gOPOL5CF7q gp-accordion-item">
+      <div aria-hidden uid="MEqfpH89KX" id="MEqfpH89KX" data-index="8"
+        class="gp-flex gp-accordion-item_header gp-cursor-pointer gp-items-center gp-gap-[16px] gOPOL5CF7q gp-accordion-item-gOPOL5CF7q-8" style="--pl:16px;--pr:16px;--pt:16px;--pb:16px;--pl-mobile:14px;--pr-mobile:14px;--pt-mobile:14px;--pb-mobile:14px;--h:auto;--h-tablet:auto;--h-mobile:auto;--fd:row-reverse;--jc:space-between;--hvr-bgc:transparent;--bgc:transparent;--bs:none;--hvr-bs:none;--bw:0px 0px 1px 0px;--hvr-bw:0px 0px 1px 0px;--bc:#121212;--hvr-bc:#121212">
+        
+          <div class="gp-inline-flex">
+            <span style="--c:#FFFFFF;width:14px;height:14px"
+            data-index="8"
+            class="group-hover:[color:var(--icon-expand-hover-color)] gp-collapsible-icon gp-accordion-item_icon gp-inline-flex gp-items-center gp-justify-center gp-overflow-hidden gp-transition-all gp-duration-200 [&>svg]:!gp-h-[var(--height-iconCollapseSize)] [&>svg]:!gp-w-full">
+              <svg height="20" width="20" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 256 256" fill="currentColor" data-id="508817587901825384">
+              <path fill="currentColor" strokeLinecap="round" strokeLinejoin="round" fill="currentColor" d="M228,128a12,12,0,0,1-12,12H140v76a12,12,0,0,1-24,0V140H40a12,12,0,0,1,0-24h76V40a12,12,0,0,1,24,0v76h76A12,12,0,0,1,228,128Z" /></svg>
+            </span>
+          </div>
+          
+        <div class="gp-flex gp-w-full gp-items-center gp-break-all" style="--gg:16px;--jc:left">
+          
+          
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id
+        
+        style="--c:#FFFFFF;--dynamic-source-color:#F4F4F4"
+        data-test-force-publish="1761036464140"
+      >
+      <div  >
+        <div
+          data-gp-text
+          class="gp-overflow-hidden gp-accordion-text-content group-hover:[color:var(--text-hover-color)!important]  gp-text-instant"
+          style="--w:100%;--tdt:auto;--ts:none;--fs:normal;--ff:var(--g-font-Fredoka, 'Fredoka'), var(--g-font-body, body);--size:19px;--size-tablet:16px;--size-mobile:14px;--lh:130%;--lh-tablet:130%;--lh-mobile:130%;--weight:bold;word-break:break-word;overflow:hidden;--tdl:"
+        >
+          {{ section.settings.ggOPOL5CF7q_childItem_8 }}
+        </div>
+      </div>
+    </div>
+    
+          
+        </div>
+      </div>
+      <div data-index="8" data-show="false" class="gp-accordion-item_body gp-transition-all gp-grid gp-duration-500 gp-overflow-hidden gp-grid-rows-[0fr]" style="grid-template-rows:0fr;grid-template-columns:minmax(auto, 100%)">
+        <div data-index="8" class="gp-accordion-item_body-inner gp-transition-all gp-duration-500 gp-min-h-0" style="--pl:16px;--pr:16px;--pl-mobile:14px;--pr-mobile:14px">
+          <div
+      data-same-height-display-contents
+      style="--ai:normal;--jc:normal;--o:0"
+      class="0KXbFF_S-m gp-relative gp-flex gp-flex-col"
+    >
+      
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id="g3C6JvqYjK"
+        class="g3C6JvqYjK"
+        style="--ta:left;--bs:none;--bw:1px 1px 1px 1px;--bc:var(--g-c-line-3, line-3);--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--dynamic-source-color:#F4F4F4"
+        data-test-force-publish="1761036464141"
+      >
+      <div class="gp-flex" style="--jc:left">
+        <div
+          data-gp-text
+          class=" gp-text-instant gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--tdt:auto;--b:none;--bc:#121212;--bw:1px 1px 1px 1px;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--shadow:none;--ts:none;--ta:left;--line-clamp:unset;--line-clamp-tablet:unset;--line-clamp-mobile:unset;--ff:var(--g-font-Poppins, 'Poppins'), var(--g-font-body, body);--weight:400;--size:16px;--size-tablet:16px;--size-mobile:15px;--lh:180%;--lh-tablet:180%;--lh-mobile:180%;--c:#FFFFFF;--tt:none;word-break:break-word;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;overflow:hidden;--tdl:"
+        >
+          {{ section.settings.gg3C6JvqYjK_text | replace: '$locationOrigin', locationOrigin }}
+        </div>
+      </div>
+    </div>
+    
+    </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+          </div>
+            
+    </gp-accordion>
+    
+    <script {% if section.settings.section_preload == "false" %}class="gps-link" delay {% else %}src{% endif %}="https://assets.gemcommerce.com/assets-v2/gp-accordion-v7-5.js?v={{ shop.metafields.GEMPAGES.ASSETS_VERSION }}" defer="defer"></script>
+    
+  
+      </div>
+    </div>
+
+      
+    </gp-row>
+  
+  
+    </div>
+
+      
+    </gp-row>
+  
+        </section>
+      
+  
+    <style {% if section.settings.section_preload == "false" %} class="gps-link" type="text/disabled-css" {% endif %}>@font-face {
+  font-family: 'Fredoka';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: normal;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/fredoka/v17/X7nP4b87HvSqjb_WIi2yDCRwoQ_k7367_B-i2yQag0-mac3O8SL8EemM.woff) format('woff');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJfedA.woff) format('woff');
+}
+/* hebrew */
+@font-face {
+  font-family: 'Fredoka';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/fredoka/v17/X7nP4b87HvSqjb_WIi2yDCRwoQ_k7367_B-i2yQag0-mac3O8SL8E-mMttxNbiktb9I.woff) format('woff');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Fredoka';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/fredoka/v17/X7nP4b87HvSqjb_WIi2yDCRwoQ_k7367_B-i2yQag0-mac3O8SL8H-mMttxNbiktb9I.woff) format('woff');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Fredoka';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/fredoka/v17/X7nP4b87HvSqjb_WIi2yDCRwoQ_k7367_B-i2yQag0-mac3O8SL8EemMttxNbikt.woff) format('woff');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* devanagari */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJbecnFHGPezSQ.woff2) format('woff2');
+  unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B09;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJnecnFHGPezSQ.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJfecnFHGPc.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+</style>
+    
+{% schema %}
+  {
+    
+    "name": "Section 6",
+    "tag": "section",
+    "class": "gps-578147854816707514 gps gpsil",
+    "settings": [{"type":"paragraph","content":"Section design by GemPages. [Click here to start design](https://admin.shopify.com/store/c80c08-d3/apps/gempages-cro/app/shopify/edit?pageType=GP_STATIC&editorId=578147854783087546&sectionId=578147854816707514)"},{"type":"select","label":"Section Preload","id":"section_preload","options":[{"label":"On","value":"true"},{"label":"Off","value":"false"},{"label":"Off Lazy Script","value":"off_lazy_script"}],"default":"false"},{"type":"text","label":"Checksum","id":"checksum"},{"type":"html","id":"ggL23hJ4dsa_text","label":"ggL23hJ4dsa_text","default":"FAQ"},{"type":"html","id":"ggQwByvQyPd_text","label":"ggQwByvQyPd_text","default":"<p>Got questions? We’ve got answers!</p>"},{"type":"html","id":"ggOPOL5CF7q_childItem_0","label":"ggOPOL5CF7q_childItem_0","default":"<p><strong>Is this 100% safe for my pet?</strong></p>"},{"type":"html","id":"ggOPOL5CF7q_childItem_1","label":"ggOPOL5CF7q_childItem_1","default":"<p>How do I use the product?</p>"},{"type":"html","id":"ggOPOL5CF7q_childItem_2","label":"ggOPOL5CF7q_childItem_2","default":"<p>Is this a substitute for toothbrushing?</p>"},{"type":"html","id":"ggOPOL5CF7q_childItem_3","label":"ggOPOL5CF7q_childItem_3","default":"<p>What’s in the formula?</p>"},{"type":"html","id":"ggOPOL5CF7q_childItem_4","label":"ggOPOL5CF7q_childItem_4","default":"<p>When can I expect results?</p>"},{"type":"html","id":"ggOPOL5CF7q_childItem_5","label":"ggOPOL5CF7q_childItem_5","default":"<p>Is FreshWipes suitable for all breeds and sizes?</p>"},{"type":"html","id":"ggOPOL5CF7q_childItem_6","label":"ggOPOL5CF7q_childItem_6","default":"<p>Do the wipes help with bad breath?</p>"},{"type":"html","id":"ggOPOL5CF7q_childItem_7","label":"ggOPOL5CF7q_childItem_7","default":"<p>How should I store FreshWipes?</p>"},{"type":"html","id":"ggOPOL5CF7q_childItem_8","label":"ggOPOL5CF7q_childItem_8","default":"<p>What happens if I’m not satisfied?</p>"},{"type":"html","id":"gg-gSoihG-2_text","label":"gg-gSoihG-2_text","default":"<p>✅ <strong>Yes! The wipes are made to be as gentle as they are effective.</strong></p><p>They are free from:</p><ul><li>❌ Alcohol<br><br>&nbsp;</li><li>❌ Parabens<br><br>&nbsp;</li><li>❌ Essential oils (which can irritate some pets)<br><br>&nbsp;</li><li>❌ Harsh chemicals or artificial fragrances<br><br>&nbsp;</li></ul><p>Our formula is developed with veterinary insight to ensure safety for both dogs and cats – even those with sensitive gums or skin.</p>"},{"type":"html","id":"gg9ogdxg3hD_text","label":"gg9ogdxg3hD_text","default":"<p>Slip the wipe over your finger.</p><ol><li>Gently rub along your pet’s teeth and gums in circular motions.<br><br>&nbsp;</li><li>Focus especially on the gum line and any areas with visible plaque or discoloration.<br>&nbsp;</li></ol><p>No toothbrush. No mess. No stress.</p><p>Use daily or 1–2 times a week for best results.</p>"},{"type":"html","id":"ggTNC_0Y-QC_text","label":"ggTNC_0Y-QC_text","default":"<p>For most pet owners: yes.</p><p>Brushing is best – but often unrealistic in everyday life.</p><p><strong>FreshWipes provides a simple and reliable way to care for your pet’s oral health – without the struggle.</strong></p>"},{"type":"html","id":"ggLuoTHdNsW_text","label":"ggLuoTHdNsW_text","default":"<p><strong>Only what your pet needs – nothing more.</strong><br><br>Every ingredient is carefully selected to support safe and effective oral care:</p><ul><li>Purified water – gentle base that adds moisture<br>&nbsp;</li><li>Aloe vera – soothes gums and helps reduce irritation<br>&nbsp;</li><li>Natural plant extracts – provide antibacterial protection<br>&nbsp;</li><li>Zinc compounds – freshen breath and fight plaque<br>&nbsp;</li><li>pH-balanced &amp; fragrance-free – safe for sensitive pets<br>&nbsp;</li><li>Cruelty-free – never tested on animals<br>&nbsp;</li><li>No alcohol, fluoride, or harsh chemicals<br>&nbsp;</li></ul><p><strong>Just safe, simple, and effective dental care – in every wipe.</strong></p>"},{"type":"html","id":"ggyK-Z3aqQA_text","label":"ggyK-Z3aqQA_text","default":"<p><strong>🦷 Fresh breath? In just a few days.</strong><br><br>🦷 Cleaner teeth and healthier gums? 2–3 weeks with regular use.</p><p><strong>Hold tight – your pet’s mouth will thank you!</strong></p>"},{"type":"html","id":"ggGpthg5G3D_text","label":"ggGpthg5G3D_text","default":"<p>Yes, the wipes are flexible and work well for everything from small toy breeds to large dogs – and for cats.</p>"},{"type":"html","id":"ggiJmeIB0Kt_text","label":"ggiJmeIB0Kt_text","default":"<p>Yes! Antibacterial ingredients and natural breath-fresheners help reduce plaque and bad odor.</p>"},{"type":"html","id":"gguEn3Wh4GN_text","label":"gguEn3Wh4GN_text","default":"<p>Store the container in a cool, dry place. Avoid direct sunlight to maintain moisture in the wipes.</p>"},{"type":"html","id":"gg3C6JvqYjK_text","label":"gg3C6JvqYjK_text","default":"Replace this text with your content"}],
+    "blocks": [{"type": "@app"}],
+    "locales": {}
+  }
+{% endschema %}
+  

@@ -1,0 +1,10 @@
+<!-- Elevate - 2025-12-17T08:53:13.267Z -->
+{%- if content_for_header contains "elevateab.app" -%}
+  {%- unless request.design_mode -%}
+    <script>
+      const environment = { rootUrl: '{{ routes.root_url }}', themeId: {{ theme.id }}, themeRole: '{{ theme.role }}', activeCurrency: '{{ localization.country.currency.iso_code | default: shop.currency }}', template: { suffix: '{{ template.suffix }}', type: '{{ template.name }}' }, isThemePreview: {% if content_for_header contains "previewBarInjector.init();" or content_for_header contains "https://cdn.shopify.com/shopifycloud/preview-bar/preview-bar-modules.js" %}true{% else %}false{% endif %} };
+      try { window.eab_data = { selectors: JSON.parse(`{{shop.metafields.elevateab.select}}`) || {}, allTests: JSON.parse(`{{shop.metafields.elevateab.tests}}`) || {}, currencyFormat: {% if settings.currency_code_enabled %}"{{ shop.money_with_currency_format }}"{% else %}"{{ shop.money_format }}"{% endif %}, environment: environment }; } catch(error) { console.log(error); window.eab_data = { selectors: {}, allTests: {}, currencyFormat: {% if settings.currency_code_enabled %}"{{ shop.money_with_currency_format }}"{% else %}"{{ shop.money_format }}"{% endif %}, environment: environment }; }
+    </script>
+    {{ shop.metafields.elevateab.redirect.value }}
+  {%- endunless -%}
+{%- endif -%}

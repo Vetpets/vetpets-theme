@@ -1,0 +1,304 @@
+
+    {% render 'gp-head', isThemeSection: true %}
+    
+    <style {% if section.settings.section_preload == "false" %} class="gps-link gps-style" type="text/disabled-css" {% endif %}>.gps-624287142054462280.gps.gpsil [style*="--bg:"]{background:var(--bg)}.gps-624287142054462280.gps.gpsil [style*="--bga:"]{background-attachment:var(--bga)}.gps-624287142054462280.gps.gpsil [style*="--bgc:"]{background-color:var(--bgc)}.gps-624287142054462280.gps.gpsil [style*="--bgi:"]{background-image:var(--bgi)}.gps-624287142054462280.gps.gpsil [style*="--bgp:"]{background-position:var(--bgp)}.gps-624287142054462280.gps.gpsil [style*="--bgr:"]{background-repeat:var(--bgr)}.gps-624287142054462280.gps.gpsil [style*="--bgs:"]{background-size:var(--bgs)}.gps-624287142054462280.gps.gpsil [style*="--b:"]{border:var(--b)}.gps-624287142054462280.gps.gpsil [style*="--hvr-b:"]:hover{border:var(--hvr-b)}.gps-624287142054462280.gps.gpsil [style*="--focus-b:"]:focus{border:var(--focus-b)}.gps-624287142054462280.gps.gpsil [style*="--bb:"]{border-bottom:var(--bb)}.gps-624287142054462280.gps.gpsil [style*="--hvr-bb:"]:hover{border-bottom:var(--hvr-bb)}.gps-624287142054462280.gps.gpsil [style*="--focus-bb:"]:focus{border-bottom:var(--focus-bb)}.gps-624287142054462280.gps.gpsil [style*="--bc:"]{border-color:var(--bc)}.gps-624287142054462280.gps.gpsil [style*="--bblr:"]{border-bottom-left-radius:var(--bblr)}.gps-624287142054462280.gps.gpsil [style*="--hvr-bblr:"]:hover{border-bottom-left-radius:var(--hvr-bblr)}.gps-624287142054462280.gps.gpsil [style*="--focus-bblr:"]:focus{border-bottom-left-radius:var(--focus-bblr)}.gps-624287142054462280.gps.gpsil [style*="--bbrr:"]{border-bottom-right-radius:var(--bbrr)}.gps-624287142054462280.gps.gpsil [style*="--hvr-bbrr:"]:hover{border-bottom-right-radius:var(--hvr-bbrr)}.gps-624287142054462280.gps.gpsil [style*="--focus-bbrr:"]:focus{border-bottom-right-radius:var(--focus-bbrr)}.gps-624287142054462280.gps.gpsil [style*="--bs:"]{border-style:var(--bs)}.gps-624287142054462280.gps.gpsil [style*="--bt:"]{border-top:var(--bt)}.gps-624287142054462280.gps.gpsil [style*="--hvr-bt:"]:hover{border-top:var(--hvr-bt)}.gps-624287142054462280.gps.gpsil [style*="--focus-bt:"]:focus{border-top:var(--focus-bt)}.gps-624287142054462280.gps.gpsil [style*="--btlr:"]{border-top-left-radius:var(--btlr)}.gps-624287142054462280.gps.gpsil [style*="--hvr-btlr:"]:hover{border-top-left-radius:var(--hvr-btlr)}.gps-624287142054462280.gps.gpsil [style*="--focus-btlr:"]:focus{border-top-left-radius:var(--focus-btlr)}.gps-624287142054462280.gps.gpsil [style*="--btrr:"]{border-top-right-radius:var(--btrr)}.gps-624287142054462280.gps.gpsil [style*="--hvr-btrr:"]:hover{border-top-right-radius:var(--hvr-btrr)}.gps-624287142054462280.gps.gpsil [style*="--focus-btrr:"]:focus{border-top-right-radius:var(--focus-btrr)}.gps-624287142054462280.gps.gpsil [style*="--bw:"]{border-width:var(--bw)}.gps-624287142054462280.gps.gpsil [style*="--shadow:"]{box-shadow:var(--shadow)}.gps-624287142054462280.gps.gpsil [style*="--c:"]{color:var(--c)}.gps-624287142054462280.gps.gpsil [style*="--cg:"]{-moz-column-gap:var(--cg);column-gap:var(--cg)}.gps-624287142054462280.gps.gpsil [style*="--ff:"]{font-family:var(--ff)}.gps-624287142054462280.gps.gpsil [style*="--size:"]{font-size:var(--size)}.gps-624287142054462280.gps.gpsil [style*="--weight:"]{font-weight:var(--weight)}.gps-624287142054462280.gps.gpsil [style*="--fs:"]{font-style:var(--fs)}.gps-624287142054462280.gps.gpsil [style*="--gtc:"]{grid-template-columns:var(--gtc)}.gps-624287142054462280.gps.gpsil [style*="--h:"]{height:var(--h)}.gps-624287142054462280.gps.gpsil [style*="--jc:"]{justify-content:var(--jc)}.gps-624287142054462280.gps.gpsil [style*="--ls:"]{letter-spacing:var(--ls)}.gps-624287142054462280.gps.gpsil [style*="--lh:"]{line-height:var(--lh)}.gps-624287142054462280.gps.gpsil [style*="--tdt:"]{text-decoration-thickness:var(--tdt)}.gps-624287142054462280.gps.gpsil [style*="--m:"]{margin:var(--m)}.gps-624287142054462280.gps.gpsil [style*="--mb:"]{margin-bottom:var(--mb)}.gps-624287142054462280.gps.gpsil [style*="--op:"]{opacity:var(--op)}.gps-624287142054462280.gps.gpsil [style*="--o:"]{order:var(--o)}.gps-624287142054462280.gps.gpsil [style*="--pc:"]{place-content:var(--pc)}.gps-624287142054462280.gps.gpsil [style*="--p:"]{padding:var(--p)}.gps-624287142054462280.gps.gpsil [style*="--pb:"]{padding-bottom:var(--pb)}.gps-624287142054462280.gps.gpsil [style*="--pl:"]{padding-left:var(--pl)}.gps-624287142054462280.gps.gpsil [style*="--pr:"]{padding-right:var(--pr)}.gps-624287142054462280.gps.gpsil [style*="--pt:"]{padding-top:var(--pt)}.gps-624287142054462280.gps.gpsil [style*="--ta:"]{text-align:var(--ta)}.gps-624287142054462280.gps.gpsil [style*="--ts:"]{text-shadow:var(--ts)}.gps-624287142054462280.gps.gpsil [style*="--t:"]{transform:var(--t)}.gps-624287142054462280.gps.gpsil [style*="--w:"]{width:var(--w)}.gps-624287142054462280.gps.gpsil [style*="--line-clamp:"]{display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:var(--line-clamp)}@media only screen and (max-width:1024px){.gps-624287142054462280.gps.gpsil [style*="--cg-tablet:"]{-moz-column-gap:var(--cg-tablet);column-gap:var(--cg-tablet)}.gps-624287142054462280.gps.gpsil [style*="--size-tablet:"]{font-size:var(--size-tablet)}.gps-624287142054462280.gps.gpsil [style*="--lh-tablet:"]{line-height:var(--lh-tablet)}.gps-624287142054462280.gps.gpsil [style*="--op-tablet:"]{opacity:var(--op-tablet)}.gps-624287142054462280.gps.gpsil [style*="--pb-tablet:"]{padding-bottom:var(--pb-tablet)}.gps-624287142054462280.gps.gpsil [style*="--pl-tablet:"]{padding-left:var(--pl-tablet)}.gps-624287142054462280.gps.gpsil [style*="--pr-tablet:"]{padding-right:var(--pr-tablet)}.gps-624287142054462280.gps.gpsil [style*="--pt-tablet:"]{padding-top:var(--pt-tablet)}.gps-624287142054462280.gps.gpsil [style*="--w-tablet:"]{width:var(--w-tablet)}.gps-624287142054462280.gps.gpsil [style*="--line-clamp-tablet:"]{display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:var(--line-clamp-tablet)}}@media only screen and (max-width:767px){.gps-624287142054462280.gps.gpsil [style*="--cg-mobile:"]{-moz-column-gap:var(--cg-mobile);column-gap:var(--cg-mobile)}.gps-624287142054462280.gps.gpsil [style*="--size-mobile:"]{font-size:var(--size-mobile)}.gps-624287142054462280.gps.gpsil [style*="--gtc-mobile:"]{grid-template-columns:var(--gtc-mobile)}.gps-624287142054462280.gps.gpsil [style*="--jc-mobile:"]{justify-content:var(--jc-mobile)}.gps-624287142054462280.gps.gpsil [style*="--lh-mobile:"]{line-height:var(--lh-mobile)}.gps-624287142054462280.gps.gpsil [style*="--mb-mobile:"]{margin-bottom:var(--mb-mobile)}.gps-624287142054462280.gps.gpsil [style*="--op-mobile:"]{opacity:var(--op-mobile)}.gps-624287142054462280.gps.gpsil [style*="--pb-mobile:"]{padding-bottom:var(--pb-mobile)}.gps-624287142054462280.gps.gpsil [style*="--pl-mobile:"]{padding-left:var(--pl-mobile)}.gps-624287142054462280.gps.gpsil [style*="--pr-mobile:"]{padding-right:var(--pr-mobile)}.gps-624287142054462280.gps.gpsil [style*="--pt-mobile:"]{padding-top:var(--pt-mobile)}.gps-624287142054462280.gps.gpsil [style*="--ta-mobile:"]{text-align:var(--ta-mobile)}.gps-624287142054462280.gps.gpsil [style*="--w-mobile:"]{width:var(--w-mobile)}.gps-624287142054462280.gps.gpsil [style*="--line-clamp-mobile:"]{display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:var(--line-clamp-mobile)}}.gps-624287142054462280 .gp-pointer-events-none{pointer-events:none}.gps-624287142054462280 .gp-absolute{position:absolute}.gps-624287142054462280 .gp-relative{position:relative}.gps-624287142054462280 .gp-inset-0{inset:0}.gps-624287142054462280 .gp-z-1{z-index:1}.gps-624287142054462280 .gp-mx-auto{margin-left:auto;margin-right:auto}.gps-624287142054462280 .gp-mb-0{margin-bottom:0}.gps-624287142054462280 .gp-flex{display:flex}.gps-624287142054462280 .gp-grid{display:grid}.gps-624287142054462280 .\!gp-hidden{display:none!important}.gps-624287142054462280 .gp-hidden{display:none}.gps-624287142054462280 .gp-w-max{width:-moz-max-content;width:max-content}.gps-624287142054462280 .gp-min-w-max{min-width:-moz-max-content;min-width:max-content}.gps-624287142054462280 .\!gp-max-w-max{max-width:-moz-max-content!important;max-width:max-content!important}.gps-624287142054462280 .gp-max-w-full{max-width:100%}.gps-624287142054462280 .gp-flex-1{flex:1 1 0%}.gps-624287142054462280 .gp-grid-rows-\[1fr\]{grid-template-rows:1fr}.gps-624287142054462280 .gp-flex-col{flex-direction:column}.gps-624287142054462280 .gp-flex-wrap{flex-wrap:wrap}.gps-624287142054462280 .gp-text-center{text-align:center}.gps-624287142054462280 .gp-text-g-text-1{color:var(--g-c-text-1)}.gps-624287142054462280 .gp-text-g-text-2{color:var(--g-c-text-2)}.gps-624287142054462280 .gp-transition-colors{transition-duration:.15s;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1)}.gps-624287142054462280 .gp-duration-200{transition-duration:.2s}.gps-624287142054462280 .gp-ease-in-out{transition-timing-function:cubic-bezier(.4,0,.2,1)}@media (max-width:1024px){.gps-624287142054462280 .tablet\:\!gp-hidden{display:none!important}.gps-624287142054462280 .tablet\:gp-hidden{display:none}}@media (max-width:767px){.gps-624287142054462280 .mobile\:\!gp-hidden{display:none!important}.gps-624287142054462280 .mobile\:gp-hidden{display:none}}.gps-624287142054462280 .\[\&_\*\]\:gp-max-w-full *{max-width:100%}</style>
+    
+  
+    
+    
+    
+
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+
+    
+        <section
+          class="gp-mx-auto gp-max-w-full [&_*]:gp-max-w-full {% if section.settings.section_preload == "false" %}gps-lazy {% endif %}"
+          style="--w:100%;--w-tablet:calc(var(--g-ct-w, 100%) + 2 * var(--g-ct-p, 15px));--w-mobile:calc(var(--g-ct-w, 100%) + 2 * var(--g-ct-p, 15px))"
+        >
+          
+    <gp-row gp-data='{"background":{"desktop":{"type":"color","color":"#D5F7FF","image":{"src":"","width":0,"height":0},"size":"cover","position":{"x":50,"y":50},"repeat":"no-repeat","attachment":"scroll","preload":false}},"uid":"g6_G3i5GK5"}' data-id="g6_G3i5GK5" id="g6_G3i5GK5" data-same-height-subgrid-container class="g6_G3i5GK5 gp-relative gp-mx-auto gp-mb-0 gp-grid gp-max-w-full gp-transition-colors gp-duration-200 gp-ease-in-out [&_*]:gp-max-w-full gp-grid-rows-[1fr]" style="--pt:0px;--pl:0px;--pb:0px;--pr:0px;--pt-tablet:0px;--pl-tablet:0px;--pb-tablet:0px;--pr-tablet:0px;--pt-mobile:0px;--pl-mobile:0px;--pb-mobile:0px;--pr-mobile:0px;--d:grid;--d-tablet:grid;--d-mobile:grid;--bs:solid;--bw:0px;--bc:#121212;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--shadow:none;--op:100%;--cg:32px;--gtc:minmax(0, 12fr);--gtc-mobile:minmax(0, 12fr);--w:100%;--bgc:#D5F7FF;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;--pc:start">
+      
+
+      <div
+      data-same-height-display-contents
+      style="--jc:start"
+      class="gGtCdU54el gp-relative gp-flex gp-flex-col"
+    >
+      
+    
+
+    
+
+    
+    <gp-row gp-data='{"background":{"desktop":{"attachment":"scroll","color":"#D5F7FF","image":{"height":0,"src":"","width":0},"position":{"x":50,"y":50},"repeat":"no-repeat","size":"cover","type":"color","video":"","videoHtml5":"","preload":false}},"uid":"goDnjaUdAa"}' data-id="goDnjaUdAa" id="goDnjaUdAa" data-same-height-subgrid-container class="goDnjaUdAa gp-relative gp-mx-auto gp-mb-0 gp-grid gp-max-w-full gp-transition-colors gp-duration-200 gp-ease-in-out [&_*]:gp-max-w-full gp-grid-rows-[1fr]" style="--bs:none;--bw:1px 1px 1px 1px;--bc:#121212;--shadow:none;--d:grid;--d-mobile:none;--d-tablet:grid;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--mb:32px;--pt:12px;--pl:20px;--pb:12px;--pr:20px;--mb-mobile:20px;--pt-mobile:12px;--pl-mobile:20px;--pb-mobile:12px;--pr-mobile:20px;--cg:8px;--gtc:minmax(0, 12fr);--gtc-mobile:minmax(0, 12fr);--w:100%;--bgc:#D5F7FF;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;--pc:start">
+      
+
+      <div
+      data-same-height-display-contents
+      style="--jc:start"
+      class="go0TOjif-S gp-relative gp-flex gp-flex-col"
+    >
+      
+    
+
+    
+
+    
+    <gp-row gp-data='{"background":{"desktop":{"attachment":"scroll","color":"#00000000","image":{"height":0,"src":"","width":0},"position":{"x":50,"y":50},"repeat":"no-repeat","size":"cover","type":"color","video":"","videoHtml5":""}},"uid":"gFrOK3E7ov"}' data-id="gFrOK3E7ov" id="gFrOK3E7ov" data-same-height-subgrid-container class="gFrOK3E7ov gp-relative gp-mx-auto gp-mb-0 gp-grid gp-max-w-full gp-transition-colors gp-duration-200 gp-ease-in-out [&_*]:gp-max-w-full gp-grid-rows-[1fr]" style="--bs:none;--bw:1px 1px 1px 1px;--bc:#121212;--shadow:none;--d:grid;--d-mobile:grid;--d-tablet:grid;--op:100%;--op-tablet:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--mb:0px;--pt:0px;--pl:0px;--pb:0px;--pr:0px;--cg:163px;--cg-tablet:127px;--cg-mobile:31px;--gtc:minmax(0, 12fr);--gtc-mobile:minmax(0, 12fr);--w:996px;--w-tablet:100%;--w-mobile:100%;--h:auto;--bgc:#00000000;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;--pc:center">
+      
+
+      <div
+      data-same-height-display-contents
+      style="--jc:center"
+      class="gGoD2vCmF6 gp-relative gp-flex gp-flex-col"
+    >
+      
+    
+
+    
+
+    
+    <gp-row gp-data='{"background":{"desktop":{"attachment":"scroll","color":"transparent","image":{"height":0,"src":"","width":0},"position":{"x":50,"y":50},"repeat":"no-repeat","size":"cover","type":"color"}},"uid":"gHNdNlSUp3"}' data-id="gHNdNlSUp3" id="gHNdNlSUp3" data-same-height-subgrid-container class="gHNdNlSUp3 gp-relative gp-mx-auto gp-mb-0 gp-grid gp-max-w-full gp-transition-colors gp-duration-200 gp-ease-in-out [&_*]:gp-max-w-full gp-grid-rows-[1fr]" style="--bs:solid;--bw:0px;--bc:#121212;--shadow:none;--d:grid;--d-mobile:grid;--d-tablet:grid;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--cg:24px;--cg-tablet:24px;--gtc:minmax(0, auto) minmax(0, auto);--gtc-mobile:minmax(0, 12fr);--w:100%;--w-tablet:var(--g-ct-w, 100%);--w-mobile:100%;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;--pc:center">
+      
+
+      <div
+      data-same-height-display-contents
+      style="--jc:center"
+      class="g_SJlz2f8q gp-relative gp-flex gp-flex-col"
+    >
+      
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id="g2msyEgTWH"
+        class="g2msyEgTWH"
+        style="--ta:left;--bs:solid;--bw:0px;--bc:#121212;--shadow:none;--d:block;--d-mobile:none;--d-tablet:block;--op:100%;--op-mobile:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--dynamic-source-color:#F4F4F4"
+      >
+      <div class="gp-flex" style="--jc:left">
+        <div
+          data-gp-text
+          class=" gp-text-instant gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--tdt:auto;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--ts:none;--ta:left;--line-clamp:unset;--line-clamp-tablet:unset;--line-clamp-mobile:unset;--fs:normal;--ff:var(--g-font-body, body);--weight:600;--size:17px;--size-tablet:17px;--size-mobile:14px;--lh:130%;--lh-tablet:130%;--lh-mobile:150%;--ls:normal;--c:#FFFFFF;word-break:break-word;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;overflow:hidden"
+        >
+          <p>{{ section.settings.gg2msyEgTWH_text_-2025902464 | replace: '$locationOrigin', locationOrigin }}</p>
+        </div>
+      </div>
+    </div>
+    
+      <style id="custom-css-g2msyEgTWH">
+        .g2msyEgTWH {
+
+}
+.g2msyEgTWH p {
+
+}
+      </style>
+    
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id="geXTvrBGYU"
+        class="geXTvrBGYU"
+        style="--ta:left;--bs:solid;--bw:0px;--bc:#121212;--shadow:none;--d:none;--d-mobile:block;--d-tablet:none;--op:100%;--op-mobile:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--mb-mobile:0px;--dynamic-source-color:#F4F4F4"
+      >
+      <div class="gp-flex" style="--jc:left">
+        <div
+          data-gp-text
+          class=" gp-text-instant gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--tdt:auto;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--ts:none;--ta:left;--ta-mobile:center;--line-clamp:unset;--line-clamp-tablet:unset;--line-clamp-mobile:unset;--fs:normal;--ff:var(--g-font-body, body);--weight:600;--size:17px;--size-tablet:17px;--size-mobile:14px;--lh:130%;--lh-tablet:130%;--lh-mobile:150%;--ls:normal;--c:#FFFFFF;word-break:break-word;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;overflow:hidden"
+        >
+          {{ section.settings.ggeXTvrBGYU_text_-1436447225 | replace: '$locationOrigin', locationOrigin }}
+        </div>
+      </div>
+    </div>
+    
+      <style id="custom-css-geXTvrBGYU">
+        .geXTvrBGYU {
+
+}
+.geXTvrBGYU p {
+
+}
+      </style>
+    
+    </div><div
+      data-same-height-display-contents
+      style="--jc:center"
+      class="gqhUhMyyBy gp-relative gp-flex gp-flex-col"
+    >
+      <div gp-el-wrapper style="--bs:solid;--bw:0px;--bc:#121212;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--pageType:GP_STATIC;--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px" class="gCVbURv0ZS ">
+      
+    <gp-countdown-timer
+        data-id="gCVbURv0ZS"
+        gp-href="#"
+        class="gp-flex"
+        style="--jc:right;--jc-mobile:center"
+        gp-data='{"behaviour":"daily","dateStandard":"2024-08-13T02:43:26.689Z","dayLabel":"Days","enableDay":false,"enableHour":true,"enableMinute":true,"enableSecond":true,"enableWeek":false,"hourLabel":"HRS","loopAfterFinish":true,"minuteLabel":"MIN","redirectUrl":{"link":"#","target":"_self","type":"stay-on-page"},"secondLabel":"SEC","timeZone":"UTC-7","timerDaily":{"format":"am","hours":12,"mins":0},"timerEverygreen":{"days":0,"endTime":1720763006689,"hours":3,"mins":0,"startTime":1720752206689},"translate":"dayLabel,hourLabel,minuteLabel,secondLabel,weekLabel","weekLabel":"Weeks","uid":"gCVbURv0ZS","builderData":{"advanced":{"border":{"desktop":{"normal":{"border":"solid","borderType":"none","borderWidth":"1px","color":"#121212","isCustom":true,"width":"0px"}},"position":"all"},"boxShadow":{"desktop":{"normal":{"angle":49,"blur":"4px","color":"rgba(18, 18, 18, 0.7)","distance":"4px","spread":"4px","type":"shadow-1"}}},"d":{"desktop":true,"mobile":true,"tablet":true},"hasBoxShadow":{"desktop":{"normal":false}},"op":{"desktop":"100%"},"pageType":"GP_STATIC","rounded":{"desktop":{"normal":{"bblr":"0px","bbrr":"0px","btlr":"0px","btrr":"0px","radiusType":"none"}}},"spacing-setting":{"desktop":{"margin":{"bottom":0}}}},"label":"Countdown Timer","settings":{"behaviour":"daily","dateStandard":"2024-08-13T02:43:26.689Z","dayLabel":"Days","enableDay":false,"enableHour":true,"enableMinute":true,"enableSecond":true,"enableWeek":false,"hourLabel":"HRS","loopAfterFinish":true,"minuteLabel":"MIN","redirectUrl":{"link":"#","target":"_self","type":"stay-on-page"},"secondLabel":"SEC","timeZone":"UTC-7","timerDaily":{"format":"am","hours":12,"mins":0},"timerEverygreen":{"days":0,"endTime":1720763006689,"hours":3,"mins":0,"startTime":1720752206689},"translate":"dayLabel,hourLabel,minuteLabel,secondLabel,weekLabel","weekLabel":"Weeks"},"styles":{"backgroundItemColor":"#FFFFFF","borderState":{"normal":{"border":"none","borderType":"none","borderWidth":"1px","isCustom":false,"width":"1px 1px 1px 1px"}},"colorLabel":"text-1","colorNumber":"text-2","enableLabelTextStyle":true,"horizontalGap":"8px","itemPadding":{"desktop":{"bottom":"4px","left":"9.5px","right":"9.5px","top":"4px"},"mobile":{"bottom":"4px","left":"7.5px","right":"7.5px","top":"4px"}},"labelTypo":{"attrs":{"color":"#999999"},"custom":{"fontSize":{"desktop":"13px","mobile":"12px","tablet":"13px"},"fontStyle":"normal","fontWeight":"600","hasShadowText":false,"letterSpacing":{"desktop":"normal"},"lineHeight":{"desktop":"130%","mobile":"130%","tablet":"130%"},"textShadow":{"angle":37,"blur":"2px","color":"rgba(0, 0, 0, 0.6)","distance":"4px","type":"custom"}},"type":"paragraph-2"},"numTypo":{"attrs":{"bold":true,"color":"#242424"},"custom":{"fontSize":{"desktop":"16px","mobile":"14px","tablet":"16px"},"fontStyle":"normal","fontWeight":"700","hasShadowText":false,"letterSpacing":{"desktop":"normal"},"lineHeight":{"desktop":"130%","mobile":"130%","tablet":"130%"},"textShadow":{"angle":37,"blur":"2px","color":"rgba(0, 0, 0, 0.6)","distance":"4px","type":"custom"}},"type":"subheading-2"},"roundedState":{"normal":{"bblr":"3px","bbrr":"3px","btlr":"3px","btrr":"3px","radiusType":"custom"}},"textAlign":{"desktop":"right","mobile":"center"},"verticalGap":"0px"},"tag":"Countdown","uid":"gCVbURv0ZS","childrens":[],"type":"component"}}'>
+        <div id="section-countdown" class="gp-flex gp-flex-wrap gp-w-max gp-relative " style="gap:8px;--jc:right;--jc-mobile:center">
+        <a
+            href="#"
+            target="_self"
+            aria-label="Countdown link"
+            class="gp-absolute gp-inset-0 gp-z-1 gp-pointer-events-none"
+          > </a>
+          
+          
+          
+    <div style="--pl:9.5px;--pr:9.5px;--pt:4px;--pb:4px;--pl-mobile:7.5px;--pr-mobile:7.5px;--pt-mobile:4px;--pb-mobile:4px;--bs:none;--bw:1px 1px 1px 1px;--bblr:3px;--bbrr:3px;--btlr:3px;--btrr:3px;--hvr-bblr:3px;--hvr-bbrr:3px;--hvr-btlr:3px;--hvr-btrr:3px;--focus-bblr:3px;--focus-bbrr:3px;--focus-btlr:3px;--focus-btrr:3px;--active-bblr:3px;--active-bbrr:3px;--active-btlr:3px;--active-btrr:3px;--bg:#FFFFFF" class="gp-flex-1 gp-text-center gp-min-w-max !gp-max-w-max">
+    
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id="gCVbURv0ZS-text" id="hour"
+        class="gCVbURv0ZS"
+        style="--mb:0px;--c:var(--g-c-text-2, text-2);--dynamic-source-color:#F4F4F4"
+      >
+      <div  >
+        <div
+          data-gp-text
+          class="gp-countdown-number gp-text-g-text-2  gp-text-instant"
+          style="--w:100%;--tdt:auto;--ts:none;--fs:normal;--ff:var(--g-font-heading, heading);--size:16px;--size-tablet:16px;--size-mobile:14px;--lh:130%;--lh-tablet:130%;--lh-mobile:130%;--ls:normal;--weight:bold;--c:#242424;word-break:break-word;overflow:hidden"
+        >
+          00
+        </div>
+      </div>
+    </div>
+    
+    
+         
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id="gCVbURv0ZS-text"
+        class="gCVbURv0ZS"
+        style="--c:var(--g-c-text-1, text-1);--dynamic-source-color:#F4F4F4"
+      >
+      <div  >
+        <div
+          data-gp-text
+          class=" gp-text-g-text-1  gp-text-instant"
+          style="--w:100%;--tdt:auto;--ts:none;--fs:normal;--ff:var(--g-font-body, body);--weight:600;--size:13px;--size-tablet:13px;--size-mobile:12px;--lh:130%;--lh-tablet:130%;--lh-mobile:130%;--ls:normal;--c:#999999;word-break:break-word;overflow:hidden"
+        >
+          {{ section.settings.ggCVbURv0ZS_hourLabel_-81315086 }}
+        </div>
+      </div>
+    </div>
+    
+    
+    </div>
+    
+          
+    <div style="--pl:9.5px;--pr:9.5px;--pt:4px;--pb:4px;--pl-mobile:7.5px;--pr-mobile:7.5px;--pt-mobile:4px;--pb-mobile:4px;--bs:none;--bw:1px 1px 1px 1px;--bblr:3px;--bbrr:3px;--btlr:3px;--btrr:3px;--hvr-bblr:3px;--hvr-bbrr:3px;--hvr-btlr:3px;--hvr-btrr:3px;--focus-bblr:3px;--focus-bbrr:3px;--focus-btlr:3px;--focus-btrr:3px;--active-bblr:3px;--active-bbrr:3px;--active-btlr:3px;--active-btrr:3px;--bg:#FFFFFF" class="gp-flex-1 gp-text-center gp-min-w-max !gp-max-w-max">
+    
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id="gCVbURv0ZS-text" id="minute"
+        class="gCVbURv0ZS"
+        style="--mb:0px;--c:var(--g-c-text-2, text-2);--dynamic-source-color:#F4F4F4"
+      >
+      <div  >
+        <div
+          data-gp-text
+          class="gp-countdown-number gp-text-g-text-2  gp-text-instant"
+          style="--w:100%;--tdt:auto;--ts:none;--fs:normal;--ff:var(--g-font-heading, heading);--size:16px;--size-tablet:16px;--size-mobile:14px;--lh:130%;--lh-tablet:130%;--lh-mobile:130%;--ls:normal;--weight:bold;--c:#242424;word-break:break-word;overflow:hidden"
+        >
+          00
+        </div>
+      </div>
+    </div>
+    
+    
+         
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id="gCVbURv0ZS-text"
+        class="gCVbURv0ZS"
+        style="--c:var(--g-c-text-1, text-1);--dynamic-source-color:#F4F4F4"
+      >
+      <div  >
+        <div
+          data-gp-text
+          class=" gp-text-g-text-1  gp-text-instant"
+          style="--w:100%;--tdt:auto;--ts:none;--fs:normal;--ff:var(--g-font-body, body);--weight:600;--size:13px;--size-tablet:13px;--size-mobile:12px;--lh:130%;--lh-tablet:130%;--lh-mobile:130%;--ls:normal;--c:#999999;word-break:break-word;overflow:hidden"
+        >
+          {{ section.settings.ggCVbURv0ZS_minuteLabel_937189210 }}
+        </div>
+      </div>
+    </div>
+    
+    
+    </div>
+    
+          
+    <div style="--pl:9.5px;--pr:9.5px;--pt:4px;--pb:4px;--pl-mobile:7.5px;--pr-mobile:7.5px;--pt-mobile:4px;--pb-mobile:4px;--bs:none;--bw:1px 1px 1px 1px;--bblr:3px;--bbrr:3px;--btlr:3px;--btrr:3px;--hvr-bblr:3px;--hvr-bbrr:3px;--hvr-btlr:3px;--hvr-btrr:3px;--focus-bblr:3px;--focus-bbrr:3px;--focus-btlr:3px;--focus-btrr:3px;--active-bblr:3px;--active-bbrr:3px;--active-btlr:3px;--active-btrr:3px;--bg:#FFFFFF" class="gp-flex-1 gp-text-center gp-min-w-max !gp-max-w-max">
+    
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id="gCVbURv0ZS-text" id="second"
+        class="gCVbURv0ZS"
+        style="--mb:0px;--c:var(--g-c-text-2, text-2);--dynamic-source-color:#F4F4F4"
+      >
+      <div  >
+        <div
+          data-gp-text
+          class="gp-countdown-number gp-text-g-text-2  gp-text-instant"
+          style="--w:100%;--tdt:auto;--ts:none;--fs:normal;--ff:var(--g-font-heading, heading);--size:16px;--size-tablet:16px;--size-mobile:14px;--lh:130%;--lh-tablet:130%;--lh-mobile:130%;--ls:normal;--weight:bold;--c:#242424;word-break:break-word;overflow:hidden"
+        >
+          00
+        </div>
+      </div>
+    </div>
+    
+    
+         
+    {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+    <div data-id="gCVbURv0ZS-text"
+        class="gCVbURv0ZS"
+        style="--c:var(--g-c-text-1, text-1);--dynamic-source-color:#F4F4F4"
+      >
+      <div  >
+        <div
+          data-gp-text
+          class=" gp-text-g-text-1  gp-text-instant"
+          style="--w:100%;--tdt:auto;--ts:none;--fs:normal;--ff:var(--g-font-body, body);--weight:600;--size:13px;--size-tablet:13px;--size-mobile:12px;--lh:130%;--lh-tablet:130%;--lh-mobile:130%;--ls:normal;--c:#999999;word-break:break-word;overflow:hidden"
+        >
+          {{ section.settings.ggCVbURv0ZS_secondLabel_-211754351 }}
+        </div>
+      </div>
+    </div>
+    
+    
+    </div>
+    
+      </div>
+     </gp-countdown-timer>
+    <script {% if section.settings.section_preload == "false" %}class="gps-link" delay {% else %}src{% endif %}="https://assets.gemcommerce.com/assets-v2/gp-countdown-v7-5.js?v={{ shop.metafields.GEMPAGES.ASSETS_VERSION }}" defer="defer"></script>
+  
+      </div>
+    </div>
+
+      
+    </gp-row>
+  
+  
+    </div>
+
+      
+    </gp-row>
+  
+  
+    </div>
+
+      
+    </gp-row>
+  
+  
+    </div>
+
+      
+    </gp-row>
+  
+        </section>
+      
+  
+    
+{% schema %}
+  {
+    "presets": [{ "name": "Section - Jun 17 02:15:31" }],
+    "name": "Section - Jun 17 02:15:31",
+    "tag": "section",
+    "class": "gps-624287142054462280 gps gpsil",
+    "settings": [{"type":"paragraph","content":"Section design by GemPages. [Click here to start design](https://admin.shopify.com/store/c80c08-d3/apps/gempages-cro/app/shopify/edit?pageType=THEME_SECTION&editorId=624287142054462280)"},{"type":"select","label":"Section Preload","id":"section_preload","options":[{"label":"On","value":"true"},{"label":"Off","value":"false"},{"label":"Off Lazy Script","value":"off_lazy_script"}],"default":"off_lazy_script"},{"type":"text","label":"Checksum","id":"checksum"},{"type":"html","id":"gg2msyEgTWH_text_-2025902464","label":"gg2msyEgTWH_text_-2025902464","default":"<span style=\"color:#FF0000;\"><strong>LIMITED-TIME FATHER'S DAY SALE</strong>:</span> <span style=\"background-color:rgba(0,0,0,0);color:#000000;\">BUY 2 GET 2 + FREE GIFTS</span>"},{"type":"html","id":"ggeXTvrBGYU_text_-1436447225","label":"ggeXTvrBGYU_text_-1436447225","default":"<p><span style=\"color:#FF0000;\"><strong>LIMITED TIME DEAL</strong>:</span></p><p><span style=\"background-color:rgba(0,0,0,0);color:#000000;\">BUY 2 GET 2 FREE + GIFTS</span></p>"},{"type":"html","id":"ggCVbURv0ZS_dayLabel_1272337240","label":"ggCVbURv0ZS_dayLabel_1272337240","default":"Days"},{"type":"html","id":"ggCVbURv0ZS_hourLabel_-81315086","label":"ggCVbURv0ZS_hourLabel_-81315086","default":"HRS"},{"type":"html","id":"ggCVbURv0ZS_minuteLabel_937189210","label":"ggCVbURv0ZS_minuteLabel_937189210","default":"MIN"},{"type":"html","id":"ggCVbURv0ZS_secondLabel_-211754351","label":"ggCVbURv0ZS_secondLabel_-211754351","default":"SEC"},{"type":"html","id":"ggCVbURv0ZS_weekLabel_1106278614","label":"ggCVbURv0ZS_weekLabel_1106278614","default":"Weeks"}],
+    "blocks": [{"type": "@app"}],
+    "locales": {}
+  }
+{% endschema %}

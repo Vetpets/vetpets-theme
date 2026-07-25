@@ -1,0 +1,271 @@
+{% comment %}
+  Theme goal amounts (goal_1_amount, etc.) are in the store's base currency (shop.currency).
+  Presentment currency uses cart.total_price; we scale goals by API exchange rates
+  stored in cart.attributes._exchange_rate so thresholds match the customer's region.
+{% endcomment %}
+{% assign base_currency_code = shop.currency %}
+{% assign current_currency_code = cart.currency.iso_code %}
+{% assign stored_exchange_currency = cart.attributes._exchange_currency | default: base_currency_code %}
+{% assign exchange_rate = cart.attributes._exchange_rate | default: 1 %}
+{% assign update_exchange = false %}
+{% if current_currency_code == base_currency_code %}
+  {% unless exchange_rate == 1 %}
+    {% assign update_exchange = true %}
+  {% endunless %}
+{% else %}
+  {% if exchange_rate == blank or exchange_rate == 0 or exchange_rate == 1 or stored_exchange_currency != current_currency_code %}
+    {% assign update_exchange = true %}
+  {% endif %}
+{% endif %}
+
+{% assign goal_1 = "goal_1_amount" %}
+{% assign goal_2 = "goal_2_amount" %}
+{% assign goal_3 = "goal_3_amount" %}
+
+{% if update_exchange %}
+  <script>
+    (function() {
+      if (window.__cartCheckpointExchangeUpdating) return;
+      window.__cartCheckpointExchangeUpdating = true;
+
+      async function refreshCartDrawer() {
+        const cartDrawer = document.querySelector("cart-drawer");
+        if (!cartDrawer) {
+          console.warn("Cart drawer not found");
+          return;
+        }
+
+        try {
+          const response = await fetch("/cart?section_id=cart-drawer");
+          if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+          
+          const html = await response.text();
+          
+          // Create a temporary container to parse the HTML
+          const tempContainer = document.createElement('div');
+          tempContainer.innerHTML = html;
+          
+          // Find the cart drawer content in the response
+          const newCartDrawer = tempContainer.querySelector('cart-drawer') || tempContainer;
+          const drawerInner = newCartDrawer.querySelector('.drawer__inner');
+          
+          if (drawerInner) {
+            // Replace the content of the existing cart drawer
+            const existingDrawerInner = cartDrawer.querySelector('.drawer__inner');
+            if (existingDrawerInner) {
+              existingDrawerInner.innerHTML = drawerInner.innerHTML + '<div id="new-elem"></div>';
+            }
+            
+            // Re-initialize any dynamic elements if needed
+            cartDrawer.dispatchEvent(new Event('cart-updated'));
+          }
+          
+          console.log("Cart drawer refreshed successfully");
+        } catch (error) {
+          console.error("Error refreshing cart drawer:", error);
+        }
+      }
+
+      const baseCurrency = "{{ base_currency_code }}";
+      const activeCurrency = Shopify.currency && Shopify.currency.active ? Shopify.currency.active : "{{ current_currency_code }}";
+      console.log(activeCurrency);
+      const cacheKey = `cart_checkpoint_rates_${baseCurrency}`;
+      const cacheDurationMs = 24 * 60 * 60 * 1000; // one day
+
+      function getCachedRates() {
+        try {
+          const raw = localStorage.getItem(cacheKey);
+          if (!raw) return null;
+          const parsed = JSON.parse(raw);
+          if (!parsed || !parsed.timestamp || !parsed.rates) return null;
+          if (Date.now() - parsed.timestamp > cacheDurationMs) return null;
+          return parsed.rates;
+        } catch (error) {
+          return null;
+        }
+      }
+
+      async function getExchangeRate() {
+        if (activeCurrency === baseCurrency) return 1;
+
+        const cachedRates = getCachedRates();
+        if (cachedRates && cachedRates[activeCurrency]) {
+          return Number(cachedRates[activeCurrency]);
+        }
+
+        try {
+          const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${baseCurrency}`);
+          if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+          const data = await response.json();
+          if (!data || !data.rates || !data.rates[activeCurrency]) {
+            throw new Error(`Rate not available for ${activeCurrency}`);
+          }
+
+          localStorage.setItem(cacheKey, JSON.stringify({
+            timestamp: Date.now(),
+            rates: data.rates
+          }));
+
+          return Number(data.rates[activeCurrency]);
+        } catch (error) {
+          console.error("Exchange rate API failed:", error);
+          return null;
+        }
+      }
+
+      getExchangeRate()
+        .then((converted) => {
+          if (!converted || converted <= 0) return null;
+          return fetch('/cart/update.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              attributes: {
+                "_exchange_rate": converted,
+                "_exchange_currency": activeCurrency
+              }
+            })
+          });
+        })
+        .then(response => response ? response.json() : null)
+        .then((result) => {
+          if (result) return refreshCartDrawer();
+          return null;
+        })
+        .finally(() => {
+          window.__cartCheckpointExchangeUpdating = false;
+        });
+    })();
+  </script>
+{% endif %}
+{% if cart == empty %}
+  <script>
+    fetch('/cart/update.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        attributes: {
+          "_exchange_rate": "",
+          "_exchange_currency": ""
+        }
+      })
+    })
+    </script>
+{% endif %}
+
+{% liquid
+  assign is_quantity = false
+  if block.settings.goal_type == 'quantity'
+    assign is_quantity = true
+  endif
+
+  if is_quantity
+    assign goal_multiplier = 1.0
+    assign goal_max_reference = items_count
+  else
+    assign goal_multiplier = 100.00 | times: exchange_rate
+    assign goal_max_reference = cart.total_price
+  endif
+
+  if block.settings.enable_goal_1
+    assign highest_goal = block.settings[goal_1] | times: goal_multiplier
+  endif
+  if block.settings.enable_goal_2
+    assign highest_goal = block.settings[goal_2] | times: goal_multiplier
+  endif
+  if block.settings.enable_goal_3
+    assign highest_goal = block.settings[goal_3] | times: goal_multiplier
+  endif
+    
+  assign bar_progress = goal_max_reference | divided_by: highest_goal | times: 100.00
+  assign all_goals_reached = false
+  if bar_progress >= 100.00
+    assign all_goals_reached = true
+    assign bar_progress = 100
+  endif
+
+  assign next_goal_text = nil
+  if block.settings.enable_goal_1
+    assign goal_1_position = block.settings[goal_1] | divided_by: highest_goal | times: goal_multiplier | times: 100.00
+    if goal_1_position > bar_progress and next_goal_text == nil
+      assign next_goal_text = block.settings.goal_1_text
+      assign next_goal = block.settings[goal_1] | times: goal_multiplier
+    endif
+  endif
+  if block.settings.enable_goal_2
+    assign goal_2_position = block.settings[goal_2] | divided_by: highest_goal | times: goal_multiplier | times: 100.00
+    if goal_2_position > bar_progress and next_goal_text == nil
+      assign next_goal_text = block.settings.goal_2_text
+      assign next_goal = block.settings[goal_2] | times: goal_multiplier
+    endif
+  endif
+  if block.settings.enable_goal_3
+    assign goal_3_position = block.settings[goal_3] | divided_by: highest_goal | times: goal_multiplier | times: 100.00
+    if goal_3_position > bar_progress and next_goal_text == nil
+      assign next_goal_text = block.settings.goal_3_text
+      assign next_goal = block.settings[goal_3] | times: goal_multiplier
+    endif
+  endif
+%}
+{% capture goal_difference_html %}
+  {% if is_quantity %}
+    {{ next_goal | minus: items_count | round }}
+  {% else %}
+    <span>{{ next_goal | minus: goal_max_reference | money_without_trailing_zeros }}</span>
+  {% endif %}
+{% endcapture %}
+
+<div id="progress_checkpoint" class="cart-progress cart-checkpoints accent-color-{{ block.settings.accent_color }}" style="--mobile-text-size: {{ block.settings.labels_mobile_text_size | divided_by: 10.0 }}rem;--desktop-text-size: {{ block.settings.labels_desktop_text_size | divided_by: 10.0 }}rem;--margin-top: {{ block.settings.margin_top | divided_by: 10.0 }}rem;--margin-bottom: {{ block.settings.margin_bottom | divided_by: 10.0 }}rem;" {{ block.shopify_attributes }} >
+  <p class="cart-progress__text">
+    {% if all_goals_reached == false %}
+      {{ block.settings.progress_message | replace: '[amount]', goal_difference_html | replace: '[next_goal]', next_goal_text }}
+    {% else %}
+      {{ block.settings.success_message }}
+    {% endif %}
+  </p>
+  <div class="cart-progress__bar">
+    <div class="cart-progress__bar__progress" style="width: {{ bar_progress }}%;">&nbsp</div>
+    {% if block.settings.enable_goal_1 %}
+      <div id="checkpoint_1" class="cart-progress__bar__badge cart-checkpoints__icon" style="--position:{{ goal_1_position }}%;"
+        data-threshold="{% unless is_quantity %}{{ block.settings[goal_1] | times: 100.00 | times: exchange_rate | round }}{% endunless %}"
+        >
+        <span class="material-symbols-outlined{% if block.settings.goal_1_icon_filled %} filled{% endif %}">
+          {{ block.settings.goal_1_icon | strip | downcase | replace: ' ', '_' }}
+        </span>
+        {% if block.settings.goal_1_label != blank %}
+          <span class='cart-checkpoints__label custom-font-size'>
+            {{ block.settings.goal_1_label }}
+          </span>
+        {% endif %}
+      </div>
+    {% endif %}
+    {% if block.settings.enable_goal_2 %}
+      <div id="checkpoint_2" class="cart-progress__bar__badge cart-checkpoints__icon" style="--position:{{ goal_2_position }}%;"
+        data-threshold="{% unless is_quantity %}{{ block.settings[goal_2] | times: 100.00 | times: exchange_rate | round }}{% endunless %}"
+        >
+        <span class="material-symbols-outlined{% if block.settings.goal_2_icon_filled %} filled{% endif %}">
+          {{ block.settings.goal_2_icon | strip | downcase | replace: ' ', '_' }}
+        </span>
+        {% if block.settings.goal_2_label != blank %}
+          <span class='cart-checkpoints__label custom-font-size'>
+            {{ block.settings.goal_2_label }}
+          </span>
+        {% endif %}
+      </div>
+    {% endif %}
+    {% if block.settings.enable_goal_3 %}
+      <div id="checkpoint_3" class="cart-progress__bar__badge cart-checkpoints__icon" style="--position:{{ goal_3_position }}%;"
+        data-threshold="{% unless is_quantity %}{{ block.settings[goal_3] | times: 100.00 | times: exchange_rate | round }}{% endunless %}"
+        >
+        <span class="material-symbols-outlined{% if block.settings.goal_3_icon_filled %} filled{% endif %}">
+          {{ block.settings.goal_3_icon | strip | downcase | replace: ' ', '_' }}
+        </span>
+        {% if block.settings.goal_3_label != blank %}
+          <span class='cart-checkpoints__label custom-font-size'>
+            {{ block.settings.goal_3_label }}
+          </span>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</div>
