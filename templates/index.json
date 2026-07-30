@@ -2073,7 +2073,7 @@
       ],
       "name": "SS - Modal popup #6",
       "settings": {
-        "display_options": "click",
+        "display_options": "after_seconds",
         "seconds": 5,
         "percent": 50,
         "hide_modal_days": 0,
