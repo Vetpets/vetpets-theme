@@ -2074,8 +2074,8 @@
       "disabled": true,
       "name": "SS - Modal popup #6",
       "settings": {
-        "display_options": "click",
-        "seconds": 10,
+        "display_options": "after_seconds",
+        "seconds": 5,
         "percent": 50,
         "hide_modal_days": 0,
         "button_fixed": true,
