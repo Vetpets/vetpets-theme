@@ -2102,7 +2102,7 @@
         "close_align": "top_left",
         "close_offset": 16,
         "close_offset_mobile": 12,
-        "image_hide_mobile": true,
+        "image_hide_mobile": false,
         "mobile_overlay_color": "#ffffff",
         "mobile_overlay_opacity": 40,
         "image": "shopify://shop_images/03.png",
