@@ -1870,9 +1870,10 @@
         "logo_imHArJ": {
           "type": "logo",
           "settings": {
+            "logo": "shopify://shop_images/Vetpets_logga_5_e9bbafef-0e29-41d5-bf25-9383590065d1.png",
             "logo_width": 120,
             "logo_width_mobile": 100,
-            "logo_mt": 0,
+            "logo_mt": 20,
             "logo_mt_mobile": 0
           }
         },
@@ -1894,7 +1895,7 @@
         "heading_Fkm7gL": {
           "type": "heading",
           "settings": {
-            "heading": "<h3>Try your luck</h3>",
+            "heading": "<p>TRY YOUR LUCK</p>",
             "heading_custom": false,
             "heading_font": "josefin_sans_n4",
             "heading_size": 48,
@@ -1903,13 +1904,13 @@
             "heading_height": 130,
             "heading_mt": 16,
             "heading_mt_mobile": 12,
-            "heading_color": "#121212"
+            "heading_color": "#00225B"
           }
         },
         "text_rFKxcE": {
           "type": "text",
           "settings": {
-            "text": "<p>Scratch below to see what you win</p>",
+            "text": "<p>Scratch below to reveal today's surprise.</p>",
             "text_custom": false,
             "text_font": "josefin_sans_n4",
             "text_size": 16,
@@ -1933,23 +1934,24 @@
             "card_radius": 16,
             "card_mt": 24,
             "card_mt_mobile": 20,
+            "overlay_image": "shopify://shop_images/vetpets-ss-scratchcard-page1.png",
             "overlay_text": "SCRATCH HERE",
             "overlay_text_size": 18,
             "overlay_text_size_mobile": 16,
-            "reveal_subtitle": "You've unlocked",
-            "reveal_subtitle_size": 16,
-            "reveal_subtitle_size_mobile": 14,
-            "reveal_title": "10% OFF",
+            "reveal_subtitle": "CLAIM YOUR 10% DISCOUNT",
+            "reveal_subtitle_size": 36,
+            "reveal_subtitle_size_mobile": 34,
+            "reveal_title": "CONGRATS!",
             "reveal_title_size": 48,
             "reveal_title_size_mobile": 40,
             "reveal_custom": false,
             "reveal_font": "josefin_sans_n4",
             "claim_label": "Claim Discount",
-            "card_bg_color": "#FFFFFF",
-            "overlay_color": "#D7CCA5",
-            "overlay_text_color": "#B5AB89",
-            "reveal_subtitle_color": "#121212",
-            "reveal_title_color": "#121212"
+            "card_bg_color": "#ffffff",
+            "overlay_color": "#d7cca5",
+            "overlay_text_color": "#b5ab89",
+            "reveal_subtitle_color": "#128DCB",
+            "reveal_title_color": "#00225B"
           }
         },
         "newsletter_UJzh7J": {
@@ -2015,14 +2017,14 @@
             "success_button_url": "",
             "discount_code_color": "#121212",
             "discount_code_label_color": "#707070",
-            "discount_code_bg_color": "#F5F5F5",
-            "discount_code_border_color": "#CCCCCC",
+            "discount_code_bg_color": "#f5f5f5",
+            "discount_code_border_color": "#cccccc",
             "discount_code_border_hover_color": "#999999",
             "input_color": "#121212",
             "input_placeholder_color": "#707070",
-            "input_bg_color": "#FFFFFF",
-            "input_border_color": "#DFDFDF",
-            "input_border_focus_color": "transparent",
+            "input_bg_color": "#ffffff",
+            "input_border_color": "#dfdfdf",
+            "input_border_focus_color": "rgba(0,0,0,0)",
             "heading_thanks_text_color": "#121212",
             "thanks_text_color": "#121212"
           }
@@ -2102,7 +2104,7 @@
         "close_offset": 16,
         "close_offset_mobile": 12,
         "image_hide_mobile": true,
-        "mobile_overlay_color": "#FFFFFF",
+        "mobile_overlay_color": "#ffffff",
         "mobile_overlay_opacity": 40,
         "image_width": 50,
         "image_position_desktop": "right",
@@ -2118,18 +2120,18 @@
         "button_padding_horizontal_mobile": 24,
         "button_radius": 12,
         "button_border_thickness": 0,
-        "button_color": "#FFFFFF",
-        "button_hover_color": "#FFFFFF",
+        "button_color": "#ffffff",
+        "button_hover_color": "#ffffff",
         "button_bg_color": "#121212",
         "button_bg_hover_color": "#333333",
         "button_border_color": "#121212",
         "button_border_hover_color": "#121212",
         "modal_background_style": "solid",
-        "modal_bg_color": "#FFFFFF",
+        "modal_bg_color": "#ffffff",
         "modal_background_gradient": "linear-gradient(180deg, #FFFFFF 0%, #F2F2F2 100%)",
         "close_color": "#121212",
         "background_style": "solid",
-        "background_color": "#FFFFFF",
+        "background_color": "#ffffff",
         "background_gradient": "linear-gradient(180deg, #FFFFFF 0%, #F2F2F2 100%)",
         "border_color": "#121212",
         "margin_top": 0,
