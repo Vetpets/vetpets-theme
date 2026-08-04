@@ -1,1 +1,77 @@
-{"context":{"market":"usa"},"parent":"header-group.json","sections":{"custom_liquid_gMn3P":{"type":"custom-liquid","disabled":false,"settings":{"display_id":false,"visibility":"always-display","custom_liquid":"<style>\n.vp-july4-bar{\nposition:relative;\nbackground-color:#192c6f;\nbackground-image:linear-gradient(\n77deg,\n#192c6f,\n#1e367f 52%,\n#192c6f\n);\ncolor:#fff;\nfont-family:Geist,Arial,sans-serif;\ndisplay:flex;\nalign-items:center;\njustify-content:center;\ngap:10px;\npadding:8px 14px;\noverflow:hidden;\n}\n.vp-july4-bar::after{\ncontent:\"\";\nposition:absolute;\ntop:0;\nleft:-150%;\nwidth:40%;\nheight:100%;\nbackground:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);\nanimation:vpShine 6s linear infinite;\n}\n@keyframes vpShine{100%{left:170%;}}\n.vp-stars{\nposition:absolute;\ntop:50%;\ntransform:translateY(-50%);\ndisplay:flex;\ngap:0;\npointer-events:none;\nz-index:2;\nwidth:46px;\nheight:42px;\n}\n.vp-stars svg{\nanimation:vpFloat 3s ease-in-out infinite alternate;\n}\n.vp-stars svg:nth-child(2){\nposition:absolute;\nleft:30px;\ntop:4px;\nanimation-delay:.4s;\n}\n\n.vp-stars svg:nth-child(3){\nposition:absolute;\nleft:34px;\ntop:28px;\nanimation-delay:.8s;\n}\n@keyframes vpFloat{from{transform:translateY(0)}to{transform:translateY(-3px)}}\n.vp-stars.left{\nleft:8px;\n}\n\n.vp-stars.right{\nright:8px;\ntransform:translateY(-50%) scaleX(-1);\n}\n.vp-stars .lg{width:22px;height:22px}\n.vp-stars .sm{width:10px;height:10px}\n.vp-info{display:flex;flex-direction:column;line-height:1.1}\n.vp-title{font-size:15px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}\n.vp-sub{font-size:13px;font-weight:500;opacity:.96;margin-top:2px}\n.vp-countdown{display:flex;gap:8px}\n.vp-single-box{\nbackground:#fff;\nwidth:122px;\npadding:5px 8px;\nborder-radius:5px;\ntext-align:center;\nbox-shadow:0 2px 6px rgba(0,0,0,.10);\n}\n\n.vp-time{\nfont-size:22px;\nfont-weight:800;\ncolor:#223B87;\nfont-variant-numeric:tabular-nums;\nline-height:1;\n}\n\n.vp-time-labels{\ndisplay:flex;\njustify-content:space-around;\nmargin-top:2px;\nfont-size:8px;\nfont-weight:600;\ncolor:#666;\nletter-spacing:.5px;\n}\n\n.vp-time-labels span{\nflex:1;\ntext-align:center;\n}\n@media(max-width:768px){\n\n.vp-info{\npadding-left:12px;\n}\n\n.vp-title{\nfont-size:11px;\n}\n\n.vp-sub{\nfont-size:8px;\n}\n\n.vp-countdown{\ngap:8px;\n}\n\n.vp-single-box{\nwidth:108px;\npadding:4px 6px;\n}\n\n.vp-time{\nfont-size:20px;\n}\n\n.vp-time-labels{\nfont-size:6px;\n}\n\n.vp-stars.left{\nleft:5px;\n}\n\n.vp-stars.right{\nright:5px;\n}\n\n.vp-stars .lg{\nwidth:22px;\nheight:22px;\nposition:absolute;\nleft:0;\ntop:10px;\n}\n\n.vp-stars .sm{\nwidth:7px;\nheight:7px;\nposition:absolute;\n}\n\n.vp-stars{\nwidth:30px;\nheight:28px;\n}\n\n.vp-stars svg:nth-child(2){\nposition:absolute;\nleft:18px;\ntop:2px;\n}\n\n.vp-stars svg:nth-child(3){\nposition:absolute;\nleft:20px;\ntop:18px;\n}\n\n}\n<\/style>\n\n<div class=\"vp-july4-bar\" id=\"vpJulyBar\">\n<div class=\"vp-stars left\">\n<svg class=\"lg\" viewBox=\"0 0 24 24\"><polygon fill=\"#fff\" points=\"12,1 15,9 23,9 17,14 19,23 12,18 5,23 7,14 1,9 9,9\"\/><\/svg>\n<svg class=\"sm\" viewBox=\"0 0 24 24\"><polygon fill=\"#2F6BFF\" points=\"12,1 15,9 23,9 17,14 19,23 12,18 5,23 7,14 1,9 9,9\"\/><\/svg>\n<svg class=\"sm\" viewBox=\"0 0 24 24\"><polygon fill=\"#E53935\" points=\"12,1 15,9 23,9 17,14 19,23 12,18 5,23 7,14 1,9 9,9\"\/><\/svg>\n<\/div>\n\n<div class=\"vp-info\">\n<div class=\"vp-title\">JULY 4TH EXCLUSIVE<\/div>\n<div class=\"vp-sub\">UP TO 64% OFF + FREE GIFTS<\/div>\n<\/div>\n\n<div class=\"vp-countdown\">\n\n<div class=\"vp-single-box\">\n\n<div class=\"vp-time\">\n<span id=\"h\">00<\/span>:<span id=\"m\">00<\/span>:<span id=\"s\">00<\/span>\n<\/div>\n\n<div class=\"vp-time-labels\">\n<span>HRS<\/span>\n<span>MIN<\/span>\n<span>SEC<\/span>\n<\/div>\n\n<\/div>\n\n<\/div>\n\n<div class=\"vp-stars right\">\n<svg class=\"sm\" viewBox=\"0 0 24 24\">\n<polygon fill=\"#E53935\" points=\"12,1 15,9 23,9 17,14 19,23 12,18 5,23 7,14 1,9 9,9\"\/>\n<\/svg>\n\n<svg class=\"sm\" viewBox=\"0 0 24 24\">\n<polygon fill=\"#2F6BFF\" points=\"12,1 15,9 23,9 17,14 19,23 12,18 5,23 7,14 1,9 9,9\"\/>\n<\/svg>\n\n<svg class=\"lg\" viewBox=\"0 0 24 24\">\n<polygon fill=\"#fff\" points=\"12,1 15,9 23,9 17,14 19,23 12,18 5,23 7,14 1,9 9,9\"\/>\n<\/svg>\n<\/div>\n\n<script>\n\/\/ Sale ends on July 4, 2026 at 11:59:59 PM Eastern Daylight Time\nconst end = new Date(2026, 6, 4, 23, 59, 59).getTime();\n\nconst h = document.getElementById(\"h\");\nconst m = document.getElementById(\"m\");\nconst s = document.getElementById(\"s\");\nconst bar = document.getElementById(\"vpJulyBar\");\n\nfunction updateCountdown(){\n\n    const now = new Date().getTime();\n    const diff = end - now;\n\n    if(diff <= 0){\n        bar.style.display = \"none\";\n        return;\n    }\n\n    const hours = Math.floor(\n    diff \/ (1000 * 60 * 60)\n);\n    const minutes = Math.floor((diff % (1000 * 60 * 60)) \/ (1000 * 60));\n    const seconds = Math.floor((diff % (1000 * 60)) \/ 1000);\n\n    h.textContent = String(hours).padStart(3,\"0\");\n    m.textContent = String(minutes).padStart(2,\"0\");\n    s.textContent = String(seconds).padStart(2,\"0\");\n}\n\nupdateCountdown();\nsetInterval(updateCountdown,1000);\n<\/script>","color_scheme":"background-1","header-54e75b6f30ebee06590ec49b86f7a7dc":null,"padding_top":0,"padding_bottom":0},"blocks":{},"block_order":[],"name":"t:sections.custom-liquid.presets.name"},"horizontal_ticker_7D8jfx":{"disabled":false,"settings":{},"blocks":{"text_Aiypdp":{"disabled":true,"settings":{}},"text_kH6e7p":{"type":"text","disabled":false,"settings":{"title":"NATIONAL DOG MONTH - UP TO 70% OFF"}}},"block_order":["text_Aiypdp","text_RK7pqQ","text_kH6e7p"]},"fe1c8c67-b84c-4466-a515-70df3134c1c0":{"disabled":false,"settings":{},"blocks":{}},"announcement_bar_NCpPRh":{"disabled":true,"settings":{},"blocks":{"announcement_kezFxd":{"disabled":true,"settings":{}}}}},"order":["custom_liquid_gMn3P","announcement_bar_NCpPRh","horizontal_ticker_7D8jfx","fe1c8c67-b84c-4466-a515-70df3134c1c0","header"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "context": {
+    "market": "usa"
+  },
+  "parent": "header-group.json",
+  "sections": {
+    "custom_liquid_gMn3P": {
+      "type": "custom-liquid",
+      "disabled": false,
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "custom_liquid": "<style>\n.vp-july4-bar{\nposition:relative;\nbackground-color:#192c6f;\nbackground-image:linear-gradient(\n77deg,\n#192c6f,\n#1e367f 52%,\n#192c6f\n);\ncolor:#fff;\nfont-family:Geist,Arial,sans-serif;\ndisplay:flex;\nalign-items:center;\njustify-content:center;\ngap:10px;\npadding:8px 14px;\noverflow:hidden;\n}\n.vp-july4-bar::after{\ncontent:\"\";\nposition:absolute;\ntop:0;\nleft:-150%;\nwidth:40%;\nheight:100%;\nbackground:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);\nanimation:vpShine 6s linear infinite;\n}\n@keyframes vpShine{100%{left:170%;}}\n.vp-stars{\nposition:absolute;\ntop:50%;\ntransform:translateY(-50%);\ndisplay:flex;\ngap:0;\npointer-events:none;\nz-index:2;\nwidth:46px;\nheight:42px;\n}\n.vp-stars svg{\nanimation:vpFloat 3s ease-in-out infinite alternate;\n}\n.vp-stars svg:nth-child(2){\nposition:absolute;\nleft:30px;\ntop:4px;\nanimation-delay:.4s;\n}\n\n.vp-stars svg:nth-child(3){\nposition:absolute;\nleft:34px;\ntop:28px;\nanimation-delay:.8s;\n}\n@keyframes vpFloat{from{transform:translateY(0)}to{transform:translateY(-3px)}}\n.vp-stars.left{\nleft:8px;\n}\n\n.vp-stars.right{\nright:8px;\ntransform:translateY(-50%) scaleX(-1);\n}\n.vp-stars .lg{width:22px;height:22px}\n.vp-stars .sm{width:10px;height:10px}\n.vp-info{display:flex;flex-direction:column;line-height:1.1}\n.vp-title{font-size:15px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}\n.vp-sub{font-size:13px;font-weight:500;opacity:.96;margin-top:2px}\n.vp-countdown{display:flex;gap:8px}\n.vp-single-box{\nbackground:#fff;\nwidth:122px;\npadding:5px 8px;\nborder-radius:5px;\ntext-align:center;\nbox-shadow:0 2px 6px rgba(0,0,0,.10);\n}\n\n.vp-time{\nfont-size:22px;\nfont-weight:800;\ncolor:#223B87;\nfont-variant-numeric:tabular-nums;\nline-height:1;\n}\n\n.vp-time-labels{\ndisplay:flex;\njustify-content:space-around;\nmargin-top:2px;\nfont-size:8px;\nfont-weight:600;\ncolor:#666;\nletter-spacing:.5px;\n}\n\n.vp-time-labels span{\nflex:1;\ntext-align:center;\n}\n@media(max-width:768px){\n\n.vp-info{\npadding-left:12px;\n}\n\n.vp-title{\nfont-size:11px;\n}\n\n.vp-sub{\nfont-size:8px;\n}\n\n.vp-countdown{\ngap:8px;\n}\n\n.vp-single-box{\nwidth:108px;\npadding:4px 6px;\n}\n\n.vp-time{\nfont-size:20px;\n}\n\n.vp-time-labels{\nfont-size:6px;\n}\n\n.vp-stars.left{\nleft:5px;\n}\n\n.vp-stars.right{\nright:5px;\n}\n\n.vp-stars .lg{\nwidth:22px;\nheight:22px;\nposition:absolute;\nleft:0;\ntop:10px;\n}\n\n.vp-stars .sm{\nwidth:7px;\nheight:7px;\nposition:absolute;\n}\n\n.vp-stars{\nwidth:30px;\nheight:28px;\n}\n\n.vp-stars svg:nth-child(2){\nposition:absolute;\nleft:18px;\ntop:2px;\n}\n\n.vp-stars svg:nth-child(3){\nposition:absolute;\nleft:20px;\ntop:18px;\n}\n\n}\n</style>\n\n<div class=\"vp-july4-bar\" id=\"vpJulyBar\">\n<div class=\"vp-stars left\">\n<svg class=\"lg\" viewBox=\"0 0 24 24\"><polygon fill=\"#fff\" points=\"12,1 15,9 23,9 17,14 19,23 12,18 5,23 7,14 1,9 9,9\"/></svg>\n<svg class=\"sm\" viewBox=\"0 0 24 24\"><polygon fill=\"#2F6BFF\" points=\"12,1 15,9 23,9 17,14 19,23 12,18 5,23 7,14 1,9 9,9\"/></svg>\n<svg class=\"sm\" viewBox=\"0 0 24 24\"><polygon fill=\"#E53935\" points=\"12,1 15,9 23,9 17,14 19,23 12,18 5,23 7,14 1,9 9,9\"/></svg>\n</div>\n\n<div class=\"vp-info\">\n<div class=\"vp-title\">JULY 4TH EXCLUSIVE</div>\n<div class=\"vp-sub\">UP TO 64% OFF + FREE GIFTS</div>\n</div>\n\n<div class=\"vp-countdown\">\n\n<div class=\"vp-single-box\">\n\n<div class=\"vp-time\">\n<span id=\"h\">00</span>:<span id=\"m\">00</span>:<span id=\"s\">00</span>\n</div>\n\n<div class=\"vp-time-labels\">\n<span>HRS</span>\n<span>MIN</span>\n<span>SEC</span>\n</div>\n\n</div>\n\n</div>\n\n<div class=\"vp-stars right\">\n<svg class=\"sm\" viewBox=\"0 0 24 24\">\n<polygon fill=\"#E53935\" points=\"12,1 15,9 23,9 17,14 19,23 12,18 5,23 7,14 1,9 9,9\"/>\n</svg>\n\n<svg class=\"sm\" viewBox=\"0 0 24 24\">\n<polygon fill=\"#2F6BFF\" points=\"12,1 15,9 23,9 17,14 19,23 12,18 5,23 7,14 1,9 9,9\"/>\n</svg>\n\n<svg class=\"lg\" viewBox=\"0 0 24 24\">\n<polygon fill=\"#fff\" points=\"12,1 15,9 23,9 17,14 19,23 12,18 5,23 7,14 1,9 9,9\"/>\n</svg>\n</div>\n\n<script>\n// Sale ends on July 4, 2026 at 11:59:59 PM Eastern Daylight Time\nconst end = new Date(2026, 6, 4, 23, 59, 59).getTime();\n\nconst h = document.getElementById(\"h\");\nconst m = document.getElementById(\"m\");\nconst s = document.getElementById(\"s\");\nconst bar = document.getElementById(\"vpJulyBar\");\n\nfunction updateCountdown(){\n\n    const now = new Date().getTime();\n    const diff = end - now;\n\n    if(diff <= 0){\n        bar.style.display = \"none\";\n        return;\n    }\n\n    const hours = Math.floor(\n    diff / (1000 * 60 * 60)\n);\n    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));\n    const seconds = Math.floor((diff % (1000 * 60)) / 1000);\n\n    h.textContent = String(hours).padStart(3,\"0\");\n    m.textContent = String(minutes).padStart(2,\"0\");\n    s.textContent = String(seconds).padStart(2,\"0\");\n}\n\nupdateCountdown();\nsetInterval(updateCountdown,1000);\n</script>",
+        "color_scheme": "background-1",
+        "header-54e75b6f30ebee06590ec49b86f7a7dc": null,
+        "padding_top": 0,
+        "padding_bottom": 0
+      },
+      "blocks": {},
+      "block_order": [],
+      "name": "t:sections.custom-liquid.presets.name"
+    },
+    "horizontal_ticker_7D8jfx": {
+      "disabled": false,
+      "settings": {},
+      "blocks": {
+        "text_Aiypdp": {
+          "disabled": true,
+          "settings": {}
+        },
+        "text_kH6e7p": {
+          "type": "text",
+          "disabled": false,
+          "settings": {
+            "title": "NATIONAL DOG MONTH - UP TO 70% OFF"
+          }
+        }
+      },
+      "block_order": [
+        "text_Aiypdp",
+        "text_RK7pqQ",
+        "text_kH6e7p"
+      ]
+    },
+    "fe1c8c67-b84c-4466-a515-70df3134c1c0": {
+      "disabled": false,
+      "settings": {},
+      "blocks": {}
+    },
+    "announcement_bar_NCpPRh": {
+      "disabled": true,
+      "settings": {},
+      "blocks": {
+        "announcement_kezFxd": {
+          "disabled": true,
+          "settings": {}
+        }
+      }
+    }
+  },
+  "order": [
+    "custom_liquid_gMn3P",
+    "announcement_bar_NCpPRh",
+    "horizontal_ticker_7D8jfx",
+    "fe1c8c67-b84c-4466-a515-70df3134c1c0",
+    "header"
+  ]
+}

@@ -8,1871 +8,9 @@
  * ------------------------------------------------------------
  */
 {
-  "sections": {
-    "image_banner_gUTUbM": {
-      "type": "image-banner",
-      "name": "t:sections.image-banner.presets.name",
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "image": "shopify://shop_images/Namnlos_design_-_2026-04-21T171044.129.jpg",
-        "image_1_visibility": "mobile-hidden",
-        "image_2": "shopify://shop_images/Namnlos_design_-_2026-04-21T171257.153.jpg",
-        "image_2_visibility": "desktop-hidden",
-        "image_overlay_opacity": 0,
-        "image_height": "adapt",
-        "url": "shopify://products/freshcare-complete-health-kit",
-        "desktop_content_position": "middle-center",
-        "show_text_box": true,
-        "desktop_content_alignment": "left",
-        "color_scheme": "background-1",
-        "transparent_container_color": "white",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": true,
-        "show_text_below": true
-      }
-    },
-    "ss_hero_pro_PGyKJy": {
-      "type": "ss-hero-pro",
-      "blocks": {
-        "caption_teTphi": {
-          "type": "caption",
-          "disabled": true,
-          "settings": {
-            "caption": "<p>Vet Recommended</p>",
-            "caption_custom": false,
-            "caption_font": "josefin_sans_n4",
-            "caption_size": 12,
-            "caption_size_mobile": 12,
-            "caption_advanced": false,
-            "caption_height": 130,
-            "caption_mt": 0,
-            "caption_mt_mobile": 0,
-            "background": true,
-            "caption_bg_opacity": 1,
-            "enable_blur": false,
-            "caption_radius": 100,
-            "caption_border_thickness": 1,
-            "caption_padding_horizontal": 12,
-            "caption_padding_horizontal_mobile": 12,
-            "caption_padding_vertical": 6,
-            "caption_padding_vertical_mobile": 6,
-            "caption_color": "#ffffff",
-            "caption_bg_color": "#13b6b5",
-            "caption_border_color": "#13b6b5"
-          }
-        },
-        "heading_ckcrih": {
-          "type": "heading",
-          "settings": {
-            "heading": "<p>The Daily Routine Responsible Pet Fathers Use to <strong>Keep Their </strong></p><p><strong>Pet Healthy</strong></p>",
-            "heading_custom": false,
-            "heading_font": "josefin_sans_n4",
-            "heading_accent_font": "playfair_n4",
-            "heading_size": 36,
-            "heading_size_mobile": 22,
-            "heading_advanced": false,
-            "heading_height": 130,
-            "heading_mt": 8,
-            "heading_mt_mobile": 8,
-            "heading_color": "#ffffff",
-            "heading_accent_color": "#47b5e9"
-          }
-        },
-        "text_WyELWw": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "text": "<p>Finger wipes designed for your dog's teeth, eyes, and ears. Simple enough to do every day. Gentle enough that your dog won't fight it.</p>",
-            "text_custom": false,
-            "text_font": "josefin_sans_n4",
-            "text_size": 16,
-            "text_size_mobile": 14,
-            "text_advanced": false,
-            "text_height": 150,
-            "text_mt": 20,
-            "text_mt_mobile": 20,
-            "text_color": "#ffffff"
-          }
-        },
-        "feature_JGbpw8": {
-          "type": "feature",
-          "settings": {
-            "icon": "heart",
-            "text": "Only 30 Seconds/Day"
-          }
-        },
-        "feature_9fXTEx": {
-          "type": "feature",
-          "settings": {
-            "icon": "bolt",
-            "text": "Clear results in 2–3 weeks"
-          }
-        },
-        "feature_RdRWiJ": {
-          "type": "feature",
-          "settings": {
-            "icon": "gift",
-            "text": "Buy 2 Get 2 Free"
-          }
-        },
-        "button_c8nHDF": {
-          "type": "button",
-          "settings": {
-            "button": "FATHER'S DAY SALE",
-            "url": "shopify://collections/finger-wipes",
-            "open_in_new_tab": false,
-            "button_style": "non_outline",
-            "button_custom": false,
-            "button_font": "josefin_sans_n4",
-            "button_size": 18,
-            "button_size_mobile": 18,
-            "button_advanced": false,
-            "button_height": 100,
-            "button_padding_horizontal": 40,
-            "button_padding_horizontal_mobile": 32,
-            "button_padding_vertical": 20,
-            "button_padding_vertical_mobile": 20,
-            "button_radius": 100,
-            "button_border_thickness": 1,
-            "button_mt": 24,
-            "button_mt_mobile": 24,
-            "button_custom_styling": true,
-            "button_full_width_mobile": true,
-            "button_color": "#ffffff",
-            "button_hover_color": "#ffffff",
-            "button_bg_color": "#47b5e9",
-            "button_bg_hover_color": "#13b6b5",
-            "button_border_color": "#1a1a1a",
-            "button_border_hover_color": "#1a1a1a",
-            "button_shadow_color": "#000000"
-          }
-        },
-        "verified_eGxjE3": {
-          "type": "verified",
-          "settings": {
-            "icon_size": 16,
-            "icon_size_mobile": 16,
-            "icon": "shield_check",
-            "text": "<p>100-Day Money-Back Guarantee</p>",
-            "text_custom": false,
-            "text_font": "josefin_sans_n4",
-            "text_size": 14,
-            "text_size_mobile": 14,
-            "text_advanced": false,
-            "text_height": 150,
-            "text_mt": 16,
-            "text_mt_mobile": 16,
-            "icon_color": "#13b6b5",
-            "text_color": "#ffffff"
-          }
-        }
-      },
-      "block_order": [
-        "caption_teTphi",
-        "heading_ckcrih",
-        "text_WyELWw",
-        "feature_JGbpw8",
-        "feature_9fXTEx",
-        "feature_RdRWiJ",
-        "button_c8nHDF",
-        "verified_eGxjE3"
-      ],
-      "disabled": true,
-      "name": "SS - Hero pro 💎",
-      "settings": {
-        "hero_height": "fixed_height",
-        "hero_fixed_height": 700,
-        "hero_fixed_height_mobile": 780,
-        "content_max_width": 45,
-        "enable_split_layout": false,
-        "content_align": "left",
-        "content_align_mobile": "center",
-        "content_vertical_align": "center",
-        "content_vertical_align_mobile": "start",
-        "features_advanced": true,
-        "features_mt": 20,
-        "features_mt_mobile": 20,
-        "features_gap": 20,
-        "features_gap_mobile": 10,
-        "feature_background": false,
-        "feature_bg_opacity": 0.3,
-        "feature_enable_blur": true,
-        "feature_radius": 100,
-        "feature_border_thickness": 1,
-        "feature_padding_horizontal": 12,
-        "feature_padding_horizontal_mobile": 12,
-        "feature_padding_vertical": 6,
-        "feature_padding_vertical_mobile": 6,
-        "feature_icon_size": 18,
-        "feature_icon_size_mobile": 16,
-        "feature_text_custom": false,
-        "feature_text_font": "josefin_sans_n4",
-        "feature_text_size": 14,
-        "feature_text_size_mobile": 12,
-        "feature_text_height": 100,
-        "feature_icon_color": "#13b6b5",
-        "feature_text_color": "#ffffff",
-        "feature_bg_color": "#ffffff",
-        "feature_border_color": "#ffffff",
-        "layout_bg_type": "image",
-        "bg_image": "shopify://shop_images/Namnlos_design_-_2026-07-01T094629.525.jpg",
-        "bg_image_mobile": "shopify://shop_images/Namnlos_design_-_2026-07-01T094829.441.jpg",
-        "bg_video_url": "",
-        "bg_overlay": 0,
-        "bg_overlay_color": "#121212",
-        "background_style": "solid",
-        "background_color": "#121212",
-        "background_gradient": "radial-gradient(rgba(30, 30, 36, 1), rgba(5, 5, 5, 1) 100%)",
-        "border_color": "#121212",
-        "margin_top": 0,
-        "margin_bottom": 0,
-        "margin_horizontal": 0,
-        "margin_horizontal_mobile": 0,
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "padding_horizontal": 3,
-        "padding_horizontal_mobile": 0,
-        "width": "page",
-        "content_width": 1400,
-        "border_thickness": 0,
-        "section_radius": 0,
-        "lazy": false
-      }
-    },
-    "multicolumn_Q8WAgx": {
-      "type": "multicolumn",
-      "blocks": {
-        "column_GPiyNA": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/Namnlos_design_-_2026-01-25T035641.031.jpg",
-            "muted_autoplay": true,
-            "title": "Teeth",
-            "text": "<p>Plaque builds up daily, causing bad breath and tartar.</p><p><strong>FreshWipes remove plaque quickly with the ease of a simple daily wipe.</strong></p>",
-            "link_label": "Shop FreshWipes",
-            "link": "shopify://products/freshwipes-kit-protects-against-dental-diseases"
-          }
-        },
-        "column_kaPqz7": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/Namnlos_design_-_2026-01-25T040543.697.jpg",
-            "muted_autoplay": true,
-            "title": "Eyes",
-            "text": "<p>Tear stains and moisture can lead to irritation and discomfort.</p><p><strong>EyeWipes gently clean daily to help keep eyes clear and healthy.</strong></p>",
-            "link_label": "Shop EyeWipes",
-            "link": "shopify://products/eyewipes-prevention-that-keeps-eyes-clear"
-          }
-        },
-        "column_N7Pa4L": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/Namnlos_design_-_2026-01-25T040850.470.jpg",
-            "muted_autoplay": true,
-            "title": "Ears",
-            "text": "<p>Wax and moisture can lead to buildup and ear infections.</p><p><strong>EarWipes gently remove buildup to help keep ears clean and healthy.</strong></p>",
-            "link_label": "Shop EarWipes",
-            "link": "shopify://products/earwipes-kit-protects-against-ear-problems"
-          }
-        }
-      },
-      "block_order": [
-        "column_GPiyNA",
-        "column_kaPqz7",
-        "column_N7Pa4L"
-      ],
-      "name": "t:sections.multicolumn.presets.name",
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "title": "Daily Pet Care <strong>Made Simple</strong>",
-        "title_highlight_color": "#47b5e9",
-        "heading_size": "h1",
-        "button_label": "",
-        "button_link": "",
-        "atc_button_label": "",
-        "atc_product": "",
-        "atc_skip_cart": false,
-        "color_scheme": "background-1",
-        "cards_color_scheme": "bg-overlay",
-        "cards_corner_radius": 20,
-        "stretch_cards": false,
-        "stretched_cards_content_alignment": "center",
-        "image_width": "full",
-        "image_ratio": "adapt",
-        "media_position": "top",
-        "column_alignment": "center",
-        "desktop_heading_size": 24,
-        "mobile_heading_size": 22,
-        "desktop_text_size": 16,
-        "mobile_text_size": 15,
-        "desktop_text_top_margin": 10,
-        "mobile_text_top_margin": 10,
-        "desktop_container_padding_y": 24,
-        "desktop_container_padding_x": 24,
-        "mobile_container_padding_y": 24,
-        "mobile_container_padding_x": 24,
-        "type": "slide",
-        "autoplay": false,
-        "autoplay_speed": 5,
-        "arrows_color_scheme": "inverse",
-        "transparent_arrows": true,
-        "dots_color_scheme": "inverse",
-        "desktop_full_page": true,
-        "columns_desktop": 3,
-        "slider_desktop": false,
-        "per_move_desktop": 1,
-        "desktop_spacing": 40,
-        "desktop_side_padding": 0,
-        "desktop_padding_calc": true,
-        "desktop_adaptive_height": false,
-        "desktop_dots_position": "under",
-        "desktop_arrows_position": "sides",
-        "columns_mobile": "1",
-        "slider_mobile": true,
-        "enable_mobile_preview": false,
-        "mobile_adaptive_height": false,
-        "mobile_dots_position": "under",
-        "mobile_arrows_position": "under",
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "custom_colors_background": "#ffffff",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#2e2a39",
-        "custom_colors_solid_button_background": "#dd1d1d",
-        "custom_colors_solid_button_text": "#ffffff",
-        "custom_colors_outline_button": "#dd1d1d",
-        "custom_cards_colors_background": "#f3f3f3",
-        "custom_cards_gradient_background": "",
-        "custom_cards_colors_heading": "#222126",
-        "custom_cards_colors_text": "#2e2a39"
-      }
-    },
-    "image_with_text_77grg8": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading_7Cnegf": {
-          "type": "heading",
-          "settings": {
-            "title": "<strong>Complete </strong>Tear Stain <strong>System</strong>",
-            "title_highlight_color": "#47b5e9",
-            "heading_size": "h2"
-          }
-        },
-        "caption_PF3zmz": {
-          "type": "caption",
-          "settings": {
-            "caption": "<strong>Most wipes only clean the surface — this fixes the cause.</strong>",
-            "text_style": "caption-with-letter-spacing",
-            "text_size": "large"
-          }
-        },
-        "text_j7jXft": {
-          "type": "text",
-          "settings": {
-            "text": "<p><strong>Still seeing tear stains even after using wipes?</strong><br/><strong>That’s because you’re missing the full routine.</strong><br/><br/>✔ Know <em>exactly</em> what causes tear stains<br/>✔ Learn the <strong>right way</strong> to use your wipes (most owners do it wrong)<br/>✔ Build a <strong>simple daily routine</strong> that prevents buildup<br/>✔ See visible improvement in as little as <strong>30 days</strong></p>",
-            "text_style": "body"
-          }
-        },
-        "text_AWAjgE": {
-          "type": "text",
-          "settings": {
-            "text": "",
-            "text_style": "body"
-          }
-        },
-        "heading_Mf9z4H": {
-          "type": "heading",
-          "settings": {
-            "title": "Use this complete system with your <strong>eyewipes </strong>for best results",
-            "title_highlight_color": "#47b5e9",
-            "heading_size": "h2"
-          }
-        },
-        "button_B3dn7y": {
-          "type": "button",
-          "settings": {
-            "button_label": "Get the Full System — $24.00",
-            "button_link": "shopify://products/eyewipes-prevention-that-keeps-eyes-clear",
-            "button_style_secondary": false
-          }
-        },
-        "caption_YUqL68": {
-          "type": "caption",
-          "settings": {
-            "caption": "<strong> Instant access • One-time payment • No subscription</strong>",
-            "text_style": "caption-with-letter-spacing",
-            "text_size": "large"
-          }
-        }
-      },
-      "block_order": [
-        "heading_7Cnegf",
-        "caption_PF3zmz",
-        "text_j7jXft",
-        "text_AWAjgE",
-        "heading_Mf9z4H",
-        "button_B3dn7y",
-        "caption_YUqL68"
-      ],
-      "name": "t:sections.image-with-text.presets.name",
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "image": "shopify://shop_images/ProductDesignPetGloveWipes_2.png",
-        "video_autoplay": false,
-        "video_loop": false,
-        "height": "adapt",
-        "color_scheme": "background-1",
-        "section_color_scheme": "background-1",
-        "full_desktop_width": false,
-        "content_layout": "no-overlap",
-        "desktop_media_width": 50,
-        "layout": "image_first",
-        "desktop_content_position": "middle",
-        "desktop_content_alignment": "left",
-        "mobile_full_media_width": false,
-        "mobile_direction": "normal",
-        "mobile_image_quanlity": "2",
-        "mobile_content_alignment": "left",
-        "mobile_padding_top": 0,
-        "mobile_padding_bottom": 16,
-        "desktop_padding_top": 36,
-        "desktop_padding_bottom": 36,
-        "custom_colors_background": "#2e2a39",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#ffffff",
-        "custom_colors_solid_button_background": "#dd1d1d",
-        "custom_colors_solid_button_text": "#47b5e9",
-        "custom_colors_outline_button": "#dd1d1d",
-        "custom_section_colors_background": "#ffffff",
-        "custom_section_gradient_background": ""
-      }
-    },
-    "custom_columns_mDVBj9": {
-      "type": "custom-columns",
-      "blocks": {
-        "heading_C9B9Ad": {
-          "type": "heading",
-          "settings": {
-            "column": "col_1",
-            "visibility": "always-display",
-            "heading": "You’re cleaning it… but it keeps coming back.",
-            "title_highlight_color": "#6d388b",
-            "heading_size": "h1",
-            "alignment": "center",
-            "mobile_alignment": "mobile-center",
-            "margin_top": 20,
-            "margin_bottom": 20
-          }
-        },
-        "richtext_YegVym": {
-          "type": "richtext",
-          "settings": {
-            "column": "col_1",
-            "visibility": "always-display",
-            "text": "<p>Because you’re only fixing the surface.<br/></p><p></p>",
-            "text_style": "body",
-            "alignment": "center",
-            "mobile_alignment": "mobile-center",
-            "margin_top": 20,
-            "margin_bottom": 20
-          }
-        },
-        "icon_with_text_jPrdt3": {
-          "type": "icon_with_text",
-          "settings": {
-            "column": "col_2",
-            "visibility": "always-display",
-            "icon": "",
-            "filled_icon": false,
-            "icon_size": "m",
-            "icon_position": "next-to-title",
-            "icon_color": "accent-1",
-            "icon_heading_size": "h3",
-            "icon_text_alignment": "left",
-            "title": "",
-            "text": "<p>Most routines only fix the surface.  <br/>The real issue builds underneath — and keeps returning.<br/><br/>That’s why we created a simple system:<br/><br/>🧼 Clean daily with EyeWipes  <br/>📘 Follow a 30-day routine that fixes the root  <br/><br/>✔ Stop the cycle  <br/>✔ Know exactly what to do  <br/>✔ See real results  </p>",
-            "margin_top": 20,
-            "margin_bottom": 20
-          }
-        },
-        "image_Krw6Yt": {
-          "type": "image",
-          "settings": {
-            "column": "col_3",
-            "visibility": "always-display",
-            "image": "shopify://shop_images/DIGITALPRODUCT_1BrightEyesin30Days.png",
-            "width": 100,
-            "alignment": "flex-end",
-            "mobile_alignment": "flex-end",
-            "border_radius": 0,
-            "margin_top": 20,
-            "margin_bottom": 20
-          }
-        },
-        "richtext_bAHfYa": {
-          "type": "richtext",
-          "settings": {
-            "column": "col_3",
-            "visibility": "always-display",
-            "text": "<p>Includes optional guide in cart for best results</p>",
-            "text_style": "subtitle",
-            "alignment": "center",
-            "mobile_alignment": "mobile-center",
-            "margin_top": 20,
-            "margin_bottom": 20
-          }
-        },
-        "buttons_JcLLeF": {
-          "type": "buttons",
-          "settings": {
-            "column": "col_3",
-            "visibility": "always-display",
-            "button_label_1": "Start the 30-Day Routine",
-            "button_link_1": "shopify://products/eyewipes-prevention-that-keeps-eyes-clear",
-            "button_style_secondary_1": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false,
-            "full_width": false,
-            "alignment": "center",
-            "mobile_alignment": "center",
-            "margin_top": 20,
-            "margin_bottom": 20
-          }
-        }
-      },
-      "block_order": [
-        "heading_C9B9Ad",
-        "richtext_YegVym",
-        "icon_with_text_jPrdt3",
-        "image_Krw6Yt",
-        "richtext_bAHfYa",
-        "buttons_JcLLeF"
-      ],
-      "disabled": true,
-      "name": "Custom columns",
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "color_scheme": "background-1",
-        "columns_count": 3,
-        "desktop_page_width": "normal",
-        "column_gap_desktop": 40,
-        "row_gap_desktop": 40,
-        "desktop_vertical_alignment": "center",
-        "mobile_full_page": false,
-        "column_gap_mobile": 20,
-        "row_gap_mobile": 30,
-        "mobile_vertical_alignment": "flex-start",
-        "col_1_desktop_width": 12,
-        "col_1_mobile_width": 4,
-        "col_1_visibility": "always-display",
-        "col_2_desktop_width": 4,
-        "col_2_mobile_width": 4,
-        "col_2_visibility": "always-display",
-        "col_3_desktop_width": 4,
-        "col_3_mobile_width": 4,
-        "col_3_visibility": "always-display",
-        "col_4_desktop_width": 4,
-        "col_4_mobile_width": 4,
-        "col_4_visibility": "always-display",
-        "col_5_desktop_width": 3,
-        "col_5_mobile_width": 4,
-        "col_5_visibility": "always-display",
-        "col_6_desktop_width": 3,
-        "col_6_mobile_width": 4,
-        "col_6_visibility": "always-display",
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "custom_colors_background": "#ffffff",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#2e2a39",
-        "custom_colors_solid_button_background": "#dd1d1d",
-        "custom_colors_solid_button_text": "#ffffff",
-        "custom_colors_outline_button": "#dd1d1d"
-      }
-    },
-    "image_with_text_xEiazN": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading_CwgiUG": {
-          "type": "heading",
-          "settings": {
-            "title": "You’re cleaning it… but it keeps coming back.",
-            "title_highlight_color": "#6d388b",
-            "heading_size": "h1"
-          }
-        },
-        "button_pwptYA": {
-          "type": "button",
-          "settings": {
-            "button_label": "Start the 30-Day Routine",
-            "button_link": "shopify://products/eyewipes-prevention-that-keeps-eyes-clear",
-            "button_style_secondary": false
-          }
-        },
-        "text_fjVmFM": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Most routines only fix the surface.  <br/>The real issue builds underneath — and keeps returning.<br/><br/>That’s why we created a simple system:<br/><br/>&gt; Clean daily with EyeWipes  <br/>&gt; Follow a 30-day routine that fixes the root  <br/><br/>✔ Stop the cycle  <br/>✔ Know exactly what to do  <br/>✔ See real results  </p>",
-            "text_style": "body"
-          }
-        }
-      },
-      "block_order": [
-        "heading_CwgiUG",
-        "button_pwptYA",
-        "text_fjVmFM"
-      ],
-      "disabled": true,
-      "name": "t:sections.image-with-text.presets.name",
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "image": "shopify://shop_images/DIGITALPRODUCT_1BrightEyesin30Days.png",
-        "video_autoplay": true,
-        "video_loop": true,
-        "height": "adapt",
-        "color_scheme": "background-1",
-        "section_color_scheme": "background-1",
-        "full_desktop_width": false,
-        "content_layout": "no-overlap",
-        "desktop_media_width": 50,
-        "layout": "image_first",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "mobile_full_media_width": false,
-        "mobile_direction": "normal",
-        "mobile_image_quanlity": "2",
-        "mobile_content_alignment": "left",
-        "mobile_padding_top": 0,
-        "mobile_padding_bottom": 16,
-        "desktop_padding_top": 36,
-        "desktop_padding_bottom": 36,
-        "custom_colors_background": "#2e2a39",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#ffffff",
-        "custom_colors_solid_button_background": "#dd1d1d",
-        "custom_colors_solid_button_text": "#ffffff",
-        "custom_colors_outline_button": "#dd1d1d",
-        "custom_section_colors_background": "#ffffff",
-        "custom_section_gradient_background": ""
-      }
-    },
-    "section_divider_ehXT7d": {
-      "type": "section-divider",
-      "name": "Section divider",
-      "settings": {
-        "visibility": "always-display",
-        "shape": "waves_2",
-        "flip_horizontal": false,
-        "flip_vertical": false,
-        "shape_color": "background-2",
-        "custom_shape_color": "#dd1d1d",
-        "background_color": "background-1",
-        "custom_background_color": "#ffffff",
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "multicolumn_fMxtnA": {
-      "type": "multicolumn",
-      "blocks": {
-        "column_4ky8tG": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_24.svg",
-            "muted_autoplay": true,
-            "title": "1. Antibacterial CPC Formula",
-            "text": "<p>Cetylpyridinium Chloride (CPC) is clinically proven to eliminate up to 99% of the bacteria that cause plaque buildup and bad breath — the same active ingredient used in professional dental mouthwashes.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_8JfWNy": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_25.svg",
-            "muted_autoplay": true,
-            "title": "2. Mechanical Cleaning",
-            "text": "<p>The textured surface acts like a micro-toothbrush, physically removing plaque and food debris — without the discomfort dogs associate with traditional brushing.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_x3dgeT": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_26.svg",
-            "muted_autoplay": true,
-            "title": "3. Enzymatic Breakdown",
-            "text": "<p>Natural enzymes continue working after use, breaking down biofilm that would otherwise harden into tartar.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_9WQacg": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_27.svg",
-            "muted_autoplay": true,
-            "title": "4. Moisture-Locking Glycerin",
-            "text": "<p>Keeps each wipe moist and effective — no dry, ineffective wiping that delivers zero results.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "column_4ky8tG",
-        "column_8JfWNy",
-        "column_x3dgeT",
-        "column_9WQacg"
-      ],
-      "name": "t:sections.multicolumn.presets.name",
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "title": "How Our <strong>FreshWipes Work</strong>",
-        "title_highlight_color": "#47b5e9",
-        "heading_size": "h1",
-        "button_label": "Get FreshWipes Now",
-        "button_link": "shopify://products/freshwipes-kit-protects-against-dental-diseases",
-        "atc_button_label": "",
-        "atc_product": "",
-        "atc_skip_cart": false,
-        "color_scheme": "background-2",
-        "cards_color_scheme": "bg-overlay",
-        "cards_corner_radius": 20,
-        "stretch_cards": false,
-        "stretched_cards_content_alignment": "center",
-        "image_width": "full",
-        "image_ratio": "square",
-        "media_position": "top",
-        "column_alignment": "center",
-        "desktop_heading_size": 24,
-        "mobile_heading_size": 22,
-        "desktop_text_size": 16,
-        "mobile_text_size": 15,
-        "desktop_text_top_margin": 10,
-        "mobile_text_top_margin": 10,
-        "desktop_container_padding_y": 24,
-        "desktop_container_padding_x": 24,
-        "mobile_container_padding_y": 24,
-        "mobile_container_padding_x": 24,
-        "type": "slide",
-        "autoplay": false,
-        "autoplay_speed": 5,
-        "arrows_color_scheme": "inverse",
-        "transparent_arrows": true,
-        "dots_color_scheme": "inverse",
-        "desktop_full_page": false,
-        "columns_desktop": 4,
-        "slider_desktop": false,
-        "per_move_desktop": 1,
-        "desktop_spacing": 40,
-        "desktop_side_padding": 0,
-        "desktop_padding_calc": true,
-        "desktop_adaptive_height": false,
-        "desktop_dots_position": "under",
-        "desktop_arrows_position": "sides",
-        "columns_mobile": "1",
-        "slider_mobile": true,
-        "enable_mobile_preview": false,
-        "mobile_adaptive_height": false,
-        "mobile_dots_position": "under",
-        "mobile_arrows_position": "under",
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "custom_colors_background": "#ffffff",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#2e2a39",
-        "custom_colors_solid_button_background": "#dd1d1d",
-        "custom_colors_solid_button_text": "#ffffff",
-        "custom_colors_outline_button": "#dd1d1d",
-        "custom_cards_colors_background": "#f3f3f3",
-        "custom_cards_gradient_background": "",
-        "custom_cards_colors_heading": "#222126",
-        "custom_cards_colors_text": "#2e2a39"
-      }
-    },
-    "section_divider_T7NFdM": {
-      "type": "section-divider",
-      "name": "Section divider",
-      "settings": {
-        "visibility": "always-display",
-        "shape": "waves_2",
-        "flip_horizontal": false,
-        "flip_vertical": true,
-        "shape_color": "background-2",
-        "custom_shape_color": "#dd1d1d",
-        "background_color": "background-1",
-        "custom_background_color": "#ffffff",
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "featured_product_mft4bF": {
-      "type": "featured-product",
-      "blocks": {
-        "rating_stars_ffh6rB": {
-          "type": "rating_stars",
-          "settings": {
-            "rating": 4.8,
-            "star_color": "#ffcc00",
-            "bg_stars_style": "full",
-            "bg_star_color": "#ececec",
-            "label": "4.86/5 Based on 10.000+ Reviews",
-            "size": 13,
-            "alignment": "flex-start",
-            "scroll_id": "",
-            "margin_top": 9,
-            "margin_bottom": 6
-          }
-        },
-        "title_TQgNKf": {
-          "type": "title",
-          "settings": {
-            "text_size": "h2",
-            "title_alignment": "left",
-            "uppercase_title": false,
-            "margin_top": 0,
-            "margin_bottom": 9
-          }
-        },
-        "price_8PtzFF": {
-          "type": "price",
-          "settings": {
-            "layout": "price_first",
-            "price_color": "accent-1",
-            "compare_price_color": "text",
-            "displayed_badge": "sale",
-            "icon_scale": 140,
-            "custom_badge_text": "[icon_1] SPECIAL OFFER",
-            "icon_1": "redeem",
-            "filled_icon_1": false,
-            "icon_2": "check_circle",
-            "filled_icon_2": false,
-            "margin_top": 9,
-            "margin_bottom": 9
-          }
-        },
-        "text_RUXXFf": {
-          "type": "text",
-          "settings": {
-            "mobile_text_size": 14,
-            "desktop_text_size": 16,
-            "alignment": "left",
-            "text_color": "#121212",
-            "text_1": "Fights plaque, wax & tear stains",
-            "text_2": "Veterinary-approved ingredients",
-            "text_3": "Simple daily routine dogs accept",
-            "icon_scale": 140,
-            "icon_color": "#47b5e9",
-            "icon_1": "pets",
-            "filled_icon_1": true,
-            "icon_2": "pets",
-            "filled_icon_2": true,
-            "icon_3": "pets",
-            "filled_icon_3": true,
-            "width": "100%",
-            "direction": "vertical",
-            "column_gap": 5,
-            "enable_bg": false,
-            "bg_color": "#f3f3f3",
-            "corner_radius": 40,
-            "padding": 3,
-            "border_size": 0,
-            "border_color": "#b7b7b7",
-            "margin_top": 15,
-            "margin_bottom": 15
-          }
-        },
-        "text_bPezX7": {
-          "type": "text",
-          "settings": {
-            "mobile_text_size": 14,
-            "desktop_text_size": 16,
-            "alignment": "left",
-            "text_color": "#121212",
-            "text_1": "FreshWipes: 50 st | EarWipes: 50 st | EyeWipes: 100 st",
-            "text_2": "",
-            "text_3": "",
-            "icon_scale": 140,
-            "icon_color": "#47b5e9",
-            "icon_1": "pets",
-            "filled_icon_1": true,
-            "icon_2": "check_circle",
-            "filled_icon_2": true,
-            "icon_3": "check_circle",
-            "filled_icon_3": false,
-            "width": "100%",
-            "direction": "vertical",
-            "column_gap": 3,
-            "enable_bg": false,
-            "bg_color": "#f3f3f3",
-            "corner_radius": 40,
-            "padding": 3,
-            "border_size": 0,
-            "border_color": "#b7b7b7",
-            "margin_top": 15,
-            "margin_bottom": 15
-          }
-        },
-        "variant_picker_bLHNGe": {
-          "type": "variant_picker",
-          "settings": {
-            "picker_types": "swatches, pills, pills",
-            "custom_labels": "",
-            "skip_unavailable": false,
-            "swatches_size": "medium",
-            "swatches_border_radius": 100,
-            "swatches_custom_colors": "disabled",
-            "swatches_custom_colors_list": "#000000, #FFFFFF",
-            "breaks_style": "normal",
-            "breaks_headline": "BUNDLE & SAVE",
-            "breaks_display_selected_indicator": true,
-            "breaks_border_radius": 10,
-            "breaks_border_width": 2,
-            "breaks_color_scheme": "accent-1",
-            "breaks_badges": "[empty], Most popular, [empty]",
-            "breaks_badge_style": "1",
-            "breaks_badge_color": "accent-1",
-            "breaks_displayed_images": "none",
-            "breaks_custom_images": "",
-            "breaks_image_width": 70,
-            "breaks_space_images": true,
-            "breaks_vertical_images_position": "top",
-            "breaks_vertical_prices_layout": "vertical",
-            "breaks_labels": "[name], [name], [name]",
-            "breaks_benefits": "[empty], Free Shipping, Free Shipping",
-            "breaks_benefit_position": "top",
-            "breaks_benefit_style": "outlined",
-            "breaks_benefit_color": "accent-1",
-            "breaks_captions": "Variant 1 caption, Variant 2 caption, Variant 3 caption",
-            "breaks_price_texts": "[price], [price], [price]",
-            "breaks_compare_price_texts": "[compare_price], [compare_price], [compare_price]",
-            "margin_top": 15,
-            "margin_bottom": 15
-          }
-        },
-        "quantity_selector_LnLnVh": {
-          "type": "quantity_selector",
-          "disabled": true,
-          "settings": {
-            "full_width_classic": false,
-            "atc_append": "none",
-            "atc_append_heights": "stretch-quantity",
-            "enable_quantity_discounts": true,
-            "style": "normal",
-            "headline": "",
-            "preselected": "option_1",
-            "display_selected_indicator": true,
-            "border_radius": 10,
-            "border_width": 2,
-            "color_scheme": "accent-1",
-            "enable_variant_selectors": true,
-            "enable_variant_selectors_on_quantity_of_1": false,
-            "update_prices": false,
-            "skip_unavailable": false,
-            "full_width_pickers": false,
-            "hide_pickers_overlay": true,
-            "pickers_label": "",
-            "image_width": 70,
-            "space_images": true,
-            "vertical_images_position": "top",
-            "vertical_prices_layout": "vertical",
-            "option_1_quantity": 1,
-            "option_1_badge": "",
-            "option_1_badge_style": "1",
-            "option_1_badge_color": "accent-1",
-            "option_1_label": "1-Pakning – 50 stk",
-            "option_1_benefit": "Spar 40 %",
-            "option_1_benefit_position": "top",
-            "option_1_benefit_style": "solid",
-            "option_1_benefit_color": "accent-2",
-            "option_1_caption": "5 kr per bruk",
-            "option_1_percentage_off_text": "0",
-            "option_1_fixed_amount_off": "0",
-            "option_1_price_text": "[price]",
-            "option_1_compare_price": "compare_price",
-            "option_1_compare_price_text": "[compare_price]",
-            "option_2_quantity": 2,
-            "option_2_badge": "Kjøp 2 Få 50 % Rabatt",
-            "option_2_badge_style": "1",
-            "option_2_badge_color": "accent-2",
-            "option_2_label": "2-Pakning – 100 stk",
-            "option_2_benefit": "Spar 50 %",
-            "option_2_benefit_position": "top",
-            "option_2_benefit_style": "solid",
-            "option_2_benefit_color": "accent-2",
-            "option_2_caption": "4 kr per bruk",
-            "option_2_percentage_off_text": "0",
-            "option_2_fixed_amount_off": "99",
-            "option_2_price_text": "[price]",
-            "option_2_compare_price": "compare_price",
-            "option_2_compare_price_text": "[compare_price]",
-            "option_3_quantity": 4,
-            "option_3_badge": "Gjelder denne uken",
-            "option_3_badge_style": "1",
-            "option_3_badge_color": "accent-2",
-            "option_3_label": "4-Pakning – 200 stk",
-            "option_3_benefit": "Spar 60 %",
-            "option_3_benefit_position": "top",
-            "option_3_benefit_style": "solid",
-            "option_3_benefit_color": "accent-2",
-            "option_3_caption": "3 kr per bruk",
-            "option_3_percentage_off_text": "0",
-            "option_3_fixed_amount_off": "397",
-            "option_3_price_text": "[price]",
-            "option_3_compare_price": "compare_price",
-            "option_3_compare_price_text": "[compare_price]",
-            "option_4_quantity": 0,
-            "option_4_badge": "",
-            "option_4_badge_style": "1",
-            "option_4_badge_color": "accent-1",
-            "option_4_label": "Buy [quantity]",
-            "option_4_benefit": "",
-            "option_4_benefit_position": "top",
-            "option_4_benefit_style": "outlined",
-            "option_4_benefit_color": "accent-1",
-            "option_4_caption": "You save [amount_saved]",
-            "option_4_percentage_off_text": "0",
-            "option_4_fixed_amount_off": "0",
-            "option_4_price_text": "[price]",
-            "option_4_compare_price": "compare_price",
-            "option_4_compare_price_text": "[compare_price]",
-            "margin_top": 15,
-            "margin_bottom": 15
-          }
-        },
-        "buy_buttons_w7BDb7": {
-          "type": "buy_buttons",
-          "settings": {
-            "show_dynamic_checkout": false,
-            "skip_cart": false,
-            "uppercase_text": true,
-            "icon_scale": 120,
-            "icon_spacing": 10,
-            "atc_custom_label": "",
-            "display_price": false,
-            "enable_custom_color": false,
-            "custom_color": "#dd1d1d",
-            "enable_secondary_btn": false,
-            "secondary_btn_label": "Buy It Now",
-            "secondary_btn_enable_custom_color": false,
-            "secondary_btn_custom_color": "#dd1d1d",
-            "margin_top": 24,
-            "margin_bottom": 24
-          }
-        },
-        "payment_badges_Dy3ffd": {
-          "type": "payment_badges",
-          "settings": {
-            "enabled_payment_types": "klarna, visa, master, maestro, american_express, paypal, apple_pay, google_pay",
-            "margin_top": 15,
-            "margin_bottom": 15
-          }
-        },
-        "text_jyXxhN": {
-          "type": "text",
-          "settings": {
-            "mobile_text_size": 14,
-            "desktop_text_size": 16,
-            "alignment": "left",
-            "text_color": "#121212",
-            "text_1": "100-Day Money-Back Guarantee",
-            "text_2": "Over 45,000 Happy Customers",
-            "text_3": "3 Free E-books Included With Order",
-            "icon_scale": 140,
-            "icon_color": "#47b5e9",
-            "icon_1": "new_releases",
-            "filled_icon_1": true,
-            "icon_2": "favorite",
-            "filled_icon_2": true,
-            "icon_3": "book",
-            "filled_icon_3": true,
-            "width": "100%",
-            "direction": "vertical",
-            "column_gap": 4,
-            "enable_bg": true,
-            "bg_color": "#f3f3f3",
-            "corner_radius": 40,
-            "padding": 3,
-            "border_size": 0,
-            "border_color": "#b7b7b7",
-            "margin_top": 15,
-            "margin_bottom": 15
-          }
-        },
-        "view_details_9V3TMg": {
-          "type": "view_details",
-          "settings": {
-            "style": "text",
-            "enable_custom_color": false,
-            "custom_color": "#dd1d1d",
-            "large_font_size": false,
-            "uppercase": false,
-            "display_arrow": true,
-            "margin_top": 15,
-            "margin_bottom": 0
-          }
-        }
-      },
-      "block_order": [
-        "rating_stars_ffh6rB",
-        "title_TQgNKf",
-        "price_8PtzFF",
-        "text_RUXXFf",
-        "text_bPezX7",
-        "variant_picker_bLHNGe",
-        "quantity_selector_LnLnVh",
-        "buy_buttons_w7BDb7",
-        "payment_badges_Dy3ffd",
-        "text_jyXxhN",
-        "view_details_9V3TMg"
-      ],
-      "name": "t:sections.featured-product.presets.name",
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "color_scheme": "background-1",
-        "secondary_background": false,
-        "enable_sticky_info": true,
-        "product": "freshcare-complete-health-kit",
-        "product_images": "all",
-        "display_variant_image_first": false,
-        "disable_prepend": false,
-        "hide_variants": false,
-        "variant_image_filtering": "none",
-        "image_zoom": "none",
-        "arrows_color_scheme": "inverse",
-        "transparent_arrows": false,
-        "dots_color_scheme": "inverse",
-        "video_player": "play_btn",
-        "enable_video_looping": false,
-        "autoplay_videos_pause_btn": false,
-        "video_sound_btn": false,
-        "video_timeline": false,
-        "play_btn_color_scheme": "accent-1",
-        "sound_btn_color_scheme": "inverse",
-        "timeline_color": "accent-1",
-        "media_size": "medium",
-        "media_position": "left",
-        "gallery_layout": "thumbnail_slider",
-        "desktop_thumbnails_position": "bottom",
-        "desktop_thumbnails_count": 5,
-        "desktop_vertical_thumbnails_width": 16,
-        "desktop_vertical_thumbnails_hide_arrows": false,
-        "constrain_to_viewport": true,
-        "media_fit": "contain",
-        "desktop_arrows_position": "hidden",
-        "mobile_media_corner_radius": 0,
-        "mobile_spacing_pixels": 0,
-        "mobile_arrows_position": "hidden",
-        "mobile_pagination": "dots_overlay",
-        "mobile_thumbnails_position": "bottom",
-        "mobile_thumbnails_count": 5,
-        "mobile_vertical_thumbnails_width": 22,
-        "mobile_vertical_thumbnails_hide_arrows": true,
-        "mobile_scroll_padding_percentage": 0,
-        "mobile_scroll_padding_pixels": 0,
-        "enable_mobile_outher_spacing": false,
-        "mobile_slides_container_width": 100,
-        "mobile_slides_inner_width": 100,
-        "trust_badge_position": "top-right",
-        "trust_badge_size": "medium",
-        "mobile_padding_top": 20,
-        "mobile_padding_bottom": 20,
-        "desktop_padding_top": 36,
-        "desktop_padding_bottom": 36
-      }
-    },
-    "testimonials_zdydDA": {
-      "type": "testimonials",
-      "blocks": {
-        "column_PkYcKz": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "Vet said do something this works",
-            "text": "<p>Talked to my vet about dental care and she said the most important thing is to do SOMETHING regularly, even if you can't brush. These wipes have made it so much easier for me to keep the routine. My 11-year-old dachshund has noticeably whiter teeth and I feel safe using the natural ingredients. Takes barely a minute a day. Highly recommend!</p>",
-            "author": "Anne B., 57 - 2025-11-09"
-          }
-        },
-        "column_EyT3yh": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "Finally something that actually works",
-            "text": "<p>Really good. I've tried chew toys, water additives, everything possible. Nothing worked and my dog's breath was TERRIBLE. These wipes actually remove the dirt, you see it directly on the wipe. Takes max 2 minutes and I can do it while watching TV. Should've bought these ages ago.</p>",
-            "author": "Sophie H., 43 - 2025-10-26"
-          }
-        },
-        "column_ccnzHG": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "Safe for the whole family",
-            "text": "<p>We have a 3-year-old at home and the dog licks him constantly. I wanted something for the dog's breath that isn't dangerous if the kids get it on them. These are natural and work really well. Takes 2 minutes in the evening when the kids are asleep. The dog sits calmly and his breath is so much fresher now. Great not to have to worry when he kisses the kids!</p>",
-            "author": "Sarah E., 39 - 2025-10-03"
-          }
-        },
-        "column_JxijFr": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "Getting better each time",
-            "text": "<p>My dog wasn't fond of it at first. But now it's going better. It works.</p>",
-            "author": "Christine B. - 2025-09-21"
-          }
-        },
-        "column_xxKDbT": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "No more crusty mornings",
-            "text": "<p>My Bichon used to wake up with those brown areas every single day. I tried everything - baby wipes, damp cloths, nothing worked properly. These actually remove the gunk and it doesn't come back as quickly. Takes about a week to see real improvement but now her eyes look so much cleaner. Finally something that works</p>",
-            "author": "Sophie N., 31 | Bichon Frise - 2025-10-29"
-          }
-        },
-        "column_BTnNrC": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "Safe for sensitive eyes",
-            "text": "<p>We have a 3-year-old at home and the dog licks him constantly around him. I wanted something gentle that wouldn't irritate if it got in his eyes. These are natural and work really well. Takes 2 minutes in the evening. His eye area looks so much cleaner now and no more redness. Great not to have to worry.</p>",
-            "author": "Maria L., 41 | Golden Retriever - 2025-10-03"
-          }
-        },
-        "column_wfxDja": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "The scratching has stopped",
-            "text": "<p>My Golden has been digging at his ears for MONTHS. Like every few minutes, constantly. I tried wiping them with wet paper towels, bought those expensive ear drops from the pet store - he hated these and would literally hide under the bed when he saw me coming. Started using these wipes about 2 weeks ago and the scratching is almost completely gone. The smell disappeared too which is honestly the best part because his face used to reek. He just sits there now, doesn't even try to pull away.</p>",
-            "author": "Karin J., 54 | Golden Retriever owner - 2025-09-14"
-          }
-        },
-        "column_tXay4g": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "Highly recommended!!",
-            "text": "<p>My dog has always been afraid of toothbrushing, which made it difficult to keep his teeth clean.<br/><br/>But after we started using these wipes, he’s become completely calm.<br/><br/>It’s amazing to see that he no longer runs away or gets anxious when it’s time to clean his teeth.</p>",
-            "author_avatar": "shopify://shop_images/Profilbild1_b3680c3c-3c9b-4f7c-aaa0-1c5e71863e67.webp",
-            "author": "– Erik A"
-          }
-        },
-        "column_tUC9cB": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "He’s completely fearless now!",
-            "text": "<p>Brushing my dog’s teeth has been a struggle for years because he was so scared.<br/><br/>But these wipes changed everything.<br/><br/>He’s now completely fearless and lets me clean his teeth without any problems.<br/><br/>This has truly improved our dental care routine.</p>",
-            "author_avatar": "shopify://shop_images/Profilbild1_78735bd1-dd93-45c0-b80c-27246ca5802d.webp",
-            "author": "– Johan E"
-          }
-        },
-        "column_M8VjaY": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "Highly recommend to all dog owners",
-            "text": "<p>I’ve always had a hard time brushing my dog’s teeth because he was afraid.<br/><br/>With these wipes, he’s now completely calm.<br/><br/>It’s such a huge relief to be able to clean his teeth without having to fight with him.<br/><br/><strong>Highly recommend this to all dog owners.</strong></p>",
-            "author_avatar": "shopify://shop_images/Profilbild_3.webp",
-            "author": "– Sarah Johansen"
-          }
-        },
-        "column_WzDbWA": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "I’m very satisfied",
-            "text": "<p>I’ve used this product on my dog for a few weeks now, and I’m very satisfied.<br/><br/>His teeth look much cleaner, and his breath has noticeably improved.<br/><br/>It’s also very easy to use, which is a big plus.</p>",
-            "author_avatar": "shopify://shop_images/Profilbild1.webp",
-            "author": "– Simon Andersson"
-          }
-        },
-        "column_BgwVTr": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "A great product that really makes a difference",
-            "text": "<p>A great product that really makes a difference. I’ve noticed that my dog’s tartar has significantly reduced and his breath is much fresher.<br/><br/>Plus, it’s very easy to use.</p><p></p>",
-            "author_avatar": "shopify://shop_images/profilbild.webp",
-            "author": "– John Taylor"
-          }
-        },
-        "column_qb88rE": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "Delivers great results",
-            "text": "<p>My dog likes it, and it’s easy to use every day.<br/><br/>Delivers great results.</p>",
-            "author_avatar": "shopify://shop_images/Profilbild1.jpg",
-            "author": "– Sofia Jones"
-          }
-        },
-        "column_WRiJX3": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "I see an improvement in his oral health",
-            "text": "<p>My dog seems to like it, and I can see an improvement in his oral health.</p>",
-            "author_avatar": "shopify://shop_images/Profilbild3_98453ffc-28e5-4418-89bd-9cc2393e092a.webp",
-            "author": "– Margaret Davies"
-          }
-        }
-      },
-      "block_order": [
-        "column_PkYcKz",
-        "column_EyT3yh",
-        "column_ccnzHG",
-        "column_JxijFr",
-        "column_xxKDbT",
-        "column_BTnNrC",
-        "column_wfxDja",
-        "column_tXay4g",
-        "column_tUC9cB",
-        "column_M8VjaY",
-        "column_WzDbWA",
-        "column_BgwVTr",
-        "column_qb88rE",
-        "column_WRiJX3"
-      ],
-      "name": "Testimonials",
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "title": "Verified Reviews",
-        "title_highlight_color": "#6d388b",
-        "heading_size": "h1",
-        "text": "<p><strong>45,000+ dog owners</strong> trust our products for dog daily care</p>",
-        "color_scheme": "background-1",
-        "image_width": "half",
-        "image_ratio": "square",
-        "column_alignment": "center",
-        "show_stars": true,
-        "inactive_stars_style": "solid",
-        "star_color": "#ffcc00",
-        "bg_star_color": "#ececec",
-        "show_quotes": true,
-        "quotes_color_scheme": "accent-1",
-        "cards_color_scheme": "bg-overlay",
-        "type": "slide",
-        "autoplay": true,
-        "autoplay_speed": 5,
-        "arrows_color_scheme": "inverse",
-        "transparent_arrows": true,
-        "dots_color_scheme": "inverse",
-        "desktop_full_page": true,
-        "columns_desktop": 5,
-        "slider_desktop": true,
-        "per_move_desktop": 1,
-        "desktop_spacing": 40,
-        "desktop_side_padding": 0,
-        "desktop_padding_calc": false,
-        "desktop_adaptive_height": false,
-        "desktop_dots_position": "under",
-        "desktop_arrows_position": "sides",
-        "slider_mobile": true,
-        "enable_mobile_preview": false,
-        "mobile_adaptive_height": false,
-        "mobile_dots_position": "under",
-        "mobile_arrows_position": "under",
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "custom_colors_background": "#ffffff",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#2e2a39",
-        "custom_cards_colors_background": "#f3f3f3",
-        "custom_cards_gradient_background": "",
-        "custom_cards_colors_text": "#2e2a39"
-      }
-    },
-    "17854288026a1c7a9d": {
-      "type": "apps",
-      "settings": {
-        "display_id": false,
-        "include_margins": true
-      }
-    },
-    "collapsible_content_j44jLX": {
-      "type": "collapsible-content",
-      "blocks": {
-        "collapsible_row_pYyTgC": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Are all products safe for my pet?",
-            "icon": "",
-            "filled_icon": false,
-            "row_content": "<p>Yes. All three products (FreshWipes, EyeWipes, EarWipes) are formulated with pet safety as the top priority:</p><p><strong>FreshWipes:</strong></p><ul><li>Non-toxic, food-grade ingredients</li><li>Safe if swallowed or licked</li><li>No harsh chemicals, alcohol, or artificial flavors</li><li>Vet-approved formula</li></ul><p><strong>EyeWipes:</strong></p><ul><li>pH-balanced for sensitive eye area</li><li>Non-irritating, even if formula gets in eyes</li><li>Won't sting or burn</li><li>Gentle enough for daily use</li></ul><p><strong>EarWipes:</strong></p><ul><li>Alcohol-free formula (won't irritate ear canal)</li><li>Non-toxic if licked during grooming</li><li>Gentle on sensitive ear tissue</li><li>Safe for regular preventive use</li></ul><p>All products are manufactured to veterinary standards and contain no ingredients that could harm your pet, even with repeated daily use.</p>",
-            "page": ""
-          }
-        },
-        "collapsible_row_eTY6yM": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Is FreshWipes a substitute for toothbrushing?",
-            "icon": "",
-            "filled_icon": false,
-            "row_content": "<p>FreshWipes aren't a perfect replacement for brushing, but they're close - and they're what most dogs will actually tolerate.</p><p><strong>Here's the reality:</strong> Brushing is ideal, but most dogs resist it and most owners give up. FreshWipes use the same mechanical cleaning action as a toothbrush (physically removing plaque), just in a format your dog won't fight.</p><p><strong>Bottom line:</strong> A wipe you use daily beats a toothbrush that sits unused. Consistent care is what prevents dental problems, and FreshWipes make that possible.</p>",
-            "page": ""
-          }
-        },
-        "collapsible_row_aAM8Eq": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Will this help old, stubborn tear stains?",
-            "icon": "",
-            "filled_icon": false,
-            "row_content": "<p>Yes, but older stains take longer to fade.</p><p><strong>Timeline:</strong></p><ul><li>Fresh stains (weeks old): 3-7 days</li><li>Moderate stains (1-3 months): 2 weeks</li><li>Old stains (months/years): 3-4 weeks</li></ul><p><strong>Why it works:</strong> Daily use removes existing buildup while preventing new stains from setting. Most customers see visible improvement within 2 weeks.</p><p><strong>Important:</strong> Tear staining is ongoing - your dog's eyes keep producing tears. Daily cleaning stops new stains and gradually fades old ones.</p>",
-            "page": ""
-          }
-        },
-        "collapsible_row_ErVBdA": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Will this prevent ear infections?",
-            "icon": "",
-            "filled_icon": false,
-            "row_content": "<p>Yes - regular cleaning significantly reduces infection risk by removing the wax and moisture where bacteria thrive.</p><p><strong>How it works:</strong> Ear infections happen when wax, dirt, and moisture build up, creating an environment for bacteria and yeast. EarWipes remove that buildup before infections can start.</p><p><strong>Best for prevention:</strong> If your dog is prone to ear infections (common in breeds like Cocker Spaniels, Basset Hounds, Labs), weekly cleaning can break the cycle and reduce vet visits.</p><p><strong>Already infected?</strong> See your vet first. Start using EarWipes after treatment to prevent recurrence.</p>",
-            "page": ""
-          }
-        },
-        "collapsible_row_GiwTCH": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "How long does one container last?",
-            "icon": "",
-            "filled_icon": false,
-            "row_content": "<p>Depends on the product and how many pets you have:</p><p><strong>FreshWipes (50 wipes):</strong></p><ul><li>1 dog, daily use: ~50 days (1.5 months)</li><li>2 dogs, daily use: ~25 days</li></ul><p><strong>EyeWipes (100 wipes):</strong></p><ul><li>1 dog, daily use: ~50 days (2 wipes per day)</li><li>2 dogs, daily use: ~25 days</li></ul><p><strong>EarWipes (50 wipes):</strong></p><ul><li>1 dog, 2x per week: ~3-6 months</li><li>1 dog after swimming: varies</li></ul><p><strong>Complete Care Kit:</strong><br/><br/>~2-3 months of comprehensive daily care for one dog.</p>",
-            "page": ""
-          }
-        },
-        "collapsible_row_tzUTRG": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Do I need all three products?",
-            "icon": "",
-            "filled_icon": false,
-            "row_content": "<p>Each product addresses different needs - teeth, eyes, or ears. You can start with one, but most dogs benefit from all three areas.</p><p><strong>Here's why customers choose the Complete Kit:</strong></p><ul><li><strong>Save 20%</strong> vs buying products separately</li><li><strong>Cover all three problem areas</strong> vets check most often</li><li><strong>One routine</strong> handles everything in under 2 minutes</li><li><strong>Prevent expensive vet bills</strong> across dental, eye, and ear issues</li></ul><p><strong>Start with what matters most to your dog right now.</strong> Many customers begin with FreshWipes for dental care, see results, then add EyeWipes and EarWipes for complete preventive care.</p><p>The Kit makes it simple and saves money - but choose what works for you.</p>",
-            "page": ""
-          }
-        },
-        "collapsible_row_A8ddyW": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Can I use these on cats too?",
-            "icon": "",
-            "filled_icon": false,
-            "row_content": "<p><strong>Yes!</strong> All three products are safe and effective for both dogs and cats.</p><p><strong>Tips for cats:</strong></p><ul><li>Start slowly - cats are more particular about handling</li><li>Choose calm moments (after meals or naps)</li><li>Be extra gentle - cats have sensitive skin</li><li>Quick wipes work better than long sessions</li><li>Use high-value treats for cooperation</li></ul><p>The formulas work identically on cats. Many customers use them on multi-pet households with both dogs and cats.</p>",
-            "page": ""
-          }
-        },
-        "collapsible_row_ggVhDq": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "How long does shipping take?",
-            "icon": "",
-            "filled_icon": false,
-            "row_content": "<p><strong>Delivery Time:</strong></p><ul><li><strong>Standard:</strong> 1-2 days handling + 5-10 days shipping</li><li><strong>Priority:</strong> 1-2 days handling + 4-7 days shipping</li></ul><p><strong>Tracking:</strong> You'll receive a tracking number via email as soon as your order ships from our warehouse.</p><p><strong>Questions?</strong> Email <a href=\"mailto:info@shopvetpets.com\">info@shopvetpets.com</a> - we reply within 24 hours on weekdays.</p>",
-            "page": ""
-          }
-        },
-        "collapsible_row_z7xrwD": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "How does the 100-day money-back guarantee work?",
-            "icon": "",
-            "filled_icon": false,
-            "row_content": "<p>We truly believe our products will make a difference for both you and your dog. That's why we offer a <strong>100-day money-back guarantee</strong> - not the standard 30 days.</p><p><strong>Why 100 days?</strong> Because we want you to really try the products, see results, and build a routine without feeling rushed. Some dogs take a few weeks to adjust, and real results show up with consistent use.</p><p><strong>How it works:</strong></p><ol><li>Try the products at home, in your own time</li><li>Not completely satisfied? Email us at info@shopvetpets.com</li><li>We'll refund you - no stress, no hassle, no complicated forms</li></ol><p><strong>What's covered:</strong></p><ul><li>Full purchase price refunded</li><li>Works on single products or Complete Kit</li><li>No restocking fees</li><li>You can even keep partially used containers</li></ul><p><strong>Our philosophy:</strong> It's more important that your dog gets the care they deserve than that you keep something you don't love. If it's not right for you, we want to make it right.</p><p><strong>To start a return:</strong> Email info@shopvetpets.com with your order number and we'll take care of the rest within 3-5 business days.</p>",
-            "page": ""
-          }
-        }
-      },
-      "block_order": [
-        "collapsible_row_pYyTgC",
-        "collapsible_row_eTY6yM",
-        "collapsible_row_aAM8Eq",
-        "collapsible_row_ErVBdA",
-        "collapsible_row_GiwTCH",
-        "collapsible_row_tzUTRG",
-        "collapsible_row_A8ddyW",
-        "collapsible_row_ggVhDq",
-        "collapsible_row_z7xrwD"
-      ],
-      "name": "t:sections.collapsible_content.presets.name",
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "caption": "",
-        "title": "Questions? <strong>We've Got Answers.</strong>",
-        "title_highlight_color": "#47b5e9",
-        "heading_size": "h1",
-        "heading_alignment": "center",
-        "layout": "none",
-        "color_scheme": "background-1",
-        "container_color_scheme": "background-2",
-        "open_first_collapsible_row": false,
-        "video_muted_autoplay": true,
-        "image_ratio": "adapt",
-        "desktop_layout": "image_second",
-        "row_heading_size": "medium",
-        "collapse_icon": "carret",
-        "display_top_border": true,
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "custom_colors_background": "#ffffff",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#2e2a39",
-        "custom_contaner_colors_background": "#ffffff",
-        "custom_container_gradient_background": "",
-        "custom_contaner_colors_text": "#2e2a39"
-      }
-    },
-    "image_banner_dHw7hG": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_iLbTac": {
-          "type": "heading",
-          "settings": {
-            "title": "100-Day Money-Back Guarantee",
-            "title_highlight_color": "#6d388b",
-            "heading_size": "h1"
-          }
-        },
-        "text_QyRwEW": {
-          "type": "text",
-          "settings": {
-            "text": "FreshWipes is a simple and safe solution for your dog’s oral hygiene. We want both you and your dog to be satisfied – that’s why we offer a 100-day money-back guarantee.Our wipes are designed to be both effective and gentle, and they fit perfectly on your finger for easy use. Give your dog a pain-free future with a product you can trust – completely risk-free!",
-            "text_style": "body"
-          }
-        },
-        "buttons_k79XVz": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Learn more about the money-back guarantee",
-            "button_link_1": "shopify://pages/100-day-money-back-guarantee",
-            "button_style_secondary_1": true,
-            "button_label_2": "Get FreshCare Kit",
-            "button_link_2": "shopify://products/freshcare-complete-health-kit",
-            "button_style_secondary_2": false
-          }
-        },
-        "rating_stars_wfcbRT": {
-          "type": "rating_stars",
-          "settings": {
-            "rating": 4.8,
-            "star_color": "#ffcc00",
-            "bg_stars_style": "full",
-            "bg_star_color": "#ececec",
-            "label": "4,86/5 (45,000+ Happy Customers)",
-            "size": 10,
-            "scroll_id": ""
-          }
-        }
-      },
-      "block_order": [
-        "heading_iLbTac",
-        "text_QyRwEW",
-        "buttons_k79XVz",
-        "rating_stars_wfcbRT"
-      ],
-      "name": "t:sections.image-banner.presets.name",
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "image": "shopify://shop_images/irish-setter-dog-close-up.jpg",
-        "image_1_visibility": "always-display",
-        "image_2_visibility": "always-display",
-        "image_overlay_opacity": 10,
-        "image_height": "large",
-        "url": "",
-        "desktop_content_position": "middle-center",
-        "show_text_box": false,
-        "desktop_content_alignment": "center",
-        "color_scheme": "background-1",
-        "transparent_container_color": "white",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": true,
-        "show_text_below": true
-      }
-    },
-    "featured_collection_Jri9Vj": {
-      "type": "featured-collection",
-      "name": "t:sections.featured-collection.presets.name",
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "title": "Complete care for healthier dogs",
-        "title_highlight_color": "#6d388b",
-        "heading_size": "h1",
-        "description": "<p>No stress. Just results.</p>",
-        "show_description": false,
-        "description_style": "body",
-        "color_scheme": "background-1",
-        "collection": "finger-wipes",
-        "products_to_show": 4,
-        "stretch_cards": false,
-        "show_view_all": false,
-        "view_all_style": "solid",
-        "cards_color_scheme": "background-1",
-        "image_ratio": "adapt",
-        "show_secondary_image": false,
-        "badges": "regular",
-        "show_vendor": false,
-        "show_rating": false,
-        "enable_quick_add": true,
-        "swatches_option_name": "",
-        "swatches_position": "top",
-        "swatches_desktop_size": 36,
-        "swatches_mobile_size": 24,
-        "type": "slide",
-        "autoplay": false,
-        "autoplay_speed": 5,
-        "arrows_color_scheme": "inverse",
-        "transparent_arrows": true,
-        "dots_color_scheme": "inverse",
-        "desktop_full_page": false,
-        "columns_desktop": 4,
-        "slider_desktop": false,
-        "per_move_desktop": 1,
-        "desktop_spacing": 40,
-        "desktop_side_padding": 0,
-        "desktop_padding_calc": true,
-        "desktop_adaptive_height": false,
-        "desktop_dots_position": "under",
-        "desktop_arrows_position": "sides",
-        "columns_mobile": "1",
-        "slider_mobile": true,
-        "enable_mobile_preview": false,
-        "mobile_adaptive_height": false,
-        "mobile_dots_position": "under",
-        "mobile_arrows_position": "under",
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "custom_colors_background": "#f5f5f5",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#2e2a39",
-        "custom_colors_solid_button_background": "#47b5e9",
-        "custom_colors_solid_button_text": "#ffffff"
-      }
-    },
-    "1761917105d5ecc4a9": {
-      "type": "apps",
-      "settings": {
-        "display_id": false,
-        "include_margins": true
-      }
-    },
-    "section_divider_c4Gbyq": {
-      "type": "section-divider",
-      "name": "Section divider",
-      "settings": {
-        "visibility": "always-display",
-        "shape": "waves_1",
-        "flip_horizontal": false,
-        "flip_vertical": false,
-        "shape_color": "background-2",
-        "custom_shape_color": "#dd1d1d",
-        "background_color": "background-1",
-        "custom_background_color": "#ffffff",
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "icon_bar_ztYi7K": {
-      "type": "icon-bar",
-      "blocks": {
-        "column_TJV6JA": {
-          "type": "column",
-          "settings": {
-            "icon": "favorite",
-            "filled_icon": true,
-            "title": "OVER 45,000+ HAPPY CUSTOMERS",
-            "text": "<p>Making pets and their owners happy all around the world.</p>"
-          }
-        },
-        "column_eWVQtV": {
-          "type": "column",
-          "settings": {
-            "icon": "new_releases",
-            "filled_icon": true,
-            "title": "100-DAY MONEY-BACK GUARANTEE",
-            "text": "<p>Not satisfied? Just contact us within 100 days of your purchase – we’ll make it right.</p>"
-          }
-        },
-        "column_tpTf49": {
-          "type": "column",
-          "settings": {
-            "icon": "support_agent",
-            "filled_icon": false,
-            "title": "SUPPORT MONDAY–FRIDAY",
-            "text": "<p>Need help? Reach out to us – we respond within 24 hours on weekdays.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "column_TJV6JA",
-        "column_eWVQtV",
-        "column_tpTf49"
-      ],
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "title": "",
-        "title_highlight_color": "#6d388b",
-        "heading_size": "h1",
-        "text": "",
-        "color_scheme": "custom",
-        "icon_layout": "vertical",
-        "icon_size": "medium",
-        "icon_color": "accent-1",
-        "cards_color_scheme": "custom",
-        "type": "slide",
-        "autoplay": false,
-        "autoplay_speed": 5,
-        "arrows_color_scheme": "inverse",
-        "transparent_arrows": true,
-        "dots_color_scheme": "inverse",
-        "desktop_full_page": false,
-        "columns_desktop": 3,
-        "slider_desktop": false,
-        "per_move_desktop": 1,
-        "desktop_spacing": 40,
-        "desktop_side_padding": 0,
-        "desktop_padding_calc": true,
-        "desktop_adaptive_height": false,
-        "desktop_dots_position": "under",
-        "desktop_arrows_position": "sides",
-        "columns_mobile": "1",
-        "slider_mobile": true,
-        "enable_mobile_preview": false,
-        "mobile_adaptive_height": false,
-        "mobile_dots_position": "under",
-        "mobile_arrows_position": "under",
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "custom_colors_background": "#d5f7ff",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#2e2a39",
-        "custom_cards_colors_background": "#d5f7ff",
-        "custom_cards_gradient_background": "",
-        "custom_cards_colors_text": "#2e2a39"
-      }
-    },
-    "section_divider_Vr9Acc": {
-      "type": "section-divider",
-      "name": "Section divider",
-      "settings": {
-        "visibility": "always-display",
-        "shape": "waves_1",
-        "flip_horizontal": false,
-        "flip_vertical": false,
-        "shape_color": "background-1",
-        "custom_shape_color": "#dd1d1d",
-        "background_color": "background-2",
-        "custom_background_color": "#ffffff",
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "contact_form_WHP8G7": {
-      "type": "contact-form",
-      "blocks": {
-        "field_row_fNxBGi": {
-          "type": "field_row",
-          "settings": {
-            "input_1_enabled": true,
-            "input_1_type": "name",
-            "input_1_required": false,
-            "input_1_error_message": "This field is required",
-            "input_1_custom_name": "Custom input name",
-            "input_2_enabled": true,
-            "input_2_type": "email",
-            "input_2_required": false,
-            "input_2_error_message": "This field is required",
-            "input_2_custom_name": "Custom input name"
-          }
-        },
-        "field_row_f84rat": {
-          "type": "field_row",
-          "settings": {
-            "input_1_enabled": true,
-            "input_1_type": "phone",
-            "input_1_required": false,
-            "input_1_error_message": "This field is required",
-            "input_1_custom_name": "Custom input name",
-            "input_2_enabled": false,
-            "input_2_type": "custom",
-            "input_2_required": false,
-            "input_2_error_message": "This field is required",
-            "input_2_custom_name": "Custom input name"
-          }
-        },
-        "textarea_NbxXax": {
-          "type": "textarea",
-          "settings": {
-            "input_type": "comment",
-            "input_required": false,
-            "input_error_message": "This field is required",
-            "input_custom_name": "Custom name"
-          }
-        }
-      },
-      "block_order": [
-        "field_row_fNxBGi",
-        "field_row_f84rat",
-        "textarea_NbxXax"
-      ],
-      "disabled": true,
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "title": "Contact our support",
-        "title_highlight_color": "#6d388b",
-        "heading_size": "h1",
-        "button_full_width": true,
-        "color_scheme": "background-1",
-        "success_icon": "check_circle",
-        "success_icon_filled": false,
-        "success_text_color": "#28c100",
-        "success_bg_color": "#f2ffed",
-        "success_border_radius": 8,
-        "success_border_width": 1,
-        "success_border_color": "#28c100",
-        "errors_icon": "error",
-        "errors_icon_filled": false,
-        "errors_text_color": "#ff0000",
-        "errors_bg_color": "#fff5f5",
-        "errors_border_radius": 8,
-        "errors_border_width": 1,
-        "errors_border_color": "#ff0000",
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "custom_colors_background": "#ffffff",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#2e2a39",
-        "custom_colors_solid_button_background": "#dd1d1d",
-        "custom_colors_solid_button_text": "#ffffff"
-      }
-    },
-    "1762748223f606df65": {
-      "type": "apps",
-      "disabled": true,
-      "settings": {
-        "display_id": false,
-        "include_margins": true
-      }
-    }
-  },
   "order": [
     "image_banner_gUTUbM",
+    "image_banner_NBXkrF",
     "ss_hero_pro_PGyKJy",
     "multicolumn_Q8WAgx",
     "image_with_text_77grg8",
@@ -1892,6 +30,2534 @@
     "icon_bar_ztYi7K",
     "section_divider_Vr9Acc",
     "contact_form_WHP8G7",
-    "1762748223f606df65"
-  ]
+    "1762748223f606df65",
+    "ss_modal_popup_6_LP6T6J",
+    "ss_modal_popup_6_EkyBft"
+  ],
+  "sections": {
+    "1761917105d5ecc4a9": {
+      "settings": {
+        "display_id": false,
+        "include_margins": true
+      },
+      "type": "apps"
+    },
+    "1762748223f606df65": {
+      "disabled": true,
+      "settings": {
+        "display_id": false,
+        "include_margins": true
+      },
+      "type": "apps"
+    },
+    "17854288026a1c7a9d": {
+      "block_order": [
+        "loox_reviews_loox_card_carousel_section_ccGMRh",
+        "loox_reviews_loox_testimonial_carousel_section_kc4M9w",
+        "loox_reviews_loox_agg_section_yh6bcp"
+      ],
+      "blocks": {
+        "loox_reviews_loox_agg_section_yh6bcp": {
+          "disabled": true,
+          "settings": {
+            "aggregated": false,
+            "data-limit": 10,
+            "default_tab": "automatic",
+            "hide_thumbnails": true,
+            "is_sample": true,
+            "maxwidth": 1080,
+            "only_photos": false,
+            "product_handle": "",
+            "reviews_to_display": "product_reviews_only"
+          },
+          "type": "shopify://apps/loox-reviews/blocks/loox-agg-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e"
+        },
+        "loox_reviews_loox_card_carousel_section_ccGMRh": {
+          "disabled": true,
+          "settings": {
+            "arrows_backgroundColor": "#ffffff",
+            "arrows_iconColor": "#9a9a9a",
+            "borderRadius": 8,
+            "border_active": false,
+            "border_color": "#000000",
+            "border_width": 2,
+            "imageRatio": "0.72",
+            "itemBackgroundColor": "#ffffff",
+            "itemsPerView": 4,
+            "maxNumberOfCharacters": 100,
+            "maxWidth": 1100,
+            "mobileItemsPerView": 1,
+            "productIds": "",
+            "reviewerNameColor": "#000000",
+            "shadow": "offset-dark",
+            "starsBackgroundColor": "#ffffff",
+            "starsColor": "",
+            "textColor": "#000000"
+          },
+          "type": "shopify://apps/loox-reviews/blocks/loox-card-carousel-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e"
+        },
+        "loox_reviews_loox_testimonial_carousel_section_kc4M9w": {
+          "disabled": true,
+          "settings": {
+            "arrows_hideOnMobile": true,
+            "arrows_iconColor": "#000000",
+            "autoplay_active": false,
+            "autoplay_duration": 2,
+            "desktopFontSize": 32,
+            "maxNumberOfCharacters": 100,
+            "maxWidth": 1100,
+            "mobileFontSize": 20,
+            "pagination_active": true,
+            "pagination_dotColor": "#000000",
+            "pagination_selectedDotColor": "#000000",
+            "productIds": "",
+            "quoteMarkIcon": "style-1",
+            "quotesIconColor": "#eaeaea",
+            "reviewerNameColor": "#000000",
+            "starsColor": "",
+            "textColor": "#000000"
+          },
+          "type": "shopify://apps/loox-reviews/blocks/loox-testimonial-carousel-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e"
+        }
+      },
+      "disabled": true,
+      "settings": {
+        "display_id": false,
+        "include_margins": true
+      },
+      "type": "apps"
+    },
+    "collapsible_content_j44jLX": {
+      "block_order": [
+        "collapsible_row_pYyTgC",
+        "collapsible_row_eTY6yM",
+        "collapsible_row_aAM8Eq",
+        "collapsible_row_ErVBdA",
+        "collapsible_row_GiwTCH",
+        "collapsible_row_tzUTRG",
+        "collapsible_row_A8ddyW",
+        "collapsible_row_ggVhDq",
+        "collapsible_row_z7xrwD"
+      ],
+      "blocks": {
+        "collapsible_row_A8ddyW": {
+          "settings": {
+            "filled_icon": false,
+            "heading": "Can I use these on cats too?",
+            "icon": "",
+            "page": "",
+            "row_content": "<p><strong>Yes!</strong> All three products are safe and effective for both dogs and cats.</p><p><strong>Tips for cats:</strong></p><ul><li>Start slowly - cats are more particular about handling</li><li>Choose calm moments (after meals or naps)</li><li>Be extra gentle - cats have sensitive skin</li><li>Quick wipes work better than long sessions</li><li>Use high-value treats for cooperation</li></ul><p>The formulas work identically on cats. Many customers use them on multi-pet households with both dogs and cats.</p>"
+          },
+          "type": "collapsible_row"
+        },
+        "collapsible_row_ErVBdA": {
+          "settings": {
+            "filled_icon": false,
+            "heading": "Will this prevent ear infections?",
+            "icon": "",
+            "page": "",
+            "row_content": "<p>Yes - regular cleaning significantly reduces infection risk by removing the wax and moisture where bacteria thrive.</p><p><strong>How it works:</strong> Ear infections happen when wax, dirt, and moisture build up, creating an environment for bacteria and yeast. EarWipes remove that buildup before infections can start.</p><p><strong>Best for prevention:</strong> If your dog is prone to ear infections (common in breeds like Cocker Spaniels, Basset Hounds, Labs), weekly cleaning can break the cycle and reduce vet visits.</p><p><strong>Already infected?</strong> See your vet first. Start using EarWipes after treatment to prevent recurrence.</p>"
+          },
+          "type": "collapsible_row"
+        },
+        "collapsible_row_GiwTCH": {
+          "settings": {
+            "filled_icon": false,
+            "heading": "How long does one container last?",
+            "icon": "",
+            "page": "",
+            "row_content": "<p>Depends on the product and how many pets you have:</p><p><strong>FreshWipes (50 wipes):</strong></p><ul><li>1 dog, daily use: ~50 days (1.5 months)</li><li>2 dogs, daily use: ~25 days</li></ul><p><strong>EyeWipes (100 wipes):</strong></p><ul><li>1 dog, daily use: ~50 days (2 wipes per day)</li><li>2 dogs, daily use: ~25 days</li></ul><p><strong>EarWipes (50 wipes):</strong></p><ul><li>1 dog, 2x per week: ~3-6 months</li><li>1 dog after swimming: varies</li></ul><p><strong>Complete Care Kit:</strong><br/><br/>~2-3 months of comprehensive daily care for one dog.</p>"
+          },
+          "type": "collapsible_row"
+        },
+        "collapsible_row_aAM8Eq": {
+          "settings": {
+            "filled_icon": false,
+            "heading": "Will this help old, stubborn tear stains?",
+            "icon": "",
+            "page": "",
+            "row_content": "<p>Yes, but older stains take longer to fade.</p><p><strong>Timeline:</strong></p><ul><li>Fresh stains (weeks old): 3-7 days</li><li>Moderate stains (1-3 months): 2 weeks</li><li>Old stains (months/years): 3-4 weeks</li></ul><p><strong>Why it works:</strong> Daily use removes existing buildup while preventing new stains from setting. Most customers see visible improvement within 2 weeks.</p><p><strong>Important:</strong> Tear staining is ongoing - your dog's eyes keep producing tears. Daily cleaning stops new stains and gradually fades old ones.</p>"
+          },
+          "type": "collapsible_row"
+        },
+        "collapsible_row_eTY6yM": {
+          "settings": {
+            "filled_icon": false,
+            "heading": "Is FreshWipes a substitute for toothbrushing?",
+            "icon": "",
+            "page": "",
+            "row_content": "<p>FreshWipes aren't a perfect replacement for brushing, but they're close - and they're what most dogs will actually tolerate.</p><p><strong>Here's the reality:</strong> Brushing is ideal, but most dogs resist it and most owners give up. FreshWipes use the same mechanical cleaning action as a toothbrush (physically removing plaque), just in a format your dog won't fight.</p><p><strong>Bottom line:</strong> A wipe you use daily beats a toothbrush that sits unused. Consistent care is what prevents dental problems, and FreshWipes make that possible.</p>"
+          },
+          "type": "collapsible_row"
+        },
+        "collapsible_row_ggVhDq": {
+          "settings": {
+            "filled_icon": false,
+            "heading": "How long does shipping take?",
+            "icon": "",
+            "page": "",
+            "row_content": "<p><strong>Delivery Time:</strong></p><ul><li><strong>Standard:</strong> 1-2 days handling + 5-10 days shipping</li><li><strong>Priority:</strong> 1-2 days handling + 4-7 days shipping</li></ul><p><strong>Tracking:</strong> You'll receive a tracking number via email as soon as your order ships from our warehouse.</p><p><strong>Questions?</strong> Email <a href=\"mailto:info@shopvetpets.com\">info@shopvetpets.com</a> - we reply within 24 hours on weekdays.</p>"
+          },
+          "type": "collapsible_row"
+        },
+        "collapsible_row_pYyTgC": {
+          "settings": {
+            "filled_icon": false,
+            "heading": "Are all products safe for my pet?",
+            "icon": "",
+            "page": "",
+            "row_content": "<p>Yes. All three products (FreshWipes, EyeWipes, EarWipes) are formulated with pet safety as the top priority:</p><p><strong>FreshWipes:</strong></p><ul><li>Non-toxic, food-grade ingredients</li><li>Safe if swallowed or licked</li><li>No harsh chemicals, alcohol, or artificial flavors</li><li>Vet-approved formula</li></ul><p><strong>EyeWipes:</strong></p><ul><li>pH-balanced for sensitive eye area</li><li>Non-irritating, even if formula gets in eyes</li><li>Won't sting or burn</li><li>Gentle enough for daily use</li></ul><p><strong>EarWipes:</strong></p><ul><li>Alcohol-free formula (won't irritate ear canal)</li><li>Non-toxic if licked during grooming</li><li>Gentle on sensitive ear tissue</li><li>Safe for regular preventive use</li></ul><p>All products are manufactured to veterinary standards and contain no ingredients that could harm your pet, even with repeated daily use.</p>"
+          },
+          "type": "collapsible_row"
+        },
+        "collapsible_row_tzUTRG": {
+          "settings": {
+            "filled_icon": false,
+            "heading": "Do I need all three products?",
+            "icon": "",
+            "page": "",
+            "row_content": "<p>Each product addresses different needs - teeth, eyes, or ears. You can start with one, but most dogs benefit from all three areas.</p><p><strong>Here's why customers choose the Complete Kit:</strong></p><ul><li><strong>Save 20%</strong> vs buying products separately</li><li><strong>Cover all three problem areas</strong> vets check most often</li><li><strong>One routine</strong> handles everything in under 2 minutes</li><li><strong>Prevent expensive vet bills</strong> across dental, eye, and ear issues</li></ul><p><strong>Start with what matters most to your dog right now.</strong> Many customers begin with FreshWipes for dental care, see results, then add EyeWipes and EarWipes for complete preventive care.</p><p>The Kit makes it simple and saves money - but choose what works for you.</p>"
+          },
+          "type": "collapsible_row"
+        },
+        "collapsible_row_z7xrwD": {
+          "settings": {
+            "filled_icon": false,
+            "heading": "How does the 100-day money-back guarantee work?",
+            "icon": "",
+            "page": "",
+            "row_content": "<p>We truly believe our products will make a difference for both you and your dog. That's why we offer a <strong>100-day money-back guarantee</strong> - not the standard 30 days.</p><p><strong>Why 100 days?</strong> Because we want you to really try the products, see results, and build a routine without feeling rushed. Some dogs take a few weeks to adjust, and real results show up with consistent use.</p><p><strong>How it works:</strong></p><ol><li>Try the products at home, in your own time</li><li>Not completely satisfied? Email us at info@shopvetpets.com</li><li>We'll refund you - no stress, no hassle, no complicated forms</li></ol><p><strong>What's covered:</strong></p><ul><li>Full purchase price refunded</li><li>Works on single products or Complete Kit</li><li>No restocking fees</li><li>You can even keep partially used containers</li></ul><p><strong>Our philosophy:</strong> It's more important that your dog gets the care they deserve than that you keep something you don't love. If it's not right for you, we want to make it right.</p><p><strong>To start a return:</strong> Email info@shopvetpets.com with your order number and we'll take care of the rest within 3-5 business days.</p>"
+          },
+          "type": "collapsible_row"
+        }
+      },
+      "name": "t:sections.collapsible_content.presets.name",
+      "settings": {
+        "caption": "",
+        "collapse_icon": "carret",
+        "color_scheme": "background-1",
+        "container_color_scheme": "background-2",
+        "custom_colors_background": "#ffffff",
+        "custom_colors_text": "#2e2a39",
+        "custom_container_gradient_background": "",
+        "custom_contaner_colors_background": "#ffffff",
+        "custom_contaner_colors_text": "#2e2a39",
+        "custom_gradient_background": "",
+        "desktop_layout": "image_second",
+        "display_id": false,
+        "display_top_border": true,
+        "heading_alignment": "center",
+        "heading_size": "h1",
+        "image_ratio": "adapt",
+        "layout": "none",
+        "open_first_collapsible_row": false,
+        "padding_bottom": 36,
+        "padding_top": 36,
+        "row_heading_size": "medium",
+        "title": "Questions? <strong>We've Got Answers.</strong>",
+        "title_highlight_color": "#47b5e9",
+        "video_muted_autoplay": true,
+        "visibility": "always-display"
+      },
+      "type": "collapsible-content"
+    },
+    "contact_form_WHP8G7": {
+      "block_order": [
+        "field_row_fNxBGi",
+        "field_row_f84rat",
+        "textarea_NbxXax"
+      ],
+      "blocks": {
+        "field_row_f84rat": {
+          "settings": {
+            "input_1_custom_name": "Custom input name",
+            "input_1_enabled": true,
+            "input_1_error_message": "This field is required",
+            "input_1_required": false,
+            "input_1_type": "phone",
+            "input_2_custom_name": "Custom input name",
+            "input_2_enabled": false,
+            "input_2_error_message": "This field is required",
+            "input_2_required": false,
+            "input_2_type": "custom"
+          },
+          "type": "field_row"
+        },
+        "field_row_fNxBGi": {
+          "settings": {
+            "input_1_custom_name": "Custom input name",
+            "input_1_enabled": true,
+            "input_1_error_message": "This field is required",
+            "input_1_required": false,
+            "input_1_type": "name",
+            "input_2_custom_name": "Custom input name",
+            "input_2_enabled": true,
+            "input_2_error_message": "This field is required",
+            "input_2_required": false,
+            "input_2_type": "email"
+          },
+          "type": "field_row"
+        },
+        "textarea_NbxXax": {
+          "settings": {
+            "input_custom_name": "Custom name",
+            "input_error_message": "This field is required",
+            "input_required": false,
+            "input_type": "comment"
+          },
+          "type": "textarea"
+        }
+      },
+      "disabled": true,
+      "settings": {
+        "button_full_width": true,
+        "color_scheme": "background-1",
+        "custom_colors_background": "#ffffff",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_text": "#2e2a39",
+        "custom_gradient_background": "",
+        "display_id": false,
+        "errors_bg_color": "#fff5f5",
+        "errors_border_color": "#ff0000",
+        "errors_border_radius": 8,
+        "errors_border_width": 1,
+        "errors_icon": "error",
+        "errors_icon_filled": false,
+        "errors_text_color": "#ff0000",
+        "heading_size": "h1",
+        "padding_bottom": 36,
+        "padding_top": 36,
+        "success_bg_color": "#f2ffed",
+        "success_border_color": "#28c100",
+        "success_border_radius": 8,
+        "success_border_width": 1,
+        "success_icon": "check_circle",
+        "success_icon_filled": false,
+        "success_text_color": "#28c100",
+        "title": "Contact our support",
+        "title_highlight_color": "#6d388b",
+        "visibility": "always-display"
+      },
+      "type": "contact-form"
+    },
+    "custom_columns_mDVBj9": {
+      "block_order": [
+        "heading_C9B9Ad",
+        "richtext_YegVym",
+        "icon_with_text_jPrdt3",
+        "image_Krw6Yt",
+        "richtext_bAHfYa",
+        "buttons_JcLLeF"
+      ],
+      "blocks": {
+        "buttons_JcLLeF": {
+          "settings": {
+            "alignment": "center",
+            "button_label_1": "Start the 30-Day Routine",
+            "button_label_2": "",
+            "button_link_1": "shopify://products/eyewipes-prevention-that-keeps-eyes-clear",
+            "button_link_2": "",
+            "button_style_secondary_1": false,
+            "button_style_secondary_2": false,
+            "column": "col_3",
+            "full_width": false,
+            "margin_bottom": 20,
+            "margin_top": 20,
+            "mobile_alignment": "center",
+            "visibility": "always-display"
+          },
+          "type": "buttons"
+        },
+        "heading_C9B9Ad": {
+          "settings": {
+            "alignment": "center",
+            "column": "col_1",
+            "heading": "You’re cleaning it… but it keeps coming back.",
+            "heading_size": "h1",
+            "margin_bottom": 20,
+            "margin_top": 20,
+            "mobile_alignment": "mobile-center",
+            "title_highlight_color": "#6d388b",
+            "visibility": "always-display"
+          },
+          "type": "heading"
+        },
+        "icon_with_text_jPrdt3": {
+          "settings": {
+            "column": "col_2",
+            "filled_icon": false,
+            "icon": "",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h3",
+            "icon_position": "next-to-title",
+            "icon_size": "m",
+            "icon_text_alignment": "left",
+            "margin_bottom": 20,
+            "margin_top": 20,
+            "text": "<p>Most routines only fix the surface.  <br/>The real issue builds underneath — and keeps returning.<br/><br/>That’s why we created a simple system:<br/><br/>🧼 Clean daily with EyeWipes  <br/>📘 Follow a 30-day routine that fixes the root  <br/><br/>✔ Stop the cycle  <br/>✔ Know exactly what to do  <br/>✔ See real results  </p>",
+            "title": "",
+            "visibility": "always-display"
+          },
+          "type": "icon_with_text"
+        },
+        "image_Krw6Yt": {
+          "settings": {
+            "alignment": "flex-end",
+            "border_radius": 0,
+            "column": "col_3",
+            "image": "shopify://shop_images/DIGITALPRODUCT_1BrightEyesin30Days.png",
+            "margin_bottom": 20,
+            "margin_top": 20,
+            "mobile_alignment": "flex-end",
+            "visibility": "always-display",
+            "width": 100
+          },
+          "type": "image"
+        },
+        "richtext_YegVym": {
+          "settings": {
+            "alignment": "center",
+            "column": "col_1",
+            "margin_bottom": 20,
+            "margin_top": 20,
+            "mobile_alignment": "mobile-center",
+            "text": "<p>Because you’re only fixing the surface.<br/></p><p></p>",
+            "text_style": "body",
+            "visibility": "always-display"
+          },
+          "type": "richtext"
+        },
+        "richtext_bAHfYa": {
+          "settings": {
+            "alignment": "center",
+            "column": "col_3",
+            "margin_bottom": 20,
+            "margin_top": 20,
+            "mobile_alignment": "mobile-center",
+            "text": "<p>Includes optional guide in cart for best results</p>",
+            "text_style": "subtitle",
+            "visibility": "always-display"
+          },
+          "type": "richtext"
+        }
+      },
+      "disabled": true,
+      "name": "Custom columns",
+      "settings": {
+        "col_1_desktop_width": 12,
+        "col_1_mobile_width": 4,
+        "col_1_visibility": "always-display",
+        "col_2_desktop_width": 4,
+        "col_2_mobile_width": 4,
+        "col_2_visibility": "always-display",
+        "col_3_desktop_width": 4,
+        "col_3_mobile_width": 4,
+        "col_3_visibility": "always-display",
+        "col_4_desktop_width": 4,
+        "col_4_mobile_width": 4,
+        "col_4_visibility": "always-display",
+        "col_5_desktop_width": 3,
+        "col_5_mobile_width": 4,
+        "col_5_visibility": "always-display",
+        "col_6_desktop_width": 3,
+        "col_6_mobile_width": 4,
+        "col_6_visibility": "always-display",
+        "color_scheme": "background-1",
+        "column_gap_desktop": 40,
+        "column_gap_mobile": 20,
+        "columns_count": 3,
+        "custom_colors_background": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_text": "#2e2a39",
+        "custom_gradient_background": "",
+        "desktop_page_width": "normal",
+        "desktop_vertical_alignment": "center",
+        "display_id": false,
+        "mobile_full_page": false,
+        "mobile_vertical_alignment": "flex-start",
+        "padding_bottom": 36,
+        "padding_top": 36,
+        "row_gap_desktop": 40,
+        "row_gap_mobile": 30,
+        "visibility": "always-display"
+      },
+      "type": "custom-columns"
+    },
+    "featured_collection_Jri9Vj": {
+      "name": "t:sections.featured-collection.presets.name",
+      "settings": {
+        "arrows_color_scheme": "inverse",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "badges": "regular",
+        "cards_color_scheme": "background-1",
+        "collection": "finger-wipes",
+        "color_scheme": "background-1",
+        "columns_desktop": 4,
+        "columns_mobile": "1",
+        "custom_colors_background": "#f5f5f5",
+        "custom_colors_solid_button_background": "#47b5e9",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_text": "#2e2a39",
+        "custom_gradient_background": "",
+        "description": "<p>No stress. Just results.</p>",
+        "description_style": "body",
+        "desktop_adaptive_height": false,
+        "desktop_arrows_position": "sides",
+        "desktop_dots_position": "under",
+        "desktop_full_page": false,
+        "desktop_padding_calc": true,
+        "desktop_side_padding": 0,
+        "desktop_spacing": 40,
+        "display_id": false,
+        "dots_color_scheme": "inverse",
+        "enable_mobile_preview": false,
+        "enable_quick_add": true,
+        "heading_size": "h1",
+        "image_ratio": "adapt",
+        "mobile_adaptive_height": false,
+        "mobile_arrows_position": "under",
+        "mobile_dots_position": "under",
+        "padding_bottom": 36,
+        "padding_top": 36,
+        "per_move_desktop": 1,
+        "products_to_show": 4,
+        "show_description": false,
+        "show_rating": false,
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_view_all": false,
+        "slider_desktop": false,
+        "slider_mobile": true,
+        "stretch_cards": false,
+        "swatches_desktop_size": 36,
+        "swatches_mobile_size": 24,
+        "swatches_option_name": "",
+        "swatches_position": "top",
+        "title": "Complete care for healthier dogs",
+        "title_highlight_color": "#6d388b",
+        "transparent_arrows": true,
+        "type": "slide",
+        "view_all_style": "solid",
+        "visibility": "always-display"
+      },
+      "type": "featured-collection"
+    },
+    "featured_product_mft4bF": {
+      "block_order": [
+        "rating_stars_ffh6rB",
+        "title_TQgNKf",
+        "price_8PtzFF",
+        "text_RUXXFf",
+        "text_bPezX7",
+        "variant_picker_bLHNGe",
+        "quantity_selector_LnLnVh",
+        "buy_buttons_w7BDb7",
+        "payment_badges_Dy3ffd",
+        "text_jyXxhN",
+        "view_details_9V3TMg"
+      ],
+      "blocks": {
+        "buy_buttons_w7BDb7": {
+          "settings": {
+            "atc_custom_label": "",
+            "custom_color": "#dd1d1d",
+            "display_price": false,
+            "enable_custom_color": false,
+            "enable_secondary_btn": false,
+            "icon_scale": 120,
+            "icon_spacing": 10,
+            "margin_bottom": 24,
+            "margin_top": 24,
+            "secondary_btn_custom_color": "#dd1d1d",
+            "secondary_btn_enable_custom_color": false,
+            "secondary_btn_label": "Buy It Now",
+            "show_dynamic_checkout": false,
+            "skip_cart": false,
+            "uppercase_text": true
+          },
+          "type": "buy_buttons"
+        },
+        "payment_badges_Dy3ffd": {
+          "settings": {
+            "enabled_payment_types": "klarna, visa, master, maestro, american_express, paypal, apple_pay, google_pay",
+            "margin_bottom": 15,
+            "margin_top": 15
+          },
+          "type": "payment_badges"
+        },
+        "price_8PtzFF": {
+          "settings": {
+            "compare_price_color": "text",
+            "custom_badge_text": "[icon_1] SPECIAL OFFER",
+            "displayed_badge": "sale",
+            "filled_icon_1": false,
+            "filled_icon_2": false,
+            "icon_1": "redeem",
+            "icon_2": "check_circle",
+            "icon_scale": 140,
+            "layout": "price_first",
+            "margin_bottom": 9,
+            "margin_top": 9,
+            "price_color": "accent-1"
+          },
+          "type": "price"
+        },
+        "quantity_selector_LnLnVh": {
+          "disabled": true,
+          "settings": {
+            "atc_append": "none",
+            "atc_append_heights": "stretch-quantity",
+            "border_radius": 10,
+            "border_width": 2,
+            "color_scheme": "accent-1",
+            "display_selected_indicator": true,
+            "enable_quantity_discounts": true,
+            "enable_variant_selectors": true,
+            "enable_variant_selectors_on_quantity_of_1": false,
+            "full_width_classic": false,
+            "full_width_pickers": false,
+            "headline": "",
+            "hide_pickers_overlay": true,
+            "image_width": 70,
+            "margin_bottom": 15,
+            "margin_top": 15,
+            "option_1_badge": "",
+            "option_1_badge_color": "accent-1",
+            "option_1_badge_style": "1",
+            "option_1_benefit": "Spar 40 %",
+            "option_1_benefit_color": "accent-2",
+            "option_1_benefit_position": "top",
+            "option_1_benefit_style": "solid",
+            "option_1_caption": "5 kr per bruk",
+            "option_1_compare_price": "compare_price",
+            "option_1_compare_price_text": "[compare_price]",
+            "option_1_fixed_amount_off": "0",
+            "option_1_label": "1-Pakning – 50 stk",
+            "option_1_percentage_off_text": "0",
+            "option_1_price_text": "[price]",
+            "option_1_quantity": 1,
+            "option_2_badge": "Kjøp 2 Få 50 % Rabatt",
+            "option_2_badge_color": "accent-2",
+            "option_2_badge_style": "1",
+            "option_2_benefit": "Spar 50 %",
+            "option_2_benefit_color": "accent-2",
+            "option_2_benefit_position": "top",
+            "option_2_benefit_style": "solid",
+            "option_2_caption": "4 kr per bruk",
+            "option_2_compare_price": "compare_price",
+            "option_2_compare_price_text": "[compare_price]",
+            "option_2_fixed_amount_off": "99",
+            "option_2_label": "2-Pakning – 100 stk",
+            "option_2_percentage_off_text": "0",
+            "option_2_price_text": "[price]",
+            "option_2_quantity": 2,
+            "option_3_badge": "Gjelder denne uken",
+            "option_3_badge_color": "accent-2",
+            "option_3_badge_style": "1",
+            "option_3_benefit": "Spar 60 %",
+            "option_3_benefit_color": "accent-2",
+            "option_3_benefit_position": "top",
+            "option_3_benefit_style": "solid",
+            "option_3_caption": "3 kr per bruk",
+            "option_3_compare_price": "compare_price",
+            "option_3_compare_price_text": "[compare_price]",
+            "option_3_fixed_amount_off": "397",
+            "option_3_label": "4-Pakning – 200 stk",
+            "option_3_percentage_off_text": "0",
+            "option_3_price_text": "[price]",
+            "option_3_quantity": 4,
+            "option_4_badge": "",
+            "option_4_badge_color": "accent-1",
+            "option_4_badge_style": "1",
+            "option_4_benefit": "",
+            "option_4_benefit_color": "accent-1",
+            "option_4_benefit_position": "top",
+            "option_4_benefit_style": "outlined",
+            "option_4_caption": "You save [amount_saved]",
+            "option_4_compare_price": "compare_price",
+            "option_4_compare_price_text": "[compare_price]",
+            "option_4_fixed_amount_off": "0",
+            "option_4_label": "Buy [quantity]",
+            "option_4_percentage_off_text": "0",
+            "option_4_price_text": "[price]",
+            "option_4_quantity": 0,
+            "pickers_label": "",
+            "preselected": "option_1",
+            "skip_unavailable": false,
+            "space_images": true,
+            "style": "normal",
+            "update_prices": false,
+            "vertical_images_position": "top",
+            "vertical_prices_layout": "vertical"
+          },
+          "type": "quantity_selector"
+        },
+        "rating_stars_ffh6rB": {
+          "settings": {
+            "alignment": "flex-start",
+            "bg_star_color": "#ececec",
+            "bg_stars_style": "full",
+            "label": "4.86/5 Based on 10.000+ Reviews",
+            "margin_bottom": 6,
+            "margin_top": 9,
+            "rating": 4.8,
+            "scroll_id": "",
+            "size": 13,
+            "star_color": "#ffcc00"
+          },
+          "type": "rating_stars"
+        },
+        "text_RUXXFf": {
+          "settings": {
+            "alignment": "left",
+            "bg_color": "#f3f3f3",
+            "border_color": "#b7b7b7",
+            "border_size": 0,
+            "column_gap": 5,
+            "corner_radius": 40,
+            "desktop_text_size": 16,
+            "direction": "vertical",
+            "enable_bg": false,
+            "filled_icon_1": true,
+            "filled_icon_2": true,
+            "filled_icon_3": true,
+            "icon_1": "pets",
+            "icon_2": "pets",
+            "icon_3": "pets",
+            "icon_color": "#47b5e9",
+            "icon_scale": 140,
+            "margin_bottom": 15,
+            "margin_top": 15,
+            "mobile_text_size": 14,
+            "padding": 3,
+            "text_1": "Fights plaque, wax & tear stains",
+            "text_2": "Veterinary-approved ingredients",
+            "text_3": "Simple daily routine dogs accept",
+            "text_color": "#121212",
+            "width": "100%"
+          },
+          "type": "text"
+        },
+        "text_bPezX7": {
+          "settings": {
+            "alignment": "left",
+            "bg_color": "#f3f3f3",
+            "border_color": "#b7b7b7",
+            "border_size": 0,
+            "column_gap": 3,
+            "corner_radius": 40,
+            "desktop_text_size": 16,
+            "direction": "vertical",
+            "enable_bg": false,
+            "filled_icon_1": true,
+            "filled_icon_2": true,
+            "filled_icon_3": false,
+            "icon_1": "pets",
+            "icon_2": "check_circle",
+            "icon_3": "check_circle",
+            "icon_color": "#47b5e9",
+            "icon_scale": 140,
+            "margin_bottom": 15,
+            "margin_top": 15,
+            "mobile_text_size": 14,
+            "padding": 3,
+            "text_1": "FreshWipes: 50 st | EarWipes: 50 st | EyeWipes: 100 st",
+            "text_2": "",
+            "text_3": "",
+            "text_color": "#121212",
+            "width": "100%"
+          },
+          "type": "text"
+        },
+        "text_jyXxhN": {
+          "settings": {
+            "alignment": "left",
+            "bg_color": "#f3f3f3",
+            "border_color": "#b7b7b7",
+            "border_size": 0,
+            "column_gap": 4,
+            "corner_radius": 40,
+            "desktop_text_size": 16,
+            "direction": "vertical",
+            "enable_bg": true,
+            "filled_icon_1": true,
+            "filled_icon_2": true,
+            "filled_icon_3": true,
+            "icon_1": "new_releases",
+            "icon_2": "favorite",
+            "icon_3": "book",
+            "icon_color": "#47b5e9",
+            "icon_scale": 140,
+            "margin_bottom": 15,
+            "margin_top": 15,
+            "mobile_text_size": 14,
+            "padding": 3,
+            "text_1": "100-Day Money-Back Guarantee",
+            "text_2": "Over 45,000 Happy Customers",
+            "text_3": "3 Free E-books Included With Order",
+            "text_color": "#121212",
+            "width": "100%"
+          },
+          "type": "text"
+        },
+        "title_TQgNKf": {
+          "settings": {
+            "margin_bottom": 9,
+            "margin_top": 0,
+            "text_size": "h2",
+            "title_alignment": "left",
+            "uppercase_title": false
+          },
+          "type": "title"
+        },
+        "variant_picker_bLHNGe": {
+          "settings": {
+            "breaks_badge_color": "accent-1",
+            "breaks_badge_style": "1",
+            "breaks_badges": "[empty], Most popular, [empty]",
+            "breaks_benefit_color": "accent-1",
+            "breaks_benefit_position": "top",
+            "breaks_benefit_style": "outlined",
+            "breaks_benefits": "[empty], Free Shipping, Free Shipping",
+            "breaks_border_radius": 10,
+            "breaks_border_width": 2,
+            "breaks_captions": "Variant 1 caption, Variant 2 caption, Variant 3 caption",
+            "breaks_color_scheme": "accent-1",
+            "breaks_compare_price_texts": "[compare_price], [compare_price], [compare_price]",
+            "breaks_custom_images": "",
+            "breaks_display_selected_indicator": true,
+            "breaks_displayed_images": "none",
+            "breaks_headline": "BUNDLE & SAVE",
+            "breaks_image_width": 70,
+            "breaks_labels": "[name], [name], [name]",
+            "breaks_price_texts": "[price], [price], [price]",
+            "breaks_space_images": true,
+            "breaks_style": "normal",
+            "breaks_vertical_images_position": "top",
+            "breaks_vertical_prices_layout": "vertical",
+            "custom_labels": "",
+            "margin_bottom": 15,
+            "margin_top": 15,
+            "picker_types": "swatches, pills, pills",
+            "skip_unavailable": false,
+            "swatches_border_radius": 100,
+            "swatches_custom_colors": "disabled",
+            "swatches_custom_colors_list": "#000000, #FFFFFF",
+            "swatches_size": "medium"
+          },
+          "type": "variant_picker"
+        },
+        "view_details_9V3TMg": {
+          "settings": {
+            "custom_color": "#dd1d1d",
+            "display_arrow": true,
+            "enable_custom_color": false,
+            "large_font_size": false,
+            "margin_bottom": 0,
+            "margin_top": 15,
+            "style": "text",
+            "uppercase": false
+          },
+          "type": "view_details"
+        }
+      },
+      "name": "t:sections.featured-product.presets.name",
+      "settings": {
+        "arrows_color_scheme": "inverse",
+        "autoplay_videos_pause_btn": false,
+        "color_scheme": "background-1",
+        "constrain_to_viewport": true,
+        "desktop_arrows_position": "hidden",
+        "desktop_padding_bottom": 36,
+        "desktop_padding_top": 36,
+        "desktop_thumbnails_count": 5,
+        "desktop_thumbnails_position": "bottom",
+        "desktop_vertical_thumbnails_hide_arrows": false,
+        "desktop_vertical_thumbnails_width": 16,
+        "disable_prepend": false,
+        "display_id": false,
+        "display_variant_image_first": false,
+        "dots_color_scheme": "inverse",
+        "enable_mobile_outher_spacing": false,
+        "enable_sticky_info": true,
+        "enable_video_looping": false,
+        "gallery_layout": "thumbnail_slider",
+        "hide_variants": false,
+        "image_zoom": "none",
+        "media_fit": "contain",
+        "media_position": "left",
+        "media_size": "medium",
+        "mobile_arrows_position": "hidden",
+        "mobile_media_corner_radius": 0,
+        "mobile_padding_bottom": 20,
+        "mobile_padding_top": 20,
+        "mobile_pagination": "dots_overlay",
+        "mobile_scroll_padding_percentage": 0,
+        "mobile_scroll_padding_pixels": 0,
+        "mobile_slides_container_width": 100,
+        "mobile_slides_inner_width": 100,
+        "mobile_spacing_pixels": 0,
+        "mobile_thumbnails_count": 5,
+        "mobile_thumbnails_position": "bottom",
+        "mobile_vertical_thumbnails_hide_arrows": true,
+        "mobile_vertical_thumbnails_width": 22,
+        "play_btn_color_scheme": "accent-1",
+        "product": "freshcare-complete-health-kit",
+        "product_images": "all",
+        "secondary_background": false,
+        "sound_btn_color_scheme": "inverse",
+        "timeline_color": "accent-1",
+        "transparent_arrows": false,
+        "trust_badge_position": "top-right",
+        "trust_badge_size": "medium",
+        "variant_image_filtering": "none",
+        "video_player": "play_btn",
+        "video_sound_btn": false,
+        "video_timeline": false,
+        "visibility": "always-display"
+      },
+      "type": "featured-product"
+    },
+    "icon_bar_ztYi7K": {
+      "block_order": [
+        "column_TJV6JA",
+        "column_eWVQtV",
+        "column_tpTf49"
+      ],
+      "blocks": {
+        "column_TJV6JA": {
+          "settings": {
+            "filled_icon": true,
+            "icon": "favorite",
+            "text": "<p>Making pets and their owners happy all around the world.</p>",
+            "title": "OVER 45,000+ HAPPY CUSTOMERS"
+          },
+          "type": "column"
+        },
+        "column_eWVQtV": {
+          "settings": {
+            "filled_icon": true,
+            "icon": "new_releases",
+            "text": "<p>Not satisfied? Just contact us within 100 days of your purchase – we’ll make it right.</p>",
+            "title": "100-DAY MONEY-BACK GUARANTEE"
+          },
+          "type": "column"
+        },
+        "column_tpTf49": {
+          "settings": {
+            "filled_icon": false,
+            "icon": "support_agent",
+            "text": "<p>Need help? Reach out to us – we respond within 24 hours on weekdays.</p>",
+            "title": "SUPPORT MONDAY–FRIDAY"
+          },
+          "type": "column"
+        }
+      },
+      "settings": {
+        "arrows_color_scheme": "inverse",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "cards_color_scheme": "custom",
+        "color_scheme": "custom",
+        "columns_desktop": 3,
+        "columns_mobile": "1",
+        "custom_cards_colors_background": "#d5f7ff",
+        "custom_cards_colors_text": "#2e2a39",
+        "custom_cards_gradient_background": "",
+        "custom_colors_background": "#d5f7ff",
+        "custom_colors_text": "#2e2a39",
+        "custom_gradient_background": "",
+        "desktop_adaptive_height": false,
+        "desktop_arrows_position": "sides",
+        "desktop_dots_position": "under",
+        "desktop_full_page": false,
+        "desktop_padding_calc": true,
+        "desktop_side_padding": 0,
+        "desktop_spacing": 40,
+        "display_id": false,
+        "dots_color_scheme": "inverse",
+        "enable_mobile_preview": false,
+        "heading_size": "h1",
+        "icon_color": "accent-1",
+        "icon_layout": "vertical",
+        "icon_size": "medium",
+        "mobile_adaptive_height": false,
+        "mobile_arrows_position": "under",
+        "mobile_dots_position": "under",
+        "padding_bottom": 36,
+        "padding_top": 36,
+        "per_move_desktop": 1,
+        "slider_desktop": false,
+        "slider_mobile": true,
+        "text": "",
+        "title": "",
+        "title_highlight_color": "#6d388b",
+        "transparent_arrows": true,
+        "type": "slide",
+        "visibility": "always-display"
+      },
+      "type": "icon-bar"
+    },
+    "image_banner_NBXkrF": {
+      "disabled": true,
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "color_scheme": "background-1",
+        "desktop_content_alignment": "left",
+        "desktop_content_position": "middle-center",
+        "display_id": false,
+        "image": "shopify://shop_images/Desktop.png",
+        "image_1_visibility": "mobile-hidden",
+        "image_2": "shopify://shop_images/Mobile.png",
+        "image_2_visibility": "desktop-hidden",
+        "image_height": "adapt",
+        "image_overlay_opacity": 0,
+        "mobile_content_alignment": "center",
+        "show_text_below": true,
+        "show_text_box": true,
+        "stack_images_on_mobile": true,
+        "transparent_container_color": "white",
+        "url": "shopify://products/freshcare-complete-health-kit",
+        "visibility": "always-display"
+      },
+      "type": "image-banner"
+    },
+    "image_banner_dHw7hG": {
+      "block_order": [
+        "heading_iLbTac",
+        "text_QyRwEW",
+        "buttons_k79XVz",
+        "rating_stars_wfcbRT"
+      ],
+      "blocks": {
+        "buttons_k79XVz": {
+          "settings": {
+            "button_label_1": "Learn more about the money-back guarantee",
+            "button_label_2": "Get FreshCare Kit",
+            "button_link_1": "shopify://pages/100-day-money-back-guarantee",
+            "button_link_2": "shopify://products/freshcare-complete-health-kit",
+            "button_style_secondary_1": true,
+            "button_style_secondary_2": false
+          },
+          "type": "buttons"
+        },
+        "heading_iLbTac": {
+          "settings": {
+            "heading_size": "h1",
+            "title": "100-Day Money-Back Guarantee",
+            "title_highlight_color": "#6d388b"
+          },
+          "type": "heading"
+        },
+        "rating_stars_wfcbRT": {
+          "settings": {
+            "bg_star_color": "#ececec",
+            "bg_stars_style": "full",
+            "label": "4,86/5 (45,000+ Happy Customers)",
+            "rating": 4.8,
+            "scroll_id": "",
+            "size": 10,
+            "star_color": "#ffcc00"
+          },
+          "type": "rating_stars"
+        },
+        "text_QyRwEW": {
+          "settings": {
+            "text": "FreshWipes is a simple and safe solution for your dog’s oral hygiene. We want both you and your dog to be satisfied – that’s why we offer a 100-day money-back guarantee.Our wipes are designed to be both effective and gentle, and they fit perfectly on your finger for easy use. Give your dog a pain-free future with a product you can trust – completely risk-free!",
+            "text_style": "body"
+          },
+          "type": "text"
+        }
+      },
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "color_scheme": "background-1",
+        "desktop_content_alignment": "center",
+        "desktop_content_position": "middle-center",
+        "display_id": false,
+        "image": "shopify://shop_images/irish-setter-dog-close-up.jpg",
+        "image_1_visibility": "always-display",
+        "image_2_visibility": "always-display",
+        "image_height": "large",
+        "image_overlay_opacity": 10,
+        "mobile_content_alignment": "center",
+        "show_text_below": true,
+        "show_text_box": false,
+        "stack_images_on_mobile": true,
+        "transparent_container_color": "white",
+        "url": "",
+        "visibility": "always-display"
+      },
+      "type": "image-banner"
+    },
+    "image_banner_gUTUbM": {
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "color_scheme": "background-1",
+        "desktop_content_alignment": "left",
+        "desktop_content_position": "middle-center",
+        "display_id": false,
+        "image": "shopify://shop_images/Namnlos_design_-_2026-04-21T171044.129.jpg",
+        "image_1_visibility": "mobile-hidden",
+        "image_2": "shopify://shop_images/Namnlos_design_-_2026-04-21T171257.153.jpg",
+        "image_2_visibility": "desktop-hidden",
+        "image_height": "adapt",
+        "image_overlay_opacity": 0,
+        "mobile_content_alignment": "center",
+        "show_text_below": true,
+        "show_text_box": true,
+        "stack_images_on_mobile": true,
+        "transparent_container_color": "white",
+        "url": "shopify://products/freshcare-complete-health-kit",
+        "visibility": "always-display"
+      },
+      "type": "image-banner"
+    },
+    "image_with_text_77grg8": {
+      "block_order": [
+        "heading_7Cnegf",
+        "caption_PF3zmz",
+        "text_j7jXft",
+        "text_AWAjgE",
+        "heading_Mf9z4H",
+        "button_B3dn7y",
+        "caption_YUqL68"
+      ],
+      "blocks": {
+        "button_B3dn7y": {
+          "settings": {
+            "button_label": "Get the Full System — $24.00",
+            "button_link": "shopify://products/eyewipes-prevention-that-keeps-eyes-clear",
+            "button_style_secondary": false
+          },
+          "type": "button"
+        },
+        "caption_PF3zmz": {
+          "settings": {
+            "caption": "<strong>Most wipes only clean the surface — this fixes the cause.</strong>",
+            "text_size": "large",
+            "text_style": "caption-with-letter-spacing"
+          },
+          "type": "caption"
+        },
+        "caption_YUqL68": {
+          "settings": {
+            "caption": "<strong> Instant access • One-time payment • No subscription</strong>",
+            "text_size": "large",
+            "text_style": "caption-with-letter-spacing"
+          },
+          "type": "caption"
+        },
+        "heading_7Cnegf": {
+          "settings": {
+            "heading_size": "h2",
+            "title": "<strong>Complete </strong>Tear Stain <strong>System</strong>",
+            "title_highlight_color": "#47b5e9"
+          },
+          "type": "heading"
+        },
+        "heading_Mf9z4H": {
+          "settings": {
+            "heading_size": "h2",
+            "title": "Use this complete system with your <strong>eyewipes </strong>for best results",
+            "title_highlight_color": "#47b5e9"
+          },
+          "type": "heading"
+        },
+        "text_AWAjgE": {
+          "settings": {
+            "text": "",
+            "text_style": "body"
+          },
+          "type": "text"
+        },
+        "text_j7jXft": {
+          "settings": {
+            "text": "<p><strong>Still seeing tear stains even after using wipes?</strong><br/><strong>That’s because you’re missing the full routine.</strong><br/><br/>✔ Know <em>exactly</em> what causes tear stains<br/>✔ Learn the <strong>right way</strong> to use your wipes (most owners do it wrong)<br/>✔ Build a <strong>simple daily routine</strong> that prevents buildup<br/>✔ See visible improvement in as little as <strong>30 days</strong></p>",
+            "text_style": "body"
+          },
+          "type": "text"
+        }
+      },
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "color_scheme": "background-1",
+        "content_layout": "no-overlap",
+        "custom_colors_background": "#2e2a39",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#47b5e9",
+        "custom_colors_text": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_section_colors_background": "#ffffff",
+        "custom_section_gradient_background": "",
+        "desktop_content_alignment": "left",
+        "desktop_content_position": "middle",
+        "desktop_media_width": 50,
+        "desktop_padding_bottom": 36,
+        "desktop_padding_top": 36,
+        "display_id": false,
+        "full_desktop_width": false,
+        "height": "adapt",
+        "image": "shopify://shop_images/ProductDesignPetGloveWipes_2.png",
+        "layout": "image_first",
+        "mobile_content_alignment": "left",
+        "mobile_direction": "normal",
+        "mobile_full_media_width": false,
+        "mobile_image_quanlity": "2",
+        "mobile_padding_bottom": 16,
+        "mobile_padding_top": 0,
+        "section_color_scheme": "background-1",
+        "video_autoplay": false,
+        "video_loop": false,
+        "visibility": "always-display"
+      },
+      "type": "image-with-text"
+    },
+    "image_with_text_xEiazN": {
+      "block_order": [
+        "heading_CwgiUG",
+        "button_pwptYA",
+        "text_fjVmFM"
+      ],
+      "blocks": {
+        "button_pwptYA": {
+          "settings": {
+            "button_label": "Start the 30-Day Routine",
+            "button_link": "shopify://products/eyewipes-prevention-that-keeps-eyes-clear",
+            "button_style_secondary": false
+          },
+          "type": "button"
+        },
+        "heading_CwgiUG": {
+          "settings": {
+            "heading_size": "h1",
+            "title": "You’re cleaning it… but it keeps coming back.",
+            "title_highlight_color": "#6d388b"
+          },
+          "type": "heading"
+        },
+        "text_fjVmFM": {
+          "settings": {
+            "text": "<p>Most routines only fix the surface.  <br/>The real issue builds underneath — and keeps returning.<br/><br/>That’s why we created a simple system:<br/><br/>&gt; Clean daily with EyeWipes  <br/>&gt; Follow a 30-day routine that fixes the root  <br/><br/>✔ Stop the cycle  <br/>✔ Know exactly what to do  <br/>✔ See real results  </p>",
+            "text_style": "body"
+          },
+          "type": "text"
+        }
+      },
+      "disabled": true,
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "color_scheme": "background-1",
+        "content_layout": "no-overlap",
+        "custom_colors_background": "#2e2a39",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_text": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_section_colors_background": "#ffffff",
+        "custom_section_gradient_background": "",
+        "desktop_content_alignment": "left",
+        "desktop_content_position": "top",
+        "desktop_media_width": 50,
+        "desktop_padding_bottom": 36,
+        "desktop_padding_top": 36,
+        "display_id": false,
+        "full_desktop_width": false,
+        "height": "adapt",
+        "image": "shopify://shop_images/DIGITALPRODUCT_1BrightEyesin30Days.png",
+        "layout": "image_first",
+        "mobile_content_alignment": "left",
+        "mobile_direction": "normal",
+        "mobile_full_media_width": false,
+        "mobile_image_quanlity": "2",
+        "mobile_padding_bottom": 16,
+        "mobile_padding_top": 0,
+        "section_color_scheme": "background-1",
+        "video_autoplay": true,
+        "video_loop": true,
+        "visibility": "always-display"
+      },
+      "type": "image-with-text"
+    },
+    "multicolumn_Q8WAgx": {
+      "block_order": [
+        "column_GPiyNA",
+        "column_kaPqz7",
+        "column_N7Pa4L"
+      ],
+      "blocks": {
+        "column_GPiyNA": {
+          "settings": {
+            "image": "shopify://shop_images/Namnlos_design_-_2026-01-25T035641.031.jpg",
+            "link": "shopify://products/freshwipes-kit-protects-against-dental-diseases",
+            "link_label": "Shop FreshWipes",
+            "muted_autoplay": true,
+            "text": "<p>Plaque builds up daily, causing bad breath and tartar.</p><p><strong>FreshWipes remove plaque quickly with the ease of a simple daily wipe.</strong></p>",
+            "title": "Teeth"
+          },
+          "type": "column"
+        },
+        "column_N7Pa4L": {
+          "settings": {
+            "image": "shopify://shop_images/Namnlos_design_-_2026-01-25T040850.470.jpg",
+            "link": "shopify://products/earwipes-kit-protects-against-ear-problems",
+            "link_label": "Shop EarWipes",
+            "muted_autoplay": true,
+            "text": "<p>Wax and moisture can lead to buildup and ear infections.</p><p><strong>EarWipes gently remove buildup to help keep ears clean and healthy.</strong></p>",
+            "title": "Ears"
+          },
+          "type": "column"
+        },
+        "column_kaPqz7": {
+          "settings": {
+            "image": "shopify://shop_images/Namnlos_design_-_2026-01-25T040543.697.jpg",
+            "link": "shopify://products/eyewipes-prevention-that-keeps-eyes-clear",
+            "link_label": "Shop EyeWipes",
+            "muted_autoplay": true,
+            "text": "<p>Tear stains and moisture can lead to irritation and discomfort.</p><p><strong>EyeWipes gently clean daily to help keep eyes clear and healthy.</strong></p>",
+            "title": "Eyes"
+          },
+          "type": "column"
+        }
+      },
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "arrows_color_scheme": "inverse",
+        "atc_button_label": "",
+        "atc_product": "",
+        "atc_skip_cart": false,
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "button_label": "",
+        "button_link": "",
+        "cards_color_scheme": "bg-overlay",
+        "cards_corner_radius": 20,
+        "color_scheme": "background-1",
+        "column_alignment": "center",
+        "columns_desktop": 3,
+        "columns_mobile": "1",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_colors_heading": "#222126",
+        "custom_cards_colors_text": "#2e2a39",
+        "custom_cards_gradient_background": "",
+        "custom_colors_background": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_text": "#2e2a39",
+        "custom_gradient_background": "",
+        "desktop_adaptive_height": false,
+        "desktop_arrows_position": "sides",
+        "desktop_container_padding_x": 24,
+        "desktop_container_padding_y": 24,
+        "desktop_dots_position": "under",
+        "desktop_full_page": true,
+        "desktop_heading_size": 24,
+        "desktop_padding_calc": true,
+        "desktop_side_padding": 0,
+        "desktop_spacing": 40,
+        "desktop_text_size": 16,
+        "desktop_text_top_margin": 10,
+        "display_id": false,
+        "dots_color_scheme": "inverse",
+        "enable_mobile_preview": false,
+        "heading_size": "h1",
+        "image_ratio": "adapt",
+        "image_width": "full",
+        "media_position": "top",
+        "mobile_adaptive_height": false,
+        "mobile_arrows_position": "under",
+        "mobile_container_padding_x": 24,
+        "mobile_container_padding_y": 24,
+        "mobile_dots_position": "under",
+        "mobile_heading_size": 22,
+        "mobile_text_size": 15,
+        "mobile_text_top_margin": 10,
+        "padding_bottom": 36,
+        "padding_top": 36,
+        "per_move_desktop": 1,
+        "slider_desktop": false,
+        "slider_mobile": true,
+        "stretch_cards": false,
+        "stretched_cards_content_alignment": "center",
+        "title": "Daily Pet Care <strong>Made Simple</strong>",
+        "title_highlight_color": "#47b5e9",
+        "transparent_arrows": true,
+        "type": "slide",
+        "visibility": "always-display"
+      },
+      "type": "multicolumn"
+    },
+    "multicolumn_fMxtnA": {
+      "block_order": [
+        "column_4ky8tG",
+        "column_8JfWNy",
+        "column_x3dgeT",
+        "column_9WQacg"
+      ],
+      "blocks": {
+        "column_4ky8tG": {
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_24.svg",
+            "link": "",
+            "link_label": "",
+            "muted_autoplay": true,
+            "text": "<p>Cetylpyridinium Chloride (CPC) is clinically proven to eliminate up to 99% of the bacteria that cause plaque buildup and bad breath — the same active ingredient used in professional dental mouthwashes.</p>",
+            "title": "1. Antibacterial CPC Formula"
+          },
+          "type": "column"
+        },
+        "column_8JfWNy": {
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_25.svg",
+            "link": "",
+            "link_label": "",
+            "muted_autoplay": true,
+            "text": "<p>The textured surface acts like a micro-toothbrush, physically removing plaque and food debris — without the discomfort dogs associate with traditional brushing.</p>",
+            "title": "2. Mechanical Cleaning"
+          },
+          "type": "column"
+        },
+        "column_9WQacg": {
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_27.svg",
+            "link": "",
+            "link_label": "",
+            "muted_autoplay": true,
+            "text": "<p>Keeps each wipe moist and effective — no dry, ineffective wiping that delivers zero results.</p>",
+            "title": "4. Moisture-Locking Glycerin"
+          },
+          "type": "column"
+        },
+        "column_x3dgeT": {
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_26.svg",
+            "link": "",
+            "link_label": "",
+            "muted_autoplay": true,
+            "text": "<p>Natural enzymes continue working after use, breaking down biofilm that would otherwise harden into tartar.</p>",
+            "title": "3. Enzymatic Breakdown"
+          },
+          "type": "column"
+        }
+      },
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "arrows_color_scheme": "inverse",
+        "atc_button_label": "",
+        "atc_product": "",
+        "atc_skip_cart": false,
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "button_label": "Get FreshWipes Now",
+        "button_link": "shopify://products/freshwipes-kit-protects-against-dental-diseases",
+        "cards_color_scheme": "bg-overlay",
+        "cards_corner_radius": 20,
+        "color_scheme": "background-2",
+        "column_alignment": "center",
+        "columns_desktop": 4,
+        "columns_mobile": "1",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_colors_heading": "#222126",
+        "custom_cards_colors_text": "#2e2a39",
+        "custom_cards_gradient_background": "",
+        "custom_colors_background": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_text": "#2e2a39",
+        "custom_gradient_background": "",
+        "desktop_adaptive_height": false,
+        "desktop_arrows_position": "sides",
+        "desktop_container_padding_x": 24,
+        "desktop_container_padding_y": 24,
+        "desktop_dots_position": "under",
+        "desktop_full_page": false,
+        "desktop_heading_size": 24,
+        "desktop_padding_calc": true,
+        "desktop_side_padding": 0,
+        "desktop_spacing": 40,
+        "desktop_text_size": 16,
+        "desktop_text_top_margin": 10,
+        "display_id": false,
+        "dots_color_scheme": "inverse",
+        "enable_mobile_preview": false,
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "image_width": "full",
+        "media_position": "top",
+        "mobile_adaptive_height": false,
+        "mobile_arrows_position": "under",
+        "mobile_container_padding_x": 24,
+        "mobile_container_padding_y": 24,
+        "mobile_dots_position": "under",
+        "mobile_heading_size": 22,
+        "mobile_text_size": 15,
+        "mobile_text_top_margin": 10,
+        "padding_bottom": 36,
+        "padding_top": 36,
+        "per_move_desktop": 1,
+        "slider_desktop": false,
+        "slider_mobile": true,
+        "stretch_cards": false,
+        "stretched_cards_content_alignment": "center",
+        "title": "How Our <strong>FreshWipes Work</strong>",
+        "title_highlight_color": "#47b5e9",
+        "transparent_arrows": true,
+        "type": "slide",
+        "visibility": "always-display"
+      },
+      "type": "multicolumn"
+    },
+    "section_divider_T7NFdM": {
+      "name": "Section divider",
+      "settings": {
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "custom_shape_color": "#dd1d1d",
+        "flip_horizontal": false,
+        "flip_vertical": true,
+        "padding_bottom": 0,
+        "padding_top": 0,
+        "shape": "waves_2",
+        "shape_color": "background-2",
+        "visibility": "always-display"
+      },
+      "type": "section-divider"
+    },
+    "section_divider_Vr9Acc": {
+      "name": "Section divider",
+      "settings": {
+        "background_color": "background-2",
+        "custom_background_color": "#ffffff",
+        "custom_shape_color": "#dd1d1d",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "padding_bottom": 0,
+        "padding_top": 0,
+        "shape": "waves_1",
+        "shape_color": "background-1",
+        "visibility": "always-display"
+      },
+      "type": "section-divider"
+    },
+    "section_divider_c4Gbyq": {
+      "name": "Section divider",
+      "settings": {
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "custom_shape_color": "#dd1d1d",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "padding_bottom": 0,
+        "padding_top": 0,
+        "shape": "waves_1",
+        "shape_color": "background-2",
+        "visibility": "always-display"
+      },
+      "type": "section-divider"
+    },
+    "section_divider_ehXT7d": {
+      "name": "Section divider",
+      "settings": {
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "custom_shape_color": "#dd1d1d",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "padding_bottom": 0,
+        "padding_top": 0,
+        "shape": "waves_2",
+        "shape_color": "background-2",
+        "visibility": "always-display"
+      },
+      "type": "section-divider"
+    },
+    "ss_hero_pro_PGyKJy": {
+      "block_order": [
+        "caption_teTphi",
+        "heading_ckcrih",
+        "text_WyELWw",
+        "feature_JGbpw8",
+        "feature_9fXTEx",
+        "feature_RdRWiJ",
+        "button_c8nHDF",
+        "verified_eGxjE3"
+      ],
+      "blocks": {
+        "button_c8nHDF": {
+          "settings": {
+            "button": "FATHER'S DAY SALE",
+            "button_advanced": false,
+            "button_bg_color": "#47b5e9",
+            "button_bg_hover_color": "#13b6b5",
+            "button_border_color": "#1a1a1a",
+            "button_border_hover_color": "#1a1a1a",
+            "button_border_thickness": 1,
+            "button_color": "#ffffff",
+            "button_custom": false,
+            "button_custom_styling": true,
+            "button_font": "josefin_sans_n4",
+            "button_full_width_mobile": true,
+            "button_height": 100,
+            "button_hover_color": "#ffffff",
+            "button_mt": 24,
+            "button_mt_mobile": 24,
+            "button_padding_horizontal": 40,
+            "button_padding_horizontal_mobile": 32,
+            "button_padding_vertical": 20,
+            "button_padding_vertical_mobile": 20,
+            "button_radius": 100,
+            "button_shadow_color": "#000000",
+            "button_size": 18,
+            "button_size_mobile": 18,
+            "button_style": "non_outline",
+            "open_in_new_tab": false,
+            "url": "shopify://collections/finger-wipes"
+          },
+          "type": "button"
+        },
+        "caption_teTphi": {
+          "disabled": true,
+          "settings": {
+            "background": true,
+            "caption": "<p>Vet Recommended</p>",
+            "caption_advanced": false,
+            "caption_bg_color": "#13b6b5",
+            "caption_bg_opacity": 1,
+            "caption_border_color": "#13b6b5",
+            "caption_border_thickness": 1,
+            "caption_color": "#ffffff",
+            "caption_custom": false,
+            "caption_font": "josefin_sans_n4",
+            "caption_height": 130,
+            "caption_mt": 0,
+            "caption_mt_mobile": 0,
+            "caption_padding_horizontal": 12,
+            "caption_padding_horizontal_mobile": 12,
+            "caption_padding_vertical": 6,
+            "caption_padding_vertical_mobile": 6,
+            "caption_radius": 100,
+            "caption_size": 12,
+            "caption_size_mobile": 12,
+            "enable_blur": false
+          },
+          "type": "caption"
+        },
+        "feature_9fXTEx": {
+          "settings": {
+            "icon": "bolt",
+            "text": "Clear results in 2–3 weeks"
+          },
+          "type": "feature"
+        },
+        "feature_JGbpw8": {
+          "settings": {
+            "icon": "heart",
+            "text": "Only 30 Seconds/Day"
+          },
+          "type": "feature"
+        },
+        "feature_RdRWiJ": {
+          "settings": {
+            "icon": "gift",
+            "text": "Buy 2 Get 2 Free"
+          },
+          "type": "feature"
+        },
+        "heading_ckcrih": {
+          "settings": {
+            "heading": "<p>The Daily Routine Responsible Pet Fathers Use to <strong>Keep Their </strong></p><p><strong>Pet Healthy</strong></p>",
+            "heading_accent_color": "#47b5e9",
+            "heading_accent_font": "playfair_n4",
+            "heading_advanced": false,
+            "heading_color": "#ffffff",
+            "heading_custom": false,
+            "heading_font": "josefin_sans_n4",
+            "heading_height": 130,
+            "heading_mt": 8,
+            "heading_mt_mobile": 8,
+            "heading_size": 36,
+            "heading_size_mobile": 22
+          },
+          "type": "heading"
+        },
+        "text_WyELWw": {
+          "disabled": true,
+          "settings": {
+            "text": "<p>Finger wipes designed for your dog's teeth, eyes, and ears. Simple enough to do every day. Gentle enough that your dog won't fight it.</p>",
+            "text_advanced": false,
+            "text_color": "#ffffff",
+            "text_custom": false,
+            "text_font": "josefin_sans_n4",
+            "text_height": 150,
+            "text_mt": 20,
+            "text_mt_mobile": 20,
+            "text_size": 16,
+            "text_size_mobile": 14
+          },
+          "type": "text"
+        },
+        "verified_eGxjE3": {
+          "settings": {
+            "icon": "shield_check",
+            "icon_color": "#13b6b5",
+            "icon_size": 16,
+            "icon_size_mobile": 16,
+            "text": "<p>100-Day Money-Back Guarantee</p>",
+            "text_advanced": false,
+            "text_color": "#ffffff",
+            "text_custom": false,
+            "text_font": "josefin_sans_n4",
+            "text_height": 150,
+            "text_mt": 16,
+            "text_mt_mobile": 16,
+            "text_size": 14,
+            "text_size_mobile": 14
+          },
+          "type": "verified"
+        }
+      },
+      "disabled": true,
+      "name": "SS - Hero pro 💎",
+      "settings": {
+        "background_color": "#121212",
+        "background_gradient": "radial-gradient(rgba(30, 30, 36, 1), rgba(5, 5, 5, 1) 100%)",
+        "background_style": "solid",
+        "bg_image": "shopify://shop_images/National_Dog_Month_home_Banner.jpg",
+        "bg_image_mobile": "shopify://shop_images/Namnlos_design_-_2026-08-01T100115.007.jpg",
+        "bg_overlay": 0,
+        "bg_overlay_color": "#121212",
+        "bg_video_url": "",
+        "border_color": "#121212",
+        "border_thickness": 0,
+        "content_align": "left",
+        "content_align_mobile": "center",
+        "content_max_width": 45,
+        "content_vertical_align": "center",
+        "content_vertical_align_mobile": "start",
+        "content_width": 1400,
+        "enable_split_layout": false,
+        "feature_background": false,
+        "feature_bg_color": "#ffffff",
+        "feature_bg_opacity": 0.3,
+        "feature_border_color": "#ffffff",
+        "feature_border_thickness": 1,
+        "feature_enable_blur": true,
+        "feature_icon_color": "#13b6b5",
+        "feature_icon_size": 18,
+        "feature_icon_size_mobile": 16,
+        "feature_padding_horizontal": 12,
+        "feature_padding_horizontal_mobile": 12,
+        "feature_padding_vertical": 6,
+        "feature_padding_vertical_mobile": 6,
+        "feature_radius": 100,
+        "feature_text_color": "#ffffff",
+        "feature_text_custom": false,
+        "feature_text_font": "josefin_sans_n4",
+        "feature_text_height": 100,
+        "feature_text_size": 14,
+        "feature_text_size_mobile": 12,
+        "features_advanced": true,
+        "features_gap": 20,
+        "features_gap_mobile": 10,
+        "features_mt": 20,
+        "features_mt_mobile": 20,
+        "hero_fixed_height": 700,
+        "hero_fixed_height_mobile": 780,
+        "hero_height": "fixed_height",
+        "layout_bg_type": "image",
+        "lazy": false,
+        "margin_bottom": 0,
+        "margin_horizontal": 0,
+        "margin_horizontal_mobile": 0,
+        "margin_top": 0,
+        "padding_bottom": 36,
+        "padding_horizontal": 3,
+        "padding_horizontal_mobile": 0,
+        "padding_top": 36,
+        "section_radius": 0,
+        "width": "page"
+      },
+      "type": "ss-hero-pro"
+    },
+    "ss_modal_popup_6_EkyBft": {
+      "block_order": [
+        "logo_dweBDT",
+        "sub_heading_mGiN3B",
+        "heading_4BKE8J",
+        "text_WKhRxC",
+        "scratch_card_LGd8UA",
+        "newsletter_tERyqA",
+        "disclaimer_W8Ezam",
+        "no_thanks_RbMxPp"
+      ],
+      "blocks": {
+        "disclaimer_W8Ezam": {
+          "settings": {
+            "disclaimer": "<p>By signing up you agree to receive email marketing. You can unsubscribe at any time.</p>",
+            "disclaimer_advanced": false,
+            "disclaimer_color": "#121212",
+            "disclaimer_custom": false,
+            "disclaimer_font": "josefin_sans_n4",
+            "disclaimer_height": 150,
+            "disclaimer_mt": 12,
+            "disclaimer_mt_mobile": 12,
+            "disclaimer_size": 11,
+            "disclaimer_size_mobile": 11
+          },
+          "type": "disclaimer"
+        },
+        "heading_4BKE8J": {
+          "settings": {
+            "heading": "<p>TRY YOUR LUCK</p>",
+            "heading_advanced": true,
+            "heading_color": "#00225b",
+            "heading_custom": false,
+            "heading_font": "josefin_sans_n4",
+            "heading_height": 130,
+            "heading_mt": 16,
+            "heading_mt_mobile": 12,
+            "heading_size": 48,
+            "heading_size_mobile": 32
+          },
+          "type": "heading"
+        },
+        "logo_dweBDT": {
+          "settings": {
+            "logo": "shopify://shop_images/Vetpets_logga_5_e9bbafef-0e29-41d5-bf25-9383590065d1.png",
+            "logo_mt": 20,
+            "logo_mt_mobile": 0,
+            "logo_width": 240,
+            "logo_width_mobile": 100
+          },
+          "type": "logo"
+        },
+        "newsletter_tERyqA": {
+          "settings": {
+            "discount_code": "SCRATCH10",
+            "discount_code_advanced": false,
+            "discount_code_bg_color": "#f5f5f5",
+            "discount_code_border_color": "#cccccc",
+            "discount_code_border_hover_color": "#999999",
+            "discount_code_border_style": "dashed",
+            "discount_code_border_thickness": 2,
+            "discount_code_color": "#128dcb",
+            "discount_code_custom": false,
+            "discount_code_font": "josefin_sans_n4",
+            "discount_code_label": "Tap to copy",
+            "discount_code_label_color": "#707070",
+            "discount_code_label_size": 14,
+            "discount_code_label_size_mobile": 12,
+            "discount_code_mt": 12,
+            "discount_code_mt_mobile": 10,
+            "discount_code_padding": 14,
+            "discount_code_padding_mobile": 12,
+            "discount_code_radius": 8,
+            "discount_code_size": 24,
+            "discount_code_size_mobile": 20,
+            "discount_label_custom": false,
+            "discount_label_font": "josefin_sans_n4",
+            "email_heading": "<h3>You've Unlocked<br/>10% OFF!</h3>",
+            "email_heading_advanced": false,
+            "email_heading_color": "#00225b",
+            "email_heading_custom": false,
+            "email_heading_font": "josefin_sans_n4",
+            "email_heading_height": 130,
+            "email_heading_mt": 16,
+            "email_heading_mt_mobile": 12,
+            "email_heading_size": 40,
+            "email_heading_size_mobile": 32,
+            "form_mt": 32,
+            "form_mt_mobile": 24,
+            "heading_thanks_text": "You're In!",
+            "heading_thanks_text_color": "#121212",
+            "input_advanced": false,
+            "input_bg_color": "#ffffff",
+            "input_border_color": "#dfdfdf",
+            "input_border_focus_color": "rgba(0,0,0,0)",
+            "input_border_thickness": 1,
+            "input_color": "#121212",
+            "input_custom": false,
+            "input_font": "josefin_sans_n4",
+            "input_height": 100,
+            "input_padding_horizontal": 20,
+            "input_padding_horizontal_mobile": 20,
+            "input_padding_vertical": 18,
+            "input_padding_vertical_mobile": 18,
+            "input_placeholder_color": "#707070",
+            "input_radius": 50,
+            "input_size": 16,
+            "input_size_mobile": 16,
+            "placeholder_mail": "Your email address",
+            "submit": "CLAIM DISCOUNT",
+            "success_button_url": "",
+            "success_close_label": "Continue Shopping",
+            "success_redirect_enabled": false,
+            "success_redirect_url": "",
+            "thanks_heading_advanced": false,
+            "thanks_text": "Enjoy your exclusive discount:",
+            "thanks_text_color": "#121212",
+            "thanks_text_custom": false,
+            "thanks_text_font": "josefin_sans_n4",
+            "thanks_text_height": 150,
+            "thanks_text_mt": 8,
+            "thanks_text_mt_mobile": 8,
+            "thanks_text_size": 14,
+            "thanks_text_size_mobile": 14
+          },
+          "type": "newsletter"
+        },
+        "no_thanks_RbMxPp": {
+          "settings": {
+            "no_thanks_advanced": false,
+            "no_thanks_color": "#121212",
+            "no_thanks_custom": false,
+            "no_thanks_font": "josefin_sans_n4",
+            "no_thanks_height": 150,
+            "no_thanks_mt": 16,
+            "no_thanks_mt_mobile": 12,
+            "no_thanks_size": 14,
+            "no_thanks_size_mobile": 14,
+            "no_thanks_text": "No, thanks",
+            "no_thanks_underline": false
+          },
+          "type": "no_thanks"
+        },
+        "scratch_card_LGd8UA": {
+          "settings": {
+            "card_advanced": false,
+            "card_bg_color": "#ffffff",
+            "card_height": 220,
+            "card_height_mobile": 180,
+            "card_mt": 24,
+            "card_mt_mobile": 20,
+            "card_radius": 16,
+            "card_width": 300,
+            "card_width_mobile": 260,
+            "claim_label": "CLAIM DISCOUNT",
+            "overlay_color": "#d7cca5",
+            "overlay_image": "shopify://shop_images/vetpets-ss-scratchcard-v2.png",
+            "overlay_text": "SCRATCH HERE",
+            "overlay_text_color": "#b5ab89",
+            "overlay_text_size": 18,
+            "overlay_text_size_mobile": 16,
+            "reveal_custom": false,
+            "reveal_font": "josefin_sans_n4",
+            "reveal_subtitle": "CONGRATS!",
+            "reveal_subtitle_color": "#128dcb",
+            "reveal_subtitle_size": 36,
+            "reveal_subtitle_size_mobile": 30,
+            "reveal_title": "CLAIM YOUR 10% DISCOUNT",
+            "reveal_title_color": "#00225b",
+            "reveal_title_size": 40,
+            "reveal_title_size_mobile": 36,
+            "scratch_threshold": 50
+          },
+          "type": "scratch_card"
+        },
+        "sub_heading_mGiN3B": {
+          "settings": {
+            "sub_heading": "<p>EXCLUSIVE OFFER</p>",
+            "sub_heading_advanced": false,
+            "sub_heading_color": "#121212",
+            "sub_heading_custom": false,
+            "sub_heading_font": "josefin_sans_n4",
+            "sub_heading_height": 130,
+            "sub_heading_mt": 12,
+            "sub_heading_mt_mobile": 12,
+            "sub_heading_size": 12,
+            "sub_heading_size_mobile": 12
+          },
+          "type": "sub_heading"
+        },
+        "text_WKhRxC": {
+          "settings": {
+            "text": "<p>Scratch below to reveal today's surprise.</p>",
+            "text_advanced": false,
+            "text_color": "#121212",
+            "text_custom": false,
+            "text_font": "josefin_sans_n4",
+            "text_height": 150,
+            "text_mt": 12,
+            "text_mt_mobile": 12,
+            "text_size": 16,
+            "text_size_mobile": 14
+          },
+          "type": "text"
+        }
+      },
+      "disabled": true,
+      "name": "SS - Modal popup #6",
+      "settings": {
+        "background_color": "#ffffff",
+        "background_gradient": "linear-gradient(180deg, #FFFFFF 0%, #F2F2F2 100%)",
+        "background_style": "solid",
+        "border_color": "#121212",
+        "border_thickness": 0,
+        "button": "Unlock Offer",
+        "button_advanced": false,
+        "button_align": "left",
+        "button_align_mobile": "right",
+        "button_bg_color": "#00225b",
+        "button_bg_hover_color": "#128dcb",
+        "button_border_color": "#121212",
+        "button_border_hover_color": "#121212",
+        "button_border_thickness": 0,
+        "button_close_size": 16,
+        "button_close_size_mobile": 16,
+        "button_color": "#ffffff",
+        "button_custom": false,
+        "button_fixed": true,
+        "button_font": "josefin_sans_n4",
+        "button_height": 100,
+        "button_horizontal_dst_to_edge": 24,
+        "button_horizontal_dst_to_edge_mobile": 20,
+        "button_hover_color": "#ffffff",
+        "button_padding_horizontal": 24,
+        "button_padding_horizontal_mobile": 24,
+        "button_padding_vertical": 20,
+        "button_padding_vertical_mobile": 20,
+        "button_placement_advanced": false,
+        "button_radius": 20,
+        "button_size": 16,
+        "button_size_mobile": 16,
+        "button_vertical_align": "bottom",
+        "button_vertical_align_mobile": "bottom",
+        "button_vertical_dst_to_edge": 24,
+        "button_vertical_dst_to_edge_mobile": 20,
+        "close_align": "top_left",
+        "close_color": "#121212",
+        "close_offset": 16,
+        "close_offset_mobile": 12,
+        "close_size": 24,
+        "close_size_mobile": 24,
+        "content_advanced": false,
+        "content_align": "center",
+        "content_align_mobile": "center",
+        "content_padding_horizontal": 60,
+        "content_padding_horizontal_mobile": 20,
+        "content_padding_vertical": 50,
+        "content_padding_vertical_mobile": 40,
+        "content_width": 1400,
+        "display_options": "after_seconds",
+        "hide_modal_days": 0,
+        "image": "shopify://shop_images/01.png",
+        "image_hide_mobile": false,
+        "image_position_desktop": "right",
+        "image_width": 50,
+        "margin_bottom": 0,
+        "margin_horizontal": 0,
+        "margin_horizontal_mobile": 0,
+        "margin_top": 0,
+        "mobile_overlay_color": "#ffffff",
+        "mobile_overlay_opacity": 40,
+        "modal_background_gradient": "linear-gradient(180deg, #FFFFFF 0%, #F2F2F2 100%)",
+        "modal_background_style": "solid",
+        "modal_bg_color": "#d5f7ff",
+        "padding_bottom": 36,
+        "padding_horizontal": 5,
+        "padding_horizontal_mobile": 1.5,
+        "padding_top": 36,
+        "percent": 50,
+        "seconds": 5,
+        "section_radius": 0,
+        "width": "full"
+      },
+      "type": "ss-modal-popup-6"
+    },
+    "ss_modal_popup_6_LP6T6J": {
+      "block_order": [
+        "logo_9qUGJy",
+        "sub_heading_YTkBey",
+        "heading_yXVQ3K",
+        "text_nTFBUE",
+        "scratch_card_kz9X3X",
+        "newsletter_Mp7yCP",
+        "disclaimer_zBQK9n",
+        "no_thanks_W9MTik"
+      ],
+      "blocks": {
+        "disclaimer_zBQK9n": {
+          "settings": {
+            "disclaimer": "<p>By signing up you agree to receive email marketing. You can unsubscribe at any time.</p>",
+            "disclaimer_advanced": false,
+            "disclaimer_color": "#121212",
+            "disclaimer_custom": false,
+            "disclaimer_font": "josefin_sans_n4",
+            "disclaimer_height": 150,
+            "disclaimer_mt": 12,
+            "disclaimer_mt_mobile": 12,
+            "disclaimer_size": 11,
+            "disclaimer_size_mobile": 11
+          },
+          "type": "disclaimer"
+        },
+        "heading_yXVQ3K": {
+          "settings": {
+            "heading": "<p>TRY YOUR LUCK</p>",
+            "heading_advanced": true,
+            "heading_color": "#00225b",
+            "heading_custom": false,
+            "heading_font": "josefin_sans_n4",
+            "heading_height": 130,
+            "heading_mt": 16,
+            "heading_mt_mobile": 12,
+            "heading_size": 48,
+            "heading_size_mobile": 32
+          },
+          "type": "heading"
+        },
+        "logo_9qUGJy": {
+          "settings": {
+            "logo": "shopify://shop_images/Vetpets_logga_5_e9bbafef-0e29-41d5-bf25-9383590065d1.png",
+            "logo_mt": 20,
+            "logo_mt_mobile": 0,
+            "logo_width": 240,
+            "logo_width_mobile": 100
+          },
+          "type": "logo"
+        },
+        "newsletter_Mp7yCP": {
+          "settings": {
+            "discount_code": "SCRATCH10",
+            "discount_code_advanced": false,
+            "discount_code_bg_color": "#f5f5f5",
+            "discount_code_border_color": "#cccccc",
+            "discount_code_border_hover_color": "#999999",
+            "discount_code_border_style": "dashed",
+            "discount_code_border_thickness": 2,
+            "discount_code_color": "#128dcb",
+            "discount_code_custom": false,
+            "discount_code_font": "josefin_sans_n4",
+            "discount_code_label": "Tap to copy",
+            "discount_code_label_color": "#707070",
+            "discount_code_label_size": 14,
+            "discount_code_label_size_mobile": 12,
+            "discount_code_mt": 12,
+            "discount_code_mt_mobile": 10,
+            "discount_code_padding": 14,
+            "discount_code_padding_mobile": 12,
+            "discount_code_radius": 8,
+            "discount_code_size": 24,
+            "discount_code_size_mobile": 20,
+            "discount_label_custom": false,
+            "discount_label_font": "josefin_sans_n4",
+            "email_heading": "<h3>You've Unlocked<br/>10% OFF!</h3>",
+            "email_heading_advanced": false,
+            "email_heading_color": "#00225b",
+            "email_heading_custom": false,
+            "email_heading_font": "josefin_sans_n4",
+            "email_heading_height": 130,
+            "email_heading_mt": 16,
+            "email_heading_mt_mobile": 12,
+            "email_heading_size": 40,
+            "email_heading_size_mobile": 32,
+            "form_mt": 32,
+            "form_mt_mobile": 24,
+            "heading_thanks_text": "You're In!",
+            "heading_thanks_text_color": "#121212",
+            "input_advanced": false,
+            "input_bg_color": "#ffffff",
+            "input_border_color": "#dfdfdf",
+            "input_border_focus_color": "rgba(0,0,0,0)",
+            "input_border_thickness": 1,
+            "input_color": "#121212",
+            "input_custom": false,
+            "input_font": "josefin_sans_n4",
+            "input_height": 100,
+            "input_padding_horizontal": 20,
+            "input_padding_horizontal_mobile": 20,
+            "input_padding_vertical": 18,
+            "input_padding_vertical_mobile": 18,
+            "input_placeholder_color": "#707070",
+            "input_radius": 50,
+            "input_size": 16,
+            "input_size_mobile": 16,
+            "placeholder_mail": "Your email address",
+            "submit": "CLAIM DISCOUNT",
+            "success_button_url": "",
+            "success_close_label": "Continue Shopping",
+            "success_redirect_enabled": false,
+            "success_redirect_url": "",
+            "thanks_heading_advanced": false,
+            "thanks_text": "Enjoy your exclusive discount:",
+            "thanks_text_color": "#121212",
+            "thanks_text_custom": false,
+            "thanks_text_font": "josefin_sans_n4",
+            "thanks_text_height": 150,
+            "thanks_text_mt": 8,
+            "thanks_text_mt_mobile": 8,
+            "thanks_text_size": 14,
+            "thanks_text_size_mobile": 14
+          },
+          "type": "newsletter"
+        },
+        "no_thanks_W9MTik": {
+          "settings": {
+            "no_thanks_advanced": false,
+            "no_thanks_color": "#121212",
+            "no_thanks_custom": false,
+            "no_thanks_font": "josefin_sans_n4",
+            "no_thanks_height": 150,
+            "no_thanks_mt": 16,
+            "no_thanks_mt_mobile": 12,
+            "no_thanks_size": 14,
+            "no_thanks_size_mobile": 14,
+            "no_thanks_text": "No, thanks",
+            "no_thanks_underline": false
+          },
+          "type": "no_thanks"
+        },
+        "scratch_card_kz9X3X": {
+          "settings": {
+            "card_advanced": false,
+            "card_bg_color": "#ffffff",
+            "card_height": 220,
+            "card_height_mobile": 180,
+            "card_mt": 24,
+            "card_mt_mobile": 20,
+            "card_radius": 16,
+            "card_width": 300,
+            "card_width_mobile": 260,
+            "claim_label": "CLAIM DISCOUNT",
+            "overlay_color": "#d7cca5",
+            "overlay_image": "shopify://shop_images/sectionstore-popup-scratchbelly1.png",
+            "overlay_text": "SCRATCH HERE",
+            "overlay_text_color": "#b5ab89",
+            "overlay_text_size": 18,
+            "overlay_text_size_mobile": 16,
+            "reveal_custom": false,
+            "reveal_font": "josefin_sans_n4",
+            "reveal_subtitle": "CONGRATS!",
+            "reveal_subtitle_color": "#128dcb",
+            "reveal_subtitle_size": 36,
+            "reveal_subtitle_size_mobile": 30,
+            "reveal_title": "CLAIM YOUR 10% DISCOUNT",
+            "reveal_title_color": "#00225b",
+            "reveal_title_size": 40,
+            "reveal_title_size_mobile": 36,
+            "scratch_threshold": 50
+          },
+          "type": "scratch_card"
+        },
+        "sub_heading_YTkBey": {
+          "settings": {
+            "sub_heading": "<p>EXCLUSIVE OFFER</p>",
+            "sub_heading_advanced": false,
+            "sub_heading_color": "#121212",
+            "sub_heading_custom": false,
+            "sub_heading_font": "josefin_sans_n4",
+            "sub_heading_height": 130,
+            "sub_heading_mt": 12,
+            "sub_heading_mt_mobile": 12,
+            "sub_heading_size": 12,
+            "sub_heading_size_mobile": 12
+          },
+          "type": "sub_heading"
+        },
+        "text_nTFBUE": {
+          "settings": {
+            "text": "<p>Scratch Max's belly to reveal today's surprise.</p>",
+            "text_advanced": false,
+            "text_color": "#121212",
+            "text_custom": false,
+            "text_font": "josefin_sans_n4",
+            "text_height": 150,
+            "text_mt": 12,
+            "text_mt_mobile": 12,
+            "text_size": 16,
+            "text_size_mobile": 14
+          },
+          "type": "text"
+        }
+      },
+      "name": "SS - Modal popup #6",
+      "settings": {
+        "background_color": "#ffffff",
+        "background_gradient": "linear-gradient(180deg, #FFFFFF 0%, #F2F2F2 100%)",
+        "background_style": "solid",
+        "border_color": "#121212",
+        "border_thickness": 0,
+        "button": "Unlock Offer",
+        "button_advanced": false,
+        "button_align": "left",
+        "button_align_mobile": "right",
+        "button_bg_color": "#00225b",
+        "button_bg_hover_color": "#128dcb",
+        "button_border_color": "#121212",
+        "button_border_hover_color": "#121212",
+        "button_border_thickness": 0,
+        "button_close_size": 16,
+        "button_close_size_mobile": 16,
+        "button_color": "#ffffff",
+        "button_custom": false,
+        "button_fixed": true,
+        "button_font": "josefin_sans_n4",
+        "button_height": 100,
+        "button_horizontal_dst_to_edge": 24,
+        "button_horizontal_dst_to_edge_mobile": 20,
+        "button_hover_color": "#ffffff",
+        "button_padding_horizontal": 24,
+        "button_padding_horizontal_mobile": 24,
+        "button_padding_vertical": 20,
+        "button_padding_vertical_mobile": 20,
+        "button_placement_advanced": false,
+        "button_radius": 20,
+        "button_size": 16,
+        "button_size_mobile": 16,
+        "button_vertical_align": "bottom",
+        "button_vertical_align_mobile": "bottom",
+        "button_vertical_dst_to_edge": 24,
+        "button_vertical_dst_to_edge_mobile": 20,
+        "close_align": "top_left",
+        "close_color": "#121212",
+        "close_offset": 16,
+        "close_offset_mobile": 12,
+        "close_size": 24,
+        "close_size_mobile": 24,
+        "content_advanced": false,
+        "content_align": "center",
+        "content_align_mobile": "center",
+        "content_padding_horizontal": 60,
+        "content_padding_horizontal_mobile": 20,
+        "content_padding_vertical": 50,
+        "content_padding_vertical_mobile": 40,
+        "content_width": 1400,
+        "display_options": "after_seconds",
+        "hide_modal_days": 0,
+        "image": "shopify://shop_images/sectionstore-popup-lifestyleimgm.png",
+        "image_hide_mobile": false,
+        "image_position_desktop": "right",
+        "image_width": 50,
+        "margin_bottom": 0,
+        "margin_horizontal": 0,
+        "margin_horizontal_mobile": 0,
+        "margin_top": 0,
+        "mobile_overlay_color": "#ffffff",
+        "mobile_overlay_opacity": 40,
+        "modal_background_gradient": "linear-gradient(180deg, #FFFFFF 0%, #F2F2F2 100%)",
+        "modal_background_style": "solid",
+        "modal_bg_color": "#d5f7ff",
+        "padding_bottom": 36,
+        "padding_horizontal": 5,
+        "padding_horizontal_mobile": 1.5,
+        "padding_top": 36,
+        "percent": 50,
+        "seconds": 5,
+        "section_radius": 0,
+        "width": "full"
+      },
+      "type": "ss-modal-popup-6"
+    },
+    "testimonials_zdydDA": {
+      "block_order": [
+        "column_PkYcKz",
+        "column_EyT3yh",
+        "column_ccnzHG",
+        "column_JxijFr",
+        "column_xxKDbT",
+        "column_BTnNrC",
+        "column_wfxDja",
+        "column_tXay4g",
+        "column_tUC9cB",
+        "column_M8VjaY",
+        "column_WzDbWA",
+        "column_BgwVTr",
+        "column_qb88rE",
+        "column_WRiJX3"
+      ],
+      "blocks": {
+        "column_BTnNrC": {
+          "settings": {
+            "author": "Maria L., 41 | Golden Retriever - 2025-10-03",
+            "star_rating": 5,
+            "text": "<p>We have a 3-year-old at home and the dog licks him constantly around him. I wanted something gentle that wouldn't irritate if it got in his eyes. These are natural and work really well. Takes 2 minutes in the evening. His eye area looks so much cleaner now and no more redness. Great not to have to worry.</p>",
+            "title": "Safe for sensitive eyes"
+          },
+          "type": "column"
+        },
+        "column_BgwVTr": {
+          "settings": {
+            "author": "– John Taylor",
+            "author_avatar": "shopify://shop_images/profilbild.webp",
+            "star_rating": 5,
+            "text": "<p>A great product that really makes a difference. I’ve noticed that my dog’s tartar has significantly reduced and his breath is much fresher.<br/><br/>Plus, it’s very easy to use.</p><p></p>",
+            "title": "A great product that really makes a difference"
+          },
+          "type": "column"
+        },
+        "column_EyT3yh": {
+          "settings": {
+            "author": "Sophie H., 43 - 2025-10-26",
+            "star_rating": 5,
+            "text": "<p>Really good. I've tried chew toys, water additives, everything possible. Nothing worked and my dog's breath was TERRIBLE. These wipes actually remove the dirt, you see it directly on the wipe. Takes max 2 minutes and I can do it while watching TV. Should've bought these ages ago.</p>",
+            "title": "Finally something that actually works"
+          },
+          "type": "column"
+        },
+        "column_JxijFr": {
+          "settings": {
+            "author": "Christine B. - 2025-09-21",
+            "star_rating": 5,
+            "text": "<p>My dog wasn't fond of it at first. But now it's going better. It works.</p>",
+            "title": "Getting better each time"
+          },
+          "type": "column"
+        },
+        "column_M8VjaY": {
+          "settings": {
+            "author": "– Sarah Johansen",
+            "author_avatar": "shopify://shop_images/Profilbild_3.webp",
+            "star_rating": 5,
+            "text": "<p>I’ve always had a hard time brushing my dog’s teeth because he was afraid.<br/><br/>With these wipes, he’s now completely calm.<br/><br/>It’s such a huge relief to be able to clean his teeth without having to fight with him.<br/><br/><strong>Highly recommend this to all dog owners.</strong></p>",
+            "title": "Highly recommend to all dog owners"
+          },
+          "type": "column"
+        },
+        "column_PkYcKz": {
+          "settings": {
+            "author": "Anne B., 57 - 2025-11-09",
+            "star_rating": 5,
+            "text": "<p>Talked to my vet about dental care and she said the most important thing is to do SOMETHING regularly, even if you can't brush. These wipes have made it so much easier for me to keep the routine. My 11-year-old dachshund has noticeably whiter teeth and I feel safe using the natural ingredients. Takes barely a minute a day. Highly recommend!</p>",
+            "title": "Vet said do something this works"
+          },
+          "type": "column"
+        },
+        "column_WRiJX3": {
+          "settings": {
+            "author": "– Margaret Davies",
+            "author_avatar": "shopify://shop_images/Profilbild3_98453ffc-28e5-4418-89bd-9cc2393e092a.webp",
+            "star_rating": 5,
+            "text": "<p>My dog seems to like it, and I can see an improvement in his oral health.</p>",
+            "title": "I see an improvement in his oral health"
+          },
+          "type": "column"
+        },
+        "column_WzDbWA": {
+          "settings": {
+            "author": "– Simon Andersson",
+            "author_avatar": "shopify://shop_images/Profilbild1.webp",
+            "star_rating": 5,
+            "text": "<p>I’ve used this product on my dog for a few weeks now, and I’m very satisfied.<br/><br/>His teeth look much cleaner, and his breath has noticeably improved.<br/><br/>It’s also very easy to use, which is a big plus.</p>",
+            "title": "I’m very satisfied"
+          },
+          "type": "column"
+        },
+        "column_ccnzHG": {
+          "settings": {
+            "author": "Sarah E., 39 - 2025-10-03",
+            "star_rating": 5,
+            "text": "<p>We have a 3-year-old at home and the dog licks him constantly. I wanted something for the dog's breath that isn't dangerous if the kids get it on them. These are natural and work really well. Takes 2 minutes in the evening when the kids are asleep. The dog sits calmly and his breath is so much fresher now. Great not to have to worry when he kisses the kids!</p>",
+            "title": "Safe for the whole family"
+          },
+          "type": "column"
+        },
+        "column_qb88rE": {
+          "settings": {
+            "author": "– Sofia Jones",
+            "author_avatar": "shopify://shop_images/Profilbild1.jpg",
+            "star_rating": 5,
+            "text": "<p>My dog likes it, and it’s easy to use every day.<br/><br/>Delivers great results.</p>",
+            "title": "Delivers great results"
+          },
+          "type": "column"
+        },
+        "column_tUC9cB": {
+          "settings": {
+            "author": "– Johan E",
+            "author_avatar": "shopify://shop_images/Profilbild1_78735bd1-dd93-45c0-b80c-27246ca5802d.webp",
+            "star_rating": 5,
+            "text": "<p>Brushing my dog’s teeth has been a struggle for years because he was so scared.<br/><br/>But these wipes changed everything.<br/><br/>He’s now completely fearless and lets me clean his teeth without any problems.<br/><br/>This has truly improved our dental care routine.</p>",
+            "title": "He’s completely fearless now!"
+          },
+          "type": "column"
+        },
+        "column_tXay4g": {
+          "settings": {
+            "author": "– Erik A",
+            "author_avatar": "shopify://shop_images/Profilbild1_b3680c3c-3c9b-4f7c-aaa0-1c5e71863e67.webp",
+            "star_rating": 5,
+            "text": "<p>My dog has always been afraid of toothbrushing, which made it difficult to keep his teeth clean.<br/><br/>But after we started using these wipes, he’s become completely calm.<br/><br/>It’s amazing to see that he no longer runs away or gets anxious when it’s time to clean his teeth.</p>",
+            "title": "Highly recommended!!"
+          },
+          "type": "column"
+        },
+        "column_wfxDja": {
+          "settings": {
+            "author": "Karin J., 54 | Golden Retriever owner - 2025-09-14",
+            "star_rating": 5,
+            "text": "<p>My Golden has been digging at his ears for MONTHS. Like every few minutes, constantly. I tried wiping them with wet paper towels, bought those expensive ear drops from the pet store - he hated these and would literally hide under the bed when he saw me coming. Started using these wipes about 2 weeks ago and the scratching is almost completely gone. The smell disappeared too which is honestly the best part because his face used to reek. He just sits there now, doesn't even try to pull away.</p>",
+            "title": "The scratching has stopped"
+          },
+          "type": "column"
+        },
+        "column_xxKDbT": {
+          "settings": {
+            "author": "Sophie N., 31 | Bichon Frise - 2025-10-29",
+            "star_rating": 5,
+            "text": "<p>My Bichon used to wake up with those brown areas every single day. I tried everything - baby wipes, damp cloths, nothing worked properly. These actually remove the gunk and it doesn't come back as quickly. Takes about a week to see real improvement but now her eyes look so much cleaner. Finally something that works</p>",
+            "title": "No more crusty mornings"
+          },
+          "type": "column"
+        }
+      },
+      "name": "Testimonials",
+      "settings": {
+        "arrows_color_scheme": "inverse",
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "bg_star_color": "#ececec",
+        "cards_color_scheme": "bg-overlay",
+        "color_scheme": "background-1",
+        "column_alignment": "center",
+        "columns_desktop": 5,
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_colors_text": "#2e2a39",
+        "custom_cards_gradient_background": "",
+        "custom_colors_background": "#ffffff",
+        "custom_colors_text": "#2e2a39",
+        "custom_gradient_background": "",
+        "desktop_adaptive_height": false,
+        "desktop_arrows_position": "sides",
+        "desktop_dots_position": "under",
+        "desktop_full_page": true,
+        "desktop_padding_calc": false,
+        "desktop_side_padding": 0,
+        "desktop_spacing": 40,
+        "display_id": false,
+        "dots_color_scheme": "inverse",
+        "enable_mobile_preview": false,
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "image_width": "half",
+        "inactive_stars_style": "solid",
+        "mobile_adaptive_height": false,
+        "mobile_arrows_position": "under",
+        "mobile_dots_position": "under",
+        "padding_bottom": 36,
+        "padding_top": 36,
+        "per_move_desktop": 1,
+        "quotes_color_scheme": "accent-1",
+        "show_quotes": true,
+        "show_stars": true,
+        "slider_desktop": true,
+        "slider_mobile": true,
+        "star_color": "#ffcc00",
+        "text": "<p><strong>45,000+ dog owners</strong> trust our products for dog daily care</p>",
+        "title": "Verified Reviews",
+        "title_highlight_color": "#6d388b",
+        "transparent_arrows": true,
+        "type": "slide",
+        "visibility": "always-display"
+      },
+      "type": "testimonials"
+    }
+  }
 }

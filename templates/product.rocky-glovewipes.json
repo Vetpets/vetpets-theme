@@ -1,1 +1,1965 @@
-{"sections":{"main":{"type":"main-product","blocks":{"a6eb81db-40e4-43e0-972f-32db010a4a56":{"type":"rating_stars","settings":{"rating":4.8,"star_color":"#ffcc00","bg_stars_style":"full","bg_star_color":"#ececec","label":"Trusted by 45,000+ Pet Owners","size":13,"alignment":"flex-start","scroll_id":"#shopify-section-template--25529587368203__55bd100e-3bbd-426c-a5cf-eed7b2a3706f","margin_top":0,"margin_bottom":0}},"title":{"type":"title","settings":{"text_size":"h2","title_alignment":"left","uppercase_title":false,"margin_top":6,"margin_bottom":0}},"divider_AALhJR":{"type":"divider","settings":{"color":"#e1e1e1","height":1,"width":100,"Full_mobile_width":false,"alignment":"center","border_radius":0,"margin_top":15,"margin_bottom":15}},"text_aAPf6w":{"type":"text","disabled":true,"settings":{"mobile_text_size":14,"desktop_text_size":30,"alignment":"left","text_color":"#121212","text_1":"<strong>The Quickest Way to Clean Your Dog Without Running a Bath<\/strong>","text_2":"","text_3":"","icon_scale":120,"icon_color":"#121212","icon_1":"","filled_icon_1":false,"icon_2":"check_circle","filled_icon_2":false,"icon_3":"check_circle","filled_icon_3":false,"width":"100%","direction":"horizontal","column_gap":3,"enable_bg":false,"bg_color":"#f3f3f3","corner_radius":40,"padding":3,"border_size":0,"border_color":"#b7b7b7","margin_top":0,"margin_bottom":6}},"text_njMHhg":{"type":"text","disabled":true,"settings":{"mobile_text_size":14,"desktop_text_size":14,"alignment":"left","text_color":"#121212","text_1":"GloveWipes is a textured, antibacterial glove that lifts dirt, dander, and odor from your pet's coat in 60 seconds. No water. No rinse. No stress.","text_2":"","text_3":"","icon_scale":120,"icon_color":"#121212","icon_1":"","filled_icon_1":false,"icon_2":"check_circle","filled_icon_2":false,"icon_3":"check_circle","filled_icon_3":false,"width":"100%","direction":"horizontal","column_gap":3,"enable_bg":false,"bg_color":"#f3f3f3","corner_radius":40,"padding":3,"border_size":0,"border_color":"#b7b7b7","margin_top":3,"margin_bottom":0}},"price":{"type":"price","disabled":true,"settings":{"layout":"price_first","price_color":"accent-1","compare_price_color":"text","displayed_badge":"sale","icon_scale":140,"custom_badge_text":"[icon_1] SPECIAL OFFER","icon_1":"redeem","filled_icon_1":false,"icon_2":"check_circle","filled_icon_2":false,"margin_top":3,"margin_bottom":3}},"text_cn7XQg":{"type":"text","settings":{"mobile_text_size":14,"desktop_text_size":16,"alignment":"left","text_color":"#121212","text_1":"Lifts dirt and loose fur on contact","text_2":"Kills odor-causing bacteria without water","text_3":"Leaves the coat soft and conditioned","icon_scale":120,"icon_color":"#47b5e9","icon_1":"verified","filled_icon_1":true,"icon_2":"verified","filled_icon_2":true,"icon_3":"verified","filled_icon_3":true,"width":"100%","direction":"vertical","column_gap":3,"enable_bg":false,"bg_color":"#f3f3f3","corner_radius":40,"padding":3,"border_size":0,"border_color":"#47b5e9","margin_top":9,"margin_bottom":0}},"text_kEd4Nj":{"type":"text","settings":{"mobile_text_size":14,"desktop_text_size":16,"alignment":"left","text_color":"#121212","text_1":"Safe for daily use on dogs and cats","text_2":"","text_3":"","icon_scale":120,"icon_color":"#47b5e9","icon_1":"verified","filled_icon_1":true,"icon_2":"check_circle","filled_icon_2":true,"icon_3":"check_circle","filled_icon_3":true,"width":"100%","direction":"vertical","column_gap":0,"enable_bg":false,"bg_color":"#f3f3f3","corner_radius":40,"padding":3,"border_size":0,"border_color":"#b7b7b7","margin_top":6,"margin_bottom":12}},"custom_liquid_qmqTUE":{"type":"custom_liquid","name":"urgency","disabled":true,"settings":{"custom_liquid":"<div class=\"stock-status-wrapper\">\n  <span class=\"stock-status-dot\"><\/span>\n  <span class=\"stock-status-text\">{{ 'stock_status.almost_sold_out' | t }}<\/span>\n<\/div>\n\n<style>\n  .promo-nudge {\n    font-size: 12px;\n    font-weight: 400;\nfont-family: 'Geist'\n    color: #13B6B5 ;\n    margin-bottom: 0;\n    display: block;\n  }\n\n  .stock-status-wrapper {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n  }\n\n  .stock-status-dot {\n    width: 10px;\n    height: 10px;\n    background-color: #ff9900;\n    border-radius: 50%;\n    animation: stockPulse 1.5s ease-in-out infinite;\n    display: inline-block;\n  }\n\n  .stock-status-text {\n    color: #ff9900;\n    font-weight: 700;\n    font-size: 12px;\n  }\n\n  @keyframes stockPulse {\n    0% { transform: scale(1); opacity: 1; }\n    50% { transform: scale(1.3); opacity: 0.7; }\n    100% { transform: scale(1); opacity: 1; }\n  }\n<\/style>"}},"kaching_bundles_app_block_f8NfBp":{"type":"shopify:\/\/apps\/kaching-bundles\/blocks\/app-block\/6c637362-a106-4a32-94ac-94dcfd68cdb8","settings":{"product":"{{product}}","manual_deal_block_id":""}},"04ba004e-2f54-4936-8b1c-8bcadf6573f6":{"type":"quantity_selector","disabled":true,"settings":{"full_width_classic":false,"atc_append":"none","atc_append_heights":"stretch-quantity","enable_quantity_discounts":false,"style":"normal","headline":"Sommersalg – Gratis frakt","preselected":"option_2","display_selected_indicator":true,"border_radius":10,"border_width":2,"color_scheme":"accent-1","enable_variant_selectors":true,"enable_variant_selectors_on_quantity_of_1":false,"update_prices":false,"skip_unavailable":false,"full_width_pickers":false,"hide_pickers_overlay":true,"pickers_label":"","image_width":70,"space_images":true,"vertical_images_position":"top","vertical_prices_layout":"vertical","option_1_quantity":1,"option_1_badge":"","option_1_badge_style":"1","option_1_badge_color":"accent-1","option_1_label":"1-Pakning – 50 stk","option_1_benefit":"Spar 40 %","option_1_benefit_position":"top","option_1_benefit_style":"solid","option_1_benefit_color":"accent-2","option_1_caption":"5 kr per bruk","option_1_percentage_off_text":"0","option_1_fixed_amount_off":"0","option_1_price_text":"[price]","option_1_compare_price":"compare_price","option_1_compare_price_text":"[compare_price]","option_2_quantity":2,"option_2_badge":"Kjøp 2 Få 50 % Rabatt","option_2_badge_style":"1","option_2_badge_color":"accent-2","option_2_label":"2-Pakning – 100 stk","option_2_benefit":"Spar 50 %","option_2_benefit_position":"top","option_2_benefit_style":"solid","option_2_benefit_color":"accent-2","option_2_caption":"4 kr per bruk","option_2_percentage_off_text":"0","option_2_fixed_amount_off":"99","option_2_price_text":"[price]","option_2_compare_price":"compare_price","option_2_compare_price_text":"[compare_price]","option_3_quantity":4,"option_3_badge":"Gjelder denne uken","option_3_badge_style":"1","option_3_badge_color":"accent-2","option_3_label":"4-Pakning – 200 stk","option_3_benefit":"Spar 60 %","option_3_benefit_position":"top","option_3_benefit_style":"solid","option_3_benefit_color":"accent-2","option_3_caption":"3 kr per bruk","option_3_percentage_off_text":"0","option_3_fixed_amount_off":"397","option_3_price_text":"[price]","option_3_compare_price":"compare_price","option_3_compare_price_text":"[compare_price]","option_4_quantity":0,"option_4_badge":"","option_4_badge_style":"1","option_4_badge_color":"accent-1","option_4_label":"Buy [quantity]","option_4_benefit":"","option_4_benefit_position":"top","option_4_benefit_style":"outlined","option_4_benefit_color":"accent-1","option_4_caption":"You save [amount_saved]","option_4_percentage_off_text":"0","option_4_fixed_amount_off":"0","option_4_price_text":"[price]","option_4_compare_price":"compare_price","option_4_compare_price_text":"[compare_price]","margin_top":15,"margin_bottom":15}},"custom_liquid_cfTETd":{"type":"custom_liquid","name":"GIFT","disabled":true,"settings":{"custom_liquid":"<style>\n  .vp-trigger {\n    display: flex;\n    align-items: center;\n    gap: 12px;\n    padding: 10px 14px;\n    background: #fff;\n    border: 1px solid rgba(0,0,0,0.08);\n    border-radius: 10px;\n    cursor: pointer;\n    font-size: 10px;\n    color: inherit;\n    width: 100%;\n    margin-top: 12px;\n    text-align: left;\n    font-family: var(--font-body-family, var(--font-heading-family, inherit));\n    transition: box-shadow 0.15s ease, transform 0.1s ease;\n    -webkit-appearance: none;\n    appearance: none;\n    box-sizing: border-box;\n    box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);\n  }\n\n  .vp-trigger:hover {\n    box-shadow: 0 4px 14px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.07);\n    transform: translateY(-1px);\n  }\n\n  .vp-trigger:active {\n    transform: translateY(0);\n    box-shadow: 0 1px 4px rgba(0,0,0,0.07);\n  }\n\n  .vp-trigger-icon {\n    width: 20px;\n    height: 20px;\n    flex-shrink: 0;\n    opacity: 0.45;\n  }\n\n  .vp-trigger-label {\n    flex: 1;\n    font-size: 12px;\n    font-weight: 500;\n  }\n\n  .vp-trigger-badge {\n    font-size: 11px;\n    padding: 3px 9px;\n    background: #E1F5EE;\n    color: #0F6E56;\n    border-radius: 20px;\n    font-weight: 500;\n    white-space: nowrap;\n    flex-shrink: 0;\n  }\n\n  .vp-trigger-chevron {\n    width: 14px;\n    height: 14px;\n    opacity: 0.35;\n    flex-shrink: 0;\n  }\n\n  .vp-overlay {\n    display: none;\n    position: fixed;\n    inset: 0;\n    background: rgba(0,0,0,0.5);\n    z-index: 99999;\n    align-items: center;\n    justify-content: center;\n    padding: 16px;\n    box-sizing: border-box;\n  }\n\n  .vp-overlay.is-open {\n    display: flex;\n  }\n\n  .vp-modal {\n    background: #fff;\n    border-radius: 12px;\n    width: 100%;\n    max-width: 620px;\n    max-height: 90vh;\n    overflow: hidden;\n    display: flex;\n    flex-direction: column;\n  }\n\n  .vp-modal-header {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    padding: 14px 20px;\n    border-bottom: 0.5px solid rgba(0,0,0,0.1);\n    flex-shrink: 0;\n  }\n\n  .vp-modal-header p {\n    margin: 0;\n    font-size: 14px;\n    font-weight: 500;\n    color: #111;\n  }\n\n  .vp-modal-close {\n    background: none;\n    border: none;\n    cursor: pointer;\n    padding: 4px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    border-radius: 4px;\n    transition: background 0.15s;\n    -webkit-appearance: none;\n    appearance: none;\n  }\n\n  .vp-modal-close:hover {\n    background: rgba(0,0,0,0.06);\n  }\n\n  .vp-modal-close svg {\n    width: 18px;\n    height: 18px;\n    opacity: 0.5;\n  }\n\n  .vp-tabs {\n    display: flex;\n    border-bottom: 0.5px solid rgba(0,0,0,0.1);\n    flex-shrink: 0;\n    overflow-x: auto;\n    -webkit-overflow-scrolling: touch;\n    scrollbar-width: none;\n  }\n\n  .vp-tabs::-webkit-scrollbar {\n    display: none;\n  }\n\n  .vp-tab-btn {\n    flex-shrink: 0;\n    padding: 11px 18px;\n    font-size: 13px;\n    color: rgba(0,0,0,0.45);\n    cursor: pointer;\n    border: none;\n    border-bottom: 2px solid transparent;\n    background: none;\n    font-family: var(--font-body-family, var(--font-heading-family, inherit));\n    white-space: nowrap;\n    transition: color 0.15s, border-color 0.15s;\n    -webkit-appearance: none;\n    appearance: none;\n  }\n\n  .vp-tab-btn.is-active {\n    color: #111;\n    border-bottom-color: #111;\n    font-weight: 500;\n  }\n\n  .vp-panels {\n    overflow-y: auto;\n    flex: 1;\n    -webkit-overflow-scrolling: touch;\n  }\n\n  .vp-panel {\n    display: none;\n  }\n\n  .vp-panel.is-active {\n    display: grid;\n    grid-template-columns: 180px 1fr;\n  }\n\n  .vp-panel-image {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    padding: 24px 20px;\n    border-right: 0.5px solid rgba(0,0,0,0.1);\n    background: #f5f8fa;\n  }\n\n  .vp-panel-image img {\n    width: 100%;\n    max-width: 130px;\n    height: auto;\n    border-radius: 4px;\n    display: block;\n    object-fit: cover;\n  }\n\n  .vp-panel-content {\n    padding: 20px;\n  }\n\n  .vp-panel-content h3 {\n    font-size: 15px;\n    font-weight: 500;\n    margin: 0 0 4px;\n    color: #111;\n    line-height: 1.3;\n  }\n\n  .vp-panel-subtitle {\n    font-size: 12px;\n    color: rgba(0,0,0,0.45);\n    margin: 0 0 16px;\n    line-height: 1.4;\n  }\n\n  .vp-benefit-row {\n    display: flex;\n    align-items: flex-start;\n    gap: 8px;\n    margin-bottom: 9px;\n  }\n\n  .vp-benefit-row svg {\n    width: 15px;\n    height: 15px;\n    color: #0F6E56;\n    flex-shrink: 0;\n    margin-top: 2px;\n  }\n\n  .vp-benefit-row span {\n    font-size: 13px;\n    color: #111;\n    line-height: 1.5;\n  }\n\n  .vp-free-tag {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n    margin-top: 16px;\n    padding: 6px 12px;\n    background: #E1F5EE;\n    border-radius: 20px;\n    font-size: 12px;\n    font-weight: 500;\n    color: #0F6E56;\n  }\n\n  .vp-free-tag svg {\n    width: 13px;\n    height: 13px;\n    flex-shrink: 0;\n  }\n\n  @media screen and (max-width: 600px) {\n    .vp-panel.is-active {\n      grid-template-columns: 1fr;\n    }\n\n    .vp-panel-image {\n      border-right: none;\n      border-bottom: 0.5px solid rgba(0,0,0,0.1);\n      padding: 20px;\n    }\n\n    .vp-panel-image img {\n      max-width: 110px;\n    }\n\n    .vp-modal {\n      max-height: 88vh;\n    }\n  }\n<\/style>\n\n<button class=\"vp-trigger\" onclick=\"vpOpen()\">\n  <svg class=\"vp-trigger-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\">\n    <path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z\" \/>\n  <\/svg>\n  <span class=\"vp-trigger-label\">What's <strong> FREE <\/strong> when you bundle<\/span>\n  <span class=\"vp-trigger-badge\">2 free items<\/span>\n  <svg class=\"vp-trigger-chevron\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n    <path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M8.25 4.5l7.5 7.5-7.5 7.5\" \/>\n  <\/svg>\n<\/button>\n\n<div class=\"vp-overlay\" id=\"vp-overlay\" onclick=\"vpOverlayClick(event)\">\n  <div class=\"vp-modal\" id=\"vp-modal\">\n\n    <div class=\"vp-modal-header\">\n      <p>Free gifts when you bundle<\/p>\n      <button class=\"vp-modal-close\" onclick=\"vpClose()\">\n        <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n          <path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M6 18L18 6M6 6l12 12\" \/>\n        <\/svg>\n      <\/button>\n    <\/div>\n\n    <div class=\"vp-tabs\">\n      <button class=\"vp-tab-btn is-active\" onclick=\"vpTab(0)\">Fresh Breath in 30 Days<\/button>\n      <button class=\"vp-tab-btn\" onclick=\"vpTab(1)\">Routine Tracker<\/button>\n    <\/div>\n\n    <div class=\"vp-panels\">\n\n      <div class=\"vp-panel is-active\" id=\"vp-panel-0\">\n        <div class=\"vp-panel-image\">\n          <img src=\"https:\/\/shopvetpets.com\/cdn\/shop\/files\/DigitalProduct_2FreshBreathin30Days.png\" alt=\"Fresh Breath in 30 Days ebook cover\">\n        <\/div>\n        <div class=\"vp-panel-content\">\n          <h3>Fresh Breath in 30 Days<\/h3>\n          <p class=\"vp-panel-subtitle\">Your dog's complete guide to clean teeth and healthy gums<\/p>\n          <div class=\"vp-benefit-row\">\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M4.5 12.75l6 6 9-13.5\"\/><\/svg>\n            <span>How to get the most out of your FreshWipes routine<\/span>\n          <\/div>\n          <div class=\"vp-benefit-row\">\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M4.5 12.75l6 6 9-13.5\"\/><\/svg>\n            <span>Early warning signs of dental disease most owners miss<\/span>\n          <\/div>\n          <div class=\"vp-benefit-row\">\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M4.5 12.75l6 6 9-13.5\"\/><\/svg>\n            <span>Day-by-day guide to building a habit that actually sticks<\/span>\n          <\/div>\n          <div class=\"vp-benefit-row\">\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M4.5 12.75l6 6 9-13.5\"\/><\/svg>\n            <span>What to expect week by week in the first 30 days<\/span>\n          <\/div>\n          <div class=\"vp-free-tag\">\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" width=\"13\" height=\"13\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75\"\/><\/svg>\n            Delivered instantly after checkout\n          <\/div>\n        <\/div>\n      <\/div>\n\n      <div class=\"vp-panel\" id=\"vp-panel-1\">\n        <div class=\"vp-panel-image\">\n          <img src=\"https:\/\/cdn.shopify.com\/s\/files\/1\/0735\/4833\/3323\/files\/ROUTINETRACKER.pdf_1.png?v=1776102536\" alt=\"Fresh Breath Routine Tracker preview\">\n        <\/div>\n        <div class=\"vp-panel-content\">\n          <h3>Fresh Breath Routine Tracker<\/h3>\n          <p class=\"vp-panel-subtitle\">21-day habit tracker to keep your routine consistent<\/p>\n          <div class=\"vp-benefit-row\">\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M4.5 12.75l6 6 9-13.5\"\/><\/svg>\n            <span>21-day calendar with morning, evening, and deep clean logs<\/span>\n          <\/div>\n          <div class=\"vp-benefit-row\">\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M4.5 12.75l6 6 9-13.5\"\/><\/svg>\n            <span>Weekly wipe check to monitor plaque reduction progress<\/span>\n          <\/div>\n          <div class=\"vp-benefit-row\">\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M4.5 12.75l6 6 9-13.5\"\/><\/svg>\n            <span>Before and after photo slots to see the difference clearly<\/span>\n          <\/div>\n          <div class=\"vp-benefit-row\">\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M4.5 12.75l6 6 9-13.5\"\/><\/svg>\n            <span>Breath progress log from week 1 through week 4<\/span>\n          <\/div>\n          <div class=\"vp-free-tag\">\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" width=\"13\" height=\"13\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75\"\/><\/svg>\n            Delivered instantly after checkout\n          <\/div>\n        <\/div>\n      <\/div>\n\n    <\/div>\n  <\/div>\n<\/div>\n\n<script>\n  function vpOpen() {\n    document.getElementById('vp-overlay').classList.add('is-open');\n    document.body.style.overflow = 'hidden';\n  }\n\n  function vpClose() {\n    document.getElementById('vp-overlay').classList.remove('is-open');\n    document.body.style.overflow = '';\n  }\n\n  function vpOverlayClick(e) {\n    if (e.target === document.getElementById('vp-overlay')) vpClose();\n  }\n\n  function vpTab(index) {\n    document.querySelectorAll('.vp-tab-btn').forEach(function(t, i) {\n      t.classList.toggle('is-active', i === index);\n    });\n    document.querySelectorAll('.vp-panel').forEach(function(p, i) {\n      p.classList.toggle('is-active', i === index);\n    });\n  }\n\n  document.addEventListener('keydown', function(e) {\n    if (e.key === 'Escape') vpClose();\n  });\n<\/script>"}},"custom_liquid_8TN4AP":{"type":"custom_liquid","name":"Shipping Checkpoint","settings":{"custom_liquid":"<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <style>\n    .custom-shipping-container {\n      display: flex;\n      padding: 6px 16px;\n      justify-content: space-between;\n      align-items: center;\n      background-color: #f6f6f6;\n      border-radius: 20px;\n      margin-top: 10px;\n    }\n\n    .custom-shipping-item {\n      display: flex;\n      align-items: center;\n      gap: 6px;\n    }\n\n    .text-block-shipping {\n      font-size: 12px;\n      color: #000;\n    }\n\n    .shipping-date {\n      font-weight: bold;\n    }\n\n    .shipping-worldwide {\n      font-size: 12px;\n      color: #000;\n    }\n\n    .shipping-worldwide .bold {\n      font-weight: bold;\n    }\n\n    .green-circle {\n      animation: fade 1s ease-in-out infinite;\n    }\n\n    @keyframes fade {\n      0%, 100% { opacity: 1; }\n      50% { opacity: 0.5; }\n    }\n\n    .flags-container {\n      display: flex;\n      gap: 6px;\n      align-items: center;\n    }\n    \n    .custom-icon {\n      width: 16px;\n      height: 12px;\n    }\n  <\/style>\n  <script>\n    document.addEventListener(\"DOMContentLoaded\", function() {\n      function getNextWeekday(date) {\n        var day = date.getDay();\n        var daysToAdd = (day === 5) ? 3 : (day === 6) ? 2 : 1;\n        return new Date(date.setDate(date.getDate() + daysToAdd));\n      }\n\n      var today = new Date();\n      var shipDate = getNextWeekday(today);\n      \n      \/\/ Format date to have short month (e.g., \"Thu, Feb 22\")\n      var options = { weekday: 'short', month: 'short', day: 'numeric' };\n      var formattedDate = shipDate.toLocaleDateString('en-US', options);\n      document.getElementById('shipping-date').textContent = formattedDate;\n\n      \/\/ Fetch country data using GeoJS API\n      fetch('https:\/\/get.geojs.io\/v1\/ip\/geo.json')\n        .then(response => response.json())\n        .then(data => {\n          console.log(\"Geolocation API Response:\", data); \/\/ Debugging log\n\n          if (!data || !data.country_code) {\n            throw new Error(\"Invalid data from API\");\n          }\n          \n          var countryCode = data.country_code.toUpperCase(); \/\/ Get country code (e.g., \"GB\", \"US\")\n          var flagUrl = `https:\/\/flagcdn.com\/w40\/${countryCode.toLowerCase()}.png`;\n\n          \/\/ Set flag and country code\n          document.getElementById('country-flag').src = flagUrl;\n          document.getElementById('country-flag').alt = countryCode + \" Flag\";\n          document.getElementById('country-flag').style.display = \"inline\";\n          document.getElementById('country-text').innerHTML = `Fast <span class=\"bold\">${countryCode}<\/span> Shipping`;\n        })\n        .catch(error => {\n          console.error('Error fetching the IP information:', error);\n          document.getElementById('country-flag').style.display = \"none\"; \n          document.getElementById('country-text').innerHTML = \"Fast Worldwide Shipping\";\n        });\n    });\n  <\/script>\n<\/head>\n<body>\n  <div class=\"custom-shipping-container\">\n    <div class=\"custom-shipping-item\">\n      <svg class=\"green-circle\" xmlns=\"http:\/\/www.w3.org\/2000\/svg\" width=\"12\" height=\"13\" viewBox=\"0 0 12 13\" fill=\"none\">\n        <circle cx=\"6\" cy=\"6.5\" r=\"6\" fill=\"#137333\"\/>\n      <\/svg>\n      <div class=\"text-block-shipping\">Ships by <span id=\"shipping-date\" class=\"shipping-date\"><\/span><\/div>\n    <\/div>\n    <div class=\"custom-shipping-item flags-container\">\n      <img id=\"country-flag\" class=\"custom-icon\" src=\"\" alt=\"Country Flag\" style=\"display: none;\">\n      <div id=\"country-text\" class=\"shipping-worldwide\">Loading...<\/div>\n    <\/div>\n  <\/div>\n<\/body>\n<\/html>"}},"buy_buttons":{"type":"buy_buttons","settings":{"show_dynamic_checkout":false,"skip_cart":false,"uppercase_text":true,"icon_scale":120,"icon_spacing":10,"atc_custom_label":"","display_price":false,"enable_custom_color":false,"custom_color":"#53af01","enable_secondary_btn":false,"secondary_btn_label":"Buy It Now","secondary_btn_enable_custom_color":false,"secondary_btn_custom_color":"#dd1d1d","margin_top":12,"margin_bottom":0}},"payment_badges_XtWzKz":{"type":"payment_badges","settings":{"enabled_payment_types":"","margin_top":12,"margin_bottom":12}},"custom_liquid_Migg8c":{"type":"custom_liquid","name":"Guarantee","settings":{"custom_liquid":"<style>\n  .custom-money-back {\n    background: #FFFFFF;\n    border: 2px solid #47B5E9;\n    border-radius: 7px;\n    padding: 10px 12px;\n    margin: 4px auto 0 auto;\n    max-width: 100%;\n    display: flex;\n    align-items: center;\n    gap: 8px;\n    overflow: hidden;\n  }\n  \n  .custom-money-back__badge {\n    flex-shrink: 0;\n    width: 35px;\n    height: 35px;\n  }\n  \n  .custom-money-back__badge img {\n    width: 100%;\n    height: 100%;\n    object-fit: contain;\n  }\n  \n  .custom-money-back__content {\n    flex: 1;\n    min-width: 0;\n  }\n  \n  .custom-money-back__title {\n    color: #000000;\n    font-family: 'Geist', sans-serif;\n    font-size: 12px;\n    font-weight: 700;\n    margin-bottom: 3px;\n    line-height: 1.2;\n    letter-spacing: -0.03em;\n    white-space: nowrap;\n  }\n  \n  .custom-money-back__text {\n    color: #000000;\n    font-family: 'Geist', sans-serif;\n    font-size: 10px;\n    font-weight: 400;\n    line-height: 1.3;\n    letter-spacing: 0;\n  }\n  \n  @media (min-width: 769px) {\n    .custom-money-back {\n      padding: 10px 12px;\n      gap: 10px;\n    }\n    .custom-money-back__badge {\n      width: 40px;\n      height: 40px;\n    }\n    .custom-money-back__title {\n      font-size: 14px;\n      margin-bottom: 2px;\n      letter-spacing: 0;\n    }\n    .custom-money-back__text {\n      font-size: 12px;\n      line-height: 1.2;\n    }\n  }\n<\/style>\n\n<div class=\"custom-money-back\">\n  <div class=\"custom-money-back__badge\">\n    <img src=\"https:\/\/cdn.shopify.com\/s\/files\/1\/0735\/4833\/3323\/files\/Namnlos_design_44.svg?v=1771204616\" alt=\"Money Back Guarantee\">\n  <\/div>\n  <div class=\"custom-money-back__content\">\n    <div class=\"custom-money-back__title\">\n      100-Day Money Back Guarantee\n    <\/div>\n    <div class=\"custom-money-back__text\">\n      Not completely satisfied? Then you’ll get your money back – no stress, no hassle.\n    <\/div>\n  <\/div>\n<\/div>"}},"e7a28cbe-03cb-4c9d-a2c4-0e3e76ffb3e5":{"type":"sticky_atc","settings":{"function":"add_to_cart","display_when":"after_scroll","button_label":"ADD TO CART","enable_custom_btn_color":false,"custom_btn_color":"#dd1d1d","color_scheme":"background-1","star_color":"#ffcc00","stars_label":"Trusted by 45,000+ Pet Owners","picker_type":"combined","desktop_show_image":false,"desktop_show_title":true,"desktop_rating_stars":true,"desktop_show_price":false,"desktop_show_sale_badge":true,"desktop_variant_picker":true,"desktop_full_button_width":false,"desktop_show_price_in_button":false,"desktop_transparent_bg":false,"mobile_show_image":false,"mobile_show_title":true,"mobile_rating_stars":true,"mobile_show_price":false,"mobile_show_sale_badge":false,"mobile_variant_picker":false,"mobile_full_button_width":true,"mobile_show_price_in_button":false,"mobile_transparent_bg":false}},"description":{"type":"description","disabled":true,"settings":{"margin_top":24,"margin_bottom":24}},"collapsible_tab_t3jLVn":{"type":"collapsible_tab","disabled":true,"settings":{"heading":"Vetpets Full Dental Care Guide","heading_size":"medium","icon":"","filled_icon":false,"collapse_icon":"carret","display_top_border":true,"open":false,"content":"","page":"vetpets-full-dental-care-guide","margin_top":15,"margin_bottom":0}},"collapsible_tab_fGzmXR":{"type":"collapsible_tab","disabled":true,"settings":{"heading":"Free Gifts When You Bundle","heading_size":"medium","icon":"","filled_icon":false,"collapse_icon":"carret","display_top_border":true,"open":false,"content":"","page":"vetpets-full-dental-care-guide","margin_top":15,"margin_bottom":0}},"de158e68-5d0d-4819-a625-e2dabdff87d1":{"type":"collapsible_tab","disabled":true,"settings":{"heading":"100-Day Money-Back Guarantee","heading_size":"medium","icon":"","filled_icon":false,"collapse_icon":"carret","display_top_border":true,"open":false,"content":"<p>We truly believe FreshWipes will make a difference – for both you and your dog.<br\/><br\/>That’s why we offer a <strong>100-day money-backguarantee<\/strong>.<\/p><p>You can try the product at home, in your own time.<br\/><br\/>Not completely satisfied? Then you’ll get your money back – no stress, no hassle.<\/p><p>For us, it’s more important that your dog gets the care they deserve than that you keep something you don’t love.<\/p><p><strong>You can read more about our satisfaction guarantee here.<br\/><\/strong><a href=\"\/pages\/100-dagers-fornoydgaranti\" title=\"100-Day Satisfaction Guarantee\">100-Day Satisfaction Guarantee<\/a><\/p>","page":"","margin_top":24,"margin_bottom":0}},"collapsible_tab_jnYwdt":{"type":"collapsible_tab","settings":{"heading":"What to expect","heading_size":"small","icon":"","filled_icon":false,"collapse_icon":"carret","display_top_border":true,"open":false,"content":"<p><strong>First Weeks<\/strong><br\/><br\/>Your pet stays fresh between baths — softer coat, no doggy smell. The 60-second wipe-down becomes routine.<\/p><p><strong>First Month<\/strong><br\/><br\/>Bath nights drop off. He's clean by default now, not just after a bath — and your home stays cleaner too.<\/p><p><strong>Later Months<\/strong><br\/><br\/>Clean is just how he is. No pre-guest scramble, less hair, no smell. The routine runs itself.<\/p>","page":"free-e-book-the-secret-to-a-sparkling-home-in-just-15-minutes-a-day","margin_top":12,"margin_bottom":0}},"collapsible_tab_EGhYxC":{"type":"collapsible_tab","settings":{"heading":"Ingredients","heading_size":"small","icon":"","filled_icon":false,"collapse_icon":"carret","display_top_border":true,"open":false,"content":"<ul><li><strong>EDI-purified water<\/strong> – pure water base<\/li><li><strong>Phenoxyethanol<\/strong> – preserves formula freshness<\/li><li><strong>Chlorhexidine<\/strong> – antibacterial effect<\/li><li><strong>Decyl glucoside<\/strong> – gentle plant-derived cleanser<\/li><li><strong>Jojoba oil<\/strong> – conditions and softens coat<\/li><li><strong>Honey extract<\/strong> – soothes and moisturises skin<\/li><li><strong>Shea butter extract<\/strong> – nourishes dry or flaky skin<\/li><li><strong>Corn extract<\/strong> – gentle skin conditioning<\/li><\/ul><p>✔️ Fragrance-free ✔️ Not tested on animals (cruelty-free) ✔️ Free from alcohol and harsh chemicals<\/p>","page":"free-e-book-the-secret-to-a-sparkling-home-in-just-15-minutes-a-day","margin_top":24,"margin_bottom":0}},"collapsible_tab_DMVCEX":{"type":"collapsible_tab","settings":{"heading":"How to Use","heading_size":"small","icon":"","filled_icon":false,"collapse_icon":"carret","display_top_border":true,"open":false,"content":"<ul><li>Slip the glove over your hand until it sits snug<\/li><li>Wipe head to tail, along the coat, legs and paws<\/li><li>Pay extra attention to muddy or smelly areas<\/li><li>Use daily after walks for best results — takes under 60 seconds<\/li><\/ul>","page":"free-e-book-the-secret-to-a-sparkling-home-in-just-15-minutes-a-day","margin_top":24,"margin_bottom":0}},"collapsible_tab_aFAiwA":{"type":"collapsible_tab","settings":{"heading":"Payment & Delivery","heading_size":"small","icon":"","filled_icon":false,"collapse_icon":"carret","display_top_border":true,"open":false,"content":"<h4><strong>Payment<\/strong><\/h4><p>You can safely pay with Klarna, credit card, or bank transfer – choose what works best for you.<br\/><\/p><h4><strong>Shipping<\/strong><\/h4><p><br\/>We offer different rates for the UK and the Rest of the World:<\/p><ul><li><strong>United Kingdom (UK): <\/strong>Standard Shipping: <strong>£2.00<\/strong> (Free on orders £37 and over)Priority Shipping: <strong>£4.50<\/strong><\/li><li><strong>Rest of the World:<\/strong>Standard Shipping: <strong>$2.95<\/strong> (Free on orders $49 and over)Priority Shipping: <strong>$6.00<\/strong><\/li><\/ul><p><strong>Delivery Time<\/strong><br\/><br\/>As our UK warehouse is temporarily out of stock, your order will be shipped from our international warehouse.<br\/>We offer two shipping options at checkout:<\/p><ul><li><strong>Standard Shipping:<\/strong> 1–2 days handling + 5–10 days shipping time<\/li><li><strong>Priority Shipping:<\/strong> 1–2 days handling + 4–7 days shipping time<\/li><\/ul><p>A tracking number will be sent by email as soon as your order leaves the warehouse.<\/p><p><strong>Questions?<\/strong><br\/>Email us at <strong>info@shopvetpets.com<\/strong> – we always reply within 24 hours on weekdays.<\/p>","page":"","margin_top":24,"margin_bottom":0}},"reviews_8UgFbe":{"type":"reviews","disabled":true,"settings":{"color_scheme":"background-1","show_custom_bg":false,"custom_bg_color":"#f2f2f2","corner_radius":12,"border_width":0,"border_color":"#b7b7b7","avatar_alignment":"top","avatar_corner_radius":40,"star_color":"#ffcc00","stars_translate":0,"checkmark_color":"#6d388b","checkmark_icon_color":"#ffffff","slider_type":"slide","autoplay":false,"autoplay_speed":5,"display_arrows":false,"display_dots":true,"author_1":"– Anna, 34 år [stars]","image_1":"shopify:\/\/shop_images\/Profilbild_3.jpg","text_1":"<p>Har brukt FreshWipes i omtrent en uke og ble overrasket over hvor lett det gikk. Hunden vår er vanligvis skeptisk, men lot meg faktisk rengjøre uten problemer.<\/p>","author_2":"– Mats, 52 år [stars]","image_2":"shopify:\/\/shop_images\/Profilbild5_1a47da8b-0488-41c4-af0b-4e3b8857192b.webp","text_2":"<p>Etter to måneder er pusten mye friskere og misfargingene har blitt redusert. Vi har det som en fast rutine på søndager – og det fungerer kjempebra.<\/p>","author_3":"– Sofia, 41 år [stars]","image_3":"shopify:\/\/shop_images\/Profilbild111.webp","text_3":"<p>Vi har brukt dem i over ett år nå. Vår labrador har ikke trengt noe veterinærbesøk for tennene siden. Enkelt å ta med, og det føles trygt.<\/p>","margin_top":24,"margin_bottom":24}},"complementary_UjkCBV":{"type":"complementary","disabled":true,"settings":{"block_heading":"Bundle & Save: Complete Care Kit","make_collapsible_row":false,"icon":"price_tag","product_list_limit":10,"products_per_page":3,"pagination_style":"counter","image_ratio":"square","enable_quick_add":true,"margin_top":15,"margin_bottom":15}}},"block_order":["a6eb81db-40e4-43e0-972f-32db010a4a56","title","divider_AALhJR","text_aAPf6w","text_njMHhg","price","text_cn7XQg","text_kEd4Nj","custom_liquid_qmqTUE","kaching_bundles_app_block_f8NfBp","04ba004e-2f54-4936-8b1c-8bcadf6573f6","custom_liquid_cfTETd","custom_liquid_8TN4AP","buy_buttons","payment_badges_XtWzKz","custom_liquid_Migg8c","e7a28cbe-03cb-4c9d-a2c4-0e3e76ffb3e5","description","collapsible_tab_t3jLVn","collapsible_tab_fGzmXR","de158e68-5d0d-4819-a625-e2dabdff87d1","collapsible_tab_jnYwdt","collapsible_tab_EGhYxC","collapsible_tab_DMVCEX","collapsible_tab_aFAiwA","reviews_8UgFbe","complementary_UjkCBV"],"custom_css":[".product__title > * {font-size: calc(var(--font-heading-scale) * 1.6rem);}"],"settings":{"display_id":false,"enable_sticky_info":true,"display_variant_image_first":false,"disable_prepend":true,"hide_variants":false,"variant_image_filtering":"none","image_zoom":"none","thumbnails_ratio":"square","arrows_color_scheme":"inverse","transparent_arrows":false,"dots_color_scheme":"inverse","video_player":"play_btn","enable_video_looping":false,"autoplay_videos_pause_btn":false,"video_sound_btn":false,"video_timeline":false,"play_btn_color_scheme":"accent-1","sound_btn_color_scheme":"inverse","timeline_color":"accent-1","media_size":"medium","media_position":"left","gallery_layout":"thumbnail_slider","desktop_thumbnails_position":"bottom","desktop_thumbnails_count":5,"desktop_vertical_thumbnails_width":16,"desktop_vertical_thumbnails_hide_arrows":false,"constrain_to_viewport":true,"media_fit":"contain","desktop_arrows_position":"hidden","mobile_media_corner_radius":0,"mobile_spacing_pixels":0,"mobile_arrows_position":"sides","mobile_pagination":"hidden","mobile_thumbnails_position":"bottom","mobile_thumbnails_count":5,"mobile_vertical_thumbnails_width":22,"mobile_vertical_thumbnails_hide_arrows":true,"mobile_scroll_padding_percentage":0,"mobile_scroll_padding_pixels":2,"enable_mobile_outher_spacing":false,"mobile_slides_container_width":100,"mobile_slides_inner_width":100,"trust_badge_position":"top-right","trust_badge_size":"medium","mobile_padding_top":0,"mobile_padding_bottom":16,"desktop_padding_top":36,"desktop_padding_bottom":36}},"related-products":{"type":"related-products","disabled":true,"settings":{"display_id":false,"title":"You may also like","title_highlight_color":"#6d388b","heading_size":"h2","products_to_show":4,"stretch_cards":false,"columns_desktop":4,"color_scheme":"background-1","image_ratio":"adapt","show_secondary_image":false,"show_vendor":false,"show_rating":false,"enable_quick_add":false,"columns_mobile":"2","padding_top":36,"padding_bottom":24}},"section_divider_bfdUFA":{"type":"section-divider","name":"Section divider","settings":{"visibility":"always-display","shape":"waves_2","flip_horizontal":false,"flip_vertical":false,"shape_color":"custom","custom_shape_color":"#d5f7ff","background_color":"background-1","custom_background_color":"#ffffff","padding_top":0,"padding_bottom":0}},"image_with_text_BYWPwt":{"type":"image-with-text","blocks":{"heading_6YJirD":{"type":"heading","settings":{"title":"A Daily Cleaning Routine Responsible <strong>Owners Love — And Dogs Tolerate<\/strong>","title_highlight_color":"#47b5e9","heading_size":"h2"}},"text_8Y6Km6":{"type":"text","settings":{"text":"<p>Most solutions are too messy, too slow, or too much of a fight to do every day. So you may skip it — and your <strong>dog's muddy paws goes straight from the walk to the rug and to the sofa.<\/strong> GloveWipes fits into your daily routine in 60 seconds. No water, no rinse, no drama.<\/p>","text_style":"body"}}},"block_order":["heading_6YJirD","text_8Y6Km6"],"name":"t:sections.image-with-text.presets.name","settings":{"display_id":false,"visibility":"always-display","image":"shopify:\/\/shop_images\/GloveWipes_10.jpg","video_autoplay":true,"video_loop":true,"height":"adapt","color_scheme":"custom","section_color_scheme":"custom","full_desktop_width":false,"content_layout":"no-overlap","desktop_media_width":50,"layout":"image_first","desktop_content_position":"middle","desktop_content_alignment":"left","mobile_full_media_width":false,"mobile_direction":"normal","mobile_image_quanlity":"2","mobile_content_alignment":"left","mobile_padding_top":0,"mobile_padding_bottom":16,"desktop_padding_top":36,"desktop_padding_bottom":36,"custom_colors_background":"#d5f7ff","custom_gradient_background":"","custom_colors_text":"#000000","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff","custom_colors_outline_button":"#dd1d1d","custom_section_colors_background":"#d5f7ff","custom_section_gradient_background":""}},"section_divider_HcqEyx":{"type":"section-divider","name":"Section divider","settings":{"visibility":"always-display","shape":"waves_2","flip_horizontal":false,"flip_vertical":true,"shape_color":"custom","custom_shape_color":"#d5f7ff","background_color":"background-1","custom_background_color":"#ffffff","padding_top":0,"padding_bottom":0}},"image_with_text_eVzzWi":{"type":"image-with-text","blocks":{"heading_8t69HH":{"type":"heading","settings":{"title":"Here's Why Nothing You've <strong>Tried Has Stuck<\/strong>","title_highlight_color":"#47b5e9","heading_size":"h2"}},"text_with_icon_9pQYLX":{"type":"text_with_icon","settings":{"mobile_text_size":14,"desktop_text_size":16,"alignment":"left","mobile_alignment":"left","text_color":"#121212","text_1":"<strong>Towels & cloths: <\/strong>Smooth surface. Moves dirt around — doesn't lift it off.","text_2":"<strong>Sprays & dry shampoo:<\/strong> Sits on top of the coat. Your dog licks it off within the hour.","text_3":"<strong>Bath every time:<\/strong> 20 minutes, a soaking bathroom, a dog who hates it. Not something you can do every day.","icon_scale":120,"icon_color":"#ec1a1a","icon_1":"cancel","filled_icon_1":false,"icon_2":"cancel","filled_icon_2":false,"icon_3":"cancel","filled_icon_3":false,"width":"100%","direction":"vertical","column_gap":3,"enable_bg":false,"bg_color":"#f3f3f3","corner_radius":40,"padding":5,"border_size":0,"border_color":"#b7b7b7"}}},"block_order":["heading_8t69HH","text_with_icon_9pQYLX"],"name":"t:sections.image-with-text.presets.name","settings":{"display_id":false,"visibility":"always-display","image":"shopify:\/\/shop_images\/GloveWipes_11.jpg","video_autoplay":true,"video_loop":true,"height":"adapt","color_scheme":"background-1","section_color_scheme":"background-1","full_desktop_width":false,"content_layout":"no-overlap","desktop_media_width":50,"layout":"text_first","desktop_content_position":"top","desktop_content_alignment":"left","mobile_full_media_width":false,"mobile_direction":"normal","mobile_image_quanlity":"2","mobile_content_alignment":"left","mobile_padding_top":16,"mobile_padding_bottom":16,"desktop_padding_top":36,"desktop_padding_bottom":36,"custom_colors_background":"#2e2a39","custom_gradient_background":"","custom_colors_text":"#ffffff","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff","custom_colors_outline_button":"#dd1d1d","custom_section_colors_background":"#ffffff","custom_section_gradient_background":""}},"section_divider_YJdTqY":{"type":"section-divider","name":"Section divider","settings":{"visibility":"always-display","shape":"waves_2","flip_horizontal":false,"flip_vertical":false,"shape_color":"custom","custom_shape_color":"#d5f7ff","background_color":"background-1","custom_background_color":"#ffffff","padding_top":0,"padding_bottom":0}},"custom_columns_fQkrT4":{"type":"custom-columns","blocks":{"heading_XkDpwE":{"type":"heading","settings":{"column":"col_1","visibility":"always-display","heading":"60 Seconds. Fits Your Hand. <strong>Your Pet Won't Even Notice.<\/strong>","title_highlight_color":"#47b5e9","heading_size":"h1","alignment":"center","mobile_alignment":"mobile-center","margin_top":20,"margin_bottom":20}},"icon_with_text_PDwLbm":{"type":"icon_with_text","settings":{"column":"col_2","visibility":"always-display","icon":"check_circle","filled_icon":true,"icon_size":"m","icon_position":"next-to-title","icon_color":"accent-1","icon_heading_size":"h3","icon_text_alignment":"left","title":"The texture lifts.","text":"<p>Raised surface physically grips and pulls dirt, bacteria, and loose fur off the coat. You'll see it on the glove after the first use.<\/p>","margin_top":20,"margin_bottom":30}},"icon_with_text_yfmrMj":{"type":"icon_with_text","settings":{"column":"col_2","visibility":"always-display","icon":"check_circle","filled_icon":true,"icon_size":"m","icon_position":"next-to-title","icon_color":"accent-1","icon_heading_size":"h3","icon_text_alignment":"left","title":"The formula prevents.","text":"<p>Chlorhexidine and antibacterial actives kill bacteria on contact and slow regrowth. The clean actually lasts.<\/p>","margin_top":20,"margin_bottom":20}},"image_GYyj9f":{"type":"image","settings":{"column":"col_3","visibility":"always-display","image":"shopify:\/\/shop_images\/GloveWipes_13.jpg","width":100,"alignment":"center","mobile_alignment":"center","border_radius":14,"margin_top":20,"margin_bottom":20}},"icon_with_text_Qi6M3M":{"type":"icon_with_text","settings":{"column":"col_4","visibility":"always-display","icon":"check_circle","filled_icon":true,"icon_size":"m","icon_position":"next-to-title","icon_color":"accent-1","icon_heading_size":"h3","icon_text_alignment":"left","title":"The glove stays in control.","text":"<p>Fits over your hand. Your dog feels your touch — not a tool. Most dogs stand still.<\/p>","margin_top":20,"margin_bottom":30}},"icon_with_text_mmx9Ka":{"type":"icon_with_text","settings":{"column":"col_4","visibility":"always-display","icon":"check_circle","filled_icon":true,"icon_size":"m","icon_position":"next-to-title","icon_color":"accent-1","icon_heading_size":"h3","icon_text_alignment":"left","title":"The routine finally sticks.","text":"<p>60 seconds at the door after every walk. No setup, no mess, no reason to skip it. This is the daily habit that actually holds.<\/p>","margin_top":20,"margin_bottom":20}}},"block_order":["heading_XkDpwE","icon_with_text_PDwLbm","icon_with_text_yfmrMj","image_GYyj9f","icon_with_text_Qi6M3M","icon_with_text_mmx9Ka"],"name":"Custom columns","settings":{"display_id":false,"visibility":"always-display","color_scheme":"background-2","columns_count":4,"desktop_page_width":"normal","column_gap_desktop":40,"row_gap_desktop":40,"desktop_vertical_alignment":"center","mobile_full_page":false,"column_gap_mobile":20,"row_gap_mobile":30,"mobile_vertical_alignment":"flex-start","col_1_desktop_width":12,"col_1_mobile_width":4,"col_1_visibility":"always-display","col_2_desktop_width":4,"col_2_mobile_width":4,"col_2_visibility":"always-display","col_3_desktop_width":4,"col_3_mobile_width":4,"col_3_visibility":"always-display","col_4_desktop_width":4,"col_4_mobile_width":4,"col_4_visibility":"always-display","col_5_desktop_width":3,"col_5_mobile_width":4,"col_5_visibility":"always-display","col_6_desktop_width":3,"col_6_mobile_width":4,"col_6_visibility":"always-display","padding_top":36,"padding_bottom":36,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#2e2a39","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff","custom_colors_outline_button":"#dd1d1d"}},"section_divider_hJDAfH":{"type":"section-divider","name":"Section divider","settings":{"visibility":"always-display","shape":"waves_2","flip_horizontal":false,"flip_vertical":true,"shape_color":"custom","custom_shape_color":"#d5f7ff","background_color":"background-1","custom_background_color":"#ffffff","padding_top":0,"padding_bottom":0}},"rocky_transformation_DyJtqK":{"type":"rocky-transformation","blocks":{"step_eY3iC6":{"type":"step","settings":{"image":"shopify:\/\/shop_images\/GloveWipes_14.jpg","icon":"","title":"Slip It On","description":"Slide GloveWipes over your hand until it sits snug. Textured side facing out."}},"step_xxRHMq":{"type":"step","settings":{"image":"shopify:\/\/shop_images\/GloveWipes_15.jpg","icon":"","title":"Wipe Head to Tail","description":"Run the glove along the coat, paws, and any problem areas. The texture does the work."}},"step_KVpXNW":{"type":"step","settings":{"image":"shopify:\/\/shop_images\/GloveWipes_16.jpg","icon":"","title":"Fresh Dog. Done.","description":"No rinsing. No drying. Your dog is clean and you're both ready to move on."}}},"block_order":["step_eY3iC6","step_xxRHMq","step_KVpXNW"],"name":"Rocky - Transformation","settings":{"headline_p1":"Clean Dog,","headline_acc":"3 Easy Steps,","headline_p2":"Under 60 Seconds.","subheadline":"No tub, no water, no sprays, no fighting with your dog to hold still.","headline_color":"#111111","accent_color":"#47b5e9","subheadline_color":"#6b7280","number_color":"#47b5e9","number_bg":"#ffffff","step_title_color":"#111111","step_desc_color":"#787878","line_color":"#47b5e9","bg_color":"#ffffff","card_bg":"#ffffff","card_border":"#e5e7eb","image_size_mobile":240,"image_size_desktop":280,"image_radius":12,"icon_size":24,"headline_size_mobile":24,"headline_size_desktop":36,"padding_mobile":24,"padding_desktop":60}},"ss_feature_34_G9LRXc":{"type":"ss-feature-34","blocks":{"heading_WEMMMY":{"type":"heading","settings":{"heading":"<p>What's Actually Inside Every GloveWipe<\/p>","heading_custom":false,"heading_font":"josefin_sans_n4","heading_size":36,"heading_size_mobile":24,"heading_height":130,"heading_mt":0,"heading_mt_mobile":0,"heading_width":70,"heading_color":"#47b5e9"}},"text_kqBwEi":{"type":"text","settings":{"text":"<p>No alcohol. No harsh chemicals. Safe for daily use on coat and skin.<\/p>","text_custom":false,"text_font":"josefin_sans_n4","text_size":14,"text_size_mobile":14,"text_height":150,"text_mt":16,"text_mt_mobile":16,"text_width":70,"text_color":"#121212"}},"feature_dFtxpR":{"type":"feature","settings":{"icon":"plant","title":"Jojoba Oil","feature_text":"<p>Lightweight conditioning that leaves the coat soft and healthy — not greasy. Mimics the skin's natural oils for a natural feel.<\/p>","feature_icon_color":"#ffffff","feature_icon_hover_color":"#ffffff","feature_icon_bg_color":"#13b6b5","feature_icon_bg_hover_color":"#13b6b5","feature_icon_border_color":"#13b6b5","feature_icon_border_hover_color":"#121212"}},"feature_BpM3Yn":{"type":"feature","settings":{"icon":"plant","title":"Honey Extract","feature_text":"<p>A natural humectant that soothes and moisturises the skin during cleaning. Leaves the coat with a subtle natural softness.<\/p>","feature_icon_color":"#ffffff","feature_icon_hover_color":"#ffffff","feature_icon_bg_color":"#13b6b5","feature_icon_bg_hover_color":"#13b6b5","feature_icon_border_color":"#13b6b5","feature_icon_border_hover_color":"#121212"}},"feature_KBDnFE":{"type":"feature","settings":{"icon":"plant","title":"Shea Butter Extract","feature_text":"<p>Deeply nourishing for dry or flaky skin. Conditions the coat while the glove cleans.<\/p>","feature_icon_color":"#ffffff","feature_icon_hover_color":"#ffffff","feature_icon_bg_color":"#13b6b5","feature_icon_bg_hover_color":"#13b6b5","feature_icon_border_color":"#13b6b5","feature_icon_border_hover_color":"#121212"}},"feature_tLiaNT":{"type":"feature","settings":{"icon":"plant","title":"Corn Extract","feature_text":"<p>A gentle skin-conditioning agent that supports moisture balance and coat health.<\/p>","feature_icon_color":"#ffffff","feature_icon_hover_color":"#ffffff","feature_icon_bg_color":"#13b6b5","feature_icon_bg_hover_color":"#13b6b5","feature_icon_border_color":"#13b6b5","feature_icon_border_hover_color":"#121212"}}},"block_order":["heading_WEMMMY","text_kqBwEi","feature_dFtxpR","feature_BpM3Yn","feature_KBDnFE","feature_tLiaNT"],"name":"SS - Feature #34","settings":{"content_align":"center","content_align_mobile":"center","features_gap":18,"features_gap_mobile":16,"features_mt":38,"features_mt_mobile":40,"feature_padding_horizontal":12,"feature_padding_horizontal_mobile":16,"feature_padding_vertical":20,"feature_padding_vertical_mobile":10,"feature_radius":20,"feature_border_thickness":0,"feature_icon_padding":8,"feature_icon_radius":100,"feature_icon_border_thickness":1,"feature_icon_size":20,"feature_icon_size_mobile":18,"title_custom":false,"title_font":"josefin_sans_n4","title_size":16,"title_size_mobile":16,"title_height":130,"open_icon_size":30,"open_icon_size_mobile":26,"feature_text_custom":false,"feature_text_font":"josefin_sans_n4","feature_text_size":16,"feature_text_size_mobile":16,"feature_text_height":150,"feature_text_padding_top":18,"title_color":"#121212","feature_text_color":"#707070","open_icon_color":"#47b5e9","feature_bg_color":"#ffffff","background_color":"#f3f3f3","background_gradient":"linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(213, 247, 255, 1) 81%, rgba(255, 255, 255, 1) 100%)","border_color":"#121212","margin_top":0,"margin_bottom":0,"margin_horizontal":0,"margin_horizontal_mobile":0,"padding_top":60,"padding_bottom":60,"padding_horizontal":5,"padding_horizontal_mobile":1.5,"full_width":false,"content_width":1400,"border_thickness":0,"section_radius":0,"lazy":true}},"section_divider_kAW6L6":{"type":"section-divider","disabled":true,"settings":{"visibility":"always-display","shape":"waves_2","flip_horizontal":false,"flip_vertical":false,"shape_color":"custom","custom_shape_color":"#d5f7ff","background_color":"background-1","custom_background_color":"#d5f7ff","padding_top":0,"padding_bottom":0}},"image_with_text_jpGEnV":{"type":"image-with-text","blocks":{"heading_xgchUK":{"type":"heading","settings":{"title":"A simple habit that <strong>makes a big difference<\/strong>","title_highlight_color":"#47b5e9","heading_size":"h2"}},"text_jBQGVq":{"type":"text","settings":{"text":"<p>Many dog owners think dental care has to be complicated.<\/p><p>But with FreshWipes, it’s so easy that you’ll actually use them.<\/p><p>1–2 times a week is all it takes to prevent painful problems in the future.<\/p><h4><strong>Fresh breath, stronger teeth, happier dog<\/strong><\/h4><p>A healthy mouth affects the whole body.<\/p><p>With FreshWipes, your dog not only gets fresher breath and whiter teeth –<br\/><br\/>they’ll also feel better and have more energy.<\/p><p><strong>Fewer infections. More play. More joy.<\/strong><\/p>","text_style":"body"}},"atc_button_3Pb78r":{"type":"atc_button","settings":{"button_label":"ADD TO CART","class":"addqty","atc_product":"freshwipes-kit-protects-against-dental-diseases","atc_skip_cart":false}},"text_with_icon_HTFYqw":{"type":"text_with_icon","settings":{"mobile_text_size":14,"desktop_text_size":16,"alignment":"left","mobile_alignment":"left","text_color":"#121212","text_1":"100-Day Money-Back Guarantee","text_2":"","text_3":"","icon_scale":120,"icon_color":"#47b5e9","icon_1":"new_releases","filled_icon_1":true,"icon_2":"check_circle","filled_icon_2":false,"icon_3":"check_circle","filled_icon_3":false,"width":"100%","direction":"vertical","column_gap":3,"enable_bg":false,"bg_color":"#f3f3f3","corner_radius":40,"padding":3,"border_size":0,"border_color":"#b7b7b7"}}},"block_order":["heading_xgchUK","text_jBQGVq","atc_button_3Pb78r","text_with_icon_HTFYqw"],"disabled":true,"settings":{"display_id":false,"visibility":"always-display","image":"shopify:\/\/shop_images\/Gif_2.gif","video_autoplay":true,"video_loop":true,"height":"adapt","color_scheme":"custom","section_color_scheme":"custom","full_desktop_width":false,"content_layout":"no-overlap","desktop_media_width":50,"layout":"text_first","desktop_content_position":"top","desktop_content_alignment":"left","mobile_full_media_width":false,"mobile_direction":"normal","mobile_image_quanlity":"2","mobile_content_alignment":"left","mobile_padding_top":0,"mobile_padding_bottom":16,"desktop_padding_top":36,"desktop_padding_bottom":36,"custom_colors_background":"#d5f7ff","custom_gradient_background":"","custom_colors_text":"#000000","custom_colors_solid_button_background":"#47b5e9","custom_colors_solid_button_text":"#ffffff","custom_colors_outline_button":"#dd1d1d","custom_section_colors_background":"#d5f7ff","custom_section_gradient_background":""}},"section_divider_BJPHP4":{"type":"section-divider","disabled":true,"settings":{"visibility":"always-display","shape":"waves_2","flip_horizontal":false,"flip_vertical":true,"shape_color":"custom","custom_shape_color":"#d5f7ff","background_color":"background-1","custom_background_color":"#d5f7ff","padding_top":0,"padding_bottom":0}},"ss_comparison_table_20_CV4BXQ":{"type":"ss-comparison-table-20","blocks":{"row_zL9KPW":{"type":"row","settings":{"left_text":"<p>Lifts dirt and bacteria off the coat<\/p>","left_icon":"yes","right_text":"<p>Spreads it around or masks it<\/p>","right_icon":"no"}},"row_gnxHgn":{"type":"row","settings":{"left_text":"<p>60 seconds at the door<\/p>","left_icon":"yes","right_text":"<p>20 minutes, wet bathroom, stressed dog<\/p>","right_icon":"no"}},"row_kPQCaz":{"type":"row","settings":{"left_text":"<p>Your dog loves it and stands still<\/p>","left_icon":"yes","right_text":"<p>Most dogs resist, fight, or run<\/p>","right_icon":"no"}},"row_Ubii6P":{"type":"row","settings":{"left_text":"<p>No water, no rinse, no mess<\/p>","left_icon":"yes","right_text":"<p>Sprays get licked off, towels just smear<\/p>","right_icon":"no"}},"row_jmbPLw":{"type":"row","settings":{"left_text":"<p>Safe for daily use<\/p>","left_icon":"yes","right_text":"<p>Too harsh, too slow, or too much effort to repeat<\/p>","right_icon":"no"}},"row_HEFHUy":{"type":"row","settings":{"left_text":"<p>Results that actually last<\/p>","left_icon":"yes","right_text":"<p>Back to square one within days<\/p>","right_icon":"no"}},"row_EqX3DC":{"type":"row","settings":{"left_text":"<p>Builds a routine you'll stick to<\/p>","left_icon":"yes","right_text":"<p>Too inconvenient to make a habit<\/p>","right_icon":"no"}}},"block_order":["row_zL9KPW","row_gnxHgn","row_kPQCaz","row_Ubii6P","row_jmbPLw","row_HEFHUy","row_EqX3DC"],"custom_css":[".comparison-versus-template--25517100073227__ss_comparison_table_20_CV4BXQ {text-size-adjust: 100% !important; -webkit-text-size-adjust: 100% !important;}"],"name":"SS - Comparison table #20","settings":{"heading":"<p><strong>Why GloveWipes Works Better<\/strong> Than What You've Already Tried<\/p>","heading_custom":false,"heading_font":"josefin_sans_n4","heading_size":36,"heading_size_mobile":24,"heading_height":130,"heading_padding_horizontal":0,"heading_padding_horizontal_mobile":0,"heading_align":"center","heading_align_mobile":"center","images_mt":36,"images_mt_mobile":24,"left_image":"shopify:\/\/shop_images\/GloveWipes_17.jpg","right_image":"shopify:\/\/shop_images\/GloveWipes_18.jpg","image_radius":20,"image_border_thickness":0,"image_ratio":"square","image_ratio_mobile":"square","versus":"Vs","versus_custom":false,"versus_font":"geist_n4","versus_size":16,"versus_size_mobile":12,"versus_height":130,"versus_padding":20,"versus_padding_mobile":8,"versus_radius":100,"versus_border_thickness":0,"rows_gap":8,"rows_gap_mobile":8,"rows_mt":24,"rows_mt_mobile":20,"row_width":94,"row_width_mobile":100,"row_padding_horizontal":12,"row_padding_horizontal_mobile":10,"row_padding_vertical":12,"row_padding_vertical_mobile":8,"row_radius":16,"icon_size":18,"icon_size_mobile":18,"text_custom":false,"text_font":"josefin_sans_n4","text_size":14,"text_size_mobile":12,"text_height":120,"versus_color":"#ffffff","versus_bg_color":"#121212","versus_border_color":"#ffffff","text_left_color":"#ffffff","text_right_color":"#121212","row_left_bg_color":"#47b5e9","row_right_bg_color":"#f3f3f3","icon_left_bg_color":"#ffffff","icon_right_bg_color":"#121212","heading_color":"#121212","image_border_color":"#121212","background_color":"#ffffff","background_gradient":"linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(213, 247, 255, 1) 52%, rgba(255, 255, 255, 1) 100%)","border_color":"#121212","margin_top":0,"margin_bottom":0,"margin_horizontal":0,"margin_horizontal_mobile":0,"padding_top":36,"padding_bottom":36,"padding_horizontal":5,"padding_horizontal_mobile":1,"full_width":false,"content_width":1000,"border_thickness":0,"section_radius":0,"lazy":true}},"image_with_text_rLM4fU":{"type":"image-with-text","blocks":{"heading_8CwgKb":{"type":"heading","settings":{"title":"What Vets Actually Tell Dog Owners <strong>About Daily Coat Care<\/strong>","title_highlight_color":"#47b5e9","heading_size":"h2"}},"text_G78B3U":{"type":"text","settings":{"text":"<p>\"Most owners only think about their dog's coat when it becomes a problem. A simple 60-second daily routine removes what builds up before it ever gets to that point.\"<\/p>","text_style":"body"}},"caption_TmEtTh":{"type":"caption","settings":{"caption":"Dr. James Mitchell, DVM","text_style":"caption-with-letter-spacing","text_size":"medium"}}},"block_order":["heading_8CwgKb","text_G78B3U","caption_TmEtTh"],"name":"t:sections.image-with-text.presets.name","settings":{"display_id":false,"visibility":"always-display","image":"shopify:\/\/shop_images\/GloveWipes_19.jpg","video_autoplay":true,"video_loop":true,"height":"adapt","color_scheme":"background-1","section_color_scheme":"background-1","full_desktop_width":false,"content_layout":"no-overlap","desktop_media_width":50,"layout":"image_first","desktop_content_position":"middle","desktop_content_alignment":"left","mobile_full_media_width":false,"mobile_direction":"normal","mobile_image_quanlity":"2","mobile_content_alignment":"left","mobile_padding_top":0,"mobile_padding_bottom":16,"desktop_padding_top":36,"desktop_padding_bottom":36,"custom_colors_background":"#2e2a39","custom_gradient_background":"","custom_colors_text":"#ffffff","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff","custom_colors_outline_button":"#dd1d1d","custom_section_colors_background":"#ffffff","custom_section_gradient_background":""}},"55bd100e-3bbd-426c-a5cf-eed7b2a3706f":{"type":"testimonials","blocks":{"column_zJ6zMR":{"type":"column","settings":{"star_rating":5,"title":"","text":"<p>\"I've tried every spray out there. My dog licks it straight off within minutes. This is the first thing that actually fits into our daily routine — and he just stands there while I do it.\"<\/p>","author":"— Susan, Golden Retriever owner"}},"column_8RKF7m":{"type":"column","settings":{"star_rating":5,"title":"","text":"<p>\"After every walk I wiped his paws with a towel and hoped for the best. Now I do his whole coat in under a minute. The sofa has genuinely never been cleaner.\"<\/p>","author":"— Carol, Labradoodle owner"}},"column_rFd6he":{"type":"column","settings":{"star_rating":5,"title":"","text":"<p>\"I was skeptical after wasting money on products that promised everything. Three weeks in and this is the first thing that's made daily cleaning feel completely effortless.\"<\/p>","author":"— Patricia, Bichon Frise owner"}},"column_gCBCNY":{"type":"column","settings":{"star_rating":5,"title":"","text":"<p>\"My dog hates baths — always has. This takes 60 seconds, he doesn't flinch, and his coat actually stays fresh. Wish I'd found this years ago.\"<\/p>","author":"— Dorothy, Cavalier King Charles owner"}},"column_cCkemb":{"type":"column","settings":{"star_rating":5,"title":"","text":"<p>\"My dog hates baths — always has. This takes 60 seconds, he doesn't flinch, and his coat actually stays fresh. Wish I'd found this years ago.\"<\/p>","author":"— Dorothy, Cavalier King Charles owner"}},"column_77fFgP":{"type":"column","settings":{"star_rating":5,"title":"","text":"<p>\"My dog used to come in from walks and go straight to the couch. Now I wipe him down at the door in under a minute. It's become part of our routine and he doesn't even try to escape.\"<\/p>","author":"— Barbara, Spaniel owner"}},"column_BgewtE":{"type":"column","settings":{"star_rating":5,"title":"","text":"<p>\"I felt guilty every time I skipped bath night. Now I don't have to — 60 seconds every day and his coat stays fresh. Simple as that.\"<\/p>","author":"— Linda, Poodle owner"}},"column_FUpWBg":{"type":"column","settings":{"star_rating":5,"title":"","text":"<p>\"Bought this not expecting much after everything else I've tried. Two weeks in and his coat feels softer, smells fresher and I actually look forward to our little routine.\"<\/p>","author":"— Joyce, Shih Tzu owner"}}},"block_order":["column_zJ6zMR","column_8RKF7m","column_rFd6he","column_gCBCNY","column_cCkemb","column_77fFgP","column_BgewtE","column_FUpWBg"],"settings":{"display_id":false,"visibility":"always-display","title":"45,000+<strong> <\/strong>Happy<strong> Pet Owners<\/strong>","title_highlight_color":"#47b5e9","heading_size":"h2","text":"<p>Keeping their dogs clean every day — without the bath battle.<\/p>","color_scheme":"background-1","image_width":"full","image_ratio":"square","column_alignment":"center","show_stars":true,"inactive_stars_style":"solid","star_color":"#ffcc00","bg_star_color":"#ececec","show_quotes":false,"quotes_color_scheme":"accent-1","cards_color_scheme":"bg-overlay","type":"slide","autoplay":true,"autoplay_speed":3,"arrows_color_scheme":"inverse","transparent_arrows":true,"dots_color_scheme":"inverse","desktop_full_page":false,"columns_desktop":3,"slider_desktop":true,"per_move_desktop":1,"desktop_spacing":40,"desktop_side_padding":0,"desktop_padding_calc":true,"desktop_adaptive_height":false,"desktop_dots_position":"hidden","desktop_arrows_position":"under","slider_mobile":true,"enable_mobile_preview":true,"mobile_adaptive_height":false,"mobile_dots_position":"hidden","mobile_arrows_position":"under","padding_top":36,"padding_bottom":36,"custom_colors_background":"#ffffff","custom_gradient_background":"linear-gradient(57deg, rgba(249, 119, 255, 1), rgba(54, 212, 255, 1) 47%, rgba(43, 252, 135, 1) 83%)","custom_colors_text":"#2e2a39","custom_cards_colors_background":"#f3f3f3","custom_cards_gradient_background":"","custom_cards_colors_text":"#2e2a39"}},"section_divider_pFE63Q":{"type":"section-divider","settings":{"visibility":"always-display","shape":"waves_1","flip_horizontal":false,"flip_vertical":false,"shape_color":"background-2","custom_shape_color":"#dd1d1d","background_color":"background-1","custom_background_color":"#ffffff","padding_top":0,"padding_bottom":0}},"collapsible_content_TbfYVV":{"type":"collapsible-content","blocks":{"collapsible_row_tR8CwM":{"type":"collapsible_row","settings":{"heading":"Will my dog tolerate it?","icon":"","filled_icon":false,"row_content":"<p>Almost every dog do — far better than baths. No water, no tub, no restraint. Your hand inside the glove means your dog feels your touch, not a tool.<\/p>","page":""}},"collapsible_row_wWEXkL":{"type":"collapsible_row","settings":{"heading":"Is this a replacement for bathing?","icon":"","filled_icon":false,"row_content":"<p>No — it's what keeps your dog clean between baths so they become less urgent and less frequent.<\/p>","page":""}},"collapsible_row_3fRqLL":{"type":"collapsible_row","settings":{"heading":"When will I see results?","icon":"","filled_icon":false,"row_content":"<p>Most owners notice a fresher coat within the first few uses. Visible improvement in coat condition within 1–2 weeks of daily use.<\/p>","page":""}},"collapsible_row_4GGYLx":{"type":"collapsible_row","settings":{"heading":"Can I use it on my cat?","icon":"","filled_icon":false,"row_content":"<p>GloveWipes is formulated for dogs. We'd recommend checking with your vet before use on cats.<\/p>","page":""}},"collapsible_row_X6j8jm":{"type":"collapsible_row","settings":{"heading":"How do I use it?","icon":"","filled_icon":false,"row_content":"<p>Slip the glove over your hand, textured side out. Wipe head to tail, paws, and any problem areas. Done in under 60 seconds.<\/p>","page":""}},"collapsible_row_gJ6pC7":{"type":"collapsible_row","settings":{"heading":"How should I store them?","icon":"","filled_icon":false,"row_content":"<p>Store at room temperature, away from direct sunlight. Keep the lid closed after each use to maintain moisture and freshness.<\/p>","page":""}},"collapsible_row_DDddPH":{"type":"collapsible_row","settings":{"heading":"What if I'm not satisfied?","icon":"","filled_icon":false,"row_content":"<p>100-day money-back guarantee. Not happy? Full refund. No return needed. Email us at <a href=\"mailto:info@shopvetpets.com\">info@shopvetpets.com<\/a>.<\/p>","page":""}}},"block_order":["collapsible_row_tR8CwM","collapsible_row_wWEXkL","collapsible_row_3fRqLL","collapsible_row_4GGYLx","collapsible_row_X6j8jm","collapsible_row_gJ6pC7","collapsible_row_DDddPH"],"settings":{"display_id":false,"visibility":"always-display","caption":"","title":"Frequently Asked Questions","title_highlight_color":"#6d388b","heading_size":"h1","heading_alignment":"center","layout":"row","color_scheme":"background-2","container_color_scheme":"accent-1","open_first_collapsible_row":false,"video_muted_autoplay":true,"image_ratio":"adapt","desktop_layout":"image_second","row_heading_size":"medium","collapse_icon":"carret","display_top_border":true,"padding_top":0,"padding_bottom":0,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#2e2a39","custom_contaner_colors_background":"#ffffff","custom_container_gradient_background":"","custom_contaner_colors_text":"#2e2a39"}},"section_divider_HfUqqg":{"type":"section-divider","settings":{"visibility":"always-display","shape":"waves_1","flip_horizontal":false,"flip_vertical":false,"shape_color":"background-1","custom_shape_color":"#dd1d1d","background_color":"background-2","custom_background_color":"#ffffff","padding_top":0,"padding_bottom":0}},"icon_bar_KHKwKc":{"type":"icon-bar","blocks":{"column_QHckr6":{"type":"column","settings":{"icon":"favorite","filled_icon":true,"title":"OVER 45,000 SATISFIED CUSTOMERS","text":"<p>We’ve made dog owners and dogs across the world happy!<\/p>"}},"column_tPk8Rq":{"type":"column","settings":{"icon":"new_releases","filled_icon":true,"title":"100-DAY MONEY-BACK GUARANTEE","text":"<p>Not satisfied? Just contact us within 365 days of purchase, and we’ll take care of it for you.<\/p>"}},"column_FkbetQ":{"type":"column","settings":{"icon":"support_agent","filled_icon":true,"title":"SUPPORT MONDAY–FRIDAY","text":"<p>Questions? Don’t hesitate to reach out – we’ll respond within 24 hours!<\/p>"}}},"block_order":["column_QHckr6","column_tPk8Rq","column_FkbetQ"],"settings":{"display_id":false,"visibility":"always-display","title":"","title_highlight_color":"#6d388b","heading_size":"h2","text":"","color_scheme":"background-1","icon_layout":"vertical","icon_size":"medium","icon_color":"accent-1","cards_color_scheme":"background-1","type":"slide","autoplay":false,"autoplay_speed":5,"arrows_color_scheme":"inverse","transparent_arrows":true,"dots_color_scheme":"inverse","desktop_full_page":false,"columns_desktop":3,"slider_desktop":false,"per_move_desktop":1,"desktop_spacing":40,"desktop_side_padding":0,"desktop_padding_calc":true,"desktop_adaptive_height":false,"desktop_dots_position":"under","desktop_arrows_position":"sides","columns_mobile":"1","slider_mobile":true,"enable_mobile_preview":false,"mobile_adaptive_height":false,"mobile_dots_position":"hidden","mobile_arrows_position":"under","padding_top":36,"padding_bottom":36,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#2e2a39","custom_cards_colors_background":"#f3f3f3","custom_cards_gradient_background":"","custom_cards_colors_text":"#2e2a39"}}},"order":["main","related-products","section_divider_bfdUFA","image_with_text_BYWPwt","section_divider_HcqEyx","image_with_text_eVzzWi","section_divider_YJdTqY","custom_columns_fQkrT4","section_divider_hJDAfH","rocky_transformation_DyJtqK","ss_feature_34_G9LRXc","section_divider_kAW6L6","image_with_text_jpGEnV","section_divider_BJPHP4","ss_comparison_table_20_CV4BXQ","image_with_text_rLM4fU","55bd100e-3bbd-426c-a5cf-eed7b2a3706f","section_divider_pFE63Q","collapsible_content_TbfYVV","section_divider_HfUqqg","icon_bar_KHKwKc"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "a6eb81db-40e4-43e0-972f-32db010a4a56": {
+          "type": "rating_stars",
+          "settings": {
+            "rating": 4.8,
+            "star_color": "#ffcc00",
+            "bg_stars_style": "full",
+            "bg_star_color": "#ececec",
+            "label": "Trusted by 45,000+ Pet Owners",
+            "size": 13,
+            "alignment": "flex-start",
+            "scroll_id": "#shopify-section-template--25529587368203__55bd100e-3bbd-426c-a5cf-eed7b2a3706f",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "text_size": "h2",
+            "title_alignment": "left",
+            "uppercase_title": false,
+            "margin_top": 6,
+            "margin_bottom": 0
+          }
+        },
+        "divider_AALhJR": {
+          "type": "divider",
+          "settings": {
+            "color": "#e1e1e1",
+            "height": 1,
+            "width": 100,
+            "Full_mobile_width": false,
+            "alignment": "center",
+            "border_radius": 0,
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "text_aAPf6w": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 30,
+            "alignment": "left",
+            "text_color": "#121212",
+            "text_1": "<strong>The Quickest Way to Clean Your Dog Without Running a Bath</strong>",
+            "text_2": "",
+            "text_3": "",
+            "icon_scale": 120,
+            "icon_color": "#121212",
+            "icon_1": "",
+            "filled_icon_1": false,
+            "icon_2": "check_circle",
+            "filled_icon_2": false,
+            "icon_3": "check_circle",
+            "filled_icon_3": false,
+            "width": "100%",
+            "direction": "horizontal",
+            "column_gap": 3,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 0,
+            "margin_bottom": 6
+          }
+        },
+        "text_njMHhg": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 14,
+            "alignment": "left",
+            "text_color": "#121212",
+            "text_1": "GloveWipes is a textured, antibacterial glove that lifts dirt, dander, and odor from your pet's coat in 60 seconds. No water. No rinse. No stress.",
+            "text_2": "",
+            "text_3": "",
+            "icon_scale": 120,
+            "icon_color": "#121212",
+            "icon_1": "",
+            "filled_icon_1": false,
+            "icon_2": "check_circle",
+            "filled_icon_2": false,
+            "icon_3": "check_circle",
+            "filled_icon_3": false,
+            "width": "100%",
+            "direction": "horizontal",
+            "column_gap": 3,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 3,
+            "margin_bottom": 0
+          }
+        },
+        "price": {
+          "type": "price",
+          "disabled": true,
+          "settings": {
+            "layout": "price_first",
+            "price_color": "accent-1",
+            "compare_price_color": "text",
+            "displayed_badge": "sale",
+            "icon_scale": 140,
+            "custom_badge_text": "[icon_1] SPECIAL OFFER",
+            "icon_1": "redeem",
+            "filled_icon_1": false,
+            "icon_2": "check_circle",
+            "filled_icon_2": false,
+            "margin_top": 3,
+            "margin_bottom": 3
+          }
+        },
+        "text_cn7XQg": {
+          "type": "text",
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "text_color": "#121212",
+            "text_1": "Lifts dirt and loose fur on contact",
+            "text_2": "Kills odor-causing bacteria without water",
+            "text_3": "Leaves the coat soft and conditioned",
+            "icon_scale": 120,
+            "icon_color": "#47b5e9",
+            "icon_1": "verified",
+            "filled_icon_1": true,
+            "icon_2": "verified",
+            "filled_icon_2": true,
+            "icon_3": "verified",
+            "filled_icon_3": true,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 3,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#47b5e9",
+            "margin_top": 9,
+            "margin_bottom": 0
+          }
+        },
+        "text_kEd4Nj": {
+          "type": "text",
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "text_color": "#121212",
+            "text_1": "Safe for daily use on dogs and cats",
+            "text_2": "",
+            "text_3": "",
+            "icon_scale": 120,
+            "icon_color": "#47b5e9",
+            "icon_1": "verified",
+            "filled_icon_1": true,
+            "icon_2": "check_circle",
+            "filled_icon_2": true,
+            "icon_3": "check_circle",
+            "filled_icon_3": true,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 0,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 6,
+            "margin_bottom": 12
+          }
+        },
+        "custom_liquid_qmqTUE": {
+          "type": "custom_liquid",
+          "name": "urgency",
+          "disabled": true,
+          "settings": {
+            "custom_liquid": "<div class=\"stock-status-wrapper\">\n  <span class=\"stock-status-dot\"></span>\n  <span class=\"stock-status-text\">{{ 'stock_status.almost_sold_out' | t }}</span>\n</div>\n\n<style>\n  .promo-nudge {\n    font-size: 12px;\n    font-weight: 400;\nfont-family: 'Geist'\n    color: #13B6B5 ;\n    margin-bottom: 0;\n    display: block;\n  }\n\n  .stock-status-wrapper {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n  }\n\n  .stock-status-dot {\n    width: 10px;\n    height: 10px;\n    background-color: #ff9900;\n    border-radius: 50%;\n    animation: stockPulse 1.5s ease-in-out infinite;\n    display: inline-block;\n  }\n\n  .stock-status-text {\n    color: #ff9900;\n    font-weight: 700;\n    font-size: 12px;\n  }\n\n  @keyframes stockPulse {\n    0% { transform: scale(1); opacity: 1; }\n    50% { transform: scale(1.3); opacity: 0.7; }\n    100% { transform: scale(1); opacity: 1; }\n  }\n</style>"
+          }
+        },
+        "kaching_bundles_app_block_f8NfBp": {
+          "type": "shopify://apps/kaching-bundles/blocks/app-block/6c637362-a106-4a32-94ac-94dcfd68cdb8",
+          "settings": {
+            "product": "{{product}}",
+            "manual_deal_block_id": ""
+          }
+        },
+        "04ba004e-2f54-4936-8b1c-8bcadf6573f6": {
+          "type": "quantity_selector",
+          "disabled": true,
+          "settings": {
+            "full_width_classic": false,
+            "atc_append": "none",
+            "atc_append_heights": "stretch-quantity",
+            "enable_quantity_discounts": false,
+            "style": "normal",
+            "headline": "Sommersalg – Gratis frakt",
+            "preselected": "option_2",
+            "display_selected_indicator": true,
+            "border_radius": 10,
+            "border_width": 2,
+            "color_scheme": "accent-1",
+            "enable_variant_selectors": true,
+            "enable_variant_selectors_on_quantity_of_1": false,
+            "update_prices": false,
+            "skip_unavailable": false,
+            "full_width_pickers": false,
+            "hide_pickers_overlay": true,
+            "pickers_label": "",
+            "image_width": 70,
+            "space_images": true,
+            "vertical_images_position": "top",
+            "vertical_prices_layout": "vertical",
+            "option_1_quantity": 1,
+            "option_1_badge": "",
+            "option_1_badge_style": "1",
+            "option_1_badge_color": "accent-1",
+            "option_1_label": "1-Pakning – 50 stk",
+            "option_1_benefit": "Spar 40 %",
+            "option_1_benefit_position": "top",
+            "option_1_benefit_style": "solid",
+            "option_1_benefit_color": "accent-2",
+            "option_1_caption": "5 kr per bruk",
+            "option_1_percentage_off_text": "0",
+            "option_1_fixed_amount_off": "0",
+            "option_1_price_text": "[price]",
+            "option_1_compare_price": "compare_price",
+            "option_1_compare_price_text": "[compare_price]",
+            "option_2_quantity": 2,
+            "option_2_badge": "Kjøp 2 Få 50 % Rabatt",
+            "option_2_badge_style": "1",
+            "option_2_badge_color": "accent-2",
+            "option_2_label": "2-Pakning – 100 stk",
+            "option_2_benefit": "Spar 50 %",
+            "option_2_benefit_position": "top",
+            "option_2_benefit_style": "solid",
+            "option_2_benefit_color": "accent-2",
+            "option_2_caption": "4 kr per bruk",
+            "option_2_percentage_off_text": "0",
+            "option_2_fixed_amount_off": "99",
+            "option_2_price_text": "[price]",
+            "option_2_compare_price": "compare_price",
+            "option_2_compare_price_text": "[compare_price]",
+            "option_3_quantity": 4,
+            "option_3_badge": "Gjelder denne uken",
+            "option_3_badge_style": "1",
+            "option_3_badge_color": "accent-2",
+            "option_3_label": "4-Pakning – 200 stk",
+            "option_3_benefit": "Spar 60 %",
+            "option_3_benefit_position": "top",
+            "option_3_benefit_style": "solid",
+            "option_3_benefit_color": "accent-2",
+            "option_3_caption": "3 kr per bruk",
+            "option_3_percentage_off_text": "0",
+            "option_3_fixed_amount_off": "397",
+            "option_3_price_text": "[price]",
+            "option_3_compare_price": "compare_price",
+            "option_3_compare_price_text": "[compare_price]",
+            "option_4_quantity": 0,
+            "option_4_badge": "",
+            "option_4_badge_style": "1",
+            "option_4_badge_color": "accent-1",
+            "option_4_label": "Buy [quantity]",
+            "option_4_benefit": "",
+            "option_4_benefit_position": "top",
+            "option_4_benefit_style": "outlined",
+            "option_4_benefit_color": "accent-1",
+            "option_4_caption": "You save [amount_saved]",
+            "option_4_percentage_off_text": "0",
+            "option_4_fixed_amount_off": "0",
+            "option_4_price_text": "[price]",
+            "option_4_compare_price": "compare_price",
+            "option_4_compare_price_text": "[compare_price]",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "custom_liquid_cfTETd": {
+          "type": "custom_liquid",
+          "name": "GIFT",
+          "disabled": true,
+          "settings": {
+            "custom_liquid": "<style>\n  .vp-trigger {\n    display: flex;\n    align-items: center;\n    gap: 12px;\n    padding: 10px 14px;\n    background: #fff;\n    border: 1px solid rgba(0,0,0,0.08);\n    border-radius: 10px;\n    cursor: pointer;\n    font-size: 10px;\n    color: inherit;\n    width: 100%;\n    margin-top: 12px;\n    text-align: left;\n    font-family: var(--font-body-family, var(--font-heading-family, inherit));\n    transition: box-shadow 0.15s ease, transform 0.1s ease;\n    -webkit-appearance: none;\n    appearance: none;\n    box-sizing: border-box;\n    box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);\n  }\n\n  .vp-trigger:hover {\n    box-shadow: 0 4px 14px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.07);\n    transform: translateY(-1px);\n  }\n\n  .vp-trigger:active {\n    transform: translateY(0);\n    box-shadow: 0 1px 4px rgba(0,0,0,0.07);\n  }\n\n  .vp-trigger-icon {\n    width: 20px;\n    height: 20px;\n    flex-shrink: 0;\n    opacity: 0.45;\n  }\n\n  .vp-trigger-label {\n    flex: 1;\n    font-size: 12px;\n    font-weight: 500;\n  }\n\n  .vp-trigger-badge {\n    font-size: 11px;\n    padding: 3px 9px;\n    background: #E1F5EE;\n    color: #0F6E56;\n    border-radius: 20px;\n    font-weight: 500;\n    white-space: nowrap;\n    flex-shrink: 0;\n  }\n\n  .vp-trigger-chevron {\n    width: 14px;\n    height: 14px;\n    opacity: 0.35;\n    flex-shrink: 0;\n  }\n\n  .vp-overlay {\n    display: none;\n    position: fixed;\n    inset: 0;\n    background: rgba(0,0,0,0.5);\n    z-index: 99999;\n    align-items: center;\n    justify-content: center;\n    padding: 16px;\n    box-sizing: border-box;\n  }\n\n  .vp-overlay.is-open {\n    display: flex;\n  }\n\n  .vp-modal {\n    background: #fff;\n    border-radius: 12px;\n    width: 100%;\n    max-width: 620px;\n    max-height: 90vh;\n    overflow: hidden;\n    display: flex;\n    flex-direction: column;\n  }\n\n  .vp-modal-header {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    padding: 14px 20px;\n    border-bottom: 0.5px solid rgba(0,0,0,0.1);\n    flex-shrink: 0;\n  }\n\n  .vp-modal-header p {\n    margin: 0;\n    font-size: 14px;\n    font-weight: 500;\n    color: #111;\n  }\n\n  .vp-modal-close {\n    background: none;\n    border: none;\n    cursor: pointer;\n    padding: 4px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    border-radius: 4px;\n    transition: background 0.15s;\n    -webkit-appearance: none;\n    appearance: none;\n  }\n\n  .vp-modal-close:hover {\n    background: rgba(0,0,0,0.06);\n  }\n\n  .vp-modal-close svg {\n    width: 18px;\n    height: 18px;\n    opacity: 0.5;\n  }\n\n  .vp-tabs {\n    display: flex;\n    border-bottom: 0.5px solid rgba(0,0,0,0.1);\n    flex-shrink: 0;\n    overflow-x: auto;\n    -webkit-overflow-scrolling: touch;\n    scrollbar-width: none;\n  }\n\n  .vp-tabs::-webkit-scrollbar {\n    display: none;\n  }\n\n  .vp-tab-btn {\n    flex-shrink: 0;\n    padding: 11px 18px;\n    font-size: 13px;\n    color: rgba(0,0,0,0.45);\n    cursor: pointer;\n    border: none;\n    border-bottom: 2px solid transparent;\n    background: none;\n    font-family: var(--font-body-family, var(--font-heading-family, inherit));\n    white-space: nowrap;\n    transition: color 0.15s, border-color 0.15s;\n    -webkit-appearance: none;\n    appearance: none;\n  }\n\n  .vp-tab-btn.is-active {\n    color: #111;\n    border-bottom-color: #111;\n    font-weight: 500;\n  }\n\n  .vp-panels {\n    overflow-y: auto;\n    flex: 1;\n    -webkit-overflow-scrolling: touch;\n  }\n\n  .vp-panel {\n    display: none;\n  }\n\n  .vp-panel.is-active {\n    display: grid;\n    grid-template-columns: 180px 1fr;\n  }\n\n  .vp-panel-image {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    padding: 24px 20px;\n    border-right: 0.5px solid rgba(0,0,0,0.1);\n    background: #f5f8fa;\n  }\n\n  .vp-panel-image img {\n    width: 100%;\n    max-width: 130px;\n    height: auto;\n    border-radius: 4px;\n    display: block;\n    object-fit: cover;\n  }\n\n  .vp-panel-content {\n    padding: 20px;\n  }\n\n  .vp-panel-content h3 {\n    font-size: 15px;\n    font-weight: 500;\n    margin: 0 0 4px;\n    color: #111;\n    line-height: 1.3;\n  }\n\n  .vp-panel-subtitle {\n    font-size: 12px;\n    color: rgba(0,0,0,0.45);\n    margin: 0 0 16px;\n    line-height: 1.4;\n  }\n\n  .vp-benefit-row {\n    display: flex;\n    align-items: flex-start;\n    gap: 8px;\n    margin-bottom: 9px;\n  }\n\n  .vp-benefit-row svg {\n    width: 15px;\n    height: 15px;\n    color: #0F6E56;\n    flex-shrink: 0;\n    margin-top: 2px;\n  }\n\n  .vp-benefit-row span {\n    font-size: 13px;\n    color: #111;\n    line-height: 1.5;\n  }\n\n  .vp-free-tag {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n    margin-top: 16px;\n    padding: 6px 12px;\n    background: #E1F5EE;\n    border-radius: 20px;\n    font-size: 12px;\n    font-weight: 500;\n    color: #0F6E56;\n  }\n\n  .vp-free-tag svg {\n    width: 13px;\n    height: 13px;\n    flex-shrink: 0;\n  }\n\n  @media screen and (max-width: 600px) {\n    .vp-panel.is-active {\n      grid-template-columns: 1fr;\n    }\n\n    .vp-panel-image {\n      border-right: none;\n      border-bottom: 0.5px solid rgba(0,0,0,0.1);\n      padding: 20px;\n    }\n\n    .vp-panel-image img {\n      max-width: 110px;\n    }\n\n    .vp-modal {\n      max-height: 88vh;\n    }\n  }\n</style>\n\n<button class=\"vp-trigger\" onclick=\"vpOpen()\">\n  <svg class=\"vp-trigger-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\">\n    <path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z\" />\n  </svg>\n  <span class=\"vp-trigger-label\">What's <strong> FREE </strong> when you bundle</span>\n  <span class=\"vp-trigger-badge\">2 free items</span>\n  <svg class=\"vp-trigger-chevron\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n    <path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M8.25 4.5l7.5 7.5-7.5 7.5\" />\n  </svg>\n</button>\n\n<div class=\"vp-overlay\" id=\"vp-overlay\" onclick=\"vpOverlayClick(event)\">\n  <div class=\"vp-modal\" id=\"vp-modal\">\n\n    <div class=\"vp-modal-header\">\n      <p>Free gifts when you bundle</p>\n      <button class=\"vp-modal-close\" onclick=\"vpClose()\">\n        <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n          <path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M6 18L18 6M6 6l12 12\" />\n        </svg>\n      </button>\n    </div>\n\n    <div class=\"vp-tabs\">\n      <button class=\"vp-tab-btn is-active\" onclick=\"vpTab(0)\">Fresh Breath in 30 Days</button>\n      <button class=\"vp-tab-btn\" onclick=\"vpTab(1)\">Routine Tracker</button>\n    </div>\n\n    <div class=\"vp-panels\">\n\n      <div class=\"vp-panel is-active\" id=\"vp-panel-0\">\n        <div class=\"vp-panel-image\">\n          <img src=\"https://shopvetpets.com/cdn/shop/files/DigitalProduct_2FreshBreathin30Days.png\" alt=\"Fresh Breath in 30 Days ebook cover\">\n        </div>\n        <div class=\"vp-panel-content\">\n          <h3>Fresh Breath in 30 Days</h3>\n          <p class=\"vp-panel-subtitle\">Your dog's complete guide to clean teeth and healthy gums</p>\n          <div class=\"vp-benefit-row\">\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M4.5 12.75l6 6 9-13.5\"/></svg>\n            <span>How to get the most out of your FreshWipes routine</span>\n          </div>\n          <div class=\"vp-benefit-row\">\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M4.5 12.75l6 6 9-13.5\"/></svg>\n            <span>Early warning signs of dental disease most owners miss</span>\n          </div>\n          <div class=\"vp-benefit-row\">\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M4.5 12.75l6 6 9-13.5\"/></svg>\n            <span>Day-by-day guide to building a habit that actually sticks</span>\n          </div>\n          <div class=\"vp-benefit-row\">\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M4.5 12.75l6 6 9-13.5\"/></svg>\n            <span>What to expect week by week in the first 30 days</span>\n          </div>\n          <div class=\"vp-free-tag\">\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" width=\"13\" height=\"13\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75\"/></svg>\n            Delivered instantly after checkout\n          </div>\n        </div>\n      </div>\n\n      <div class=\"vp-panel\" id=\"vp-panel-1\">\n        <div class=\"vp-panel-image\">\n          <img src=\"https://cdn.shopify.com/s/files/1/0735/4833/3323/files/ROUTINETRACKER.pdf_1.png?v=1776102536\" alt=\"Fresh Breath Routine Tracker preview\">\n        </div>\n        <div class=\"vp-panel-content\">\n          <h3>Fresh Breath Routine Tracker</h3>\n          <p class=\"vp-panel-subtitle\">21-day habit tracker to keep your routine consistent</p>\n          <div class=\"vp-benefit-row\">\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M4.5 12.75l6 6 9-13.5\"/></svg>\n            <span>21-day calendar with morning, evening, and deep clean logs</span>\n          </div>\n          <div class=\"vp-benefit-row\">\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M4.5 12.75l6 6 9-13.5\"/></svg>\n            <span>Weekly wipe check to monitor plaque reduction progress</span>\n          </div>\n          <div class=\"vp-benefit-row\">\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M4.5 12.75l6 6 9-13.5\"/></svg>\n            <span>Before and after photo slots to see the difference clearly</span>\n          </div>\n          <div class=\"vp-benefit-row\">\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M4.5 12.75l6 6 9-13.5\"/></svg>\n            <span>Breath progress log from week 1 through week 4</span>\n          </div>\n          <div class=\"vp-free-tag\">\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" width=\"13\" height=\"13\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75\"/></svg>\n            Delivered instantly after checkout\n          </div>\n        </div>\n      </div>\n\n    </div>\n  </div>\n</div>\n\n<script>\n  function vpOpen() {\n    document.getElementById('vp-overlay').classList.add('is-open');\n    document.body.style.overflow = 'hidden';\n  }\n\n  function vpClose() {\n    document.getElementById('vp-overlay').classList.remove('is-open');\n    document.body.style.overflow = '';\n  }\n\n  function vpOverlayClick(e) {\n    if (e.target === document.getElementById('vp-overlay')) vpClose();\n  }\n\n  function vpTab(index) {\n    document.querySelectorAll('.vp-tab-btn').forEach(function(t, i) {\n      t.classList.toggle('is-active', i === index);\n    });\n    document.querySelectorAll('.vp-panel').forEach(function(p, i) {\n      p.classList.toggle('is-active', i === index);\n    });\n  }\n\n  document.addEventListener('keydown', function(e) {\n    if (e.key === 'Escape') vpClose();\n  });\n</script>"
+          }
+        },
+        "custom_liquid_8TN4AP": {
+          "type": "custom_liquid",
+          "name": "Shipping Checkpoint",
+          "settings": {
+            "custom_liquid": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <style>\n    .custom-shipping-container {\n      display: flex;\n      padding: 6px 16px;\n      justify-content: space-between;\n      align-items: center;\n      background-color: #f6f6f6;\n      border-radius: 20px;\n      margin-top: 10px;\n    }\n\n    .custom-shipping-item {\n      display: flex;\n      align-items: center;\n      gap: 6px;\n    }\n\n    .text-block-shipping {\n      font-size: 12px;\n      color: #000;\n    }\n\n    .shipping-date {\n      font-weight: bold;\n    }\n\n    .shipping-worldwide {\n      font-size: 12px;\n      color: #000;\n    }\n\n    .shipping-worldwide .bold {\n      font-weight: bold;\n    }\n\n    .green-circle {\n      animation: fade 1s ease-in-out infinite;\n    }\n\n    @keyframes fade {\n      0%, 100% { opacity: 1; }\n      50% { opacity: 0.5; }\n    }\n\n    .flags-container {\n      display: flex;\n      gap: 6px;\n      align-items: center;\n    }\n    \n    .custom-icon {\n      width: 16px;\n      height: 12px;\n    }\n  </style>\n  <script>\n    document.addEventListener(\"DOMContentLoaded\", function() {\n      function getNextWeekday(date) {\n        var day = date.getDay();\n        var daysToAdd = (day === 5) ? 3 : (day === 6) ? 2 : 1;\n        return new Date(date.setDate(date.getDate() + daysToAdd));\n      }\n\n      var today = new Date();\n      var shipDate = getNextWeekday(today);\n      \n      // Format date to have short month (e.g., \"Thu, Feb 22\")\n      var options = { weekday: 'short', month: 'short', day: 'numeric' };\n      var formattedDate = shipDate.toLocaleDateString('en-US', options);\n      document.getElementById('shipping-date').textContent = formattedDate;\n\n      // Fetch country data using GeoJS API\n      fetch('https://get.geojs.io/v1/ip/geo.json')\n        .then(response => response.json())\n        .then(data => {\n          console.log(\"Geolocation API Response:\", data); // Debugging log\n\n          if (!data || !data.country_code) {\n            throw new Error(\"Invalid data from API\");\n          }\n          \n          var countryCode = data.country_code.toUpperCase(); // Get country code (e.g., \"GB\", \"US\")\n          var flagUrl = `https://flagcdn.com/w40/${countryCode.toLowerCase()}.png`;\n\n          // Set flag and country code\n          document.getElementById('country-flag').src = flagUrl;\n          document.getElementById('country-flag').alt = countryCode + \" Flag\";\n          document.getElementById('country-flag').style.display = \"inline\";\n          document.getElementById('country-text').innerHTML = `Fast <span class=\"bold\">${countryCode}</span> Shipping`;\n        })\n        .catch(error => {\n          console.error('Error fetching the IP information:', error);\n          document.getElementById('country-flag').style.display = \"none\"; \n          document.getElementById('country-text').innerHTML = \"Fast Worldwide Shipping\";\n        });\n    });\n  </script>\n</head>\n<body>\n  <div class=\"custom-shipping-container\">\n    <div class=\"custom-shipping-item\">\n      <svg class=\"green-circle\" xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"13\" viewBox=\"0 0 12 13\" fill=\"none\">\n        <circle cx=\"6\" cy=\"6.5\" r=\"6\" fill=\"#137333\"/>\n      </svg>\n      <div class=\"text-block-shipping\">Ships by <span id=\"shipping-date\" class=\"shipping-date\"></span></div>\n    </div>\n    <div class=\"custom-shipping-item flags-container\">\n      <img id=\"country-flag\" class=\"custom-icon\" src=\"\" alt=\"Country Flag\" style=\"display: none;\">\n      <div id=\"country-text\" class=\"shipping-worldwide\">Loading...</div>\n    </div>\n  </div>\n</body>\n</html>"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "skip_cart": false,
+            "uppercase_text": true,
+            "icon_scale": 120,
+            "icon_spacing": 10,
+            "atc_custom_label": "",
+            "display_price": false,
+            "enable_custom_color": false,
+            "custom_color": "#53af01",
+            "enable_secondary_btn": false,
+            "secondary_btn_label": "Buy It Now",
+            "secondary_btn_enable_custom_color": false,
+            "secondary_btn_custom_color": "#dd1d1d",
+            "margin_top": 12,
+            "margin_bottom": 0
+          }
+        },
+        "payment_badges_XtWzKz": {
+          "type": "payment_badges",
+          "settings": {
+            "enabled_payment_types": "",
+            "margin_top": 12,
+            "margin_bottom": 12
+          }
+        },
+        "custom_liquid_Migg8c": {
+          "type": "custom_liquid",
+          "name": "Guarantee",
+          "settings": {
+            "custom_liquid": "<style>\n  .custom-money-back {\n    background: #FFFFFF;\n    border: 2px solid #47B5E9;\n    border-radius: 7px;\n    padding: 10px 12px;\n    margin: 4px auto 0 auto;\n    max-width: 100%;\n    display: flex;\n    align-items: center;\n    gap: 8px;\n    overflow: hidden;\n  }\n  \n  .custom-money-back__badge {\n    flex-shrink: 0;\n    width: 35px;\n    height: 35px;\n  }\n  \n  .custom-money-back__badge img {\n    width: 100%;\n    height: 100%;\n    object-fit: contain;\n  }\n  \n  .custom-money-back__content {\n    flex: 1;\n    min-width: 0;\n  }\n  \n  .custom-money-back__title {\n    color: #000000;\n    font-family: 'Geist', sans-serif;\n    font-size: 12px;\n    font-weight: 700;\n    margin-bottom: 3px;\n    line-height: 1.2;\n    letter-spacing: -0.03em;\n    white-space: nowrap;\n  }\n  \n  .custom-money-back__text {\n    color: #000000;\n    font-family: 'Geist', sans-serif;\n    font-size: 10px;\n    font-weight: 400;\n    line-height: 1.3;\n    letter-spacing: 0;\n  }\n  \n  @media (min-width: 769px) {\n    .custom-money-back {\n      padding: 10px 12px;\n      gap: 10px;\n    }\n    .custom-money-back__badge {\n      width: 40px;\n      height: 40px;\n    }\n    .custom-money-back__title {\n      font-size: 14px;\n      margin-bottom: 2px;\n      letter-spacing: 0;\n    }\n    .custom-money-back__text {\n      font-size: 12px;\n      line-height: 1.2;\n    }\n  }\n</style>\n\n<div class=\"custom-money-back\">\n  <div class=\"custom-money-back__badge\">\n    <img src=\"https://cdn.shopify.com/s/files/1/0735/4833/3323/files/Namnlos_design_44.svg?v=1771204616\" alt=\"Money Back Guarantee\">\n  </div>\n  <div class=\"custom-money-back__content\">\n    <div class=\"custom-money-back__title\">\n      100-Day Money Back Guarantee\n    </div>\n    <div class=\"custom-money-back__text\">\n      Not completely satisfied? Then you’ll get your money back – no stress, no hassle.\n    </div>\n  </div>\n</div>"
+          }
+        },
+        "e7a28cbe-03cb-4c9d-a2c4-0e3e76ffb3e5": {
+          "type": "sticky_atc",
+          "settings": {
+            "function": "add_to_cart",
+            "display_when": "after_scroll",
+            "button_label": "ADD TO CART",
+            "enable_custom_btn_color": false,
+            "custom_btn_color": "#dd1d1d",
+            "color_scheme": "background-1",
+            "star_color": "#ffcc00",
+            "stars_label": "Trusted by 45,000+ Pet Owners",
+            "picker_type": "combined",
+            "desktop_show_image": false,
+            "desktop_show_title": true,
+            "desktop_rating_stars": true,
+            "desktop_show_price": false,
+            "desktop_show_sale_badge": true,
+            "desktop_variant_picker": true,
+            "desktop_full_button_width": false,
+            "desktop_show_price_in_button": false,
+            "desktop_transparent_bg": false,
+            "mobile_show_image": false,
+            "mobile_show_title": true,
+            "mobile_rating_stars": true,
+            "mobile_show_price": false,
+            "mobile_show_sale_badge": false,
+            "mobile_variant_picker": false,
+            "mobile_full_button_width": true,
+            "mobile_show_price_in_button": false,
+            "mobile_transparent_bg": false
+          }
+        },
+        "description": {
+          "type": "description",
+          "disabled": true,
+          "settings": {
+            "margin_top": 24,
+            "margin_bottom": 24
+          }
+        },
+        "collapsible_tab_t3jLVn": {
+          "type": "collapsible_tab",
+          "disabled": true,
+          "settings": {
+            "heading": "Vetpets Full Dental Care Guide",
+            "heading_size": "medium",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "",
+            "page": "vetpets-full-dental-care-guide",
+            "margin_top": 15,
+            "margin_bottom": 0
+          }
+        },
+        "collapsible_tab_fGzmXR": {
+          "type": "collapsible_tab",
+          "disabled": true,
+          "settings": {
+            "heading": "Free Gifts When You Bundle",
+            "heading_size": "medium",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "",
+            "page": "vetpets-full-dental-care-guide",
+            "margin_top": 15,
+            "margin_bottom": 0
+          }
+        },
+        "de158e68-5d0d-4819-a625-e2dabdff87d1": {
+          "type": "collapsible_tab",
+          "disabled": true,
+          "settings": {
+            "heading": "100-Day Money-Back Guarantee",
+            "heading_size": "medium",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p>We truly believe FreshWipes will make a difference – for both you and your dog.<br/><br/>That’s why we offer a <strong>100-day money-backguarantee</strong>.</p><p>You can try the product at home, in your own time.<br/><br/>Not completely satisfied? Then you’ll get your money back – no stress, no hassle.</p><p>For us, it’s more important that your dog gets the care they deserve than that you keep something you don’t love.</p><p><strong>You can read more about our satisfaction guarantee here.<br/></strong><a href=\"/pages/100-dagers-fornoydgaranti\" title=\"100-Day Satisfaction Guarantee\">100-Day Satisfaction Guarantee</a></p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "collapsible_tab_jnYwdt": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "What to expect",
+            "heading_size": "small",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p><strong>First Weeks</strong><br/><br/>Your pet stays fresh between baths — softer coat, no doggy smell. The 60-second wipe-down becomes routine.</p><p><strong>First Month</strong><br/><br/>Bath nights drop off. He's clean by default now, not just after a bath — and your home stays cleaner too.</p><p><strong>Later Months</strong><br/><br/>Clean is just how he is. No pre-guest scramble, less hair, no smell. The routine runs itself.</p>",
+            "page": "free-e-book-the-secret-to-a-sparkling-home-in-just-15-minutes-a-day",
+            "margin_top": 12,
+            "margin_bottom": 0
+          }
+        },
+        "collapsible_tab_EGhYxC": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Ingredients",
+            "heading_size": "small",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<ul><li><strong>EDI-purified water</strong> – pure water base</li><li><strong>Phenoxyethanol</strong> – preserves formula freshness</li><li><strong>Chlorhexidine</strong> – antibacterial effect</li><li><strong>Decyl glucoside</strong> – gentle plant-derived cleanser</li><li><strong>Jojoba oil</strong> – conditions and softens coat</li><li><strong>Honey extract</strong> – soothes and moisturises skin</li><li><strong>Shea butter extract</strong> – nourishes dry or flaky skin</li><li><strong>Corn extract</strong> – gentle skin conditioning</li></ul><p>✔️ Fragrance-free ✔️ Not tested on animals (cruelty-free) ✔️ Free from alcohol and harsh chemicals</p>",
+            "page": "free-e-book-the-secret-to-a-sparkling-home-in-just-15-minutes-a-day",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "collapsible_tab_DMVCEX": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "How to Use",
+            "heading_size": "small",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<ul><li>Slip the glove over your hand until it sits snug</li><li>Wipe head to tail, along the coat, legs and paws</li><li>Pay extra attention to muddy or smelly areas</li><li>Use daily after walks for best results — takes under 60 seconds</li></ul>",
+            "page": "free-e-book-the-secret-to-a-sparkling-home-in-just-15-minutes-a-day",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "collapsible_tab_aFAiwA": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Payment & Delivery",
+            "heading_size": "small",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<h4><strong>Payment</strong></h4><p>You can safely pay with Klarna, credit card, or bank transfer – choose what works best for you.<br/></p><h4><strong>Shipping</strong></h4><p><br/>We offer different rates for the UK and the Rest of the World:</p><ul><li><strong>United Kingdom (UK): </strong>Standard Shipping: <strong>£2.00</strong> (Free on orders £37 and over)Priority Shipping: <strong>£4.50</strong></li><li><strong>Rest of the World:</strong>Standard Shipping: <strong>$2.95</strong> (Free on orders $49 and over)Priority Shipping: <strong>$6.00</strong></li></ul><p><strong>Delivery Time</strong><br/><br/>As our UK warehouse is temporarily out of stock, your order will be shipped from our international warehouse.<br/>We offer two shipping options at checkout:</p><ul><li><strong>Standard Shipping:</strong> 1–2 days handling + 5–10 days shipping time</li><li><strong>Priority Shipping:</strong> 1–2 days handling + 4–7 days shipping time</li></ul><p>A tracking number will be sent by email as soon as your order leaves the warehouse.</p><p><strong>Questions?</strong><br/>Email us at <strong>info@shopvetpets.com</strong> – we always reply within 24 hours on weekdays.</p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "reviews_8UgFbe": {
+          "type": "reviews",
+          "disabled": true,
+          "settings": {
+            "color_scheme": "background-1",
+            "show_custom_bg": false,
+            "custom_bg_color": "#f2f2f2",
+            "corner_radius": 12,
+            "border_width": 0,
+            "border_color": "#b7b7b7",
+            "avatar_alignment": "top",
+            "avatar_corner_radius": 40,
+            "star_color": "#ffcc00",
+            "stars_translate": 0,
+            "checkmark_color": "#6d388b",
+            "checkmark_icon_color": "#ffffff",
+            "slider_type": "slide",
+            "autoplay": false,
+            "autoplay_speed": 5,
+            "display_arrows": false,
+            "display_dots": true,
+            "author_1": "– Anna, 34 år [stars]",
+            "image_1": "shopify://shop_images/Profilbild_3.jpg",
+            "text_1": "<p>Har brukt FreshWipes i omtrent en uke og ble overrasket over hvor lett det gikk. Hunden vår er vanligvis skeptisk, men lot meg faktisk rengjøre uten problemer.</p>",
+            "author_2": "– Mats, 52 år [stars]",
+            "image_2": "shopify://shop_images/Profilbild5_1a47da8b-0488-41c4-af0b-4e3b8857192b.webp",
+            "text_2": "<p>Etter to måneder er pusten mye friskere og misfargingene har blitt redusert. Vi har det som en fast rutine på søndager – og det fungerer kjempebra.</p>",
+            "author_3": "– Sofia, 41 år [stars]",
+            "image_3": "shopify://shop_images/Profilbild111.webp",
+            "text_3": "<p>Vi har brukt dem i over ett år nå. Vår labrador har ikke trengt noe veterinærbesøk for tennene siden. Enkelt å ta med, og det føles trygt.</p>",
+            "margin_top": 24,
+            "margin_bottom": 24
+          }
+        },
+        "complementary_UjkCBV": {
+          "type": "complementary",
+          "disabled": true,
+          "settings": {
+            "block_heading": "Bundle & Save: Complete Care Kit",
+            "make_collapsible_row": false,
+            "icon": "price_tag",
+            "product_list_limit": 10,
+            "products_per_page": 3,
+            "pagination_style": "counter",
+            "image_ratio": "square",
+            "enable_quick_add": true,
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        }
+      },
+      "block_order": [
+        "a6eb81db-40e4-43e0-972f-32db010a4a56",
+        "title",
+        "divider_AALhJR",
+        "text_aAPf6w",
+        "text_njMHhg",
+        "price",
+        "text_cn7XQg",
+        "text_kEd4Nj",
+        "custom_liquid_qmqTUE",
+        "kaching_bundles_app_block_f8NfBp",
+        "04ba004e-2f54-4936-8b1c-8bcadf6573f6",
+        "custom_liquid_cfTETd",
+        "custom_liquid_8TN4AP",
+        "buy_buttons",
+        "payment_badges_XtWzKz",
+        "custom_liquid_Migg8c",
+        "e7a28cbe-03cb-4c9d-a2c4-0e3e76ffb3e5",
+        "description",
+        "collapsible_tab_t3jLVn",
+        "collapsible_tab_fGzmXR",
+        "de158e68-5d0d-4819-a625-e2dabdff87d1",
+        "collapsible_tab_jnYwdt",
+        "collapsible_tab_EGhYxC",
+        "collapsible_tab_DMVCEX",
+        "collapsible_tab_aFAiwA",
+        "reviews_8UgFbe",
+        "complementary_UjkCBV"
+      ],
+      "custom_css": [
+        ".product__title > * {font-size: calc(var(--font-heading-scale) * 1.6rem);}"
+      ],
+      "settings": {
+        "display_id": false,
+        "enable_sticky_info": true,
+        "display_variant_image_first": false,
+        "disable_prepend": true,
+        "hide_variants": false,
+        "variant_image_filtering": "none",
+        "image_zoom": "none",
+        "thumbnails_ratio": "square",
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": false,
+        "dots_color_scheme": "inverse",
+        "video_player": "play_btn",
+        "enable_video_looping": false,
+        "autoplay_videos_pause_btn": false,
+        "video_sound_btn": false,
+        "video_timeline": false,
+        "play_btn_color_scheme": "accent-1",
+        "sound_btn_color_scheme": "inverse",
+        "timeline_color": "accent-1",
+        "media_size": "medium",
+        "media_position": "left",
+        "gallery_layout": "thumbnail_slider",
+        "desktop_thumbnails_position": "bottom",
+        "desktop_thumbnails_count": 5,
+        "desktop_vertical_thumbnails_width": 16,
+        "desktop_vertical_thumbnails_hide_arrows": false,
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "desktop_arrows_position": "hidden",
+        "mobile_media_corner_radius": 0,
+        "mobile_spacing_pixels": 0,
+        "mobile_arrows_position": "sides",
+        "mobile_pagination": "hidden",
+        "mobile_thumbnails_position": "bottom",
+        "mobile_thumbnails_count": 5,
+        "mobile_vertical_thumbnails_width": 22,
+        "mobile_vertical_thumbnails_hide_arrows": true,
+        "mobile_scroll_padding_percentage": 0,
+        "mobile_scroll_padding_pixels": 2,
+        "enable_mobile_outher_spacing": false,
+        "mobile_slides_container_width": 100,
+        "mobile_slides_inner_width": 100,
+        "trust_badge_position": "top-right",
+        "trust_badge_size": "medium",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "disabled": true,
+      "settings": {
+        "display_id": false,
+        "title": "You may also like",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "stretch_cards": false,
+        "columns_desktop": 4,
+        "color_scheme": "background-1",
+        "image_ratio": "adapt",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "columns_mobile": "2",
+        "padding_top": 36,
+        "padding_bottom": 24
+      }
+    },
+    "section_divider_bfdUFA": {
+      "type": "section-divider",
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "custom",
+        "custom_shape_color": "#d5f7ff",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_with_text_BYWPwt": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_6YJirD": {
+          "type": "heading",
+          "settings": {
+            "title": "A Daily Cleaning Routine Responsible <strong>Owners Love — And Dogs Tolerate</strong>",
+            "title_highlight_color": "#47b5e9",
+            "heading_size": "h2"
+          }
+        },
+        "text_8Y6Km6": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Most solutions are too messy, too slow, or too much of a fight to do every day. So you may skip it — and your <strong>dog's muddy paws goes straight from the walk to the rug and to the sofa.</strong> GloveWipes fits into your daily routine in 60 seconds. No water, no rinse, no drama.</p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_6YJirD",
+        "text_8Y6Km6"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/GloveWipes_10.jpg",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "custom",
+        "section_color_scheme": "custom",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "image_first",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#d5f7ff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#000000",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#d5f7ff",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "section_divider_HcqEyx": {
+      "type": "section-divider",
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": true,
+        "shape_color": "custom",
+        "custom_shape_color": "#d5f7ff",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_with_text_eVzzWi": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_8t69HH": {
+          "type": "heading",
+          "settings": {
+            "title": "Here's Why Nothing You've <strong>Tried Has Stuck</strong>",
+            "title_highlight_color": "#47b5e9",
+            "heading_size": "h2"
+          }
+        },
+        "text_with_icon_9pQYLX": {
+          "type": "text_with_icon",
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "mobile_alignment": "left",
+            "text_color": "#121212",
+            "text_1": "<strong>Towels & cloths: </strong>Smooth surface. Moves dirt around — doesn't lift it off.",
+            "text_2": "<strong>Sprays & dry shampoo:</strong> Sits on top of the coat. Your dog licks it off within the hour.",
+            "text_3": "<strong>Bath every time:</strong> 20 minutes, a soaking bathroom, a dog who hates it. Not something you can do every day.",
+            "icon_scale": 120,
+            "icon_color": "#ec1a1a",
+            "icon_1": "cancel",
+            "filled_icon_1": false,
+            "icon_2": "cancel",
+            "filled_icon_2": false,
+            "icon_3": "cancel",
+            "filled_icon_3": false,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 3,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 5,
+            "border_size": 0,
+            "border_color": "#b7b7b7"
+          }
+        }
+      },
+      "block_order": [
+        "heading_8t69HH",
+        "text_with_icon_9pQYLX"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/GloveWipes_11.jpg",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "background-1",
+        "section_color_scheme": "background-1",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "text_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#2e2a39",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#ffffff",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#ffffff",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "section_divider_YJdTqY": {
+      "type": "section-divider",
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "custom",
+        "custom_shape_color": "#d5f7ff",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "custom_columns_fQkrT4": {
+      "type": "custom-columns",
+      "blocks": {
+        "heading_XkDpwE": {
+          "type": "heading",
+          "settings": {
+            "column": "col_1",
+            "visibility": "always-display",
+            "heading": "60 Seconds. Fits Your Hand. <strong>Your Pet Won't Even Notice.</strong>",
+            "title_highlight_color": "#47b5e9",
+            "heading_size": "h1",
+            "alignment": "center",
+            "mobile_alignment": "mobile-center",
+            "margin_top": 20,
+            "margin_bottom": 20
+          }
+        },
+        "icon_with_text_PDwLbm": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_2",
+            "visibility": "always-display",
+            "icon": "check_circle",
+            "filled_icon": true,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h3",
+            "icon_text_alignment": "left",
+            "title": "The texture lifts.",
+            "text": "<p>Raised surface physically grips and pulls dirt, bacteria, and loose fur off the coat. You'll see it on the glove after the first use.</p>",
+            "margin_top": 20,
+            "margin_bottom": 30
+          }
+        },
+        "icon_with_text_yfmrMj": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_2",
+            "visibility": "always-display",
+            "icon": "check_circle",
+            "filled_icon": true,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h3",
+            "icon_text_alignment": "left",
+            "title": "The formula prevents.",
+            "text": "<p>Chlorhexidine and antibacterial actives kill bacteria on contact and slow regrowth. The clean actually lasts.</p>",
+            "margin_top": 20,
+            "margin_bottom": 20
+          }
+        },
+        "image_GYyj9f": {
+          "type": "image",
+          "settings": {
+            "column": "col_3",
+            "visibility": "always-display",
+            "image": "shopify://shop_images/GloveWipes_13.jpg",
+            "width": 100,
+            "alignment": "center",
+            "mobile_alignment": "center",
+            "border_radius": 14,
+            "margin_top": 20,
+            "margin_bottom": 20
+          }
+        },
+        "icon_with_text_Qi6M3M": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_4",
+            "visibility": "always-display",
+            "icon": "check_circle",
+            "filled_icon": true,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h3",
+            "icon_text_alignment": "left",
+            "title": "The glove stays in control.",
+            "text": "<p>Fits over your hand. Your dog feels your touch — not a tool. Most dogs stand still.</p>",
+            "margin_top": 20,
+            "margin_bottom": 30
+          }
+        },
+        "icon_with_text_mmx9Ka": {
+          "type": "icon_with_text",
+          "settings": {
+            "column": "col_4",
+            "visibility": "always-display",
+            "icon": "check_circle",
+            "filled_icon": true,
+            "icon_size": "m",
+            "icon_position": "next-to-title",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h3",
+            "icon_text_alignment": "left",
+            "title": "The routine finally sticks.",
+            "text": "<p>60 seconds at the door after every walk. No setup, no mess, no reason to skip it. This is the daily habit that actually holds.</p>",
+            "margin_top": 20,
+            "margin_bottom": 20
+          }
+        }
+      },
+      "block_order": [
+        "heading_XkDpwE",
+        "icon_with_text_PDwLbm",
+        "icon_with_text_yfmrMj",
+        "image_GYyj9f",
+        "icon_with_text_Qi6M3M",
+        "icon_with_text_mmx9Ka"
+      ],
+      "name": "Custom columns",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "color_scheme": "background-2",
+        "columns_count": 4,
+        "desktop_page_width": "normal",
+        "column_gap_desktop": 40,
+        "row_gap_desktop": 40,
+        "desktop_vertical_alignment": "center",
+        "mobile_full_page": false,
+        "column_gap_mobile": 20,
+        "row_gap_mobile": 30,
+        "mobile_vertical_alignment": "flex-start",
+        "col_1_desktop_width": 12,
+        "col_1_mobile_width": 4,
+        "col_1_visibility": "always-display",
+        "col_2_desktop_width": 4,
+        "col_2_mobile_width": 4,
+        "col_2_visibility": "always-display",
+        "col_3_desktop_width": 4,
+        "col_3_mobile_width": 4,
+        "col_3_visibility": "always-display",
+        "col_4_desktop_width": 4,
+        "col_4_mobile_width": 4,
+        "col_4_visibility": "always-display",
+        "col_5_desktop_width": 3,
+        "col_5_mobile_width": 4,
+        "col_5_visibility": "always-display",
+        "col_6_desktop_width": 3,
+        "col_6_mobile_width": 4,
+        "col_6_visibility": "always-display",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d"
+      }
+    },
+    "section_divider_hJDAfH": {
+      "type": "section-divider",
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": true,
+        "shape_color": "custom",
+        "custom_shape_color": "#d5f7ff",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "rocky_transformation_DyJtqK": {
+      "type": "rocky-transformation",
+      "blocks": {
+        "step_eY3iC6": {
+          "type": "step",
+          "settings": {
+            "image": "shopify://shop_images/GloveWipes_14.jpg",
+            "icon": "",
+            "title": "Slip It On",
+            "description": "Slide GloveWipes over your hand until it sits snug. Textured side facing out."
+          }
+        },
+        "step_xxRHMq": {
+          "type": "step",
+          "settings": {
+            "image": "shopify://shop_images/GloveWipes_15.jpg",
+            "icon": "",
+            "title": "Wipe Head to Tail",
+            "description": "Run the glove along the coat, paws, and any problem areas. The texture does the work."
+          }
+        },
+        "step_KVpXNW": {
+          "type": "step",
+          "settings": {
+            "image": "shopify://shop_images/GloveWipes_16.jpg",
+            "icon": "",
+            "title": "Fresh Dog. Done.",
+            "description": "No rinsing. No drying. Your dog is clean and you're both ready to move on."
+          }
+        }
+      },
+      "block_order": [
+        "step_eY3iC6",
+        "step_xxRHMq",
+        "step_KVpXNW"
+      ],
+      "name": "Rocky - Transformation",
+      "settings": {
+        "headline_p1": "Clean Dog,",
+        "headline_acc": "3 Easy Steps,",
+        "headline_p2": "Under 60 Seconds.",
+        "subheadline": "No tub, no water, no sprays, no fighting with your dog to hold still.",
+        "headline_color": "#111111",
+        "accent_color": "#47b5e9",
+        "subheadline_color": "#6b7280",
+        "number_color": "#47b5e9",
+        "number_bg": "#ffffff",
+        "step_title_color": "#111111",
+        "step_desc_color": "#787878",
+        "line_color": "#47b5e9",
+        "bg_color": "#ffffff",
+        "card_bg": "#ffffff",
+        "card_border": "#e5e7eb",
+        "image_size_mobile": 240,
+        "image_size_desktop": 280,
+        "image_radius": 12,
+        "icon_size": 24,
+        "headline_size_mobile": 24,
+        "headline_size_desktop": 36,
+        "padding_mobile": 24,
+        "padding_desktop": 60
+      }
+    },
+    "ss_feature_34_G9LRXc": {
+      "type": "ss-feature-34",
+      "blocks": {
+        "heading_WEMMMY": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>What's Actually Inside Every GloveWipe</p>",
+            "heading_custom": false,
+            "heading_font": "josefin_sans_n4",
+            "heading_size": 36,
+            "heading_size_mobile": 24,
+            "heading_height": 130,
+            "heading_mt": 0,
+            "heading_mt_mobile": 0,
+            "heading_width": 70,
+            "heading_color": "#47b5e9"
+          }
+        },
+        "text_kqBwEi": {
+          "type": "text",
+          "settings": {
+            "text": "<p>No alcohol. No harsh chemicals. Safe for daily use on coat and skin.</p>",
+            "text_custom": false,
+            "text_font": "josefin_sans_n4",
+            "text_size": 14,
+            "text_size_mobile": 14,
+            "text_height": 150,
+            "text_mt": 16,
+            "text_mt_mobile": 16,
+            "text_width": 70,
+            "text_color": "#121212"
+          }
+        },
+        "feature_dFtxpR": {
+          "type": "feature",
+          "settings": {
+            "icon": "plant",
+            "title": "Jojoba Oil",
+            "feature_text": "<p>Lightweight conditioning that leaves the coat soft and healthy — not greasy. Mimics the skin's natural oils for a natural feel.</p>",
+            "feature_icon_color": "#ffffff",
+            "feature_icon_hover_color": "#ffffff",
+            "feature_icon_bg_color": "#13b6b5",
+            "feature_icon_bg_hover_color": "#13b6b5",
+            "feature_icon_border_color": "#13b6b5",
+            "feature_icon_border_hover_color": "#121212"
+          }
+        },
+        "feature_BpM3Yn": {
+          "type": "feature",
+          "settings": {
+            "icon": "plant",
+            "title": "Honey Extract",
+            "feature_text": "<p>A natural humectant that soothes and moisturises the skin during cleaning. Leaves the coat with a subtle natural softness.</p>",
+            "feature_icon_color": "#ffffff",
+            "feature_icon_hover_color": "#ffffff",
+            "feature_icon_bg_color": "#13b6b5",
+            "feature_icon_bg_hover_color": "#13b6b5",
+            "feature_icon_border_color": "#13b6b5",
+            "feature_icon_border_hover_color": "#121212"
+          }
+        },
+        "feature_KBDnFE": {
+          "type": "feature",
+          "settings": {
+            "icon": "plant",
+            "title": "Shea Butter Extract",
+            "feature_text": "<p>Deeply nourishing for dry or flaky skin. Conditions the coat while the glove cleans.</p>",
+            "feature_icon_color": "#ffffff",
+            "feature_icon_hover_color": "#ffffff",
+            "feature_icon_bg_color": "#13b6b5",
+            "feature_icon_bg_hover_color": "#13b6b5",
+            "feature_icon_border_color": "#13b6b5",
+            "feature_icon_border_hover_color": "#121212"
+          }
+        },
+        "feature_tLiaNT": {
+          "type": "feature",
+          "settings": {
+            "icon": "plant",
+            "title": "Corn Extract",
+            "feature_text": "<p>A gentle skin-conditioning agent that supports moisture balance and coat health.</p>",
+            "feature_icon_color": "#ffffff",
+            "feature_icon_hover_color": "#ffffff",
+            "feature_icon_bg_color": "#13b6b5",
+            "feature_icon_bg_hover_color": "#13b6b5",
+            "feature_icon_border_color": "#13b6b5",
+            "feature_icon_border_hover_color": "#121212"
+          }
+        }
+      },
+      "block_order": [
+        "heading_WEMMMY",
+        "text_kqBwEi",
+        "feature_dFtxpR",
+        "feature_BpM3Yn",
+        "feature_KBDnFE",
+        "feature_tLiaNT"
+      ],
+      "name": "SS - Feature #34",
+      "settings": {
+        "content_align": "center",
+        "content_align_mobile": "center",
+        "features_gap": 18,
+        "features_gap_mobile": 16,
+        "features_mt": 38,
+        "features_mt_mobile": 40,
+        "feature_padding_horizontal": 12,
+        "feature_padding_horizontal_mobile": 16,
+        "feature_padding_vertical": 20,
+        "feature_padding_vertical_mobile": 10,
+        "feature_radius": 20,
+        "feature_border_thickness": 0,
+        "feature_icon_padding": 8,
+        "feature_icon_radius": 100,
+        "feature_icon_border_thickness": 1,
+        "feature_icon_size": 20,
+        "feature_icon_size_mobile": 18,
+        "title_custom": false,
+        "title_font": "josefin_sans_n4",
+        "title_size": 16,
+        "title_size_mobile": 16,
+        "title_height": 130,
+        "open_icon_size": 30,
+        "open_icon_size_mobile": 26,
+        "feature_text_custom": false,
+        "feature_text_font": "josefin_sans_n4",
+        "feature_text_size": 16,
+        "feature_text_size_mobile": 16,
+        "feature_text_height": 150,
+        "feature_text_padding_top": 18,
+        "title_color": "#121212",
+        "feature_text_color": "#707070",
+        "open_icon_color": "#47b5e9",
+        "feature_bg_color": "#ffffff",
+        "background_color": "#f3f3f3",
+        "background_gradient": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(213, 247, 255, 1) 81%, rgba(255, 255, 255, 1) 100%)",
+        "border_color": "#121212",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_horizontal": 0,
+        "margin_horizontal_mobile": 0,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "padding_horizontal": 5,
+        "padding_horizontal_mobile": 1.5,
+        "full_width": false,
+        "content_width": 1400,
+        "border_thickness": 0,
+        "section_radius": 0,
+        "lazy": true
+      }
+    },
+    "section_divider_kAW6L6": {
+      "type": "section-divider",
+      "disabled": true,
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "custom",
+        "custom_shape_color": "#d5f7ff",
+        "background_color": "background-1",
+        "custom_background_color": "#d5f7ff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_with_text_jpGEnV": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_xgchUK": {
+          "type": "heading",
+          "settings": {
+            "title": "A simple habit that <strong>makes a big difference</strong>",
+            "title_highlight_color": "#47b5e9",
+            "heading_size": "h2"
+          }
+        },
+        "text_jBQGVq": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Many dog owners think dental care has to be complicated.</p><p>But with FreshWipes, it’s so easy that you’ll actually use them.</p><p>1–2 times a week is all it takes to prevent painful problems in the future.</p><h4><strong>Fresh breath, stronger teeth, happier dog</strong></h4><p>A healthy mouth affects the whole body.</p><p>With FreshWipes, your dog not only gets fresher breath and whiter teeth –<br/><br/>they’ll also feel better and have more energy.</p><p><strong>Fewer infections. More play. More joy.</strong></p>",
+            "text_style": "body"
+          }
+        },
+        "atc_button_3Pb78r": {
+          "type": "atc_button",
+          "settings": {
+            "button_label": "ADD TO CART",
+            "class": "addqty",
+            "atc_product": "freshwipes-kit-protects-against-dental-diseases",
+            "atc_skip_cart": false
+          }
+        },
+        "text_with_icon_HTFYqw": {
+          "type": "text_with_icon",
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "mobile_alignment": "left",
+            "text_color": "#121212",
+            "text_1": "100-Day Money-Back Guarantee",
+            "text_2": "",
+            "text_3": "",
+            "icon_scale": 120,
+            "icon_color": "#47b5e9",
+            "icon_1": "new_releases",
+            "filled_icon_1": true,
+            "icon_2": "check_circle",
+            "filled_icon_2": false,
+            "icon_3": "check_circle",
+            "filled_icon_3": false,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 3,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7"
+          }
+        }
+      },
+      "block_order": [
+        "heading_xgchUK",
+        "text_jBQGVq",
+        "atc_button_3Pb78r",
+        "text_with_icon_HTFYqw"
+      ],
+      "disabled": true,
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/Gif_2.gif",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "custom",
+        "section_color_scheme": "custom",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "text_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#d5f7ff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#000000",
+        "custom_colors_solid_button_background": "#47b5e9",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#d5f7ff",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "section_divider_BJPHP4": {
+      "type": "section-divider",
+      "disabled": true,
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": true,
+        "shape_color": "custom",
+        "custom_shape_color": "#d5f7ff",
+        "background_color": "background-1",
+        "custom_background_color": "#d5f7ff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "ss_comparison_table_20_CV4BXQ": {
+      "type": "ss-comparison-table-20",
+      "blocks": {
+        "row_zL9KPW": {
+          "type": "row",
+          "settings": {
+            "left_text": "<p>Lifts dirt and bacteria off the coat</p>",
+            "left_icon": "yes",
+            "right_text": "<p>Spreads it around or masks it</p>",
+            "right_icon": "no"
+          }
+        },
+        "row_gnxHgn": {
+          "type": "row",
+          "settings": {
+            "left_text": "<p>60 seconds at the door</p>",
+            "left_icon": "yes",
+            "right_text": "<p>20 minutes, wet bathroom, stressed dog</p>",
+            "right_icon": "no"
+          }
+        },
+        "row_kPQCaz": {
+          "type": "row",
+          "settings": {
+            "left_text": "<p>Your dog loves it and stands still</p>",
+            "left_icon": "yes",
+            "right_text": "<p>Most dogs resist, fight, or run</p>",
+            "right_icon": "no"
+          }
+        },
+        "row_Ubii6P": {
+          "type": "row",
+          "settings": {
+            "left_text": "<p>No water, no rinse, no mess</p>",
+            "left_icon": "yes",
+            "right_text": "<p>Sprays get licked off, towels just smear</p>",
+            "right_icon": "no"
+          }
+        },
+        "row_jmbPLw": {
+          "type": "row",
+          "settings": {
+            "left_text": "<p>Safe for daily use</p>",
+            "left_icon": "yes",
+            "right_text": "<p>Too harsh, too slow, or too much effort to repeat</p>",
+            "right_icon": "no"
+          }
+        },
+        "row_HEFHUy": {
+          "type": "row",
+          "settings": {
+            "left_text": "<p>Results that actually last</p>",
+            "left_icon": "yes",
+            "right_text": "<p>Back to square one within days</p>",
+            "right_icon": "no"
+          }
+        },
+        "row_EqX3DC": {
+          "type": "row",
+          "settings": {
+            "left_text": "<p>Builds a routine you'll stick to</p>",
+            "left_icon": "yes",
+            "right_text": "<p>Too inconvenient to make a habit</p>",
+            "right_icon": "no"
+          }
+        }
+      },
+      "block_order": [
+        "row_zL9KPW",
+        "row_gnxHgn",
+        "row_kPQCaz",
+        "row_Ubii6P",
+        "row_jmbPLw",
+        "row_HEFHUy",
+        "row_EqX3DC"
+      ],
+      "custom_css": [
+        ".comparison-versus-template--25517100073227__ss_comparison_table_20_CV4BXQ {text-size-adjust: 100% !important; -webkit-text-size-adjust: 100% !important;}"
+      ],
+      "name": "SS - Comparison table #20",
+      "settings": {
+        "heading": "<p><strong>Why GloveWipes Works Better</strong> Than What You've Already Tried</p>",
+        "heading_custom": false,
+        "heading_font": "josefin_sans_n4",
+        "heading_size": 36,
+        "heading_size_mobile": 24,
+        "heading_height": 130,
+        "heading_padding_horizontal": 0,
+        "heading_padding_horizontal_mobile": 0,
+        "heading_align": "center",
+        "heading_align_mobile": "center",
+        "images_mt": 36,
+        "images_mt_mobile": 24,
+        "left_image": "shopify://shop_images/GloveWipes_17.jpg",
+        "right_image": "shopify://shop_images/GloveWipes_18.jpg",
+        "image_radius": 20,
+        "image_border_thickness": 0,
+        "image_ratio": "square",
+        "image_ratio_mobile": "square",
+        "versus": "Vs",
+        "versus_custom": false,
+        "versus_font": "geist_n4",
+        "versus_size": 16,
+        "versus_size_mobile": 12,
+        "versus_height": 130,
+        "versus_padding": 20,
+        "versus_padding_mobile": 8,
+        "versus_radius": 100,
+        "versus_border_thickness": 0,
+        "rows_gap": 8,
+        "rows_gap_mobile": 8,
+        "rows_mt": 24,
+        "rows_mt_mobile": 20,
+        "row_width": 94,
+        "row_width_mobile": 100,
+        "row_padding_horizontal": 12,
+        "row_padding_horizontal_mobile": 10,
+        "row_padding_vertical": 12,
+        "row_padding_vertical_mobile": 8,
+        "row_radius": 16,
+        "icon_size": 18,
+        "icon_size_mobile": 18,
+        "text_custom": false,
+        "text_font": "josefin_sans_n4",
+        "text_size": 14,
+        "text_size_mobile": 12,
+        "text_height": 120,
+        "versus_color": "#ffffff",
+        "versus_bg_color": "#121212",
+        "versus_border_color": "#ffffff",
+        "text_left_color": "#ffffff",
+        "text_right_color": "#121212",
+        "row_left_bg_color": "#47b5e9",
+        "row_right_bg_color": "#f3f3f3",
+        "icon_left_bg_color": "#ffffff",
+        "icon_right_bg_color": "#121212",
+        "heading_color": "#121212",
+        "image_border_color": "#121212",
+        "background_color": "#ffffff",
+        "background_gradient": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(213, 247, 255, 1) 52%, rgba(255, 255, 255, 1) 100%)",
+        "border_color": "#121212",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_horizontal": 0,
+        "margin_horizontal_mobile": 0,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "padding_horizontal": 5,
+        "padding_horizontal_mobile": 1,
+        "full_width": false,
+        "content_width": 1000,
+        "border_thickness": 0,
+        "section_radius": 0,
+        "lazy": true
+      }
+    },
+    "image_with_text_rLM4fU": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_8CwgKb": {
+          "type": "heading",
+          "settings": {
+            "title": "What Vets Actually Tell Dog Owners <strong>About Daily Coat Care</strong>",
+            "title_highlight_color": "#47b5e9",
+            "heading_size": "h2"
+          }
+        },
+        "text_G78B3U": {
+          "type": "text",
+          "settings": {
+            "text": "<p>\"Most owners only think about their dog's coat when it becomes a problem. A simple 60-second daily routine removes what builds up before it ever gets to that point.\"</p>",
+            "text_style": "body"
+          }
+        },
+        "caption_TmEtTh": {
+          "type": "caption",
+          "settings": {
+            "caption": "Dr. James Mitchell, DVM",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        }
+      },
+      "block_order": [
+        "heading_8CwgKb",
+        "text_G78B3U",
+        "caption_TmEtTh"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/GloveWipes_19.jpg",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "background-1",
+        "section_color_scheme": "background-1",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "image_first",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#2e2a39",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#ffffff",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#ffffff",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "55bd100e-3bbd-426c-a5cf-eed7b2a3706f": {
+      "type": "testimonials",
+      "blocks": {
+        "column_zJ6zMR": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "",
+            "text": "<p>\"I've tried every spray out there. My dog licks it straight off within minutes. This is the first thing that actually fits into our daily routine — and he just stands there while I do it.\"</p>",
+            "author": "— Susan, Golden Retriever owner"
+          }
+        },
+        "column_8RKF7m": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "",
+            "text": "<p>\"After every walk I wiped his paws with a towel and hoped for the best. Now I do his whole coat in under a minute. The sofa has genuinely never been cleaner.\"</p>",
+            "author": "— Carol, Labradoodle owner"
+          }
+        },
+        "column_rFd6he": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "",
+            "text": "<p>\"I was skeptical after wasting money on products that promised everything. Three weeks in and this is the first thing that's made daily cleaning feel completely effortless.\"</p>",
+            "author": "— Patricia, Bichon Frise owner"
+          }
+        },
+        "column_gCBCNY": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "",
+            "text": "<p>\"My dog hates baths — always has. This takes 60 seconds, he doesn't flinch, and his coat actually stays fresh. Wish I'd found this years ago.\"</p>",
+            "author": "— Dorothy, Cavalier King Charles owner"
+          }
+        },
+        "column_cCkemb": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "",
+            "text": "<p>\"My dog hates baths — always has. This takes 60 seconds, he doesn't flinch, and his coat actually stays fresh. Wish I'd found this years ago.\"</p>",
+            "author": "— Dorothy, Cavalier King Charles owner"
+          }
+        },
+        "column_77fFgP": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "",
+            "text": "<p>\"My dog used to come in from walks and go straight to the couch. Now I wipe him down at the door in under a minute. It's become part of our routine and he doesn't even try to escape.\"</p>",
+            "author": "— Barbara, Spaniel owner"
+          }
+        },
+        "column_BgewtE": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "",
+            "text": "<p>\"I felt guilty every time I skipped bath night. Now I don't have to — 60 seconds every day and his coat stays fresh. Simple as that.\"</p>",
+            "author": "— Linda, Poodle owner"
+          }
+        },
+        "column_FUpWBg": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "",
+            "text": "<p>\"Bought this not expecting much after everything else I've tried. Two weeks in and his coat feels softer, smells fresher and I actually look forward to our little routine.\"</p>",
+            "author": "— Joyce, Shih Tzu owner"
+          }
+        }
+      },
+      "block_order": [
+        "column_zJ6zMR",
+        "column_8RKF7m",
+        "column_rFd6he",
+        "column_gCBCNY",
+        "column_cCkemb",
+        "column_77fFgP",
+        "column_BgewtE",
+        "column_FUpWBg"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "45,000+<strong> </strong>Happy<strong> Pet Owners</strong>",
+        "title_highlight_color": "#47b5e9",
+        "heading_size": "h2",
+        "text": "<p>Keeping their dogs clean every day — without the bath battle.</p>",
+        "color_scheme": "background-1",
+        "image_width": "full",
+        "image_ratio": "square",
+        "column_alignment": "center",
+        "show_stars": true,
+        "inactive_stars_style": "solid",
+        "star_color": "#ffcc00",
+        "bg_star_color": "#ececec",
+        "show_quotes": false,
+        "quotes_color_scheme": "accent-1",
+        "cards_color_scheme": "bg-overlay",
+        "type": "slide",
+        "autoplay": true,
+        "autoplay_speed": 3,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_full_page": false,
+        "columns_desktop": 3,
+        "slider_desktop": true,
+        "per_move_desktop": 1,
+        "desktop_spacing": 40,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "hidden",
+        "desktop_arrows_position": "under",
+        "slider_mobile": true,
+        "enable_mobile_preview": true,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "hidden",
+        "mobile_arrows_position": "under",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "linear-gradient(57deg, rgba(249, 119, 255, 1), rgba(54, 212, 255, 1) 47%, rgba(43, 252, 135, 1) 83%)",
+        "custom_colors_text": "#2e2a39",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_text": "#2e2a39"
+      }
+    },
+    "section_divider_pFE63Q": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "background-2",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "collapsible_content_TbfYVV": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_tR8CwM": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Will my dog tolerate it?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Almost every dog do — far better than baths. No water, no tub, no restraint. Your hand inside the glove means your dog feels your touch, not a tool.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_wWEXkL": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Is this a replacement for bathing?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>No — it's what keeps your dog clean between baths so they become less urgent and less frequent.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_3fRqLL": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "When will I see results?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Most owners notice a fresher coat within the first few uses. Visible improvement in coat condition within 1–2 weeks of daily use.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_4GGYLx": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can I use it on my cat?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>GloveWipes is formulated for dogs. We'd recommend checking with your vet before use on cats.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_X6j8jm": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How do I use it?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Slip the glove over your hand, textured side out. Wipe head to tail, paws, and any problem areas. Done in under 60 seconds.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_gJ6pC7": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How should I store them?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Store at room temperature, away from direct sunlight. Keep the lid closed after each use to maintain moisture and freshness.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_DDddPH": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What if I'm not satisfied?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>100-day money-back guarantee. Not happy? Full refund. No return needed. Email us at <a href=\"mailto:info@shopvetpets.com\">info@shopvetpets.com</a>.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_tR8CwM",
+        "collapsible_row_wWEXkL",
+        "collapsible_row_3fRqLL",
+        "collapsible_row_4GGYLx",
+        "collapsible_row_X6j8jm",
+        "collapsible_row_gJ6pC7",
+        "collapsible_row_DDddPH"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "caption": "",
+        "title": "Frequently Asked Questions",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "row",
+        "color_scheme": "background-2",
+        "container_color_scheme": "accent-1",
+        "open_first_collapsible_row": false,
+        "video_muted_autoplay": true,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "row_heading_size": "medium",
+        "collapse_icon": "carret",
+        "display_top_border": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_contaner_colors_background": "#ffffff",
+        "custom_container_gradient_background": "",
+        "custom_contaner_colors_text": "#2e2a39"
+      }
+    },
+    "section_divider_HfUqqg": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "background-1",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-2",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "icon_bar_KHKwKc": {
+      "type": "icon-bar",
+      "blocks": {
+        "column_QHckr6": {
+          "type": "column",
+          "settings": {
+            "icon": "favorite",
+            "filled_icon": true,
+            "title": "OVER 45,000 SATISFIED CUSTOMERS",
+            "text": "<p>We’ve made dog owners and dogs across the world happy!</p>"
+          }
+        },
+        "column_tPk8Rq": {
+          "type": "column",
+          "settings": {
+            "icon": "new_releases",
+            "filled_icon": true,
+            "title": "100-DAY MONEY-BACK GUARANTEE",
+            "text": "<p>Not satisfied? Just contact us within 365 days of purchase, and we’ll take care of it for you.</p>"
+          }
+        },
+        "column_FkbetQ": {
+          "type": "column",
+          "settings": {
+            "icon": "support_agent",
+            "filled_icon": true,
+            "title": "SUPPORT MONDAY–FRIDAY",
+            "text": "<p>Questions? Don’t hesitate to reach out – we’ll respond within 24 hours!</p>"
+          }
+        }
+      },
+      "block_order": [
+        "column_QHckr6",
+        "column_tPk8Rq",
+        "column_FkbetQ"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h2",
+        "text": "",
+        "color_scheme": "background-1",
+        "icon_layout": "vertical",
+        "icon_size": "medium",
+        "icon_color": "accent-1",
+        "cards_color_scheme": "background-1",
+        "type": "slide",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_full_page": false,
+        "columns_desktop": 3,
+        "slider_desktop": false,
+        "per_move_desktop": 1,
+        "desktop_spacing": 40,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "sides",
+        "columns_mobile": "1",
+        "slider_mobile": true,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "hidden",
+        "mobile_arrows_position": "under",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_text": "#2e2a39"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "related-products",
+    "section_divider_bfdUFA",
+    "image_with_text_BYWPwt",
+    "section_divider_HcqEyx",
+    "image_with_text_eVzzWi",
+    "section_divider_YJdTqY",
+    "custom_columns_fQkrT4",
+    "section_divider_hJDAfH",
+    "rocky_transformation_DyJtqK",
+    "ss_feature_34_G9LRXc",
+    "section_divider_kAW6L6",
+    "image_with_text_jpGEnV",
+    "section_divider_BJPHP4",
+    "ss_comparison_table_20_CV4BXQ",
+    "image_with_text_rLM4fU",
+    "55bd100e-3bbd-426c-a5cf-eed7b2a3706f",
+    "section_divider_pFE63Q",
+    "collapsible_content_TbfYVV",
+    "section_divider_HfUqqg",
+    "icon_bar_KHKwKc"
+  ]
+}

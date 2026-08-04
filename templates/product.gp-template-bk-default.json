@@ -8,472 +8,624 @@
  * ------------------------------------------------------------
  */
 {
+  "order": [
+    "main",
+    "image_slider_mYdxDt",
+    "section_divider_q94HQ4",
+    "image_with_text_Ei4Ccz",
+    "section_divider_XeNhA8",
+    "image_with_text_PLRggf",
+    "section_divider_xwTHTM",
+    "custom_columns_tCbQVM",
+    "section_divider_iVUHzY",
+    "testimonials_A3d8yL",
+    "image_with_text_PCDA6T",
+    "related-products",
+    "featured_collection_MRf9GU",
+    "icon_bar_FXDFLd",
+    "1762748258f247e3fb"
+  ],
   "sections": {
-    "main": {
-      "type": "main-product",
+    "1762748258f247e3fb": {
+      "settings": {
+        "display_id": false,
+        "include_margins": true
+      },
+      "type": "apps"
+    },
+    "custom_columns_tCbQVM": {
+      "block_order": [
+        "heading_KUnYfn",
+        "richtext_rErCjL",
+        "icon_with_text_tW9KnU",
+        "icon_with_text_RkxWkq",
+        "image_4JqQ7a",
+        "icon_with_text_Yt7WxB",
+        "icon_with_text_mUkFLX"
+      ],
       "blocks": {
-        "a6eb81db-40e4-43e0-972f-32db010a4a56": {
-          "type": "rating_stars",
+        "heading_KUnYfn": {
           "settings": {
-            "rating": 4.8,
-            "star_color": "#ffcc00",
-            "bg_stars_style": "full",
-            "bg_star_color": "#ececec",
-            "label": "4,86/5 (15.000+ Happy Customers)",
-            "size": 12,
-            "alignment": "flex-start",
-            "scroll_id": "",
-            "margin_top": 0,
-            "margin_bottom": 9
-          }
+            "alignment": "center",
+            "column": "col_1",
+            "heading": "That's why dog owners <strong>choose EarWipes</strong>",
+            "heading_size": "h2",
+            "margin_bottom": 20,
+            "margin_top": 20,
+            "mobile_alignment": "mobile-center",
+            "title_highlight_color": "#47b5e9",
+            "visibility": "always-display"
+          },
+          "type": "heading"
         },
-        "title": {
-          "type": "title",
+        "icon_with_text_RkxWkq": {
           "settings": {
-            "text_size": "h2",
-            "title_alignment": "left",
-            "uppercase_title": false,
-            "margin_top": 0,
-            "margin_bottom": 0
-          }
+            "column": "col_2",
+            "filled_icon": false,
+            "icon": "pets",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h3",
+            "icon_position": "next-to-title",
+            "icon_size": "m",
+            "icon_text_alignment": "left",
+            "margin_bottom": 20,
+            "margin_top": 20,
+            "text": "<p>Safe for puppies, adult dogs, and sensitive ears. No alcohol, no harsh chemicals.</p>",
+            "title": "Gentle yet effective – even for daily use",
+            "visibility": "always-display"
+          },
+          "type": "icon_with_text"
         },
-        "price": {
-          "type": "price",
-          "disabled": true,
+        "icon_with_text_Yt7WxB": {
           "settings": {
-            "layout": "price_first",
-            "price_color": "accent-1",
-            "compare_price_color": "text",
-            "displayed_badge": "sale",
-            "icon_scale": 140,
-            "custom_badge_text": "[icon_1] SPECIAL OFFER",
-            "icon_1": "redeem",
-            "filled_icon_1": false,
-            "icon_2": "check_circle",
-            "filled_icon_2": false,
-            "margin_top": 9,
-            "margin_bottom": 15
-          }
+            "column": "col_4",
+            "filled_icon": false,
+            "icon": "pets",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h3",
+            "icon_position": "next-to-title",
+            "icon_size": "m",
+            "icon_text_alignment": "left",
+            "margin_bottom": 30,
+            "margin_top": 20,
+            "text": "<p>pH-balanced cleaning that stops bacteria and yeast before they become a problem.</p>",
+            "title": "Prevents infections before they start",
+            "visibility": "always-display"
+          },
+          "type": "icon_with_text"
         },
-        "text_CQPADX": {
-          "type": "text",
+        "icon_with_text_mUkFLX": {
           "settings": {
-            "mobile_text_size": 14,
-            "desktop_text_size": 16,
-            "alignment": "left",
-            "text_color": "#121212",
-            "text_1": "Removes plaque before it hardens into tartar",
-            "text_2": "Cleans tear stains and prevents buildup",
-            "text_3": "Breaks down ear wax and odor at the source",
-            "icon_scale": 120,
-            "icon_color": "#118fcb",
-            "icon_1": "new_releases",
-            "filled_icon_1": true,
-            "icon_2": "local_shipping",
-            "filled_icon_2": true,
-            "icon_3": "pets",
-            "filled_icon_3": true,
-            "width": "100%",
-            "direction": "vertical",
-            "column_gap": 4,
-            "enable_bg": false,
-            "bg_color": "#f3f3f3",
-            "corner_radius": 40,
-            "padding": 3,
-            "border_size": 0,
-            "border_color": "#b7b7b7",
-            "margin_top": 15,
-            "margin_bottom": 15
-          }
+            "column": "col_4",
+            "filled_icon": false,
+            "icon": "pets",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h3",
+            "icon_position": "next-to-title",
+            "icon_size": "m",
+            "icon_text_alignment": "left",
+            "margin_bottom": 20,
+            "margin_top": 20,
+            "text": "<p>Your dog avoids discomfort – and you avoid wrestling matches with ear drop bottles.</p>",
+            "title": "No liquid mess or stress",
+            "visibility": "always-display"
+          },
+          "type": "icon_with_text"
         },
-        "5fcc0428-e768-4cb7-bea3-eb0274198dd1": {
-          "type": "variant_picker",
+        "icon_with_text_tW9KnU": {
           "settings": {
-            "picker_types": "dropdown, dropdown",
-            "custom_labels": "[name] - [selected]",
-            "skip_unavailable": false,
-            "swatches_size": "medium",
-            "swatches_custom_colors": "disabled",
-            "swatches_custom_colors_list": "#000000, #6D388B, #0000FF, #FFCC00",
-            "full_width_dropdowns": false,
-            "breaks_style": "normal",
-            "breaks_headline": "BUNDLE & SAVE",
-            "breaks_display_selected_indicator": true,
-            "breaks_border_radius": 10,
-            "breaks_border_width": 2,
-            "breaks_color_scheme": "accent-1",
-            "breaks_badges": "[empty], Most popular, [empty]",
-            "breaks_badge_style": "1",
-            "breaks_badge_color": "accent-1",
-            "breaks_displayed_images": "variant_images",
-            "breaks_custom_images": "",
-            "breaks_image_width": 70,
-            "breaks_space_images": true,
-            "breaks_vertical_images_position": "top",
-            "breaks_vertical_prices_layout": "vertical",
-            "breaks_labels": "[name], [name], [name]",
-            "breaks_benefits": "[empty], Free Shipping, Free Shipping",
-            "breaks_benefit_position": "top",
-            "breaks_benefit_style": "outlined",
-            "breaks_benefit_color": "accent-1",
-            "breaks_captions": "Variant 1 caption, Variant 2 caption, Variant 3 caption",
-            "breaks_price_texts": "[price], [price], [price]",
-            "breaks_compare_price_texts": "[compare_price], [compare_price], [compare_price]",
-            "margin_top": 15,
-            "margin_bottom": 15
-          }
+            "column": "col_2",
+            "filled_icon": false,
+            "icon": "pets",
+            "icon_color": "accent-1",
+            "icon_heading_size": "h3",
+            "icon_position": "next-to-title",
+            "icon_size": "m",
+            "icon_text_alignment": "left",
+            "margin_bottom": 30,
+            "margin_top": 20,
+            "text": "<p>Specially developed formula lifts away brown buildup, moisture, and debris without pushing it deeper.</p>",
+            "title": "Removes wax & dirt",
+            "visibility": "always-display"
+          },
+          "type": "icon_with_text"
         },
-        "04ba004e-2f54-4936-8b1c-8bcadf6573f6": {
-          "type": "quantity_selector",
+        "image_4JqQ7a": {
           "settings": {
-            "full_width_classic": false,
-            "atc_append": "none",
-            "atc_append_heights": "stretch-quantity",
-            "enable_quantity_discounts": false,
-            "style": "normal",
-            "headline": "☀️ SUMMER OFFERS ☀️",
-            "preselected": "option_1",
-            "display_selected_indicator": true,
-            "border_radius": 10,
-            "border_width": 2,
-            "color_scheme": "accent-1",
-            "enable_variant_selectors": true,
-            "enable_variant_selectors_on_quantity_of_1": false,
-            "update_prices": false,
-            "skip_unavailable": false,
-            "full_width_pickers": false,
-            "hide_pickers_overlay": true,
-            "pickers_label": "",
-            "image_width": 70,
-            "space_images": true,
-            "vertical_images_position": "top",
-            "vertical_prices_layout": "vertical",
-            "option_1_quantity": 1,
-            "option_1_badge": "",
-            "option_1_badge_style": "1",
-            "option_1_badge_color": "accent-1",
-            "option_1_label": "1x ClearSwipe",
-            "option_1_benefit": "Save 40%",
-            "option_1_benefit_position": "top",
-            "option_1_benefit_style": "solid",
-            "option_1_benefit_color": "accent-2",
-            "option_1_caption": "Free E-book + 2 Free Microfibre covers",
-            "option_1_percentage_off_text": "0",
-            "option_1_fixed_amount_off": "0",
-            "option_1_price_text": "[price]",
-            "option_1_compare_price": "compare_price",
-            "option_1_compare_price_text": "[compare_price]",
-            "option_2_quantity": 2,
-            "option_2_badge": "Buy 1 Get 1 Free",
-            "option_2_badge_style": "1",
-            "option_2_badge_color": "accent-2",
-            "option_2_label": "2x ClearSwipe",
-            "option_2_benefit": "Save 50%",
-            "option_2_benefit_position": "top",
-            "option_2_benefit_style": "solid",
-            "option_2_benefit_color": "accent-2",
-            "option_2_caption": "Free E-book + 2 Free Microfibre covers",
-            "option_2_percentage_off_text": "0",
-            "option_2_fixed_amount_off": "12.99",
-            "option_2_price_text": "[price]",
-            "option_2_compare_price": "compare_price",
-            "option_2_compare_price_text": "[compare_price]",
-            "option_3_quantity": 3,
-            "option_3_badge": "Our best offer!",
-            "option_3_badge_style": "1",
-            "option_3_badge_color": "accent-2",
-            "option_3_label": "3x ClearSwipe",
-            "option_3_benefit": "Save 53%",
-            "option_3_benefit_position": "top",
-            "option_3_benefit_style": "solid",
-            "option_3_benefit_color": "accent-2",
-            "option_3_caption": "Free E-book + 2 Free Microfibre covers",
-            "option_3_percentage_off_text": "0",
-            "option_3_fixed_amount_off": "24.98",
-            "option_3_price_text": "[price]",
-            "option_3_compare_price": "compare_price",
-            "option_3_compare_price_text": "[compare_price]",
-            "option_4_quantity": 0,
-            "option_4_badge": "",
-            "option_4_badge_style": "1",
-            "option_4_badge_color": "accent-1",
-            "option_4_label": "Buy [quantity]",
-            "option_4_benefit": "",
-            "option_4_benefit_position": "top",
-            "option_4_benefit_style": "outlined",
-            "option_4_benefit_color": "accent-1",
-            "option_4_caption": "You save [amount_saved]",
-            "option_4_percentage_off_text": "0",
-            "option_4_fixed_amount_off": "0",
-            "option_4_price_text": "[price]",
-            "option_4_compare_price": "compare_price",
-            "option_4_compare_price_text": "[compare_price]",
-            "margin_top": 15,
-            "margin_bottom": 15
-          }
+            "alignment": "center",
+            "border_radius": 0,
+            "column": "col_3",
+            "image": "shopify://shop_images/Engelska_12.jpg",
+            "margin_bottom": 20,
+            "margin_top": 20,
+            "mobile_alignment": "center",
+            "visibility": "always-display",
+            "width": 100
+          },
+          "type": "image"
         },
-        "inventory_TFawNK": {
-          "type": "inventory",
-          "disabled": true,
+        "richtext_rErCjL": {
           "settings": {
+            "alignment": "center",
+            "column": "col_1",
+            "margin_bottom": 20,
+            "margin_top": 20,
+            "mobile_alignment": "mobile-center",
+            "text": "",
             "text_style": "body",
-            "inventory_threshold": 10,
-            "show_inventory_quantity": true,
-            "margin_top": 15,
-            "margin_bottom": 15
-          }
-        },
-        "custom_liquid_tdTfb6": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "<!-- Snippet: stock-status.liquid -->\n<div class=\"stock-status-wrapper\">\n  <span class=\"stock-status-dot\"></span>\n  <span class=\"stock-status-text\">Low stock due to Black Month Sale</span>\n</div>\n\n<style>\n  .stock-status-wrapper {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n  }\n\n  .stock-status-dot {\n    width: 14px;\n    height: 14px;\n    background-color: #ff9900;\n    border-radius: 50%;\n    animation: stockPulse 1.5s ease-in-out infinite;\n    display: inline-block;\n  }\n\n  .stock-status-text {\n    color: #ff9900;\n    font-weight: 700;\n    font-size: 14px;\n  }\n\n  @keyframes stockPulse {\n    0% { transform: scale(1); opacity: 1; }\n    50% { transform: scale(1.3); opacity: 0.7; }\n    100% { transform: scale(1); opacity: 1; }\n  }\n</style>"
-          }
-        },
-        "buy_buttons": {
-          "type": "buy_buttons",
-          "settings": {
-            "show_dynamic_checkout": false,
-            "skip_cart": false,
-            "uppercase_text": true,
-            "icon_scale": 120,
-            "icon_spacing": 10,
-            "atc_custom_label": "",
-            "display_price": false,
-            "enable_custom_color": false,
-            "custom_color": "#53af01",
-            "enable_secondary_btn": false,
-            "secondary_btn_label": "Buy It Now",
-            "secondary_btn_enable_custom_color": false,
-            "secondary_btn_custom_color": "#dd1d1d",
-            "margin_top": 24,
-            "margin_bottom": 24
-          }
-        },
-        "payment_badges_XtWzKz": {
-          "type": "payment_badges",
-          "settings": {
-            "enabled_payment_types": "",
-            "margin_top": 15,
-            "margin_bottom": 15
-          }
-        },
-        "custom_liquid_hTmdHC": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "<style>\n  .custom-money-back {\n    background: #FFFFFF;\n    border: 2px solid #47B5E9;\n    border-radius: 7px;\n    padding: 10px 12px;\n    margin: 10px auto 0 auto;\n    max-width: 100%;\n    display: flex;\n    align-items: center;\n    gap: 8px;\n    overflow: hidden;\n  }\n  \n  .custom-money-back__badge {\n    flex-shrink: 0;\n    width: 35px;\n    height: 35px;\n  }\n  \n  .custom-money-back__badge img {\n    width: 100%;\n    height: 100%;\n    object-fit: contain;\n  }\n  \n  .custom-money-back__content {\n    flex: 1;\n    min-width: 0;\n  }\n  \n  .custom-money-back__title {\n    color: #000000;\n    font-family: 'Poppins', sans-serif;\n    font-size: 14px;\n    font-weight: 700;\n    margin-bottom: 3px;\n    line-height: 1.2;\n    letter-spacing: -0.03em;\n    white-space: nowrap;\n  }\n  \n  .custom-money-back__text {\n    color: #000000;\n    font-family: 'Poppins', sans-serif;\n    font-size: 8px;\n    font-weight: 400;\n    line-height: 1.3;\n    letter-spacing: 0;\n  }\n  \n  @media (min-width: 769px) {\n    .custom-money-back {\n      padding: 15px 20px;\n      gap: 18px;\n    }\n    .custom-money-back__badge {\n      width: 60px;\n      height: 60px;\n    }\n    .custom-money-back__title {\n      font-size: 18px;\n      margin-bottom: 6px;\n      letter-spacing: 0;\n    }\n    .custom-money-back__text {\n      font-size: 13px;\n      line-height: 1.5;\n    }\n  }\n</style>\n\n<div class=\"custom-money-back\">\n  <div class=\"custom-money-back__badge\">\n    <img src=\"https://cdn.shopify.com/s/files/1/0735/4833/3323/files/Namnlos_design_44.svg?v=1771204616\" alt=\"Money Back Guarantee\">\n  </div>\n  <div class=\"custom-money-back__content\">\n    <div class=\"custom-money-back__title\">\n      Clear ears OR your money back.\n    </div>\n    <div class=\"custom-money-back__text\">\n      Use EarWipes daily. If your dog’s ears don’t stay clean and odor-free, we’ll refund you. No improvement, no payment. No questions asked.\n    </div>\n  </div>\n</div>"
-          }
-        },
-        "custom_liquid_bgawBg": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <style>\n    .custom-shipping-container {\n      display: flex;\n      padding: 6px 16px;\n      justify-content: space-between;\n      align-items: center;\n      background-color: #f6f6f6;\n      border-radius: 20px;\n      margin-top: 10px;\n    }\n\n    .custom-shipping-item {\n      display: flex;\n      align-items: center;\n      gap: 6px;\n    }\n\n    .text-block-shipping {\n      font-size: 12px;\n      color: #000;\n    }\n\n    .shipping-date {\n      font-weight: bold;\n    }\n\n    .shipping-worldwide {\n      font-size: 12px;\n      color: #000;\n    }\n\n    .shipping-worldwide .bold {\n      font-weight: bold;\n    }\n\n    .green-circle {\n      animation: fade 1s ease-in-out infinite;\n    }\n\n    @keyframes fade {\n      0%, 100% { opacity: 1; }\n      50% { opacity: 0.5; }\n    }\n\n    .flags-container {\n      display: flex;\n      gap: 6px;\n      align-items: center;\n    }\n    \n    .custom-icon {\n      width: 16px;\n      height: 12px;\n    }\n  </style>\n  <script>\n    document.addEventListener(\"DOMContentLoaded\", function() {\n      function getNextWeekday(date) {\n        var day = date.getDay();\n        var daysToAdd = (day === 5) ? 3 : (day === 6) ? 2 : 1;\n        return new Date(date.setDate(date.getDate() + daysToAdd));\n      }\n\n      var today = new Date();\n      var shipDate = getNextWeekday(today);\n      \n      // Format date to have short month (e.g., \"Thu, Feb 22\")\n      var options = { weekday: 'short', month: 'short', day: 'numeric' };\n      var formattedDate = shipDate.toLocaleDateString('en-US', options);\n      document.getElementById('shipping-date').textContent = formattedDate;\n\n      // Fetch country data using GeoJS API\n      fetch('https://get.geojs.io/v1/ip/geo.json')\n        .then(response => response.json())\n        .then(data => {\n          console.log(\"Geolocation API Response:\", data); // Debugging log\n\n          if (!data || !data.country_code) {\n            throw new Error(\"Invalid data from API\");\n          }\n          \n          var countryCode = data.country_code.toUpperCase(); // Get country code (e.g., \"GB\", \"US\")\n          var flagUrl = `https://flagcdn.com/w40/${countryCode.toLowerCase()}.png`;\n\n          // Set flag and country code\n          document.getElementById('country-flag').src = flagUrl;\n          document.getElementById('country-flag').alt = countryCode + \" Flag\";\n          document.getElementById('country-flag').style.display = \"inline\";\n          document.getElementById('country-text').innerHTML = `Free <span class=\"bold\">${countryCode}</span> Shipping`;\n        })\n        .catch(error => {\n          console.error('Error fetching the IP information:', error);\n          document.getElementById('country-flag').style.display = \"none\"; \n          document.getElementById('country-text').innerHTML = \"Fast Worldwide Shipping\";\n        });\n    });\n  </script>\n</head>\n<body>\n  <div class=\"custom-shipping-container\">\n    <div class=\"custom-shipping-item\">\n      <svg class=\"green-circle\" xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"13\" viewBox=\"0 0 12 13\" fill=\"none\">\n        <circle cx=\"6\" cy=\"6.5\" r=\"6\" fill=\"#137333\"/>\n      </svg>\n      <div class=\"text-block-shipping\">Ships by <span id=\"shipping-date\" class=\"shipping-date\"></span></div>\n    </div>\n    <div class=\"custom-shipping-item flags-container\">\n      <img id=\"country-flag\" class=\"custom-icon\" src=\"\" alt=\"Country Flag\" style=\"display: none;\">\n      <div id=\"country-text\" class=\"shipping-worldwide\">Loading...</div>\n    </div>\n  </div>\n</body>\n</html>"
-          }
-        },
-        "text_iGeFz8": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "mobile_text_size": 14,
-            "desktop_text_size": 16,
-            "alignment": "left",
-            "text_color": "#121212",
-            "text_1": "Most pet care routines only treat symptoms.  This system helps prevent the problem before it starts — daily, gently, and consistently.",
-            "text_2": "",
-            "text_3": "",
-            "icon_scale": 120,
-            "icon_color": "#121212",
-            "icon_1": "",
-            "filled_icon_1": false,
-            "icon_2": "",
-            "filled_icon_2": false,
-            "icon_3": "",
-            "filled_icon_3": false,
-            "width": "100%",
-            "direction": "horizontal",
-            "column_gap": 3,
-            "enable_bg": false,
-            "bg_color": "#f3f3f3",
-            "corner_radius": 40,
-            "padding": 3,
-            "border_size": 0,
-            "border_color": "#b7b7b7",
-            "margin_top": 15,
-            "margin_bottom": 15
-          }
-        },
-        "e7a28cbe-03cb-4c9d-a2c4-0e3e76ffb3e5": {
-          "type": "sticky_atc",
-          "settings": {
-            "function": "add_to_cart",
-            "display_when": "after_scroll",
-            "button_label": "Add to cart",
-            "enable_custom_btn_color": false,
-            "custom_btn_color": "#dd1d1d",
-            "color_scheme": "background-1",
-            "star_color": "#ffcc00",
-            "stars_label": "4,86/5 (15.000+ Happy Customers)",
-            "picker_type": "combined",
-            "desktop_show_image": true,
-            "desktop_show_title": true,
-            "desktop_rating_stars": true,
-            "desktop_show_price": true,
-            "desktop_show_sale_badge": true,
-            "desktop_variant_picker": true,
-            "desktop_full_button_width": false,
-            "desktop_show_price_in_button": false,
-            "desktop_transparent_bg": false,
-            "mobile_show_image": false,
-            "mobile_show_title": true,
-            "mobile_rating_stars": true,
-            "mobile_show_price": false,
-            "mobile_show_sale_badge": false,
-            "mobile_variant_picker": false,
-            "mobile_full_button_width": true,
-            "mobile_show_price_in_button": false,
-            "mobile_transparent_bg": false
-          }
-        },
-        "collapsible_tab_ERGKLJ": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "What to expect?",
-            "heading_size": "small",
-            "icon": "dentistry",
-            "filled_icon": true,
-            "collapse_icon": "carret",
-            "display_top_border": true,
-            "open": false,
-            "content": "<p>Daily use gently removes wax, dirt, and buildup before they can contribute to ear problems. Here's what you'll typically notice in your pet:</p><p><strong>Week 1</strong> — ears look cleaner, with less visible wax and debris after each wipe.<br/><br/><strong>Week 2</strong> — less buildup returns between cleanings, and ears stay fresher for longer.<br/><br/><strong>Week 3 </strong>— consistently clean ears with reduced wax buildup and a healthier ear environment.<br/><br/>Every wipe comes away with the wax, dirt, and debris you've just removed — visible proof it's lifting buildup from the ear, not simply pushing it around.</p>",
-            "page": "free-e-book-the-secret-to-a-sparkling-home-in-just-15-minutes-a-day",
-            "margin_top": 12,
-            "margin_bottom": 0
-          }
-        },
-        "collapsible_tab_3z9NFe": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Why RoutineCare?",
-            "heading_size": "small",
-            "icon": "loyalty",
-            "filled_icon": true,
-            "collapse_icon": "carret",
-            "display_top_border": true,
-            "open": false,
-            "content": "<p>✓ Save 20% on every order</p><p>✓ Free shipping, always</p><p>✓ Free gifts — plus surprise treats in your boxes</p><p>✓ Delivered every 30 days — skip, reschedule or change frequency anytime</p><p>✓ Skip, pause or cancel anytime — you're always in control</p><p>✓ Your refill arrives before you run out</p><p>✓ Consistency is what makes results last</p><p>✓ 100-day money-back guarantee — or you don't pay</p>",
-            "page": "free-e-book-the-secret-to-a-sparkling-home-in-just-15-minutes-a-day",
-            "margin_top": 12,
-            "margin_bottom": 0
-          }
-        },
-        "collapsible_tab_yayUBe": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Ingredients",
-            "heading_size": "small",
-            "icon": "nutrition",
-            "filled_icon": true,
-            "collapse_icon": "carret",
-            "display_top_border": true,
-            "open": false,
-            "content": "<p>•  <strong>EDI-purified water</strong> – base solution<br/><br/>• <strong>Aloe Vera (Aloe Barbadensis)</strong>– soothes and moisturizes the skin around the ear<br/><br/>• <strong>Chamomile (Chamomilla Recutita)</strong>– known for its gentle, anti-inflammatory properties<br/><br/>• <strong>Glycerin </strong>– binds moisture and protects the skin<br/><br/>• <strong>Ethylhexylglycerin </strong>– gentle preservative with antibacterial effect<br/><br/>• <strong>Decyl Glucoside</strong> – mild cleansing surfactant derived from plants<br/><br/>• <strong>Polyhexamethylene Biguanide Hydrochloride</strong> – antibacterial, prevents irritation</p><p>• <strong>Vitamin E</strong>– strengthens and protects the delicate skin</p><p>✔️ pH-balanced and fragrance-free<br/><br/>✔️ Not tested on animals (cruelty-free)<br/><br/>✔️ Free from alcohol, parabens & sulfates</p>",
-            "page": "free-e-book-the-secret-to-a-sparkling-home-in-just-15-minutes-a-day",
-            "margin_top": 24,
-            "margin_bottom": 0
-          }
-        },
-        "collapsible_tab_RAfyBa": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Payment & Delivery",
-            "heading_size": "small",
-            "icon": "delivery_truck_speed",
-            "filled_icon": true,
-            "collapse_icon": "carret",
-            "display_top_border": true,
-            "open": false,
-            "content": "<h4><strong>Payment</strong></h4><p>You can safely pay with Klarna, credit card, or bank transfer – choose what works best for you.<br/></p><h4><strong>Shipping</strong></h4><p><br/>We offer different rates for the UK and the Rest of the World:</p><ul><li><strong>United Kingdom (UK): </strong>Standard Shipping: <strong>£2.00</strong> (Free on orders £37 and over)Priority Shipping: <strong>£4.50</strong></li><li><strong>Rest of the World:</strong>Standard Shipping: <strong>$2.95</strong> (Free on orders $49 and over)Priority Shipping: <strong>$6.00</strong></li></ul><p><strong>Delivery Time</strong><br/><br/>As our UK warehouse is temporarily out of stock, your order will be shipped from our international warehouse.<br/>We offer two shipping options at checkout:</p><ul><li><strong>Standard Shipping:</strong> 1–2 days handling + 5–10 days shipping time</li><li><strong>Priority Shipping:</strong> 1–2 days handling + 4–7 days shipping time</li></ul><p>A tracking number will be sent by email as soon as your order leaves the warehouse.</p><p><strong>Questions?</strong><br/>Email us at <strong>info@shopvetpets.com</strong> – we always reply within 24 hours on weekdays.</p>",
-            "page": "",
-            "margin_top": 24,
-            "margin_bottom": 0
-          }
-        },
-        "collapsible_tab_iQb3wA": {
-          "type": "collapsible_tab",
-          "disabled": true,
-          "settings": {
-            "heading": "100-Day Money-Back Guarantee",
-            "heading_size": "medium",
-            "icon": "",
-            "filled_icon": false,
-            "collapse_icon": "carret",
-            "display_top_border": true,
-            "open": false,
-            "content": "<p>We truly believe your product from us will make a difference – for both you and your dog.<br/><br/>That’s why we offer a <strong>100-day money-back guarantee</strong>.</p><p>You can try the product at home, in your own time.<br/><br/>Not completely satisfied? Then you’ll get your money back – no stress, no hassle.</p><p>For us, it’s more important that your dog gets the care they deserve than that you keep something you don’t love.</p><p><strong>You can read more about our satisfaction guarantee here.<br/></strong><a href=\"/pages/100-dagers-fornoydgaranti\" title=\"100-Day Money-Back Guarantee\">100-Day Money-Back Guarantee</a></p>",
-            "page": "",
-            "margin_top": 24,
-            "margin_bottom": 0
-          }
-        },
-        "collapsible_tab_fC3Agw": {
-          "type": "collapsible_tab",
-          "disabled": true,
-          "settings": {
-            "heading": "Payment & Delivery",
-            "heading_size": "medium",
-            "icon": "",
-            "filled_icon": false,
-            "collapse_icon": "carret",
-            "display_top_border": true,
-            "open": false,
-            "content": "<h4><strong>Payment</strong></h4><p>You can safely pay with Klarna, credit card, or bank transfer – choose what works best for you.<br/></p><h4><strong>Shipping</strong></h4><p><br/>We offer different rates for the UK and the Rest of the World:</p><ul><li><strong>United Kingdom (UK): </strong>Standard Shipping: <strong>£2.00</strong> (Free on orders £37 and over)Priority Shipping: <strong>£4.50</strong></li><li><strong>Rest of the World:</strong>Standard Shipping: <strong>$2.95</strong> (Free on orders $49 and over)Priority Shipping: <strong>$6.00</strong></li></ul><p><strong>Delivery Time</strong><br/><br/>As our UK warehouse is temporarily out of stock, your order will be shipped from our international warehouse.<br/>We offer two shipping options at checkout:</p><ul><li><strong>Standard Shipping:</strong> 1–2 days handling + 5–10 days shipping time</li><li><strong>Priority Shipping:</strong> 1–2 days handling + 4–7 days shipping time</li></ul><p>A tracking number will be sent by email as soon as your order leaves the warehouse.</p><p><strong>Questions?</strong><br/>Email us at <strong>info@shopvetpets.com</strong> – we always reply within 24 hours on weekdays.</p>",
-            "page": "",
-            "margin_top": 24,
-            "margin_bottom": 0
-          }
-        },
-        "description": {
-          "type": "description",
-          "disabled": true,
-          "settings": {
-            "margin_top": 24,
-            "margin_bottom": 24
-          }
-        },
-        "reviews_8UgFbe": {
-          "type": "reviews",
-          "disabled": true,
-          "settings": {
-            "color_scheme": "background-1",
-            "show_custom_bg": false,
-            "custom_bg_color": "#f2f2f2",
-            "corner_radius": 12,
-            "border_width": 0,
-            "border_color": "#b7b7b7",
-            "avatar_alignment": "top",
-            "avatar_corner_radius": 40,
-            "star_color": "#ffcc00",
-            "stars_translate": 0,
-            "checkmark_color": "#6d388b",
-            "checkmark_icon_color": "#ffffff",
-            "slider_type": "slide",
-            "autoplay": false,
-            "autoplay_speed": 5,
-            "display_arrows": false,
-            "display_dots": true,
-            "author_1": "Anna Müller, Germany [stars]",
-            "image_1": "shopify://shop_images/Profilbild_21_6774d488-3bc3-405d-b134-5d5f0598af50.webp",
-            "text_1": "<p>ClearSwipe has transformed my cleaning routine. With just one swipe, my windows are spotless and streak-free. It's incredibly easy to use and saves me so much time.</p>",
-            "author_2": "Luca Rossi, Italy [stars]",
-            "image_2": "shopify://shop_images/Profilbild_32.webp",
-            "text_2": "<p>I was skeptical at first, but ClearSwipe exceeded my expectations. It's durable, eco-friendly, and leaves my mirrors and glass surfaces gleaming. Highly recommended!</p>",
-            "author_3": "Sophie Dubois, France [stars]",
-            "image_3": "shopify://shop_images/Profilbild111.webp",
-            "text_3": "<p>I've tried various window cleaners, but ClearSwipe stands out. It cleans efficiently without leaving any streaks or drips. Plus, it's made from recycled materials, which I appreciate.</p>",
-            "margin_top": 24,
-            "margin_bottom": 24
-          }
+            "visibility": "always-display"
+          },
+          "type": "richtext"
         }
       },
+      "name": "Custom columns",
+      "settings": {
+        "col_1_desktop_width": 12,
+        "col_1_mobile_width": 4,
+        "col_1_visibility": "always-display",
+        "col_2_desktop_width": 4,
+        "col_2_mobile_width": 4,
+        "col_2_visibility": "always-display",
+        "col_3_desktop_width": 4,
+        "col_3_mobile_width": 4,
+        "col_3_visibility": "always-display",
+        "col_4_desktop_width": 4,
+        "col_4_mobile_width": 4,
+        "col_4_visibility": "always-display",
+        "col_5_desktop_width": 3,
+        "col_5_mobile_width": 4,
+        "col_5_visibility": "always-display",
+        "col_6_desktop_width": 3,
+        "col_6_mobile_width": 4,
+        "col_6_visibility": "always-display",
+        "color_scheme": "background-2",
+        "column_gap_desktop": 40,
+        "column_gap_mobile": 20,
+        "columns_count": 4,
+        "custom_colors_background": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_text": "#2e2a39",
+        "custom_gradient_background": "",
+        "desktop_page_width": "normal",
+        "desktop_vertical_alignment": "center",
+        "display_id": false,
+        "mobile_full_page": false,
+        "mobile_vertical_alignment": "flex-start",
+        "padding_bottom": 36,
+        "padding_top": 36,
+        "row_gap_desktop": 40,
+        "row_gap_mobile": 30,
+        "visibility": "always-display"
+      },
+      "type": "custom-columns"
+    },
+    "featured_collection_MRf9GU": {
+      "settings": {
+        "arrows_color_scheme": "inverse",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "badges": "regular",
+        "cards_color_scheme": "background-1",
+        "collection": "frontpage",
+        "color_scheme": "background-1",
+        "columns_desktop": 4,
+        "columns_mobile": "1",
+        "custom_colors_background": "#ffffff",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_text": "#2e2a39",
+        "custom_gradient_background": "",
+        "description": "",
+        "description_style": "body",
+        "desktop_adaptive_height": false,
+        "desktop_arrows_position": "sides",
+        "desktop_dots_position": "under",
+        "desktop_full_page": false,
+        "desktop_padding_calc": true,
+        "desktop_side_padding": 0,
+        "desktop_spacing": 40,
+        "display_id": false,
+        "dots_color_scheme": "inverse",
+        "enable_mobile_preview": false,
+        "enable_quick_add": false,
+        "heading_size": "h1",
+        "image_ratio": "adapt",
+        "mobile_adaptive_height": false,
+        "mobile_arrows_position": "under",
+        "mobile_dots_position": "under",
+        "padding_bottom": 36,
+        "padding_top": 36,
+        "per_move_desktop": 1,
+        "products_to_show": 4,
+        "show_description": false,
+        "show_rating": false,
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_view_all": true,
+        "slider_desktop": false,
+        "slider_mobile": true,
+        "stretch_cards": false,
+        "swatches_desktop_size": 36,
+        "swatches_mobile_size": 24,
+        "swatches_option_name": "",
+        "swatches_position": "top",
+        "title": "You may also like:",
+        "title_highlight_color": "#6d388b",
+        "transparent_arrows": true,
+        "type": "slide",
+        "view_all_style": "solid",
+        "visibility": "always-display"
+      },
+      "type": "featured-collection"
+    },
+    "icon_bar_FXDFLd": {
+      "block_order": [
+        "column_Vjy7DA",
+        "column_WFdFKH",
+        "column_phDGHY"
+      ],
+      "blocks": {
+        "column_Vjy7DA": {
+          "settings": {
+            "filled_icon": true,
+            "icon": "favorite",
+            "text": "<p>Loved by dog owners and their pets across the world.</p>",
+            "title": "OVER 45 000 SATISFIED CUSTOMERS"
+          },
+          "type": "column"
+        },
+        "column_WFdFKH": {
+          "settings": {
+            "filled_icon": true,
+            "icon": "new_releases",
+            "text": "<p>Not satisfied? Just contact us within 100 days of your purchase – we’ll make it right.</p>",
+            "title": "100-DAY MONEY-BACK GUARANTEE"
+          },
+          "type": "column"
+        },
+        "column_phDGHY": {
+          "settings": {
+            "filled_icon": false,
+            "icon": "support_agent",
+            "text": "<p>Need help? Reach out to us – we respond within 24 hours on weekdays.</p><p></p><p></p>",
+            "title": "SUPPORT MONDAY–FRIDAY"
+          },
+          "type": "column"
+        }
+      },
+      "name": "Icon Bar",
+      "settings": {
+        "arrows_color_scheme": "inverse",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "cards_color_scheme": "background-2",
+        "color_scheme": "background-2",
+        "columns_desktop": 3,
+        "columns_mobile": "1",
+        "custom_cards_colors_background": "#ffffff",
+        "custom_cards_colors_text": "#2e2a39",
+        "custom_cards_gradient_background": "",
+        "custom_colors_background": "#ffffff",
+        "custom_colors_text": "#2e2a39",
+        "custom_gradient_background": "",
+        "desktop_adaptive_height": false,
+        "desktop_arrows_position": "sides",
+        "desktop_dots_position": "under",
+        "desktop_full_page": false,
+        "desktop_padding_calc": true,
+        "desktop_side_padding": 0,
+        "desktop_spacing": 40,
+        "display_id": false,
+        "dots_color_scheme": "inverse",
+        "enable_mobile_preview": false,
+        "heading_size": "h1",
+        "icon_color": "accent-1",
+        "icon_layout": "vertical",
+        "icon_size": "medium",
+        "mobile_adaptive_height": false,
+        "mobile_arrows_position": "under",
+        "mobile_dots_position": "under",
+        "padding_bottom": 36,
+        "padding_top": 36,
+        "per_move_desktop": 1,
+        "slider_desktop": false,
+        "slider_mobile": true,
+        "text": "",
+        "title": "",
+        "title_highlight_color": "#6d388b",
+        "transparent_arrows": true,
+        "type": "slide",
+        "visibility": "always-display"
+      },
+      "type": "icon-bar"
+    },
+    "image_slider_mYdxDt": {
+      "block_order": [
+        "image_slide_bk64Fk",
+        "image_slide_CrCqJT",
+        "image_slide_AKJ7Rk",
+        "image_slide_pBGtCV",
+        "image_slide_Pc94Pp"
+      ],
+      "blocks": {
+        "image_slide_AKJ7Rk": {
+          "settings": {
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2",
+            "description": "",
+            "image": "shopify://shop_images/Ai_AVATARS_4.jpg",
+            "link": ""
+          },
+          "type": "image_slide"
+        },
+        "image_slide_CrCqJT": {
+          "settings": {
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2",
+            "description": "",
+            "image": "shopify://shop_images/Ai_AVATARS_2.jpg",
+            "link": ""
+          },
+          "type": "image_slide"
+        },
+        "image_slide_Pc94Pp": {
+          "settings": {
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2",
+            "description": "",
+            "image": "shopify://shop_images/Ai_AVATARS_25.png",
+            "link": ""
+          },
+          "type": "image_slide"
+        },
+        "image_slide_bk64Fk": {
+          "settings": {
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2",
+            "description": "",
+            "image": "shopify://shop_images/Ai_AVATARS.jpg",
+            "link": ""
+          },
+          "type": "image_slide"
+        },
+        "image_slide_pBGtCV": {
+          "settings": {
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2",
+            "description": "",
+            "image": "shopify://shop_images/Ai_AVATARS_1.jpg",
+            "link": ""
+          },
+          "type": "image_slide"
+        }
+      },
+      "name": "Image/Video Slider",
+      "settings": {
+        "arrows_color_scheme": "inverse",
+        "autoplay": true,
+        "autoplay_speed": 10.5,
+        "center_mode": false,
+        "color_scheme": "background-2",
+        "custom_colors_background": "#ffffff",
+        "custom_colors_text": "#121212",
+        "custom_gradient_background": "",
+        "desktop_adaptive_height": false,
+        "desktop_arrows_position": "hidden",
+        "desktop_border_radius": 12,
+        "desktop_dots_position": "under",
+        "desktop_padding_calc": true,
+        "desktop_page_width": "normal",
+        "desktop_side_padding": 0,
+        "desktop_spacing": 28,
+        "display_id": false,
+        "dots_color_scheme": "inverse",
+        "drag": "enabled",
+        "heading_size": "h2",
+        "mobile_adaptive_height": false,
+        "mobile_arrows_position": "hidden",
+        "mobile_border_radius": 12,
+        "mobile_dots_position": "under",
+        "mobile_full_page": false,
+        "mobile_padding_calc": true,
+        "mobile_side_padding": 0,
+        "mobile_spacing": 12,
+        "padding_bottom": 36,
+        "padding_top": 36,
+        "per_move_desktop": 1,
+        "per_move_mobile": 1,
+        "slides_desktop": 3,
+        "slides_mobile": 2,
+        "title": "Thousands of <strong>satisfied dogs & dog owners</strong>",
+        "title_highlight_color": "#47b5e9",
+        "transparent_arrows": false,
+        "type": "loop",
+        "visibility": "always-display"
+      },
+      "type": "image-slider"
+    },
+    "image_with_text_Ei4Ccz": {
+      "block_order": [
+        "heading_8gWHeA",
+        "text_tzVfPD"
+      ],
+      "blocks": {
+        "heading_8gWHeA": {
+          "settings": {
+            "heading_size": "h2",
+            "title": "Your dog's ears tell a<strong> story you can't ignore</strong>",
+            "title_highlight_color": "#d02b2b"
+          },
+          "type": "heading"
+        },
+        "text_tzVfPD": {
+          "settings": {
+            "text": "<p><strong>A yeasty smell, brown wax, or constant head shaking</strong>—these may seem like minor problems.</p><p>But beneath the surface, they can quickly<strong> turn into something much worse.</strong></p><p>Moisture and bacteria build up in your dog's ears every day. Without cleaning, your dog risks painful infections, inflammation, and costly vet bills.</p><p>It hurts to think about, but the fact is:</p><p><strong>Paper towels and cotton pads can push bacteria deeper.</strong> Ear drops create stress and mess.</p><p>You shouldn't have to worry every time you check your dog's ears.</p><p><strong>That's why we—together with veterinarians—created EarWipes</strong> – a simple, gentle routine that both cleans and protects.</p>",
+            "text_style": "body"
+          },
+          "type": "text"
+        }
+      },
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "color_scheme": "custom",
+        "content_layout": "no-overlap",
+        "custom_colors_background": "#d5f7ff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_text": "#2e2a39",
+        "custom_gradient_background": "",
+        "custom_section_colors_background": "#d5f7ff",
+        "custom_section_gradient_background": "",
+        "desktop_content_alignment": "left",
+        "desktop_content_position": "top",
+        "desktop_media_width": 50,
+        "desktop_padding_bottom": 36,
+        "desktop_padding_top": 36,
+        "display_id": false,
+        "full_desktop_width": false,
+        "height": "adapt",
+        "image": "shopify://shop_images/Ear_Wipes_Listing_Images_1.webp",
+        "layout": "image_first",
+        "mobile_content_alignment": "left",
+        "mobile_direction": "normal",
+        "mobile_full_media_width": false,
+        "mobile_image_quanlity": "2",
+        "mobile_padding_bottom": 16,
+        "mobile_padding_top": 0,
+        "section_color_scheme": "custom",
+        "video_autoplay": true,
+        "video_loop": true,
+        "visibility": "always-display"
+      },
+      "type": "image-with-text"
+    },
+    "image_with_text_PCDA6T": {
+      "block_order": [
+        "heading_b8M8fn",
+        "text_JVGtNh"
+      ],
+      "blocks": {
+        "heading_b8M8fn": {
+          "settings": {
+            "heading_size": "h1",
+            "title": "Gentle care for <strong>sensitive ears</strong>",
+            "title_highlight_color": "#47b5e9"
+          },
+          "type": "heading"
+        },
+        "text_JVGtNh": {
+          "settings": {
+            "text": "<p>EarWipes are developed with your dog's sensitive ears in focus.</p><p>The formula is free from harsh chemicals and developed to be safe to use regularly.</p><p>Each wipe is pH-balanced and gentle, while effectively removing wax, dirt and bacteria.</p><p><strong>Naturally caring ingredients:</strong></p><ul><li><strong>Corn extract</strong> – mild & natural cleaning that keeps ears fresh.</li><li><strong>Rosemary extract</strong> – cleansing & antibacterial power from nature.</li><li><strong>Witch hazel</strong> – soothes irritation and reduces itching.</li></ul><p>Together they provide a cleaning that both prevents and cares – so your dog avoids discomfort and you don't have to worry about infections.</p>",
+            "text_style": "body"
+          },
+          "type": "text"
+        }
+      },
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "color_scheme": "background-1",
+        "content_layout": "no-overlap",
+        "custom_colors_background": "#d5f7ff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_text": "#2e2a39",
+        "custom_gradient_background": "",
+        "custom_section_colors_background": "#d5f7ff",
+        "custom_section_gradient_background": "",
+        "desktop_content_alignment": "left",
+        "desktop_content_position": "top",
+        "desktop_media_width": 50,
+        "desktop_padding_bottom": 36,
+        "desktop_padding_top": 36,
+        "display_id": false,
+        "full_desktop_width": false,
+        "height": "adapt",
+        "image": "shopify://shop_images/Engelska_13.jpg",
+        "layout": "image_first",
+        "mobile_content_alignment": "left",
+        "mobile_direction": "normal",
+        "mobile_full_media_width": false,
+        "mobile_image_quanlity": "2",
+        "mobile_padding_bottom": 16,
+        "mobile_padding_top": 0,
+        "section_color_scheme": "background-1",
+        "video_autoplay": true,
+        "video_loop": true,
+        "visibility": "always-display"
+      },
+      "type": "image-with-text"
+    },
+    "image_with_text_PLRggf": {
+      "block_order": [
+        "caption_WpPykQ",
+        "heading_WYjtma",
+        "text_KEyKFx"
+      ],
+      "blocks": {
+        "caption_WpPykQ": {
+          "settings": {
+            "caption": "See how easy it is – completely stress-free",
+            "text_size": "medium",
+            "text_style": "caption-with-letter-spacing"
+          },
+          "type": "caption"
+        },
+        "heading_WYjtma": {
+          "settings": {
+            "heading_size": "h1",
+            "title": "Stops infections <strong>before they start</strong>",
+            "title_highlight_color": "#47b5e9"
+          },
+          "type": "heading"
+        },
+        "text_KEyKFx": {
+          "settings": {
+            "text": "<p>EarWipes does more than just wipe away dirt.</p><p>They are developed to clean deeply – so that bacteria don't get a foothold.</p><p>By removing wax and debris <strong>it reduces the risk of odor, inflammation and painful infections.</strong></p><p>And thanks to the gentle formula, they are comfortable even for sensitive ears.</p><p><strong>The result? Clean, healthy ears and a dog that doesn't need to scratch.</strong></p>",
+            "text_style": "body"
+          },
+          "type": "text"
+        }
+      },
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "color_scheme": "background-1",
+        "content_layout": "no-overlap",
+        "custom_colors_background": "#2e2a39",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_text": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_section_colors_background": "#ffffff",
+        "custom_section_gradient_background": "",
+        "desktop_content_alignment": "left",
+        "desktop_content_position": "top",
+        "desktop_media_width": 50,
+        "desktop_padding_bottom": 36,
+        "desktop_padding_top": 36,
+        "display_id": false,
+        "full_desktop_width": false,
+        "height": "adapt",
+        "layout": "text_first",
+        "mobile_content_alignment": "left",
+        "mobile_direction": "normal",
+        "mobile_full_media_width": false,
+        "mobile_image_quanlity": "2",
+        "mobile_padding_bottom": 16,
+        "mobile_padding_top": 0,
+        "section_color_scheme": "background-1",
+        "video": "shopify://files/videos/earwipes (2).mp4",
+        "video_autoplay": true,
+        "video_loop": true,
+        "visibility": "always-display"
+      },
+      "type": "image-with-text"
+    },
+    "main": {
       "block_order": [
         "a6eb81db-40e4-43e0-972f-32db010a4a56",
         "title",
@@ -498,563 +650,606 @@
         "description",
         "reviews_8UgFbe"
       ],
+      "blocks": {
+        "04ba004e-2f54-4936-8b1c-8bcadf6573f6": {
+          "settings": {
+            "atc_append": "none",
+            "atc_append_heights": "stretch-quantity",
+            "border_radius": 10,
+            "border_width": 2,
+            "color_scheme": "accent-1",
+            "display_selected_indicator": true,
+            "enable_quantity_discounts": false,
+            "enable_variant_selectors": true,
+            "enable_variant_selectors_on_quantity_of_1": false,
+            "full_width_classic": false,
+            "full_width_pickers": false,
+            "headline": "☀️ SUMMER OFFERS ☀️",
+            "hide_pickers_overlay": true,
+            "image_width": 70,
+            "margin_bottom": 15,
+            "margin_top": 15,
+            "option_1_badge": "",
+            "option_1_badge_color": "accent-1",
+            "option_1_badge_style": "1",
+            "option_1_benefit": "Save 40%",
+            "option_1_benefit_color": "accent-2",
+            "option_1_benefit_position": "top",
+            "option_1_benefit_style": "solid",
+            "option_1_caption": "Free E-book + 2 Free Microfibre covers",
+            "option_1_compare_price": "compare_price",
+            "option_1_compare_price_text": "[compare_price]",
+            "option_1_fixed_amount_off": "0",
+            "option_1_label": "1x ClearSwipe",
+            "option_1_percentage_off_text": "0",
+            "option_1_price_text": "[price]",
+            "option_1_quantity": 1,
+            "option_2_badge": "Buy 1 Get 1 Free",
+            "option_2_badge_color": "accent-2",
+            "option_2_badge_style": "1",
+            "option_2_benefit": "Save 50%",
+            "option_2_benefit_color": "accent-2",
+            "option_2_benefit_position": "top",
+            "option_2_benefit_style": "solid",
+            "option_2_caption": "Free E-book + 2 Free Microfibre covers",
+            "option_2_compare_price": "compare_price",
+            "option_2_compare_price_text": "[compare_price]",
+            "option_2_fixed_amount_off": "12.99",
+            "option_2_label": "2x ClearSwipe",
+            "option_2_percentage_off_text": "0",
+            "option_2_price_text": "[price]",
+            "option_2_quantity": 2,
+            "option_3_badge": "Our best offer!",
+            "option_3_badge_color": "accent-2",
+            "option_3_badge_style": "1",
+            "option_3_benefit": "Save 53%",
+            "option_3_benefit_color": "accent-2",
+            "option_3_benefit_position": "top",
+            "option_3_benefit_style": "solid",
+            "option_3_caption": "Free E-book + 2 Free Microfibre covers",
+            "option_3_compare_price": "compare_price",
+            "option_3_compare_price_text": "[compare_price]",
+            "option_3_fixed_amount_off": "24.98",
+            "option_3_label": "3x ClearSwipe",
+            "option_3_percentage_off_text": "0",
+            "option_3_price_text": "[price]",
+            "option_3_quantity": 3,
+            "option_4_badge": "",
+            "option_4_badge_color": "accent-1",
+            "option_4_badge_style": "1",
+            "option_4_benefit": "",
+            "option_4_benefit_color": "accent-1",
+            "option_4_benefit_position": "top",
+            "option_4_benefit_style": "outlined",
+            "option_4_caption": "You save [amount_saved]",
+            "option_4_compare_price": "compare_price",
+            "option_4_compare_price_text": "[compare_price]",
+            "option_4_fixed_amount_off": "0",
+            "option_4_label": "Buy [quantity]",
+            "option_4_percentage_off_text": "0",
+            "option_4_price_text": "[price]",
+            "option_4_quantity": 0,
+            "pickers_label": "",
+            "preselected": "option_1",
+            "skip_unavailable": false,
+            "space_images": true,
+            "style": "normal",
+            "update_prices": false,
+            "vertical_images_position": "top",
+            "vertical_prices_layout": "vertical"
+          },
+          "type": "quantity_selector"
+        },
+        "5fcc0428-e768-4cb7-bea3-eb0274198dd1": {
+          "settings": {
+            "breaks_badge_color": "accent-1",
+            "breaks_badge_style": "1",
+            "breaks_badges": "[empty], Most popular, [empty]",
+            "breaks_benefit_color": "accent-1",
+            "breaks_benefit_position": "top",
+            "breaks_benefit_style": "outlined",
+            "breaks_benefits": "[empty], Free Shipping, Free Shipping",
+            "breaks_border_radius": 10,
+            "breaks_border_width": 2,
+            "breaks_captions": "Variant 1 caption, Variant 2 caption, Variant 3 caption",
+            "breaks_color_scheme": "accent-1",
+            "breaks_compare_price_texts": "[compare_price], [compare_price], [compare_price]",
+            "breaks_custom_images": "",
+            "breaks_display_selected_indicator": true,
+            "breaks_displayed_images": "variant_images",
+            "breaks_headline": "BUNDLE & SAVE",
+            "breaks_image_width": 70,
+            "breaks_labels": "[name], [name], [name]",
+            "breaks_price_texts": "[price], [price], [price]",
+            "breaks_space_images": true,
+            "breaks_style": "normal",
+            "breaks_vertical_images_position": "top",
+            "breaks_vertical_prices_layout": "vertical",
+            "custom_labels": "[name] - [selected]",
+            "full_width_dropdowns": false,
+            "margin_bottom": 15,
+            "margin_top": 15,
+            "picker_types": "dropdown, dropdown",
+            "skip_unavailable": false,
+            "swatches_custom_colors": "disabled",
+            "swatches_custom_colors_list": "#000000, #6D388B, #0000FF, #FFCC00",
+            "swatches_size": "medium"
+          },
+          "type": "variant_picker"
+        },
+        "a6eb81db-40e4-43e0-972f-32db010a4a56": {
+          "settings": {
+            "alignment": "flex-start",
+            "bg_star_color": "#ececec",
+            "bg_stars_style": "full",
+            "label": "4,86/5 (15.000+ Happy Customers)",
+            "margin_bottom": 9,
+            "margin_top": 0,
+            "rating": 4.8,
+            "scroll_id": "",
+            "size": 12,
+            "star_color": "#ffcc00"
+          },
+          "type": "rating_stars"
+        },
+        "buy_buttons": {
+          "settings": {
+            "atc_custom_label": "",
+            "custom_color": "#53af01",
+            "display_price": false,
+            "enable_custom_color": false,
+            "enable_secondary_btn": false,
+            "icon_scale": 120,
+            "icon_spacing": 10,
+            "margin_bottom": 24,
+            "margin_top": 24,
+            "secondary_btn_custom_color": "#dd1d1d",
+            "secondary_btn_enable_custom_color": false,
+            "secondary_btn_label": "Buy It Now",
+            "show_dynamic_checkout": false,
+            "skip_cart": false,
+            "uppercase_text": true
+          },
+          "type": "buy_buttons"
+        },
+        "collapsible_tab_3z9NFe": {
+          "settings": {
+            "collapse_icon": "carret",
+            "content": "<p>✓ Save 20% on every order</p><p>✓ Free shipping, always</p><p>✓ Free gifts — plus surprise treats in your boxes</p><p>✓ Delivered every 30 days — skip, reschedule or change frequency anytime</p><p>✓ Skip, pause or cancel anytime — you're always in control</p><p>✓ Your refill arrives before you run out</p><p>✓ Consistency is what makes results last</p><p>✓ 100-day money-back guarantee — or you don't pay</p>",
+            "display_top_border": true,
+            "filled_icon": true,
+            "heading": "Why RoutineCare?",
+            "heading_size": "small",
+            "icon": "loyalty",
+            "margin_bottom": 0,
+            "margin_top": 12,
+            "open": false,
+            "page": "free-e-book-the-secret-to-a-sparkling-home-in-just-15-minutes-a-day"
+          },
+          "type": "collapsible_tab"
+        },
+        "collapsible_tab_ERGKLJ": {
+          "settings": {
+            "collapse_icon": "carret",
+            "content": "<p>Daily use gently removes wax, dirt, and buildup before they can contribute to ear problems. Here's what you'll typically notice in your pet:</p><p><strong>Week 1</strong> — ears look cleaner, with less visible wax and debris after each wipe.<br/><br/><strong>Week 2</strong> — less buildup returns between cleanings, and ears stay fresher for longer.<br/><br/><strong>Week 3 </strong>— consistently clean ears with reduced wax buildup and a healthier ear environment.<br/><br/>Every wipe comes away with the wax, dirt, and debris you've just removed — visible proof it's lifting buildup from the ear, not simply pushing it around.</p>",
+            "display_top_border": true,
+            "filled_icon": true,
+            "heading": "What to expect?",
+            "heading_size": "small",
+            "icon": "dentistry",
+            "margin_bottom": 0,
+            "margin_top": 12,
+            "open": false,
+            "page": "free-e-book-the-secret-to-a-sparkling-home-in-just-15-minutes-a-day"
+          },
+          "type": "collapsible_tab"
+        },
+        "collapsible_tab_RAfyBa": {
+          "settings": {
+            "collapse_icon": "carret",
+            "content": "<h4><strong>Payment</strong></h4><p>You can safely pay with Klarna, credit card, or bank transfer – choose what works best for you.<br/></p><h4><strong>Shipping</strong></h4><p><br/>We offer different rates for the UK and the Rest of the World:</p><ul><li><strong>United Kingdom (UK): </strong>Standard Shipping: <strong>£2.00</strong> (Free on orders £37 and over)Priority Shipping: <strong>£4.50</strong></li><li><strong>Rest of the World:</strong>Standard Shipping: <strong>$2.95</strong> (Free on orders $49 and over)Priority Shipping: <strong>$6.00</strong></li></ul><p><strong>Delivery Time</strong><br/><br/>As our UK warehouse is temporarily out of stock, your order will be shipped from our international warehouse.<br/>We offer two shipping options at checkout:</p><ul><li><strong>Standard Shipping:</strong> 1–2 days handling + 5–10 days shipping time</li><li><strong>Priority Shipping:</strong> 1–2 days handling + 4–7 days shipping time</li></ul><p>A tracking number will be sent by email as soon as your order leaves the warehouse.</p><p><strong>Questions?</strong><br/>Email us at <strong>info@shopvetpets.com</strong> – we always reply within 24 hours on weekdays.</p>",
+            "display_top_border": true,
+            "filled_icon": true,
+            "heading": "Payment & Delivery",
+            "heading_size": "small",
+            "icon": "delivery_truck_speed",
+            "margin_bottom": 0,
+            "margin_top": 24,
+            "open": false,
+            "page": ""
+          },
+          "type": "collapsible_tab"
+        },
+        "collapsible_tab_fC3Agw": {
+          "disabled": true,
+          "settings": {
+            "collapse_icon": "carret",
+            "content": "<h4><strong>Payment</strong></h4><p>You can safely pay with Klarna, credit card, or bank transfer – choose what works best for you.<br/></p><h4><strong>Shipping</strong></h4><p><br/>We offer different rates for the UK and the Rest of the World:</p><ul><li><strong>United Kingdom (UK): </strong>Standard Shipping: <strong>£2.00</strong> (Free on orders £37 and over)Priority Shipping: <strong>£4.50</strong></li><li><strong>Rest of the World:</strong>Standard Shipping: <strong>$2.95</strong> (Free on orders $49 and over)Priority Shipping: <strong>$6.00</strong></li></ul><p><strong>Delivery Time</strong><br/><br/>As our UK warehouse is temporarily out of stock, your order will be shipped from our international warehouse.<br/>We offer two shipping options at checkout:</p><ul><li><strong>Standard Shipping:</strong> 1–2 days handling + 5–10 days shipping time</li><li><strong>Priority Shipping:</strong> 1–2 days handling + 4–7 days shipping time</li></ul><p>A tracking number will be sent by email as soon as your order leaves the warehouse.</p><p><strong>Questions?</strong><br/>Email us at <strong>info@shopvetpets.com</strong> – we always reply within 24 hours on weekdays.</p>",
+            "display_top_border": true,
+            "filled_icon": false,
+            "heading": "Payment & Delivery",
+            "heading_size": "medium",
+            "icon": "",
+            "margin_bottom": 0,
+            "margin_top": 24,
+            "open": false,
+            "page": ""
+          },
+          "type": "collapsible_tab"
+        },
+        "collapsible_tab_iQb3wA": {
+          "disabled": true,
+          "settings": {
+            "collapse_icon": "carret",
+            "content": "<p>We truly believe your product from us will make a difference – for both you and your dog.<br/><br/>That’s why we offer a <strong>100-day money-back guarantee</strong>.</p><p>You can try the product at home, in your own time.<br/><br/>Not completely satisfied? Then you’ll get your money back – no stress, no hassle.</p><p>For us, it’s more important that your dog gets the care they deserve than that you keep something you don’t love.</p><p><strong>You can read more about our satisfaction guarantee here.<br/></strong><a href=\"/pages/100-dagers-fornoydgaranti\" title=\"100-Day Money-Back Guarantee\">100-Day Money-Back Guarantee</a></p>",
+            "display_top_border": true,
+            "filled_icon": false,
+            "heading": "100-Day Money-Back Guarantee",
+            "heading_size": "medium",
+            "icon": "",
+            "margin_bottom": 0,
+            "margin_top": 24,
+            "open": false,
+            "page": ""
+          },
+          "type": "collapsible_tab"
+        },
+        "collapsible_tab_yayUBe": {
+          "settings": {
+            "collapse_icon": "carret",
+            "content": "<p>•  <strong>EDI-purified water</strong> – base solution<br/><br/>• <strong>Aloe Vera (Aloe Barbadensis)</strong>– soothes and moisturizes the skin around the ear<br/><br/>• <strong>Chamomile (Chamomilla Recutita)</strong>– known for its gentle, anti-inflammatory properties<br/><br/>• <strong>Glycerin </strong>– binds moisture and protects the skin<br/><br/>• <strong>Ethylhexylglycerin </strong>– gentle preservative with antibacterial effect<br/><br/>• <strong>Decyl Glucoside</strong> – mild cleansing surfactant derived from plants<br/><br/>• <strong>Polyhexamethylene Biguanide Hydrochloride</strong> – antibacterial, prevents irritation</p><p>• <strong>Vitamin E</strong>– strengthens and protects the delicate skin</p><p>✔️ pH-balanced and fragrance-free<br/><br/>✔️ Not tested on animals (cruelty-free)<br/><br/>✔️ Free from alcohol, parabens & sulfates</p>",
+            "display_top_border": true,
+            "filled_icon": true,
+            "heading": "Ingredients",
+            "heading_size": "small",
+            "icon": "nutrition",
+            "margin_bottom": 0,
+            "margin_top": 24,
+            "open": false,
+            "page": "free-e-book-the-secret-to-a-sparkling-home-in-just-15-minutes-a-day"
+          },
+          "type": "collapsible_tab"
+        },
+        "custom_liquid_bgawBg": {
+          "settings": {
+            "custom_liquid": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <style>\n    .custom-shipping-container {\n      display: flex;\n      padding: 6px 16px;\n      justify-content: space-between;\n      align-items: center;\n      background-color: #f6f6f6;\n      border-radius: 20px;\n      margin-top: 10px;\n    }\n\n    .custom-shipping-item {\n      display: flex;\n      align-items: center;\n      gap: 6px;\n    }\n\n    .text-block-shipping {\n      font-size: 12px;\n      color: #000;\n    }\n\n    .shipping-date {\n      font-weight: bold;\n    }\n\n    .shipping-worldwide {\n      font-size: 12px;\n      color: #000;\n    }\n\n    .shipping-worldwide .bold {\n      font-weight: bold;\n    }\n\n    .green-circle {\n      animation: fade 1s ease-in-out infinite;\n    }\n\n    @keyframes fade {\n      0%, 100% { opacity: 1; }\n      50% { opacity: 0.5; }\n    }\n\n    .flags-container {\n      display: flex;\n      gap: 6px;\n      align-items: center;\n    }\n    \n    .custom-icon {\n      width: 16px;\n      height: 12px;\n    }\n  </style>\n  <script>\n    document.addEventListener(\"DOMContentLoaded\", function() {\n      function getNextWeekday(date) {\n        var day = date.getDay();\n        var daysToAdd = (day === 5) ? 3 : (day === 6) ? 2 : 1;\n        return new Date(date.setDate(date.getDate() + daysToAdd));\n      }\n\n      var today = new Date();\n      var shipDate = getNextWeekday(today);\n      \n      // Format date to have short month (e.g., \"Thu, Feb 22\")\n      var options = { weekday: 'short', month: 'short', day: 'numeric' };\n      var formattedDate = shipDate.toLocaleDateString('en-US', options);\n      document.getElementById('shipping-date').textContent = formattedDate;\n\n      // Fetch country data using GeoJS API\n      fetch('https://get.geojs.io/v1/ip/geo.json')\n        .then(response => response.json())\n        .then(data => {\n          console.log(\"Geolocation API Response:\", data); // Debugging log\n\n          if (!data || !data.country_code) {\n            throw new Error(\"Invalid data from API\");\n          }\n          \n          var countryCode = data.country_code.toUpperCase(); // Get country code (e.g., \"GB\", \"US\")\n          var flagUrl = `https://flagcdn.com/w40/${countryCode.toLowerCase()}.png`;\n\n          // Set flag and country code\n          document.getElementById('country-flag').src = flagUrl;\n          document.getElementById('country-flag').alt = countryCode + \" Flag\";\n          document.getElementById('country-flag').style.display = \"inline\";\n          document.getElementById('country-text').innerHTML = `Free <span class=\"bold\">${countryCode}</span> Shipping`;\n        })\n        .catch(error => {\n          console.error('Error fetching the IP information:', error);\n          document.getElementById('country-flag').style.display = \"none\"; \n          document.getElementById('country-text').innerHTML = \"Fast Worldwide Shipping\";\n        });\n    });\n  </script>\n</head>\n<body>\n  <div class=\"custom-shipping-container\">\n    <div class=\"custom-shipping-item\">\n      <svg class=\"green-circle\" xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"13\" viewBox=\"0 0 12 13\" fill=\"none\">\n        <circle cx=\"6\" cy=\"6.5\" r=\"6\" fill=\"#137333\"/>\n      </svg>\n      <div class=\"text-block-shipping\">Ships by <span id=\"shipping-date\" class=\"shipping-date\"></span></div>\n    </div>\n    <div class=\"custom-shipping-item flags-container\">\n      <img id=\"country-flag\" class=\"custom-icon\" src=\"\" alt=\"Country Flag\" style=\"display: none;\">\n      <div id=\"country-text\" class=\"shipping-worldwide\">Loading...</div>\n    </div>\n  </div>\n</body>\n</html>"
+          },
+          "type": "custom_liquid"
+        },
+        "custom_liquid_hTmdHC": {
+          "settings": {
+            "custom_liquid": "<style>\n  .custom-money-back {\n    background: #FFFFFF;\n    border: 2px solid #47B5E9;\n    border-radius: 7px;\n    padding: 10px 12px;\n    margin: 10px auto 0 auto;\n    max-width: 100%;\n    display: flex;\n    align-items: center;\n    gap: 8px;\n    overflow: hidden;\n  }\n  \n  .custom-money-back__badge {\n    flex-shrink: 0;\n    width: 35px;\n    height: 35px;\n  }\n  \n  .custom-money-back__badge img {\n    width: 100%;\n    height: 100%;\n    object-fit: contain;\n  }\n  \n  .custom-money-back__content {\n    flex: 1;\n    min-width: 0;\n  }\n  \n  .custom-money-back__title {\n    color: #000000;\n    font-family: 'Poppins', sans-serif;\n    font-size: 14px;\n    font-weight: 700;\n    margin-bottom: 3px;\n    line-height: 1.2;\n    letter-spacing: -0.03em;\n    white-space: nowrap;\n  }\n  \n  .custom-money-back__text {\n    color: #000000;\n    font-family: 'Poppins', sans-serif;\n    font-size: 8px;\n    font-weight: 400;\n    line-height: 1.3;\n    letter-spacing: 0;\n  }\n  \n  @media (min-width: 769px) {\n    .custom-money-back {\n      padding: 15px 20px;\n      gap: 18px;\n    }\n    .custom-money-back__badge {\n      width: 60px;\n      height: 60px;\n    }\n    .custom-money-back__title {\n      font-size: 18px;\n      margin-bottom: 6px;\n      letter-spacing: 0;\n    }\n    .custom-money-back__text {\n      font-size: 13px;\n      line-height: 1.5;\n    }\n  }\n</style>\n\n<div class=\"custom-money-back\">\n  <div class=\"custom-money-back__badge\">\n    <img src=\"https://cdn.shopify.com/s/files/1/0735/4833/3323/files/Namnlos_design_44.svg?v=1771204616\" alt=\"Money Back Guarantee\">\n  </div>\n  <div class=\"custom-money-back__content\">\n    <div class=\"custom-money-back__title\">\n      Clear ears OR your money back.\n    </div>\n    <div class=\"custom-money-back__text\">\n      Use EarWipes daily. If your dog’s ears don’t stay clean and odor-free, we’ll refund you. No improvement, no payment. No questions asked.\n    </div>\n  </div>\n</div>"
+          },
+          "type": "custom_liquid"
+        },
+        "custom_liquid_tdTfb6": {
+          "settings": {
+            "custom_liquid": "<!-- Snippet: stock-status.liquid -->\n<div class=\"stock-status-wrapper\">\n  <span class=\"stock-status-dot\"></span>\n  <span class=\"stock-status-text\">Low stock due to Black Month Sale</span>\n</div>\n\n<style>\n  .stock-status-wrapper {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n  }\n\n  .stock-status-dot {\n    width: 14px;\n    height: 14px;\n    background-color: #ff9900;\n    border-radius: 50%;\n    animation: stockPulse 1.5s ease-in-out infinite;\n    display: inline-block;\n  }\n\n  .stock-status-text {\n    color: #ff9900;\n    font-weight: 700;\n    font-size: 14px;\n  }\n\n  @keyframes stockPulse {\n    0% { transform: scale(1); opacity: 1; }\n    50% { transform: scale(1.3); opacity: 0.7; }\n    100% { transform: scale(1); opacity: 1; }\n  }\n</style>"
+          },
+          "type": "custom_liquid"
+        },
+        "description": {
+          "disabled": true,
+          "settings": {
+            "margin_bottom": 24,
+            "margin_top": 24
+          },
+          "type": "description"
+        },
+        "e7a28cbe-03cb-4c9d-a2c4-0e3e76ffb3e5": {
+          "settings": {
+            "button_label": "Add to cart",
+            "color_scheme": "background-1",
+            "custom_btn_color": "#dd1d1d",
+            "desktop_full_button_width": false,
+            "desktop_rating_stars": true,
+            "desktop_show_image": true,
+            "desktop_show_price": true,
+            "desktop_show_price_in_button": false,
+            "desktop_show_sale_badge": true,
+            "desktop_show_title": true,
+            "desktop_transparent_bg": false,
+            "desktop_variant_picker": true,
+            "display_when": "after_scroll",
+            "enable_custom_btn_color": false,
+            "function": "add_to_cart",
+            "mobile_full_button_width": true,
+            "mobile_rating_stars": true,
+            "mobile_show_image": false,
+            "mobile_show_price": false,
+            "mobile_show_price_in_button": false,
+            "mobile_show_sale_badge": false,
+            "mobile_show_title": true,
+            "mobile_transparent_bg": false,
+            "mobile_variant_picker": false,
+            "picker_type": "combined",
+            "star_color": "#ffcc00",
+            "stars_label": "4,86/5 (15.000+ Happy Customers)"
+          },
+          "type": "sticky_atc"
+        },
+        "inventory_TFawNK": {
+          "disabled": true,
+          "settings": {
+            "inventory_threshold": 10,
+            "margin_bottom": 15,
+            "margin_top": 15,
+            "show_inventory_quantity": true,
+            "text_style": "body"
+          },
+          "type": "inventory"
+        },
+        "payment_badges_XtWzKz": {
+          "settings": {
+            "enabled_payment_types": "",
+            "margin_bottom": 15,
+            "margin_top": 15
+          },
+          "type": "payment_badges"
+        },
+        "price": {
+          "disabled": true,
+          "settings": {
+            "compare_price_color": "text",
+            "custom_badge_text": "[icon_1] SPECIAL OFFER",
+            "displayed_badge": "sale",
+            "filled_icon_1": false,
+            "filled_icon_2": false,
+            "icon_1": "redeem",
+            "icon_2": "check_circle",
+            "icon_scale": 140,
+            "layout": "price_first",
+            "margin_bottom": 15,
+            "margin_top": 9,
+            "price_color": "accent-1"
+          },
+          "type": "price"
+        },
+        "reviews_8UgFbe": {
+          "disabled": true,
+          "settings": {
+            "author_1": "Anna Müller, Germany [stars]",
+            "author_2": "Luca Rossi, Italy [stars]",
+            "author_3": "Sophie Dubois, France [stars]",
+            "autoplay": false,
+            "autoplay_speed": 5,
+            "avatar_alignment": "top",
+            "avatar_corner_radius": 40,
+            "border_color": "#b7b7b7",
+            "border_width": 0,
+            "checkmark_color": "#6d388b",
+            "checkmark_icon_color": "#ffffff",
+            "color_scheme": "background-1",
+            "corner_radius": 12,
+            "custom_bg_color": "#f2f2f2",
+            "display_arrows": false,
+            "display_dots": true,
+            "image_1": "shopify://shop_images/Profilbild_21_6774d488-3bc3-405d-b134-5d5f0598af50.webp",
+            "image_2": "shopify://shop_images/Profilbild_32.webp",
+            "image_3": "shopify://shop_images/Profilbild111.webp",
+            "margin_bottom": 24,
+            "margin_top": 24,
+            "show_custom_bg": false,
+            "slider_type": "slide",
+            "star_color": "#ffcc00",
+            "stars_translate": 0,
+            "text_1": "<p>ClearSwipe has transformed my cleaning routine. With just one swipe, my windows are spotless and streak-free. It's incredibly easy to use and saves me so much time.</p>",
+            "text_2": "<p>I was skeptical at first, but ClearSwipe exceeded my expectations. It's durable, eco-friendly, and leaves my mirrors and glass surfaces gleaming. Highly recommended!</p>",
+            "text_3": "<p>I've tried various window cleaners, but ClearSwipe stands out. It cleans efficiently without leaving any streaks or drips. Plus, it's made from recycled materials, which I appreciate.</p>"
+          },
+          "type": "reviews"
+        },
+        "text_CQPADX": {
+          "settings": {
+            "alignment": "left",
+            "bg_color": "#f3f3f3",
+            "border_color": "#b7b7b7",
+            "border_size": 0,
+            "column_gap": 4,
+            "corner_radius": 40,
+            "desktop_text_size": 16,
+            "direction": "vertical",
+            "enable_bg": false,
+            "filled_icon_1": true,
+            "filled_icon_2": true,
+            "filled_icon_3": true,
+            "icon_1": "new_releases",
+            "icon_2": "local_shipping",
+            "icon_3": "pets",
+            "icon_color": "#118fcb",
+            "icon_scale": 120,
+            "margin_bottom": 15,
+            "margin_top": 15,
+            "mobile_text_size": 14,
+            "padding": 3,
+            "text_1": "Removes plaque before it hardens into tartar",
+            "text_2": "Cleans tear stains and prevents buildup",
+            "text_3": "Breaks down ear wax and odor at the source",
+            "text_color": "#121212",
+            "width": "100%"
+          },
+          "type": "text"
+        },
+        "text_iGeFz8": {
+          "disabled": true,
+          "settings": {
+            "alignment": "left",
+            "bg_color": "#f3f3f3",
+            "border_color": "#b7b7b7",
+            "border_size": 0,
+            "column_gap": 3,
+            "corner_radius": 40,
+            "desktop_text_size": 16,
+            "direction": "horizontal",
+            "enable_bg": false,
+            "filled_icon_1": false,
+            "filled_icon_2": false,
+            "filled_icon_3": false,
+            "icon_1": "",
+            "icon_2": "",
+            "icon_3": "",
+            "icon_color": "#121212",
+            "icon_scale": 120,
+            "margin_bottom": 15,
+            "margin_top": 15,
+            "mobile_text_size": 14,
+            "padding": 3,
+            "text_1": "Most pet care routines only treat symptoms.  This system helps prevent the problem before it starts — daily, gently, and consistently.",
+            "text_2": "",
+            "text_3": "",
+            "text_color": "#121212",
+            "width": "100%"
+          },
+          "type": "text"
+        },
+        "title": {
+          "settings": {
+            "margin_bottom": 0,
+            "margin_top": 0,
+            "text_size": "h2",
+            "title_alignment": "left",
+            "uppercase_title": false
+          },
+          "type": "title"
+        }
+      },
       "custom_css": [],
       "settings": {
-        "display_id": false,
-        "enable_sticky_info": true,
-        "display_variant_image_first": false,
-        "disable_prepend": true,
-        "hide_variants": false,
-        "variant_image_filtering": "none",
-        "image_zoom": "none",
-        "thumbnails_ratio": "square",
         "arrows_color_scheme": "inverse",
-        "transparent_arrows": false,
-        "dots_color_scheme": "inverse",
-        "video_player": "play_btn",
-        "enable_video_looping": false,
         "autoplay_videos_pause_btn": false,
-        "video_sound_btn": false,
-        "video_timeline": false,
-        "play_btn_color_scheme": "accent-1",
-        "sound_btn_color_scheme": "inverse",
-        "timeline_color": "accent-1",
-        "media_size": "medium",
-        "media_position": "left",
-        "gallery_layout": "thumbnail_slider",
-        "desktop_thumbnails_position": "bottom",
-        "desktop_thumbnails_count": 5,
-        "desktop_vertical_thumbnails_width": 16,
-        "desktop_vertical_thumbnails_hide_arrows": false,
         "constrain_to_viewport": true,
-        "media_fit": "contain",
         "desktop_arrows_position": "hidden",
-        "mobile_media_corner_radius": 0,
-        "mobile_spacing_pixels": 0,
+        "desktop_padding_bottom": 36,
+        "desktop_padding_top": 36,
+        "desktop_thumbnails_count": 5,
+        "desktop_thumbnails_position": "bottom",
+        "desktop_vertical_thumbnails_hide_arrows": false,
+        "desktop_vertical_thumbnails_width": 16,
+        "disable_prepend": true,
+        "display_id": false,
+        "display_variant_image_first": false,
+        "dots_color_scheme": "inverse",
+        "enable_mobile_outher_spacing": false,
+        "enable_sticky_info": true,
+        "enable_video_looping": false,
+        "gallery_layout": "thumbnail_slider",
+        "hide_variants": false,
+        "image_zoom": "none",
+        "media_fit": "contain",
+        "media_position": "left",
+        "media_size": "medium",
         "mobile_arrows_position": "sides",
+        "mobile_media_corner_radius": 0,
+        "mobile_padding_bottom": 16,
+        "mobile_padding_top": 0,
         "mobile_pagination": "hidden",
-        "mobile_thumbnails_position": "bottom",
-        "mobile_thumbnails_count": 5,
-        "mobile_vertical_thumbnails_width": 22,
-        "mobile_vertical_thumbnails_hide_arrows": true,
         "mobile_scroll_padding_percentage": 0,
         "mobile_scroll_padding_pixels": 2,
-        "enable_mobile_outher_spacing": false,
         "mobile_slides_container_width": 100,
         "mobile_slides_inner_width": 100,
+        "mobile_spacing_pixels": 0,
+        "mobile_thumbnails_count": 5,
+        "mobile_thumbnails_position": "bottom",
+        "mobile_vertical_thumbnails_hide_arrows": true,
+        "mobile_vertical_thumbnails_width": 22,
+        "play_btn_color_scheme": "accent-1",
+        "sound_btn_color_scheme": "inverse",
+        "thumbnails_ratio": "square",
+        "timeline_color": "accent-1",
+        "transparent_arrows": false,
         "trust_badge_position": "top-right",
         "trust_badge_size": "medium",
-        "mobile_padding_top": 0,
-        "mobile_padding_bottom": 16,
-        "desktop_padding_top": 36,
-        "desktop_padding_bottom": 36
-      }
-    },
-    "image_slider_mYdxDt": {
-      "type": "image-slider",
-      "blocks": {
-        "image_slide_bk64Fk": {
-          "type": "image_slide",
-          "settings": {
-            "image": "shopify://shop_images/Ai_AVATARS.jpg",
-            "link": "",
-            "description": "",
-            "desc_alignment": "center",
-            "desc_color_scheme": "background-2"
-          }
-        },
-        "image_slide_CrCqJT": {
-          "type": "image_slide",
-          "settings": {
-            "image": "shopify://shop_images/Ai_AVATARS_2.jpg",
-            "link": "",
-            "description": "",
-            "desc_alignment": "center",
-            "desc_color_scheme": "background-2"
-          }
-        },
-        "image_slide_AKJ7Rk": {
-          "type": "image_slide",
-          "settings": {
-            "image": "shopify://shop_images/Ai_AVATARS_4.jpg",
-            "link": "",
-            "description": "",
-            "desc_alignment": "center",
-            "desc_color_scheme": "background-2"
-          }
-        },
-        "image_slide_pBGtCV": {
-          "type": "image_slide",
-          "settings": {
-            "image": "shopify://shop_images/Ai_AVATARS_1.jpg",
-            "link": "",
-            "description": "",
-            "desc_alignment": "center",
-            "desc_color_scheme": "background-2"
-          }
-        },
-        "image_slide_Pc94Pp": {
-          "type": "image_slide",
-          "settings": {
-            "image": "shopify://shop_images/Ai_AVATARS_25.png",
-            "link": "",
-            "description": "",
-            "desc_alignment": "center",
-            "desc_color_scheme": "background-2"
-          }
-        }
+        "variant_image_filtering": "none",
+        "video_player": "play_btn",
+        "video_sound_btn": false,
+        "video_timeline": false
       },
-      "block_order": [
-        "image_slide_bk64Fk",
-        "image_slide_CrCqJT",
-        "image_slide_AKJ7Rk",
-        "image_slide_pBGtCV",
-        "image_slide_Pc94Pp"
-      ],
-      "name": "Image/Video Slider",
+      "type": "main-product"
+    },
+    "related-products": {
+      "disabled": true,
       "settings": {
+        "color_scheme": "background-1",
+        "columns_desktop": 4,
+        "columns_mobile": "2",
         "display_id": false,
-        "visibility": "always-display",
-        "title": "Thousands of <strong>satisfied dogs & dog owners</strong>",
-        "title_highlight_color": "#47b5e9",
+        "enable_quick_add": false,
         "heading_size": "h2",
-        "color_scheme": "background-2",
-        "type": "loop",
-        "drag": "enabled",
-        "autoplay": true,
-        "autoplay_speed": 10.5,
-        "center_mode": false,
-        "arrows_color_scheme": "inverse",
-        "transparent_arrows": false,
-        "dots_color_scheme": "inverse",
-        "desktop_page_width": "normal",
-        "desktop_border_radius": 12,
-        "slides_desktop": 3,
-        "per_move_desktop": 1,
-        "desktop_spacing": 28,
-        "desktop_side_padding": 0,
-        "desktop_padding_calc": true,
-        "desktop_adaptive_height": false,
-        "desktop_dots_position": "under",
-        "desktop_arrows_position": "hidden",
-        "mobile_full_page": false,
-        "mobile_border_radius": 12,
-        "slides_mobile": 2,
-        "per_move_mobile": 1,
-        "mobile_spacing": 12,
-        "mobile_side_padding": 0,
-        "mobile_padding_calc": true,
-        "mobile_adaptive_height": false,
-        "mobile_dots_position": "under",
-        "mobile_arrows_position": "hidden",
+        "image_ratio": "adapt",
+        "padding_bottom": 24,
         "padding_top": 36,
-        "padding_bottom": 36,
-        "custom_colors_background": "#ffffff",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#121212"
-      }
-    },
-    "section_divider_q94HQ4": {
-      "type": "section-divider",
-      "settings": {
-        "visibility": "always-display",
-        "shape": "waves_2",
-        "flip_horizontal": false,
-        "flip_vertical": false,
-        "shape_color": "custom",
-        "custom_shape_color": "#d5f7ff",
-        "background_color": "background-1",
-        "custom_background_color": "#ffffff",
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "image_with_text_Ei4Ccz": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading_8gWHeA": {
-          "type": "heading",
-          "settings": {
-            "title": "Your dog's ears tell a<strong> story you can't ignore</strong>",
-            "title_highlight_color": "#d02b2b",
-            "heading_size": "h2"
-          }
-        },
-        "text_tzVfPD": {
-          "type": "text",
-          "settings": {
-            "text": "<p><strong>A yeasty smell, brown wax, or constant head shaking</strong>—these may seem like minor problems.</p><p>But beneath the surface, they can quickly<strong> turn into something much worse.</strong></p><p>Moisture and bacteria build up in your dog's ears every day. Without cleaning, your dog risks painful infections, inflammation, and costly vet bills.</p><p>It hurts to think about, but the fact is:</p><p><strong>Paper towels and cotton pads can push bacteria deeper.</strong> Ear drops create stress and mess.</p><p>You shouldn't have to worry every time you check your dog's ears.</p><p><strong>That's why we—together with veterinarians—created EarWipes</strong> – a simple, gentle routine that both cleans and protects.</p>",
-            "text_style": "body"
-          }
-        }
+        "products_to_show": 4,
+        "show_rating": false,
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "stretch_cards": false,
+        "title": "You may also like",
+        "title_highlight_color": "#6d388b"
       },
-      "block_order": [
-        "heading_8gWHeA",
-        "text_tzVfPD"
-      ],
-      "name": "t:sections.image-with-text.presets.name",
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "image": "shopify://shop_images/Ear_Wipes_Listing_Images_1.webp",
-        "video_autoplay": true,
-        "video_loop": true,
-        "height": "adapt",
-        "color_scheme": "custom",
-        "section_color_scheme": "custom",
-        "full_desktop_width": false,
-        "content_layout": "no-overlap",
-        "desktop_media_width": 50,
-        "layout": "image_first",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "mobile_full_media_width": false,
-        "mobile_direction": "normal",
-        "mobile_image_quanlity": "2",
-        "mobile_content_alignment": "left",
-        "mobile_padding_top": 0,
-        "mobile_padding_bottom": 16,
-        "desktop_padding_top": 36,
-        "desktop_padding_bottom": 36,
-        "custom_colors_background": "#d5f7ff",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#2e2a39",
-        "custom_colors_solid_button_background": "#dd1d1d",
-        "custom_colors_solid_button_text": "#ffffff",
-        "custom_colors_outline_button": "#dd1d1d",
-        "custom_section_colors_background": "#d5f7ff",
-        "custom_section_gradient_background": ""
-      }
+      "type": "related-products"
     },
     "section_divider_XeNhA8": {
-      "type": "section-divider",
       "settings": {
-        "visibility": "always-display",
-        "shape": "waves_2",
-        "flip_horizontal": false,
-        "flip_vertical": true,
-        "shape_color": "custom",
-        "custom_shape_color": "#d5f7ff",
         "background_color": "background-1",
         "custom_background_color": "#d6fdfd",
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "image_with_text_PLRggf": {
-      "type": "image-with-text",
-      "blocks": {
-        "caption_WpPykQ": {
-          "type": "caption",
-          "settings": {
-            "caption": "See how easy it is – completely stress-free",
-            "text_style": "caption-with-letter-spacing",
-            "text_size": "medium"
-          }
-        },
-        "heading_WYjtma": {
-          "type": "heading",
-          "settings": {
-            "title": "Stops infections <strong>before they start</strong>",
-            "title_highlight_color": "#47b5e9",
-            "heading_size": "h1"
-          }
-        },
-        "text_KEyKFx": {
-          "type": "text",
-          "settings": {
-            "text": "<p>EarWipes does more than just wipe away dirt.</p><p>They are developed to clean deeply – so that bacteria don't get a foothold.</p><p>By removing wax and debris <strong>it reduces the risk of odor, inflammation and painful infections.</strong></p><p>And thanks to the gentle formula, they are comfortable even for sensitive ears.</p><p><strong>The result? Clean, healthy ears and a dog that doesn't need to scratch.</strong></p>",
-            "text_style": "body"
-          }
-        }
-      },
-      "block_order": [
-        "caption_WpPykQ",
-        "heading_WYjtma",
-        "text_KEyKFx"
-      ],
-      "name": "t:sections.image-with-text.presets.name",
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "video": "shopify://files/videos/earwipes (2).mp4",
-        "video_autoplay": true,
-        "video_loop": true,
-        "height": "adapt",
-        "color_scheme": "background-1",
-        "section_color_scheme": "background-1",
-        "full_desktop_width": false,
-        "content_layout": "no-overlap",
-        "desktop_media_width": 50,
-        "layout": "text_first",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "mobile_full_media_width": false,
-        "mobile_direction": "normal",
-        "mobile_image_quanlity": "2",
-        "mobile_content_alignment": "left",
-        "mobile_padding_top": 0,
-        "mobile_padding_bottom": 16,
-        "desktop_padding_top": 36,
-        "desktop_padding_bottom": 36,
-        "custom_colors_background": "#2e2a39",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#ffffff",
-        "custom_colors_solid_button_background": "#dd1d1d",
-        "custom_colors_solid_button_text": "#ffffff",
-        "custom_colors_outline_button": "#dd1d1d",
-        "custom_section_colors_background": "#ffffff",
-        "custom_section_gradient_background": ""
-      }
-    },
-    "section_divider_xwTHTM": {
-      "type": "section-divider",
-      "name": "Section divider",
-      "settings": {
-        "visibility": "always-display",
-        "shape": "waves_1",
-        "flip_horizontal": false,
-        "flip_vertical": false,
-        "shape_color": "custom",
         "custom_shape_color": "#d5f7ff",
-        "background_color": "background-1",
-        "custom_background_color": "#ffffff",
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "custom_columns_tCbQVM": {
-      "type": "custom-columns",
-      "blocks": {
-        "heading_KUnYfn": {
-          "type": "heading",
-          "settings": {
-            "column": "col_1",
-            "visibility": "always-display",
-            "heading": "That's why dog owners <strong>choose EarWipes</strong>",
-            "title_highlight_color": "#47b5e9",
-            "heading_size": "h2",
-            "alignment": "center",
-            "mobile_alignment": "mobile-center",
-            "margin_top": 20,
-            "margin_bottom": 20
-          }
-        },
-        "richtext_rErCjL": {
-          "type": "richtext",
-          "settings": {
-            "column": "col_1",
-            "visibility": "always-display",
-            "text": "",
-            "text_style": "body",
-            "alignment": "center",
-            "mobile_alignment": "mobile-center",
-            "margin_top": 20,
-            "margin_bottom": 20
-          }
-        },
-        "icon_with_text_tW9KnU": {
-          "type": "icon_with_text",
-          "settings": {
-            "column": "col_2",
-            "visibility": "always-display",
-            "icon": "pets",
-            "filled_icon": false,
-            "icon_size": "m",
-            "icon_position": "next-to-title",
-            "icon_color": "accent-1",
-            "icon_heading_size": "h3",
-            "icon_text_alignment": "left",
-            "title": "Removes wax & dirt",
-            "text": "<p>Specially developed formula lifts away brown buildup, moisture, and debris without pushing it deeper.</p>",
-            "margin_top": 20,
-            "margin_bottom": 30
-          }
-        },
-        "icon_with_text_RkxWkq": {
-          "type": "icon_with_text",
-          "settings": {
-            "column": "col_2",
-            "visibility": "always-display",
-            "icon": "pets",
-            "filled_icon": false,
-            "icon_size": "m",
-            "icon_position": "next-to-title",
-            "icon_color": "accent-1",
-            "icon_heading_size": "h3",
-            "icon_text_alignment": "left",
-            "title": "Gentle yet effective – even for daily use",
-            "text": "<p>Safe for puppies, adult dogs, and sensitive ears. No alcohol, no harsh chemicals.</p>",
-            "margin_top": 20,
-            "margin_bottom": 20
-          }
-        },
-        "image_4JqQ7a": {
-          "type": "image",
-          "settings": {
-            "column": "col_3",
-            "visibility": "always-display",
-            "image": "shopify://shop_images/Engelska_12.jpg",
-            "width": 100,
-            "alignment": "center",
-            "mobile_alignment": "center",
-            "border_radius": 0,
-            "margin_top": 20,
-            "margin_bottom": 20
-          }
-        },
-        "icon_with_text_Yt7WxB": {
-          "type": "icon_with_text",
-          "settings": {
-            "column": "col_4",
-            "visibility": "always-display",
-            "icon": "pets",
-            "filled_icon": false,
-            "icon_size": "m",
-            "icon_position": "next-to-title",
-            "icon_color": "accent-1",
-            "icon_heading_size": "h3",
-            "icon_text_alignment": "left",
-            "title": "Prevents infections before they start",
-            "text": "<p>pH-balanced cleaning that stops bacteria and yeast before they become a problem.</p>",
-            "margin_top": 20,
-            "margin_bottom": 30
-          }
-        },
-        "icon_with_text_mUkFLX": {
-          "type": "icon_with_text",
-          "settings": {
-            "column": "col_4",
-            "visibility": "always-display",
-            "icon": "pets",
-            "filled_icon": false,
-            "icon_size": "m",
-            "icon_position": "next-to-title",
-            "icon_color": "accent-1",
-            "icon_heading_size": "h3",
-            "icon_text_alignment": "left",
-            "title": "No liquid mess or stress",
-            "text": "<p>Your dog avoids discomfort – and you avoid wrestling matches with ear drop bottles.</p>",
-            "margin_top": 20,
-            "margin_bottom": 20
-          }
-        }
-      },
-      "block_order": [
-        "heading_KUnYfn",
-        "richtext_rErCjL",
-        "icon_with_text_tW9KnU",
-        "icon_with_text_RkxWkq",
-        "image_4JqQ7a",
-        "icon_with_text_Yt7WxB",
-        "icon_with_text_mUkFLX"
-      ],
-      "name": "Custom columns",
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "color_scheme": "background-2",
-        "columns_count": 4,
-        "desktop_page_width": "normal",
-        "column_gap_desktop": 40,
-        "row_gap_desktop": 40,
-        "desktop_vertical_alignment": "center",
-        "mobile_full_page": false,
-        "column_gap_mobile": 20,
-        "row_gap_mobile": 30,
-        "mobile_vertical_alignment": "flex-start",
-        "col_1_desktop_width": 12,
-        "col_1_mobile_width": 4,
-        "col_1_visibility": "always-display",
-        "col_2_desktop_width": 4,
-        "col_2_mobile_width": 4,
-        "col_2_visibility": "always-display",
-        "col_3_desktop_width": 4,
-        "col_3_mobile_width": 4,
-        "col_3_visibility": "always-display",
-        "col_4_desktop_width": 4,
-        "col_4_mobile_width": 4,
-        "col_4_visibility": "always-display",
-        "col_5_desktop_width": 3,
-        "col_5_mobile_width": 4,
-        "col_5_visibility": "always-display",
-        "col_6_desktop_width": 3,
-        "col_6_mobile_width": 4,
-        "col_6_visibility": "always-display",
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "custom_colors_background": "#ffffff",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#2e2a39",
-        "custom_colors_solid_button_background": "#dd1d1d",
-        "custom_colors_solid_button_text": "#ffffff",
-        "custom_colors_outline_button": "#dd1d1d"
-      }
-    },
-    "section_divider_iVUHzY": {
-      "type": "section-divider",
-      "settings": {
-        "visibility": "always-display",
-        "shape": "waves_2",
         "flip_horizontal": false,
         "flip_vertical": true,
+        "padding_bottom": 0,
+        "padding_top": 0,
+        "shape": "waves_2",
         "shape_color": "custom",
-        "custom_shape_color": "#d5f7ff",
+        "visibility": "always-display"
+      },
+      "type": "section-divider"
+    },
+    "section_divider_iVUHzY": {
+      "settings": {
         "background_color": "background-1",
         "custom_background_color": "#d5f7ff",
+        "custom_shape_color": "#d5f7ff",
+        "flip_horizontal": false,
+        "flip_vertical": true,
+        "padding_bottom": 0,
         "padding_top": 0,
-        "padding_bottom": 0
-      }
+        "shape": "waves_2",
+        "shape_color": "custom",
+        "visibility": "always-display"
+      },
+      "type": "section-divider"
+    },
+    "section_divider_q94HQ4": {
+      "settings": {
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "custom_shape_color": "#d5f7ff",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "padding_bottom": 0,
+        "padding_top": 0,
+        "shape": "waves_2",
+        "shape_color": "custom",
+        "visibility": "always-display"
+      },
+      "type": "section-divider"
+    },
+    "section_divider_xwTHTM": {
+      "name": "Section divider",
+      "settings": {
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "custom_shape_color": "#d5f7ff",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "padding_bottom": 0,
+        "padding_top": 0,
+        "shape": "waves_1",
+        "shape_color": "custom",
+        "visibility": "always-display"
+      },
+      "type": "section-divider"
     },
     "testimonials_A3d8yL": {
-      "type": "testimonials",
-      "blocks": {
-        "column_ewA3bM": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "The scratching finally stopped",
-            "text": "<p>My Golden has been digging at his ears for MONTHS. Like every few minutes, constantly. I tried wiping them with wet paper towels, bought those expensive ear drops from the pet store - he hated those and would literally hide under the bed when he saw me coming. Started using these wipes about 2 weeks ago and the scratching is almost completely gone. The smell disappeared too which is honestly the best part because his face used to reek. He just sits there now, doesn't even try to pull away.</p>",
-            "author": "Emily R., 47 | Golden Retriever owner - 2025-09-14"
-          }
-        },
-        "column_NQ3cek": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "Haven't been to the vet in 5 months",
-            "text": "<p>My Cocker gets ear infections constantly. Like clockwork every 2-3 months. Every single time it's $250+ at the vet, antibiotics, the whole thing. I was getting desperate honestly. Started cleaning his ears with these twice a week after his groomer recommended them. It's been 5 months and NO infections. My vet actually commented on how good his ears looked at his last checkup. I'm not even kidding when I say these have saved me probably $500 this year alone.</p>",
-            "author": "Michael T., 52 | Cocker Spaniel owner - 2025-08-22"
-          }
-        },
-        "column_dYBUCU": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "Game changer for my water-obsessed Lab",
-            "text": "<p>My Lab is obsessed with water. Pool, lake, doesn't matter - he's in it. But then his ears would get this gross yeasty smell within like 2 days. I was using those liquid ear cleaners and it was a whole wrestling match every time. Total nightmare. These wipes are so much easier - I just do it right after he swims while he's still tired. Takes maybe a minute for both ears. The smell doesn't come back anymore and his ears stay dry. Honestly wish I'd found these years ago.</p>",
-            "author": "Sarah K., 39 | Labrador owner - 2025-10-05"
-          }
-        },
-        "column_jMPBCd": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "First thing that doesn't make her ears worse",
-            "text": "<p>My Poodle's ears are SO sensitive. Everything I tried made them red and angry looking. Even the \"gentle\" stuff from the vet. She'd shake her head for hours after. These don't seem to bother her at all. I can actually see the brown gunk on the wipe when I'm done which is kinda gross but also you know it's actually working? Her ears are finally that healthy pink color instead of inflamed. I use them maybe 3 times a week and it keeps everything under control.</p>",
-            "author": "Linda M., 61 | Poodle owner - 2025-07-18"
-          }
-        },
-        "column_xD3bEU": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "Rescue with chronic ear issues - finally under control",
-            "text": "<p>Adopted a Beagle from the shelter who had really bad ear problems. They told me it would probably be an ongoing thing, just part of having a Beagle. Started cleaning her ears with these right away, just a couple times a week. Six months later and we haven't had a single infection. Not one. The vet was honestly surprised because apparently her breed is prone to it. Super easy to use and she doesn't fight me on it. Way better than dealing with vet visits every other month.</p>",
-            "author": "James W., 44 | Beagle owner - 2025-11-29"
-          }
-        }
-      },
       "block_order": [
         "column_ewA3bM",
         "column_NQ3cek",
@@ -1062,298 +1257,103 @@
         "column_jMPBCd",
         "column_xD3bEU"
       ],
+      "blocks": {
+        "column_NQ3cek": {
+          "settings": {
+            "author": "Michael T., 52 | Cocker Spaniel owner - 2025-08-22",
+            "star_rating": 5,
+            "text": "<p>My Cocker gets ear infections constantly. Like clockwork every 2-3 months. Every single time it's $250+ at the vet, antibiotics, the whole thing. I was getting desperate honestly. Started cleaning his ears with these twice a week after his groomer recommended them. It's been 5 months and NO infections. My vet actually commented on how good his ears looked at his last checkup. I'm not even kidding when I say these have saved me probably $500 this year alone.</p>",
+            "title": "Haven't been to the vet in 5 months"
+          },
+          "type": "column"
+        },
+        "column_dYBUCU": {
+          "settings": {
+            "author": "Sarah K., 39 | Labrador owner - 2025-10-05",
+            "star_rating": 5,
+            "text": "<p>My Lab is obsessed with water. Pool, lake, doesn't matter - he's in it. But then his ears would get this gross yeasty smell within like 2 days. I was using those liquid ear cleaners and it was a whole wrestling match every time. Total nightmare. These wipes are so much easier - I just do it right after he swims while he's still tired. Takes maybe a minute for both ears. The smell doesn't come back anymore and his ears stay dry. Honestly wish I'd found these years ago.</p>",
+            "title": "Game changer for my water-obsessed Lab"
+          },
+          "type": "column"
+        },
+        "column_ewA3bM": {
+          "settings": {
+            "author": "Emily R., 47 | Golden Retriever owner - 2025-09-14",
+            "star_rating": 5,
+            "text": "<p>My Golden has been digging at his ears for MONTHS. Like every few minutes, constantly. I tried wiping them with wet paper towels, bought those expensive ear drops from the pet store - he hated those and would literally hide under the bed when he saw me coming. Started using these wipes about 2 weeks ago and the scratching is almost completely gone. The smell disappeared too which is honestly the best part because his face used to reek. He just sits there now, doesn't even try to pull away.</p>",
+            "title": "The scratching finally stopped"
+          },
+          "type": "column"
+        },
+        "column_jMPBCd": {
+          "settings": {
+            "author": "Linda M., 61 | Poodle owner - 2025-07-18",
+            "star_rating": 5,
+            "text": "<p>My Poodle's ears are SO sensitive. Everything I tried made them red and angry looking. Even the \"gentle\" stuff from the vet. She'd shake her head for hours after. These don't seem to bother her at all. I can actually see the brown gunk on the wipe when I'm done which is kinda gross but also you know it's actually working? Her ears are finally that healthy pink color instead of inflamed. I use them maybe 3 times a week and it keeps everything under control.</p>",
+            "title": "First thing that doesn't make her ears worse"
+          },
+          "type": "column"
+        },
+        "column_xD3bEU": {
+          "settings": {
+            "author": "James W., 44 | Beagle owner - 2025-11-29",
+            "star_rating": 5,
+            "text": "<p>Adopted a Beagle from the shelter who had really bad ear problems. They told me it would probably be an ongoing thing, just part of having a Beagle. Started cleaning her ears with these right away, just a couple times a week. Six months later and we haven't had a single infection. Not one. The vet was honestly surprised because apparently her breed is prone to it. Super easy to use and she doesn't fight me on it. Way better than dealing with vet visits every other month.</p>",
+            "title": "Rescue with chronic ear issues - finally under control"
+          },
+          "type": "column"
+        }
+      },
       "name": "Testimonials",
       "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "title": "Verified Reviews",
-        "title_highlight_color": "#6d388b",
-        "heading_size": "h1",
-        "text": "<p><strong>45,000+ dog owners</strong> are keeping ears clean without the stress</p>",
-        "color_scheme": "background-1",
-        "image_width": "full",
-        "image_ratio": "square",
-        "column_alignment": "center",
-        "show_stars": true,
-        "inactive_stars_style": "solid",
-        "star_color": "#ffcc00",
-        "bg_star_color": "#ececec",
-        "show_quotes": true,
-        "quotes_color_scheme": "accent-1",
-        "cards_color_scheme": "bg-overlay",
-        "type": "loop",
+        "arrows_color_scheme": "inverse",
         "autoplay": true,
         "autoplay_speed": 9.5,
-        "arrows_color_scheme": "inverse",
-        "transparent_arrows": true,
-        "dots_color_scheme": "inverse",
-        "desktop_full_page": true,
+        "bg_star_color": "#ececec",
+        "cards_color_scheme": "bg-overlay",
+        "color_scheme": "background-1",
+        "column_alignment": "center",
         "columns_desktop": 5,
-        "slider_desktop": false,
-        "per_move_desktop": 1,
-        "desktop_spacing": 40,
-        "desktop_side_padding": 0,
-        "desktop_padding_calc": true,
-        "desktop_adaptive_height": false,
-        "desktop_dots_position": "under",
-        "desktop_arrows_position": "sides",
-        "slider_mobile": true,
-        "enable_mobile_preview": false,
-        "mobile_adaptive_height": false,
-        "mobile_dots_position": "under",
-        "mobile_arrows_position": "under",
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "custom_colors_background": "#ffffff",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#2e2a39",
         "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_colors_text": "#2e2a39",
         "custom_cards_gradient_background": "",
-        "custom_cards_colors_text": "#2e2a39"
-      }
-    },
-    "image_with_text_PCDA6T": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading_b8M8fn": {
-          "type": "heading",
-          "settings": {
-            "title": "Gentle care for <strong>sensitive ears</strong>",
-            "title_highlight_color": "#47b5e9",
-            "heading_size": "h1"
-          }
-        },
-        "text_JVGtNh": {
-          "type": "text",
-          "settings": {
-            "text": "<p>EarWipes are developed with your dog's sensitive ears in focus.</p><p>The formula is free from harsh chemicals and developed to be safe to use regularly.</p><p>Each wipe is pH-balanced and gentle, while effectively removing wax, dirt and bacteria.</p><p><strong>Naturally caring ingredients:</strong></p><ul><li><strong>Corn extract</strong> – mild & natural cleaning that keeps ears fresh.</li><li><strong>Rosemary extract</strong> – cleansing & antibacterial power from nature.</li><li><strong>Witch hazel</strong> – soothes irritation and reduces itching.</li></ul><p>Together they provide a cleaning that both prevents and cares – so your dog avoids discomfort and you don't have to worry about infections.</p>",
-            "text_style": "body"
-          }
-        }
-      },
-      "block_order": [
-        "heading_b8M8fn",
-        "text_JVGtNh"
-      ],
-      "name": "t:sections.image-with-text.presets.name",
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "image": "shopify://shop_images/Engelska_13.jpg",
-        "video_autoplay": true,
-        "video_loop": true,
-        "height": "adapt",
-        "color_scheme": "background-1",
-        "section_color_scheme": "background-1",
-        "full_desktop_width": false,
-        "content_layout": "no-overlap",
-        "desktop_media_width": 50,
-        "layout": "image_first",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "mobile_full_media_width": false,
-        "mobile_direction": "normal",
-        "mobile_image_quanlity": "2",
-        "mobile_content_alignment": "left",
-        "mobile_padding_top": 0,
-        "mobile_padding_bottom": 16,
-        "desktop_padding_top": 36,
-        "desktop_padding_bottom": 36,
-        "custom_colors_background": "#d5f7ff",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#2e2a39",
-        "custom_colors_solid_button_background": "#dd1d1d",
-        "custom_colors_solid_button_text": "#ffffff",
-        "custom_colors_outline_button": "#dd1d1d",
-        "custom_section_colors_background": "#d5f7ff",
-        "custom_section_gradient_background": ""
-      }
-    },
-    "related-products": {
-      "type": "related-products",
-      "disabled": true,
-      "settings": {
-        "display_id": false,
-        "title": "You may also like",
-        "title_highlight_color": "#6d388b",
-        "heading_size": "h2",
-        "products_to_show": 4,
-        "stretch_cards": false,
-        "columns_desktop": 4,
-        "color_scheme": "background-1",
-        "image_ratio": "adapt",
-        "show_secondary_image": false,
-        "show_vendor": false,
-        "show_rating": false,
-        "enable_quick_add": false,
-        "columns_mobile": "2",
-        "padding_top": 36,
-        "padding_bottom": 24
-      }
-    },
-    "featured_collection_MRf9GU": {
-      "type": "featured-collection",
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "title": "You may also like:",
-        "title_highlight_color": "#6d388b",
-        "heading_size": "h1",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "color_scheme": "background-1",
-        "collection": "frontpage",
-        "products_to_show": 4,
-        "stretch_cards": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "cards_color_scheme": "background-1",
-        "image_ratio": "adapt",
-        "show_secondary_image": false,
-        "badges": "regular",
-        "show_vendor": false,
-        "show_rating": false,
-        "enable_quick_add": false,
-        "swatches_option_name": "",
-        "swatches_position": "top",
-        "swatches_desktop_size": 36,
-        "swatches_mobile_size": 24,
-        "type": "slide",
-        "autoplay": false,
-        "autoplay_speed": 5,
-        "arrows_color_scheme": "inverse",
-        "transparent_arrows": true,
-        "dots_color_scheme": "inverse",
-        "desktop_full_page": false,
-        "columns_desktop": 4,
-        "slider_desktop": false,
-        "per_move_desktop": 1,
-        "desktop_spacing": 40,
-        "desktop_side_padding": 0,
-        "desktop_padding_calc": true,
-        "desktop_adaptive_height": false,
-        "desktop_dots_position": "under",
-        "desktop_arrows_position": "sides",
-        "columns_mobile": "1",
-        "slider_mobile": true,
-        "enable_mobile_preview": false,
-        "mobile_adaptive_height": false,
-        "mobile_dots_position": "under",
-        "mobile_arrows_position": "under",
-        "padding_top": 36,
-        "padding_bottom": 36,
         "custom_colors_background": "#ffffff",
-        "custom_gradient_background": "",
         "custom_colors_text": "#2e2a39",
-        "custom_colors_solid_button_background": "#dd1d1d",
-        "custom_colors_solid_button_text": "#ffffff"
-      }
-    },
-    "icon_bar_FXDFLd": {
-      "type": "icon-bar",
-      "blocks": {
-        "column_Vjy7DA": {
-          "type": "column",
-          "settings": {
-            "icon": "favorite",
-            "filled_icon": true,
-            "title": "OVER 45 000 SATISFIED CUSTOMERS",
-            "text": "<p>Loved by dog owners and their pets across the world.</p>"
-          }
-        },
-        "column_WFdFKH": {
-          "type": "column",
-          "settings": {
-            "icon": "new_releases",
-            "filled_icon": true,
-            "title": "100-DAY MONEY-BACK GUARANTEE",
-            "text": "<p>Not satisfied? Just contact us within 100 days of your purchase – we’ll make it right.</p>"
-          }
-        },
-        "column_phDGHY": {
-          "type": "column",
-          "settings": {
-            "icon": "support_agent",
-            "filled_icon": false,
-            "title": "SUPPORT MONDAY–FRIDAY",
-            "text": "<p>Need help? Reach out to us – we respond within 24 hours on weekdays.</p><p></p><p></p>"
-          }
-        }
-      },
-      "block_order": [
-        "column_Vjy7DA",
-        "column_WFdFKH",
-        "column_phDGHY"
-      ],
-      "name": "Icon Bar",
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "title": "",
-        "title_highlight_color": "#6d388b",
-        "heading_size": "h1",
-        "text": "",
-        "color_scheme": "background-2",
-        "icon_layout": "vertical",
-        "icon_size": "medium",
-        "icon_color": "accent-1",
-        "cards_color_scheme": "background-2",
-        "type": "slide",
-        "autoplay": false,
-        "autoplay_speed": 5,
-        "arrows_color_scheme": "inverse",
-        "transparent_arrows": true,
-        "dots_color_scheme": "inverse",
-        "desktop_full_page": false,
-        "columns_desktop": 3,
-        "slider_desktop": false,
-        "per_move_desktop": 1,
-        "desktop_spacing": 40,
-        "desktop_side_padding": 0,
-        "desktop_padding_calc": true,
+        "custom_gradient_background": "",
         "desktop_adaptive_height": false,
-        "desktop_dots_position": "under",
         "desktop_arrows_position": "sides",
-        "columns_mobile": "1",
-        "slider_mobile": true,
-        "enable_mobile_preview": false,
-        "mobile_adaptive_height": false,
-        "mobile_dots_position": "under",
-        "mobile_arrows_position": "under",
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "custom_colors_background": "#ffffff",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#2e2a39",
-        "custom_cards_colors_background": "#ffffff",
-        "custom_cards_gradient_background": "",
-        "custom_cards_colors_text": "#2e2a39"
-      }
-    },
-    "1762748258f247e3fb": {
-      "type": "apps",
-      "settings": {
+        "desktop_dots_position": "under",
+        "desktop_full_page": true,
+        "desktop_padding_calc": true,
+        "desktop_side_padding": 0,
+        "desktop_spacing": 40,
         "display_id": false,
-        "include_margins": true
-      }
+        "dots_color_scheme": "inverse",
+        "enable_mobile_preview": false,
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "image_width": "full",
+        "inactive_stars_style": "solid",
+        "mobile_adaptive_height": false,
+        "mobile_arrows_position": "under",
+        "mobile_dots_position": "under",
+        "padding_bottom": 36,
+        "padding_top": 36,
+        "per_move_desktop": 1,
+        "quotes_color_scheme": "accent-1",
+        "show_quotes": true,
+        "show_stars": true,
+        "slider_desktop": false,
+        "slider_mobile": true,
+        "star_color": "#ffcc00",
+        "text": "<p><strong>45,000+ dog owners</strong> are keeping ears clean without the stress</p>",
+        "title": "Verified Reviews",
+        "title_highlight_color": "#6d388b",
+        "transparent_arrows": true,
+        "type": "loop",
+        "visibility": "always-display"
+      },
+      "type": "testimonials"
     }
-  },
-  "order": [
-    "main",
-    "image_slider_mYdxDt",
-    "section_divider_q94HQ4",
-    "image_with_text_Ei4Ccz",
-    "section_divider_XeNhA8",
-    "image_with_text_PLRggf",
-    "section_divider_xwTHTM",
-    "custom_columns_tCbQVM",
-    "section_divider_iVUHzY",
-    "testimonials_A3d8yL",
-    "image_with_text_PCDA6T",
-    "related-products",
-    "featured_collection_MRf9GU",
-    "icon_bar_FXDFLd",
-    "1762748258f247e3fb"
-  ]
+  }
 }
