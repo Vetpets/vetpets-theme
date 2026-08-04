@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "image_banner_Q6qLek": {
@@ -38,12 +29,12 @@
       "settings": {
         "display_id": false,
         "visibility": "always-display",
-        "image": "shopify://shop_images/72_1.png",
+        "image": "shopify:\/\/shop_images\/72_1.png",
         "image_1_visibility": "mobile-hidden",
         "image_2_visibility": "desktop-hidden",
         "image_overlay_opacity": 0,
         "image_height": "adapt",
-        "url": "shopify://collections/finger-wipes",
+        "url": "shopify:\/\/collections\/finger-wipes",
         "desktop_content_position": "middle-center",
         "show_text_box": true,
         "desktop_content_alignment": "left",
@@ -140,7 +131,7 @@
         "paragraph": {
           "type": "paragraph",
           "settings": {
-            "text": "<p>Join our email list for exclusive offers and the latest news. </p>"
+            "text": "<p>Join our email list for exclusive offers and the latest news. <\/p>"
           }
         },
         "email-form": {

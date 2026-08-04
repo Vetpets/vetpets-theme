@@ -64,11 +64,11 @@
                 </button>
               </div>
 
-              {%- if additional_checkout_buttons -%}
+              {% comment %} {%- if additional_checkout_buttons -%}
                 <div class="cart__dynamic-checkout-buttons additional-checkout-buttons">
                   {{ content_for_additional_checkout_buttons }}
                 </div>
-              {%- endif -%}
+              {%- endif -%} {% endcomment %}
           {%- endcase -%}
         {% endfor %}
 

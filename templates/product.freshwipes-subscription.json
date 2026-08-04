@@ -392,7 +392,7 @@
             "desktop_rating_stars": true,
             "desktop_show_price": true,
             "desktop_show_sale_badge": true,
-            "desktop_variant_picker": false,
+            "desktop_variant_picker": true,
             "desktop_full_button_width": true,
             "desktop_show_price_in_button": false,
             "desktop_transparent_bg": false,
@@ -1481,7 +1481,6 @@
           "type": "atc_button",
           "settings": {
             "button_label": "ADD TO CART",
-            "class": "",
             "atc_product": "",
             "atc_skip_cart": false
           }

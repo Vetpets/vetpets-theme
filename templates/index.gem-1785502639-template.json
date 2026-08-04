@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "image_banner_gUTUbM": {
@@ -15,13 +6,13 @@
       "settings": {
         "display_id": false,
         "visibility": "always-display",
-        "image": "shopify://shop_images/Namnlos_design_-_2026-04-21T171044.129.jpg",
+        "image": "shopify:\/\/shop_images\/Namnlos_design_-_2026-04-21T171044.129.jpg",
         "image_1_visibility": "mobile-hidden",
-        "image_2": "shopify://shop_images/Namnlos_design_-_2026-04-21T171257.153.jpg",
+        "image_2": "shopify:\/\/shop_images\/Namnlos_design_-_2026-04-21T171257.153.jpg",
         "image_2_visibility": "desktop-hidden",
         "image_overlay_opacity": 0,
         "image_height": "adapt",
-        "url": "shopify://products/freshcare-complete-health-kit",
+        "url": "shopify:\/\/products\/freshcare-complete-health-kit",
         "desktop_content_position": "middle-center",
         "show_text_box": true,
         "desktop_content_alignment": "left",
@@ -39,7 +30,7 @@
           "type": "caption",
           "disabled": true,
           "settings": {
-            "caption": "<p>Vet Recommended</p>",
+            "caption": "<p>Vet Recommended<\/p>",
             "caption_custom": false,
             "caption_font": "josefin_sans_n4",
             "caption_size": 12,
@@ -65,7 +56,7 @@
         "heading_ckcrih": {
           "type": "heading",
           "settings": {
-            "heading": "<p>The Daily Routine Responsible Pet Fathers Use to <strong>Keep Their </strong></p><p><strong>Pet Healthy</strong></p>",
+            "heading": "<p>The Daily Routine Responsible Pet Fathers Use to <strong>Keep Their <\/strong><\/p><p><strong>Pet Healthy<\/strong><\/p>",
             "heading_custom": false,
             "heading_font": "josefin_sans_n4",
             "heading_accent_font": "playfair_n4",
@@ -83,7 +74,7 @@
           "type": "text",
           "disabled": true,
           "settings": {
-            "text": "<p>Finger wipes designed for your dog's teeth, eyes, and ears. Simple enough to do every day. Gentle enough that your dog won't fight it.</p>",
+            "text": "<p>Finger wipes designed for your dog's teeth, eyes, and ears. Simple enough to do every day. Gentle enough that your dog won't fight it.<\/p>",
             "text_custom": false,
             "text_font": "josefin_sans_n4",
             "text_size": 16,
@@ -99,7 +90,7 @@
           "type": "feature",
           "settings": {
             "icon": "heart",
-            "text": "Only 30 Seconds/Day"
+            "text": "Only 30 Seconds\/Day"
           }
         },
         "feature_9fXTEx": {
@@ -120,7 +111,7 @@
           "type": "button",
           "settings": {
             "button": "FATHER'S DAY SALE",
-            "url": "shopify://collections/finger-wipes",
+            "url": "shopify:\/\/collections\/finger-wipes",
             "open_in_new_tab": false,
             "button_style": "non_outline",
             "button_custom": false,
@@ -154,7 +145,7 @@
             "icon_size": 16,
             "icon_size_mobile": 16,
             "icon": "shield_check",
-            "text": "<p>100-Day Money-Back Guarantee</p>",
+            "text": "<p>100-Day Money-Back Guarantee<\/p>",
             "text_custom": false,
             "text_font": "josefin_sans_n4",
             "text_size": 14,
@@ -216,8 +207,8 @@
         "feature_bg_color": "#ffffff",
         "feature_border_color": "#ffffff",
         "layout_bg_type": "image",
-        "bg_image": "shopify://shop_images/Namnlos_design_-_2026-07-01T094629.525.jpg",
-        "bg_image_mobile": "shopify://shop_images/Namnlos_design_-_2026-07-01T094829.441.jpg",
+        "bg_image": "shopify:\/\/shop_images\/Namnlos_design_-_2026-07-01T094629.525.jpg",
+        "bg_image_mobile": "shopify:\/\/shop_images\/Namnlos_design_-_2026-07-01T094829.441.jpg",
         "bg_video_url": "",
         "bg_overlay": 0,
         "bg_overlay_color": "#121212",
@@ -246,34 +237,34 @@
         "column_GPiyNA": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/Namnlos_design_-_2026-01-25T035641.031.jpg",
+            "image": "shopify:\/\/shop_images\/Namnlos_design_-_2026-01-25T035641.031.jpg",
             "muted_autoplay": true,
             "title": "Teeth",
-            "text": "<p>Plaque builds up daily, causing bad breath and tartar.</p><p><strong>FreshWipes remove plaque quickly with the ease of a simple daily wipe.</strong></p>",
+            "text": "<p>Plaque builds up daily, causing bad breath and tartar.<\/p><p><strong>FreshWipes remove plaque quickly with the ease of a simple daily wipe.<\/strong><\/p>",
             "link_label": "Shop FreshWipes",
-            "link": "shopify://products/freshwipes-kit-protects-against-dental-diseases"
+            "link": "shopify:\/\/products\/freshwipes-kit-protects-against-dental-diseases"
           }
         },
         "column_kaPqz7": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/Namnlos_design_-_2026-01-25T040543.697.jpg",
+            "image": "shopify:\/\/shop_images\/Namnlos_design_-_2026-01-25T040543.697.jpg",
             "muted_autoplay": true,
             "title": "Eyes",
-            "text": "<p>Tear stains and moisture can lead to irritation and discomfort.</p><p><strong>EyeWipes gently clean daily to help keep eyes clear and healthy.</strong></p>",
+            "text": "<p>Tear stains and moisture can lead to irritation and discomfort.<\/p><p><strong>EyeWipes gently clean daily to help keep eyes clear and healthy.<\/strong><\/p>",
             "link_label": "Shop EyeWipes",
-            "link": "shopify://products/eyewipes-prevention-that-keeps-eyes-clear"
+            "link": "shopify:\/\/products\/eyewipes-prevention-that-keeps-eyes-clear"
           }
         },
         "column_N7Pa4L": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/Namnlos_design_-_2026-01-25T040850.470.jpg",
+            "image": "shopify:\/\/shop_images\/Namnlos_design_-_2026-01-25T040850.470.jpg",
             "muted_autoplay": true,
             "title": "Ears",
-            "text": "<p>Wax and moisture can lead to buildup and ear infections.</p><p><strong>EarWipes gently remove buildup to help keep ears clean and healthy.</strong></p>",
+            "text": "<p>Wax and moisture can lead to buildup and ear infections.<\/p><p><strong>EarWipes gently remove buildup to help keep ears clean and healthy.<\/strong><\/p>",
             "link_label": "Shop EarWipes",
-            "link": "shopify://products/earwipes-kit-protects-against-ear-problems"
+            "link": "shopify:\/\/products\/earwipes-kit-protects-against-ear-problems"
           }
         }
       },
@@ -286,7 +277,7 @@
       "settings": {
         "display_id": false,
         "visibility": "always-display",
-        "title": "Daily Pet Care <strong>Made Simple</strong>",
+        "title": "Daily Pet Care <strong>Made Simple<\/strong>",
         "title_highlight_color": "#47b5e9",
         "heading_size": "h1",
         "button_label": "",
@@ -355,7 +346,7 @@
         "heading_7Cnegf": {
           "type": "heading",
           "settings": {
-            "title": "<strong>Complete </strong>Tear Stain <strong>System</strong>",
+            "title": "<strong>Complete <\/strong>Tear Stain <strong>System<\/strong>",
             "title_highlight_color": "#47b5e9",
             "heading_size": "h2"
           }
@@ -363,7 +354,7 @@
         "caption_PF3zmz": {
           "type": "caption",
           "settings": {
-            "caption": "<strong>Most wipes only clean the surface — this fixes the cause.</strong>",
+            "caption": "<strong>Most wipes only clean the surface — this fixes the cause.<\/strong>",
             "text_style": "caption-with-letter-spacing",
             "text_size": "large"
           }
@@ -371,7 +362,7 @@
         "text_j7jXft": {
           "type": "text",
           "settings": {
-            "text": "<p><strong>Still seeing tear stains even after using wipes?</strong><br/><strong>That’s because you’re missing the full routine.</strong><br/><br/>✔ Know <em>exactly</em> what causes tear stains<br/>✔ Learn the <strong>right way</strong> to use your wipes (most owners do it wrong)<br/>✔ Build a <strong>simple daily routine</strong> that prevents buildup<br/>✔ See visible improvement in as little as <strong>30 days</strong></p>",
+            "text": "<p><strong>Still seeing tear stains even after using wipes?<\/strong><br\/><strong>That’s because you’re missing the full routine.<\/strong><br\/><br\/>✔ Know <em>exactly<\/em> what causes tear stains<br\/>✔ Learn the <strong>right way<\/strong> to use your wipes (most owners do it wrong)<br\/>✔ Build a <strong>simple daily routine<\/strong> that prevents buildup<br\/>✔ See visible improvement in as little as <strong>30 days<\/strong><\/p>",
             "text_style": "body"
           }
         },
@@ -385,7 +376,7 @@
         "heading_Mf9z4H": {
           "type": "heading",
           "settings": {
-            "title": "Use this complete system with your <strong>eyewipes </strong>for best results",
+            "title": "Use this complete system with your <strong>eyewipes <\/strong>for best results",
             "title_highlight_color": "#47b5e9",
             "heading_size": "h2"
           }
@@ -394,14 +385,14 @@
           "type": "button",
           "settings": {
             "button_label": "Get the Full System — $24.00",
-            "button_link": "shopify://products/eyewipes-prevention-that-keeps-eyes-clear",
+            "button_link": "shopify:\/\/products\/eyewipes-prevention-that-keeps-eyes-clear",
             "button_style_secondary": false
           }
         },
         "caption_YUqL68": {
           "type": "caption",
           "settings": {
-            "caption": "<strong> Instant access • One-time payment • No subscription</strong>",
+            "caption": "<strong> Instant access • One-time payment • No subscription<\/strong>",
             "text_style": "caption-with-letter-spacing",
             "text_size": "large"
           }
@@ -420,7 +411,7 @@
       "settings": {
         "display_id": false,
         "visibility": "always-display",
-        "image": "shopify://shop_images/ProductDesignPetGloveWipes_2.png",
+        "image": "shopify:\/\/shop_images\/ProductDesignPetGloveWipes_2.png",
         "video_autoplay": false,
         "video_loop": false,
         "height": "adapt",
@@ -472,7 +463,7 @@
           "settings": {
             "column": "col_1",
             "visibility": "always-display",
-            "text": "<p>Because you’re only fixing the surface.<br/></p><p></p>",
+            "text": "<p>Because you’re only fixing the surface.<br\/><\/p><p><\/p>",
             "text_style": "body",
             "alignment": "center",
             "mobile_alignment": "mobile-center",
@@ -493,7 +484,7 @@
             "icon_heading_size": "h3",
             "icon_text_alignment": "left",
             "title": "",
-            "text": "<p>Most routines only fix the surface.  <br/>The real issue builds underneath — and keeps returning.<br/><br/>That’s why we created a simple system:<br/><br/>🧼 Clean daily with EyeWipes  <br/>📘 Follow a 30-day routine that fixes the root  <br/><br/>✔ Stop the cycle  <br/>✔ Know exactly what to do  <br/>✔ See real results  </p>",
+            "text": "<p>Most routines only fix the surface.  <br\/>The real issue builds underneath — and keeps returning.<br\/><br\/>That’s why we created a simple system:<br\/><br\/>🧼 Clean daily with EyeWipes  <br\/>📘 Follow a 30-day routine that fixes the root  <br\/><br\/>✔ Stop the cycle  <br\/>✔ Know exactly what to do  <br\/>✔ See real results  <\/p>",
             "margin_top": 20,
             "margin_bottom": 20
           }
@@ -503,7 +494,7 @@
           "settings": {
             "column": "col_3",
             "visibility": "always-display",
-            "image": "shopify://shop_images/DIGITALPRODUCT_1BrightEyesin30Days.png",
+            "image": "shopify:\/\/shop_images\/DIGITALPRODUCT_1BrightEyesin30Days.png",
             "width": 100,
             "alignment": "flex-end",
             "mobile_alignment": "flex-end",
@@ -517,7 +508,7 @@
           "settings": {
             "column": "col_3",
             "visibility": "always-display",
-            "text": "<p>Includes optional guide in cart for best results</p>",
+            "text": "<p>Includes optional guide in cart for best results<\/p>",
             "text_style": "subtitle",
             "alignment": "center",
             "mobile_alignment": "mobile-center",
@@ -531,7 +522,7 @@
             "column": "col_3",
             "visibility": "always-display",
             "button_label_1": "Start the 30-Day Routine",
-            "button_link_1": "shopify://products/eyewipes-prevention-that-keeps-eyes-clear",
+            "button_link_1": "shopify:\/\/products\/eyewipes-prevention-that-keeps-eyes-clear",
             "button_style_secondary_1": false,
             "button_label_2": "",
             "button_link_2": "",
@@ -610,14 +601,14 @@
           "type": "button",
           "settings": {
             "button_label": "Start the 30-Day Routine",
-            "button_link": "shopify://products/eyewipes-prevention-that-keeps-eyes-clear",
+            "button_link": "shopify:\/\/products\/eyewipes-prevention-that-keeps-eyes-clear",
             "button_style_secondary": false
           }
         },
         "text_fjVmFM": {
           "type": "text",
           "settings": {
-            "text": "<p>Most routines only fix the surface.  <br/>The real issue builds underneath — and keeps returning.<br/><br/>That’s why we created a simple system:<br/><br/>&gt; Clean daily with EyeWipes  <br/>&gt; Follow a 30-day routine that fixes the root  <br/><br/>✔ Stop the cycle  <br/>✔ Know exactly what to do  <br/>✔ See real results  </p>",
+            "text": "<p>Most routines only fix the surface.  <br\/>The real issue builds underneath — and keeps returning.<br\/><br\/>That’s why we created a simple system:<br\/><br\/>&gt; Clean daily with EyeWipes  <br\/>&gt; Follow a 30-day routine that fixes the root  <br\/><br\/>✔ Stop the cycle  <br\/>✔ Know exactly what to do  <br\/>✔ See real results  <\/p>",
             "text_style": "body"
           }
         }
@@ -632,7 +623,7 @@
       "settings": {
         "display_id": false,
         "visibility": "always-display",
-        "image": "shopify://shop_images/DIGITALPRODUCT_1BrightEyesin30Days.png",
+        "image": "shopify:\/\/shop_images\/DIGITALPRODUCT_1BrightEyesin30Days.png",
         "video_autoplay": true,
         "video_loop": true,
         "height": "adapt",
@@ -684,10 +675,10 @@
         "column_4ky8tG": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_24.svg",
+            "image": "shopify:\/\/shop_images\/Din_Hunds_Leende_spelar_ocksa_roll_24.svg",
             "muted_autoplay": true,
             "title": "1. Antibacterial CPC Formula",
-            "text": "<p>Cetylpyridinium Chloride (CPC) is clinically proven to eliminate up to 99% of the bacteria that cause plaque buildup and bad breath — the same active ingredient used in professional dental mouthwashes.</p>",
+            "text": "<p>Cetylpyridinium Chloride (CPC) is clinically proven to eliminate up to 99% of the bacteria that cause plaque buildup and bad breath — the same active ingredient used in professional dental mouthwashes.<\/p>",
             "link_label": "",
             "link": ""
           }
@@ -695,10 +686,10 @@
         "column_8JfWNy": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_25.svg",
+            "image": "shopify:\/\/shop_images\/Din_Hunds_Leende_spelar_ocksa_roll_25.svg",
             "muted_autoplay": true,
             "title": "2. Mechanical Cleaning",
-            "text": "<p>The textured surface acts like a micro-toothbrush, physically removing plaque and food debris — without the discomfort dogs associate with traditional brushing.</p>",
+            "text": "<p>The textured surface acts like a micro-toothbrush, physically removing plaque and food debris — without the discomfort dogs associate with traditional brushing.<\/p>",
             "link_label": "",
             "link": ""
           }
@@ -706,10 +697,10 @@
         "column_x3dgeT": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_26.svg",
+            "image": "shopify:\/\/shop_images\/Din_Hunds_Leende_spelar_ocksa_roll_26.svg",
             "muted_autoplay": true,
             "title": "3. Enzymatic Breakdown",
-            "text": "<p>Natural enzymes continue working after use, breaking down biofilm that would otherwise harden into tartar.</p>",
+            "text": "<p>Natural enzymes continue working after use, breaking down biofilm that would otherwise harden into tartar.<\/p>",
             "link_label": "",
             "link": ""
           }
@@ -717,10 +708,10 @@
         "column_9WQacg": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_27.svg",
+            "image": "shopify:\/\/shop_images\/Din_Hunds_Leende_spelar_ocksa_roll_27.svg",
             "muted_autoplay": true,
             "title": "4. Moisture-Locking Glycerin",
-            "text": "<p>Keeps each wipe moist and effective — no dry, ineffective wiping that delivers zero results.</p>",
+            "text": "<p>Keeps each wipe moist and effective — no dry, ineffective wiping that delivers zero results.<\/p>",
             "link_label": "",
             "link": ""
           }
@@ -736,11 +727,11 @@
       "settings": {
         "display_id": false,
         "visibility": "always-display",
-        "title": "How Our <strong>FreshWipes Work</strong>",
+        "title": "How Our <strong>FreshWipes Work<\/strong>",
         "title_highlight_color": "#47b5e9",
         "heading_size": "h1",
         "button_label": "Get FreshWipes Now",
-        "button_link": "shopify://products/freshwipes-kit-protects-against-dental-diseases",
+        "button_link": "shopify:\/\/products\/freshwipes-kit-protects-against-dental-diseases",
         "atc_button_label": "",
         "atc_product": "",
         "atc_skip_cart": false,
@@ -825,7 +816,7 @@
             "star_color": "#ffcc00",
             "bg_stars_style": "full",
             "bg_star_color": "#ececec",
-            "label": "4.86/5 Based on 10.000+ Reviews",
+            "label": "4.86\/5 Based on 10.000+ Reviews",
             "size": 13,
             "alignment": "flex-start",
             "scroll_id": "",
@@ -1199,7 +1190,7 @@
           "settings": {
             "star_rating": 5,
             "title": "Vet said do something this works",
-            "text": "<p>Talked to my vet about dental care and she said the most important thing is to do SOMETHING regularly, even if you can't brush. These wipes have made it so much easier for me to keep the routine. My 11-year-old dachshund has noticeably whiter teeth and I feel safe using the natural ingredients. Takes barely a minute a day. Highly recommend!</p>",
+            "text": "<p>Talked to my vet about dental care and she said the most important thing is to do SOMETHING regularly, even if you can't brush. These wipes have made it so much easier for me to keep the routine. My 11-year-old dachshund has noticeably whiter teeth and I feel safe using the natural ingredients. Takes barely a minute a day. Highly recommend!<\/p>",
             "author": "Anne B., 57 - 2025-11-09"
           }
         },
@@ -1208,7 +1199,7 @@
           "settings": {
             "star_rating": 5,
             "title": "Finally something that actually works",
-            "text": "<p>Really good. I've tried chew toys, water additives, everything possible. Nothing worked and my dog's breath was TERRIBLE. These wipes actually remove the dirt, you see it directly on the wipe. Takes max 2 minutes and I can do it while watching TV. Should've bought these ages ago.</p>",
+            "text": "<p>Really good. I've tried chew toys, water additives, everything possible. Nothing worked and my dog's breath was TERRIBLE. These wipes actually remove the dirt, you see it directly on the wipe. Takes max 2 minutes and I can do it while watching TV. Should've bought these ages ago.<\/p>",
             "author": "Sophie H., 43 - 2025-10-26"
           }
         },
@@ -1217,7 +1208,7 @@
           "settings": {
             "star_rating": 5,
             "title": "Safe for the whole family",
-            "text": "<p>We have a 3-year-old at home and the dog licks him constantly. I wanted something for the dog's breath that isn't dangerous if the kids get it on them. These are natural and work really well. Takes 2 minutes in the evening when the kids are asleep. The dog sits calmly and his breath is so much fresher now. Great not to have to worry when he kisses the kids!</p>",
+            "text": "<p>We have a 3-year-old at home and the dog licks him constantly. I wanted something for the dog's breath that isn't dangerous if the kids get it on them. These are natural and work really well. Takes 2 minutes in the evening when the kids are asleep. The dog sits calmly and his breath is so much fresher now. Great not to have to worry when he kisses the kids!<\/p>",
             "author": "Sarah E., 39 - 2025-10-03"
           }
         },
@@ -1226,7 +1217,7 @@
           "settings": {
             "star_rating": 5,
             "title": "Getting better each time",
-            "text": "<p>My dog wasn't fond of it at first. But now it's going better. It works.</p>",
+            "text": "<p>My dog wasn't fond of it at first. But now it's going better. It works.<\/p>",
             "author": "Christine B. - 2025-09-21"
           }
         },
@@ -1235,7 +1226,7 @@
           "settings": {
             "star_rating": 5,
             "title": "No more crusty mornings",
-            "text": "<p>My Bichon used to wake up with those brown areas every single day. I tried everything - baby wipes, damp cloths, nothing worked properly. These actually remove the gunk and it doesn't come back as quickly. Takes about a week to see real improvement but now her eyes look so much cleaner. Finally something that works</p>",
+            "text": "<p>My Bichon used to wake up with those brown areas every single day. I tried everything - baby wipes, damp cloths, nothing worked properly. These actually remove the gunk and it doesn't come back as quickly. Takes about a week to see real improvement but now her eyes look so much cleaner. Finally something that works<\/p>",
             "author": "Sophie N., 31 | Bichon Frise - 2025-10-29"
           }
         },
@@ -1244,7 +1235,7 @@
           "settings": {
             "star_rating": 5,
             "title": "Safe for sensitive eyes",
-            "text": "<p>We have a 3-year-old at home and the dog licks him constantly around him. I wanted something gentle that wouldn't irritate if it got in his eyes. These are natural and work really well. Takes 2 minutes in the evening. His eye area looks so much cleaner now and no more redness. Great not to have to worry.</p>",
+            "text": "<p>We have a 3-year-old at home and the dog licks him constantly around him. I wanted something gentle that wouldn't irritate if it got in his eyes. These are natural and work really well. Takes 2 minutes in the evening. His eye area looks so much cleaner now and no more redness. Great not to have to worry.<\/p>",
             "author": "Maria L., 41 | Golden Retriever - 2025-10-03"
           }
         },
@@ -1253,7 +1244,7 @@
           "settings": {
             "star_rating": 5,
             "title": "The scratching has stopped",
-            "text": "<p>My Golden has been digging at his ears for MONTHS. Like every few minutes, constantly. I tried wiping them with wet paper towels, bought those expensive ear drops from the pet store - he hated these and would literally hide under the bed when he saw me coming. Started using these wipes about 2 weeks ago and the scratching is almost completely gone. The smell disappeared too which is honestly the best part because his face used to reek. He just sits there now, doesn't even try to pull away.</p>",
+            "text": "<p>My Golden has been digging at his ears for MONTHS. Like every few minutes, constantly. I tried wiping them with wet paper towels, bought those expensive ear drops from the pet store - he hated these and would literally hide under the bed when he saw me coming. Started using these wipes about 2 weeks ago and the scratching is almost completely gone. The smell disappeared too which is honestly the best part because his face used to reek. He just sits there now, doesn't even try to pull away.<\/p>",
             "author": "Karin J., 54 | Golden Retriever owner - 2025-09-14"
           }
         },
@@ -1262,8 +1253,8 @@
           "settings": {
             "star_rating": 5,
             "title": "Highly recommended!!",
-            "text": "<p>My dog has always been afraid of toothbrushing, which made it difficult to keep his teeth clean.<br/><br/>But after we started using these wipes, he’s become completely calm.<br/><br/>It’s amazing to see that he no longer runs away or gets anxious when it’s time to clean his teeth.</p>",
-            "author_avatar": "shopify://shop_images/Profilbild1_b3680c3c-3c9b-4f7c-aaa0-1c5e71863e67.webp",
+            "text": "<p>My dog has always been afraid of toothbrushing, which made it difficult to keep his teeth clean.<br\/><br\/>But after we started using these wipes, he’s become completely calm.<br\/><br\/>It’s amazing to see that he no longer runs away or gets anxious when it’s time to clean his teeth.<\/p>",
+            "author_avatar": "shopify:\/\/shop_images\/Profilbild1_b3680c3c-3c9b-4f7c-aaa0-1c5e71863e67.webp",
             "author": "– Erik A"
           }
         },
@@ -1272,8 +1263,8 @@
           "settings": {
             "star_rating": 5,
             "title": "He’s completely fearless now!",
-            "text": "<p>Brushing my dog’s teeth has been a struggle for years because he was so scared.<br/><br/>But these wipes changed everything.<br/><br/>He’s now completely fearless and lets me clean his teeth without any problems.<br/><br/>This has truly improved our dental care routine.</p>",
-            "author_avatar": "shopify://shop_images/Profilbild1_78735bd1-dd93-45c0-b80c-27246ca5802d.webp",
+            "text": "<p>Brushing my dog’s teeth has been a struggle for years because he was so scared.<br\/><br\/>But these wipes changed everything.<br\/><br\/>He’s now completely fearless and lets me clean his teeth without any problems.<br\/><br\/>This has truly improved our dental care routine.<\/p>",
+            "author_avatar": "shopify:\/\/shop_images\/Profilbild1_78735bd1-dd93-45c0-b80c-27246ca5802d.webp",
             "author": "– Johan E"
           }
         },
@@ -1282,8 +1273,8 @@
           "settings": {
             "star_rating": 5,
             "title": "Highly recommend to all dog owners",
-            "text": "<p>I’ve always had a hard time brushing my dog’s teeth because he was afraid.<br/><br/>With these wipes, he’s now completely calm.<br/><br/>It’s such a huge relief to be able to clean his teeth without having to fight with him.<br/><br/><strong>Highly recommend this to all dog owners.</strong></p>",
-            "author_avatar": "shopify://shop_images/Profilbild_3.webp",
+            "text": "<p>I’ve always had a hard time brushing my dog’s teeth because he was afraid.<br\/><br\/>With these wipes, he’s now completely calm.<br\/><br\/>It’s such a huge relief to be able to clean his teeth without having to fight with him.<br\/><br\/><strong>Highly recommend this to all dog owners.<\/strong><\/p>",
+            "author_avatar": "shopify:\/\/shop_images\/Profilbild_3.webp",
             "author": "– Sarah Johansen"
           }
         },
@@ -1292,8 +1283,8 @@
           "settings": {
             "star_rating": 5,
             "title": "I’m very satisfied",
-            "text": "<p>I’ve used this product on my dog for a few weeks now, and I’m very satisfied.<br/><br/>His teeth look much cleaner, and his breath has noticeably improved.<br/><br/>It’s also very easy to use, which is a big plus.</p>",
-            "author_avatar": "shopify://shop_images/Profilbild1.webp",
+            "text": "<p>I’ve used this product on my dog for a few weeks now, and I’m very satisfied.<br\/><br\/>His teeth look much cleaner, and his breath has noticeably improved.<br\/><br\/>It’s also very easy to use, which is a big plus.<\/p>",
+            "author_avatar": "shopify:\/\/shop_images\/Profilbild1.webp",
             "author": "– Simon Andersson"
           }
         },
@@ -1302,8 +1293,8 @@
           "settings": {
             "star_rating": 5,
             "title": "A great product that really makes a difference",
-            "text": "<p>A great product that really makes a difference. I’ve noticed that my dog’s tartar has significantly reduced and his breath is much fresher.<br/><br/>Plus, it’s very easy to use.</p><p></p>",
-            "author_avatar": "shopify://shop_images/profilbild.webp",
+            "text": "<p>A great product that really makes a difference. I’ve noticed that my dog’s tartar has significantly reduced and his breath is much fresher.<br\/><br\/>Plus, it’s very easy to use.<\/p><p><\/p>",
+            "author_avatar": "shopify:\/\/shop_images\/profilbild.webp",
             "author": "– John Taylor"
           }
         },
@@ -1312,8 +1303,8 @@
           "settings": {
             "star_rating": 5,
             "title": "Delivers great results",
-            "text": "<p>My dog likes it, and it’s easy to use every day.<br/><br/>Delivers great results.</p>",
-            "author_avatar": "shopify://shop_images/Profilbild1.jpg",
+            "text": "<p>My dog likes it, and it’s easy to use every day.<br\/><br\/>Delivers great results.<\/p>",
+            "author_avatar": "shopify:\/\/shop_images\/Profilbild1.jpg",
             "author": "– Sofia Jones"
           }
         },
@@ -1322,8 +1313,8 @@
           "settings": {
             "star_rating": 5,
             "title": "I see an improvement in his oral health",
-            "text": "<p>My dog seems to like it, and I can see an improvement in his oral health.</p>",
-            "author_avatar": "shopify://shop_images/Profilbild3_98453ffc-28e5-4418-89bd-9cc2393e092a.webp",
+            "text": "<p>My dog seems to like it, and I can see an improvement in his oral health.<\/p>",
+            "author_avatar": "shopify:\/\/shop_images\/Profilbild3_98453ffc-28e5-4418-89bd-9cc2393e092a.webp",
             "author": "– Margaret Davies"
           }
         }
@@ -1351,7 +1342,7 @@
         "title": "Verified Reviews",
         "title_highlight_color": "#6d388b",
         "heading_size": "h1",
-        "text": "<p><strong>45,000+ dog owners</strong> trust our products for dog daily care</p>",
+        "text": "<p><strong>45,000+ dog owners<\/strong> trust our products for dog daily care<\/p>",
         "color_scheme": "background-1",
         "image_width": "half",
         "image_ratio": "square",
@@ -1410,7 +1401,7 @@
             "heading": "Are all products safe for my pet?",
             "icon": "",
             "filled_icon": false,
-            "row_content": "<p>Yes. All three products (FreshWipes, EyeWipes, EarWipes) are formulated with pet safety as the top priority:</p><p><strong>FreshWipes:</strong></p><ul><li>Non-toxic, food-grade ingredients</li><li>Safe if swallowed or licked</li><li>No harsh chemicals, alcohol, or artificial flavors</li><li>Vet-approved formula</li></ul><p><strong>EyeWipes:</strong></p><ul><li>pH-balanced for sensitive eye area</li><li>Non-irritating, even if formula gets in eyes</li><li>Won't sting or burn</li><li>Gentle enough for daily use</li></ul><p><strong>EarWipes:</strong></p><ul><li>Alcohol-free formula (won't irritate ear canal)</li><li>Non-toxic if licked during grooming</li><li>Gentle on sensitive ear tissue</li><li>Safe for regular preventive use</li></ul><p>All products are manufactured to veterinary standards and contain no ingredients that could harm your pet, even with repeated daily use.</p>",
+            "row_content": "<p>Yes. All three products (FreshWipes, EyeWipes, EarWipes) are formulated with pet safety as the top priority:<\/p><p><strong>FreshWipes:<\/strong><\/p><ul><li>Non-toxic, food-grade ingredients<\/li><li>Safe if swallowed or licked<\/li><li>No harsh chemicals, alcohol, or artificial flavors<\/li><li>Vet-approved formula<\/li><\/ul><p><strong>EyeWipes:<\/strong><\/p><ul><li>pH-balanced for sensitive eye area<\/li><li>Non-irritating, even if formula gets in eyes<\/li><li>Won't sting or burn<\/li><li>Gentle enough for daily use<\/li><\/ul><p><strong>EarWipes:<\/strong><\/p><ul><li>Alcohol-free formula (won't irritate ear canal)<\/li><li>Non-toxic if licked during grooming<\/li><li>Gentle on sensitive ear tissue<\/li><li>Safe for regular preventive use<\/li><\/ul><p>All products are manufactured to veterinary standards and contain no ingredients that could harm your pet, even with repeated daily use.<\/p>",
             "page": ""
           }
         },
@@ -1420,7 +1411,7 @@
             "heading": "Is FreshWipes a substitute for toothbrushing?",
             "icon": "",
             "filled_icon": false,
-            "row_content": "<p>FreshWipes aren't a perfect replacement for brushing, but they're close - and they're what most dogs will actually tolerate.</p><p><strong>Here's the reality:</strong> Brushing is ideal, but most dogs resist it and most owners give up. FreshWipes use the same mechanical cleaning action as a toothbrush (physically removing plaque), just in a format your dog won't fight.</p><p><strong>Bottom line:</strong> A wipe you use daily beats a toothbrush that sits unused. Consistent care is what prevents dental problems, and FreshWipes make that possible.</p>",
+            "row_content": "<p>FreshWipes aren't a perfect replacement for brushing, but they're close - and they're what most dogs will actually tolerate.<\/p><p><strong>Here's the reality:<\/strong> Brushing is ideal, but most dogs resist it and most owners give up. FreshWipes use the same mechanical cleaning action as a toothbrush (physically removing plaque), just in a format your dog won't fight.<\/p><p><strong>Bottom line:<\/strong> A wipe you use daily beats a toothbrush that sits unused. Consistent care is what prevents dental problems, and FreshWipes make that possible.<\/p>",
             "page": ""
           }
         },
@@ -1430,7 +1421,7 @@
             "heading": "Will this help old, stubborn tear stains?",
             "icon": "",
             "filled_icon": false,
-            "row_content": "<p>Yes, but older stains take longer to fade.</p><p><strong>Timeline:</strong></p><ul><li>Fresh stains (weeks old): 3-7 days</li><li>Moderate stains (1-3 months): 2 weeks</li><li>Old stains (months/years): 3-4 weeks</li></ul><p><strong>Why it works:</strong> Daily use removes existing buildup while preventing new stains from setting. Most customers see visible improvement within 2 weeks.</p><p><strong>Important:</strong> Tear staining is ongoing - your dog's eyes keep producing tears. Daily cleaning stops new stains and gradually fades old ones.</p>",
+            "row_content": "<p>Yes, but older stains take longer to fade.<\/p><p><strong>Timeline:<\/strong><\/p><ul><li>Fresh stains (weeks old): 3-7 days<\/li><li>Moderate stains (1-3 months): 2 weeks<\/li><li>Old stains (months\/years): 3-4 weeks<\/li><\/ul><p><strong>Why it works:<\/strong> Daily use removes existing buildup while preventing new stains from setting. Most customers see visible improvement within 2 weeks.<\/p><p><strong>Important:<\/strong> Tear staining is ongoing - your dog's eyes keep producing tears. Daily cleaning stops new stains and gradually fades old ones.<\/p>",
             "page": ""
           }
         },
@@ -1440,7 +1431,7 @@
             "heading": "Will this prevent ear infections?",
             "icon": "",
             "filled_icon": false,
-            "row_content": "<p>Yes - regular cleaning significantly reduces infection risk by removing the wax and moisture where bacteria thrive.</p><p><strong>How it works:</strong> Ear infections happen when wax, dirt, and moisture build up, creating an environment for bacteria and yeast. EarWipes remove that buildup before infections can start.</p><p><strong>Best for prevention:</strong> If your dog is prone to ear infections (common in breeds like Cocker Spaniels, Basset Hounds, Labs), weekly cleaning can break the cycle and reduce vet visits.</p><p><strong>Already infected?</strong> See your vet first. Start using EarWipes after treatment to prevent recurrence.</p>",
+            "row_content": "<p>Yes - regular cleaning significantly reduces infection risk by removing the wax and moisture where bacteria thrive.<\/p><p><strong>How it works:<\/strong> Ear infections happen when wax, dirt, and moisture build up, creating an environment for bacteria and yeast. EarWipes remove that buildup before infections can start.<\/p><p><strong>Best for prevention:<\/strong> If your dog is prone to ear infections (common in breeds like Cocker Spaniels, Basset Hounds, Labs), weekly cleaning can break the cycle and reduce vet visits.<\/p><p><strong>Already infected?<\/strong> See your vet first. Start using EarWipes after treatment to prevent recurrence.<\/p>",
             "page": ""
           }
         },
@@ -1450,7 +1441,7 @@
             "heading": "How long does one container last?",
             "icon": "",
             "filled_icon": false,
-            "row_content": "<p>Depends on the product and how many pets you have:</p><p><strong>FreshWipes (50 wipes):</strong></p><ul><li>1 dog, daily use: ~50 days (1.5 months)</li><li>2 dogs, daily use: ~25 days</li></ul><p><strong>EyeWipes (100 wipes):</strong></p><ul><li>1 dog, daily use: ~50 days (2 wipes per day)</li><li>2 dogs, daily use: ~25 days</li></ul><p><strong>EarWipes (50 wipes):</strong></p><ul><li>1 dog, 2x per week: ~3-6 months</li><li>1 dog after swimming: varies</li></ul><p><strong>Complete Care Kit:</strong><br/><br/>~2-3 months of comprehensive daily care for one dog.</p>",
+            "row_content": "<p>Depends on the product and how many pets you have:<\/p><p><strong>FreshWipes (50 wipes):<\/strong><\/p><ul><li>1 dog, daily use: ~50 days (1.5 months)<\/li><li>2 dogs, daily use: ~25 days<\/li><\/ul><p><strong>EyeWipes (100 wipes):<\/strong><\/p><ul><li>1 dog, daily use: ~50 days (2 wipes per day)<\/li><li>2 dogs, daily use: ~25 days<\/li><\/ul><p><strong>EarWipes (50 wipes):<\/strong><\/p><ul><li>1 dog, 2x per week: ~3-6 months<\/li><li>1 dog after swimming: varies<\/li><\/ul><p><strong>Complete Care Kit:<\/strong><br\/><br\/>~2-3 months of comprehensive daily care for one dog.<\/p>",
             "page": ""
           }
         },
@@ -1460,7 +1451,7 @@
             "heading": "Do I need all three products?",
             "icon": "",
             "filled_icon": false,
-            "row_content": "<p>Each product addresses different needs - teeth, eyes, or ears. You can start with one, but most dogs benefit from all three areas.</p><p><strong>Here's why customers choose the Complete Kit:</strong></p><ul><li><strong>Save 20%</strong> vs buying products separately</li><li><strong>Cover all three problem areas</strong> vets check most often</li><li><strong>One routine</strong> handles everything in under 2 minutes</li><li><strong>Prevent expensive vet bills</strong> across dental, eye, and ear issues</li></ul><p><strong>Start with what matters most to your dog right now.</strong> Many customers begin with FreshWipes for dental care, see results, then add EyeWipes and EarWipes for complete preventive care.</p><p>The Kit makes it simple and saves money - but choose what works for you.</p>",
+            "row_content": "<p>Each product addresses different needs - teeth, eyes, or ears. You can start with one, but most dogs benefit from all three areas.<\/p><p><strong>Here's why customers choose the Complete Kit:<\/strong><\/p><ul><li><strong>Save 20%<\/strong> vs buying products separately<\/li><li><strong>Cover all three problem areas<\/strong> vets check most often<\/li><li><strong>One routine<\/strong> handles everything in under 2 minutes<\/li><li><strong>Prevent expensive vet bills<\/strong> across dental, eye, and ear issues<\/li><\/ul><p><strong>Start with what matters most to your dog right now.<\/strong> Many customers begin with FreshWipes for dental care, see results, then add EyeWipes and EarWipes for complete preventive care.<\/p><p>The Kit makes it simple and saves money - but choose what works for you.<\/p>",
             "page": ""
           }
         },
@@ -1470,7 +1461,7 @@
             "heading": "Can I use these on cats too?",
             "icon": "",
             "filled_icon": false,
-            "row_content": "<p><strong>Yes!</strong> All three products are safe and effective for both dogs and cats.</p><p><strong>Tips for cats:</strong></p><ul><li>Start slowly - cats are more particular about handling</li><li>Choose calm moments (after meals or naps)</li><li>Be extra gentle - cats have sensitive skin</li><li>Quick wipes work better than long sessions</li><li>Use high-value treats for cooperation</li></ul><p>The formulas work identically on cats. Many customers use them on multi-pet households with both dogs and cats.</p>",
+            "row_content": "<p><strong>Yes!<\/strong> All three products are safe and effective for both dogs and cats.<\/p><p><strong>Tips for cats:<\/strong><\/p><ul><li>Start slowly - cats are more particular about handling<\/li><li>Choose calm moments (after meals or naps)<\/li><li>Be extra gentle - cats have sensitive skin<\/li><li>Quick wipes work better than long sessions<\/li><li>Use high-value treats for cooperation<\/li><\/ul><p>The formulas work identically on cats. Many customers use them on multi-pet households with both dogs and cats.<\/p>",
             "page": ""
           }
         },
@@ -1480,7 +1471,7 @@
             "heading": "How long does shipping take?",
             "icon": "",
             "filled_icon": false,
-            "row_content": "<p><strong>Delivery Time:</strong></p><ul><li><strong>Standard:</strong> 1-2 days handling + 5-10 days shipping</li><li><strong>Priority:</strong> 1-2 days handling + 4-7 days shipping</li></ul><p><strong>Tracking:</strong> You'll receive a tracking number via email as soon as your order ships from our warehouse.</p><p><strong>Questions?</strong> Email <a href=\"mailto:info@shopvetpets.com\">info@shopvetpets.com</a> - we reply within 24 hours on weekdays.</p>",
+            "row_content": "<p><strong>Delivery Time:<\/strong><\/p><ul><li><strong>Standard:<\/strong> 1-2 days handling + 5-10 days shipping<\/li><li><strong>Priority:<\/strong> 1-2 days handling + 4-7 days shipping<\/li><\/ul><p><strong>Tracking:<\/strong> You'll receive a tracking number via email as soon as your order ships from our warehouse.<\/p><p><strong>Questions?<\/strong> Email <a href=\"mailto:info@shopvetpets.com\">info@shopvetpets.com<\/a> - we reply within 24 hours on weekdays.<\/p>",
             "page": ""
           }
         },
@@ -1490,7 +1481,7 @@
             "heading": "How does the 100-day money-back guarantee work?",
             "icon": "",
             "filled_icon": false,
-            "row_content": "<p>We truly believe our products will make a difference for both you and your dog. That's why we offer a <strong>100-day money-back guarantee</strong> - not the standard 30 days.</p><p><strong>Why 100 days?</strong> Because we want you to really try the products, see results, and build a routine without feeling rushed. Some dogs take a few weeks to adjust, and real results show up with consistent use.</p><p><strong>How it works:</strong></p><ol><li>Try the products at home, in your own time</li><li>Not completely satisfied? Email us at info@shopvetpets.com</li><li>We'll refund you - no stress, no hassle, no complicated forms</li></ol><p><strong>What's covered:</strong></p><ul><li>Full purchase price refunded</li><li>Works on single products or Complete Kit</li><li>No restocking fees</li><li>You can even keep partially used containers</li></ul><p><strong>Our philosophy:</strong> It's more important that your dog gets the care they deserve than that you keep something you don't love. If it's not right for you, we want to make it right.</p><p><strong>To start a return:</strong> Email info@shopvetpets.com with your order number and we'll take care of the rest within 3-5 business days.</p>",
+            "row_content": "<p>We truly believe our products will make a difference for both you and your dog. That's why we offer a <strong>100-day money-back guarantee<\/strong> - not the standard 30 days.<\/p><p><strong>Why 100 days?<\/strong> Because we want you to really try the products, see results, and build a routine without feeling rushed. Some dogs take a few weeks to adjust, and real results show up with consistent use.<\/p><p><strong>How it works:<\/strong><\/p><ol><li>Try the products at home, in your own time<\/li><li>Not completely satisfied? Email us at info@shopvetpets.com<\/li><li>We'll refund you - no stress, no hassle, no complicated forms<\/li><\/ol><p><strong>What's covered:<\/strong><\/p><ul><li>Full purchase price refunded<\/li><li>Works on single products or Complete Kit<\/li><li>No restocking fees<\/li><li>You can even keep partially used containers<\/li><\/ul><p><strong>Our philosophy:<\/strong> It's more important that your dog gets the care they deserve than that you keep something you don't love. If it's not right for you, we want to make it right.<\/p><p><strong>To start a return:<\/strong> Email info@shopvetpets.com with your order number and we'll take care of the rest within 3-5 business days.<\/p>",
             "page": ""
           }
         }
@@ -1511,7 +1502,7 @@
         "display_id": false,
         "visibility": "always-display",
         "caption": "",
-        "title": "Questions? <strong>We've Got Answers.</strong>",
+        "title": "Questions? <strong>We've Got Answers.<\/strong>",
         "title_highlight_color": "#47b5e9",
         "heading_size": "h1",
         "heading_alignment": "center",
@@ -1557,10 +1548,10 @@
           "type": "buttons",
           "settings": {
             "button_label_1": "Learn more about the money-back guarantee",
-            "button_link_1": "shopify://pages/100-day-money-back-guarantee",
+            "button_link_1": "shopify:\/\/pages\/100-day-money-back-guarantee",
             "button_style_secondary_1": true,
             "button_label_2": "Get FreshCare Kit",
-            "button_link_2": "shopify://products/freshcare-complete-health-kit",
+            "button_link_2": "shopify:\/\/products\/freshcare-complete-health-kit",
             "button_style_secondary_2": false
           }
         },
@@ -1571,7 +1562,7 @@
             "star_color": "#ffcc00",
             "bg_stars_style": "full",
             "bg_star_color": "#ececec",
-            "label": "4,86/5 (45,000+ Happy Customers)",
+            "label": "4,86\/5 (45,000+ Happy Customers)",
             "size": 10,
             "scroll_id": ""
           }
@@ -1587,7 +1578,7 @@
       "settings": {
         "display_id": false,
         "visibility": "always-display",
-        "image": "shopify://shop_images/irish-setter-dog-close-up.jpg",
+        "image": "shopify:\/\/shop_images\/irish-setter-dog-close-up.jpg",
         "image_1_visibility": "always-display",
         "image_2_visibility": "always-display",
         "image_overlay_opacity": 10,
@@ -1612,7 +1603,7 @@
         "title": "Complete care for healthier dogs",
         "title_highlight_color": "#6d388b",
         "heading_size": "h1",
-        "description": "<p>No stress. Just results.</p>",
+        "description": "<p>No stress. Just results.<\/p>",
         "show_description": false,
         "description_style": "body",
         "color_scheme": "background-1",
@@ -1695,7 +1686,7 @@
             "icon": "favorite",
             "filled_icon": true,
             "title": "OVER 45,000+ HAPPY CUSTOMERS",
-            "text": "<p>Making pets and their owners happy all around the world.</p>"
+            "text": "<p>Making pets and their owners happy all around the world.<\/p>"
           }
         },
         "column_eWVQtV": {
@@ -1704,7 +1695,7 @@
             "icon": "new_releases",
             "filled_icon": true,
             "title": "100-DAY MONEY-BACK GUARANTEE",
-            "text": "<p>Not satisfied? Just contact us within 100 days of your purchase – we’ll make it right.</p>"
+            "text": "<p>Not satisfied? Just contact us within 100 days of your purchase – we’ll make it right.<\/p>"
           }
         },
         "column_tpTf49": {
@@ -1713,7 +1704,7 @@
             "icon": "support_agent",
             "filled_icon": false,
             "title": "SUPPORT MONDAY–FRIDAY",
-            "text": "<p>Need help? Reach out to us – we respond within 24 hours on weekdays.</p>"
+            "text": "<p>Need help? Reach out to us – we respond within 24 hours on weekdays.<\/p>"
           }
         }
       },
