@@ -129,6 +129,9 @@
       {%-if variant == empty or variant == null -%}
         {%- assign variant = product.selected_or_first_available_variant -%}
       {%- endif -%}
+      {% unless isSettingSameHeightProductList %}
+        {%- assign isSettingSameHeightProductList = false -%}
+      {% endunless %}
     
       <gp-product
         data-uid="gR-UWokkkr"
@@ -162,8 +165,9 @@
     .gem-slider-item-gzE-FMq1_y-{{product.id}}.gp-gallery-image-item::after, .gem-slider-item-gp-gallery-gzE-FMq1_y-{{product.id}}.gp-gallery-image-item.gem-slider-item-active::after {
       content: "";
       height: 100%;
-      width: 100%;
+      width: calc(100% - 1px);
       position: absolute;
+      box-sizing: border-box;
       z-index: 999;
       top: 0;
       left: 0;
@@ -197,10 +201,10 @@
       "pageContext": {"pageType":"GP_STATIC","sectionName":"","isPreviewing":false,"isOptimizePlan":false,"isTranslateWithLocale":false,"isLazyLoadSection":true,"isLazyLoadImage":true,"hasCollectionHandle":true,"numberOfProductOfProductList":0,"pageBackground":"","fontType":"google","primaryLocale":"","showPriceCurrency":false,"enableLazyLoadImage":true},
       "setting":{"ftDragToScroll":true,"ftNavigationPosition":{"desktop":"none"},"ftClickOpenLightBox":{"desktop":"product-link"},"filterByVariant":"all_images","displayByVariant":false,"typeDisplay":"all-images","preDisplay":"1st-available-variant","hoverEffect":"none","zoomType":"default","zoom":150,"otherImage":0,"ftClickOpenNewTab":false,"ftLoop":{"desktop":true},"ftPauseOnHover":true,"ftAnimationSpeed":500,"ftAnimationMode":"ease-out","ftArrowIcon":"<svg height=\"20\" width=\"20\" data-name=\"caret-right-regular\" xmlns=\"http://www.w3.org/2000/svg\"  viewBox=\"0 0 256 256\" fill=\"currentColor\" data-id=\"508418455613473128\">\n              <path fill=\"currentColor\" strokeLinecap=\"round\" strokeLinejoin=\"round\" fill=\"currentColor\" d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\" /></svg>","ftArrowIconColor":"text-1","ftArrowIconSize":{"desktop":16},"ftArrowNavColor":"bg-3","ftArrowNavSize":{"width":"Auto","height":"Auto","padding":{"top":"12px","bottom":"12px","left":"12px","right":"12px"},"shapeLinked":true,"shape":"square","shapeValue":"1/1"},"ftArrowNavRadius":{"btrr":"9999px","bblr":"9999px","bbrr":"9999px","btlr":"9999px","radiusType":"circle"},"ftDotStyle":{"desktop":"none"},"ftDotSize":{"desktop":16},"ftDotGapToCarousel":{"desktop":16},"ftDotColor":{"desktop":"#121212"},"ftDotActiveColor":{"desktop":"#FFFFFF"},"type":{"desktop":"slider"},"galleryHoverEffect":"none","galleryZoomType":"default","galleryZoom":150,"clickOpenLightBox":{"desktop":false},"borderActive":{"borderType":"none","border":"solid","borderWidth":"1px","width":"1px 1px 1px 1px","isCustom":false,"color":"line-3"},"navigationPosition":{"desktop":"inside"},"loop":{"desktop":true},"pauseOnHover":true,"speed":1,"arrowIcon":"<svg height=\"20\" width=\"20\" data-name=\"caret-right-regular\" xmlns=\"http://www.w3.org/2000/svg\"  viewBox=\"0 0 256 256\" fill=\"currentColor\" data-id=\"508418455613473128\">\n              <path fill=\"currentColor\" strokeLinecap=\"round\" strokeLinejoin=\"round\" fill=\"currentColor\" d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\" /></svg>","arrowIconSize":{"desktop":24},"arrowIconColor":"text-1","dragToScroll":true,"arrowNavColor":"bg-3","arrowNavSize":{"width":"Auto","height":"Auto","padding":{"top":"12px","bottom":"12px","left":"12px","right":"12px"},"shapeLinked":true,"shape":"square","shapeValue":"1/1"},"arrowNavBorder":{"borderType":"none","border":"none","borderWidth":"1px","width":"1px 1px 1px 1px","isCustom":false},"arrowNavRadius":{"btrr":"9999px","bblr":"9999px","bbrr":"9999px","btlr":"9999px","radiusType":"circle"},"arrowNavShadow":{"type":"shadow-1","distance":"4px","blur":"12px","spread":"0px","color":"rgba(0, 0, 0, 0.20)","angle":90,"enable":false},"qualityType":{"desktop":"high"},"preload":false,"qualityPercent":{"desktop":100}},
       "styles":{"position":{"desktop":"bottom-center","mobile":"bottom-center"},"spacing":{"desktop":"8px"},"ratioLayout":{"desktop":[2,10]},"ratioLayoutRight":{"desktop":[10,2]},"ftShape":{"desktop":{"shape":"square","shapeValue":"1/1","width":"100%","shapeLinked":true}},"ftLayout":{"desktop":"cover"},"ftCorner":{"btrr":"0px","bblr":"0px","bbrr":"0px","btlr":"0px","radiusType":"none"},"shape":{"desktop":{"shape":"square","shapeValue":"1/1","width":"100%","shapeLinked":true}},"shapeForFtOnly":{"desktop":{"shape":"square","shapeValue":"1/1","width":"100%","shapeLinked":true}},"shapeForBottom":{"desktop":{"shape":"square","shapeValue":"1/1","width":"20%","shapeLinked":true}},"shapeForInsideBottom":{"desktop":{"shape":"square","shapeValue":"1/1","width":"20%","shapeLinked":true}},"shapeForInside":{"desktop":{"shape":"square","shapeValue":"1/1","width":"20%","shapeLinked":true}},"shapeFor2Col":{"desktop":{"shape":"square","shapeValue":"1/1","width":"50%","shapeLinked":true}},"shapeFor1Col":{"desktop":{"shape":"square","shapeValue":"1/1","width":"100%","shapeLinked":true}},"layout":{"desktop":"cover"},"itemSpacing":{"desktop":"8px"},"corner":{"btrr":"0px","bblr":"0px","bbrr":"0px","btlr":"0px","radiusType":"none"},"align":{"desktop":"flex-start"}},
-      "productUrl":{{product.url | json | escape}},
-      "product":{{product | json | escape}},
-      "collectionUrl": {{ collection.url | json | escape }},
-      "collection": {{ collection | json | escape}}
+      "productUrl":{{product.url | json }},
+      "product":{% if product %}{"id":{{ product.id | json }},"handle":{{ product.handle | json }},"media":{{ product.media | json | escape }}}{% else %}null{% endif %},
+      "collectionUrl": {{ collection.url | json }},
+      "collection": {% if collection %}{"handle":{{ collection.handle | json }}}{% else %}null{% endif %}
     }
   '
       section-id="{{section.id}}" data-id="gzE-FMq1_y"
@@ -356,7 +360,7 @@
     {% if product.media.size > 1 %}
         
       
-    <gp-carousel-v3 gp-data='{"id":"ft-gp-carousel-gzE-FMq1_y-{{section.id}}-{{product.id}}","isHiddenArrowWhenDisabled":true,"setting":{"loop":{"desktop":true},"itemNumber":{"desktop":1},"dot":{"desktop":true,"tablet":true,"mobile":true},"dotStyle":{"desktop":"none","tablet":"none","mobile":"none"},"dotSize":{"desktop":16},"dotGapToCarousel":{"desktop":16},"dotColor":{"desktop":"#121212"},"dotActiveColor":{"desktop":"#FFFFFF"},"controlOverContent":{"desktop":false,"tablet":false,"mobile":false},"enableDrag":{"desktop":true,"tablet":true,"mobile":true},"arrowCustom":"<svg height=\"20\" width=\"20\" data-name=\"caret-right-regular\" xmlns=\"http://www.w3.org/2000/svg\"  viewBox=\"0 0 256 256\" fill=\"currentColor\" data-id=\"508418455613473128\">\n              <path fill=\"currentColor\" strokeLinecap=\"round\" strokeLinejoin=\"round\" fill=\"currentColor\" d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\" /></svg>","arrowIconSize":{"desktop":16},"arrowCustomColor":"text-1","arrowBackgroundColor":"bg-3","roundedArrow":{"desktop":{"btrr":"9999px","bblr":"9999px","bbrr":"9999px","btlr":"9999px","radiusType":"circle"}},"arrowGapToEachSide":"16","animationMode":"ease-out","navigationStyle":{"desktop":"none"},"navigationEnable":{"desktop":false},"arrowButtonSize":{"desktop":{"width":"Auto","height":"Auto","padding":{"top":"12px","bottom":"12px","left":"12px","right":"12px"}}},"enableAction":{"desktop":true}},"styles":{"playSpeed":500,"sizeSetting":{"desktop":{"width":"100%","height":"auto"},"tablet":{"width":"100%","height":"auto"},"mobile":{"width":"100%","height":"auto"}},"align":{"desktop":"flex-start","tablet":"flex-start","mobile":"flex-start"},"spacing":{"desktop":6,"tablet":6,"mobile":6}}}' data-id="gp-carousel-gzE-FMq1_y" id="gp-root-carousel-ft-gp-carousel-gzE-FMq1_y-{{section.id}}-{{product.id}}" type="gp-feature-image-carousel" product-id="{{product.id}}" product-media="{{product.media.size}}" style="--jc:flex-start;--jc-tablet:flex-start;--jc-mobile:flex-start;--o:0;--o-tablet:0;--o-mobile:0;--d:flex;--d-mobile:flex;--d-tablet:flex" class="gp-group/carousel gp-w-full gp-flex `gp-flex-1 gp-w-full gp-feature-image-carousel gp-product-images-gallery-gp-carousel-gzE-FMq1_y">
+    <gp-carousel-v3 gp-data='{"id":"ft-gp-carousel-gzE-FMq1_y-{{section.id}}-{{product.id}}","isHiddenArrowWhenDisabled":true,"setting":{"loop":{"desktop":true},"itemNumber":{"desktop":1},"dot":{"desktop":true,"tablet":true,"mobile":true},"dotStyle":{"desktop":"none","tablet":"none","mobile":"none"},"dotSize":{"desktop":16},"dotGapToCarousel":{"desktop":16},"dotColor":{"desktop":"#121212"},"dotActiveColor":{"desktop":"#FFFFFF"},"controlOverContent":{"desktop":false,"tablet":false,"mobile":false},"enableDrag":{"desktop":true,"tablet":true,"mobile":true},"arrowCustom":"<svg height=\"20\" width=\"20\" data-name=\"caret-right-regular\" xmlns=\"http://www.w3.org/2000/svg\"  viewBox=\"0 0 256 256\" fill=\"currentColor\" data-id=\"508418455613473128\">\n              <path fill=\"currentColor\" strokeLinecap=\"round\" strokeLinejoin=\"round\" fill=\"currentColor\" d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\" /></svg>","arrowIconSize":{"desktop":16},"arrowCustomColor":"text-1","arrowBackgroundColor":"bg-3","roundedArrow":{"desktop":{"btrr":"9999px","bblr":"9999px","bbrr":"9999px","btlr":"9999px","radiusType":"circle"}},"arrowGapToEachSide":"16","animationMode":"ease-out","navigationStyle":{"desktop":"none"},"navigationEnable":{"desktop":false},"arrowButtonSize":{"desktop":{"width":"Auto","height":"Auto","padding":{"top":"12px","bottom":"12px","left":"12px","right":"12px"}}},"enableAction":{"desktop":true}},"styles":{"playSpeed":500,"sizeSetting":{"desktop":{"width":"100%","height":"auto"},"tablet":{"width":"100%","height":"auto"},"mobile":{"width":"100%","height":"auto"}},"align":{"desktop":"flex-start","tablet":"flex-start","mobile":"flex-start"},"spacing":{"desktop":6,"tablet":6,"mobile":6}},"carouselType":"feature_image"}' data-id="gp-carousel-gzE-FMq1_y" id="gp-root-carousel-ft-gp-carousel-gzE-FMq1_y-{{section.id}}-{{product.id}}" type="gp-feature-image-carousel" product-id="{{product.id}}" product-media="{{product.media.size}}" style="--jc:flex-start;--jc-tablet:flex-start;--jc-mobile:flex-start;--o:0;--o-tablet:0;--o-mobile:0;--d:flex;--d-mobile:flex;--d-tablet:flex" class="gp-group/carousel gp-w-full gp-flex `gp-flex-1 gp-w-full gp-feature-image-carousel gp-product-images-gallery-gp-carousel-gzE-FMq1_y">
       <div
         
         class="gp-carousel-gzE-FMq1_y gp-featured-image-wrapper gp-relative gp-my-0 tablet:gp-px-0 gp-max-w-full mobile:gp-px-0 gp-carousel-wrapper mobile:gp-block tablet:gp-block gp-block"
@@ -370,7 +374,7 @@
     <button
       type="button"
       aria-label='Carousel Back Arrow'
-      class="gp-z-1 gp-items-center gp-justify-center gp-overflow-hidden gp-shrink-0 before:gp-left-0 before:gp-top-0 gp-carousel-arrow-gp-carousel-gzE-FMq1_y ft-gp-carousel-gzE-FMq1_y-{{section.id}}-{{product.id}} gp-carousel-action-back gem-slider-previous gp-cursor-pointer gp-text-gray-500 !gp-hidden tablet:!gp-hidden mobile:!gp-hidden"
+      class="gp-z-2 gp-items-center gp-justify-center gp-overflow-hidden gp-shrink-0 before:gp-left-0 before:gp-top-0 gp-carousel-arrow-gp-carousel-gzE-FMq1_y ft-gp-carousel-gzE-FMq1_y-{{section.id}}-{{product.id}} gp-carousel-action-back gem-slider-previous gp-cursor-pointer gp-text-gray-500 !gp-hidden tablet:!gp-hidden mobile:!gp-hidden"
       style="--bg:var(--g-c-bg-3, bg-3);--d:none;--d-tablet:none;--d-mobile:none;--left:3px;--right:initial;--top:initial;--left-tablet:3px;--right-tablet:initial;--top-tablet:initial;--left-mobile:3px;--right-mobile:initial;--top-mobile:initial;--w:Auto;--w-tablet:Auto;--w-mobile:Auto;--h:Auto;--h-tablet:Auto;--h-mobile:Auto;--pl:12px;--pr:12px;--pt:12px;--pb:12px;--v:hidden"
     >
       <style type="text/css">
@@ -488,8 +492,8 @@
       >
       
       <div
-        class="gp-w-full gp-relative {% if featureMedia == null or featureMedia.media_type == 'image' %}{{ 'gp-h-0' }}{% else %}{{ 'gp-h-full !gp-pb-0' }}{% endif %}"
-        style="--pb: calc((1/1)*100%);--pb-tablet: calc((1/1)*100%);--pb-mobile: calc((1/1)*100%); {% if featureMedia.media_type == 'video' or featureMedia.media_type == 'external_video' %}{{ 'display: flex; align-items: center; justify-content: center' }}{% endif %}"
+        class="gp-w-full gp-relative {% if featureMedia == null or featureMedia.media_type == 'image' %}{{ 'gp-h-0' }}{% else %}{{ 'gp-h-full !gp-pb-0' }}{% endif %} {% if featureMedia.media_type == 'video' or featureMedia.media_type == 'external_video' %}{{ 'gp-flex gp-items-center gp-justify-center' }}{% endif %}"
+        style="--pb: calc((1/1)*100%);--pb-tablet: calc((1/1)*100%);--pb-mobile: calc((1/1)*100%);"
       >
         
     {% case featureMedia.media_type %}
@@ -597,7 +601,7 @@
     <button
       type="button"
       aria-label='Carousel Next Arrow'
-      class="gp-z-1 gp-items-center gp-justify-center gp-overflow-hidden gp-shrink-0 before:gp-left-0 before:gp-top-0 gp-carousel-arrow-gp-carousel-gzE-FMq1_y ft-gp-carousel-gzE-FMq1_y-{{section.id}}-{{product.id}} gp-carousel-action-next gem-slider-next gp-cursor-pointer gp-text-gray-500 !gp-hidden tablet:!gp-hidden mobile:!gp-hidden"
+      class="gp-z-2 gp-items-center gp-justify-center gp-overflow-hidden gp-shrink-0 before:gp-left-0 before:gp-top-0 gp-carousel-arrow-gp-carousel-gzE-FMq1_y ft-gp-carousel-gzE-FMq1_y-{{section.id}}-{{product.id}} gp-carousel-action-next gem-slider-next gp-cursor-pointer gp-text-gray-500 !gp-hidden tablet:!gp-hidden mobile:!gp-hidden"
       style="--bg:var(--g-c-bg-3, bg-3);--d:none;--d-tablet:none;--d-mobile:none;--right:3px;--left:initial;--bottom:initial;--right-tablet:3px;--left-tablet:initial;--bottom-tablet:initial;--right-mobile:3px;--left-mobile:initial;--bottom-mobile:initial;--w:Auto;--w-tablet:Auto;--w-mobile:Auto;--h:Auto;--h-tablet:Auto;--h-mobile:Auto;--pl:12px;--pr:12px;--pt:12px;--pb:12px;--v:hidden"
     >
       <style type="text/css">
@@ -699,7 +703,7 @@
       >
         {% if product.media.size > 1 %}
     
-    <gp-carousel-v3 gp-data='{"id":"gp-gallery-gzE-FMq1_y-{{product.id}}","isHiddenArrowWhenDisabled":true,"setting":{"loop":{"desktop":true},"itemNumber":{"desktop":"auto","tablet":"auto","mobile":"auto"},"dot":{"desktop":false,"tablet":false,"mobile":false},"dotStyle":{"desktop":"none","tablet":"none","mobile":"none"},"controlOverContent":{"desktop":true,"tablet":true,"mobile":true},"enableDrag":{"desktop":true,"tablet":true,"mobile":true},"vertical":{"desktop":false,"mobile":false,"tablet":false},"arrowCustom":"<svg height=\"20\" width=\"20\" data-name=\"caret-right-regular\" xmlns=\"http://www.w3.org/2000/svg\"  viewBox=\"0 0 256 256\" fill=\"currentColor\" data-id=\"508418455613473128\">\n              <path fill=\"currentColor\" strokeLinecap=\"round\" strokeLinejoin=\"round\" fill=\"currentColor\" d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\" /></svg>","arrowIconSize":{"desktop":24},"arrowCustomColor":"text-1","arrowBackgroundColor":"bg-3","arrowBorder":{"desktop":{"borderType":"none","border":"none","borderWidth":"1px","width":"1px 1px 1px 1px","isCustom":false}},"roundedArrow":{"desktop":{"btrr":"9999px","bblr":"9999px","bbrr":"9999px","btlr":"9999px","radiusType":"circle"}},"arrowShadow":{"desktop":{"type":"shadow-1","distance":"4px","blur":"12px","spread":"0px","color":"rgba(0, 0, 0, 0.20)","angle":90,"enable":false}},"arrowGapToEachSide":"16","navigationStyle":{"desktop":"inside"},"navigationEnable":{"desktop":true},"arrowButtonSize":{"desktop":{"width":"Auto","height":"Auto","padding":{"top":"12px","bottom":"12px","left":"12px","right":"12px"}}},"animationMode":"ease-out","enableAction":{"desktop":true}},"styles":{"spacing":{"desktop":8,"tablet":8,"mobile":8},"sizeSetting":{"desktop":{"width":"100%","height":"100%"},"tablet":{"width":"100%","height":"100%"},"mobile":{"width":"100%","height":"100%"}}}}' data-id="gp-gallery-gzE-FMq1_y" id="gp-root-carousel-gp-gallery-gzE-FMq1_y-{{product.id}}" type="grid-carousel" product-media="{{product.media.size}}" style="--d:flex;--d-mobile:flex;--d-tablet:flex" class="gp-group/carousel gp-w-full gp-flex gp-flex-1 gp-w-full carousel-gallery gp-px-0 tablet:gp-px-0 mobile:gp-px-0">
+    <gp-carousel-v3 gp-data='{"id":"gp-gallery-gzE-FMq1_y-{{product.id}}","isHiddenArrowWhenDisabled":true,"setting":{"loop":{"desktop":true},"itemNumber":{"desktop":"auto","tablet":"auto","mobile":"auto"},"dot":{"desktop":false,"tablet":false,"mobile":false},"dotStyle":{"desktop":"none","tablet":"none","mobile":"none"},"controlOverContent":{"desktop":true,"tablet":true,"mobile":true},"enableDrag":{"desktop":true,"tablet":true,"mobile":true},"vertical":{"desktop":false,"mobile":false,"tablet":false},"arrowCustom":"<svg height=\"20\" width=\"20\" data-name=\"caret-right-regular\" xmlns=\"http://www.w3.org/2000/svg\"  viewBox=\"0 0 256 256\" fill=\"currentColor\" data-id=\"508418455613473128\">\n              <path fill=\"currentColor\" strokeLinecap=\"round\" strokeLinejoin=\"round\" fill=\"currentColor\" d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\" /></svg>","arrowIconSize":{"desktop":24},"arrowCustomColor":"text-1","arrowBackgroundColor":"bg-3","arrowBorder":{"desktop":{"borderType":"none","border":"none","borderWidth":"1px","width":"1px 1px 1px 1px","isCustom":false}},"roundedArrow":{"desktop":{"btrr":"9999px","bblr":"9999px","bbrr":"9999px","btlr":"9999px","radiusType":"circle"}},"arrowShadow":{"desktop":{"type":"shadow-1","distance":"4px","blur":"12px","spread":"0px","color":"rgba(0, 0, 0, 0.20)","angle":90,"enable":false}},"arrowGapToEachSide":"16","navigationStyle":{"desktop":"inside"},"navigationEnable":{"desktop":true},"arrowButtonSize":{"desktop":{"width":"Auto","height":"Auto","padding":{"top":"12px","bottom":"12px","left":"12px","right":"12px"}}},"animationMode":"ease-out","enableAction":{"desktop":true}},"styles":{"spacing":{"desktop":8,"tablet":8,"mobile":8},"sizeSetting":{"desktop":{"width":"100%","height":"100%"},"tablet":{"width":"100%","height":"100%"},"mobile":{"width":"100%","height":"100%"}}},"shouldInitByLayout":{"desktop":true,"tablet":true,"mobile":true},"carouselType":"feature_image_thumbs"}' data-id="gp-gallery-gzE-FMq1_y" id="gp-root-carousel-gp-gallery-gzE-FMq1_y-{{product.id}}" type="grid-carousel" product-media="{{product.media.size}}" style="--d:flex;--d-mobile:flex;--d-tablet:flex" class="gp-group/carousel gp-w-full gp-flex gp-flex-1 gp-w-full carousel-gallery gp-px-0 tablet:gp-px-0 mobile:gp-px-0">
       <div
         
         class="gp-gallery-gzE-FMq1_y  gp-py-0 tablet:gp-py-0 mobile:gp-py-0 gp-relative gp-my-0 tablet:gp-px-0 gp-max-w-full mobile:gp-px-0 gp-carousel-wrapper mobile:gp-block tablet:gp-block gp-block"
@@ -711,7 +715,7 @@
     <button
       type="button"
       aria-label='Carousel Back Arrow'
-      class="gp-z-1 gp-items-center gp-justify-center gp-overflow-hidden gp-shrink-0 before:gp-left-0 before:gp-top-0 gp-carousel-arrow-gp-gallery-gzE-FMq1_y gp-gallery-gzE-FMq1_y-{{product.id}} gp-carousel-action-back gem-slider-previous gp-cursor-pointer gp-text-gray-500 !gp-flex !gp-absolute gp-z-2 tablet:!gp-flex tablet:!gp-absolute tablet:gp-z-2 mobile:!gp-flex mobile:!gp-absolute mobile:gp-z-2"
+      class="gp-z-2 gp-items-center gp-justify-center gp-overflow-hidden gp-shrink-0 before:gp-left-0 before:gp-top-0 gp-carousel-arrow-gp-gallery-gzE-FMq1_y gp-gallery-gzE-FMq1_y-{{product.id}} gp-carousel-action-back gem-slider-previous gp-cursor-pointer gp-text-gray-500 !gp-flex !gp-absolute gp-z-2 tablet:!gp-flex tablet:!gp-absolute tablet:gp-z-2 mobile:!gp-flex mobile:!gp-absolute mobile:gp-z-2"
       style="--bg:var(--g-c-bg-3, bg-3);--d:flex;--d-tablet:flex;--d-mobile:flex;--left:16px;--right:initial;--top:initial;--left-tablet:16px;--right-tablet:initial;--top-tablet:initial;--left-mobile:16px;--right-mobile:initial;--top-mobile:initial;--w:Auto;--w-tablet:Auto;--w-mobile:Auto;--h:Auto;--h-tablet:Auto;--h-mobile:Auto;--pl:12px;--pr:12px;--pt:12px;--pb:12px;--shadow:none;--v:hidden"
     >
       <style type="text/css">
@@ -826,7 +830,7 @@
       >
       
       <div class="gp-w-full gp-relative gp-h-full"
-        
+
       >
       
     <img
@@ -896,7 +900,7 @@
       >
       
       <div class="gp-w-full gp-relative gp-h-full"
-        
+
       >
       
     <img
@@ -948,7 +952,7 @@
     <button
       type="button"
       aria-label='Carousel Next Arrow'
-      class="gp-z-1 gp-items-center gp-justify-center gp-overflow-hidden gp-shrink-0 before:gp-left-0 before:gp-top-0 gp-carousel-arrow-gp-gallery-gzE-FMq1_y gp-gallery-gzE-FMq1_y-{{product.id}} gp-carousel-action-next gem-slider-next gp-cursor-pointer gp-text-gray-500 !gp-flex !gp-absolute gp-z-2 tablet:!gp-flex tablet:!gp-absolute tablet:gp-z-2 mobile:!gp-flex mobile:!gp-absolute mobile:gp-z-2"
+      class="gp-z-2 gp-items-center gp-justify-center gp-overflow-hidden gp-shrink-0 before:gp-left-0 before:gp-top-0 gp-carousel-arrow-gp-gallery-gzE-FMq1_y gp-gallery-gzE-FMq1_y-{{product.id}} gp-carousel-action-next gem-slider-next gp-cursor-pointer gp-text-gray-500 !gp-flex !gp-absolute gp-z-2 tablet:!gp-flex tablet:!gp-absolute tablet:gp-z-2 mobile:!gp-flex mobile:!gp-absolute mobile:gp-z-2"
       style="--bg:var(--g-c-bg-3, bg-3);--d:flex;--d-tablet:flex;--d-mobile:flex;--right:16px;--left:initial;--bottom:initial;--right-tablet:16px;--left-tablet:initial;--bottom-tablet:initial;--right-mobile:16px;--left-mobile:initial;--bottom-mobile:initial;--w:Auto;--w-tablet:Auto;--w-mobile:Auto;--h:Auto;--h-tablet:Auto;--h-mobile:Auto;--pl:12px;--pr:12px;--pt:12px;--pb:12px;--shadow:none;--v:hidden"
     >
       <style type="text/css">
@@ -1086,7 +1090,7 @@
         </h2>
       </div>
     </div>
-    <div gp-el-wrapper style="--d:block;--d-tablet:block;--d-mobile:block;--bs:none;--bw:1px 1px 1px 1px;--bc:var(--g-c-line-3, line-3);--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--op:100%" class="gHBmXYklDh ">
+    <div gp-el-wrapper style="--d:block;--d-tablet:block;--d-mobile:block;--bs:none;--bw:1px 1px 1px 1px;--bc:var(--g-c-line-3, line-3);--bblr:0px;--bbrr:0px;--btlr:0px;--btrr:0px;--op:100%" class="gXCfyav0Cz ">
       
     {% assign app_blocks = section.blocks | where: "type", "@app" %}
     <div
@@ -1094,7 +1098,7 @@
       style="--jc:center"
     >
       {% for block in app_blocks %}
-        {% if block.type == '@app' and block.id contains 'gp_app_kaching-bundles_gHBmXYklDh' %}
+        {% if block.type == '@app' and block.id contains 'gp_app_kaching-bundles_gXCfyav0Cz' %}
           {% render block %}
         {% endif %}
       {% endfor %}
@@ -1120,8 +1124,11 @@
       class="gp-product-button"
       gp-label-out-of-stock="{{ section.settings.gghc03vB35o_outOfStockLabel }}"
       gp-label-unavailable="{{ section.settings.gghc03vB35o_unavailableLabel }}"
-      gp-data='{"styles":{"errorTypo":{"type":"paragraph-2","attrs":{"color":"error"}},"successTypo":{"type":"paragraph-2","attrs":{"color":"success"}}},"setting":{"errorType":"built-in","actionEffect":"buy-now","enableMessage":true,"label":"Start with Freshwipes","errorMessage":"{{ section.settings.gghc03vB35o_errorMessage| escape | replace: '&quot;', '\"' }}","successMessage":"{{ section.settings.gghc03vB35o_successMessage| escape | replace: '&quot;', '\"' }}","outOfStockLabel":"Out of stock","customURL":{"link":"/cart","target":"_self"},"variantSelectionRequiredMessage":"{{ section.settings.gghc03vB35o_variantSelectionRequiredMessage| escape | replace: '&quot;', '\"' }}"},"variantID":"{{variant.id}}","disabled":"{{variant.available}}","totalVariant":"{{total_combinations}}"}'
+      gp-data='{"styles":{"errorTypo":{"type":"paragraph-2","attrs":{"color":"error"}},"successTypo":{"type":"paragraph-2","attrs":{"color":"success"}}},"setting":{"errorType":"built-in","actionEffect":"buy-now","enableMessage":true,"label":"Start with Freshwipes","outOfStockLabel":"Out of stock","customURL":{"link":"/cart","target":"_self"}},"variantID":"{{variant.id}}","disabled":"{{variant.available}}","totalVariant":"{{total_combinations}}"}'
+      data-variant-selection-required-message="{{ section.settings.gghc03vB35o_variantSelectionRequiredMessage| escape  }}"
       gp-enable-third-partycart="{{shop.metafields.GEMPAGES.enableThirdPartyCart}}"
+      gp-error-message="{{ section.settings.gghc03vB35o_errorMessage| escape  }}"
+      gp-success-message="{{ section.settings.gghc03vB35o_successMessage| escape  }}"
     >
       
     <gp-button
@@ -1330,7 +1337,7 @@
 {% schema %}
   {
     
-    "name": "Section 7",
+    "name": "Section 6",
     "tag": "section",
     "class": "gps-620066466569389031 gps gpsil",
     "settings": [{"type":"paragraph","content":"Section design by GemPages. [Click here to start design](https://admin.shopify.com/store/c80c08-d3/apps/gempages-cro/app/shopify/edit?pageType=GP_STATIC&editorId=598570922474996620&sectionId=620066466569389031)"},{"type":"select","label":"Section Preload","id":"section_preload","options":[{"label":"On","value":"true"},{"label":"Off","value":"false"},{"label":"Off Lazy Script","value":"off_lazy_script"}],"default":"false"},{"type":"text","label":"Checksum","id":"checksum"},{"type":"html","id":"ggxyoeCUkgn_text","label":"ggxyoeCUkgn_text","default":"<strong>Make dental care a priority&nbsp;</strong><span style=\"color:rgb(71,181,233);\"><strong>for your fur babies.</strong></span>"},{"type":"html","id":"ggJAsU2PH1z_text","label":"ggJAsU2PH1z_text","default":"<p><strong>Trusted by 45,000+ dog owners.</strong></p><p>A solution you can trust. A decision your dogs will thank you for.</p>"},{"type":"html","id":"ggx89IwCdto_text","label":"ggx89IwCdto_text","default":"FreshWipes Kit – Protects Against Dental Diseases"},{"type":"html","id":"ggxDbskxQFs_text","label":"ggxDbskxQFs_text","default":"<strong>UP TO 70% OFF + FREE GIFTS</strong>"},{"type":"html","id":"gghc03vB35o_label","label":"gghc03vB35o_label","default":"Start with Freshwipes"},{"type":"html","id":"gghc03vB35o_outOfStockLabel","label":"gghc03vB35o_outOfStockLabel","default":"Out of stock"},{"type":"html","id":"gghc03vB35o_unavailableLabel","label":"gghc03vB35o_unavailableLabel","default":"Unavailable"},{"type":"html","id":"gghc03vB35o_variantSelectionRequiredMessage","label":"gghc03vB35o_variantSelectionRequiredMessage","default":"Please select a variant to add product to cart"},{"type":"html","id":"gghc03vB35o_successMessage","label":"gghc03vB35o_successMessage","default":"Add product to cart successfully"},{"type":"html","id":"gghc03vB35o_errorMessage","label":"gghc03vB35o_errorMessage","default":"Cannot add product to cart"},{"type":"html","id":"gguk8v2Xd6Q_text","label":"gguk8v2Xd6Q_text","default":"<p>100-Day Plaque Relief Guarantee</p>"}],
