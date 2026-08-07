@@ -12,46 +12,14 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "text_n6nzJP": {
-          "type": "text",
-          "settings": {
-            "mobile_text_size": 14,
-            "desktop_text_size": 16,
-            "alignment": "left",
-            "text_color": "#47B5E9",
-            "text_1": "VETPETS · DAILY PAW CARE",
-            "text_2": "",
-            "text_3": "",
-            "icon_scale": 120,
-            "icon_color": "#121212",
-            "icon_1": "",
-            "filled_icon_1": false,
-            "icon_2": "check_circle",
-            "filled_icon_2": false,
-            "icon_3": "check_circle",
-            "filled_icon_3": false,
-            "width": "100%",
-            "direction": "horizontal",
-            "column_gap": 3,
-            "enable_bg": false,
-            "bg_color": "#f3f3f3",
-            "corner_radius": 40,
-            "padding": 3,
-            "border_size": 0,
-            "border_color": "#b7b7b7",
-            "margin_top": 15,
-            "margin_bottom": 15
-          }
-        },
         "a6eb81db-40e4-43e0-972f-32db010a4a56": {
           "type": "rating_stars",
-          "disabled": true,
           "settings": {
             "rating": 4.8,
             "star_color": "#ffcc00",
             "bg_stars_style": "full",
             "bg_star_color": "#ececec",
-            "label": "4,86/5 (15.000+ Happy Customers)",
+            "label": "Trusted by 45,000+ Pet Owners",
             "size": 12,
             "alignment": "flex-start",
             "scroll_id": "",
@@ -65,8 +33,21 @@
             "text_size": "h2",
             "title_alignment": "left",
             "uppercase_title": false,
-            "margin_top": 0,
+            "margin_top": 6,
             "margin_bottom": 0
+          }
+        },
+        "divider_7ENJn3": {
+          "type": "divider",
+          "settings": {
+            "color": "#e1e1e1",
+            "height": 1,
+            "width": 100,
+            "Full_mobile_width": false,
+            "alignment": "center",
+            "border_radius": 0,
+            "margin_top": 15,
+            "margin_bottom": 15
           }
         },
         "description": {
@@ -308,38 +289,6 @@
             "mobile_transparent_bg": false
           }
         },
-        "collapsible_tab_ERGKLJ": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "What to expect?",
-            "heading_size": "small",
-            "icon": "dentistry",
-            "filled_icon": true,
-            "collapse_icon": "carret",
-            "display_top_border": true,
-            "open": false,
-            "content": "<p>Daily use gently removes wax, dirt, and buildup before they can contribute to ear problems. Here's what you'll typically notice in your pet:</p><p><strong>Week 1</strong> — ears look cleaner, with less visible wax and debris after each wipe.<br/><br/><strong>Week 2</strong> — less buildup returns between cleanings, and ears stay fresher for longer.<br/><br/><strong>Week 3 </strong>— consistently clean ears with reduced wax buildup and a healthier ear environment.<br/><br/>Every wipe comes away with the wax, dirt, and debris you've just removed — visible proof it's lifting buildup from the ear, not simply pushing it around.</p>",
-            "page": "free-e-book-the-secret-to-a-sparkling-home-in-just-15-minutes-a-day",
-            "margin_top": 12,
-            "margin_bottom": 0
-          }
-        },
-        "collapsible_tab_3z9NFe": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Why RoutineCare?",
-            "heading_size": "small",
-            "icon": "loyalty",
-            "filled_icon": true,
-            "collapse_icon": "carret",
-            "display_top_border": true,
-            "open": false,
-            "content": "<p>✓ Save 20% on every order</p><p>✓ Free shipping, always</p><p>✓ Free gifts — plus surprise treats in your boxes</p><p>✓ Delivered every 30 days — skip, reschedule or change frequency anytime</p><p>✓ Skip, pause or cancel anytime — you're always in control</p><p>✓ Your refill arrives before you run out</p><p>✓ Consistency is what makes results last</p><p>✓ 100-day money-back guarantee — or you don't pay</p>",
-            "page": "free-e-book-the-secret-to-a-sparkling-home-in-just-15-minutes-a-day",
-            "margin_top": 12,
-            "margin_bottom": 0
-          }
-        },
         "collapsible_tab_yayUBe": {
           "type": "collapsible_tab",
           "settings": {
@@ -350,7 +299,7 @@
             "collapse_icon": "carret",
             "display_top_border": true,
             "open": false,
-            "content": "<p>•  <strong>EDI-purified water</strong> – base solution<br/><br/>• <strong>Aloe Vera (Aloe Barbadensis)</strong>– soothes and moisturizes the skin around the ear<br/><br/>• <strong>Chamomile (Chamomilla Recutita)</strong>– known for its gentle, anti-inflammatory properties<br/><br/>• <strong>Glycerin </strong>– binds moisture and protects the skin<br/><br/>• <strong>Ethylhexylglycerin </strong>– gentle preservative with antibacterial effect<br/><br/>• <strong>Decyl Glucoside</strong> – mild cleansing surfactant derived from plants<br/><br/>• <strong>Polyhexamethylene Biguanide Hydrochloride</strong> – antibacterial, prevents irritation</p><p>• <strong>Vitamin E</strong>– strengthens and protects the delicate skin</p><p>✔️ pH-balanced and fragrance-free<br/><br/>✔️ Not tested on animals (cruelty-free)<br/><br/>✔️ Free from alcohol, parabens & sulfates</p>",
+            "content": "<p><strong>Lauryl Glucoside</strong> — a gentle, plant-derived cleanser that lifts dirt without stripping the skin.<br/><strong>PEG-7 Glyceryl Cocoate </strong>— a mild coconut-derived cleansing agent.<br/><strong>PEG-6 Caprylic/Capric Glycerides</strong> — helps the formula rinse-free and non-greasy.<br/><strong>Glycerin </strong>— draws in moisture to help prevent dryness.<br/><strong>Amino Acid Humectan</strong>t — helps the skin retain moisture after cleansing.<br/><strong>Witch Hazel Extract </strong>— a soothing plant extract.<br/><strong>Cucumber Extract</strong> — a soothing, hydrating plant extract.<br/><strong>Benzalkonium Chloride </strong>— included at a low concentration to help keep the formula clean and support hygienic use.<br/><strong>Phenoxyethanol </strong>— a preservative that keeps the formula stable over time.<br/><strong>EDI Purified Water</strong> — the base of the formula.</p>",
             "page": "free-e-book-the-secret-to-a-sparkling-home-in-just-15-minutes-a-day",
             "margin_top": 24,
             "margin_bottom": 0
@@ -442,9 +391,9 @@
         }
       },
       "block_order": [
-        "text_n6nzJP",
         "a6eb81db-40e4-43e0-972f-32db010a4a56",
         "title",
+        "divider_7ENJn3",
         "description",
         "price",
         "5fcc0428-e768-4cb7-bea3-eb0274198dd1",
@@ -456,8 +405,6 @@
         "custom_liquid_hTmdHC",
         "custom_liquid_bgawBg",
         "e7a28cbe-03cb-4c9d-a2c4-0e3e76ffb3e5",
-        "collapsible_tab_ERGKLJ",
-        "collapsible_tab_3z9NFe",
         "collapsible_tab_yayUBe",
         "collapsible_tab_RAfyBa",
         "collapsible_tab_iQb3wA",
