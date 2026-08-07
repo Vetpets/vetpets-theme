@@ -1214,7 +1214,7 @@
             "heading": "What's in the formula?",
             "icon": "",
             "filled_icon": false,
-            "row_content": "<p>A full ingredient list is provided on the product page above — every ingredient is disclosed.</p><p></p>",
+            "row_content": "<p>A full ingredient list is provided on the product page above — every ingredient is disclosed.<a href=\"#shopify-section-template--25626190381323__image_with_text_PCDA6T\" title=\"#shopify-section-template--25626190381323__image_with_text_PCDA6T\"> Click here.</a></p><p></p>",
             "page": ""
           }
         },
