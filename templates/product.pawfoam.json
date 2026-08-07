@@ -640,15 +640,15 @@
         "heading_8gWHeA": {
           "type": "heading",
           "settings": {
-            "title": "Your dog's ears tell a<strong> story you can't ignore</strong>",
-            "title_highlight_color": "#d02b2b",
+            "title": "Every Walk Brings the <strong>Outside Back In</strong>",
+            "title_highlight_color": "#47B5E9",
             "heading_size": "h2"
           }
         },
         "text_tzVfPD": {
           "type": "text",
           "settings": {
-            "text": "<p><strong>A yeasty smell, brown wax, or constant head shaking</strong>—these may seem like minor problems.</p><p>But beneath the surface, they can quickly<strong> turn into something much worse.</strong></p><p>Moisture and bacteria build up in your dog's ears every day. Without cleaning, your dog risks painful infections, inflammation, and costly vet bills.</p><p>It hurts to think about, but the fact is:</p><p><strong>Paper towels and cotton pads can push bacteria deeper.</strong> Ear drops create stress and mess.</p><p>You shouldn't have to worry every time you check your dog's ears.</p><p><strong>That's why we—together with veterinarians—created EarWipes</strong> – a simple, gentle routine that both cleans and protects.</p>",
+            "text": "<p>Mud between the pads. Road salt packed into the creases. Pollen and grass caught where paws meet floor. It doesn't wash out with a towel — and a full bath after every walk isn't realistic. PawFoam handles it at the door, before any of it gets past the mat.</p>",
             "text_style": "body"
           }
         }
@@ -661,7 +661,7 @@
       "settings": {
         "display_id": false,
         "visibility": "always-display",
-        "image": "shopify://shop_images/Ear_Wipes_Listing_Images_1.webp",
+        "image": "shopify://shop_images/hf_20260807_063002_389226d3-e189-4bf1-97c8-a2b23979e010.png",
         "video_autoplay": true,
         "video_loop": true,
         "height": "adapt",
@@ -670,8 +670,8 @@
         "full_desktop_width": false,
         "content_layout": "no-overlap",
         "desktop_media_width": 50,
-        "layout": "image_first",
-        "desktop_content_position": "top",
+        "layout": "text_first",
+        "desktop_content_position": "middle",
         "desktop_content_alignment": "left",
         "mobile_full_media_width": false,
         "mobile_direction": "normal",
@@ -681,13 +681,13 @@
         "mobile_padding_bottom": 16,
         "desktop_padding_top": 36,
         "desktop_padding_bottom": 36,
-        "custom_colors_background": "#d5f7ff",
+        "custom_colors_background": "#FFFFFF",
         "custom_gradient_background": "",
         "custom_colors_text": "#2e2a39",
         "custom_colors_solid_button_background": "#dd1d1d",
         "custom_colors_solid_button_text": "#ffffff",
         "custom_colors_outline_button": "#dd1d1d",
-        "custom_section_colors_background": "#d5f7ff",
+        "custom_section_colors_background": "#FFFFFF",
         "custom_section_gradient_background": ""
       }
     },
@@ -697,7 +697,7 @@
         "visibility": "always-display",
         "shape": "waves_2",
         "flip_horizontal": false,
-        "flip_vertical": true,
+        "flip_vertical": false,
         "shape_color": "custom",
         "custom_shape_color": "#d5f7ff",
         "background_color": "background-1",
@@ -706,70 +706,64 @@
         "padding_bottom": 0
       }
     },
-    "image_with_text_PLRggf": {
-      "type": "image-with-text",
+    "rocky_transformation_DAtJU8": {
+      "type": "rocky-transformation",
       "blocks": {
-        "caption_WpPykQ": {
-          "type": "caption",
+        "step_YeqR3G": {
+          "type": "step",
           "settings": {
-            "caption": "See how easy it is – completely stress-free",
-            "text_style": "caption-with-letter-spacing",
-            "text_size": "medium"
+            "icon": "",
+            "title": "Press",
+            "description": "Pump foam onto the built-in brush head."
           }
         },
-        "heading_WYjtma": {
-          "type": "heading",
+        "step_znaAzp": {
+          "type": "step",
           "settings": {
-            "title": "Stops infections <strong>before they start</strong>",
-            "title_highlight_color": "#47b5e9",
-            "heading_size": "h1"
+            "icon": "",
+            "title": "Scrub",
+            "description": "Massage into pads & toes, ~15 sec per paw."
           }
         },
-        "text_KEyKFx": {
-          "type": "text",
+        "step_VRP7Ff": {
+          "type": "step",
           "settings": {
-            "text": "<p>EarWipes does more than just wipe away dirt.</p><p>They are developed to clean deeply – so that bacteria don't get a foothold.</p><p>By removing wax and debris <strong>it reduces the risk of odor, inflammation and painful infections.</strong></p><p>And thanks to the gentle formula, they are comfortable even for sensitive ears.</p><p><strong>The result? Clean, healthy ears and a dog that doesn't need to scratch.</strong></p>",
-            "text_style": "body"
+            "icon": "",
+            "title": "Wipe Dry",
+            "description": "Towel off. No rinse, no bath."
           }
         }
       },
       "block_order": [
-        "caption_WpPykQ",
-        "heading_WYjtma",
-        "text_KEyKFx"
+        "step_YeqR3G",
+        "step_znaAzp",
+        "step_VRP7Ff"
       ],
-      "name": "t:sections.image-with-text.presets.name",
+      "name": "VETPETS - Transformation",
       "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "video": "shopify://files/videos/earwipes (2).mp4",
-        "video_autoplay": true,
-        "video_loop": true,
-        "height": "adapt",
-        "color_scheme": "background-1",
-        "section_color_scheme": "background-1",
-        "full_desktop_width": false,
-        "content_layout": "no-overlap",
-        "desktop_media_width": 50,
-        "layout": "text_first",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "mobile_full_media_width": false,
-        "mobile_direction": "normal",
-        "mobile_image_quanlity": "2",
-        "mobile_content_alignment": "left",
-        "mobile_padding_top": 0,
-        "mobile_padding_bottom": 16,
-        "desktop_padding_top": 36,
-        "desktop_padding_bottom": 36,
-        "custom_colors_background": "#2e2a39",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#ffffff",
-        "custom_colors_solid_button_background": "#dd1d1d",
-        "custom_colors_solid_button_text": "#ffffff",
-        "custom_colors_outline_button": "#dd1d1d",
-        "custom_section_colors_background": "#ffffff",
-        "custom_section_gradient_background": ""
+        "headline_p1": "One Bottle. One Brush. 30 Seconds.",
+        "headline_acc": "",
+        "headline_p2": "",
+        "subheadline": "The brush isn't decoration — it's the mechanism. Foam loosens what's trapped between the pads; the brush lifts it out.",
+        "headline_color": "#111111",
+        "accent_color": "#47B5E9",
+        "subheadline_color": "#6b7280",
+        "number_color": "#FFFFFF",
+        "number_bg": "#13B6B5",
+        "step_title_color": "#111111",
+        "step_desc_color": "#6b7280",
+        "line_color": "#e5e7eb",
+        "bg_color": "#D5F7FF",
+        "card_bg": "#D5F7FF",
+        "card_border": "#13B6B5",
+        "image_size_mobile": 160,
+        "image_size_desktop": 160,
+        "image_radius": 12,
+        "icon_size": 24,
+        "headline_size_mobile": 26,
+        "headline_size_desktop": 38,
+        "padding_mobile": 44,
+        "padding_desktop": 64
       }
     },
     "section_divider_xwTHTM": {
@@ -779,7 +773,7 @@
         "visibility": "always-display",
         "shape": "waves_1",
         "flip_horizontal": false,
-        "flip_vertical": false,
+        "flip_vertical": true,
         "shape_color": "custom",
         "custom_shape_color": "#d5f7ff",
         "background_color": "background-1",
@@ -788,187 +782,149 @@
         "padding_bottom": 0
       }
     },
-    "custom_columns_tCbQVM": {
-      "type": "custom-columns",
+    "multicolumn_AqXcgX": {
+      "type": "multicolumn",
       "blocks": {
-        "heading_KUnYfn": {
-          "type": "heading",
+        "column_Xirj8T": {
+          "type": "column",
           "settings": {
-            "column": "col_1",
-            "visibility": "always-display",
-            "heading": "That's why dog owners <strong>choose EarWipes</strong>",
-            "title_highlight_color": "#47b5e9",
-            "heading_size": "h2",
-            "alignment": "center",
-            "mobile_alignment": "mobile-center",
-            "margin_top": 20,
-            "margin_bottom": 20
+            "image": "shopify://shop_images/hf_20260807_063015_2c6ba5ce-dac7-44e1-bdb6-cb941fb8ad49.png",
+            "muted_autoplay": true,
+            "title": "Muddy → Spotless",
+            "text": "<p>Clean, dry paws before mud reaches the floor.<br/></p>",
+            "link_label": "",
+            "link": ""
           }
         },
-        "richtext_rErCjL": {
-          "type": "richtext",
+        "column_qLBQLA": {
+          "type": "column",
           "settings": {
-            "column": "col_1",
-            "visibility": "always-display",
-            "text": "",
-            "text_style": "body",
-            "alignment": "center",
-            "mobile_alignment": "mobile-center",
-            "margin_top": 20,
-            "margin_bottom": 20
+            "image": "shopify://shop_images/hf_20260807_063021_3760d24c-a27a-4d85-99ff-30ce1bcb4555.png",
+            "muted_autoplay": true,
+            "title": "Buildup → Clean Pads",
+            "text": "<p>Residue lifted from between the pads.</p>",
+            "link_label": "",
+            "link": ""
           }
         },
-        "icon_with_text_tW9KnU": {
-          "type": "icon_with_text",
+        "column_V9FbWW": {
+          "type": "column",
           "settings": {
-            "column": "col_2",
-            "visibility": "always-display",
-            "icon": "pets",
-            "filled_icon": false,
-            "icon_size": "m",
-            "icon_position": "next-to-title",
-            "icon_color": "accent-1",
-            "icon_heading_size": "h3",
-            "icon_text_alignment": "left",
-            "title": "Removes wax & dirt",
-            "text": "<p>Specially developed formula lifts away brown buildup, moisture, and debris without pushing it deeper.</p>",
-            "margin_top": 20,
-            "margin_bottom": 30
+            "image": "shopify://shop_images/hf_20260807_065028_bac905cf-a29c-4f69-814d-0cfd23d28a5f.png",
+            "muted_autoplay": true,
+            "title": "Smelly → Fresh",
+            "text": "<p>Odor-causing buildup cleared, not covered.</p>",
+            "link_label": "",
+            "link": ""
           }
         },
-        "icon_with_text_RkxWkq": {
-          "type": "icon_with_text",
+        "column_xBqG6B": {
+          "type": "column",
           "settings": {
-            "column": "col_2",
-            "visibility": "always-display",
-            "icon": "pets",
-            "filled_icon": false,
-            "icon_size": "m",
-            "icon_position": "next-to-title",
-            "icon_color": "accent-1",
-            "icon_heading_size": "h3",
-            "icon_text_alignment": "left",
-            "title": "Gentle yet effective – even for daily use",
-            "text": "<p>Safe for puppies, adult dogs, and sensitive ears. No alcohol, no harsh chemicals.</p>",
-            "margin_top": 20,
-            "margin_bottom": 20
+            "image": "shopify://shop_images/hf_20260807_065217_2f0f810f-ee9f-4a01-b1bd-efa316542d1d.png",
+            "muted_autoplay": true,
+            "title": "Salt & Grit → Safe",
+            "text": "<p>Nothing sharp or irritating left behind.<br/><br/></p>",
+            "link_label": "",
+            "link": ""
           }
         },
-        "image_4JqQ7a": {
-          "type": "image",
+        "column_tKq3PE": {
+          "type": "column",
           "settings": {
-            "column": "col_3",
-            "visibility": "always-display",
-            "image": "shopify://shop_images/Engelska_12.jpg",
-            "width": 100,
-            "alignment": "center",
-            "mobile_alignment": "center",
-            "border_radius": 0,
-            "margin_top": 20,
-            "margin_bottom": 20
+            "image": "shopify://shop_images/hf_20260807_065044_6e497487-b036-4170-94ad-188f7851f363.png",
+            "muted_autoplay": true,
+            "title": "Pollen → Cleared",
+            "text": "<p>Removed before it sits against skin.<br/><br/></p>",
+            "link_label": "",
+            "link": ""
           }
         },
-        "icon_with_text_Yt7WxB": {
-          "type": "icon_with_text",
+        "column_a6e6HB": {
+          "type": "column",
           "settings": {
-            "column": "col_4",
-            "visibility": "always-display",
-            "icon": "pets",
-            "filled_icon": false,
-            "icon_size": "m",
-            "icon_position": "next-to-title",
-            "icon_color": "accent-1",
-            "icon_heading_size": "h3",
-            "icon_text_alignment": "left",
-            "title": "Prevents infections before they start",
-            "text": "<p>pH-balanced cleaning that stops bacteria and yeast before they become a problem.</p>",
-            "margin_top": 20,
-            "margin_bottom": 30
-          }
-        },
-        "icon_with_text_mUkFLX": {
-          "type": "icon_with_text",
-          "settings": {
-            "column": "col_4",
-            "visibility": "always-display",
-            "icon": "pets",
-            "filled_icon": false,
-            "icon_size": "m",
-            "icon_position": "next-to-title",
-            "icon_color": "accent-1",
-            "icon_heading_size": "h3",
-            "icon_text_alignment": "left",
-            "title": "No liquid mess or stress",
-            "text": "<p>Your dog avoids discomfort – and you avoid wrestling matches with ear drop bottles.</p>",
-            "margin_top": 20,
-            "margin_bottom": 20
+            "image": "shopify://shop_images/hf_20260807_070514_3aef9acd-27ac-4f69-a5d3-56fd04a673df.png",
+            "muted_autoplay": true,
+            "title": "Daily → Under Control",
+            "text": "<p>A 30-second post-walk habit.<br/><br/></p>",
+            "link_label": "",
+            "link": ""
           }
         }
       },
       "block_order": [
-        "heading_KUnYfn",
-        "richtext_rErCjL",
-        "icon_with_text_tW9KnU",
-        "icon_with_text_RkxWkq",
-        "image_4JqQ7a",
-        "icon_with_text_Yt7WxB",
-        "icon_with_text_mUkFLX"
+        "column_Xirj8T",
+        "column_qLBQLA",
+        "column_V9FbWW",
+        "column_xBqG6B",
+        "column_tKq3PE",
+        "column_a6e6HB"
       ],
-      "name": "Custom columns",
+      "name": "t:sections.multicolumn.presets.name",
       "settings": {
         "display_id": false,
         "visibility": "always-display",
-        "color_scheme": "background-2",
-        "columns_count": 4,
-        "desktop_page_width": "normal",
-        "column_gap_desktop": 40,
-        "row_gap_desktop": 40,
-        "desktop_vertical_alignment": "center",
-        "mobile_full_page": false,
-        "column_gap_mobile": 20,
-        "row_gap_mobile": 30,
-        "mobile_vertical_alignment": "flex-start",
-        "col_1_desktop_width": 12,
-        "col_1_mobile_width": 4,
-        "col_1_visibility": "always-display",
-        "col_2_desktop_width": 4,
-        "col_2_mobile_width": 4,
-        "col_2_visibility": "always-display",
-        "col_3_desktop_width": 4,
-        "col_3_mobile_width": 4,
-        "col_3_visibility": "always-display",
-        "col_4_desktop_width": 4,
-        "col_4_mobile_width": 4,
-        "col_4_visibility": "always-display",
-        "col_5_desktop_width": 3,
-        "col_5_mobile_width": 4,
-        "col_5_visibility": "always-display",
-        "col_6_desktop_width": 3,
-        "col_6_mobile_width": 4,
-        "col_6_visibility": "always-display",
+        "title": "From Muddy to Handled",
+        "title_highlight_color": "#6D388B",
+        "heading_size": "h1",
+        "button_label": "",
+        "button_link": "",
+        "atc_button_label": "",
+        "atc_product": "",
+        "atc_skip_cart": false,
+        "color_scheme": "background-1",
+        "cards_color_scheme": "custom",
+        "cards_corner_radius": 12,
+        "stretch_cards": false,
+        "stretched_cards_content_alignment": "center",
+        "image_width": "full",
+        "image_ratio": "square",
+        "media_position": "top",
+        "column_alignment": "center",
+        "desktop_heading_size": 24,
+        "mobile_heading_size": 22,
+        "desktop_text_size": 16,
+        "mobile_text_size": 15,
+        "desktop_text_top_margin": 10,
+        "mobile_text_top_margin": 10,
+        "desktop_container_padding_y": 24,
+        "desktop_container_padding_x": 24,
+        "mobile_container_padding_y": 24,
+        "mobile_container_padding_x": 24,
+        "type": "slide",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_full_page": false,
+        "columns_desktop": 3,
+        "slider_desktop": false,
+        "per_move_desktop": 1,
+        "desktop_spacing": 40,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "sides",
+        "columns_mobile": "1",
+        "slider_mobile": true,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "under",
         "padding_top": 36,
         "padding_bottom": 36,
-        "custom_colors_background": "#ffffff",
+        "custom_colors_background": "#D5F7FF",
         "custom_gradient_background": "",
-        "custom_colors_text": "#2e2a39",
-        "custom_colors_solid_button_background": "#dd1d1d",
-        "custom_colors_solid_button_text": "#ffffff",
-        "custom_colors_outline_button": "#dd1d1d"
-      }
-    },
-    "section_divider_iVUHzY": {
-      "type": "section-divider",
-      "settings": {
-        "visibility": "always-display",
-        "shape": "waves_2",
-        "flip_horizontal": false,
-        "flip_vertical": true,
-        "shape_color": "custom",
-        "custom_shape_color": "#d5f7ff",
-        "background_color": "background-1",
-        "custom_background_color": "#d5f7ff",
-        "padding_top": 0,
-        "padding_bottom": 0
+        "custom_colors_text": "#2E2A39",
+        "custom_colors_solid_button_background": "#13B6B5",
+        "custom_colors_solid_button_text": "#D5F7FF",
+        "custom_colors_outline_button": "#13B6B5",
+        "custom_cards_colors_background": "#FFFFFF",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_heading": "#222126",
+        "custom_cards_colors_text": "#2E2A39"
       }
     },
     "testimonials_A3d8yL": {
@@ -1310,10 +1266,9 @@
     "section_divider_q94HQ4",
     "image_with_text_Ei4Ccz",
     "section_divider_XeNhA8",
-    "image_with_text_PLRggf",
+    "rocky_transformation_DAtJU8",
     "section_divider_xwTHTM",
-    "custom_columns_tCbQVM",
-    "section_divider_iVUHzY",
+    "multicolumn_AqXcgX",
     "testimonials_A3d8yL",
     "image_with_text_PCDA6T",
     "related-products",
