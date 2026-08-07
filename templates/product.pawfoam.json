@@ -568,6 +568,22 @@
         "custom_colors_text": "#121212"
       }
     },
+    "section_divider_HPiA3H": {
+      "type": "section-divider",
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "custom",
+        "custom_shape_color": "#D5F7FF",
+        "background_color": "background-1",
+        "custom_background_color": "#FFFFFF",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
     "image_with_text_Ei4Ccz": {
       "type": "image-with-text",
       "blocks": {
@@ -599,8 +615,8 @@
         "video_autoplay": true,
         "video_loop": true,
         "height": "adapt",
-        "color_scheme": "custom",
-        "section_color_scheme": "custom",
+        "color_scheme": "background-2",
+        "section_color_scheme": "background-2",
         "full_desktop_width": false,
         "content_layout": "no-overlap",
         "desktop_media_width": 50,
@@ -631,7 +647,7 @@
         "visibility": "always-display",
         "shape": "waves_2",
         "flip_horizontal": false,
-        "flip_vertical": false,
+        "flip_vertical": true,
         "shape_color": "custom",
         "custom_shape_color": "#d5f7ff",
         "background_color": "background-1",
@@ -646,6 +662,7 @@
         "step_YeqR3G": {
           "type": "step",
           "settings": {
+            "image": "shopify://shop_images/hf_20260807_081137_ee119fe9-a53e-485e-82eb-a5e03b50a531.png",
             "icon": "",
             "title": "Press",
             "description": "Pump foam onto the built-in brush head."
@@ -654,6 +671,7 @@
         "step_znaAzp": {
           "type": "step",
           "settings": {
+            "image": "shopify://shop_images/hf_20260807_081127_bc81545c-23bc-4ed4-926a-724c72de405a.png",
             "icon": "",
             "title": "Scrub",
             "description": "Massage into pads & toes, ~15 sec per paw."
@@ -662,6 +680,7 @@
         "step_VRP7Ff": {
           "type": "step",
           "settings": {
+            "image": "shopify://shop_images/hf_20260807_080659_92880483-85b9-4039-972b-ea55fefca285.png",
             "icon": "",
             "title": "Wipe Dry",
             "description": "Towel off. No rinse, no bath."
@@ -675,9 +694,9 @@
       ],
       "name": "VETPETS - Transformation",
       "settings": {
-        "headline_p1": "One Bottle. One Brush. 30 Seconds.",
-        "headline_acc": "",
-        "headline_p2": "",
+        "headline_p1": "One Bottle,",
+        "headline_acc": "One Brush,",
+        "headline_p2": "30 Seconds.",
         "subheadline": "The brush isn't decoration — it's the mechanism. Foam loosens what's trapped between the pads; the brush lifts it out.",
         "headline_color": "#111111",
         "accent_color": "#47b5e9",
@@ -687,17 +706,17 @@
         "step_title_color": "#111111",
         "step_desc_color": "#6b7280",
         "line_color": "#e5e7eb",
-        "bg_color": "#d5f7ff",
+        "bg_color": "#FFFFFF",
         "card_bg": "#d5f7ff",
         "card_border": "#13b6b5",
-        "image_size_mobile": 160,
-        "image_size_desktop": 160,
+        "image_size_mobile": 240,
+        "image_size_desktop": 280,
         "image_radius": 12,
         "icon_size": 24,
         "headline_size_mobile": 26,
         "headline_size_desktop": 38,
-        "padding_mobile": 44,
-        "padding_desktop": 64
+        "padding_mobile": 24,
+        "padding_desktop": 60
       }
     },
     "section_divider_xwTHTM": {
@@ -707,7 +726,7 @@
         "visibility": "always-display",
         "shape": "waves_1",
         "flip_horizontal": false,
-        "flip_vertical": true,
+        "flip_vertical": false,
         "shape_color": "custom",
         "custom_shape_color": "#d5f7ff",
         "background_color": "background-1",
@@ -806,7 +825,7 @@
         "atc_button_label": "",
         "atc_product": "",
         "atc_skip_cart": false,
-        "color_scheme": "background-1",
+        "color_scheme": "background-2",
         "cards_color_scheme": "custom",
         "cards_corner_radius": 12,
         "stretch_cards": false,
@@ -855,7 +874,7 @@
         "custom_colors_solid_button_background": "#13b6b5",
         "custom_colors_solid_button_text": "#d5f7ff",
         "custom_colors_outline_button": "#13b6b5",
-        "custom_cards_colors_background": "#ffffff",
+        "custom_cards_colors_background": "#D5F7FF",
         "custom_cards_gradient_background": "",
         "custom_cards_colors_heading": "#222126",
         "custom_cards_colors_text": "#2e2a39"
@@ -1311,6 +1330,7 @@
   "order": [
     "main",
     "image_slider_mYdxDt",
+    "section_divider_HPiA3H",
     "image_with_text_Ei4Ccz",
     "section_divider_XeNhA8",
     "rocky_transformation_DAtJU8",
