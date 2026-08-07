@@ -1181,6 +1181,112 @@
         "padding_bottom": 0
       }
     },
+    "collapsible_content_BxaLD9": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_TzFLDL": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Collapsible row",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "",
+            "page": ""
+          }
+        },
+        "collapsible_row_K3RDVf": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Collapsible row",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "",
+            "page": ""
+          }
+        },
+        "collapsible_row_cJX4z8": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Collapsible row",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "",
+            "page": ""
+          }
+        },
+        "collapsible_row_KLRrMB": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Collapsible row",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "",
+            "page": ""
+          }
+        },
+        "collapsible_row_Awhng3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Collapsible row",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_TzFLDL",
+        "collapsible_row_K3RDVf",
+        "collapsible_row_cJX4z8",
+        "collapsible_row_KLRrMB",
+        "collapsible_row_Awhng3"
+      ],
+      "name": "t:sections.collapsible_content.presets.name",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "caption": "",
+        "title": "Collapsible content",
+        "title_highlight_color": "#6D388B",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "row",
+        "color_scheme": "background-2",
+        "container_color_scheme": "accent-1",
+        "open_first_collapsible_row": false,
+        "video_muted_autoplay": true,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "row_heading_size": "medium",
+        "collapse_icon": "carret",
+        "display_top_border": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "custom_colors_background": "#FFFFFF",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2E2A39",
+        "custom_contaner_colors_background": "#47B5E9",
+        "custom_container_gradient_background": "",
+        "custom_contaner_colors_text": "#111111"
+      }
+    },
+    "section_divider_QmRXhf": {
+      "type": "section-divider",
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": true,
+        "shape_color": "background-2",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-1",
+        "custom_background_color": "#FFFFFF",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
     "testimonials_A3d8yL": {
       "type": "testimonials",
       "blocks": {
@@ -1354,11 +1460,11 @@
         "title_highlight_color": "#6d388b",
         "heading_size": "h1",
         "text": "",
-        "color_scheme": "background-2",
+        "color_scheme": "background-1",
         "icon_layout": "vertical",
         "icon_size": "medium",
         "icon_color": "accent-1",
-        "cards_color_scheme": "background-2",
+        "cards_color_scheme": "background-1",
         "type": "slide",
         "autoplay": false,
         "autoplay_speed": 5,
@@ -1414,6 +1520,8 @@
     "section_divider_nDdCcC",
     "comparison_table_KERHmh",
     "section_divider_NCVFG6",
+    "collapsible_content_BxaLD9",
+    "section_divider_QmRXhf",
     "testimonials_A3d8yL",
     "related-products",
     "icon_bar_FXDFLd",
