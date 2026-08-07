@@ -1185,6 +1185,56 @@
     "collapsible_content_BxaLD9": {
       "type": "collapsible-content",
       "blocks": {
+        "collapsible_row_K3RDVf": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Do I need to rinse it off?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>No. Wipe away with a towel after scrubbing — no rinsing required.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_cJX4z8": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can I use it every day?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Yes, PawFoam is designed for daily use after walks.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_KLRrMB": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Is it safe if my dog licks their paws afterward?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>PawFoam is formulated to be safe if licked after use. As with any new product, introduce it gradually and consult your vet if your pet has known sensitivities.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_Awhng3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What's in the formula?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>A full ingredient list is provided on the product page above — every ingredient is disclosed.</p><p></p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_Ef4mHC": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How is this different from paw wipes?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>The built-in textured brush works foam into the pads and between the toes, reaching buildup a flat wipe can miss.</p><p></p>",
+            "page": ""
+          }
+        },
         "collapsible_row_TzFLDL": {
           "type": "collapsible_row",
           "settings": {
@@ -1194,54 +1244,15 @@
             "row_content": "<p>Yes. PawFoam is formulated for both dogs and cats.</p><p></p>",
             "page": ""
           }
-        },
-        "collapsible_row_K3RDVf": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Do I need to rinse it off?",
-            "icon": "",
-            "filled_icon": false,
-            "row_content": "<p>No. Wipe away with a towel after scrubbing — no rinsing required.</p><p></p>",
-            "page": ""
-          }
-        },
-        "collapsible_row_cJX4z8": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Collapsible row",
-            "icon": "",
-            "filled_icon": false,
-            "row_content": "",
-            "page": ""
-          }
-        },
-        "collapsible_row_KLRrMB": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Collapsible row",
-            "icon": "",
-            "filled_icon": false,
-            "row_content": "",
-            "page": ""
-          }
-        },
-        "collapsible_row_Awhng3": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Collapsible row",
-            "icon": "",
-            "filled_icon": false,
-            "row_content": "",
-            "page": ""
-          }
         }
       },
       "block_order": [
-        "collapsible_row_TzFLDL",
         "collapsible_row_K3RDVf",
         "collapsible_row_cJX4z8",
         "collapsible_row_KLRrMB",
-        "collapsible_row_Awhng3"
+        "collapsible_row_Awhng3",
+        "collapsible_row_Ef4mHC",
+        "collapsible_row_TzFLDL"
       ],
       "name": "t:sections.collapsible_content.presets.name",
       "settings": {
