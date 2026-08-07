@@ -791,130 +791,20 @@
         "padding_bottom": 0
       }
     },
-    "rocky_transformation_QQXf9K": {
-      "type": "rocky-transformation",
-      "blocks": {
-        "step_yTrQEp": {
-          "type": "step",
-          "settings": {
-            "image": "shopify://shop_images/hf_20260807_063015_2c6ba5ce-dac7-44e1-bdb6-cb941fb8ad49.png",
-            "icon": "",
-            "title": "Connect via USB-C",
-            "description": "Plug into any computer. No special software needed."
-          }
-        },
-        "step_7tdhJ7": {
-          "type": "step",
-          "settings": {
-            "image": "shopify://shop_images/hf_20260807_063021_3760d24c-a27a-4d85-99ff-30ce1bcb4555.png",
-            "icon": "",
-            "title": "Connect via USB-C",
-            "description": "Plug into any computer. No special software needed."
-          }
-        },
-        "step_4MWfyj": {
-          "type": "step",
-          "settings": {
-            "image": "shopify://shop_images/hf_20260807_065028_bac905cf-a29c-4f69-814d-0cfd23d28a5f.png",
-            "icon": "",
-            "title": "Connect via USB-C",
-            "description": "Plug into any computer. No special software, no accounts, no setup wizards."
-          }
-        }
-      },
-      "block_order": [
-        "step_yTrQEp",
-        "step_7tdhJ7",
-        "step_4MWfyj"
-      ],
-      "name": "Rocky - Transformation",
+    "section_divider_f4Kqw7": {
+      "type": "section-divider",
+      "name": "Section divider",
       "settings": {
-        "headline_p1": "Plug In. Drag. Drop.",
-        "headline_acc": "",
-        "headline_p2": "",
-        "subheadline": "",
-        "headline_color": "#111111",
-        "accent_color": "#2563eb",
-        "subheadline_color": "#6b7280",
-        "number_color": "#2563eb",
-        "number_bg": "#eff6ff",
-        "step_title_color": "#111111",
-        "step_desc_color": "#6b7280",
-        "line_color": "#e5e7eb",
-        "bg_color": "#f9fafb",
-        "card_bg": "#ffffff",
-        "card_border": "#e5e7eb",
-        "image_size_mobile": 160,
-        "image_size_desktop": 160,
-        "image_radius": 12,
-        "icon_size": 24,
-        "headline_size_mobile": 26,
-        "headline_size_desktop": 38,
-        "padding_mobile": 44,
-        "padding_desktop": 40
-      }
-    },
-    "rocky_transformation_GEHNtC": {
-      "type": "rocky-transformation",
-      "blocks": {
-        "step_DyXJpi": {
-          "type": "step",
-          "settings": {
-            "image": "shopify://shop_images/hf_20260807_065217_2f0f810f-ee9f-4a01-b1bd-efa316542d1d.png",
-            "icon": "",
-            "title": "Connect via USB-C",
-            "description": "Plug into any computer. No special software needed."
-          }
-        },
-        "step_FqHD4L": {
-          "type": "step",
-          "settings": {
-            "image": "shopify://shop_images/hf_20260807_065044_6e497487-b036-4170-94ad-188f7851f363.png",
-            "icon": "",
-            "title": "Drag & Drop Your Music",
-            "description": "Copy your files like a flash drive. MP3, FLAC, WAV — it plays them all."
-          }
-        },
-        "step_eXgRfW": {
-          "type": "step",
-          "settings": {
-            "image": "shopify://shop_images/hf_20260807_070514_3aef9acd-27ac-4f69-a5d3-56fd04a673df.png",
-            "icon": "",
-            "title": "Press Play",
-            "description": "Unplug and go. Your entire library, organized and ready to listen."
-          }
-        }
-      },
-      "block_order": [
-        "step_DyXJpi",
-        "step_FqHD4L",
-        "step_eXgRfW"
-      ],
-      "name": "Rocky - Transformation",
-      "settings": {
-        "headline_p1": "",
-        "headline_acc": "",
-        "headline_p2": "",
-        "subheadline": "",
-        "headline_color": "#111111",
-        "accent_color": "#FFFFFF",
-        "subheadline_color": "#6b7280",
-        "number_color": "#FFFFFF",
-        "number_bg": "#FFFFFF",
-        "step_title_color": "#111111",
-        "step_desc_color": "#6b7280",
-        "line_color": "#e5e7eb",
-        "bg_color": "#f9fafb",
-        "card_bg": "#ffffff",
-        "card_border": "#e5e7eb",
-        "image_size_mobile": 160,
-        "image_size_desktop": 160,
-        "image_radius": 12,
-        "icon_size": 24,
-        "headline_size_mobile": 26,
-        "headline_size_desktop": 38,
-        "padding_mobile": 24,
-        "padding_desktop": 40
+        "visibility": "always-display",
+        "shape": "waves_1",
+        "flip_horizontal": false,
+        "flip_vertical": true,
+        "shape_color": "custom",
+        "custom_shape_color": "#d5f7ff",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "multicolumn_AqXcgX": {
@@ -1517,8 +1407,7 @@
     "section_divider_XeNhA8",
     "rocky_transformation_DAtJU8",
     "section_divider_xwTHTM",
-    "rocky_transformation_QQXf9K",
-    "rocky_transformation_GEHNtC",
+    "section_divider_f4Kqw7",
     "multicolumn_AqXcgX",
     "section_divider_bcCWBh",
     "image_with_text_PCDA6T",
