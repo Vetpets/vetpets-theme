@@ -50,11 +50,66 @@
             "margin_bottom": 15
           }
         },
-        "description": {
-          "type": "description",
+        "text_GUPPTb": {
+          "type": "text",
           "settings": {
-            "margin_top": 24,
-            "margin_bottom": 24
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "text_color": "#121212",
+            "text_1": "Lifts mud, grit, and buildup from between the pads",
+            "text_2": "Helps remove the bacteria and residue behind paw odor",
+            "text_3": "Leaves paws soft and moisturized, not stripped",
+            "icon_scale": 120,
+            "icon_color": "#47B5E9",
+            "icon_1": "pets",
+            "filled_icon_1": false,
+            "icon_2": "pets",
+            "filled_icon_2": false,
+            "icon_3": "pets",
+            "filled_icon_3": false,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 3,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 9,
+            "margin_bottom": 0
+          }
+        },
+        "text_hAjT7x": {
+          "type": "text",
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "text_color": "#121212",
+            "text_1": "Safe for daily use on dogs and cats — no rinse needed",
+            "text_2": "",
+            "text_3": "",
+            "icon_scale": 120,
+            "icon_color": "#47B5E9",
+            "icon_1": "pets",
+            "filled_icon_1": false,
+            "icon_2": "check_circle",
+            "filled_icon_2": false,
+            "icon_3": "check_circle",
+            "filled_icon_3": false,
+            "width": "100%",
+            "direction": "horizontal",
+            "column_gap": 3,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 15,
+            "margin_bottom": 15
           }
         },
         "price": {
@@ -211,6 +266,12 @@
             "margin_bottom": 15
           }
         },
+        "custom_liquid_tdTfb6": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<!-- Snippet: stock-status.liquid -->\n<div class=\"stock-status-wrapper\">\n  <span class=\"stock-status-dot\"></span>\n  <span class=\"stock-status-text\">Low stock due to Black Month Sale</span>\n</div>\n\n<style>\n  .stock-status-wrapper {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n  }\n\n  .stock-status-dot {\n    width: 14px;\n    height: 14px;\n    background-color: #ff9900;\n    border-radius: 50%;\n    animation: stockPulse 1.5s ease-in-out infinite;\n    display: inline-block;\n  }\n\n  .stock-status-text {\n    color: #ff9900;\n    font-weight: 700;\n    font-size: 14px;\n  }\n\n  @keyframes stockPulse {\n    0% { transform: scale(1); opacity: 1; }\n    50% { transform: scale(1.3); opacity: 0.7; }\n    100% { transform: scale(1); opacity: 1; }\n  }\n</style>"
+          }
+        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
@@ -229,12 +290,6 @@
             "secondary_btn_custom_color": "#dd1d1d",
             "margin_top": 24,
             "margin_bottom": 24
-          }
-        },
-        "custom_liquid_tdTfb6": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "<!-- Snippet: stock-status.liquid -->\n<div class=\"stock-status-wrapper\">\n  <span class=\"stock-status-dot\"></span>\n  <span class=\"stock-status-text\">Low stock due to Black Month Sale</span>\n</div>\n\n<style>\n  .stock-status-wrapper {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n  }\n\n  .stock-status-dot {\n    width: 14px;\n    height: 14px;\n    background-color: #ff9900;\n    border-radius: 50%;\n    animation: stockPulse 1.5s ease-in-out infinite;\n    display: inline-block;\n  }\n\n  .stock-status-text {\n    color: #ff9900;\n    font-weight: 700;\n    font-size: 14px;\n  }\n\n  @keyframes stockPulse {\n    0% { transform: scale(1); opacity: 1; }\n    50% { transform: scale(1.3); opacity: 0.7; }\n    100% { transform: scale(1); opacity: 1; }\n  }\n</style>"
           }
         },
         "payment_badges_XtWzKz": {
@@ -394,13 +449,14 @@
         "a6eb81db-40e4-43e0-972f-32db010a4a56",
         "title",
         "divider_7ENJn3",
-        "description",
+        "text_GUPPTb",
+        "text_hAjT7x",
         "price",
         "5fcc0428-e768-4cb7-bea3-eb0274198dd1",
         "04ba004e-2f54-4936-8b1c-8bcadf6573f6",
         "inventory_TFawNK",
-        "buy_buttons",
         "custom_liquid_tdTfb6",
+        "buy_buttons",
         "payment_badges_XtWzKz",
         "custom_liquid_hTmdHC",
         "custom_liquid_bgawBg",
@@ -1039,7 +1095,7 @@
       "settings": {
         "display_id": false,
         "visibility": "always-display",
-        "image": "shopify://shop_images/hf_20260807_071440_60920823-1351-4757-863f-ea771af0122d.png",
+        "image": "shopify://shop_images/hf_20260807_090137_f9cf9a62-562d-4f2d-a44d-7ced80ca3810.png",
         "video_autoplay": true,
         "video_loop": true,
         "height": "adapt",
