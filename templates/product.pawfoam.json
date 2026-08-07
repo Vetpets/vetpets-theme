@@ -952,113 +952,6 @@
         "padding_bottom": 0
       }
     },
-    "testimonials_A3d8yL": {
-      "type": "testimonials",
-      "blocks": {
-        "column_ewA3bM": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "The scratching finally stopped",
-            "text": "<p>My Golden has been digging at his ears for MONTHS. Like every few minutes, constantly. I tried wiping them with wet paper towels, bought those expensive ear drops from the pet store - he hated those and would literally hide under the bed when he saw me coming. Started using these wipes about 2 weeks ago and the scratching is almost completely gone. The smell disappeared too which is honestly the best part because his face used to reek. He just sits there now, doesn't even try to pull away.</p>",
-            "author": "Emily R., 47 | Golden Retriever owner - 2025-09-14"
-          }
-        },
-        "column_NQ3cek": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "Haven't been to the vet in 5 months",
-            "text": "<p>My Cocker gets ear infections constantly. Like clockwork every 2-3 months. Every single time it's $250+ at the vet, antibiotics, the whole thing. I was getting desperate honestly. Started cleaning his ears with these twice a week after his groomer recommended them. It's been 5 months and NO infections. My vet actually commented on how good his ears looked at his last checkup. I'm not even kidding when I say these have saved me probably $500 this year alone.</p>",
-            "author": "Michael T., 52 | Cocker Spaniel owner - 2025-08-22"
-          }
-        },
-        "column_dYBUCU": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "Game changer for my water-obsessed Lab",
-            "text": "<p>My Lab is obsessed with water. Pool, lake, doesn't matter - he's in it. But then his ears would get this gross yeasty smell within like 2 days. I was using those liquid ear cleaners and it was a whole wrestling match every time. Total nightmare. These wipes are so much easier - I just do it right after he swims while he's still tired. Takes maybe a minute for both ears. The smell doesn't come back anymore and his ears stay dry. Honestly wish I'd found these years ago.</p>",
-            "author": "Sarah K., 39 | Labrador owner - 2025-10-05"
-          }
-        },
-        "column_jMPBCd": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "First thing that doesn't make her ears worse",
-            "text": "<p>My Poodle's ears are SO sensitive. Everything I tried made them red and angry looking. Even the \"gentle\" stuff from the vet. She'd shake her head for hours after. These don't seem to bother her at all. I can actually see the brown gunk on the wipe when I'm done which is kinda gross but also you know it's actually working? Her ears are finally that healthy pink color instead of inflamed. I use them maybe 3 times a week and it keeps everything under control.</p>",
-            "author": "Linda M., 61 | Poodle owner - 2025-07-18"
-          }
-        },
-        "column_xD3bEU": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "Rescue with chronic ear issues - finally under control",
-            "text": "<p>Adopted a Beagle from the shelter who had really bad ear problems. They told me it would probably be an ongoing thing, just part of having a Beagle. Started cleaning her ears with these right away, just a couple times a week. Six months later and we haven't had a single infection. Not one. The vet was honestly surprised because apparently her breed is prone to it. Super easy to use and she doesn't fight me on it. Way better than dealing with vet visits every other month.</p>",
-            "author": "James W., 44 | Beagle owner - 2025-11-29"
-          }
-        }
-      },
-      "block_order": [
-        "column_ewA3bM",
-        "column_NQ3cek",
-        "column_dYBUCU",
-        "column_jMPBCd",
-        "column_xD3bEU"
-      ],
-      "disabled": true,
-      "name": "Testimonials",
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "title": "Verified Reviews",
-        "title_highlight_color": "#6d388b",
-        "heading_size": "h1",
-        "text": "<p><strong>45,000+ dog owners</strong> are keeping ears clean without the stress</p>",
-        "color_scheme": "background-1",
-        "image_width": "full",
-        "image_ratio": "square",
-        "column_alignment": "center",
-        "show_stars": true,
-        "inactive_stars_style": "solid",
-        "star_color": "#ffcc00",
-        "bg_star_color": "#ececec",
-        "show_quotes": true,
-        "quotes_color_scheme": "accent-1",
-        "cards_color_scheme": "bg-overlay",
-        "type": "loop",
-        "autoplay": true,
-        "autoplay_speed": 9.5,
-        "arrows_color_scheme": "inverse",
-        "transparent_arrows": true,
-        "dots_color_scheme": "inverse",
-        "desktop_full_page": true,
-        "columns_desktop": 5,
-        "slider_desktop": false,
-        "per_move_desktop": 1,
-        "desktop_spacing": 40,
-        "desktop_side_padding": 0,
-        "desktop_padding_calc": true,
-        "desktop_adaptive_height": false,
-        "desktop_dots_position": "under",
-        "desktop_arrows_position": "sides",
-        "slider_mobile": true,
-        "enable_mobile_preview": false,
-        "mobile_adaptive_height": false,
-        "mobile_dots_position": "under",
-        "mobile_arrows_position": "under",
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "custom_colors_background": "#ffffff",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#2e2a39",
-        "custom_cards_colors_background": "#f3f3f3",
-        "custom_cards_gradient_background": "",
-        "custom_cards_colors_text": "#2e2a39"
-      }
-    },
     "image_with_text_PCDA6T": {
       "type": "image-with-text",
       "blocks": {
@@ -1272,6 +1165,113 @@
         "padding_bottom": 0
       }
     },
+    "testimonials_A3d8yL": {
+      "type": "testimonials",
+      "blocks": {
+        "column_ewA3bM": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "The scratching finally stopped",
+            "text": "<p>My Golden has been digging at his ears for MONTHS. Like every few minutes, constantly. I tried wiping them with wet paper towels, bought those expensive ear drops from the pet store - he hated those and would literally hide under the bed when he saw me coming. Started using these wipes about 2 weeks ago and the scratching is almost completely gone. The smell disappeared too which is honestly the best part because his face used to reek. He just sits there now, doesn't even try to pull away.</p>",
+            "author": "Emily R., 47 | Golden Retriever owner - 2025-09-14"
+          }
+        },
+        "column_NQ3cek": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Haven't been to the vet in 5 months",
+            "text": "<p>My Cocker gets ear infections constantly. Like clockwork every 2-3 months. Every single time it's $250+ at the vet, antibiotics, the whole thing. I was getting desperate honestly. Started cleaning his ears with these twice a week after his groomer recommended them. It's been 5 months and NO infections. My vet actually commented on how good his ears looked at his last checkup. I'm not even kidding when I say these have saved me probably $500 this year alone.</p>",
+            "author": "Michael T., 52 | Cocker Spaniel owner - 2025-08-22"
+          }
+        },
+        "column_dYBUCU": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Game changer for my water-obsessed Lab",
+            "text": "<p>My Lab is obsessed with water. Pool, lake, doesn't matter - he's in it. But then his ears would get this gross yeasty smell within like 2 days. I was using those liquid ear cleaners and it was a whole wrestling match every time. Total nightmare. These wipes are so much easier - I just do it right after he swims while he's still tired. Takes maybe a minute for both ears. The smell doesn't come back anymore and his ears stay dry. Honestly wish I'd found these years ago.</p>",
+            "author": "Sarah K., 39 | Labrador owner - 2025-10-05"
+          }
+        },
+        "column_jMPBCd": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "First thing that doesn't make her ears worse",
+            "text": "<p>My Poodle's ears are SO sensitive. Everything I tried made them red and angry looking. Even the \"gentle\" stuff from the vet. She'd shake her head for hours after. These don't seem to bother her at all. I can actually see the brown gunk on the wipe when I'm done which is kinda gross but also you know it's actually working? Her ears are finally that healthy pink color instead of inflamed. I use them maybe 3 times a week and it keeps everything under control.</p>",
+            "author": "Linda M., 61 | Poodle owner - 2025-07-18"
+          }
+        },
+        "column_xD3bEU": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Rescue with chronic ear issues - finally under control",
+            "text": "<p>Adopted a Beagle from the shelter who had really bad ear problems. They told me it would probably be an ongoing thing, just part of having a Beagle. Started cleaning her ears with these right away, just a couple times a week. Six months later and we haven't had a single infection. Not one. The vet was honestly surprised because apparently her breed is prone to it. Super easy to use and she doesn't fight me on it. Way better than dealing with vet visits every other month.</p>",
+            "author": "James W., 44 | Beagle owner - 2025-11-29"
+          }
+        }
+      },
+      "block_order": [
+        "column_ewA3bM",
+        "column_NQ3cek",
+        "column_dYBUCU",
+        "column_jMPBCd",
+        "column_xD3bEU"
+      ],
+      "disabled": true,
+      "name": "Testimonials",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Verified Reviews",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "text": "<p><strong>45,000+ dog owners</strong> are keeping ears clean without the stress</p>",
+        "color_scheme": "background-1",
+        "image_width": "full",
+        "image_ratio": "square",
+        "column_alignment": "center",
+        "show_stars": true,
+        "inactive_stars_style": "solid",
+        "star_color": "#ffcc00",
+        "bg_star_color": "#ececec",
+        "show_quotes": true,
+        "quotes_color_scheme": "accent-1",
+        "cards_color_scheme": "bg-overlay",
+        "type": "loop",
+        "autoplay": true,
+        "autoplay_speed": 9.5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_full_page": true,
+        "columns_desktop": 5,
+        "slider_desktop": false,
+        "per_move_desktop": 1,
+        "desktop_spacing": 40,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "sides",
+        "slider_mobile": true,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "under",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_text": "#2e2a39"
+      }
+    },
     "related-products": {
       "type": "related-products",
       "disabled": true,
@@ -1393,11 +1393,11 @@
     "section_divider_xwTHTM",
     "multicolumn_AqXcgX",
     "section_divider_bcCWBh",
-    "testimonials_A3d8yL",
     "image_with_text_PCDA6T",
     "section_divider_nDdCcC",
     "comparison_table_KERHmh",
     "section_divider_NCVFG6",
+    "testimonials_A3d8yL",
     "related-products",
     "icon_bar_FXDFLd",
     "1762748258f247e3fb"
