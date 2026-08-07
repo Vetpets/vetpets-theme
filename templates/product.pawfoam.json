@@ -988,20 +988,11 @@
             "text": "<p><strong>Lauryl Glucoside</strong> — a gentle, plant-derived cleanser that lifts dirt without stripping the skin.<br/><strong>PEG-7 Glyceryl Cocoate </strong>— a mild coconut-derived cleansing agent.<br/><strong>PEG-6 Caprylic/Capric Glycerides</strong> — helps the formula rinse-free and non-greasy.<br/><strong>Glycerin </strong>— draws in moisture to help prevent dryness.<br/><strong>Amino Acid Humectan</strong>t — helps the skin retain moisture after cleansing.<br/><strong>Witch Hazel Extract </strong>— a soothing plant extract.<br/><strong>Cucumber Extract</strong> — a soothing, hydrating plant extract.<br/><strong>Benzalkonium Chloride </strong>— included at a low concentration to help keep the formula clean and support hygienic use.<br/><strong>Phenoxyethanol </strong>— a preservative that keeps the formula stable over time.<br/><strong>EDI Purified Water</strong> — the base of the formula.</p>",
             "text_style": "body"
           }
-        },
-        "caption_K46G9c": {
-          "type": "caption",
-          "settings": {
-            "caption": "For pet use only. External use only. Avoid contact with eyes. Keep out of reach of children. Discontinue use and consult a veterinarian if irritation occurs.",
-            "text_style": "caption-with-letter-spacing",
-            "text_size": "medium"
-          }
         }
       },
       "block_order": [
         "heading_b8M8fn",
-        "text_JVGtNh",
-        "caption_K46G9c"
+        "text_JVGtNh"
       ],
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
