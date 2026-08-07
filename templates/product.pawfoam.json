@@ -114,6 +114,7 @@
         },
         "price": {
           "type": "price",
+          "disabled": true,
           "settings": {
             "layout": "price_first",
             "price_color": "accent-1",
@@ -273,12 +274,6 @@
             "custom_liquid": "<!-- Snippet: stock-status.liquid -->\n<div class=\"stock-status-wrapper\">\n  <span class=\"stock-status-dot\"></span>\n  <span class=\"stock-status-text\">Low stock due to Black Month Sale</span>\n</div>\n\n<style>\n  .stock-status-wrapper {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n  }\n\n  .stock-status-dot {\n    width: 14px;\n    height: 14px;\n    background-color: #ff9900;\n    border-radius: 50%;\n    animation: stockPulse 1.5s ease-in-out infinite;\n    display: inline-block;\n  }\n\n  .stock-status-text {\n    color: #ff9900;\n    font-weight: 700;\n    font-size: 14px;\n  }\n\n  @keyframes stockPulse {\n    0% { transform: scale(1); opacity: 1; }\n    50% { transform: scale(1.3); opacity: 0.7; }\n    100% { transform: scale(1); opacity: 1; }\n  }\n</style>"
           }
         },
-        "custom_liquid_bgawBg": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <style>\n    .custom-shipping-container {\n      display: flex;\n      padding: 6px 16px;\n      justify-content: space-between;\n      align-items: center;\n      background-color: #f6f6f6;\n      border-radius: 20px;\n      margin-top: 10px;\n    }\n\n    .custom-shipping-item {\n      display: flex;\n      align-items: center;\n      gap: 6px;\n    }\n\n    .text-block-shipping {\n      font-size: 12px;\n      color: #000;\n    }\n\n    .shipping-date {\n      font-weight: bold;\n    }\n\n    .shipping-worldwide {\n      font-size: 12px;\n      color: #000;\n    }\n\n    .shipping-worldwide .bold {\n      font-weight: bold;\n    }\n\n    .green-circle {\n      animation: fade 1s ease-in-out infinite;\n    }\n\n    @keyframes fade {\n      0%, 100% { opacity: 1; }\n      50% { opacity: 0.5; }\n    }\n\n    .flags-container {\n      display: flex;\n      gap: 6px;\n      align-items: center;\n    }\n    \n    .custom-icon {\n      width: 16px;\n      height: 12px;\n    }\n  </style>\n  <script>\n    document.addEventListener(\"DOMContentLoaded\", function() {\n      function getNextWeekday(date) {\n        var day = date.getDay();\n        var daysToAdd = (day === 5) ? 3 : (day === 6) ? 2 : 1;\n        return new Date(date.setDate(date.getDate() + daysToAdd));\n      }\n\n      var today = new Date();\n      var shipDate = getNextWeekday(today);\n      \n      // Format date to have short month (e.g., \"Thu, Feb 22\")\n      var options = { weekday: 'short', month: 'short', day: 'numeric' };\n      var formattedDate = shipDate.toLocaleDateString('en-US', options);\n      document.getElementById('shipping-date').textContent = formattedDate;\n\n      // Fetch country data using GeoJS API\n      fetch('https://get.geojs.io/v1/ip/geo.json')\n        .then(response => response.json())\n        .then(data => {\n          console.log(\"Geolocation API Response:\", data); // Debugging log\n\n          if (!data || !data.country_code) {\n            throw new Error(\"Invalid data from API\");\n          }\n          \n          var countryCode = data.country_code.toUpperCase(); // Get country code (e.g., \"GB\", \"US\")\n          var flagUrl = `https://flagcdn.com/w40/${countryCode.toLowerCase()}.png`;\n\n          // Set flag and country code\n          document.getElementById('country-flag').src = flagUrl;\n          document.getElementById('country-flag').alt = countryCode + \" Flag\";\n          document.getElementById('country-flag').style.display = \"inline\";\n          document.getElementById('country-text').innerHTML = `Free <span class=\"bold\">${countryCode}</span> Shipping`;\n        })\n        .catch(error => {\n          console.error('Error fetching the IP information:', error);\n          document.getElementById('country-flag').style.display = \"none\"; \n          document.getElementById('country-text').innerHTML = \"Fast Worldwide Shipping\";\n        });\n    });\n  </script>\n</head>\n<body>\n  <div class=\"custom-shipping-container\">\n    <div class=\"custom-shipping-item\">\n      <svg class=\"green-circle\" xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"13\" viewBox=\"0 0 12 13\" fill=\"none\">\n        <circle cx=\"6\" cy=\"6.5\" r=\"6\" fill=\"#137333\"/>\n      </svg>\n      <div class=\"text-block-shipping\">Ships by <span id=\"shipping-date\" class=\"shipping-date\"></span></div>\n    </div>\n    <div class=\"custom-shipping-item flags-container\">\n      <img id=\"country-flag\" class=\"custom-icon\" src=\"\" alt=\"Country Flag\" style=\"display: none;\">\n      <div id=\"country-text\" class=\"shipping-worldwide\">Loading...</div>\n    </div>\n  </div>\n</body>\n</html>"
-          }
-        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
@@ -297,6 +292,12 @@
             "secondary_btn_custom_color": "#dd1d1d",
             "margin_top": 24,
             "margin_bottom": 24
+          }
+        },
+        "custom_liquid_bgawBg": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <style>\n    .custom-shipping-container {\n      display: flex;\n      padding: 6px 16px;\n      justify-content: space-between;\n      align-items: center;\n      background-color: #f6f6f6;\n      border-radius: 20px;\n      margin-top: 10px;\n    }\n\n    .custom-shipping-item {\n      display: flex;\n      align-items: center;\n      gap: 6px;\n    }\n\n    .text-block-shipping {\n      font-size: 12px;\n      color: #000;\n    }\n\n    .shipping-date {\n      font-weight: bold;\n    }\n\n    .shipping-worldwide {\n      font-size: 12px;\n      color: #000;\n    }\n\n    .shipping-worldwide .bold {\n      font-weight: bold;\n    }\n\n    .green-circle {\n      animation: fade 1s ease-in-out infinite;\n    }\n\n    @keyframes fade {\n      0%, 100% { opacity: 1; }\n      50% { opacity: 0.5; }\n    }\n\n    .flags-container {\n      display: flex;\n      gap: 6px;\n      align-items: center;\n    }\n    \n    .custom-icon {\n      width: 16px;\n      height: 12px;\n    }\n  </style>\n  <script>\n    document.addEventListener(\"DOMContentLoaded\", function() {\n      function getNextWeekday(date) {\n        var day = date.getDay();\n        var daysToAdd = (day === 5) ? 3 : (day === 6) ? 2 : 1;\n        return new Date(date.setDate(date.getDate() + daysToAdd));\n      }\n\n      var today = new Date();\n      var shipDate = getNextWeekday(today);\n      \n      // Format date to have short month (e.g., \"Thu, Feb 22\")\n      var options = { weekday: 'short', month: 'short', day: 'numeric' };\n      var formattedDate = shipDate.toLocaleDateString('en-US', options);\n      document.getElementById('shipping-date').textContent = formattedDate;\n\n      // Fetch country data using GeoJS API\n      fetch('https://get.geojs.io/v1/ip/geo.json')\n        .then(response => response.json())\n        .then(data => {\n          console.log(\"Geolocation API Response:\", data); // Debugging log\n\n          if (!data || !data.country_code) {\n            throw new Error(\"Invalid data from API\");\n          }\n          \n          var countryCode = data.country_code.toUpperCase(); // Get country code (e.g., \"GB\", \"US\")\n          var flagUrl = `https://flagcdn.com/w40/${countryCode.toLowerCase()}.png`;\n\n          // Set flag and country code\n          document.getElementById('country-flag').src = flagUrl;\n          document.getElementById('country-flag').alt = countryCode + \" Flag\";\n          document.getElementById('country-flag').style.display = \"inline\";\n          document.getElementById('country-text').innerHTML = `Free <span class=\"bold\">${countryCode}</span> Shipping`;\n        })\n        .catch(error => {\n          console.error('Error fetching the IP information:', error);\n          document.getElementById('country-flag').style.display = \"none\"; \n          document.getElementById('country-text').innerHTML = \"Fast Worldwide Shipping\";\n        });\n    });\n  </script>\n</head>\n<body>\n  <div class=\"custom-shipping-container\">\n    <div class=\"custom-shipping-item\">\n      <svg class=\"green-circle\" xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"13\" viewBox=\"0 0 12 13\" fill=\"none\">\n        <circle cx=\"6\" cy=\"6.5\" r=\"6\" fill=\"#137333\"/>\n      </svg>\n      <div class=\"text-block-shipping\">Ships by <span id=\"shipping-date\" class=\"shipping-date\"></span></div>\n    </div>\n    <div class=\"custom-shipping-item flags-container\">\n      <img id=\"country-flag\" class=\"custom-icon\" src=\"\" alt=\"Country Flag\" style=\"display: none;\">\n      <div id=\"country-text\" class=\"shipping-worldwide\">Loading...</div>\n    </div>\n  </div>\n</body>\n</html>"
           }
         },
         "payment_badges_XtWzKz": {
@@ -457,8 +458,8 @@
         "04ba004e-2f54-4936-8b1c-8bcadf6573f6",
         "inventory_TFawNK",
         "custom_liquid_tdTfb6",
-        "custom_liquid_bgawBg",
         "buy_buttons",
+        "custom_liquid_bgawBg",
         "payment_badges_XtWzKz",
         "custom_liquid_hTmdHC",
         "e7a28cbe-03cb-4c9d-a2c4-0e3e76ffb3e5",
@@ -954,7 +955,7 @@
         "mobile_arrows_position": "under",
         "padding_top": 36,
         "padding_bottom": 36,
-        "custom_colors_background": "#FFFFFF",
+        "custom_colors_background": "#ffffff",
         "custom_gradient_background": "",
         "custom_colors_text": "#2e2a39",
         "custom_colors_solid_button_background": "#13b6b5",
@@ -1038,7 +1039,7 @@
         "mobile_padding_bottom": 16,
         "desktop_padding_top": 36,
         "desktop_padding_bottom": 36,
-        "custom_colors_background": "#FFFFFF",
+        "custom_colors_background": "#ffffff",
         "custom_gradient_background": "",
         "custom_colors_text": "#2e2a39",
         "custom_colors_solid_button_background": "#dd1d1d",
@@ -1273,7 +1274,7 @@
         "visibility": "always-display",
         "caption": "",
         "title": "Frequently Asked Questions",
-        "title_highlight_color": "#6D388B",
+        "title_highlight_color": "#6d388b",
         "heading_size": "h1",
         "heading_alignment": "center",
         "layout": "row",
@@ -1288,10 +1289,10 @@
         "display_top_border": true,
         "padding_top": 0,
         "padding_bottom": 0,
-        "custom_colors_background": "#FFFFFF",
+        "custom_colors_background": "#ffffff",
         "custom_gradient_background": "",
-        "custom_colors_text": "#2E2A39",
-        "custom_contaner_colors_background": "#47B5E9",
+        "custom_colors_text": "#2e2a39",
+        "custom_contaner_colors_background": "#47b5e9",
         "custom_container_gradient_background": "",
         "custom_contaner_colors_text": "#111111"
       }
@@ -1307,7 +1308,7 @@
         "shape_color": "background-2",
         "custom_shape_color": "#dd1d1d",
         "background_color": "background-1",
-        "custom_background_color": "#FFFFFF",
+        "custom_background_color": "#ffffff",
         "padding_top": 0,
         "padding_bottom": 0
       }
