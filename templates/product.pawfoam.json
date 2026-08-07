@@ -1188,20 +1188,20 @@
         "collapsible_row_TzFLDL": {
           "type": "collapsible_row",
           "settings": {
-            "heading": "Collapsible row",
+            "heading": "Is PawFoam safe for cats?",
             "icon": "",
             "filled_icon": false,
-            "row_content": "",
+            "row_content": "<p>Yes. PawFoam is formulated for both dogs and cats.</p><p></p>",
             "page": ""
           }
         },
         "collapsible_row_K3RDVf": {
           "type": "collapsible_row",
           "settings": {
-            "heading": "Collapsible row",
+            "heading": "Do I need to rinse it off?",
             "icon": "",
             "filled_icon": false,
-            "row_content": "",
+            "row_content": "<p>No. Wipe away with a towel after scrubbing — no rinsing required.</p><p></p>",
             "page": ""
           }
         },
