@@ -576,6 +576,7 @@
         "image_slide_pBGtCV",
         "image_slide_Pc94Pp"
       ],
+      "disabled": true,
       "name": "Image/Video Slider",
       "settings": {
         "display_id": false,
@@ -625,7 +626,7 @@
         "visibility": "always-display",
         "shape": "waves_2",
         "flip_horizontal": false,
-        "flip_vertical": false,
+        "flip_vertical": true,
         "shape_color": "custom",
         "custom_shape_color": "#d5f7ff",
         "background_color": "background-1",
@@ -983,6 +984,7 @@
         "column_jMPBCd",
         "column_xD3bEU"
       ],
+      "disabled": true,
       "name": "Testimonials",
       "settings": {
         "display_id": false,
@@ -1039,7 +1041,7 @@
         "heading_b8M8fn": {
           "type": "heading",
           "settings": {
-            "title": "Gentle care for <strong>sensitive ears</strong>",
+            "title": "What's Actually<strong> in the Bottle</strong>",
             "title_highlight_color": "#47b5e9",
             "heading_size": "h1"
           }
@@ -1047,7 +1049,7 @@
         "text_JVGtNh": {
           "type": "text",
           "settings": {
-            "text": "<p>EarWipes are developed with your dog's sensitive ears in focus.</p><p>The formula is free from harsh chemicals and developed to be safe to use regularly.</p><p>Each wipe is pH-balanced and gentle, while effectively removing wax, dirt and bacteria.</p><p><strong>Naturally caring ingredients:</strong></p><ul><li><strong>Corn extract</strong> – mild & natural cleaning that keeps ears fresh.</li><li><strong>Rosemary extract</strong> – cleansing & antibacterial power from nature.</li><li><strong>Witch hazel</strong> – soothes irritation and reduces itching.</li></ul><p>Together they provide a cleaning that both prevents and cares – so your dog avoids discomfort and you don't have to worry about infections.</p>",
+            "text": "<p>No mystery formula. Here's every ingredient and what it does.<strong>Lauryl Glucoside</strong>— gentle plant-derived cleanser.<strong>Glycerin</strong>— draws in moisture, prevents dryness.<strong>Witch Hazel Extract</strong>— soothing plant extract.<br/><br/></p>",
             "text_style": "body"
           }
         }
@@ -1060,17 +1062,17 @@
       "settings": {
         "display_id": false,
         "visibility": "always-display",
-        "image": "shopify://shop_images/Engelska_13.jpg",
+        "image": "shopify://shop_images/hf_20260807_071440_60920823-1351-4757-863f-ea771af0122d.png",
         "video_autoplay": true,
         "video_loop": true,
         "height": "adapt",
-        "color_scheme": "background-1",
-        "section_color_scheme": "background-1",
+        "color_scheme": "background-2",
+        "section_color_scheme": "background-2",
         "full_desktop_width": false,
         "content_layout": "no-overlap",
         "desktop_media_width": 50,
         "layout": "image_first",
-        "desktop_content_position": "top",
+        "desktop_content_position": "middle",
         "desktop_content_alignment": "left",
         "mobile_full_media_width": false,
         "mobile_direction": "normal",
@@ -1088,6 +1090,290 @@
         "custom_colors_outline_button": "#dd1d1d",
         "custom_section_colors_background": "#d5f7ff",
         "custom_section_gradient_background": ""
+      }
+    },
+    "ss_feature_34_hb8P7f": {
+      "type": "ss-feature-34",
+      "blocks": {
+        "logo_knD3LG": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/hf_20260807_071440_60920823-1351-4757-863f-ea771af0122d.png",
+            "logo_width": 90,
+            "logo_width_mobile": 90,
+            "logo_radius": 48,
+            "logo_border_thickness": 0,
+            "logo_mt": 0,
+            "logo_mt_mobile": 0,
+            "logo_border_color": "#121212"
+          }
+        },
+        "heading_iyitLH": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>What's Actually in the Bottle<br/><br/></p>",
+            "heading_custom": false,
+            "heading_font": "josefin_sans_n4",
+            "heading_size": 48,
+            "heading_size_mobile": 32,
+            "heading_height": 130,
+            "heading_mt": 0,
+            "heading_mt_mobile": 0,
+            "heading_width": 70,
+            "heading_color": "#121212"
+          }
+        },
+        "text_XDiEfm": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Use this text to share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+            "text_custom": false,
+            "text_font": "josefin_sans_n4",
+            "text_size": 16,
+            "text_size_mobile": 16,
+            "text_height": 150,
+            "text_mt": 16,
+            "text_mt_mobile": 16,
+            "text_width": 70,
+            "text_color": "#121212"
+          }
+        },
+        "feature_aRwNm4": {
+          "type": "feature",
+          "settings": {
+            "icon": "plant",
+            "title": "Lauryl Glucoside",
+            "feature_text": "<p>A gentle, plant-derived cleanser that lifts dirt without stripping the skin.</p>",
+            "feature_icon_color": "#121212",
+            "feature_icon_hover_color": "#121212",
+            "feature_icon_bg_color": "#13B6B5",
+            "feature_icon_bg_hover_color": "#FFFFFF",
+            "feature_icon_border_color": "#121212",
+            "feature_icon_border_hover_color": "#121212"
+          }
+        },
+        "feature_TTtLcH": {
+          "type": "feature",
+          "settings": {
+            "icon": "plant",
+            "title": "PEG-7 Glyceryl Cocoate",
+            "feature_text": "<p>A mild coconut-derived cleansing agent.</p>",
+            "feature_icon_color": "#121212",
+            "feature_icon_hover_color": "#121212",
+            "feature_icon_bg_color": "#13B6B5",
+            "feature_icon_bg_hover_color": "#FFFFFF",
+            "feature_icon_border_color": "#121212",
+            "feature_icon_border_hover_color": "#121212"
+          }
+        },
+        "feature_nPGXih": {
+          "type": "feature",
+          "settings": {
+            "icon": "plant",
+            "title": "PEG-6 Caprylic/Capric Glycerides",
+            "feature_text": "<p>Helps the formula stay rinse-free and non-greasy.</p>",
+            "feature_icon_color": "#121212",
+            "feature_icon_hover_color": "#121212",
+            "feature_icon_bg_color": "#13B6B5",
+            "feature_icon_bg_hover_color": "#FFFFFF",
+            "feature_icon_border_color": "#121212",
+            "feature_icon_border_hover_color": "#121212"
+          }
+        },
+        "feature_DXtdWz": {
+          "type": "feature",
+          "settings": {
+            "icon": "plant",
+            "title": "Glycerin",
+            "feature_text": "<p>Draws in moisture to help prevent dryness.</p>",
+            "feature_icon_color": "#121212",
+            "feature_icon_hover_color": "#121212",
+            "feature_icon_bg_color": "#13B6B5",
+            "feature_icon_bg_hover_color": "#FFFFFF",
+            "feature_icon_border_color": "#121212",
+            "feature_icon_border_hover_color": "#121212"
+          }
+        },
+        "feature_ytUcpP": {
+          "type": "feature",
+          "settings": {
+            "icon": "mobile",
+            "title": "Key feature",
+            "feature_text": "<p>Describe a key feature in detail.</p>",
+            "feature_icon_color": "#121212",
+            "feature_icon_hover_color": "#121212",
+            "feature_icon_bg_color": "#c9d6ab",
+            "feature_icon_bg_hover_color": "#FFFFFF",
+            "feature_icon_border_color": "#121212",
+            "feature_icon_border_hover_color": "#121212"
+          }
+        },
+        "feature_Cg8zFq": {
+          "type": "feature",
+          "settings": {
+            "icon": "shield",
+            "title": "Key feature",
+            "feature_text": "<p>Describe a key feature in detail.</p>",
+            "feature_icon_color": "#121212",
+            "feature_icon_hover_color": "#121212",
+            "feature_icon_bg_color": "#ffec66",
+            "feature_icon_bg_hover_color": "#FFFFFF",
+            "feature_icon_border_color": "#121212",
+            "feature_icon_border_hover_color": "#121212"
+          }
+        },
+        "feature_L4TH6w": {
+          "type": "feature",
+          "settings": {
+            "icon": "atc",
+            "title": "Key feature",
+            "feature_text": "<p>Describe a key feature in detail.</p>",
+            "feature_icon_color": "#121212",
+            "feature_icon_hover_color": "#121212",
+            "feature_icon_bg_color": "#edad93",
+            "feature_icon_bg_hover_color": "#FFFFFF",
+            "feature_icon_border_color": "#121212",
+            "feature_icon_border_hover_color": "#121212"
+          }
+        },
+        "feature_FkGfMW": {
+          "type": "feature",
+          "settings": {
+            "icon": "atc",
+            "title": "Key feature",
+            "feature_text": "<p>Describe a key feature in detail.</p>",
+            "feature_icon_color": "#121212",
+            "feature_icon_hover_color": "#121212",
+            "feature_icon_bg_color": "#edad93",
+            "feature_icon_bg_hover_color": "#FFFFFF",
+            "feature_icon_border_color": "#121212",
+            "feature_icon_border_hover_color": "#121212"
+          }
+        },
+        "feature_PKNb44": {
+          "type": "feature",
+          "settings": {
+            "icon": "atc",
+            "title": "Key feature",
+            "feature_text": "<p>Describe a key feature in detail.</p>",
+            "feature_icon_color": "#121212",
+            "feature_icon_hover_color": "#121212",
+            "feature_icon_bg_color": "#edad93",
+            "feature_icon_bg_hover_color": "#FFFFFF",
+            "feature_icon_border_color": "#121212",
+            "feature_icon_border_hover_color": "#121212"
+          }
+        },
+        "feature_wWf6Ld": {
+          "type": "feature",
+          "settings": {
+            "icon": "atc",
+            "title": "Key feature",
+            "feature_text": "<p>Describe a key feature in detail.</p>",
+            "feature_icon_color": "#121212",
+            "feature_icon_hover_color": "#121212",
+            "feature_icon_bg_color": "#edad93",
+            "feature_icon_bg_hover_color": "#FFFFFF",
+            "feature_icon_border_color": "#121212",
+            "feature_icon_border_hover_color": "#121212"
+          }
+        },
+        "button_PdwiYq": {
+          "type": "button",
+          "settings": {
+            "button": "START NOW",
+            "url": "",
+            "button_custom": false,
+            "button_font": "josefin_sans_n4",
+            "button_size": 13,
+            "button_size_mobile": 13,
+            "button_height": 100,
+            "button_padding_horizontal": 36,
+            "button_padding_horizontal_mobile": 36,
+            "button_padding_vertical": 12,
+            "button_padding_vertical_mobile": 12,
+            "button_radius": 100,
+            "button_border_thickness": 1,
+            "button_mt": 56,
+            "button_mt_mobile": 32,
+            "button_style": "outline",
+            "button_color": "#121212",
+            "button_hover_color": "#FFFFFF",
+            "button_bg_color": "#FFFFFF",
+            "button_bg_hover_color": "#121212",
+            "button_border_color": "#121212",
+            "button_border_hover_color": "#121212"
+          }
+        }
+      },
+      "block_order": [
+        "logo_knD3LG",
+        "heading_iyitLH",
+        "text_XDiEfm",
+        "feature_aRwNm4",
+        "feature_TTtLcH",
+        "feature_nPGXih",
+        "feature_DXtdWz",
+        "feature_ytUcpP",
+        "feature_Cg8zFq",
+        "feature_L4TH6w",
+        "feature_FkGfMW",
+        "feature_PKNb44",
+        "feature_wWf6Ld",
+        "button_PdwiYq"
+      ],
+      "name": "SS - Feature #34",
+      "settings": {
+        "content_align": "center",
+        "content_align_mobile": "center",
+        "features_gap": 24,
+        "features_gap_mobile": 16,
+        "features_mt": 56,
+        "features_mt_mobile": 32,
+        "feature_padding_horizontal": 16,
+        "feature_padding_horizontal_mobile": 16,
+        "feature_padding_vertical": 20,
+        "feature_padding_vertical_mobile": 20,
+        "feature_radius": 4,
+        "feature_border_thickness": 0,
+        "feature_icon_padding": 10,
+        "feature_icon_radius": 100,
+        "feature_icon_border_thickness": 1,
+        "feature_icon_size": 22,
+        "feature_icon_size_mobile": 22,
+        "title_custom": false,
+        "title_font": "josefin_sans_n4",
+        "title_size": 16,
+        "title_size_mobile": 16,
+        "title_height": 130,
+        "open_icon_size": 26,
+        "open_icon_size_mobile": 26,
+        "feature_text_custom": false,
+        "feature_text_font": "josefin_sans_n4",
+        "feature_text_size": 16,
+        "feature_text_size_mobile": 16,
+        "feature_text_height": 150,
+        "feature_text_padding_top": 20,
+        "title_color": "#121212",
+        "feature_text_color": "#707070",
+        "open_icon_color": "#121212",
+        "feature_bg_color": "#FFFFFF",
+        "background_color": "#D5F7FF",
+        "background_gradient": "",
+        "border_color": "#121212",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_horizontal": 0,
+        "margin_horizontal_mobile": 0,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "padding_horizontal": 5,
+        "padding_horizontal_mobile": 1.5,
+        "full_width": true,
+        "content_width": 1200,
+        "border_thickness": 0,
+        "section_radius": 0,
+        "lazy": true
       }
     },
     "related-products": {
@@ -1110,65 +1396,6 @@
         "columns_mobile": "2",
         "padding_top": 36,
         "padding_bottom": 24
-      }
-    },
-    "featured_collection_MRf9GU": {
-      "type": "featured-collection",
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "title": "You may also like:",
-        "title_highlight_color": "#6d388b",
-        "heading_size": "h1",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "color_scheme": "background-1",
-        "collection": "frontpage",
-        "products_to_show": 4,
-        "stretch_cards": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "cards_color_scheme": "background-1",
-        "image_ratio": "adapt",
-        "show_secondary_image": false,
-        "badges": "regular",
-        "show_vendor": false,
-        "show_rating": false,
-        "enable_quick_add": false,
-        "swatches_option_name": "",
-        "swatches_position": "top",
-        "swatches_desktop_size": 36,
-        "swatches_mobile_size": 24,
-        "type": "slide",
-        "autoplay": false,
-        "autoplay_speed": 5,
-        "arrows_color_scheme": "inverse",
-        "transparent_arrows": true,
-        "dots_color_scheme": "inverse",
-        "desktop_full_page": false,
-        "columns_desktop": 4,
-        "slider_desktop": false,
-        "per_move_desktop": 1,
-        "desktop_spacing": 40,
-        "desktop_side_padding": 0,
-        "desktop_padding_calc": true,
-        "desktop_adaptive_height": false,
-        "desktop_dots_position": "under",
-        "desktop_arrows_position": "sides",
-        "columns_mobile": "1",
-        "slider_mobile": true,
-        "enable_mobile_preview": false,
-        "mobile_adaptive_height": false,
-        "mobile_dots_position": "under",
-        "mobile_arrows_position": "under",
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "custom_colors_background": "#ffffff",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#2e2a39",
-        "custom_colors_solid_button_background": "#dd1d1d",
-        "custom_colors_solid_button_text": "#ffffff"
       }
     },
     "icon_bar_FXDFLd": {
@@ -1271,8 +1498,8 @@
     "multicolumn_AqXcgX",
     "testimonials_A3d8yL",
     "image_with_text_PCDA6T",
+    "ss_feature_34_hb8P7f",
     "related-products",
-    "featured_collection_MRf9GU",
     "icon_bar_FXDFLd",
     "1762748258f247e3fb"
   ]
