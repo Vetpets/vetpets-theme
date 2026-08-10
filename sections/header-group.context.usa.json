@@ -55,21 +55,10 @@
       "disabled": false,
       "settings": {},
       "blocks": {}
-    },
-    "announcement_bar_NCpPRh": {
-      "disabled": true,
-      "settings": {},
-      "blocks": {
-        "announcement_kezFxd": {
-          "disabled": true,
-          "settings": {}
-        }
-      }
     }
   },
   "order": [
     "custom_liquid_gMn3P",
-    "announcement_bar_NCpPRh",
     "horizontal_ticker_7D8jfx",
     "fe1c8c67-b84c-4466-a515-70df3134c1c0",
     "header"
