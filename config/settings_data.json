@@ -690,11 +690,6 @@
         "disabled": false,
         "settings": {}
       },
-      "17453258828962521766": {
-        "type": "shopify://apps/captain-protection/blocks/app/a7ef2f88-bc96-4a68-ba4e-f042ccbc8beb",
-        "disabled": false,
-        "settings": {}
-      },
       "17676059084223943535": {
         "type": "shopify://apps/triplewhale/blocks/triple_pixel_snippet/483d496b-3f1a-4609-aea7-8eee3b6b7a2a",
         "disabled": false,
@@ -718,6 +713,11 @@
       "855628211100114053": {
         "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
         "disabled": false,
+        "settings": {}
+      },
+      "17453258828962521766": {
+        "type": "shopify://apps/captain-protection/blocks/app/a7ef2f88-bc96-4a68-ba4e-f042ccbc8beb",
+        "disabled": true,
         "settings": {}
       }
     }
