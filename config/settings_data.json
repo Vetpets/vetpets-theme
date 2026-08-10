@@ -312,7 +312,7 @@
             "type": "countdown_timer",
             "settings": {
               "timer_text": "We can only reserve your cart for<strong> [timer]</strong>",
-              "timer_duration": 180,
+              "timer_duration": 300,
               "font_size": "1.2",
               "color_scheme": "background-2",
               "margin_top": 0,
