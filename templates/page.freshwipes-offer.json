@@ -36,7 +36,7 @@
         "price": "",
         "compare_at_price": "",
         "cta_label": "Start With FreshWipes",
-        "cta_url": "https:\/\/shopvetpets.com\/products\/freshwipes-kit-protects-against-dental-diseases",
+        "cta_url": "\/products\/freshwipes-kit-protects-against-dental-diseases",
         "header_offset": 60
       }
     },
@@ -113,7 +113,7 @@
         "title": "FreshWipes Plaque Relief Kit",
         "subtitle": "Buy 2 Get 2 + 2 Free Gifts",
         "cta_label": "Start With FreshWipes",
-        "cta_url": "https:\/\/shopvetpets.com\/products\/freshwipes-kit-protects-against-dental-diseases"
+        "cta_url": "\/products\/freshwipes-kit-protects-against-dental-diseases"
       }
     },
     "ugc-grid": {
@@ -290,7 +290,7 @@
         "price": "",
         "compare_at_price": "",
         "cta_label": "Start With FreshWipes",
-        "cta_url": "https:\/\/shopvetpets.com\/products\/freshwipes-kit-protects-against-dental-diseases",
+        "cta_url": "\/products\/freshwipes-kit-protects-against-dental-diseases",
         "guarantee": "100-Day Plaque Relief Guarantee",
         "scarcity": "LIMITED STOCK AVAILABLE"
       }

@@ -133,10 +133,29 @@ Two further control assets were left unused, available if you want them:
 * **The "Dr. Anders Larsson, DVM" quote and photo.** Omitted for compliance —
   no named veterinarian endorsements. (It was not present on the live control
   page either.)
-* **Inline add-to-cart.** Every CTA links to the PDP:
-  `https://shopvetpets.com/products/freshwipes-kit-protects-against-dental-diseases`
-  Subscription selling plans are handled by Loop + Katching on the PDP, so
-  rebuilding them here would break the single-variable rule and risk the
-  subscription flow.
+* **Inline add-to-cart.** Every CTA links to the PDP. Subscription selling plans
+  are handled by Loop + Katching on the PDP, so rebuilding them here would break
+  the single-variable rule and risk the subscription flow.
+
+## One deviation from the brief: the CTA link is relative
+
+The brief specified the absolute URL
+`https://shopvetpets.com/products/freshwipes-kit-protects-against-dental-diseases`.
+The template ships the same destination as a **relative path** instead:
+`/products/freshwipes-kit-protects-against-dental-diseases`.
+
+Two reasons:
+
+1. Shopify rejects an absolute URL as the *schema default* of a `url` setting.
+   The three sections carrying one silently failed to sync to the theme until
+   the default was removed.
+2. On a preview theme an absolute URL drops the `preview_theme_id`, so clicking
+   the CTA would bounce the tester out of the preview and onto the live theme.
+   A relative path keeps both the preview and the locale context.
+
+For a visitor on shopvetpets.com the destination is byte-identical. If you want
+the absolute URL anyway, set it per section in the theme editor under
+**Call to action → Button link** — it is only the schema *default* that Shopify
+refuses, not the value.
 * **`main-page`.** The template renders only the nine sections above, so the
   Shopify page body content is not output. All copy lives in section settings.
