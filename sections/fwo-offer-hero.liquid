@@ -1,0 +1,183 @@
+{{ 'freshwipes-offer.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign st = section.settings
+-%}
+
+<div
+  class="fwo fwo-hero"
+  style="--fwo-header-offset: {{ st.header_offset }}px;"
+>
+  <div class="fwo__inner">
+    <div class="fwo-hero__inner">
+      {%- if st.heading != blank -%}
+        <h1 class="fwo-hero__heading">{{ st.heading | escape }}</h1>
+      {%- endif -%}
+
+      {%- if st.subheading != blank -%}
+        <p class="fwo-hero__sub">{{ st.subheading | escape }}</p>
+      {%- endif -%}
+
+      <div class="fwo-hero__media">
+        {%- render 'fwo-image',
+          image: st.image,
+          url: st.image_url,
+          width: st.image_width,
+          height: st.image_height,
+          alt: st.image_alt,
+          loading: 'eager',
+          fetchpriority: 'high',
+          sizes: '(min-width: 750px) 50vw, 100vw',
+          placeholder: 'Hero product image'
+        -%}
+      </div>
+
+      {%- render 'fwo-offer-card', st: st, blocks: section.blocks -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "FWO offer hero",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Headline"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "H1 heading",
+      "default": "REMOVE PLAQUE IN 30 SECONDS A DAY — WITHOUT A TOOTHBRUSH"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Textured finger wipes that actually scrub plaque off the gumline. No fight, no stress, no expensive vet cleanings."
+    },
+    {
+      "type": "header",
+      "content": "Product image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Overrides the image URL below when set."
+    },
+    {
+      "type": "text",
+      "id": "image_url",
+      "label": "Image URL fallback",
+      "info": "Shopify CDN url. Used only when no image is picked above."
+    },
+    {
+      "type": "number",
+      "id": "image_width",
+      "label": "Image URL width (px)",
+      "info": "Intrinsic width of the fallback image. Prevents layout shift."
+    },
+    {
+      "type": "number",
+      "id": "image_height",
+      "label": "Image URL height (px)"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "FreshWipes Plaque Relief Kit"
+    },
+    {
+      "type": "header",
+      "content": "Offer"
+    },
+    {
+      "type": "text",
+      "id": "product_name",
+      "label": "Product name",
+      "default": "FreshWipes Plaque Relief Kit"
+    },
+    {
+      "type": "text",
+      "id": "offer_headline",
+      "label": "Offer headline",
+      "default": "Buy 2 Get 2 + 2 Free Gifts"
+    },
+    {
+      "type": "text",
+      "id": "offer_subline",
+      "label": "Offer subline",
+      "default": "Save 20% with Subscribe & Save · Cancel anytime"
+    },
+    {
+      "type": "text",
+      "id": "price",
+      "label": "Price",
+      "info": "Plain text, e.g. 499 kr. Leave empty to hide the price row."
+    },
+    {
+      "type": "text",
+      "id": "compare_at_price",
+      "label": "Compare-at price",
+      "info": "Shown struck through next to the price."
+    },
+    {
+      "type": "header",
+      "content": "Call to action"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Start With FreshWipes"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "header_offset",
+      "label": "Theme header height (mobile)",
+      "info": "Used to size the hero so the CTA stays above the fold. Increase if the header or announcement bar is taller.",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust row item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FWO offer hero",
+      "blocks": [
+        { "type": "trust_item" },
+        { "type": "trust_item" },
+        { "type": "trust_item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

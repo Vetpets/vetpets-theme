@@ -1,0 +1,140 @@
+{{ 'freshwipes-offer.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign st = section.settings
+  assign media_blocks = section.blocks | where: 'type', 'media'
+  assign ingredient_blocks = section.blocks | where: 'type', 'ingredient'
+-%}
+
+<div class="fwo fwo-mechanism">
+  <div class="fwo__inner fwo__section">
+    <div class="fwo-mechanism__inner">
+      {%- if media_blocks.size > 0 -%}
+        <div class="fwo-mechanism__media">
+          {%- for block in media_blocks -%}
+            <div {{ block.shopify_attributes }}>
+              {%- render 'fwo-image',
+                image: block.settings.image,
+                url: block.settings.image_url,
+                width: block.settings.image_width,
+                height: block.settings.image_height,
+                alt: block.settings.image_alt,
+                aspect: '16 / 9',
+                sizes: '(min-width: 750px) 25vw, 50vw',
+                placeholder: 'Mechanism image'
+              -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <div class="fwo-mechanism__content">
+        {%- if st.heading != blank -%}
+          <h2 class="fwo__heading">{{ st.heading | escape }}</h2>
+        {%- endif -%}
+
+        {%- if st.body != blank -%}
+          <p class="fwo__body">{{ st.body | escape }}</p>
+        {%- endif -%}
+
+        {%- if ingredient_blocks.size > 0 -%}
+          <ul class="fwo-mechanism__ingredients">
+            {%- for block in ingredient_blocks -%}
+              {%- if block.settings.name != blank -%}
+                <li class="fwo-mechanism__ingredient" {{ block.shopify_attributes }}>
+                  <span class="fwo-mechanism__ingredient-name">{{ block.settings.name | escape }}</span>
+                  {%- if block.settings.text != blank -%}
+                    <span class="fwo-mechanism__ingredient-text">{{ block.settings.text | escape }}</span>
+                  {%- endif -%}
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "FWO mechanism",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "So we built the ideal solution that defines what 'dog dental care' SHOULD mean."
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body",
+      "default": "FreshWipes do two things nothing else does. One: the textured surface physically scrubs plaque off the gumline — like a toothbrush, but on your finger. No foreign object in your dog's mouth. No juggling with paste. Two: cetylpyridinium chloride and green tea extract kill bacteria on contact and stop it from building back overnight. Scrub and prevent. That's the combination nothing else gives you."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "media",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "image_url",
+          "label": "Image URL fallback",
+          "info": "Used only when no image is picked above."
+        },
+        {
+          "type": "number",
+          "id": "image_width",
+          "label": "Image URL width (px)"
+        },
+        {
+          "type": "number",
+          "id": "image_height",
+          "label": "Image URL height (px)"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text"
+        }
+      ]
+    },
+    {
+      "type": "ingredient",
+      "name": "Named ingredient",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Ingredient name"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Short description",
+          "info": "Optional. Keep claims compliant."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FWO mechanism",
+      "blocks": [
+        { "type": "media" },
+        { "type": "media" },
+        { "type": "ingredient" },
+        { "type": "ingredient" }
+      ]
+    }
+  ]
+}
+{% endschema %}

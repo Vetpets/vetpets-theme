@@ -1,0 +1,101 @@
+{{ 'freshwipes-offer.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign st = section.settings
+-%}
+
+<div class="fwo fwo-problem">
+  <div class="fwo__inner fwo__section">
+    <div class="fwo-problem__inner">
+      {%- if st.image != blank or st.image_url != blank -%}
+        <div class="fwo-problem__media">
+          {%- render 'fwo-image',
+            image: st.image,
+            url: st.image_url,
+            width: st.image_width,
+            height: st.image_height,
+            alt: st.image_alt,
+            aspect: '16 / 9',
+            sizes: '(min-width: 750px) 50vw, 100vw'
+          -%}
+        </div>
+      {%- endif -%}
+
+      <div class="fwo-problem__content">
+        {%- if st.heading != blank -%}
+          <h2 class="fwo__heading">{{ st.heading | escape }}</h2>
+        {%- endif -%}
+
+        {%- if st.body != blank -%}
+          <p class="fwo__body">{{ st.body | escape }}</p>
+        {%- endif -%}
+
+        {%- if st.stat != blank -%}
+          <strong class="fwo-problem__stat">{{ st.stat | escape }}</strong>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "FWO problem",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Dental Problems Start Hidden"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body",
+      "default": "It starts with invisible bacteria building along the gumline every single day. Within 48 hours, that plaque hardens into tartar — and once it hardens, no home product can remove it. You're stuck with professional cleanings under anesthesia. Hundreds of dollars. Real risk for older dogs. And it only lasts a few months before the cycle starts again."
+    },
+    {
+      "type": "text",
+      "id": "stat",
+      "label": "Stat line",
+      "default": "80% of dogs show signs of gum disease by age 3"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "image_url",
+      "label": "Image URL fallback",
+      "info": "Used only when no image is picked above."
+    },
+    {
+      "type": "number",
+      "id": "image_width",
+      "label": "Image URL width (px)"
+    },
+    {
+      "type": "number",
+      "id": "image_height",
+      "label": "Image URL height (px)"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text"
+    }
+  ],
+  "presets": [
+    {
+      "name": "FWO problem"
+    }
+  ]
+}
+{% endschema %}

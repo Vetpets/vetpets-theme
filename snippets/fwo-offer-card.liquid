@@ -1,0 +1,62 @@
+{%- comment -%}
+  FreshWipes offer lander - shared buy block.
+
+  Used by both fwo-offer-hero and fwo-offer-repeat so the two offers stay
+  identical by construction rather than by copy-paste. Both sections define
+  the same setting ids, so this snippet reads section.settings directly.
+
+  The CTA is a plain link to the PDP on purpose - subscription selling plans
+  are handled by Loop + Katching on the product page, so there is no inline
+  add-to-cart here.
+
+  Accepts:
+    st      - the section settings object
+    blocks  - section.blocks (trust_item blocks are rendered as the trust row)
+{%- endcomment -%}
+
+<div class="fwo-hero__buy">
+  {%- if st.product_name != blank -%}
+    <p class="fwo-offer__product-name">{{ st.product_name | escape }}</p>
+  {%- endif -%}
+
+  {%- if st.offer_headline != blank or st.offer_subline != blank or st.price != blank -%}
+    <div class="fwo-offer__stack">
+      {%- if st.offer_headline != blank -%}
+        <p class="fwo-offer__headline">{{ st.offer_headline | escape }}</p>
+      {%- endif -%}
+
+      {%- if st.price != blank or st.compare_at_price != blank -%}
+        <p class="fwo-offer__price-row">
+          {%- if st.price != blank -%}
+            <span class="fwo-offer__price">{{ st.price | escape }}</span>
+          {%- endif -%}
+          {%- if st.compare_at_price != blank -%}
+            <span class="fwo-offer__price-compare">{{ st.compare_at_price | escape }}</span>
+          {%- endif -%}
+        </p>
+      {%- endif -%}
+
+      {%- if st.offer_subline != blank -%}
+        <p class="fwo-offer__subline">{{ st.offer_subline | escape }}</p>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- if st.cta_label != blank -%}
+    <a
+      class="fwo-cta"
+      href="{{ st.cta_url | default: '#' }}"
+    >{{ st.cta_label | escape }}</a>
+  {%- endif -%}
+
+  {%- assign fwo_trust = blocks | where: 'type', 'trust_item' -%}
+  {%- if fwo_trust.size > 0 -%}
+    <ul class="fwo-trust">
+      {%- for block in fwo_trust -%}
+        {%- if block.settings.text != blank -%}
+          <li class="fwo-trust__item" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+</div>
