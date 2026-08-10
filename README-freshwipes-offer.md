@@ -12,10 +12,20 @@ moved to the top) and **one new proof section** (`dirty-wipe-proof`).
 |---|---|
 | Template file | `templates/page.freshwipes-offer.json` |
 | Template name in admin | **page.freshwipes-offer** |
-| Assign to | a new Shopify page, suggested handle `lander1pdp-b` |
+| Assigned page | **Lander1pdp B** — handle `lander1pdp-b` (already created, **draft**) |
+| Dev theme | `vetpets-theme/dev`, id `181692858635` (unpublished, tracks this branch) |
 
-**To publish:** Shopify admin → Online Store → Pages → *Add page* → set the title,
-then in the sidebar under **Theme template** pick `freshwipes-offer` → Save.
+Preview (you must be logged into Shopify admin — the page is a draft, so it
+returns 404 to everyone else):
+
+```
+https://shopvetpets.com/pages/lander1pdp-b?preview_theme_id=181692858635
+```
+
+**To go live:** publish the page (Online Store → Pages → Lander1pdp B →
+visibility) *and* merge `dev` into `main` so the template reaches the live
+theme. Until the merge, the live theme has no `freshwipes-offer` template and
+the page would fall back to the default page template.
 
 ## Files added
 
