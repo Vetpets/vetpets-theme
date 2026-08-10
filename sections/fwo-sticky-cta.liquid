@@ -1,0 +1,129 @@
+{{ 'freshwipes-offer.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign st = section.settings
+-%}
+
+{%- if st.enabled -%}
+  <fwo-sticky-cta class="fwo">
+    {%- comment -%}
+      The sentinel sits in normal flow at this section's position in the
+      template. Once it scrolls off the top, the bar is revealed and the
+      observer disconnects, so the bar stays for the rest of the page.
+    {%- endcomment -%}
+    <div class="fwo-sticky__sentinel" aria-hidden="true"></div>
+
+    <div class="fwo-sticky">
+      <div class="fwo-sticky__inner">
+        <div class="fwo-sticky__text">
+          {%- if st.title != blank -%}
+            <span class="fwo-sticky__title">{{ st.title | escape }}</span>
+          {%- endif -%}
+          {%- if st.subtitle != blank -%}
+            <span class="fwo-sticky__sub">{{ st.subtitle | escape }}</span>
+          {%- endif -%}
+        </div>
+
+        {%- if st.cta_label != blank -%}
+          <a class="fwo-cta" href="{{ st.cta_url | default: '#' }}">{{ st.cta_label | escape }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </fwo-sticky-cta>
+
+  <script>
+    if (!customElements.get('fwo-sticky-cta')) {
+      customElements.define(
+        'fwo-sticky-cta',
+        class FwoStickyCta extends HTMLElement {
+          connectedCallback() {
+            this.bar = this.querySelector('.fwo-sticky');
+            this.sentinel = this.querySelector('.fwo-sticky__sentinel');
+            if (!this.bar || !this.sentinel) return;
+
+            if (!('IntersectionObserver' in window)) {
+              this.reveal();
+              return;
+            }
+
+            this.observer = new IntersectionObserver(
+              (entries) => {
+                entries.forEach((entry) => {
+                  if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
+                    this.reveal();
+                  }
+                });
+              },
+              { threshold: 0 }
+            );
+            this.observer.observe(this.sentinel);
+          }
+
+          reveal() {
+            this.bar.classList.add('is-visible');
+            this.stop();
+          }
+
+          stop() {
+            if (this.observer) {
+              this.observer.disconnect();
+              this.observer = null;
+            }
+          }
+
+          disconnectedCallback() {
+            this.stop();
+          }
+        }
+      );
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "FWO sticky CTA bar",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Enable sticky bar",
+      "default": true
+    },
+    {
+      "type": "paragraph",
+      "content": "The bar appears once the visitor scrolls past this point in the page, then stays visible. Move this section to change where it activates."
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "FreshWipes Plaque Relief Kit"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Buy 2 Get 2 + 2 Free Gifts"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Start With FreshWipes"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button link",
+      "default": "https://shopvetpets.com/products/freshwipes-kit-protects-against-dental-diseases"
+    }
+  ],
+  "presets": [
+    {
+      "name": "FWO sticky CTA bar"
+    }
+  ]
+}
+{% endschema %}

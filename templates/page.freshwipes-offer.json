@@ -1,0 +1,310 @@
+{
+  "sections": {
+    "offer-hero": {
+      "type": "fwo-offer-hero",
+      "blocks": {
+        "trust-1": {
+          "type": "trust_item",
+          "settings": {
+            "text": "100-Day Plaque Relief Guarantee"
+          }
+        },
+        "trust-2": {
+          "type": "trust_item",
+          "settings": {
+            "text": "45,000+ dog owners"
+          }
+        },
+        "trust-3": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Rated 4.86\/5"
+          }
+        }
+      },
+      "block_order": ["trust-1", "trust-2", "trust-3"],
+      "settings": {
+        "heading": "REMOVE PLAQUE IN 30 SECONDS A DAY — WITHOUT A TOOTHBRUSH",
+        "subheading": "Textured finger wipes that actually scrub plaque off the gumline. No fight, no stress, no expensive vet cleanings.",
+        "image_url": "https:\/\/cdn.shopify.com\/s\/files\/1\/0735\/4833\/3323\/files\/gempages_577888762156024773-2f099bba-862b-4314-aae4-31a23fe77405.png",
+        "image_width": 2000,
+        "image_height": 1080,
+        "image_alt": "FreshWipes Plaque Relief Kit",
+        "product_name": "FreshWipes Plaque Relief Kit",
+        "offer_headline": "Buy 2 Get 2 + 2 Free Gifts",
+        "offer_subline": "Save 20% with Subscribe & Save · Cancel anytime",
+        "price": "",
+        "compare_at_price": "",
+        "cta_label": "Start With FreshWipes",
+        "cta_url": "https:\/\/shopvetpets.com\/products\/freshwipes-kit-protects-against-dental-diseases",
+        "header_offset": 60
+      }
+    },
+    "dirty-wipe-proof": {
+      "type": "fwo-dirty-wipe-proof",
+      "blocks": {
+        "proof-clean": {
+          "type": "proof_image",
+          "settings": {
+            "label": "Clean wipe",
+            "image_alt": "A clean FreshWipes finger wipe before use"
+          }
+        },
+        "proof-used": {
+          "type": "proof_image",
+          "settings": {
+            "label": "Used wipe",
+            "image_alt": "A used FreshWipes finger wipe after 30 seconds"
+          }
+        }
+      },
+      "block_order": ["proof-clean", "proof-used"],
+      "settings": {
+        "heading": "This is what comes off in 30 seconds",
+        "caption": "Plaque and bacteria lifted off the gumline — not spread around it."
+      }
+    },
+    "mechanism": {
+      "type": "fwo-mechanism",
+      "blocks": {
+        "media-texture": {
+          "type": "media",
+          "settings": {
+            "image_url": "https:\/\/cdn.shopify.com\/s\/files\/1\/0735\/4833\/3323\/files\/5_reasons_why_page_9.webp",
+            "image_width": 1600,
+            "image_height": 900,
+            "image_alt": "Close-up of the textured FreshWipes surface"
+          }
+        },
+        "media-product": {
+          "type": "media",
+          "settings": {
+            "image_url": "https:\/\/cdn.shopify.com\/s\/files\/1\/0735\/4833\/3323\/files\/5_reasons_why_page_11.jpg",
+            "image_width": 1600,
+            "image_height": 900,
+            "image_alt": "FreshWipes product shot"
+          }
+        },
+        "ingredient-cpc": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Cetylpyridinium chloride",
+            "text": ""
+          }
+        },
+        "ingredient-green-tea": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Green tea extract",
+            "text": ""
+          }
+        }
+      },
+      "block_order": ["media-texture", "media-product", "ingredient-cpc", "ingredient-green-tea"],
+      "settings": {
+        "heading": "So we built the ideal solution that defines what 'dog dental care' SHOULD mean.",
+        "body": "FreshWipes do two things nothing else does. One: the textured surface physically scrubs plaque off the gumline — like a toothbrush, but on your finger. No foreign object in your dog's mouth. No juggling with paste. Two: cetylpyridinium chloride and green tea extract kill bacteria on contact and stop it from building back overnight. Scrub and prevent. That's the combination nothing else gives you."
+      }
+    },
+    "sticky-cta": {
+      "type": "fwo-sticky-cta",
+      "settings": {
+        "enabled": true,
+        "title": "FreshWipes Plaque Relief Kit",
+        "subtitle": "Buy 2 Get 2 + 2 Free Gifts",
+        "cta_label": "Start With FreshWipes",
+        "cta_url": "https:\/\/shopvetpets.com\/products\/freshwipes-kit-protects-against-dental-diseases"
+      }
+    },
+    "ugc-grid": {
+      "type": "fwo-ugc-grid",
+      "blocks": {
+        "ugc-1": { "type": "ugc_image", "settings": { "image_alt": "" } },
+        "ugc-2": { "type": "ugc_image", "settings": { "image_alt": "" } },
+        "ugc-3": { "type": "ugc_image", "settings": { "image_alt": "" } },
+        "ugc-4": { "type": "ugc_image", "settings": { "image_alt": "" } },
+        "ugc-5": { "type": "ugc_image", "settings": { "image_alt": "" } },
+        "ugc-6": { "type": "ugc_image", "settings": { "image_alt": "" } }
+      },
+      "block_order": ["ugc-1", "ugc-2", "ugc-3", "ugc-4", "ugc-5", "ugc-6"],
+      "settings": {
+        "heading": "Thousands of dog owners finally found a routine they can trust.",
+        "rating_line": "Rated 4.86\/5",
+        "subtext": "Used daily by 45,000+ dog owners who wanted an easier way to prevent plaque and gum disease."
+      }
+    },
+    "comparison-table": {
+      "type": "fwo-comparison-table",
+      "blocks": {
+        "row-contact": {
+          "type": "row",
+          "settings": {
+            "label": "Direct contact with plaque",
+            "col1_type": "yes",
+            "col2_type": "yes",
+            "col3_type": "no"
+          }
+        },
+        "row-accept": {
+          "type": "row",
+          "settings": {
+            "label": "Most dogs accept it",
+            "col1_type": "yes",
+            "col2_type": "no",
+            "col3_type": "yes"
+          }
+        },
+        "row-visible": {
+          "type": "row",
+          "settings": {
+            "label": "You can see it working",
+            "col1_type": "yes",
+            "col2_type": "yes",
+            "col3_type": "no"
+          }
+        },
+        "row-stressfree": {
+          "type": "row",
+          "settings": {
+            "label": "Stress-free solution",
+            "col1_type": "yes",
+            "col2_type": "no",
+            "col3_type": "yes"
+          }
+        },
+        "row-gumline": {
+          "type": "row",
+          "settings": {
+            "label": "Effective on the gumline",
+            "col1_type": "yes",
+            "col2_type": "yes",
+            "col3_type": "no"
+          }
+        },
+        "row-time": {
+          "type": "row",
+          "settings": {
+            "label": "Time per day",
+            "col1_type": "text",
+            "col1_text": "30 seconds - 1 minute",
+            "col2_type": "text",
+            "col2_text": "5-10 minutes",
+            "col3_type": "text",
+            "col3_text": "30 seconds - 1 minute"
+          }
+        }
+      },
+      "block_order": [
+        "row-contact",
+        "row-accept",
+        "row-visible",
+        "row-stressfree",
+        "row-gumline",
+        "row-time"
+      ],
+      "settings": {
+        "heading": "FreshWipes vs. \"the other internet solutions\"",
+        "row_header_label": "Feature",
+        "col1_label": "FreshWipes",
+        "col1_image_url": "https:\/\/cdn.shopify.com\/s\/files\/1\/0735\/4833\/3323\/files\/gempages_577888762156024773-ed0d10ff-9a27-4aa2-9d5c-1570a31387e1.webp",
+        "col1_image_alt": "FreshWipes",
+        "col2_label": "Toothbrush + Toothpaste",
+        "col2_image_url": "https:\/\/cdn.shopify.com\/s\/files\/1\/0735\/4833\/3323\/files\/Din_Hunds_Leende_spelar_ocksa_roll_80.webp",
+        "col2_image_alt": "Dog toothbrush and toothpaste",
+        "col3_label": "Dental powders",
+        "col3_image_url": "https:\/\/cdn.shopify.com\/s\/files\/1\/0735\/4833\/3323\/files\/Din_Hunds_Leende_spelar_ocksa_roll_82.webp",
+        "col3_image_alt": "Dental powder for dogs"
+      }
+    },
+    "problem": {
+      "type": "fwo-problem",
+      "settings": {
+        "heading": "Dental Problems Start Hidden",
+        "body": "It starts with invisible bacteria building along the gumline every single day. Within 48 hours, that plaque hardens into tartar — and once it hardens, no home product can remove it. You're stuck with professional cleanings under anesthesia. Hundreds of dollars. Real risk for older dogs. And it only lasts a few months before the cycle starts again.",
+        "stat": "80% of dogs show signs of gum disease by age 3",
+        "image_url": "https:\/\/cdn.shopify.com\/s\/files\/1\/0735\/4833\/3323\/files\/5_reasons_why_page_7.webp",
+        "image_width": 1600,
+        "image_height": 900,
+        "image_alt": "Plaque building along a dog's gumline"
+      }
+    },
+    "objection": {
+      "type": "fwo-objection",
+      "settings": {
+        "heading": "Most dogs dental care are designed to fail",
+        "body": "When was the last time you were ACTUALLY able to brush your dog's teeth properly? Most of dog's dental care overlook the importance of convenience in the act. And dental powders? How can you trust something you don't see working?",
+        "quote": "“How can you keep using a solution you don’t even trust?”"
+      }
+    },
+    "offer-repeat": {
+      "type": "fwo-offer-repeat",
+      "blocks": {
+        "badge-1": {
+          "type": "badge",
+          "settings": { "text": "100-Day Money-Back Guarantee" }
+        },
+        "badge-2": {
+          "type": "badge",
+          "settings": { "text": "Limited Stock Available" }
+        },
+        "badge-3": {
+          "type": "badge",
+          "settings": { "text": "45,000+ Happy Dog Owners" }
+        },
+        "badge-4": {
+          "type": "badge",
+          "settings": { "text": "No Brushing Required" }
+        },
+        "trust-1": {
+          "type": "trust_item",
+          "settings": { "text": "100-Day Plaque Relief Guarantee" }
+        },
+        "trust-2": {
+          "type": "trust_item",
+          "settings": { "text": "45,000+ dog owners" }
+        },
+        "trust-3": {
+          "type": "trust_item",
+          "settings": { "text": "Rated 4.86\/5" }
+        }
+      },
+      "block_order": [
+        "badge-1",
+        "badge-2",
+        "badge-3",
+        "badge-4",
+        "trust-1",
+        "trust-2",
+        "trust-3"
+      ],
+      "settings": {
+        "heading": "Make dental care a priority for your fur babies.",
+        "subheading": "A solution you can trust. A decision your dogs will thank you for.",
+        "image_url": "https:\/\/cdn.shopify.com\/s\/files\/1\/0735\/4833\/3323\/files\/Din_Hunds_Leende_spelar_ocksa_roll_-_2026-06-15T160800.859.jpg",
+        "image_width": 1080,
+        "image_height": 1080,
+        "image_alt": "FreshWipes Plaque Relief Kit",
+        "product_name": "FreshWipes Plaque Relief Kit",
+        "offer_headline": "Buy 2 Get 2 + 2 Free Gifts",
+        "offer_subline": "Save 20% with Subscribe & Save · Cancel anytime",
+        "price": "",
+        "compare_at_price": "",
+        "cta_label": "Start With FreshWipes",
+        "cta_url": "https:\/\/shopvetpets.com\/products\/freshwipes-kit-protects-against-dental-diseases",
+        "guarantee": "100-Day Plaque Relief Guarantee",
+        "scarcity": "LIMITED STOCK AVAILABLE"
+      }
+    }
+  },
+  "order": [
+    "offer-hero",
+    "dirty-wipe-proof",
+    "mechanism",
+    "sticky-cta",
+    "ugc-grid",
+    "comparison-table",
+    "problem",
+    "objection",
+    "offer-repeat"
+  ]
+}

@@ -1,0 +1,84 @@
+{%- comment -%}
+  FreshWipes offer lander - image renderer.
+
+  Renders an image from either a theme-editor image_picker setting or a raw
+  Shopify CDN URL, always with width/height attributes so the page does not
+  shift while images load (CLS). If neither is provided it renders an empty
+  slot placeholder, so unfilled image settings are obvious in the editor.
+
+  Accepts:
+    image           - image_picker setting (wins when present)
+    url             - raw CDN url fallback (string)
+    width, height   - intrinsic pixel size of `url`, required for CLS
+    alt             - alt text (string)
+    aspect          - CSS aspect-ratio for the wrapper, e.g. '16 / 9'
+    loading         - 'lazy' (default) or 'eager'
+    fetchpriority   - 'high' for the LCP image, omitted otherwise
+    sizes           - sizes attribute, defaults to 100vw
+    placeholder     - label shown on the empty slot
+    class           - extra class on the wrapper
+{%- endcomment -%}
+
+{%- liquid
+  assign fwo_loading = loading | default: 'lazy'
+  assign fwo_sizes = sizes | default: '100vw'
+  assign fwo_alt = alt | default: ''
+  assign fwo_fetch = fetchpriority | default: 'auto'
+  assign fwo_style = ''
+  if aspect != blank
+    assign fwo_style = 'aspect-ratio: ' | append: aspect | append: ';'
+  endif
+-%}
+
+{%- if image != blank -%}
+  <div class="fwo-media {{ class }}"{% if fwo_style != blank %} style="{{ fwo_style }}"{% endif %}>
+    {{
+      image
+      | image_url: width: 1600
+      | image_tag:
+        loading: fwo_loading,
+        fetchpriority: fwo_fetch,
+        sizes: fwo_sizes,
+        widths: '360, 420, 540, 640, 750, 900, 1100, 1400, 1600',
+        alt: fwo_alt
+    }}
+  </div>
+{%- elsif url != blank -%}
+  {%- liquid
+    assign fwo_sep = '?'
+    if url contains '?'
+      assign fwo_sep = '&'
+    endif
+    assign fwo_src = url | append: fwo_sep | append: 'width=900'
+    assign fwo_srcset = ''
+    assign fwo_widths = '360,540,750,900,1200,1600' | split: ','
+    for w in fwo_widths
+      assign fwo_entry = url | append: fwo_sep | append: 'width=' | append: w | append: ' ' | append: w | append: 'w'
+      if fwo_srcset == blank
+        assign fwo_srcset = fwo_entry
+      else
+        assign fwo_srcset = fwo_srcset | append: ', ' | append: fwo_entry
+      endif
+    endfor
+  -%}
+  <div class="fwo-media {{ class }}"{% if fwo_style != blank %} style="{{ fwo_style }}"{% endif %}>
+    <img
+      src="{{ fwo_src }}"
+      srcset="{{ fwo_srcset }}"
+      sizes="{{ fwo_sizes }}"
+      alt="{{ fwo_alt | escape }}"
+      {% if width != blank %}width="{{ width }}"{% endif %}
+      {% if height != blank %}height="{{ height }}"{% endif %}
+      loading="{{ fwo_loading }}"
+      fetchpriority="{{ fwo_fetch }}"
+      decoding="async"
+    >
+  </div>
+{%- else -%}
+  <div
+    class="fwo-media fwo-media--placeholder {{ class }}"
+    {% if aspect != blank %}style="--fwo-aspect: {{ aspect }};"{% endif %}
+  >
+    <span>{{ placeholder | default: 'Image slot - choose an image in the theme editor' }}</span>
+  </div>
+{%- endif -%}

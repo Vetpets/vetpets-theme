@@ -1,0 +1,213 @@
+{{ 'freshwipes-offer.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign st = section.settings
+  assign badges = section.blocks | where: 'type', 'badge'
+-%}
+
+<div class="fwo fwo-repeat">
+  <div class="fwo__inner">
+    <div class="fwo-hero__inner">
+      {%- if badges.size > 0 -%}
+        <ul class="fwo-repeat__badges">
+          {%- for block in badges -%}
+            {%- if block.settings.text != blank -%}
+              <li class="fwo-repeat__badge" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if st.heading != blank -%}
+        <h2 class="fwo-hero__heading">{{ st.heading | escape }}</h2>
+      {%- endif -%}
+
+      {%- if st.subheading != blank -%}
+        <p class="fwo-hero__sub">{{ st.subheading | escape }}</p>
+      {%- endif -%}
+
+      <div class="fwo-hero__media">
+        {%- render 'fwo-image',
+          image: st.image,
+          url: st.image_url,
+          width: st.image_width,
+          height: st.image_height,
+          alt: st.image_alt,
+          aspect: '1 / 1',
+          sizes: '(min-width: 750px) 52rem, 100vw',
+          placeholder: 'Offer product image'
+        -%}
+      </div>
+
+      {%- comment -%} Same buy block as the hero, rendered from one shared snippet. {%- endcomment -%}
+      {%- render 'fwo-offer-card', st: st, blocks: section.blocks -%}
+
+      {%- if st.guarantee != blank -%}
+        <p class="fwo-repeat__guarantee">{{ st.guarantee | escape }}</p>
+      {%- endif -%}
+
+      {%- if st.scarcity != blank -%}
+        <p class="fwo-repeat__scarcity">{{ st.scarcity | escape }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "FWO offer repeat",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Headline"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Make dental care a priority for your fur babies."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "A solution you can trust. A decision your dogs will thank you for."
+    },
+    {
+      "type": "header",
+      "content": "Product image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "image_url",
+      "label": "Image URL fallback",
+      "info": "Used only when no image is picked above."
+    },
+    {
+      "type": "number",
+      "id": "image_width",
+      "label": "Image URL width (px)"
+    },
+    {
+      "type": "number",
+      "id": "image_height",
+      "label": "Image URL height (px)"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "FreshWipes Plaque Relief Kit"
+    },
+    {
+      "type": "header",
+      "content": "Offer"
+    },
+    {
+      "type": "text",
+      "id": "product_name",
+      "label": "Product name",
+      "default": "FreshWipes Plaque Relief Kit"
+    },
+    {
+      "type": "text",
+      "id": "offer_headline",
+      "label": "Offer headline",
+      "default": "Buy 2 Get 2 + 2 Free Gifts"
+    },
+    {
+      "type": "text",
+      "id": "offer_subline",
+      "label": "Offer subline",
+      "default": "Save 20% with Subscribe & Save · Cancel anytime"
+    },
+    {
+      "type": "text",
+      "id": "price",
+      "label": "Price",
+      "info": "Keep this identical to the hero. Leave empty to hide the price row."
+    },
+    {
+      "type": "text",
+      "id": "compare_at_price",
+      "label": "Compare-at price"
+    },
+    {
+      "type": "header",
+      "content": "Call to action"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Start With FreshWipes"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button link",
+      "default": "https://shopvetpets.com/products/freshwipes-kit-protects-against-dental-diseases"
+    },
+    {
+      "type": "header",
+      "content": "Guarantee and scarcity"
+    },
+    {
+      "type": "text",
+      "id": "guarantee",
+      "label": "Guarantee line",
+      "default": "100-Day Plaque Relief Guarantee"
+    },
+    {
+      "type": "text",
+      "id": "scarcity",
+      "label": "Scarcity line",
+      "default": "LIMITED STOCK AVAILABLE"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Badge",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "trust_item",
+      "name": "Trust row item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FWO offer repeat",
+      "blocks": [
+        { "type": "badge" },
+        { "type": "badge" },
+        { "type": "badge" },
+        { "type": "badge" },
+        { "type": "trust_item" },
+        { "type": "trust_item" },
+        { "type": "trust_item" }
+      ]
+    }
+  ]
+}
+{% endschema %}
