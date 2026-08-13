@@ -74,6 +74,22 @@
   if st.button_gradient
     assign cta_class = 'vp-hrc__cta vp-hrc__cta--grad'
   endif
+
+  comment
+    Width comes from the theme's own .page-width class rather than a value of
+    our own, so this section lines up with the header and every other Shrine
+    section: max-width: var(--page-width) (140rem = 1400px with the theme's
+    62.5% root font size) and padding 0 1.5rem below 750px, 0 5rem above.
+    Full width adds the theme's .page-width--full (max-width: none) and keeps
+    that padding; Custom overrides --page-width locally on this element only,
+    which changes the max-width and nothing else.
+  endcomment
+  assign width_mode = st.section_width | default: 'page'
+  assign inner_class = 'vp-hrc__inner page-width'
+  if width_mode == 'full'
+    assign inner_class = 'vp-hrc__inner page-width page-width--full'
+  endif
+  assign custom_max_width = st.custom_max_width | default: 1200
 -%}
 
 {%- capture star_icon -%}
@@ -149,7 +165,12 @@
     --vp-hrc-pad-bottom: {{ st.padding_bottom }}px;
   "
 >
-  <div class="vp-hrc__inner">
+  <div
+    class="{{ inner_class }}"
+    {% if width_mode == 'custom' %}
+      style="--page-width: {{ custom_max_width }}px;"
+    {% endif %}
+  >
     <div class="vp-hrc__content">
       {%- if st.badge_text != blank -%}
         <p class="vp-hrc__badge">
@@ -261,17 +282,19 @@
 </div>
 
 {% style %}
+  /* Vertical padding only: the horizontal padding is the theme's .page-width
+     padding on the inner container, so the content lines up with the header
+     and the sections below. */
   .vp-hrc {
     background-color: var(--vp-hrc-bg, #d5f7ff);
-    padding: var(--vp-hrc-pad-top, 48px) 20px var(--vp-hrc-pad-bottom, 48px);
+    padding-block: var(--vp-hrc-pad-top, 48px) var(--vp-hrc-pad-bottom, 48px);
     overflow: hidden;
     font-family: var(--font-body-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
     font-weight: 400;
   }
 
+  /* max-width, margin and horizontal padding all come from .page-width. */
   .vp-hrc__inner {
-    max-width: 1280px;
-    margin-inline: auto;
     display: flex;
     flex-direction: column;
     gap: 32px;
@@ -523,9 +546,13 @@
 
   /* ---------- mobile marquee ---------- */
 
+  /* Full-bleed without knowing the container's padding: centre a 100vw box on
+     the (centred) content column. The old -20px margin assumed the section's
+     own 20px padding, which now belongs to .page-width. */
   .vp-hrc__marquee {
     width: 100vw;
-    margin: 32px 0 0 -20px;
+    margin: 32px 0 0 50%;
+    transform: translateX(-50%);
     overflow: hidden;
     -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
     mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
@@ -555,10 +582,6 @@
   /* ---------- desktop layout ---------- */
 
   @media screen and (min-width: 900px) {
-    .vp-hrc {
-      padding-inline: 32px;
-    }
-
     .vp-hrc__inner {
       flex-direction: row;
       align-items: center;
@@ -750,6 +773,25 @@
     {
       "type": "header",
       "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        { "value": "page", "label": "Page width" },
+        { "value": "full", "label": "Full width" },
+        { "value": "custom", "label": "Custom" }
+      ],
+      "default": "page",
+      "info": "Page width matches the theme's page width setting, so the content lines up with the header and the sections below."
+    },
+    {
+      "type": "number",
+      "id": "custom_max_width",
+      "label": "Custom max width (px)",
+      "default": 1200,
+      "info": "Only used when Section width is set to Custom."
     },
     {
       "type": "color",
