@@ -1,0 +1,641 @@
+{%- comment -%}
+  Hero review carousel
+  --------------------
+  Left column: star badge pill, H1, subtext, CTA.
+  Right side (>= 900px): four vertical image columns scrolling in an infinite
+  loop, every other column running the opposite direction at a slightly
+  different speed. Below 900px the columns are hidden and the same images run
+  as a horizontal marquee under the text.
+
+  The loop works by duplicating each column's item list and animating the
+  track by exactly -50%. The item spacing is a margin-bottom (not a flex gap)
+  so half the track height is exactly one full copy - a flex gap would leave
+  half a gap unaccounted for and the loop would visibly jump.
+
+  All classes are prefixed vp-hrc- so nothing collides with existing CSS.
+{%- endcomment -%}
+
+{%- liquid
+  assign st = section.settings
+
+  assign speed = st.scroll_speed | default: 45
+  assign dur_1 = speed | times: 100 | divided_by: 100.0
+  assign dur_2 = speed | times: 82 | divided_by: 100.0
+  assign dur_3 = speed | times: 116 | divided_by: 100.0
+  assign dur_4 = speed | times: 93 | divided_by: 100.0
+  assign dur_marquee = speed | times: 90 | divided_by: 100.0
+
+  assign image_blocks = section.blocks | where: 'type', 'image'
+  assign has_images = false
+  for block in image_blocks
+    if block.settings.image != blank
+      assign has_images = true
+      break
+    endif
+  endfor
+-%}
+
+{%- capture star_icon -%}
+  <svg class="vp-hrc__star" width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false"><path d="M10 1.5l2.47 5.2 5.53.79-4 4.02.95 5.72L10 14.53 5.05 17.23l.95-5.72-4-4.02 5.53-.79L10 1.5z"/></svg>
+{%- endcapture -%}
+
+<div
+  class="vp-hrc"
+  data-vp-hrc="{{ section.id }}"
+  style="
+    --vp-hrc-bg: {{ st.bg_color }};
+    --vp-hrc-heading: {{ st.heading_color }};
+    --vp-hrc-text: {{ st.text_color }};
+    --vp-hrc-badge-bg: {{ st.badge_bg }};
+    --vp-hrc-badge-text: {{ st.badge_text_color }};
+    --vp-hrc-star: {{ st.star_color }};
+    --vp-hrc-btn-bg: {{ st.button_bg }};
+    --vp-hrc-btn-text: {{ st.button_text_color }};
+    --vp-hrc-wall-h: {{ st.wall_height }}px;
+    --vp-hrc-d1: {{ dur_1 }}s;
+    --vp-hrc-d2: {{ dur_2 }}s;
+    --vp-hrc-d3: {{ dur_3 }}s;
+    --vp-hrc-d4: {{ dur_4 }}s;
+    --vp-hrc-dm: {{ dur_marquee }}s;
+    --vp-hrc-pad-top: {{ st.padding_top }}px;
+    --vp-hrc-pad-bottom: {{ st.padding_bottom }}px;
+  "
+>
+  <div class="vp-hrc__inner">
+    <div class="vp-hrc__content">
+      {%- if st.badge_text != blank -%}
+        <p class="vp-hrc__badge">
+          {%- if st.show_stars -%}
+            <span class="vp-hrc__stars" aria-hidden="true">
+              {{ star_icon }}{{ star_icon }}{{ star_icon }}{{ star_icon }}{{ star_icon }}
+            </span>
+          {%- endif -%}
+          <span class="vp-hrc__badge-text">{{ st.badge_text | escape }}</span>
+        </p>
+      {%- endif -%}
+
+      {%- if st.heading != blank -%}
+        <h1 class="vp-hrc__heading">{{ st.heading | escape }}</h1>
+      {%- endif -%}
+
+      {%- if st.subtext != blank -%}
+        <div class="vp-hrc__subtext">{{ st.subtext }}</div>
+      {%- endif -%}
+
+      {%- if st.button_label != blank -%}
+        <a
+          class="vp-hrc__cta"
+          {% if st.button_link != blank %}href="{{ st.button_link }}"{% else %}href="#" aria-disabled="true"{% endif %}
+        >
+          {{- st.button_label | escape -}}
+        </a>
+      {%- endif -%}
+
+      {%- comment -%} Mobile marquee: same images, horizontal, decorative. {%- endcomment -%}
+      {%- capture marquee_items -%}
+        {%- if has_images -%}
+          {%- for block in image_blocks -%}
+            {%- if block.settings.image != blank -%}
+              <div class="vp-hrc__item vp-hrc__item--m">
+                {{
+                  block.settings.image
+                  | image_url: width: 400
+                  | image_tag: loading: 'lazy', widths: '160,240,320,400', sizes: '38vw', class: 'vp-hrc__img', alt: ''
+                }}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- else -%}
+          {%- for i in (1..8) -%}
+            <div class="vp-hrc__item vp-hrc__item--m">
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'vp-hrc__img vp-hrc__img--placeholder' }}
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      {%- endcapture -%}
+
+      <div class="vp-hrc__marquee" aria-hidden="true">
+        <div class="vp-hrc__marquee-track">
+          {{ marquee_items }}{{ marquee_items }}
+        </div>
+      </div>
+    </div>
+
+    <div class="vp-hrc__wall" aria-hidden="true">
+      {%- for col in (0..3) -%}
+        {%- capture col_items -%}
+          {%- if has_images -%}
+            {%- assign position = 0 -%}
+            {%- for block in image_blocks -%}
+              {%- if block.settings.image == blank -%}
+                {%- continue -%}
+              {%- endif -%}
+              {%- assign slot = position | modulo: 4 -%}
+              {%- assign position = position | plus: 1 -%}
+              {%- if slot != col -%}
+                {%- continue -%}
+              {%- endif -%}
+              <div class="vp-hrc__item">
+                {{
+                  block.settings.image
+                  | image_url: width: 600
+                  | image_tag: loading: 'lazy', widths: '200,300,400,600', sizes: '(min-width: 1200px) 14vw, 20vw', class: 'vp-hrc__img', alt: ''
+                }}
+              </div>
+            {%- endfor -%}
+          {%- else -%}
+            {%- for i in (1..3) -%}
+              <div class="vp-hrc__item">
+                {{ 'lifestyle-2' | placeholder_svg_tag: 'vp-hrc__img vp-hrc__img--placeholder' }}
+              </div>
+            {%- endfor -%}
+          {%- endif -%}
+        {%- endcapture -%}
+
+        {%- assign col_check = col_items | strip -%}
+        {%- if col_check != blank -%}
+          <div class="vp-hrc__col vp-hrc__col--{{ col | plus: 1 }}">
+            <div class="vp-hrc__track">
+              {{ col_items }}{{ col_items }}
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% style %}
+  .vp-hrc {
+    background-color: var(--vp-hrc-bg, #d5f7ff);
+    padding: var(--vp-hrc-pad-top, 48px) 20px var(--vp-hrc-pad-bottom, 48px);
+    overflow: hidden;
+    font-family: var(--font-body-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+    font-weight: 400;
+  }
+
+  .vp-hrc__inner {
+    max-width: 1280px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .vp-hrc__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  /* ---------- badge ---------- */
+
+  .vp-hrc__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 20px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background-color: var(--vp-hrc-badge-bg, #ffffff);
+    color: var(--vp-hrc-badge-text, #10232b);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .vp-hrc__stars {
+    display: inline-flex;
+    color: var(--vp-hrc-star, #ffb800);
+  }
+
+  .vp-hrc__star {
+    display: block;
+  }
+
+  .vp-hrc__star + .vp-hrc__star {
+    margin-left: 1px;
+  }
+
+  /* ---------- copy ---------- */
+
+  .vp-hrc__heading {
+    margin: 0;
+    font-family: var(--font-heading-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+    font-weight: 700;
+    font-size: clamp(32px, 6vw, 54px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--vp-hrc-heading, #10232b);
+    text-wrap: balance;
+  }
+
+  .vp-hrc__subtext {
+    margin: 16px 0 0;
+    max-width: 46ch;
+    font-size: clamp(15px, 1.9vw, 18px);
+    line-height: 1.6;
+    color: var(--vp-hrc-text, #2c4650);
+  }
+
+  .vp-hrc__subtext > *:first-child {
+    margin-top: 0;
+  }
+
+  .vp-hrc__subtext > *:last-child {
+    margin-bottom: 0;
+  }
+
+  .vp-hrc__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 28px;
+    padding: 16px 36px;
+    border-radius: 999px;
+    background-color: var(--vp-hrc-btn-bg, #47b5e9);
+    color: var(--vp-hrc-btn-text, #ffffff);
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+  }
+
+  .vp-hrc__cta:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.04);
+    box-shadow: 0 8px 20px rgba(16, 35, 43, 0.18);
+    text-decoration: none;
+  }
+
+  .vp-hrc__cta:focus-visible {
+    outline: 2px solid var(--vp-hrc-heading, #10232b);
+    outline-offset: 3px;
+  }
+
+  /* ---------- shared image styling ---------- */
+
+  .vp-hrc__item {
+    overflow: hidden;
+    border-radius: 10px;
+    line-height: 0;
+  }
+
+  .vp-hrc__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .vp-hrc__img--placeholder {
+    height: auto;
+    aspect-ratio: 4 / 5;
+    background-color: rgba(16, 35, 43, 0.06);
+    fill: rgba(16, 35, 43, 0.22);
+  }
+
+  .vp-hrc__item--m .vp-hrc__img--placeholder {
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
+  /* ---------- desktop wall ---------- */
+
+  .vp-hrc__wall {
+    display: none;
+  }
+
+  .vp-hrc__col {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+    height: var(--vp-hrc-wall-h, 380px);
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
+  }
+
+  .vp-hrc__track {
+    display: flex;
+    flex-direction: column;
+    will-change: transform;
+    animation-name: vp-hrc-up;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: var(--vp-hrc-d1, 45s);
+  }
+
+  .vp-hrc__track > .vp-hrc__item {
+    margin-bottom: 14px;
+  }
+
+  .vp-hrc__col--1 .vp-hrc__track { animation-duration: var(--vp-hrc-d1, 45s); }
+  .vp-hrc__col--2 .vp-hrc__track { animation-duration: var(--vp-hrc-d2, 37s); animation-name: vp-hrc-down; }
+  .vp-hrc__col--3 .vp-hrc__track { animation-duration: var(--vp-hrc-d3, 52s); }
+  .vp-hrc__col--4 .vp-hrc__track { animation-duration: var(--vp-hrc-d4, 42s); animation-name: vp-hrc-down; }
+
+  @keyframes vp-hrc-up {
+    from { transform: translateY(0); }
+    to { transform: translateY(-50%); }
+  }
+
+  @keyframes vp-hrc-down {
+    from { transform: translateY(-50%); }
+    to { transform: translateY(0); }
+  }
+
+  /* ---------- mobile marquee ---------- */
+
+  .vp-hrc__marquee {
+    width: 100vw;
+    margin: 32px 0 0 -20px;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  }
+
+  .vp-hrc__marquee-track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+    animation: vp-hrc-left var(--vp-hrc-dm, 40s) linear infinite;
+  }
+
+  .vp-hrc__item--m {
+    flex: 0 0 auto;
+    width: 38vw;
+    max-width: 190px;
+    height: 46vw;
+    max-height: 230px;
+    margin-right: 12px;
+  }
+
+  @keyframes vp-hrc-left {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ---------- desktop layout ---------- */
+
+  @media screen and (min-width: 900px) {
+    .vp-hrc {
+      padding-inline: 32px;
+    }
+
+    .vp-hrc__inner {
+      flex-direction: row;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .vp-hrc__content {
+      flex: 1 1 45%;
+      max-width: 560px;
+    }
+
+    .vp-hrc__marquee {
+      display: none;
+    }
+
+    .vp-hrc__wall {
+      display: flex;
+      flex: 1 1 55%;
+      min-width: 0;
+      gap: 14px;
+    }
+  }
+
+  /* ---------- pausing ---------- */
+
+  .vp-hrc--paused .vp-hrc__track,
+  .vp-hrc--paused .vp-hrc__marquee-track {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vp-hrc__track,
+    .vp-hrc__marquee-track {
+      animation-play-state: paused;
+    }
+
+    .vp-hrc__cta {
+      transition: none;
+    }
+
+    .vp-hrc__cta:hover {
+      transform: none;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    var root = document.querySelector('[data-vp-hrc="{{ section.id }}"]');
+    if (!root || !('IntersectionObserver' in window)) return;
+
+    // Keep the loops from burning frames while the hero is off screen.
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          root.classList.toggle('vp-hrc--paused', !entry.isIntersecting);
+        });
+      },
+      { rootMargin: '150px' }
+    );
+
+    observer.observe(root);
+
+    document.addEventListener('shopify:section:unload', function (event) {
+      if (event.detail && event.detail.sectionId === '{{ section.id }}') observer.disconnect();
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Hero review carousel",
+  "tag": "section",
+  "class": "section-hero-review-carousel",
+  "max_blocks": 24,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Badge"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge text",
+      "default": "Rated 4.8/5 by 12,000+ pet parents"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stars",
+      "label": "Show stars in badge",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "badge_bg",
+      "label": "Badge background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge text",
+      "default": "#10232B"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star colour",
+      "default": "#FFB800"
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Clean teeth and fresh breath in 30 seconds a day"
+    },
+    {
+      "type": "richtext",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "<p>Textured finger wipes that scrub plaque off the gumline — no brushing, no fight, no expensive vet cleanings.</p>"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading colour",
+      "default": "#10232B"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Subtext colour",
+      "default": "#2C4650"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button text",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button background",
+      "default": "#47B5E9"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text colour",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section background",
+      "default": "#D5F7FF"
+    },
+    {
+      "type": "range",
+      "id": "wall_height",
+      "label": "Image wall height",
+      "min": 240,
+      "max": 560,
+      "step": 10,
+      "unit": "px",
+      "default": 380,
+      "info": "Desktop only. Mobile shows a horizontal marquee instead."
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "label": "Scroll speed",
+      "min": 10,
+      "max": 90,
+      "step": 5,
+      "unit": "s",
+      "default": 45,
+      "info": "Seconds per loop. Lower is faster. Columns vary slightly around this value."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Images are decorative and are spread across the 4 columns in order. Add up to 24."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero review carousel",
+      "blocks": [
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" }
+      ]
+    }
+  ]
+}
+{% endschema %}
