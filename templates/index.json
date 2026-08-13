@@ -176,12 +176,12 @@
             "link": "https://shopvetpets.com/products/freshwipes-kit-protects-against-dental-diseases",
             "icon_image": "shopify://shop_images/vetpets-icon-teeth.svg",
             "icon": "tooth",
-            "icon_color": "#10232B",
+            "icon_color": "#10232b",
             "icon_size": 30,
             "icon_rotation": 0,
             "circle_gradient": true,
-            "circle_color_start": "#D5F7FF",
-            "circle_color_end": "#A8E6F7",
+            "circle_color_start": "#d5f7ff",
+            "circle_color_end": "#a8e6f7",
             "circle_angle": 135
           }
         },
@@ -193,12 +193,12 @@
             "link": "https://shopvetpets.com/products/eyewipes-prevention-that-keeps-eyes-clear",
             "icon_image": "shopify://shop_images/vetpets-icon-eyes.svg",
             "icon": "sparkle",
-            "icon_color": "#10232B",
+            "icon_color": "#10232b",
             "icon_size": 30,
             "icon_rotation": 0,
             "circle_gradient": true,
-            "circle_color_start": "#D5F7FF",
-            "circle_color_end": "#A8E6F7",
+            "circle_color_start": "#d5f7ff",
+            "circle_color_end": "#a8e6f7",
             "circle_angle": 135
           }
         },
@@ -210,12 +210,12 @@
             "link": "https://shopvetpets.com/products/earwipes-kit-protects-against-ear-problems",
             "icon_image": "shopify://shop_images/vetpets-icon-ears.svg",
             "icon": "ear",
-            "icon_color": "#10232B",
+            "icon_color": "#10232b",
             "icon_size": 30,
             "icon_rotation": 0,
             "circle_gradient": true,
-            "circle_color_start": "#D5F7FF",
-            "circle_color_end": "#A8E6F7",
+            "circle_color_start": "#d5f7ff",
+            "circle_color_end": "#a8e6f7",
             "circle_angle": 135
           }
         },
@@ -227,12 +227,12 @@
             "link": "https://shopvetpets.com/products/pawfoam?_pos=1&_psq=Pawfoam&_psid=6ff710905&_ss=e",
             "icon_image": "shopify://shop_images/vetpets-icon-paws.svg",
             "icon": "paw",
-            "icon_color": "#10232B",
+            "icon_color": "#10232b",
             "icon_size": 30,
             "icon_rotation": 0,
             "circle_gradient": true,
-            "circle_color_start": "#D5F7FF",
-            "circle_color_end": "#A8E6F7",
+            "circle_color_start": "#d5f7ff",
+            "circle_color_end": "#a8e6f7",
             "circle_angle": 135
           }
         },
@@ -244,12 +244,12 @@
             "link": "https://shopvetpets.com/products/glovewipes-quick-clean-kit",
             "icon_image": "shopify://shop_images/vetpets-icon-coat.svg",
             "icon": "ear",
-            "icon_color": "#10232B",
+            "icon_color": "#10232b",
             "icon_size": 30,
             "icon_rotation": 0,
             "circle_gradient": true,
-            "circle_color_start": "#D5F7FF",
-            "circle_color_end": "#A8E6F7",
+            "circle_color_start": "#d5f7ff",
+            "circle_color_end": "#a8e6f7",
             "circle_angle": 135
           }
         },
@@ -261,12 +261,12 @@
             "link": "https://shopvetpets.com/products/freshcare-complete-health-kit",
             "icon_image": "shopify://shop_images/vetpets-icon-routine.svg",
             "icon": "ear",
-            "icon_color": "#10232B",
+            "icon_color": "#10232b",
             "icon_size": 30,
             "icon_rotation": 0,
             "circle_gradient": true,
-            "circle_color_start": "#D5F7FF",
-            "circle_color_end": "#A8E6F7",
+            "circle_color_start": "#d5f7ff",
+            "circle_color_end": "#a8e6f7",
             "circle_angle": 135
           }
         }
@@ -286,7 +286,7 @@
         "columns_desktop": "3",
         "columns_mobile": "2",
         "grid_gap": 14,
-        "bg_color": "#FFFFFF",
+        "bg_color": "#ffffff",
         "padding_top": 64,
         "padding_bottom": 64,
         "padding_top_mobile": 40,
@@ -294,36 +294,36 @@
         "heading": "<p>What is your pet struggling with?</p>",
         "heading_size": 40,
         "heading_size_mobile": 26,
-        "heading_color": "#10232B",
+        "heading_color": "#10232b",
         "heading_gradient": false,
-        "heading_gradient_start": "#47B5E9",
-        "heading_gradient_end": "#13B6B5",
+        "heading_gradient_start": "#47b5e9",
+        "heading_gradient_end": "#13b6b5",
         "image_width": 320,
         "hide_image_mobile": false,
-        "card_bg": "#FFFFFF",
-        "card_border_color": "#E3EEF2",
+        "card_bg": "#ffffff",
+        "card_border_color": "#e3eef2",
         "card_radius": 16,
         "card_shadow": true,
         "circle_size": 72,
         "circle_size_mobile": 52,
         "title_size": 17,
         "title_size_mobile": 15,
-        "title_color": "#10232B",
+        "title_color": "#10232b",
         "sub_size": 14,
         "sub_size_mobile": 13,
-        "sub_color": "#5A737D",
+        "sub_color": "#5a737d",
         "font_weight": "600",
         "hide_sub_mobile": false,
         "show_arrow": true,
-        "arrow_bg": "#47B5E9",
-        "arrow_color": "#FFFFFF",
+        "arrow_bg": "#47b5e9",
+        "arrow_color": "#ffffff",
         "arrow_size": 36,
         "show_cta": true,
         "cta_text": "View all products",
         "cta_link": "shopify://collections/all-products",
-        "cta_text_color": "#FFFFFF",
-        "cta_bg": "#47B5E9",
-        "cta_border_color": "#47B5E9",
+        "cta_text_color": "#ffffff",
+        "cta_bg": "#47b5e9",
+        "cta_border_color": "#47b5e9",
         "cta_radius": 100
       }
     },
@@ -1115,284 +1115,190 @@
         "desktop_padding_bottom": 36
       }
     },
-    "testimonials_zdydDA": {
-      "type": "testimonials",
-      "blocks": {
-        "column_PkYcKz": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "Vet said do something this works",
-            "text": "<p>Talked to my vet about dental care and she said the most important thing is to do SOMETHING regularly, even if you can't brush. These wipes have made it so much easier for me to keep the routine. My 11-year-old dachshund has noticeably whiter teeth and I feel safe using the natural ingredients. Takes barely a minute a day. Highly recommend!</p>",
-            "author": "Anne B., 57 - 2025-11-09"
-          }
-        },
-        "column_EyT3yh": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "Finally something that actually works",
-            "text": "<p>Really good. I've tried chew toys, water additives, everything possible. Nothing worked and my dog's breath was TERRIBLE. These wipes actually remove the dirt, you see it directly on the wipe. Takes max 2 minutes and I can do it while watching TV. Should've bought these ages ago.</p>",
-            "author": "Sophie H., 43 - 2025-10-26"
-          }
-        },
-        "column_ccnzHG": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "Safe for the whole family",
-            "text": "<p>We have a 3-year-old at home and the dog licks him constantly. I wanted something for the dog's breath that isn't dangerous if the kids get it on them. These are natural and work really well. Takes 2 minutes in the evening when the kids are asleep. The dog sits calmly and his breath is so much fresher now. Great not to have to worry when he kisses the kids!</p>",
-            "author": "Sarah E., 39 - 2025-10-03"
-          }
-        },
-        "column_JxijFr": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "Getting better each time",
-            "text": "<p>My dog wasn't fond of it at first. But now it's going better. It works.</p>",
-            "author": "Christine B. - 2025-09-21"
-          }
-        },
-        "column_xxKDbT": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "No more crusty mornings",
-            "text": "<p>My Bichon used to wake up with those brown areas every single day. I tried everything - baby wipes, damp cloths, nothing worked properly. These actually remove the gunk and it doesn't come back as quickly. Takes about a week to see real improvement but now her eyes look so much cleaner. Finally something that works</p>",
-            "author": "Sophie N., 31 | Bichon Frise - 2025-10-29"
-          }
-        },
-        "column_BTnNrC": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "Safe for sensitive eyes",
-            "text": "<p>We have a 3-year-old at home and the dog licks him constantly around him. I wanted something gentle that wouldn't irritate if it got in his eyes. These are natural and work really well. Takes 2 minutes in the evening. His eye area looks so much cleaner now and no more redness. Great not to have to worry.</p>",
-            "author": "Maria L., 41 | Golden Retriever - 2025-10-03"
-          }
-        },
-        "column_wfxDja": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "The scratching has stopped",
-            "text": "<p>My Golden has been digging at his ears for MONTHS. Like every few minutes, constantly. I tried wiping them with wet paper towels, bought those expensive ear drops from the pet store - he hated these and would literally hide under the bed when he saw me coming. Started using these wipes about 2 weeks ago and the scratching is almost completely gone. The smell disappeared too which is honestly the best part because his face used to reek. He just sits there now, doesn't even try to pull away.</p>",
-            "author": "Karin J., 54 | Golden Retriever owner - 2025-09-14"
-          }
-        },
-        "column_tXay4g": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "Highly recommended!!",
-            "text": "<p>My dog has always been afraid of toothbrushing, which made it difficult to keep his teeth clean.<br/><br/>But after we started using these wipes, he’s become completely calm.<br/><br/>It’s amazing to see that he no longer runs away or gets anxious when it’s time to clean his teeth.</p>",
-            "author_avatar": "shopify://shop_images/Profilbild1_b3680c3c-3c9b-4f7c-aaa0-1c5e71863e67.webp",
-            "author": "– Erik A"
-          }
-        },
-        "column_tUC9cB": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "He’s completely fearless now!",
-            "text": "<p>Brushing my dog’s teeth has been a struggle for years because he was so scared.<br/><br/>But these wipes changed everything.<br/><br/>He’s now completely fearless and lets me clean his teeth without any problems.<br/><br/>This has truly improved our dental care routine.</p>",
-            "author_avatar": "shopify://shop_images/Profilbild1_78735bd1-dd93-45c0-b80c-27246ca5802d.webp",
-            "author": "– Johan E"
-          }
-        },
-        "column_M8VjaY": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "Highly recommend to all dog owners",
-            "text": "<p>I’ve always had a hard time brushing my dog’s teeth because he was afraid.<br/><br/>With these wipes, he’s now completely calm.<br/><br/>It’s such a huge relief to be able to clean his teeth without having to fight with him.<br/><br/><strong>Highly recommend this to all dog owners.</strong></p>",
-            "author_avatar": "shopify://shop_images/Profilbild_3.webp",
-            "author": "– Sarah Johansen"
-          }
-        },
-        "column_WzDbWA": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "I’m very satisfied",
-            "text": "<p>I’ve used this product on my dog for a few weeks now, and I’m very satisfied.<br/><br/>His teeth look much cleaner, and his breath has noticeably improved.<br/><br/>It’s also very easy to use, which is a big plus.</p>",
-            "author_avatar": "shopify://shop_images/Profilbild1.webp",
-            "author": "– Simon Andersson"
-          }
-        },
-        "column_BgwVTr": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "A great product that really makes a difference",
-            "text": "<p>A great product that really makes a difference. I’ve noticed that my dog’s tartar has significantly reduced and his breath is much fresher.<br/><br/>Plus, it’s very easy to use.</p><p></p>",
-            "author_avatar": "shopify://shop_images/profilbild.webp",
-            "author": "– John Taylor"
-          }
-        },
-        "column_qb88rE": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "Delivers great results",
-            "text": "<p>My dog likes it, and it’s easy to use every day.<br/><br/>Delivers great results.</p>",
-            "author_avatar": "shopify://shop_images/Profilbild1.jpg",
-            "author": "– Sofia Jones"
-          }
-        },
-        "column_WRiJX3": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "I see an improvement in his oral health",
-            "text": "<p>My dog seems to like it, and I can see an improvement in his oral health.</p>",
-            "author_avatar": "shopify://shop_images/Profilbild3_98453ffc-28e5-4418-89bd-9cc2393e092a.webp",
-            "author": "– Margaret Davies"
-          }
-        }
-      },
-      "block_order": [
-        "column_PkYcKz",
-        "column_EyT3yh",
-        "column_ccnzHG",
-        "column_JxijFr",
-        "column_xxKDbT",
-        "column_BTnNrC",
-        "column_wfxDja",
-        "column_tXay4g",
-        "column_tUC9cB",
-        "column_M8VjaY",
-        "column_WzDbWA",
-        "column_BgwVTr",
-        "column_qb88rE",
-        "column_WRiJX3"
-      ],
-      "name": "Testimonials",
+    "section_divider_hYBJ6V": {
+      "type": "section-divider",
+      "name": "Section divider",
       "settings": {
-        "display_id": false,
         "visibility": "always-display",
-        "title": "Verified Reviews",
-        "title_highlight_color": "#6d388b",
-        "heading_size": "h1",
-        "text": "<p><strong>45,000+ dog owners</strong> trust our products for dog daily care</p>",
-        "color_scheme": "background-1",
-        "image_width": "half",
-        "image_ratio": "square",
-        "column_alignment": "center",
-        "show_stars": true,
-        "inactive_stars_style": "solid",
-        "star_color": "#ffcc00",
-        "bg_star_color": "#ececec",
-        "show_quotes": true,
-        "quotes_color_scheme": "accent-1",
-        "cards_color_scheme": "bg-overlay",
-        "type": "slide",
-        "autoplay": true,
-        "autoplay_speed": 5,
-        "arrows_color_scheme": "inverse",
-        "transparent_arrows": true,
-        "dots_color_scheme": "inverse",
-        "desktop_full_page": true,
-        "columns_desktop": 5,
-        "slider_desktop": true,
-        "per_move_desktop": 1,
-        "desktop_spacing": 40,
-        "desktop_side_padding": 0,
-        "desktop_padding_calc": false,
-        "desktop_adaptive_height": false,
-        "desktop_dots_position": "under",
-        "desktop_arrows_position": "sides",
-        "slider_mobile": true,
-        "enable_mobile_preview": false,
-        "mobile_adaptive_height": false,
-        "mobile_dots_position": "under",
-        "mobile_arrows_position": "under",
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "custom_colors_background": "#ffffff",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#2e2a39",
-        "custom_cards_colors_background": "#f3f3f3",
-        "custom_cards_gradient_background": "",
-        "custom_cards_colors_text": "#2e2a39"
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "background-2",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-1",
+        "custom_background_color": "#FFFFFF",
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
-    "17854288026a1c7a9d": {
-      "type": "apps",
+    "review_slider_jL8hbB": {
+      "type": "review-slider",
       "blocks": {
-        "loox_reviews_loox_card_carousel_section_ccGMRh": {
-          "type": "shopify://apps/loox-reviews/blocks/loox-card-carousel-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
-          "disabled": true,
+        "review_UrqkM8": {
+          "type": "review",
           "settings": {
-            "maxWidth": 1100,
-            "borderRadius": 8,
-            "itemsPerView": 4,
-            "mobileItemsPerView": 1,
-            "maxNumberOfCharacters": 100,
-            "imageRatio": "0.72",
-            "reviewerNameColor": "#000000",
-            "textColor": "#000000",
-            "itemBackgroundColor": "#ffffff",
-            "starsColor": "",
-            "starsBackgroundColor": "#ffffff",
-            "arrows_backgroundColor": "#ffffff",
-            "arrows_iconColor": "#9a9a9a",
-            "shadow": "offset-dark",
-            "border_active": false,
-            "border_width": 2,
-            "border_color": "#000000",
-            "productIds": ""
+            "rating": 5,
+            "quote": "The wipes softens the crusty buildup over night and makes it easier to remove. Eyes are looking much cleaner and Argo is much happier.",
+            "category": "Eyes",
+            "product_name": "EyeWipes Kit – Prevention That Keeps Eyes Clear",
+            "product_link": "https://shopvetpets.com/products/eyewipes-prevention-that-keeps-eyes-clear",
+            "reviewer_name": "Pauline L.",
+            "verified": true
           }
         },
-        "loox_reviews_loox_testimonial_carousel_section_kc4M9w": {
-          "type": "shopify://apps/loox-reviews/blocks/loox-testimonial-carousel-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
-          "disabled": true,
+        "review_fyTWda": {
+          "type": "review",
           "settings": {
-            "maxWidth": 1100,
-            "desktopFontSize": 32,
-            "mobileFontSize": 20,
-            "maxNumberOfCharacters": 100,
-            "quoteMarkIcon": "style-1",
-            "reviewerNameColor": "#000000",
-            "textColor": "#000000",
-            "starsColor": "",
-            "quotesIconColor": "#eaeaea",
-            "arrows_iconColor": "#000000",
-            "arrows_hideOnMobile": true,
-            "pagination_active": true,
-            "pagination_selectedDotColor": "#000000",
-            "pagination_dotColor": "#000000",
-            "autoplay_active": false,
-            "autoplay_duration": 2,
-            "productIds": ""
+            "rating": 5,
+            "quote": "My Pom loves the wipes! Way less hassle than when I used to brush her teeth. Thank you!",
+            "category": "Dental",
+            "product_name": "FreshWipes Plaque Relief Kit",
+            "product_link": "https://shopvetpets.com/products/freshwipes-kit-protects-against-dental-diseases",
+            "reviewer_name": "Marilú P.",
+            "verified": true
           }
         },
-        "loox_reviews_loox_agg_section_yh6bcp": {
-          "type": "shopify://apps/loox-reviews/blocks/loox-agg-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
-          "disabled": true,
+        "review_jMiikK": {
+          "type": "review",
           "settings": {
-            "reviews_to_display": "product_reviews_only",
-            "default_tab": "automatic",
-            "only_photos": false,
-            "hide_thumbnails": true,
-            "product_handle": "",
-            "aggregated": false,
-            "data-limit": 10,
-            "maxwidth": 1080,
-            "is_sample": true
+            "rating": 5,
+            "quote": "My two 8 month old dogs are really good at having their teeth cleaned. I can get to their back teeth and all around their mouth.",
+            "category": "Dental",
+            "product_name": "FreshWipes Plaque Relief Kit",
+            "product_link": "https://shopvetpets.com/products/freshwipes-kit-protects-against-dental-diseases",
+            "reviewer_name": "Lynn H.",
+            "verified": true
+          }
+        },
+        "review_dENdxf": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "VetPet Eyewipes works very well on one of my toy poodle's eye stains. I use them every morning. And for the other toy poodle with crustier eye stains, I use a warm damp microfiber cloth followed by VetPet Eyewipes.",
+            "category": "Eyes",
+            "product_name": "EyeWipes Kit – Prevention That Keeps Eyes Clear",
+            "product_link": "https://shopvetpets.com/products/eyewipes-prevention-that-keeps-eyes-clear",
+            "reviewer_name": "Vicki M.",
+            "verified": true
+          }
+        },
+        "review_f7DMTE": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "These are really great. So easy to use & doesn’t stress the dog out while I'm using them. Would recommend",
+            "category": "Dental",
+            "product_name": "FreshWipes Plaque Relief Kit",
+            "product_link": "https://shopvetpets.com/products/freshwipes-kit-protects-against-dental-diseases",
+            "reviewer_name": "Alison Christoforidou",
+            "verified": true
+          }
+        },
+        "review_Bd3awD": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "Working. Up to the present.will advise you after 30days as recomended.Got my daughter to purchase some as well.After she had seen Buddy.",
+            "category": "Eyes",
+            "product_name": "EyeWipes Kit – Prevention That Keeps Eyes Clear",
+            "product_link": "https://shopvetpets.com/products/eyewipes-prevention-that-keeps-eyes-clear",
+            "reviewer_name": "John B.",
+            "verified": true
+          }
+        },
+        "review_E7RQA7": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "These are the only things I have used , which are many, that has actually worked. Very happy",
+            "category": "Eyes",
+            "product_name": "EyeWipes Kit – Prevention That Keeps Eyes Clear",
+            "product_link": "https://shopvetpets.com/products/eyewipes-prevention-that-keeps-eyes-clear",
+            "reviewer_name": "Barbara M.",
+            "verified": true
+          }
+        },
+        "review_RQVxaA": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "Since I started using the finger wipes the plaque on Lucy’s teeth has definitely started to disappear.",
+            "category": "Eyes",
+            "product_name": "FreshWipes Plaque Relief Kit",
+            "product_link": "https://shopvetpets.com/products/freshwipes-kit-protects-against-dental-diseases",
+            "reviewer_name": "Jackie A.",
+            "verified": true
           }
         }
       },
       "block_order": [
-        "loox_reviews_loox_card_carousel_section_ccGMRh",
-        "loox_reviews_loox_testimonial_carousel_section_kc4M9w",
-        "loox_reviews_loox_agg_section_yh6bcp"
+        "review_UrqkM8",
+        "review_fyTWda",
+        "review_jMiikK",
+        "review_dENdxf",
+        "review_f7DMTE",
+        "review_Bd3awD",
+        "review_E7RQA7",
+        "review_RQVxaA"
       ],
-      "disabled": true,
+      "name": "Review slider",
       "settings": {
-        "display_id": false,
-        "include_margins": true
+        "section_width": "page",
+        "custom_max_width": 1200,
+        "bg_color": "#D5F7FF",
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "heading": "<p>What pet parents are saying</p>",
+        "heading_size": 40,
+        "heading_size_mobile": 26,
+        "heading_color": "#10232B",
+        "heading_gradient": false,
+        "heading_gradient_start": "#47B5E9",
+        "heading_gradient_end": "#13B6B5",
+        "per_view_desktop": "3",
+        "per_view_tablet": "2",
+        "per_view_mobile": "1",
+        "slide_gap": 16,
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "show_arrows": true,
+        "arrow_bg": "#FFFFFF",
+        "arrow_color": "#10232B",
+        "show_dots": true,
+        "dot_color": "#10232B",
+        "card_bg": "#FFFFFF",
+        "card_radius": 16,
+        "card_shadow": true,
+        "star_color": "#F5A623",
+        "tag_bg": "#47B5E9",
+        "tag_text_color": "#FFFFFF",
+        "quote_size": 16,
+        "quote_size_mobile": 15,
+        "quote_color": "#2C4650",
+        "product_label": "Product:",
+        "product_link_color": "#47B5E9",
+        "name_size": 15,
+        "name_color": "#10232B",
+        "avatar_size": 44,
+        "verified_label": "Verified"
+      }
+    },
+    "section_divider_hnJwee": {
+      "type": "section-divider",
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": true,
+        "shape_color": "background-2",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-1",
+        "custom_background_color": "#FFFFFF",
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "collapsible_content_j44jLX": {
@@ -1774,94 +1680,6 @@
         "custom_background_color": "#ffffff",
         "padding_top": 0,
         "padding_bottom": 0
-      }
-    },
-    "contact_form_WHP8G7": {
-      "type": "contact-form",
-      "blocks": {
-        "field_row_fNxBGi": {
-          "type": "field_row",
-          "settings": {
-            "input_1_enabled": true,
-            "input_1_type": "name",
-            "input_1_required": false,
-            "input_1_error_message": "This field is required",
-            "input_1_custom_name": "Custom input name",
-            "input_2_enabled": true,
-            "input_2_type": "email",
-            "input_2_required": false,
-            "input_2_error_message": "This field is required",
-            "input_2_custom_name": "Custom input name"
-          }
-        },
-        "field_row_f84rat": {
-          "type": "field_row",
-          "settings": {
-            "input_1_enabled": true,
-            "input_1_type": "phone",
-            "input_1_required": false,
-            "input_1_error_message": "This field is required",
-            "input_1_custom_name": "Custom input name",
-            "input_2_enabled": false,
-            "input_2_type": "custom",
-            "input_2_required": false,
-            "input_2_error_message": "This field is required",
-            "input_2_custom_name": "Custom input name"
-          }
-        },
-        "textarea_NbxXax": {
-          "type": "textarea",
-          "settings": {
-            "input_type": "comment",
-            "input_required": false,
-            "input_error_message": "This field is required",
-            "input_custom_name": "Custom name"
-          }
-        }
-      },
-      "block_order": [
-        "field_row_fNxBGi",
-        "field_row_f84rat",
-        "textarea_NbxXax"
-      ],
-      "disabled": true,
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "title": "Contact our support",
-        "title_highlight_color": "#6d388b",
-        "heading_size": "h1",
-        "button_full_width": true,
-        "color_scheme": "background-1",
-        "success_icon": "check_circle",
-        "success_icon_filled": false,
-        "success_text_color": "#28c100",
-        "success_bg_color": "#f2ffed",
-        "success_border_radius": 8,
-        "success_border_width": 1,
-        "success_border_color": "#28c100",
-        "errors_icon": "error",
-        "errors_icon_filled": false,
-        "errors_text_color": "#ff0000",
-        "errors_bg_color": "#fff5f5",
-        "errors_border_radius": 8,
-        "errors_border_width": 1,
-        "errors_border_color": "#ff0000",
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "custom_colors_background": "#ffffff",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#2e2a39",
-        "custom_colors_solid_button_background": "#dd1d1d",
-        "custom_colors_solid_button_text": "#ffffff"
-      }
-    },
-    "1762748223f606df65": {
-      "type": "apps",
-      "disabled": true,
-      "settings": {
-        "display_id": false,
-        "include_margins": true
       }
     },
     "ss_modal_popup_6_LP6T6J": {
@@ -2447,8 +2265,9 @@
     "multicolumn_fMxtnA",
     "section_divider_T7NFdM",
     "featured_product_mft4bF",
-    "testimonials_zdydDA",
-    "17854288026a1c7a9d",
+    "section_divider_hYBJ6V",
+    "review_slider_jL8hbB",
+    "section_divider_hnJwee",
     "collapsible_content_j44jLX",
     "image_banner_dHw7hG",
     "featured_collection_Jri9Vj",
@@ -2456,8 +2275,6 @@
     "section_divider_c4Gbyq",
     "icon_bar_ztYi7K",
     "section_divider_Vr9Acc",
-    "contact_form_WHP8G7",
-    "1762748223f606df65",
     "ss_modal_popup_6_LP6T6J",
     "ss_modal_popup_6_EkyBft"
   ]
