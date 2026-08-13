@@ -2727,9 +2727,10 @@
         "product_kUq4Ur": {
           "type": "product",
           "settings": {
-            "product": "",
-            "title": "PawBalm",
+            "product": "glovewipes-quick-clean-kit",
+            "title": "GloveWipes",
             "description": "Soothes cracked pads and stops the licking and chewing.",
+            "image": "shopify://shop_images/EYEwipes_-_2026-08-13T194655.836.jpg",
             "link": "",
             "rating": 5,
             "show_status": true,
@@ -2758,9 +2759,10 @@
         "product_BeQBTR": {
           "type": "product",
           "settings": {
-            "product": "",
-            "title": "",
+            "product": "pawfoam",
+            "title": "PawFoam",
             "description": "",
+            "image": "shopify://shop_images/EYEwipes_-_2026-08-13T194805.803.jpg",
             "link": "",
             "rating": 5,
             "show_status": true,
