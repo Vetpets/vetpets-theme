@@ -9,8 +9,163 @@
  */
 {
   "sections": {
+    "hero_review_carousel_7VMA4V": {
+      "type": "hero-review-carousel",
+      "blocks": {
+        "image_ijAazT": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Namnlos_design_-_2026-08-13T102652.511.jpg"
+          }
+        },
+        "image_6KDjVa": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Namnlos_design_-_2026-08-13T102700.495.jpg"
+          }
+        },
+        "image_yyxnHb": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/UGC_BILDER_HOMEPAGE.jpg"
+          }
+        },
+        "image_3Lnbkh": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/UGC_BILDER_HOMEPAGE_1.jpg"
+          }
+        },
+        "image_pQwnGM": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/UGC_BILDER_HOMEPAGE_2.jpg"
+          }
+        },
+        "image_eUPXnt": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/UGC_BILDER_HOMEPAGE_3.jpg"
+          }
+        },
+        "image_pRh6WW": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/UGC_BILDER_HOMEPAGE_4.jpg"
+          }
+        },
+        "image_E8Lfn3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/UGC_BILDER_HOMEPAGE_5.jpg"
+          }
+        },
+        "image_7j77ga": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/UGC_BILDER_HOMEPAGE_6.jpg"
+          }
+        },
+        "image_XiGJDr": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/UGC_BILDER_HOMEPAGE_7.jpg"
+          }
+        },
+        "image_m9rUK9": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/UGC_BILDER_HOMEPAGE_8.jpg"
+          }
+        },
+        "image_JFNkDr": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/UGC_BILDER_HOMEPAGE_9.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "image_ijAazT",
+        "image_6KDjVa",
+        "image_yyxnHb",
+        "image_3Lnbkh",
+        "image_pQwnGM",
+        "image_eUPXnt",
+        "image_pRh6WW",
+        "image_E8Lfn3",
+        "image_7j77ga",
+        "image_XiGJDr",
+        "image_m9rUK9",
+        "image_JFNkDr"
+      ],
+      "name": "Hero review carousel",
+      "settings": {
+        "badge_text": "45.000+ Happy Pet Parents",
+        "show_stars": true,
+        "badge_bg": "#FFFFFF",
+        "badge_text_color": "#10232B",
+        "star_color": "#FFB800",
+        "heading": "The 30-Second Daily Routines That Stops Pet Problems Before They Start",
+        "subtext": "<p>Simple, vet-approved daily care — loved by thousands of pet parents. Subscribe today for a FREE gift plus extra savings!</p>",
+        "heading_color": "#10232B",
+        "text_color": "#2C4650",
+        "button_label": "Start the Routine — Save 20%",
+        "button_link": "shopify://collections/finger-wipes",
+        "button_bg": "#47B5E9",
+        "button_text_color": "#FFFFFF",
+        "bg_color": "#D5F7FF",
+        "wall_height": 380,
+        "scroll_speed": 45,
+        "padding_top": 48,
+        "padding_bottom": 48,
+        "badge_text_size": 14,
+        "badge_text_size_mobile": 13,
+        "heading_size": 39,
+        "heading_size_mobile": 34,
+        "subtext_size": 15,
+        "subtext_size_mobile": 16,
+        "button_text_size": 18,
+        "button_text_size_mobile": 16,
+        "heading_gradient": false,
+        "heading_gradient_start": "#47B5E9",
+        "heading_gradient_end": "#13B6B5",
+        "subtext_gradient": false,
+        "subtext_gradient_start": "#47B5E9",
+        "subtext_gradient_end": "#13B6B5",
+        "button_gradient": false,
+        "button_gradient_start": "#47B5E9",
+        "button_gradient_end": "#13B6B5",
+        "show_guarantee": true,
+        "guarantee_text": "100-Day Money-Back Guarantee",
+        "guarantee_icon": "check",
+        "guarantee_icon_style": "filled",
+        "guarantee_weight": "600",
+        "guarantee_icon_color": "#13B6B5",
+        "guarantee_text_color": "#2C4650",
+        "guarantee_text_size": 15,
+        "guarantee_text_size_mobile": 14
+      }
+    },
+    "section_divider_tRqM9Q": {
+      "type": "section-divider",
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": true,
+        "shape_color": "background-2",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-1",
+        "custom_background_color": "#FFFFFF",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
     "image_banner_gUTUbM": {
       "type": "image-banner",
+      "disabled": true,
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "display_id": false,
@@ -54,214 +209,6 @@
         "mobile_content_alignment": "center",
         "stack_images_on_mobile": true,
         "show_text_below": true
-      }
-    },
-    "ss_hero_pro_PGyKJy": {
-      "type": "ss-hero-pro",
-      "blocks": {
-        "caption_teTphi": {
-          "type": "caption",
-          "disabled": true,
-          "settings": {
-            "caption": "<p>Vet Recommended</p>",
-            "caption_custom": false,
-            "caption_font": "josefin_sans_n4",
-            "caption_size": 12,
-            "caption_size_mobile": 12,
-            "caption_advanced": false,
-            "caption_height": 130,
-            "caption_mt": 0,
-            "caption_mt_mobile": 0,
-            "background": true,
-            "caption_bg_opacity": 1,
-            "enable_blur": false,
-            "caption_radius": 100,
-            "caption_border_thickness": 1,
-            "caption_padding_horizontal": 12,
-            "caption_padding_horizontal_mobile": 12,
-            "caption_padding_vertical": 6,
-            "caption_padding_vertical_mobile": 6,
-            "caption_color": "#ffffff",
-            "caption_bg_color": "#13b6b5",
-            "caption_border_color": "#13b6b5"
-          }
-        },
-        "heading_ckcrih": {
-          "type": "heading",
-          "settings": {
-            "heading": "<p>The Daily Routine Responsible Pet Fathers Use to <strong>Keep Their </strong></p><p><strong>Pet Healthy</strong></p>",
-            "heading_custom": false,
-            "heading_font": "josefin_sans_n4",
-            "heading_accent_font": "playfair_n4",
-            "heading_size": 36,
-            "heading_size_mobile": 22,
-            "heading_advanced": false,
-            "heading_height": 130,
-            "heading_mt": 8,
-            "heading_mt_mobile": 8,
-            "heading_color": "#ffffff",
-            "heading_accent_color": "#47b5e9"
-          }
-        },
-        "text_WyELWw": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "text": "<p>Finger wipes designed for your dog's teeth, eyes, and ears. Simple enough to do every day. Gentle enough that your dog won't fight it.</p>",
-            "text_custom": false,
-            "text_font": "josefin_sans_n4",
-            "text_size": 16,
-            "text_size_mobile": 14,
-            "text_advanced": false,
-            "text_height": 150,
-            "text_mt": 20,
-            "text_mt_mobile": 20,
-            "text_color": "#ffffff"
-          }
-        },
-        "feature_JGbpw8": {
-          "type": "feature",
-          "settings": {
-            "icon": "heart",
-            "text": "Only 30 Seconds/Day"
-          }
-        },
-        "feature_9fXTEx": {
-          "type": "feature",
-          "settings": {
-            "icon": "bolt",
-            "text": "Clear results in 2–3 weeks"
-          }
-        },
-        "feature_RdRWiJ": {
-          "type": "feature",
-          "settings": {
-            "icon": "gift",
-            "text": "Buy 2 Get 2 Free"
-          }
-        },
-        "button_c8nHDF": {
-          "type": "button",
-          "settings": {
-            "button": "FATHER'S DAY SALE",
-            "url": "shopify://collections/finger-wipes",
-            "open_in_new_tab": false,
-            "button_style": "non_outline",
-            "button_custom": false,
-            "button_font": "josefin_sans_n4",
-            "button_size": 18,
-            "button_size_mobile": 18,
-            "button_advanced": false,
-            "button_height": 100,
-            "button_padding_horizontal": 40,
-            "button_padding_horizontal_mobile": 32,
-            "button_padding_vertical": 20,
-            "button_padding_vertical_mobile": 20,
-            "button_radius": 100,
-            "button_border_thickness": 1,
-            "button_mt": 24,
-            "button_mt_mobile": 24,
-            "button_custom_styling": true,
-            "button_full_width_mobile": true,
-            "button_color": "#ffffff",
-            "button_hover_color": "#ffffff",
-            "button_bg_color": "#47b5e9",
-            "button_bg_hover_color": "#13b6b5",
-            "button_border_color": "#1a1a1a",
-            "button_border_hover_color": "#1a1a1a",
-            "button_shadow_color": "#000000"
-          }
-        },
-        "verified_eGxjE3": {
-          "type": "verified",
-          "settings": {
-            "icon_size": 16,
-            "icon_size_mobile": 16,
-            "icon": "shield_check",
-            "text": "<p>100-Day Money-Back Guarantee</p>",
-            "text_custom": false,
-            "text_font": "josefin_sans_n4",
-            "text_size": 14,
-            "text_size_mobile": 14,
-            "text_advanced": false,
-            "text_height": 150,
-            "text_mt": 16,
-            "text_mt_mobile": 16,
-            "icon_color": "#13b6b5",
-            "text_color": "#ffffff"
-          }
-        }
-      },
-      "block_order": [
-        "caption_teTphi",
-        "heading_ckcrih",
-        "text_WyELWw",
-        "feature_JGbpw8",
-        "feature_9fXTEx",
-        "feature_RdRWiJ",
-        "button_c8nHDF",
-        "verified_eGxjE3"
-      ],
-      "disabled": true,
-      "name": "SS - Hero pro 💎",
-      "settings": {
-        "hero_height": "fixed_height",
-        "hero_fixed_height": 700,
-        "hero_fixed_height_mobile": 780,
-        "content_max_width": 45,
-        "enable_split_layout": false,
-        "content_align": "left",
-        "content_align_mobile": "center",
-        "content_vertical_align": "center",
-        "content_vertical_align_mobile": "start",
-        "features_advanced": true,
-        "features_mt": 20,
-        "features_mt_mobile": 20,
-        "features_gap": 20,
-        "features_gap_mobile": 10,
-        "feature_background": false,
-        "feature_bg_opacity": 0.3,
-        "feature_enable_blur": true,
-        "feature_radius": 100,
-        "feature_border_thickness": 1,
-        "feature_padding_horizontal": 12,
-        "feature_padding_horizontal_mobile": 12,
-        "feature_padding_vertical": 6,
-        "feature_padding_vertical_mobile": 6,
-        "feature_icon_size": 18,
-        "feature_icon_size_mobile": 16,
-        "feature_text_custom": false,
-        "feature_text_font": "josefin_sans_n4",
-        "feature_text_size": 14,
-        "feature_text_size_mobile": 12,
-        "feature_text_height": 100,
-        "feature_icon_color": "#13b6b5",
-        "feature_text_color": "#ffffff",
-        "feature_bg_color": "#ffffff",
-        "feature_border_color": "#ffffff",
-        "layout_bg_type": "image",
-        "bg_image": "shopify://shop_images/National_Dog_Month_home_Banner.jpg",
-        "bg_image_mobile": "shopify://shop_images/Namnlos_design_-_2026-08-01T100115.007.jpg",
-        "bg_video_url": "",
-        "bg_overlay": 0,
-        "bg_overlay_color": "#121212",
-        "background_style": "solid",
-        "background_color": "#121212",
-        "background_gradient": "radial-gradient(rgba(30, 30, 36, 1), rgba(5, 5, 5, 1) 100%)",
-        "border_color": "#121212",
-        "margin_top": 0,
-        "margin_bottom": 0,
-        "margin_horizontal": 0,
-        "margin_horizontal_mobile": 0,
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "padding_horizontal": 3,
-        "padding_horizontal_mobile": 0,
-        "width": "page",
-        "content_width": 1400,
-        "border_thickness": 0,
-        "section_radius": 0,
-        "lazy": false
       }
     },
     "multicolumn_Q8WAgx": {
@@ -469,218 +416,6 @@
         "custom_colors_text": "#ffffff",
         "custom_colors_solid_button_background": "#dd1d1d",
         "custom_colors_solid_button_text": "#47b5e9",
-        "custom_colors_outline_button": "#dd1d1d",
-        "custom_section_colors_background": "#ffffff",
-        "custom_section_gradient_background": ""
-      }
-    },
-    "custom_columns_mDVBj9": {
-      "type": "custom-columns",
-      "blocks": {
-        "heading_C9B9Ad": {
-          "type": "heading",
-          "settings": {
-            "column": "col_1",
-            "visibility": "always-display",
-            "heading": "You’re cleaning it… but it keeps coming back.",
-            "title_highlight_color": "#6d388b",
-            "heading_size": "h1",
-            "alignment": "center",
-            "mobile_alignment": "mobile-center",
-            "margin_top": 20,
-            "margin_bottom": 20
-          }
-        },
-        "richtext_YegVym": {
-          "type": "richtext",
-          "settings": {
-            "column": "col_1",
-            "visibility": "always-display",
-            "text": "<p>Because you’re only fixing the surface.<br/></p><p></p>",
-            "text_style": "body",
-            "alignment": "center",
-            "mobile_alignment": "mobile-center",
-            "margin_top": 20,
-            "margin_bottom": 20
-          }
-        },
-        "icon_with_text_jPrdt3": {
-          "type": "icon_with_text",
-          "settings": {
-            "column": "col_2",
-            "visibility": "always-display",
-            "icon": "",
-            "filled_icon": false,
-            "icon_size": "m",
-            "icon_position": "next-to-title",
-            "icon_color": "accent-1",
-            "icon_heading_size": "h3",
-            "icon_text_alignment": "left",
-            "title": "",
-            "text": "<p>Most routines only fix the surface.  <br/>The real issue builds underneath — and keeps returning.<br/><br/>That’s why we created a simple system:<br/><br/>🧼 Clean daily with EyeWipes  <br/>📘 Follow a 30-day routine that fixes the root  <br/><br/>✔ Stop the cycle  <br/>✔ Know exactly what to do  <br/>✔ See real results  </p>",
-            "margin_top": 20,
-            "margin_bottom": 20
-          }
-        },
-        "image_Krw6Yt": {
-          "type": "image",
-          "settings": {
-            "column": "col_3",
-            "visibility": "always-display",
-            "image": "shopify://shop_images/DIGITALPRODUCT_1BrightEyesin30Days.png",
-            "width": 100,
-            "alignment": "flex-end",
-            "mobile_alignment": "flex-end",
-            "border_radius": 0,
-            "margin_top": 20,
-            "margin_bottom": 20
-          }
-        },
-        "richtext_bAHfYa": {
-          "type": "richtext",
-          "settings": {
-            "column": "col_3",
-            "visibility": "always-display",
-            "text": "<p>Includes optional guide in cart for best results</p>",
-            "text_style": "subtitle",
-            "alignment": "center",
-            "mobile_alignment": "mobile-center",
-            "margin_top": 20,
-            "margin_bottom": 20
-          }
-        },
-        "buttons_JcLLeF": {
-          "type": "buttons",
-          "settings": {
-            "column": "col_3",
-            "visibility": "always-display",
-            "button_label_1": "Start the 30-Day Routine",
-            "button_link_1": "shopify://products/eyewipes-prevention-that-keeps-eyes-clear",
-            "button_style_secondary_1": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false,
-            "full_width": false,
-            "alignment": "center",
-            "mobile_alignment": "center",
-            "margin_top": 20,
-            "margin_bottom": 20
-          }
-        }
-      },
-      "block_order": [
-        "heading_C9B9Ad",
-        "richtext_YegVym",
-        "icon_with_text_jPrdt3",
-        "image_Krw6Yt",
-        "richtext_bAHfYa",
-        "buttons_JcLLeF"
-      ],
-      "disabled": true,
-      "name": "Custom columns",
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "color_scheme": "background-1",
-        "columns_count": 3,
-        "desktop_page_width": "normal",
-        "column_gap_desktop": 40,
-        "row_gap_desktop": 40,
-        "desktop_vertical_alignment": "center",
-        "mobile_full_page": false,
-        "column_gap_mobile": 20,
-        "row_gap_mobile": 30,
-        "mobile_vertical_alignment": "flex-start",
-        "col_1_desktop_width": 12,
-        "col_1_mobile_width": 4,
-        "col_1_visibility": "always-display",
-        "col_2_desktop_width": 4,
-        "col_2_mobile_width": 4,
-        "col_2_visibility": "always-display",
-        "col_3_desktop_width": 4,
-        "col_3_mobile_width": 4,
-        "col_3_visibility": "always-display",
-        "col_4_desktop_width": 4,
-        "col_4_mobile_width": 4,
-        "col_4_visibility": "always-display",
-        "col_5_desktop_width": 3,
-        "col_5_mobile_width": 4,
-        "col_5_visibility": "always-display",
-        "col_6_desktop_width": 3,
-        "col_6_mobile_width": 4,
-        "col_6_visibility": "always-display",
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "custom_colors_background": "#ffffff",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#2e2a39",
-        "custom_colors_solid_button_background": "#dd1d1d",
-        "custom_colors_solid_button_text": "#ffffff",
-        "custom_colors_outline_button": "#dd1d1d"
-      }
-    },
-    "image_with_text_xEiazN": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading_CwgiUG": {
-          "type": "heading",
-          "settings": {
-            "title": "You’re cleaning it… but it keeps coming back.",
-            "title_highlight_color": "#6d388b",
-            "heading_size": "h1"
-          }
-        },
-        "button_pwptYA": {
-          "type": "button",
-          "settings": {
-            "button_label": "Start the 30-Day Routine",
-            "button_link": "shopify://products/eyewipes-prevention-that-keeps-eyes-clear",
-            "button_style_secondary": false
-          }
-        },
-        "text_fjVmFM": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Most routines only fix the surface.  <br/>The real issue builds underneath — and keeps returning.<br/><br/>That’s why we created a simple system:<br/><br/>&gt; Clean daily with EyeWipes  <br/>&gt; Follow a 30-day routine that fixes the root  <br/><br/>✔ Stop the cycle  <br/>✔ Know exactly what to do  <br/>✔ See real results  </p>",
-            "text_style": "body"
-          }
-        }
-      },
-      "block_order": [
-        "heading_CwgiUG",
-        "button_pwptYA",
-        "text_fjVmFM"
-      ],
-      "disabled": true,
-      "name": "t:sections.image-with-text.presets.name",
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "image": "shopify://shop_images/DIGITALPRODUCT_1BrightEyesin30Days.png",
-        "video_autoplay": true,
-        "video_loop": true,
-        "height": "adapt",
-        "color_scheme": "background-1",
-        "section_color_scheme": "background-1",
-        "full_desktop_width": false,
-        "content_layout": "no-overlap",
-        "desktop_media_width": 50,
-        "layout": "image_first",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "mobile_full_media_width": false,
-        "mobile_direction": "normal",
-        "mobile_image_quanlity": "2",
-        "mobile_content_alignment": "left",
-        "mobile_padding_top": 0,
-        "mobile_padding_bottom": 16,
-        "desktop_padding_top": 36,
-        "desktop_padding_bottom": 36,
-        "custom_colors_background": "#2e2a39",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#ffffff",
-        "custom_colors_solid_button_background": "#dd1d1d",
-        "custom_colors_solid_button_text": "#ffffff",
         "custom_colors_outline_button": "#dd1d1d",
         "custom_section_colors_background": "#ffffff",
         "custom_section_gradient_background": ""
@@ -2536,13 +2271,12 @@
     }
   },
   "order": [
+    "hero_review_carousel_7VMA4V",
+    "section_divider_tRqM9Q",
     "image_banner_gUTUbM",
     "image_banner_NBXkrF",
-    "ss_hero_pro_PGyKJy",
     "multicolumn_Q8WAgx",
     "image_with_text_77grg8",
-    "custom_columns_mDVBj9",
-    "image_with_text_xEiazN",
     "section_divider_ehXT7d",
     "multicolumn_fMxtnA",
     "section_divider_T7NFdM",
