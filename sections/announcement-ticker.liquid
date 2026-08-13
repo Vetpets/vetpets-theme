@@ -1,0 +1,579 @@
+{%- comment -%}
+  Announcement ticker
+  -------------------
+  Horizontal marquee of icon + text pairs with a divider between every pair.
+
+  Seamless loop: the item list is rendered twice and the track animates to
+  translateX(-50%), i.e. exactly one copy. That only stays seamless if the
+  track has no flex gap - a gap would add one extra gap between the copies
+  and half the width would no longer be one copy. All spacing therefore
+  lives in the divider's own inline margins, and a divider is emitted after
+  every item (including the last), so the repeating unit is always
+  item + divider. Divider style "none" keeps the element and its margins and
+  only drops the visual mark, so spacing survives.
+
+  Speed is px per second, not a fixed duration: the inline JS measures one
+  copy and sets --vp-ticker-dur = width / speed. That keeps the visual speed
+  identical whether the merchant adds 2 items or 20. Without JS the CSS
+  default duration applies.
+
+  The second copy is aria-hidden so screen readers read the announcements
+  once, and shopify_attributes is only emitted on the first copy so theme
+  editor block selection targets a single element.
+
+  All classes are prefixed vp-ticker- so nothing collides with the Shrine
+  theme's .announcement-bar / .vertical-ticker CSS.
+{%- endcomment -%}
+
+{%- liquid
+  assign st = section.settings
+  assign ticker_blocks = section.blocks | where: 'type', 'item'
+
+  assign font_size = st.font_size | default: 14
+  assign font_size_m = st.font_size_mobile | default: 13
+  assign font_weight = st.font_weight | default: '600'
+  assign speed = st.scroll_speed | default: 60
+
+  assign text_transform = 'none'
+  if st.uppercase
+    assign text_transform = 'uppercase'
+  endif
+
+  assign anim_name = 'vp-ticker-left'
+  if st.direction == 'right'
+    assign anim_name = 'vp-ticker-right'
+  endif
+
+  assign root_class = 'vp-ticker'
+  if st.pause_on_hover
+    assign root_class = 'vp-ticker vp-ticker--pause-hover'
+  endif
+-%}
+
+{%- capture divider_markup -%}
+  <span class="vp-ticker__divider vp-ticker__divider--{{ st.divider_style }}" aria-hidden="true"></span>
+{%- endcapture -%}
+
+{%- if ticker_blocks.size > 0 -%}
+  <div
+    class="{{ root_class }}"
+    data-vp-ticker="{{ section.id }}"
+    data-speed="{{ speed }}"
+    style="
+      --vp-ticker-bg: {{ st.bg_color }};
+      --vp-ticker-text: {{ st.text_color }};
+      --vp-ticker-icon: {{ st.icon_color }};
+      --vp-ticker-fs: {{ font_size }}px;
+      --vp-ticker-fs-m: {{ font_size_m }}px;
+      --vp-ticker-weight: {{ font_weight }};
+      --vp-ticker-ls: {{ st.letter_spacing }}px;
+      --vp-ticker-tt: {{ text_transform }};
+      --vp-ticker-div-color: {{ st.divider_color }};
+      --vp-ticker-div-w: {{ st.divider_thickness }}px;
+      --vp-ticker-div-h: {{ st.divider_height }}px;
+      --vp-ticker-gap: {{ st.divider_gap }}px;
+      --vp-ticker-gap-m: {{ st.divider_gap_mobile }}px;
+      --vp-ticker-anim: {{ anim_name }};
+      --vp-ticker-pad-top: {{ st.padding_top }}px;
+      --vp-ticker-pad-bottom: {{ st.padding_bottom }}px;
+    "
+  >
+    <div class="vp-ticker__viewport">
+      <div class="vp-ticker__track">
+        {%- for copy in (1..2) -%}
+          {%- assign is_dup = false -%}
+          {%- unless forloop.first -%}
+            {%- assign is_dup = true -%}
+          {%- endunless -%}
+
+          {%- for block in ticker_blocks -%}
+            {%- liquid
+              assign icon_color = block.settings.icon_color
+              if icon_color == blank
+                assign icon_color = st.icon_color
+              endif
+            -%}
+            <div
+              class="vp-ticker__item"
+              {% if is_dup %}
+                aria-hidden="true"
+              {% else %}
+                {{ block.shopify_attributes }}
+              {% endif %}
+            >
+              <span class="vp-ticker__icon" style="color: {{ icon_color }};">
+                {%- case block.settings.icon -%}
+                  {%- when 'shield' -%}
+                    <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 2.5l7.5 3v5.6c0 4.6-3.1 8.4-7.5 10.4-4.4-2-7.5-5.8-7.5-10.4V5.5l7.5-3z"/><path d="M8.7 11.8l2.3 2.3 4.3-4.6"/></svg>
+                  {%- when 'heart' -%}
+                    <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                  {%- when 'leaf' -%}
+                    <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10z"/><path d="M2 21c0-3 1.9-5.4 5.1-6C9.5 14.5 12 13 13 12"/></svg>
+                  {%- when 'truck' -%}
+                    <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M1.8 4.5h13.4v10.9H1.8z"/><path d="M15.2 8.4h4l3 3v4h-7z"/><circle cx="6.3" cy="18.3" r="2.2"/><circle cx="18" cy="18.3" r="2.2"/></svg>
+                  {%- when 'coin' -%}
+                    <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v10"/><path d="M14.5 9.4c-.5-.8-1.4-1.3-2.5-1.3-1.5 0-2.6.8-2.6 2s1 1.7 2.6 2c1.6.3 2.6.8 2.6 2s-1.1 2-2.6 2c-1.1 0-2-.5-2.5-1.3"/></svg>
+                  {%- when 'package' -%}
+                    <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7l8.7 5 8.7-5"/><path d="M12 22V12"/><path d="M16.5 9.4L7.5 4.2"/></svg>
+                  {%- when 'paw' -%}
+                    <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><ellipse cx="6.6" cy="10.2" rx="2.1" ry="2.6"/><ellipse cx="11.9" cy="7.6" rx="2.2" ry="2.9"/><ellipse cx="17.3" cy="10.2" rx="2.1" ry="2.6"/><path d="M12 11.8c3.2 0 5.6 2.4 5.6 4.9 0 2-1.6 3.4-3.6 3.4-1.1 0-1.5-.4-2-.4s-.9.4-2 .4c-2 0-3.6-1.4-3.6-3.4 0-2.5 2.4-4.9 5.6-4.9z"/></svg>
+                  {%- when 'clock' -%}
+                    <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 6.6V12l3.5 2.1"/></svg>
+                  {%- when 'sparkle' -%}
+                    <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M10 2.2l1.7 4.9 4.9 1.7-4.9 1.7L10 15.4 8.3 10.5 3.4 8.8l4.9-1.7L10 2.2z"/><path d="M17.6 13.6l.9 2.6 2.6.9-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9.9-2.6z"/></svg>
+                  {%- else -%}
+                    <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M7.9 12.3l2.9 2.9 5.3-6.1"/></svg>
+                {%- endcase -%}
+              </span>
+              {%- if block.settings.text != blank -%}
+                <span class="vp-ticker__text">{{ block.settings.text | escape }}</span>
+              {%- endif -%}
+            </div>
+            {{ divider_markup }}
+          {%- endfor -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% style %}
+  .vp-ticker {
+    background-color: var(--vp-ticker-bg, #47b5e9);
+    padding-block: var(--vp-ticker-pad-top, 12px) var(--vp-ticker-pad-bottom, 12px);
+    font-family: var(--font-body-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+  }
+
+  /* Clips the overflowing track. overflow-x: hidden rather than auto so no
+     scrollbar can ever appear, on any platform. */
+  .vp-ticker__viewport {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  /* No flex gap here on purpose - see the note at the top of the file. */
+  .vp-ticker__track {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: max-content;
+    will-change: transform;
+    animation-name: var(--vp-ticker-anim, vp-ticker-left);
+    animation-duration: var(--vp-ticker-dur, 30s);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  .vp-ticker__item {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 0.5em;
+    white-space: nowrap;
+    font-size: var(--vp-ticker-fs-m, 13px);
+    font-weight: var(--vp-ticker-weight, 600);
+    letter-spacing: var(--vp-ticker-ls, 0.5px);
+    line-height: 1.2;
+    text-transform: var(--vp-ticker-tt, uppercase);
+    color: var(--vp-ticker-text, #ffffff);
+  }
+
+  .vp-ticker__icon {
+    display: inline-flex;
+    flex: 0 0 auto;
+  }
+
+  .vp-ticker__svg {
+    display: block;
+    width: 1.25em;
+    height: 1.25em;
+  }
+
+  .vp-ticker__text {
+    display: inline-block;
+  }
+
+  /* ---------- dividers ----------
+     The margins are the item spacing, so every divider variant keeps them -
+     including "none", which only drops the visual mark. */
+
+  .vp-ticker__divider {
+    flex: 0 0 auto;
+    margin-inline: var(--vp-ticker-gap-m, 18px);
+    background-color: var(--vp-ticker-div-color, #ffffff);
+  }
+
+  .vp-ticker__divider--line {
+    width: var(--vp-ticker-div-w, 1px);
+    height: var(--vp-ticker-div-h, 16px);
+  }
+
+  .vp-ticker__divider--slash {
+    width: var(--vp-ticker-div-w, 1px);
+    height: var(--vp-ticker-div-h, 16px);
+    transform: rotate(20deg);
+  }
+
+  .vp-ticker__divider--dot {
+    width: calc(var(--vp-ticker-div-w, 1px) * 3);
+    height: calc(var(--vp-ticker-div-w, 1px) * 3);
+    border-radius: 50%;
+  }
+
+  .vp-ticker__divider--none {
+    width: 0;
+    height: var(--vp-ticker-div-h, 16px);
+    background-color: transparent;
+  }
+
+  @keyframes vp-ticker-left {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @keyframes vp-ticker-right {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+  }
+
+  @media screen and (min-width: 750px) {
+    .vp-ticker__item {
+      font-size: var(--vp-ticker-fs, 14px);
+    }
+
+    .vp-ticker__divider {
+      margin-inline: var(--vp-ticker-gap, 28px);
+    }
+  }
+
+  /* ---------- pausing ---------- */
+
+  .vp-ticker--pause-hover:hover .vp-ticker__track,
+  .vp-ticker--paused .vp-ticker__track {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vp-ticker__track {
+      animation-play-state: paused;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    var root = document.querySelector('[data-vp-ticker="{{ section.id }}"]');
+    if (!root) return;
+
+    var track = root.querySelector('.vp-ticker__track');
+    if (!track) return;
+
+    // Duration is derived from the measured width of one copy, so the ticker
+    // moves at the configured px/second no matter how many items there are.
+    function sync() {
+      var speed = parseFloat(root.dataset.speed);
+      if (!speed || speed <= 0) speed = 60;
+
+      // getBoundingClientRect is sub-pixel accurate; translateX does not
+      // affect the reported width, only the position.
+      var trackWidth = track.getBoundingClientRect().width || track.scrollWidth;
+      var copyWidth = trackWidth / 2;
+      if (!copyWidth) return;
+
+      root.style.setProperty('--vp-ticker-dur', copyWidth / speed + 's');
+    }
+
+    sync();
+
+    // Web fonts land after first paint and change the text width.
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(sync).catch(function () {});
+    }
+
+    var resizeObserver;
+    if ('ResizeObserver' in window) {
+      resizeObserver = new ResizeObserver(sync);
+      resizeObserver.observe(track);
+    } else {
+      window.addEventListener('resize', sync);
+    }
+
+    // Stop burning frames while the ticker is scrolled out of view.
+    var intersectionObserver;
+    if ('IntersectionObserver' in window) {
+      intersectionObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            root.classList.toggle('vp-ticker--paused', !entry.isIntersecting);
+          });
+        },
+        { rootMargin: '100px' }
+      );
+      intersectionObserver.observe(root);
+    }
+
+    document.addEventListener('shopify:section:unload', function (event) {
+      if (!event.detail || event.detail.sectionId !== '{{ section.id }}') return;
+      if (resizeObserver) resizeObserver.disconnect();
+      if (intersectionObserver) intersectionObserver.disconnect();
+      window.removeEventListener('resize', sync);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Announcement ticker",
+  "tag": "section",
+  "class": "section-announcement-ticker",
+  "max_blocks": 20,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#47B5E9"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon (default)",
+      "default": "#FFFFFF",
+      "info": "Used by every item that has no icon colour of its own."
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "number",
+      "id": "font_size",
+      "label": "Font size desktop (px)",
+      "default": 14
+    },
+    {
+      "type": "number",
+      "id": "font_size_mobile",
+      "label": "Font size mobile (px)",
+      "default": 13
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semibold (600)" },
+        { "value": "700", "label": "Bold (700)" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing",
+      "label": "Letter spacing",
+      "min": -1,
+      "max": 4,
+      "step": 0.1,
+      "unit": "px",
+      "default": 0.5
+    },
+    {
+      "type": "checkbox",
+      "id": "uppercase",
+      "label": "Uppercase",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Divider"
+    },
+    {
+      "type": "select",
+      "id": "divider_style",
+      "label": "Divider style",
+      "options": [
+        { "value": "line", "label": "Vertical line" },
+        { "value": "dot", "label": "Dot" },
+        { "value": "slash", "label": "Slash" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "line"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider colour",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "divider_thickness",
+      "label": "Divider thickness",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "unit": "px",
+      "default": 1,
+      "info": "The dot's diameter is three times this value."
+    },
+    {
+      "type": "range",
+      "id": "divider_height",
+      "label": "Divider height",
+      "min": 6,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "divider_gap",
+      "label": "Gap each side desktop",
+      "min": 4,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "divider_gap_mobile",
+      "label": "Gap each side mobile",
+      "min": 4,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Motion"
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "label": "Scroll speed",
+      "min": 10,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 60,
+      "info": "Pixels per second. Stays constant however many items you add."
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Direction",
+      "options": [
+        { "value": "left", "label": "Right to left" },
+        { "value": "right", "label": "Left to right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause on hover",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Free shipping over 499 kr"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "check", "label": "Checkmark" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "coin", "label": "Coin" },
+            { "value": "package", "label": "Package" },
+            { "value": "paw", "label": "Paw" },
+            { "value": "clock", "label": "Clock" },
+            { "value": "sparkle", "label": "Sparkle" }
+          ],
+          "default": "check"
+        },
+        {
+          "type": "color",
+          "id": "icon_color",
+          "label": "Icon colour",
+          "info": "Leave empty to use the section's default icon colour."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement ticker",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": { "text": "Free shipping over 499 kr", "icon": "truck" }
+        },
+        {
+          "type": "item",
+          "settings": { "text": "100-day money-back guarantee", "icon": "shield" }
+        },
+        {
+          "type": "item",
+          "settings": { "text": "Vet-approved formula", "icon": "paw" }
+        },
+        {
+          "type": "item",
+          "settings": { "text": "12,000+ happy pet parents", "icon": "heart" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
