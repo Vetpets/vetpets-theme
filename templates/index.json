@@ -410,6 +410,8 @@
         "card_radius": 16,
         "card_shadow": true,
         "star_color": "#f5a623",
+        "star_size": 17,
+        "star_size_mobile": 16,
         "tag_bg": "#47b5e9",
         "tag_text_color": "#ffffff",
         "quote_size": 16,
@@ -1599,83 +1601,6 @@
         "custom_cards_colors_text": "#2e2a39"
       }
     },
-    "17854288026a1c7a9d": {
-      "type": "apps",
-      "blocks": {
-        "loox_reviews_loox_card_carousel_section_ccGMRh": {
-          "type": "shopify://apps/loox-reviews/blocks/loox-card-carousel-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
-          "disabled": true,
-          "settings": {
-            "maxWidth": 1100,
-            "borderRadius": 8,
-            "itemsPerView": 4,
-            "mobileItemsPerView": 1,
-            "maxNumberOfCharacters": 100,
-            "imageRatio": "0.72",
-            "reviewerNameColor": "#000000",
-            "textColor": "#000000",
-            "itemBackgroundColor": "#ffffff",
-            "starsColor": "",
-            "starsBackgroundColor": "#ffffff",
-            "arrows_backgroundColor": "#ffffff",
-            "arrows_iconColor": "#9a9a9a",
-            "shadow": "offset-dark",
-            "border_active": false,
-            "border_width": 2,
-            "border_color": "#000000",
-            "productIds": ""
-          }
-        },
-        "loox_reviews_loox_testimonial_carousel_section_kc4M9w": {
-          "type": "shopify://apps/loox-reviews/blocks/loox-testimonial-carousel-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
-          "disabled": true,
-          "settings": {
-            "maxWidth": 1100,
-            "desktopFontSize": 32,
-            "mobileFontSize": 20,
-            "maxNumberOfCharacters": 100,
-            "quoteMarkIcon": "style-1",
-            "reviewerNameColor": "#000000",
-            "textColor": "#000000",
-            "starsColor": "",
-            "quotesIconColor": "#eaeaea",
-            "arrows_iconColor": "#000000",
-            "arrows_hideOnMobile": true,
-            "pagination_active": true,
-            "pagination_selectedDotColor": "#000000",
-            "pagination_dotColor": "#000000",
-            "autoplay_active": false,
-            "autoplay_duration": 2,
-            "productIds": ""
-          }
-        },
-        "loox_reviews_loox_agg_section_yh6bcp": {
-          "type": "shopify://apps/loox-reviews/blocks/loox-agg-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
-          "disabled": true,
-          "settings": {
-            "reviews_to_display": "product_reviews_only",
-            "default_tab": "automatic",
-            "only_photos": false,
-            "hide_thumbnails": true,
-            "product_handle": "",
-            "aggregated": false,
-            "data-limit": 10,
-            "maxwidth": 1080,
-            "is_sample": true
-          }
-        }
-      },
-      "block_order": [
-        "loox_reviews_loox_card_carousel_section_ccGMRh",
-        "loox_reviews_loox_testimonial_carousel_section_kc4M9w",
-        "loox_reviews_loox_agg_section_yh6bcp"
-      ],
-      "disabled": true,
-      "settings": {
-        "display_id": false,
-        "include_margins": true
-      }
-    },
     "collapsible_content_j44jLX": {
       "type": "collapsible-content",
       "blocks": {
@@ -1938,13 +1863,6 @@
         "custom_colors_solid_button_text": "#ffffff"
       }
     },
-    "1761917105d5ecc4a9": {
-      "type": "apps",
-      "settings": {
-        "display_id": false,
-        "include_margins": true
-      }
-    },
     "section_divider_c4Gbyq": {
       "type": "section-divider",
       "name": "Section divider",
@@ -2135,14 +2053,6 @@
         "custom_colors_text": "#2e2a39",
         "custom_colors_solid_button_background": "#dd1d1d",
         "custom_colors_solid_button_text": "#ffffff"
-      }
-    },
-    "1762748223f606df65": {
-      "type": "apps",
-      "disabled": true,
-      "settings": {
-        "display_id": false,
-        "include_margins": true
       }
     },
     "ss_modal_popup_6_LP6T6J": {
@@ -2730,16 +2640,13 @@
     "section_divider_T7NFdM",
     "featured_product_mft4bF",
     "testimonials_zdydDA",
-    "17854288026a1c7a9d",
     "collapsible_content_j44jLX",
     "image_banner_dHw7hG",
     "featured_collection_Jri9Vj",
-    "1761917105d5ecc4a9",
     "section_divider_c4Gbyq",
     "icon_bar_ztYi7K",
     "section_divider_Vr9Acc",
     "contact_form_WHP8G7",
-    "1762748223f606df65",
     "ss_modal_popup_6_LP6T6J",
     "ss_modal_popup_6_EkyBft"
   ]
