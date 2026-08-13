@@ -47,6 +47,8 @@
   assign quote_fs = st.quote_size | default: 16
   assign quote_fs_m = st.quote_size_mobile | default: 15
   assign name_fs = st.name_size | default: 15
+  assign star_size = st.star_size | default: 17
+  assign star_size_m = st.star_size_mobile | default: 16
   assign autoplay_speed = st.autoplay_speed | default: 5
 
   assign heading_class = 'vp-reviewslider__heading'
@@ -55,12 +57,25 @@
   endif
 -%}
 
+{%- comment -%}
+  A half star is an empty star with a full one laid over it, clipped to 50%
+  width by an overflow:hidden wrapper. No SVG gradient, because a gradient
+  needs a document-unique id and these stars are duplicated across cards and
+  again across the loop's clones.
+{%- endcomment -%}
 {%- capture star_full -%}
   <svg class="vp-reviewslider__star" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false"><path d="M10 1.5l2.47 5.2 5.53.79-4 4.02.95 5.72L10 14.53 5.05 17.23l.95-5.72-4-4.02 5.53-.79L10 1.5z"/></svg>
 {%- endcapture -%}
 
 {%- capture star_empty -%}
   <svg class="vp-reviewslider__star vp-reviewslider__star--empty" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false"><path d="M10 1.5l2.47 5.2 5.53.79-4 4.02.95 5.72L10 14.53 5.05 17.23l.95-5.72-4-4.02 5.53-.79L10 1.5z"/></svg>
+{%- endcapture -%}
+
+{%- capture star_half -%}
+  <span class="vp-reviewslider__star-wrap">
+    {{- star_empty -}}
+    <span class="vp-reviewslider__star-clip">{{- star_full -}}</span>
+  </span>
 {%- endcapture -%}
 
 {%- if reviews.size > 0 -%}
@@ -79,6 +94,8 @@
       --vp-rs-card-bg: {{ st.card_bg }};
       --vp-rs-card-radius: {{ st.card_radius }}px;
       --vp-rs-star: {{ st.star_color }};
+      --vp-rs-star-size: {{ star_size }}px;
+      --vp-rs-star-size-m: {{ star_size_m }}px;
       --vp-rs-tag-bg: {{ st.tag_bg }};
       --vp-rs-tag-text: {{ st.tag_text_color }};
       --vp-rs-quote: {{ st.quote_color }};
@@ -123,6 +140,9 @@
               {%- liquid
                 assign bs = block.settings
                 assign rating = bs.rating | default: 5 | at_most: 5 | at_least: 0
+                assign rating_full = rating | floor
+                assign rating_rest = rating | minus: rating_full
+                assign rating_half_at = rating_full | plus: 1
               -%}
               <div class="vp-reviewslider__slide" {{ block.shopify_attributes }}>
                 <div class="vp-reviewslider__card{% if st.card_shadow %} vp-reviewslider__card--shadow{% endif %}">
@@ -132,8 +152,10 @@
                     aria-label="{{ rating }} out of 5 stars"
                   >
                     {%- for i in (1..5) -%}
-                      {%- if i <= rating -%}
+                      {%- if i <= rating_full -%}
                         {{ star_full }}
+                      {%- elsif rating_rest >= 0.5 and i == rating_half_at -%}
+                        {{ star_half }}
                       {%- else -%}
                         {{ star_empty }}
                       {%- endif -%}
@@ -337,14 +359,43 @@
     color: var(--vp-rs-star, #F5A623);
   }
 
-  .vp-reviewslider__star {
+  .vp-reviewslider__star,
+  .vp-reviewslider__star-wrap {
     display: block;
-    width: 17px;
-    height: 17px;
+    flex: 0 0 auto;
+    width: var(--vp-rs-star-size-m, 16px);
+    height: var(--vp-rs-star-size-m, 16px);
   }
 
   .vp-reviewslider__star--empty {
     opacity: 0.22;
+  }
+
+  /* Half star: full star laid over the empty one and clipped to 50% width.
+     The clip is what shrinks - the star inside keeps its full size. */
+  .vp-reviewslider__star-wrap {
+    position: relative;
+  }
+
+  .vp-reviewslider__star-wrap > .vp-reviewslider__star {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .vp-reviewslider__star-clip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .vp-reviewslider__star-clip > .vp-reviewslider__star {
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 
   .vp-reviewslider__quote {
@@ -524,6 +575,12 @@
 
     .vp-reviewslider__quote {
       font-size: var(--vp-rs-quote-fs, 16px);
+    }
+
+    .vp-reviewslider__star,
+    .vp-reviewslider__star-wrap {
+      width: var(--vp-rs-star-size, 17px);
+      height: var(--vp-rs-star-size, 17px);
     }
 
     .vp-reviewslider__card {
@@ -1076,6 +1133,18 @@
       "default": "#F5A623"
     },
     {
+      "type": "number",
+      "id": "star_size",
+      "label": "Star size desktop (px)",
+      "default": 17
+    },
+    {
+      "type": "number",
+      "id": "star_size_mobile",
+      "label": "Star size mobile (px)",
+      "default": 16
+    },
+    {
       "type": "color",
       "id": "tag_bg",
       "label": "Category pill background",
@@ -1156,10 +1225,14 @@
       "name": "Review",
       "settings": [
         {
-          "type": "number",
+          "type": "range",
           "id": "rating",
-          "label": "Star rating (1-5)",
-          "default": 5
+          "label": "Star rating",
+          "min": 0,
+          "max": 5,
+          "step": 0.5,
+          "default": 5,
+          "info": "Half steps render a half star."
         },
         {
           "type": "textarea",
