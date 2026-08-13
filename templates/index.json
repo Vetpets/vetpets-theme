@@ -103,13 +103,13 @@
       "settings": {
         "badge_text": "45.000+ Happy Pet Parents",
         "show_stars": true,
-        "badge_bg": "#FFFFFF",
+        "badge_bg": "#ffffff",
         "badge_text_color": "#10232b",
         "star_color": "#ffb800",
         "heading": "The 30-Second Daily Routines That Stops Pet Problems Before They Start",
         "subtext": "<p>Simple, vet-approved daily care — loved by thousands of pet parents. Subscribe today for a FREE gift plus extra savings!</p>",
-        "heading_color": "#10232b",
-        "text_color": "#2c4650",
+        "heading_color": "#000000",
+        "text_color": "#121212",
         "button_label": "Start the Routine — Save 20%",
         "button_link": "shopify://collections/finger-wipes",
         "button_bg": "#47b5e9",
@@ -140,7 +140,7 @@
         "guarantee_text": "100-Day Money-Back Guarantee",
         "guarantee_icon": "check",
         "guarantee_icon_color": "#13b6b5",
-        "guarantee_text_color": "#2c4650",
+        "guarantee_text_color": "#121212",
         "guarantee_text_size": 15,
         "guarantee_text_size_mobile": 14
       }
@@ -154,9 +154,9 @@
         "flip_horizontal": false,
         "flip_vertical": true,
         "shape_color": "background-2",
-        "custom_shape_color": "#D5F7FF",
+        "custom_shape_color": "#d5f7ff",
         "background_color": "background-1",
-        "custom_background_color": "#FFFFFF",
+        "custom_background_color": "#ffffff",
         "padding_top": 0,
         "padding_bottom": 0
       }
