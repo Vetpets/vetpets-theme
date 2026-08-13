@@ -44,6 +44,23 @@
   assign sub_fs_m = st.sub_size_mobile | default: 13
   assign image_w = st.image_width | default: 320
 
+  comment
+    The CTA radius range is 0-100 step 2. Shopify requires (max - min) / step
+    to be a whole number no greater than 101, and a schema that breaks that
+    rule is rejected outright - the file never reaches the theme and the
+    section never appears in Add section. 50 steps here.
+
+    From 50 up the button renders fully round: at that point the radius is
+    already at least half the button's height, so clamping to 999px keeps the
+    pill shape stable whatever the font size or padding.
+  endcomment
+  assign cta_radius = st.cta_radius | default: 100
+  if cta_radius >= 50
+    assign cta_radius_css = 999
+  else
+    assign cta_radius_css = cta_radius
+  endif
+
   assign grid_class = 'vp-symptomnav__grid'
   if st.hide_sub_mobile
     assign grid_class = 'vp-symptomnav__grid vp-symptomnav__grid--hide-sub-m'
@@ -88,7 +105,7 @@
     --vp-sn-cta-text: {{ st.cta_text_color }};
     --vp-sn-cta-bg: {{ st.cta_bg }};
     --vp-sn-cta-border: {{ st.cta_border_color }};
-    --vp-sn-cta-radius: {{ st.cta_radius }}px;
+    --vp-sn-cta-radius: {{ cta_radius_css }}px;
     --vp-sn-cols-d: {{ st.columns_desktop }};
     --vp-sn-cols-m: {{ st.columns_mobile }};
     --vp-sn-gap: {{ st.grid_gap }}px;
@@ -915,10 +932,11 @@
       "id": "cta_radius",
       "label": "Button corner radius",
       "min": 0,
-      "max": 999,
-      "step": 3,
+      "max": 100,
+      "step": 2,
       "unit": "px",
-      "default": 999
+      "default": 100,
+      "info": "50 and above renders a fully round pill."
     }
   ],
   "blocks": [
