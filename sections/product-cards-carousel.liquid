@@ -1,0 +1,1700 @@
+{%- comment -%}
+  Product cards carousel
+  ----------------------
+  Centred heading and subheading over a horizontally scrolling row of product
+  cards: image with a status label top left and an offer label top right,
+  benefit pills, title, star rating, description, an offer badge and a CTA.
+
+  Each card takes a product picker, and every piece of text falls back to the
+  product when the merchant leaves the override empty - title, description,
+  image and link.
+
+  Three slider modes, decided from the card count and the loop setting:
+    static  - fewer cards than fit, so there is nothing to scroll
+    finite  - loop off: the index is clamped and the arrows disable at the ends
+    loop    - the whole list is cloned before and after the originals and the
+              DOM index is normalised back into [n, 2n) without a transition
+  Cloning the full list rather than a few edge slides keeps the loop correct
+  regardless of how many cards are visible, which changes per breakpoint.
+  Clones are aria-hidden, lose their editor block attribute and have their
+  links taken out of the tab order.
+
+  Stars use the same full/half/empty markup as review-slider: a full star laid
+  over an empty one inside a 50%-wide overflow:hidden wrapper, so no SVG
+  gradient id can collide across cards or clones.
+
+  Width reuses the theme's .page-width, so the section lines up with the
+  header and its neighbours. All classes are prefixed vp-prodcards-.
+{%- endcomment -%}
+
+{%- liquid
+  assign st = section.settings
+  assign cards = section.blocks | where: 'type', 'product'
+
+  assign width_mode = st.section_width | default: 'page'
+  assign inner_class = 'vp-prodcards__inner page-width'
+  if width_mode == 'full'
+    assign inner_class = 'vp-prodcards__inner page-width page-width--full'
+  endif
+  assign custom_max_width = st.custom_max_width | default: 1200
+
+  comment
+    Number settings come back nil when cleared, so each falls back to its
+    documented default. 0 is truthy in Liquid, so a deliberate 0 survives.
+  endcomment
+  assign heading_fs = st.heading_size | default: 40
+  assign heading_fs_m = st.heading_size_mobile | default: 26
+  assign sub_fs = st.subheading_size | default: 17
+  assign sub_fs_m = st.subheading_size_mobile | default: 15
+  assign title_fs = st.title_size | default: 18
+  assign title_fs_m = st.title_size_mobile | default: 16
+  assign desc_fs = st.desc_size | default: 14
+  assign desc_fs_m = st.desc_size_mobile | default: 13
+  assign tag_fs = st.tag_size | default: 12
+  assign tag_fs_m = st.tag_size_mobile | default: 11
+  assign star_size = st.star_size | default: 17
+  assign star_size_m = st.star_size_mobile | default: 16
+  assign peek = st.peek | default: 0
+  assign autoplay_speed = st.autoplay_speed | default: 5
+
+  assign heading_class = 'vp-prodcards__heading'
+  if st.heading_gradient
+    assign heading_class = 'vp-prodcards__heading vp-prodcards__heading--grad'
+  endif
+-%}
+
+{%- capture star_full -%}
+  <svg class="vp-prodcards__star" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false"><path d="M10 1.5l2.47 5.2 5.53.79-4 4.02.95 5.72L10 14.53 5.05 17.23l.95-5.72-4-4.02 5.53-.79L10 1.5z"/></svg>
+{%- endcapture -%}
+
+{%- capture star_empty -%}
+  <svg class="vp-prodcards__star vp-prodcards__star--empty" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false"><path d="M10 1.5l2.47 5.2 5.53.79-4 4.02.95 5.72L10 14.53 5.05 17.23l.95-5.72-4-4.02 5.53-.79L10 1.5z"/></svg>
+{%- endcapture -%}
+
+{%- capture star_half -%}
+  <span class="vp-prodcards__star-wrap">
+    {{- star_empty -}}
+    <span class="vp-prodcards__star-clip">{{- star_full -}}</span>
+  </span>
+{%- endcapture -%}
+
+{%- if cards.size > 0 -%}
+  <div
+    class="vp-prodcards"
+    data-vp-prodcards="{{ section.id }}"
+    data-loop="{% if st.loop %}true{% else %}false{% endif %}"
+    data-autoplay="{% if st.autoplay %}true{% else %}false{% endif %}"
+    data-autoplay-speed="{{ autoplay_speed }}"
+    style="
+      --vp-pc-bg: {{ st.bg_color }};
+      --vp-pc-heading: {{ st.heading_color }};
+      --vp-pc-head-g1: {{ st.heading_gradient_start }};
+      --vp-pc-head-g2: {{ st.heading_gradient_end }};
+      --vp-pc-head-fs: {{ heading_fs }}px;
+      --vp-pc-head-fs-m: {{ heading_fs_m }}px;
+      --vp-pc-sub: {{ st.subheading_color }};
+      --vp-pc-sub-fs: {{ sub_fs }}px;
+      --vp-pc-sub-fs-m: {{ sub_fs_m }}px;
+      --vp-pc-card-bg: {{ st.card_bg }};
+      --vp-pc-card-border: {{ st.card_border_color }};
+      --vp-pc-card-radius: {{ st.card_radius }}px;
+      --vp-pc-title: {{ st.title_color }};
+      --vp-pc-title-fs: {{ title_fs }}px;
+      --vp-pc-title-fs-m: {{ title_fs_m }}px;
+      --vp-pc-desc: {{ st.desc_color }};
+      --vp-pc-desc-fs: {{ desc_fs }}px;
+      --vp-pc-desc-fs-m: {{ desc_fs_m }}px;
+      --vp-pc-tag-fs: {{ tag_fs }}px;
+      --vp-pc-tag-fs-m: {{ tag_fs_m }}px;
+      --vp-pc-weight: {{ st.font_weight }};
+      --vp-pc-star: {{ st.star_color }};
+      --vp-pc-star-size: {{ star_size }}px;
+      --vp-pc-star-size-m: {{ star_size_m }}px;
+      --vp-pc-arrow-bg: {{ st.arrow_bg }};
+      --vp-pc-arrow-color: {{ st.arrow_color }};
+      --vp-pc-arrow-size: {{ st.arrow_size }}px;
+      --vp-pc-dot: {{ st.dot_color }};
+      --vp-pc-gap: {{ st.slide_gap }}px;
+      --vp-pc-peek: {{ peek }}px;
+      --vp-pc-pv-d: {{ st.per_view_desktop }};
+      --vp-pc-pad-top: {{ st.padding_top }}px;
+      --vp-pc-pad-bottom: {{ st.padding_bottom }}px;
+      --vp-pc-pad-top-m: {{ st.padding_top_mobile }}px;
+      --vp-pc-pad-bottom-m: {{ st.padding_bottom_mobile }}px;
+    "
+  >
+    <div
+      class="{{ inner_class }}"
+      {% if width_mode == 'custom' %}
+        style="--page-width: {{ custom_max_width }}px;"
+      {% endif %}
+    >
+      {%- if st.heading != blank or st.subheading != blank -%}
+        <div class="vp-prodcards__intro">
+          {%- if st.heading != blank -%}
+            <div class="{{ heading_class }}">{{ st.heading }}</div>
+          {%- endif -%}
+          {%- if st.subheading != blank -%}
+            <div class="vp-prodcards__subheading">{{ st.subheading }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <div
+        class="vp-prodcards__carousel vp-prodcards__carousel--arrows-{{ st.arrow_position }}"
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="{{ st.heading | default: 'Products' | strip_html | escape }}"
+      >
+        <div class="vp-prodcards__viewport">
+          <div class="vp-prodcards__track">
+            {%- for block in cards -%}
+              {%- liquid
+                assign bs = block.settings
+                assign product = bs.product
+
+                assign card_title = bs.title
+                if card_title == blank
+                  assign card_title = product.title
+                endif
+
+                assign card_link = bs.link
+                if card_link == blank
+                  assign card_link = product.url
+                endif
+
+                assign card_image = bs.image
+                if card_image == blank
+                  assign card_image = product.featured_image
+                endif
+
+                assign card_desc = bs.description
+                if card_desc == blank and product != blank
+                  assign card_desc = product.description | strip_html | truncatewords: 18
+                endif
+
+                assign rating = bs.rating | default: 5 | at_most: 5 | at_least: 0
+                assign rating_full = rating | floor
+                assign rating_rest = rating | minus: rating_full
+                assign rating_half_at = rating_full | plus: 1
+
+                assign benefits = bs.benefits | split: ','
+              -%}
+
+              <div class="vp-prodcards__slide" {{ block.shopify_attributes }}>
+                <article class="vp-prodcards__card{% if st.card_shadow %} vp-prodcards__card--shadow{% endif %}">
+                  <div class="vp-prodcards__media">
+                    {%- if card_image != blank -%}
+                      {{
+                        card_image
+                        | image_url: width: 800
+                        | image_tag: loading: 'lazy', widths: '200,300,400,600,800', sizes: '(min-width: 990px) 25vw, 80vw', class: 'vp-prodcards__image', alt: card_title
+                      }}
+                    {%- else -%}
+                      {{ 'product-1' | placeholder_svg_tag: 'vp-prodcards__image vp-prodcards__image--placeholder' }}
+                    {%- endif -%}
+
+                    {%- if bs.show_status and bs.status_text != blank -%}
+                      <span
+                        class="vp-prodcards__label vp-prodcards__label--status"
+                        style="background-color: {{ bs.status_bg }}; color: {{ bs.status_text_color }};"
+                      >
+                        <svg class="vp-prodcards__label-icon" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true" focusable="false"><circle cx="6" cy="6" r="4"/></svg>
+                        {{ bs.status_text | escape }}
+                      </span>
+                    {%- endif -%}
+
+                    {%- if bs.show_offer and bs.offer_text != blank -%}
+                      <span
+                        class="vp-prodcards__label vp-prodcards__label--offer"
+                        style="background-color: {{ bs.offer_bg }}; color: {{ bs.offer_text_color }};"
+                      >
+                        <svg class="vp-prodcards__label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0l-7.2-7.2a2 2 0 0 1-.6-1.4V4.4a2 2 0 0 1 2-2h7.6a2 2 0 0 1 1.4.6l6.8 6.8a2 2 0 0 1 0 2.8z"/><circle cx="8" cy="8" r="1.2" fill="currentColor"/></svg>
+                        {{ bs.offer_text | escape }}
+                      </span>
+                    {%- endif -%}
+                  </div>
+
+                  <div class="vp-prodcards__body">
+                    {%- if benefits.size > 0 -%}
+                      <ul class="vp-prodcards__benefits" role="list">
+                        {%- for benefit in benefits limit: 4 -%}
+                          {%- assign benefit_text = benefit | strip -%}
+                          {%- if benefit_text != blank -%}
+                            <li
+                              class="vp-prodcards__benefit"
+                              style="background-color: {{ bs.benefit_bg }}; color: {{ bs.benefit_text_color }};"
+                            >
+                              {{- benefit_text | escape -}}
+                            </li>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </ul>
+                    {%- endif -%}
+
+                    {%- if card_title != blank -%}
+                      <h3 class="vp-prodcards__title">
+                        {%- if card_link != blank -%}
+                          <a class="vp-prodcards__title-link" href="{{ card_link }}">{{ card_title | escape }}</a>
+                        {%- else -%}
+                          {{ card_title | escape }}
+                        {%- endif -%}
+                      </h3>
+                    {%- endif -%}
+
+                    <div class="vp-prodcards__stars" role="img" aria-label="{{ rating }} out of 5 stars">
+                      {%- for i in (1..5) -%}
+                        {%- if i <= rating_full -%}
+                          {{ star_full }}
+                        {%- elsif rating_rest >= 0.5 and i == rating_half_at -%}
+                          {{ star_half }}
+                        {%- else -%}
+                          {{ star_empty }}
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </div>
+
+                    {%- if card_desc != blank -%}
+                      <p class="vp-prodcards__desc">{{ card_desc | escape }}</p>
+                    {%- endif -%}
+
+                    <div class="vp-prodcards__foot">
+                      {%- if bs.show_badge and bs.badge_text != blank -%}
+                        <span
+                          class="vp-prodcards__badge"
+                          style="background-color: {{ bs.badge_bg }}; color: {{ bs.badge_text_color }};"
+                        >
+                          {%- case bs.badge_icon -%}
+                            {%- when 'tag' -%}
+                              <svg class="vp-prodcards__badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0l-7.2-7.2a2 2 0 0 1-.6-1.4V4.4a2 2 0 0 1 2-2h7.6a2 2 0 0 1 1.4.6l6.8 6.8a2 2 0 0 1 0 2.8z"/><circle cx="8" cy="8" r="1.2" fill="currentColor"/></svg>
+                            {%- when 'star' -%}
+                              <svg class="vp-prodcards__badge-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false"><path d="M10 1.5l2.47 5.2 5.53.79-4 4.02.95 5.72L10 14.53 5.05 17.23l.95-5.72-4-4.02 5.53-.79L10 1.5z"/></svg>
+                            {%- when 'none' -%}
+                            {%- else -%}
+                              <svg class="vp-prodcards__badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12v9H4v-9"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+                          {%- endcase -%}
+                          {{ bs.badge_text | escape }}
+                        </span>
+                      {%- endif -%}
+
+                      {%- if bs.cta_text != blank -%}
+                        <a
+                          class="vp-prodcards__cta"
+                          style="background-color: {{ bs.cta_bg }}; color: {{ bs.cta_text_color }}; border-radius: {{ bs.cta_radius }}px;"
+                          {% if bs.cta_link != blank %}
+                            href="{{ bs.cta_link }}"
+                          {% elsif card_link != blank %}
+                            href="{{ card_link }}"
+                          {% else %}
+                            href="#" aria-disabled="true"
+                          {% endif %}
+                        >
+                          {{- bs.cta_text | escape -}}
+                        </a>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                </article>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+
+        {%- if st.show_arrows -%}
+          <div class="vp-prodcards__arrows">
+            <button class="vp-prodcards__arrow" type="button" data-vp-pc-prev aria-label="Previous products">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7"/></svg>
+            </button>
+            <button class="vp-prodcards__arrow" type="button" data-vp-pc-next aria-label="Next products">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        {%- endif -%}
+
+        {%- if st.show_dots -%}
+          <div class="vp-prodcards__dots" data-vp-pc-dots></div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% style %}
+  .vp-prodcards {
+    background-color: var(--vp-pc-bg, #ffffff);
+    padding-block: var(--vp-pc-pad-top-m, 40px) var(--vp-pc-pad-bottom-m, 40px);
+    font-family: var(--font-body-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+    --vp-pc-pv: 1;
+  }
+
+  /* max-width, margin and horizontal padding all come from .page-width. */
+  .vp-prodcards__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .vp-prodcards__intro {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .vp-prodcards__heading {
+    font-family: var(--font-heading-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+    font-weight: 700;
+    font-size: var(--vp-pc-head-fs-m, 26px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--vp-pc-heading, #10232B);
+    text-wrap: balance;
+  }
+
+  .vp-prodcards__heading > *:first-child,
+  .vp-prodcards__subheading > *:first-child { margin-top: 0; }
+  .vp-prodcards__heading > *:last-child,
+  .vp-prodcards__subheading > *:last-child { margin-bottom: 0; }
+
+  /* Solid colour stays as the fallback; the gradient is only painted where
+     background-clip: text is supported, so text is never invisible. */
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .vp-prodcards__heading--grad {
+      background-image: linear-gradient(90deg, var(--vp-pc-head-g1, #47B5E9), var(--vp-pc-head-g2, #13B6B5));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .vp-prodcards__heading--grad * {
+      color: inherit;
+      -webkit-text-fill-color: inherit;
+    }
+  }
+
+  .vp-prodcards__subheading {
+    font-size: var(--vp-pc-sub-fs-m, 15px);
+    line-height: 1.5;
+    color: var(--vp-pc-sub, #5A737D);
+    max-width: 62ch;
+    margin-inline: auto;
+  }
+
+  /* ---------- carousel ---------- */
+
+  .vp-prodcards__carousel {
+    position: relative;
+  }
+
+  .vp-prodcards__viewport {
+    overflow: hidden;
+    /* Horizontal drag is ours, vertical scrolling stays with the page. */
+    touch-action: pan-y;
+  }
+
+  .vp-prodcards__track {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: var(--vp-pc-gap, 16px);
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  .vp-prodcards__track.is-instant {
+    transition: none;
+  }
+
+  /* The peek is what is left over for the next card, gap included. */
+  .vp-prodcards__slide {
+    flex: 0 0 calc((100% - var(--vp-pc-peek, 0px) - (var(--vp-pc-pv, 1) - 1) * var(--vp-pc-gap, 16px)) / var(--vp-pc-pv, 1));
+    display: flex;
+    min-width: 0;
+  }
+
+  .vp-prodcards--static .vp-prodcards__track {
+    justify-content: center;
+    transform: none !important;
+  }
+
+  .vp-prodcards--static .vp-prodcards__arrows,
+  .vp-prodcards--static .vp-prodcards__dots {
+    display: none;
+  }
+
+  /* ---------- card ---------- */
+
+  .vp-prodcards__card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--vp-pc-card-bg, #ffffff);
+    border: 1px solid var(--vp-pc-card-border, #E3EEF2);
+    border-radius: var(--vp-pc-card-radius, 16px);
+  }
+
+  .vp-prodcards__card--shadow {
+    box-shadow: 0 4px 16px rgba(16, 35, 43, 0.07);
+  }
+
+  .vp-prodcards__media {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background-color: rgba(16, 35, 43, 0.03);
+  }
+
+  .vp-prodcards__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .vp-prodcards__image--placeholder {
+    fill: rgba(16, 35, 43, 0.16);
+  }
+
+  .vp-prodcards__label {
+    position: absolute;
+    top: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: var(--vp-pc-tag-fs-m, 11px);
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .vp-prodcards__label--status { left: 10px; }
+  .vp-prodcards__label--offer { right: 10px; }
+
+  .vp-prodcards__label-icon {
+    display: block;
+    width: 1em;
+    height: 1em;
+  }
+
+  .vp-prodcards__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    flex: 1 1 auto;
+    padding: 14px;
+  }
+
+  .vp-prodcards__benefits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .vp-prodcards__benefit {
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: var(--vp-pc-tag-fs-m, 11px);
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .vp-prodcards__title {
+    margin: 0;
+    font-size: var(--vp-pc-title-fs-m, 16px);
+    font-weight: var(--vp-pc-weight, 700);
+    line-height: 1.25;
+    color: var(--vp-pc-title, #10232B);
+  }
+
+  .vp-prodcards__title-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .vp-prodcards__title-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2rem;
+  }
+
+  .vp-prodcards__stars {
+    display: inline-flex;
+    gap: 2px;
+    color: var(--vp-pc-star, #F5A623);
+  }
+
+  .vp-prodcards__star,
+  .vp-prodcards__star-wrap {
+    display: block;
+    flex: 0 0 auto;
+    width: var(--vp-pc-star-size-m, 16px);
+    height: var(--vp-pc-star-size-m, 16px);
+  }
+
+  .vp-prodcards__star--empty {
+    opacity: 0.22;
+  }
+
+  /* Half star: a full star laid over the empty one and clipped to 50% width.
+     The clip shrinks; the star inside keeps its full size. */
+  .vp-prodcards__star-wrap {
+    position: relative;
+  }
+
+  .vp-prodcards__star-wrap > .vp-prodcards__star {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .vp-prodcards__star-clip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .vp-prodcards__star-clip > .vp-prodcards__star {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .vp-prodcards__desc {
+    margin: 0;
+    font-size: var(--vp-pc-desc-fs-m, 13px);
+    line-height: 1.5;
+    color: var(--vp-pc-desc, #5A737D);
+  }
+
+  /* Pushed to the bottom so CTAs line up across cards of different heights. */
+  .vp-prodcards__foot {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+    margin-top: auto;
+    padding-top: 4px;
+  }
+
+  .vp-prodcards__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: var(--vp-pc-tag-fs-m, 11px);
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .vp-prodcards__badge-icon {
+    display: block;
+    width: 1.1em;
+    height: 1.1em;
+  }
+
+  .vp-prodcards__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px 20px;
+    font-size: var(--vp-pc-desc-fs-m, 13px);
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    transition: filter 0.18s ease;
+  }
+
+  .vp-prodcards__cta:hover {
+    filter: brightness(0.94);
+    text-decoration: none;
+  }
+
+  /* ---------- arrows and dots ---------- */
+
+  .vp-prodcards__arrows {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .vp-prodcards__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--vp-pc-arrow-size, 40px);
+    height: var(--vp-pc-arrow-size, 40px);
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--vp-pc-arrow-bg, #47B5E9);
+    color: var(--vp-pc-arrow-color, #ffffff);
+    cursor: pointer;
+    transition: filter 0.18s ease, opacity 0.18s ease;
+  }
+
+  .vp-prodcards__arrow:hover {
+    filter: brightness(0.94);
+  }
+
+  .vp-prodcards__arrow[disabled] {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .vp-prodcards__arrow svg {
+    display: block;
+    width: 50%;
+    height: 50%;
+  }
+
+  .vp-prodcards__dots {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .vp-prodcards__dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--vp-pc-dot, #10232B);
+    opacity: 0.25;
+    cursor: pointer;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+  }
+
+  .vp-prodcards__dot[aria-current='true'] {
+    opacity: 1;
+    transform: scale(1.25);
+  }
+
+  .vp-prodcards__arrow:focus-visible,
+  .vp-prodcards__dot:focus-visible,
+  .vp-prodcards__title-link:focus-visible,
+  .vp-prodcards__cta:focus-visible {
+    outline: 2px solid var(--vp-pc-heading, #10232B);
+    outline-offset: 3px;
+  }
+
+  /* ---------- tablet ---------- */
+
+  @media screen and (min-width: 750px) {
+    .vp-prodcards {
+      padding-block: var(--vp-pc-pad-top, 64px) var(--vp-pc-pad-bottom, 64px);
+      --vp-pc-pv: 2;
+    }
+
+    .vp-prodcards__inner { gap: 32px; }
+    .vp-prodcards__heading { font-size: var(--vp-pc-head-fs, 40px); }
+    .vp-prodcards__subheading { font-size: var(--vp-pc-sub-fs, 17px); }
+    .vp-prodcards__title { font-size: var(--vp-pc-title-fs, 18px); }
+    .vp-prodcards__desc,
+    .vp-prodcards__cta { font-size: var(--vp-pc-desc-fs, 14px); }
+    .vp-prodcards__label,
+    .vp-prodcards__benefit,
+    .vp-prodcards__badge { font-size: var(--vp-pc-tag-fs, 12px); }
+
+    .vp-prodcards__star,
+    .vp-prodcards__star-wrap {
+      width: var(--vp-pc-star-size, 17px);
+      height: var(--vp-pc-star-size, 17px);
+    }
+
+    .vp-prodcards__body { padding: 18px; gap: 12px; }
+  }
+
+  /* ---------- desktop ---------- */
+
+  @media screen and (min-width: 990px) {
+    .vp-prodcards {
+      --vp-pc-pv: var(--vp-pc-pv-d, 3);
+    }
+
+    /* Arrows sitting on the track edges, vertically centred on the image. */
+    .vp-prodcards__carousel--sides .vp-prodcards__arrows {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      margin: 0;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+
+    .vp-prodcards__carousel--sides .vp-prodcards__arrow {
+      pointer-events: auto;
+      transform: translate(0, 120%);
+      box-shadow: 0 4px 14px rgba(16, 35, 43, 0.16);
+    }
+
+    .vp-prodcards__carousel--top .vp-prodcards__arrows {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 0;
+      transform: translateY(-160%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vp-prodcards__track,
+    .vp-prodcards__arrow,
+    .vp-prodcards__dot,
+    .vp-prodcards__cta {
+      transition: none;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    var root = document.querySelector('[data-vp-prodcards="{{ section.id }}"]');
+    if (!root) return;
+
+    var viewport = root.querySelector('.vp-prodcards__viewport');
+    var track = root.querySelector('.vp-prodcards__track');
+    if (!viewport || !track) return;
+
+    var originals = Array.prototype.slice.call(track.children);
+    var n = originals.length;
+    if (!n) return;
+
+    var dotsWrap = root.querySelector('[data-vp-pc-dots]');
+    var prevBtn = root.querySelector('[data-vp-pc-prev]');
+    var nextBtn = root.querySelector('[data-vp-pc-next]');
+
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var loopWanted = root.dataset.loop === 'true';
+    var autoplayOn = root.dataset.autoplay === 'true';
+    var autoplayMs = (parseFloat(root.dataset.autoplaySpeed) || 5) * 1000;
+
+    var clones = [];
+    var mode = 'static';
+    var perView = 1;
+    var maxIndex = 0;
+    var step = 0;
+    var index = 0;
+    var domIndex = 0;
+    var translate = 0;
+    var timer = null;
+    var hovered = false;
+    var dragging = false;
+    var startX = 0;
+    var startTranslate = 0;
+    var activePointer = null;
+
+    function readPerView() {
+      var v = parseInt(getComputedStyle(root).getPropertyValue('--vp-pc-pv'), 10);
+      return v > 0 ? v : 1;
+    }
+
+    function setPos(px, instant) {
+      translate = px;
+      if (instant) {
+        track.classList.add('is-instant');
+        track.style.transform = 'translate3d(' + px + 'px, 0, 0)';
+        void track.offsetHeight;
+        track.classList.remove('is-instant');
+      } else {
+        track.style.transform = 'translate3d(' + px + 'px, 0, 0)';
+      }
+    }
+
+    function buildClones() {
+      var i;
+      for (i = 0; i < clones.length; i++) {
+        if (clones[i].parentNode) clones[i].parentNode.removeChild(clones[i]);
+      }
+      clones = [];
+      if (mode !== 'loop') return;
+
+      var before = document.createDocumentFragment();
+      var after = document.createDocumentFragment();
+
+      originals.forEach(function (el) {
+        [before, after].forEach(function (frag) {
+          var clone = el.cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          // A clone must not duplicate a theme editor block id, and must stay
+          // out of the tab order.
+          clone.removeAttribute('data-shopify-editor-block');
+          Array.prototype.forEach.call(clone.querySelectorAll('a, button'), function (f) {
+            f.setAttribute('tabindex', '-1');
+          });
+          clones.push(clone);
+          frag.appendChild(clone);
+        });
+      });
+
+      track.insertBefore(before, originals[0]);
+      track.appendChild(after);
+    }
+
+    function measure() {
+      var rect = originals[0].getBoundingClientRect();
+      var styles = getComputedStyle(track);
+      var gap = parseFloat(styles.columnGap || styles.gap) || 0;
+      step = rect.width + gap;
+    }
+
+    function dotCount() {
+      if (mode === 'loop') return n;
+      if (mode === 'finite') return maxIndex + 1;
+      return 0;
+    }
+
+    function buildDots() {
+      if (!dotsWrap) return;
+      dotsWrap.innerHTML = '';
+      var total = dotCount();
+      for (var i = 0; i < total; i++) {
+        var dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'vp-prodcards__dot';
+        dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+        dot.dataset.index = i;
+        dotsWrap.appendChild(dot);
+      }
+      updateUi();
+    }
+
+    function updateUi() {
+      if (dotsWrap) {
+        Array.prototype.forEach.call(dotsWrap.children, function (dot, i) {
+          dot.setAttribute('aria-current', i === index ? 'true' : 'false');
+        });
+      }
+      if (prevBtn && nextBtn) {
+        var atStart = mode === 'finite' && index <= 0;
+        var atEnd = mode === 'finite' && index >= maxIndex;
+        prevBtn.disabled = mode === 'static' || atStart;
+        nextBtn.disabled = mode === 'static' || atEnd;
+      }
+    }
+
+    function normalize() {
+      if (mode !== 'loop') return;
+      if (domIndex >= 2 * n) {
+        domIndex -= n;
+        setPos(-domIndex * step, true);
+      } else if (domIndex < n) {
+        domIndex += n;
+        setPos(-domIndex * step, true);
+      }
+    }
+
+    function go(delta) {
+      if (mode === 'static' || !delta) return;
+
+      if (mode === 'loop') {
+        domIndex += delta;
+        index = (((domIndex - n) % n) + n) % n;
+        setPos(-domIndex * step, reduced.matches);
+        if (reduced.matches) normalize();
+      } else {
+        var next = Math.max(0, Math.min(maxIndex, index + delta));
+        if (next === index) {
+          setPos(-index * step, false);
+          return;
+        }
+        index = next;
+        setPos(-index * step, false);
+      }
+      updateUi();
+    }
+
+    function goTo(target) {
+      go(target - index);
+    }
+
+    function layout() {
+      perView = readPerView();
+      maxIndex = Math.max(0, n - perView);
+
+      var nextMode = n <= perView ? 'static' : (loopWanted ? 'loop' : 'finite');
+      if (nextMode !== mode) {
+        mode = nextMode;
+        buildClones();
+        index = Math.min(index, mode === 'finite' ? maxIndex : n - 1);
+        buildDots();
+      } else if (mode === 'finite') {
+        index = Math.min(index, maxIndex);
+        buildDots();
+      }
+
+      root.classList.toggle('vp-prodcards--static', mode === 'static');
+
+      if (mode === 'static') {
+        track.style.transform = '';
+        stop();
+        updateUi();
+        return;
+      }
+
+      measure();
+      if (mode === 'loop') {
+        domIndex = n + index;
+        setPos(-domIndex * step, true);
+      } else {
+        setPos(-index * step, true);
+      }
+      updateUi();
+      start();
+    }
+
+    function autoNext() {
+      if (mode === 'finite' && index >= maxIndex) {
+        goTo(0);
+      } else {
+        go(1);
+      }
+    }
+
+    function start() {
+      stop();
+      if (!autoplayOn || reduced.matches || mode === 'static' || hovered || dragging) return;
+      timer = setInterval(autoNext, autoplayMs);
+    }
+
+    function stop() {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    }
+
+    track.addEventListener('transitionend', function (event) {
+      if (event.target !== track || event.propertyName !== 'transform') return;
+      normalize();
+    });
+
+    if (prevBtn) prevBtn.addEventListener('click', function () { go(-1); start(); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { go(1); start(); });
+
+    if (dotsWrap) {
+      dotsWrap.addEventListener('click', function (event) {
+        var dot = event.target.closest('.vp-prodcards__dot');
+        if (!dot) return;
+        goTo(parseInt(dot.dataset.index, 10));
+        start();
+      });
+    }
+
+    root.addEventListener('keydown', function (event) {
+      if (event.key === 'ArrowLeft') { go(-1); start(); }
+      else if (event.key === 'ArrowRight') { go(1); start(); }
+    });
+
+    root.addEventListener('mouseenter', function () { hovered = true; stop(); });
+    root.addEventListener('mouseleave', function () { hovered = false; start(); });
+    root.addEventListener('focusin', stop);
+    root.addEventListener('focusout', function () { if (!hovered) start(); });
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) stop(); else start();
+    });
+
+    // ---- free drag / swipe ----
+
+    viewport.addEventListener('pointerdown', function (event) {
+      if (mode === 'static' || event.button !== 0) return;
+      dragging = true;
+      activePointer = event.pointerId;
+      startX = event.clientX;
+      startTranslate = translate;
+      stop();
+      if (viewport.setPointerCapture) viewport.setPointerCapture(event.pointerId);
+    });
+
+    viewport.addEventListener('pointermove', function (event) {
+      if (!dragging || event.pointerId !== activePointer) return;
+      setPos(startTranslate + (event.clientX - startX), true);
+    });
+
+    function endDrag(event) {
+      if (!dragging || (event && event.pointerId !== activePointer)) return;
+      dragging = false;
+      activePointer = null;
+
+      var dx = translate - startTranslate;
+      var delta = Math.round(-dx / step);
+      var threshold = Math.min(60, step * 0.15);
+      if (!delta && Math.abs(dx) > threshold) delta = dx < 0 ? 1 : -1;
+
+      if (delta) {
+        go(delta);
+        // A clamped finite slider may not have moved; settle either way.
+        if (mode === 'finite') setPos(-index * step, false);
+      } else {
+        setPos(mode === 'loop' ? -domIndex * step : -index * step, false);
+      }
+      start();
+    }
+
+    viewport.addEventListener('pointerup', endDrag);
+    viewport.addEventListener('pointercancel', endDrag);
+
+    // A drag that ends on a link must not also follow it.
+    viewport.addEventListener('click', function (event) {
+      if (Math.abs(translate - startTranslate) > 6 && event.target.closest('a')) {
+        event.preventDefault();
+      }
+    }, true);
+
+    layout();
+
+    var resizeObserver;
+    if ('ResizeObserver' in window) {
+      // Observing the viewport, not the track: layout() mutates the track's
+      // children and observing it would feed back into itself.
+      resizeObserver = new ResizeObserver(function () { layout(); });
+      resizeObserver.observe(viewport);
+    } else {
+      window.addEventListener('resize', layout);
+    }
+
+    if (reduced.addEventListener) {
+      reduced.addEventListener('change', function () { stop(); start(); });
+    }
+
+    document.addEventListener('shopify:section:unload', function (event) {
+      if (!event.detail || event.detail.sectionId !== '{{ section.id }}') return;
+      stop();
+      if (resizeObserver) resizeObserver.disconnect();
+      window.removeEventListener('resize', layout);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Product cards carousel",
+  "tag": "section",
+  "class": "section-product-cards-carousel",
+  "max_blocks": 20,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        { "value": "page", "label": "Page width" },
+        { "value": "full", "label": "Full width" },
+        { "value": "custom", "label": "Custom" }
+      ],
+      "default": "page",
+      "info": "Page width matches the theme's page width setting, so the section lines up with the header and its neighbours."
+    },
+    {
+      "type": "number",
+      "id": "custom_max_width",
+      "label": "Custom max width (px)",
+      "default": 1200
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding desktop",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding desktop",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Shop our best sellers</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "<p>Vet-formulated care your dog actually sits still for.</p>"
+    },
+    {
+      "type": "number",
+      "id": "heading_size",
+      "label": "Heading size desktop (px)",
+      "default": 40
+    },
+    {
+      "type": "number",
+      "id": "heading_size_mobile",
+      "label": "Heading size mobile (px)",
+      "default": 26
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading colour",
+      "default": "#10232B"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_gradient",
+      "label": "Use gradient on heading",
+      "default": false,
+      "info": "When off, the solid heading colour is used."
+    },
+    {
+      "type": "color",
+      "id": "heading_gradient_start",
+      "label": "Heading gradient start",
+      "default": "#47B5E9"
+    },
+    {
+      "type": "color",
+      "id": "heading_gradient_end",
+      "label": "Heading gradient end",
+      "default": "#13B6B5"
+    },
+    {
+      "type": "number",
+      "id": "subheading_size",
+      "label": "Subheading size desktop (px)",
+      "default": 17
+    },
+    {
+      "type": "number",
+      "id": "subheading_size_mobile",
+      "label": "Subheading size mobile (px)",
+      "default": 15
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading colour",
+      "default": "#5A737D"
+    },
+    {
+      "type": "header",
+      "content": "Carousel"
+    },
+    {
+      "type": "select",
+      "id": "per_view_desktop",
+      "label": "Cards visible on desktop",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "3",
+      "info": "Tablet always shows 2 and mobile 1."
+    },
+    {
+      "type": "number",
+      "id": "peek",
+      "label": "Sneak peek of next card (px)",
+      "default": 0,
+      "info": "Width left over for the next card, gap included. 0 hides it."
+    },
+    {
+      "type": "range",
+      "id": "slide_gap",
+      "label": "Space between cards",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Loop",
+      "default": true,
+      "info": "When off, the carousel stops at both ends and the arrows disable."
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay",
+      "default": false,
+      "info": "Pauses on hover, on focus and while dragging. Never runs under reduced motion."
+    },
+    {
+      "type": "number",
+      "id": "autoplay_speed",
+      "label": "Autoplay speed (seconds)",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show arrows",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "arrow_position",
+      "label": "Arrow position",
+      "options": [
+        { "value": "below", "label": "Below the cards" },
+        { "value": "sides", "label": "On the sides" },
+        { "value": "top", "label": "Top right" }
+      ],
+      "default": "below",
+      "info": "Sides and top right apply from 990px up; below that the arrows always sit under the cards."
+    },
+    {
+      "type": "color",
+      "id": "arrow_bg",
+      "label": "Arrow background",
+      "default": "#47B5E9"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Arrow colour",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "arrow_size",
+      "label": "Arrow size",
+      "min": 28,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show dots",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "dot_color",
+      "label": "Dot colour",
+      "default": "#10232B"
+    },
+    {
+      "type": "header",
+      "content": "Card"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border",
+      "default": "#E3EEF2"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "checkbox",
+      "id": "card_shadow",
+      "label": "Card shadow",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Title weight",
+      "options": [
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "600", "label": "Semibold (600)" },
+        { "value": "700", "label": "Bold (700)" }
+      ],
+      "default": "700",
+      "info": "Only these weights are loaded by the theme's Geist setup."
+    },
+    {
+      "type": "number",
+      "id": "title_size",
+      "label": "Title size desktop (px)",
+      "default": 18
+    },
+    {
+      "type": "number",
+      "id": "title_size_mobile",
+      "label": "Title size mobile (px)",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title colour",
+      "default": "#10232B"
+    },
+    {
+      "type": "number",
+      "id": "desc_size",
+      "label": "Description size desktop (px)",
+      "default": 14
+    },
+    {
+      "type": "number",
+      "id": "desc_size_mobile",
+      "label": "Description size mobile (px)",
+      "default": 13
+    },
+    {
+      "type": "color",
+      "id": "desc_color",
+      "label": "Description colour",
+      "default": "#5A737D"
+    },
+    {
+      "type": "number",
+      "id": "tag_size",
+      "label": "Label and pill size desktop (px)",
+      "default": 12
+    },
+    {
+      "type": "number",
+      "id": "tag_size_mobile",
+      "label": "Label and pill size mobile (px)",
+      "default": 11
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star colour",
+      "default": "#F5A623"
+    },
+    {
+      "type": "number",
+      "id": "star_size",
+      "label": "Star size desktop (px)",
+      "default": 17
+    },
+    {
+      "type": "number",
+      "id": "star_size_mobile",
+      "label": "Star size mobile (px)",
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product card",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product",
+          "info": "Every field below falls back to this product when left empty."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title override"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description override",
+          "info": "One or two lines. Falls back to the product description."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image override",
+          "info": "Falls back to the product's featured image."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link override",
+          "info": "Falls back to the product's URL."
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Star rating",
+          "min": 0,
+          "max": 5,
+          "step": 0.5,
+          "default": 5,
+          "info": "Half steps render a half star."
+        },
+        {
+          "type": "header",
+          "content": "Status label (top left)"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_status",
+          "label": "Show status label",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "status_text",
+          "label": "Status text",
+          "default": "Best seller"
+        },
+        {
+          "type": "color",
+          "id": "status_bg",
+          "label": "Status background",
+          "default": "#13B6B5"
+        },
+        {
+          "type": "color",
+          "id": "status_text_color",
+          "label": "Status text colour",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "header",
+          "content": "Offer label (top right)"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_offer",
+          "label": "Show offer label",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "offer_text",
+          "label": "Offer text",
+          "default": "Save 20%"
+        },
+        {
+          "type": "color",
+          "id": "offer_bg",
+          "label": "Offer background",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "offer_text_color",
+          "label": "Offer text colour",
+          "default": "#10232B"
+        },
+        {
+          "type": "header",
+          "content": "Benefit pills"
+        },
+        {
+          "type": "text",
+          "id": "benefits",
+          "label": "Benefits",
+          "default": "Plaque, Fresh breath, No brushing",
+          "info": "Comma separated. The first four are shown."
+        },
+        {
+          "type": "color",
+          "id": "benefit_bg",
+          "label": "Pill background",
+          "default": "#D5F7FF"
+        },
+        {
+          "type": "color",
+          "id": "benefit_text_color",
+          "label": "Pill text colour",
+          "default": "#10232B"
+        },
+        {
+          "type": "header",
+          "content": "Offer badge (above the button)"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_badge",
+          "label": "Show offer badge",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Badge text",
+          "default": "Buy 2 get 1 free"
+        },
+        {
+          "type": "select",
+          "id": "badge_icon",
+          "label": "Badge icon",
+          "options": [
+            { "value": "gift", "label": "Gift" },
+            { "value": "tag", "label": "Tag" },
+            { "value": "star", "label": "Star" },
+            { "value": "none", "label": "None" }
+          ],
+          "default": "gift"
+        },
+        {
+          "type": "color",
+          "id": "badge_bg",
+          "label": "Badge background",
+          "default": "#D5F7FF"
+        },
+        {
+          "type": "color",
+          "id": "badge_text_color",
+          "label": "Badge text colour",
+          "default": "#10232B"
+        },
+        {
+          "type": "header",
+          "content": "Button"
+        },
+        {
+          "type": "text",
+          "id": "cta_text",
+          "label": "Button text",
+          "default": "Shop now"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "Button link",
+          "info": "Falls back to the card link, then the product URL."
+        },
+        {
+          "type": "color",
+          "id": "cta_bg",
+          "label": "Button background",
+          "default": "#47B5E9"
+        },
+        {
+          "type": "color",
+          "id": "cta_text_color",
+          "label": "Button text colour",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "range",
+          "id": "cta_radius",
+          "label": "Button corner radius",
+          "min": 0,
+          "max": 50,
+          "step": 2,
+          "unit": "px",
+          "default": 50
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product cards carousel",
+      "blocks": [
+        {
+          "type": "product",
+          "settings": {
+            "title": "FreshWipes",
+            "description": "Textured finger wipes that scrub plaque off the gumline.",
+            "benefits": "Plaque, Fresh breath, No brushing",
+            "status_text": "Best seller",
+            "rating": 5
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "title": "EyeWipes",
+            "description": "Gentle daily wipes for tear stains and crusty corners.",
+            "benefits": "Tear stains, Gentle, Daily",
+            "status_text": "New",
+            "rating": 4.5
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "title": "EarWipes",
+            "description": "Weekly cleaning that keeps odour and head shaking away.",
+            "benefits": "Odour, Wax, Weekly",
+            "status_text": "Vet approved",
+            "rating": 4.5
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "title": "PawBalm",
+            "description": "Soothes cracked pads and stops the licking and chewing.",
+            "benefits": "Cracked pads, Licking, Fast relief",
+            "status_text": "Best seller",
+            "rating": 5
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
