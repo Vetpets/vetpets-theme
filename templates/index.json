@@ -114,6 +114,8 @@
         "button_link": "shopify://collections/finger-wipes",
         "button_bg": "#47b5e9",
         "button_text_color": "#ffffff",
+        "section_width": "page",
+        "custom_max_width": 1200,
         "bg_color": "#d5f7ff",
         "wall_height": 380,
         "scroll_speed": 45,
@@ -161,6 +163,149 @@
         "custom_background_color": "#ffffff",
         "padding_top": 0,
         "padding_bottom": 0
+      }
+    },
+    "symptom_nav_cards_MWGRfR": {
+      "type": "symptom-nav-cards",
+      "blocks": {
+        "card_xnPCjc": {
+          "type": "card",
+          "settings": {
+            "title": "Teeth & breath",
+            "subtitle": "Fresh breath in 30 seconds",
+            "link": "",
+            "icon": "tooth",
+            "icon_color": "#10232B",
+            "icon_size": 30,
+            "icon_rotation": 0,
+            "circle_gradient": true,
+            "circle_color_start": "#D5F7FF",
+            "circle_color_end": "#A8E6F7",
+            "circle_angle": 135
+          }
+        },
+        "card_t4jFGH": {
+          "type": "card",
+          "settings": {
+            "title": "Eyes",
+            "subtitle": "Scrub it off at the gumline",
+            "link": "",
+            "icon_image": "shopify://shop_images/vetpets-icon-eyes.svg",
+            "icon": "sparkle",
+            "icon_color": "#10232B",
+            "icon_size": 30,
+            "icon_rotation": 0,
+            "circle_gradient": true,
+            "circle_color_start": "#D5F7FF",
+            "circle_color_end": "#A8E6F7",
+            "circle_angle": 135
+          }
+        },
+        "card_rhNwCX": {
+          "type": "card",
+          "settings": {
+            "title": "Itchy paws",
+            "subtitle": "Soothe licking and chewing",
+            "link": "",
+            "icon_image": "shopify://shop_images/vetpets-icon-paws.svg",
+            "icon": "paw",
+            "icon_color": "#10232B",
+            "icon_size": 30,
+            "icon_rotation": 0,
+            "circle_gradient": true,
+            "circle_color_start": "#D5F7FF",
+            "circle_color_end": "#A8E6F7",
+            "circle_angle": 135
+          }
+        },
+        "card_FDgGYk": {
+          "type": "card",
+          "settings": {
+            "title": "Ear odour",
+            "subtitle": "Gentle weekly cleaning",
+            "link": "",
+            "icon_image": "shopify://shop_images/vetpets-icon-ears.svg",
+            "icon": "ear",
+            "icon_color": "#10232B",
+            "icon_size": 30,
+            "icon_rotation": 0,
+            "circle_gradient": true,
+            "circle_color_start": "#D5F7FF",
+            "circle_color_end": "#A8E6F7",
+            "circle_angle": 135
+          }
+        },
+        "card_fX8iHr": {
+          "type": "card",
+          "settings": {
+            "title": "Ear odour",
+            "subtitle": "Gentle weekly cleaning",
+            "link": "",
+            "icon_image": "shopify://shop_images/vetpets-icon-coat.svg",
+            "icon": "ear",
+            "icon_color": "#10232B",
+            "icon_size": 30,
+            "icon_rotation": 0,
+            "circle_gradient": true,
+            "circle_color_start": "#D5F7FF",
+            "circle_color_end": "#A8E6F7",
+            "circle_angle": 135
+          }
+        }
+      },
+      "block_order": [
+        "card_xnPCjc",
+        "card_t4jFGH",
+        "card_rhNwCX",
+        "card_FDgGYk",
+        "card_fX8iHr"
+      ],
+      "name": "Symptom nav cards",
+      "settings": {
+        "section_width": "page",
+        "custom_max_width": 1200,
+        "columns_desktop": "3",
+        "columns_mobile": "2",
+        "grid_gap": 14,
+        "bg_color": "#FFFFFF",
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "heading": "<p>What is your dog struggling with?</p>",
+        "heading_size": 40,
+        "heading_size_mobile": 26,
+        "heading_color": "#10232B",
+        "heading_gradient": false,
+        "heading_gradient_start": "#47B5E9",
+        "heading_gradient_end": "#13B6B5",
+        "image_width": 320,
+        "hide_image_mobile": false,
+        "card_bg": "#FFFFFF",
+        "card_border_color": "#E3EEF2",
+        "card_radius": 16,
+        "card_shadow": true,
+        "circle_size": 72,
+        "circle_size_mobile": 52,
+        "title_size": 17,
+        "title_size_mobile": 15,
+        "title_color": "#10232B",
+        "sub_size": 14,
+        "sub_size_mobile": 13,
+        "sub_color": "#5A737D",
+        "font_weight": "600",
+        "hide_sub_mobile": false,
+        "show_arrow": true,
+        "arrow_bg": "#47B5E9",
+        "arrow_color": "#FFFFFF",
+        "arrow_size": 36,
+        "show_cta": true,
+        "cta_text": "View all products",
+        "cta_link": "shopify://collections/finger-wipes",
+        "cta_text_color": "#47B5E9",
+        "cta_bg": "#FFFFFF",
+        "cta_border_color": "#47B5E9",
+        "cta_radius": 100
       }
     },
     "image_banner_gUTUbM": {
@@ -437,6 +582,7 @@
         "column_kaPqz7",
         "column_N7Pa4L"
       ],
+      "disabled": true,
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
         "display_id": false,
@@ -2457,6 +2603,7 @@
   "order": [
     "hero_review_carousel_NNBphJ",
     "section_divider_YVyixq",
+    "symptom_nav_cards_MWGRfR",
     "image_banner_gUTUbM",
     "ss_hero_pro_PGyKJy",
     "multicolumn_Q8WAgx",
