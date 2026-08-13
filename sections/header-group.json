@@ -151,6 +151,53 @@
         "custom_colors_text": "#ffffff"
       }
     },
+    "announcement_ticker_Ttqi7n": {
+      "type": "announcement-ticker",
+      "blocks": {
+        "item_6Rx86D": {
+          "type": "item",
+          "settings": {
+            "text": "SAVE UP TO 64%",
+            "icon": "paw",
+            "icon_color": ""
+          }
+        },
+        "item_Y6gCyL": {
+          "type": "item",
+          "settings": {
+            "text": "BUY 2 GET 2 + FREE GIFTS",
+            "icon": "heart",
+            "icon_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_6Rx86D",
+        "item_Y6gCyL"
+      ],
+      "name": "Announcement ticker",
+      "settings": {
+        "bg_color": "#47B5E9",
+        "text_color": "#FFFFFF",
+        "icon_color": "#FFFFFF",
+        "font_size": 14,
+        "font_size_mobile": 13,
+        "font_weight": "600",
+        "letter_spacing": 0.5,
+        "uppercase": true,
+        "divider_style": "line",
+        "divider_color": "#FFFFFF",
+        "divider_thickness": 1,
+        "divider_height": 16,
+        "divider_gap": 28,
+        "divider_gap_mobile": 18,
+        "scroll_speed": 60,
+        "direction": "left",
+        "pause_on_hover": true,
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    },
     "horizontal_ticker_7D8jfx": {
       "type": "horizontal-ticker",
       "blocks": {
@@ -171,6 +218,7 @@
         "text_Aiypdp",
         "text_RK7pqQ"
       ],
+      "disabled": true,
       "name": "Horizontal Ticker",
       "settings": {
         "display_id": false,
@@ -332,6 +380,7 @@
   "order": [
     "announcement_bar_NCpPRh",
     "announcement_bar_HmYXkR",
+    "announcement_ticker_Ttqi7n",
     "horizontal_ticker_7D8jfx",
     "fe1c8c67-b84c-4466-a515-70df3134c1c0",
     "header",
