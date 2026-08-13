@@ -1676,6 +1676,7 @@
         "buttons_k79XVz",
         "rating_stars_wfcbRT"
       ],
+      "disabled": true,
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "display_id": false,
