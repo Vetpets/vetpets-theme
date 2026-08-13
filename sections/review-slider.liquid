@@ -1,0 +1,1249 @@
+{%- comment -%}
+  Review slider
+  -------------
+  Speech-bubble review cards with a star rating, quote, category pill and
+  product link, with the reviewer's avatar and name below the card. The
+  bubble tail is a CSS border triangle, not an image.
+
+  Loop: the whole slide list is cloned once before and once after the
+  originals, so the DOM index is kept inside [n, 2n) and normalised without a
+  transition whenever it leaves that window. Cloning the full list rather than
+  a few edge slides makes the loop independent of how many slides are visible,
+  which changes per breakpoint. Clones are aria-hidden and their links get
+  tabindex="-1" so the carousel is announced and tabbed through once.
+
+  With fewer slides than the visible count there is nothing to loop, so the
+  slider degrades to a centred static row and the arrows and dots are hidden -
+  that is the vp-reviewslider--static state.
+
+  Drag follows the pointer freely and snaps to the nearest slide on release.
+  touch-action: pan-y keeps vertical page scrolling with the finger.
+
+  Autoplay pauses on hover, on focus, while dragging and when the tab is
+  hidden, and never starts under prefers-reduced-motion.
+
+  Width reuses the theme's .page-width exactly like hero-review-carousel.
+  All classes are prefixed vp-reviewslider- so nothing collides.
+{%- endcomment -%}
+
+{%- liquid
+  assign st = section.settings
+  assign reviews = section.blocks | where: 'type', 'review'
+
+  assign width_mode = st.section_width | default: 'page'
+  assign inner_class = 'vp-reviewslider__inner page-width'
+  if width_mode == 'full'
+    assign inner_class = 'vp-reviewslider__inner page-width page-width--full'
+  endif
+  assign custom_max_width = st.custom_max_width | default: 1200
+
+  comment
+    Number settings come back nil when the field is cleared, so each one falls
+    back to its documented default. 0 is truthy in Liquid, so a deliberate 0
+    still survives the default filter.
+  endcomment
+  assign heading_fs = st.heading_size | default: 40
+  assign heading_fs_m = st.heading_size_mobile | default: 26
+  assign quote_fs = st.quote_size | default: 16
+  assign quote_fs_m = st.quote_size_mobile | default: 15
+  assign name_fs = st.name_size | default: 15
+  assign autoplay_speed = st.autoplay_speed | default: 5
+
+  assign heading_class = 'vp-reviewslider__heading'
+  if st.heading_gradient
+    assign heading_class = 'vp-reviewslider__heading vp-reviewslider__heading--grad'
+  endif
+-%}
+
+{%- capture star_full -%}
+  <svg class="vp-reviewslider__star" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false"><path d="M10 1.5l2.47 5.2 5.53.79-4 4.02.95 5.72L10 14.53 5.05 17.23l.95-5.72-4-4.02 5.53-.79L10 1.5z"/></svg>
+{%- endcapture -%}
+
+{%- capture star_empty -%}
+  <svg class="vp-reviewslider__star vp-reviewslider__star--empty" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false"><path d="M10 1.5l2.47 5.2 5.53.79-4 4.02.95 5.72L10 14.53 5.05 17.23l.95-5.72-4-4.02 5.53-.79L10 1.5z"/></svg>
+{%- endcapture -%}
+
+{%- if reviews.size > 0 -%}
+  <div
+    class="vp-reviewslider"
+    data-vp-reviewslider="{{ section.id }}"
+    data-autoplay="{% if st.autoplay %}true{% else %}false{% endif %}"
+    data-autoplay-speed="{{ autoplay_speed }}"
+    style="
+      --vp-rs-bg: {{ st.bg_color }};
+      --vp-rs-heading: {{ st.heading_color }};
+      --vp-rs-head-g1: {{ st.heading_gradient_start }};
+      --vp-rs-head-g2: {{ st.heading_gradient_end }};
+      --vp-rs-head-fs: {{ heading_fs }}px;
+      --vp-rs-head-fs-m: {{ heading_fs_m }}px;
+      --vp-rs-card-bg: {{ st.card_bg }};
+      --vp-rs-card-radius: {{ st.card_radius }}px;
+      --vp-rs-star: {{ st.star_color }};
+      --vp-rs-tag-bg: {{ st.tag_bg }};
+      --vp-rs-tag-text: {{ st.tag_text_color }};
+      --vp-rs-quote: {{ st.quote_color }};
+      --vp-rs-quote-fs: {{ quote_fs }}px;
+      --vp-rs-quote-fs-m: {{ quote_fs_m }}px;
+      --vp-rs-link: {{ st.product_link_color }};
+      --vp-rs-name: {{ st.name_color }};
+      --vp-rs-name-fs: {{ name_fs }}px;
+      --vp-rs-avatar: {{ st.avatar_size }}px;
+      --vp-rs-arrow-bg: {{ st.arrow_bg }};
+      --vp-rs-arrow-color: {{ st.arrow_color }};
+      --vp-rs-dot: {{ st.dot_color }};
+      --vp-rs-gap: {{ st.slide_gap }}px;
+      --vp-rs-pv-d: {{ st.per_view_desktop }};
+      --vp-rs-pv-t: {{ st.per_view_tablet }};
+      --vp-rs-pv-m: {{ st.per_view_mobile }};
+      --vp-rs-pad-top: {{ st.padding_top }}px;
+      --vp-rs-pad-bottom: {{ st.padding_bottom }}px;
+      --vp-rs-pad-top-m: {{ st.padding_top_mobile }}px;
+      --vp-rs-pad-bottom-m: {{ st.padding_bottom_mobile }}px;
+    "
+  >
+    <div
+      class="{{ inner_class }}"
+      {% if width_mode == 'custom' %}
+        style="--page-width: {{ custom_max_width }}px;"
+      {% endif %}
+    >
+      {%- if st.heading != blank -%}
+        <div class="{{ heading_class }}">{{ st.heading }}</div>
+      {%- endif -%}
+
+      <div
+        class="vp-reviewslider__slider"
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="{{ st.heading | default: 'Customer reviews' | strip_html | escape }}"
+      >
+        <div class="vp-reviewslider__viewport">
+          <div class="vp-reviewslider__track">
+            {%- for block in reviews -%}
+              {%- liquid
+                assign bs = block.settings
+                assign rating = bs.rating | default: 5 | at_most: 5 | at_least: 0
+              -%}
+              <div class="vp-reviewslider__slide" {{ block.shopify_attributes }}>
+                <div class="vp-reviewslider__card{% if st.card_shadow %} vp-reviewslider__card--shadow{% endif %}">
+                  <div
+                    class="vp-reviewslider__stars"
+                    role="img"
+                    aria-label="{{ rating }} out of 5 stars"
+                  >
+                    {%- for i in (1..5) -%}
+                      {%- if i <= rating -%}
+                        {{ star_full }}
+                      {%- else -%}
+                        {{ star_empty }}
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+
+                  {%- if bs.quote != blank -%}
+                    <blockquote class="vp-reviewslider__quote">{{ bs.quote | escape | newline_to_br }}</blockquote>
+                  {%- endif -%}
+
+                  {%- if bs.category != blank -%}
+                    <p class="vp-reviewslider__tag">{{ bs.category | escape }}</p>
+                  {%- endif -%}
+
+                  {%- if bs.product_name != blank -%}
+                    <p class="vp-reviewslider__product">
+                      {{ st.product_label | default: 'Product:' }}
+                      {%- if bs.product_link != blank -%}
+                        <a class="vp-reviewslider__product-link" href="{{ bs.product_link }}">{{ bs.product_name | escape }}</a>
+                      {%- else -%}
+                        <span class="vp-reviewslider__product-link">{{ bs.product_name | escape }}</span>
+                      {%- endif -%}
+                    </p>
+                  {%- endif -%}
+                </div>
+
+                <div class="vp-reviewslider__person">
+                  {%- if bs.reviewer_image != blank -%}
+                    <div class="vp-reviewslider__avatar">
+                      {{
+                        bs.reviewer_image
+                        | image_url: width: 200
+                        | image_tag: loading: 'lazy', widths: '60,100,140,200', class: 'vp-reviewslider__avatar-img', alt: ''
+                      }}
+                    </div>
+                  {%- endif -%}
+
+                  <div class="vp-reviewslider__person-text">
+                    {%- if bs.reviewer_name != blank -%}
+                      <span class="vp-reviewslider__name">{{ bs.reviewer_name | escape }}</span>
+                    {%- endif -%}
+
+                    {%- if bs.verified -%}
+                      <span class="vp-reviewslider__verified">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M7.8 12.3l2.9 2.9 5.5-6.1" stroke="var(--vp-rs-bg, #D5F7FF)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        {{ st.verified_label | default: 'Verified' }}
+                      </span>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+
+        {%- if st.show_arrows -%}
+          <div class="vp-reviewslider__arrows" data-vp-rs-arrows>
+            <button class="vp-reviewslider__arrow" type="button" data-vp-rs-prev aria-label="Previous review">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7"/></svg>
+            </button>
+            <button class="vp-reviewslider__arrow" type="button" data-vp-rs-next aria-label="Next review">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        {%- endif -%}
+
+        {%- if st.show_dots -%}
+          <div class="vp-reviewslider__dots" data-vp-rs-dots></div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% style %}
+  .vp-reviewslider {
+    background-color: var(--vp-rs-bg, #d5f7ff);
+    padding-block: var(--vp-rs-pad-top-m, 40px) var(--vp-rs-pad-bottom-m, 40px);
+    font-family: var(--font-body-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+    --vp-rs-pv: var(--vp-rs-pv-m, 1);
+  }
+
+  /* max-width, margin and horizontal padding all come from .page-width. */
+  .vp-reviewslider__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .vp-reviewslider__heading {
+    font-family: var(--font-heading-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+    font-weight: 700;
+    font-size: var(--vp-rs-head-fs-m, 26px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--vp-rs-heading, #10232B);
+    text-wrap: balance;
+  }
+
+  .vp-reviewslider__heading > *:first-child { margin-top: 0; }
+  .vp-reviewslider__heading > *:last-child { margin-bottom: 0; }
+
+  /* Solid colour stays as the fallback; the gradient is only painted where
+     background-clip: text is supported, so text is never invisible. */
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .vp-reviewslider__heading--grad {
+      background-image: linear-gradient(90deg, var(--vp-rs-head-g1, #47B5E9), var(--vp-rs-head-g2, #13B6B5));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .vp-reviewslider__heading--grad * {
+      color: inherit;
+      -webkit-text-fill-color: inherit;
+    }
+  }
+
+  /* ---------- slider frame ---------- */
+
+  .vp-reviewslider__slider {
+    position: relative;
+  }
+
+  .vp-reviewslider__viewport {
+    overflow: hidden;
+    /* Horizontal drag is ours, vertical scrolling stays with the page. */
+    touch-action: pan-y;
+  }
+
+  .vp-reviewslider__track {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: var(--vp-rs-gap, 16px);
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  .vp-reviewslider__track.is-instant {
+    transition: none;
+  }
+
+  .vp-reviewslider__slide {
+    flex: 0 0 calc((100% - (var(--vp-rs-pv, 1) - 1) * var(--vp-rs-gap, 16px)) / var(--vp-rs-pv, 1));
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  /* Fewer slides than fit: nothing to loop, so centre what there is. */
+  .vp-reviewslider--static .vp-reviewslider__track {
+    justify-content: center;
+    transform: none !important;
+  }
+
+  .vp-reviewslider--static .vp-reviewslider__arrows,
+  .vp-reviewslider--static .vp-reviewslider__dots {
+    display: none;
+  }
+
+  .vp-reviewslider--dragging .vp-reviewslider__track {
+    cursor: grabbing;
+  }
+
+  /* ---------- card ---------- */
+
+  .vp-reviewslider__card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    height: 100%;
+    padding: 20px;
+    background-color: var(--vp-rs-card-bg, #ffffff);
+    border-radius: var(--vp-rs-card-radius, 16px);
+  }
+
+  .vp-reviewslider__card--shadow {
+    box-shadow: 0 4px 16px rgba(16, 35, 43, 0.08);
+  }
+
+  /* Speech bubble tail: a CSS border triangle pointing down at the avatar. */
+  .vp-reviewslider__card::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 28px;
+    width: 0;
+    height: 0;
+    border-left: 11px solid transparent;
+    border-right: 11px solid transparent;
+    border-top: 13px solid var(--vp-rs-card-bg, #ffffff);
+  }
+
+  .vp-reviewslider__stars {
+    display: inline-flex;
+    gap: 2px;
+    color: var(--vp-rs-star, #F5A623);
+  }
+
+  .vp-reviewslider__star {
+    display: block;
+    width: 17px;
+    height: 17px;
+  }
+
+  .vp-reviewslider__star--empty {
+    opacity: 0.22;
+  }
+
+  .vp-reviewslider__quote {
+    margin: 0;
+    font-size: var(--vp-rs-quote-fs-m, 15px);
+    line-height: 1.55;
+    color: var(--vp-rs-quote, #2C4650);
+  }
+
+  .vp-reviewslider__tag {
+    display: inline-block;
+    margin: 0;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background-color: var(--vp-rs-tag-bg, #47B5E9);
+    color: var(--vp-rs-tag-text, #ffffff);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+  }
+
+  .vp-reviewslider__product {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--vp-rs-quote, #2C4650);
+  }
+
+  .vp-reviewslider__product-link {
+    color: var(--vp-rs-link, #47B5E9);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  a.vp-reviewslider__product-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2rem;
+  }
+
+  /* ---------- reviewer ---------- */
+
+  .vp-reviewslider__person {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 22px;
+    padding-left: 6px;
+  }
+
+  .vp-reviewslider__avatar {
+    flex: 0 0 auto;
+    width: var(--vp-rs-avatar, 44px);
+    height: var(--vp-rs-avatar, 44px);
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .vp-reviewslider__avatar-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .vp-reviewslider__person-text {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 8px;
+    min-width: 0;
+  }
+
+  .vp-reviewslider__name {
+    font-size: var(--vp-rs-name-fs, 15px);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--vp-rs-name, #10232B);
+  }
+
+  .vp-reviewslider__verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--vp-rs-link, #47B5E9);
+  }
+
+  .vp-reviewslider__verified svg {
+    display: block;
+    width: 14px;
+    height: 14px;
+  }
+
+  /* ---------- arrows and dots ---------- */
+
+  .vp-reviewslider__arrows {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .vp-reviewslider__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--vp-rs-arrow-bg, #ffffff);
+    color: var(--vp-rs-arrow-color, #10232B);
+    cursor: pointer;
+    transition: filter 0.18s ease, transform 0.18s ease;
+  }
+
+  .vp-reviewslider__arrow:hover {
+    filter: brightness(0.94);
+  }
+
+  .vp-reviewslider__arrow svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+  }
+
+  .vp-reviewslider__dots {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .vp-reviewslider__dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--vp-rs-dot, #10232B);
+    opacity: 0.25;
+    cursor: pointer;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+  }
+
+  .vp-reviewslider__dot[aria-current='true'] {
+    opacity: 1;
+    transform: scale(1.25);
+  }
+
+  .vp-reviewslider__arrow:focus-visible,
+  .vp-reviewslider__dot:focus-visible {
+    outline: 2px solid var(--vp-rs-heading, #10232B);
+    outline-offset: 3px;
+  }
+
+  /* ---------- tablet ---------- */
+
+  @media screen and (min-width: 750px) {
+    .vp-reviewslider {
+      padding-block: var(--vp-rs-pad-top, 64px) var(--vp-rs-pad-bottom, 64px);
+      --vp-rs-pv: var(--vp-rs-pv-t, 2);
+    }
+
+    .vp-reviewslider__inner {
+      gap: 32px;
+    }
+
+    .vp-reviewslider__heading {
+      font-size: var(--vp-rs-head-fs, 40px);
+    }
+
+    .vp-reviewslider__quote {
+      font-size: var(--vp-rs-quote-fs, 16px);
+    }
+
+    .vp-reviewslider__card {
+      padding: 24px;
+      gap: 14px;
+    }
+  }
+
+  /* ---------- desktop ---------- */
+
+  @media screen and (min-width: 990px) {
+    .vp-reviewslider {
+      --vp-rs-pv: var(--vp-rs-pv-d, 3);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vp-reviewslider__track,
+    .vp-reviewslider__arrow,
+    .vp-reviewslider__dot {
+      transition: none;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    var root = document.querySelector('[data-vp-reviewslider="{{ section.id }}"]');
+    if (!root) return;
+
+    var viewport = root.querySelector('.vp-reviewslider__viewport');
+    var track = root.querySelector('.vp-reviewslider__track');
+    if (!viewport || !track) return;
+
+    var originals = Array.prototype.slice.call(track.children);
+    var n = originals.length;
+    if (!n) return;
+
+    var dotsWrap = root.querySelector('[data-vp-rs-dots]');
+    var prevBtn = root.querySelector('[data-vp-rs-prev]');
+    var nextBtn = root.querySelector('[data-vp-rs-next]');
+
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var autoplayOn = root.dataset.autoplay === 'true';
+    var autoplayMs = (parseFloat(root.dataset.autoplaySpeed) || 5) * 1000;
+
+    var clones = [];
+    var looping = false;
+    var perView = 1;
+    var step = 0;
+    var index = 0;
+    var domIndex = 0;
+    var translate = 0;
+    var timer = null;
+    var hovered = false;
+    var dragging = false;
+    var startX = 0;
+    var startTranslate = 0;
+    var activePointer = null;
+
+    function readPerView() {
+      var v = parseInt(getComputedStyle(root).getPropertyValue('--vp-rs-pv'), 10);
+      return v > 0 ? v : 1;
+    }
+
+    function setPos(px, instant) {
+      translate = px;
+      if (instant) {
+        track.classList.add('is-instant');
+        track.style.transform = 'translate3d(' + px + 'px, 0, 0)';
+        // Force a reflow so the next change animates from here.
+        void track.offsetHeight;
+        track.classList.remove('is-instant');
+      } else {
+        track.style.transform = 'translate3d(' + px + 'px, 0, 0)';
+      }
+    }
+
+    function buildClones() {
+      var i;
+      for (i = 0; i < clones.length; i++) {
+        if (clones[i].parentNode) clones[i].parentNode.removeChild(clones[i]);
+      }
+      clones = [];
+
+      if (!looping) return;
+
+      var before = document.createDocumentFragment();
+      var after = document.createDocumentFragment();
+
+      originals.forEach(function (el) {
+        [before, after].forEach(function (frag) {
+          var clone = el.cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          // Clones must not duplicate a theme editor block id, and must stay
+          // out of the tab order.
+          clone.removeAttribute('data-shopify-editor-block');
+          Array.prototype.forEach.call(clone.querySelectorAll('a, button'), function (f) {
+            f.setAttribute('tabindex', '-1');
+          });
+          clones.push(clone);
+          frag.appendChild(clone);
+        });
+      });
+
+      track.insertBefore(before, originals[0]);
+      track.appendChild(after);
+    }
+
+    function measure() {
+      var rect = originals[0].getBoundingClientRect();
+      var styles = getComputedStyle(track);
+      var gap = parseFloat(styles.columnGap || styles.gap) || 0;
+      step = rect.width + gap;
+    }
+
+    function buildDots() {
+      if (!dotsWrap) return;
+      dotsWrap.innerHTML = '';
+      if (!looping) return;
+      for (var i = 0; i < n; i++) {
+        var dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'vp-reviewslider__dot';
+        dot.setAttribute('aria-label', 'Go to review ' + (i + 1));
+        dot.dataset.index = i;
+        dotsWrap.appendChild(dot);
+      }
+      updateDots();
+    }
+
+    function updateDots() {
+      if (!dotsWrap) return;
+      Array.prototype.forEach.call(dotsWrap.children, function (dot, i) {
+        dot.setAttribute('aria-current', i === index ? 'true' : 'false');
+      });
+    }
+
+    function normalize() {
+      if (!looping) return;
+      if (domIndex >= 2 * n) {
+        domIndex -= n;
+        setPos(-domIndex * step, true);
+      } else if (domIndex < n) {
+        domIndex += n;
+        setPos(-domIndex * step, true);
+      }
+    }
+
+    function go(delta) {
+      if (!looping || !delta) return;
+      domIndex += delta;
+      index = (((domIndex - n) % n) + n) % n;
+      setPos(-domIndex * step, reduced.matches);
+      if (reduced.matches) normalize();
+      updateDots();
+    }
+
+    function layout() {
+      perView = readPerView();
+      var shouldLoop = n > perView;
+
+      if (shouldLoop !== looping) {
+        looping = shouldLoop;
+        buildClones();
+        buildDots();
+        domIndex = looping ? n + index : 0;
+      }
+
+      root.classList.toggle('vp-reviewslider--static', !looping);
+
+      if (!looping) {
+        track.style.transform = '';
+        stop();
+        return;
+      }
+
+      measure();
+      domIndex = n + index;
+      setPos(-domIndex * step, true);
+      start();
+    }
+
+    function start() {
+      stop();
+      if (!autoplayOn || reduced.matches || !looping || hovered || dragging) return;
+      timer = setInterval(function () {
+        go(1);
+      }, autoplayMs);
+    }
+
+    function stop() {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    }
+
+    track.addEventListener('transitionend', function (event) {
+      if (event.target !== track || event.propertyName !== 'transform') return;
+      normalize();
+    });
+
+    if (prevBtn) prevBtn.addEventListener('click', function () { go(-1); start(); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { go(1); start(); });
+
+    if (dotsWrap) {
+      dotsWrap.addEventListener('click', function (event) {
+        var dot = event.target.closest('.vp-reviewslider__dot');
+        if (!dot) return;
+        go(parseInt(dot.dataset.index, 10) - index);
+        start();
+      });
+    }
+
+    root.addEventListener('keydown', function (event) {
+      if (event.key === 'ArrowLeft') {
+        go(-1);
+        start();
+      } else if (event.key === 'ArrowRight') {
+        go(1);
+        start();
+      }
+    });
+
+    root.addEventListener('mouseenter', function () { hovered = true; stop(); });
+    root.addEventListener('mouseleave', function () { hovered = false; start(); });
+    root.addEventListener('focusin', stop);
+    root.addEventListener('focusout', function () { if (!hovered) start(); });
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) stop(); else start();
+    });
+
+    // ---- free drag / swipe ----
+
+    viewport.addEventListener('pointerdown', function (event) {
+      if (!looping || event.button !== 0) return;
+      dragging = true;
+      activePointer = event.pointerId;
+      startX = event.clientX;
+      startTranslate = translate;
+      stop();
+      root.classList.add('vp-reviewslider--dragging');
+      if (viewport.setPointerCapture) viewport.setPointerCapture(event.pointerId);
+    });
+
+    viewport.addEventListener('pointermove', function (event) {
+      if (!dragging || event.pointerId !== activePointer) return;
+      setPos(startTranslate + (event.clientX - startX), true);
+    });
+
+    function endDrag(event) {
+      if (!dragging || (event && event.pointerId !== activePointer)) return;
+      dragging = false;
+      activePointer = null;
+      root.classList.remove('vp-reviewslider--dragging');
+
+      var dx = translate - startTranslate;
+      var delta = Math.round(-dx / step);
+      var threshold = Math.min(60, step * 0.15);
+      if (!delta && Math.abs(dx) > threshold) delta = dx < 0 ? 1 : -1;
+
+      if (delta) {
+        go(delta);
+      } else {
+        setPos(-domIndex * step, false);
+      }
+      start();
+    }
+
+    viewport.addEventListener('pointerup', endDrag);
+    viewport.addEventListener('pointercancel', endDrag);
+
+    // A drag that ends on a link must not also follow it.
+    viewport.addEventListener('click', function (event) {
+      if (Math.abs(translate - startTranslate) > 6 && event.target.closest('a')) {
+        event.preventDefault();
+      }
+    }, true);
+
+    layout();
+
+    var resizeObserver;
+    if ('ResizeObserver' in window) {
+      // Observing the viewport, not the track: layout() mutates the track's
+      // children and observing it would feed back into itself.
+      resizeObserver = new ResizeObserver(function () { layout(); });
+      resizeObserver.observe(viewport);
+    } else {
+      window.addEventListener('resize', layout);
+    }
+
+    if (reduced.addEventListener) {
+      reduced.addEventListener('change', function () { stop(); start(); });
+    }
+
+    document.addEventListener('shopify:section:unload', function (event) {
+      if (!event.detail || event.detail.sectionId !== '{{ section.id }}') return;
+      stop();
+      if (resizeObserver) resizeObserver.disconnect();
+      window.removeEventListener('resize', layout);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Review slider",
+  "tag": "section",
+  "class": "section-review-slider",
+  "max_blocks": 20,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        { "value": "page", "label": "Page width" },
+        { "value": "full", "label": "Full width" },
+        { "value": "custom", "label": "Custom" }
+      ],
+      "default": "page",
+      "info": "Page width matches the theme's page width setting, so the section lines up with the header and its neighbours."
+    },
+    {
+      "type": "number",
+      "id": "custom_max_width",
+      "label": "Custom max width (px)",
+      "default": 1200,
+      "info": "Only used when Section width is set to Custom."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section background",
+      "default": "#D5F7FF"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding desktop",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding desktop",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>What pet parents are saying</p>"
+    },
+    {
+      "type": "number",
+      "id": "heading_size",
+      "label": "Heading size desktop (px)",
+      "default": 40
+    },
+    {
+      "type": "number",
+      "id": "heading_size_mobile",
+      "label": "Heading size mobile (px)",
+      "default": 26
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading colour",
+      "default": "#10232B"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_gradient",
+      "label": "Use gradient on heading",
+      "default": false,
+      "info": "When off, the solid heading colour is used."
+    },
+    {
+      "type": "color",
+      "id": "heading_gradient_start",
+      "label": "Heading gradient start",
+      "default": "#47B5E9"
+    },
+    {
+      "type": "color",
+      "id": "heading_gradient_end",
+      "label": "Heading gradient end",
+      "default": "#13B6B5"
+    },
+    {
+      "type": "header",
+      "content": "Slider"
+    },
+    {
+      "type": "select",
+      "id": "per_view_desktop",
+      "label": "Cards visible on desktop",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "per_view_tablet",
+      "label": "Cards visible on tablet",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "per_view_mobile",
+      "label": "Cards visible on mobile",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "range",
+      "id": "slide_gap",
+      "label": "Space between cards",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay",
+      "default": true,
+      "info": "Pauses on hover, on focus and while dragging. Never runs when the visitor has reduced motion enabled."
+    },
+    {
+      "type": "number",
+      "id": "autoplay_speed",
+      "label": "Autoplay speed (seconds)",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show arrows",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "arrow_bg",
+      "label": "Arrow background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Arrow colour",
+      "default": "#10232B"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show dots",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "dot_color",
+      "label": "Dot colour",
+      "default": "#10232B"
+    },
+    {
+      "type": "header",
+      "content": "Card"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "checkbox",
+      "id": "card_shadow",
+      "label": "Card shadow",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star colour",
+      "default": "#F5A623"
+    },
+    {
+      "type": "color",
+      "id": "tag_bg",
+      "label": "Category pill background",
+      "default": "#47B5E9"
+    },
+    {
+      "type": "color",
+      "id": "tag_text_color",
+      "label": "Category pill text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "number",
+      "id": "quote_size",
+      "label": "Quote size desktop (px)",
+      "default": 16
+    },
+    {
+      "type": "number",
+      "id": "quote_size_mobile",
+      "label": "Quote size mobile (px)",
+      "default": 15
+    },
+    {
+      "type": "color",
+      "id": "quote_color",
+      "label": "Quote colour",
+      "default": "#2C4650"
+    },
+    {
+      "type": "text",
+      "id": "product_label",
+      "label": "Product label",
+      "default": "Product:"
+    },
+    {
+      "type": "color",
+      "id": "product_link_color",
+      "label": "Product link colour",
+      "default": "#47B5E9"
+    },
+    {
+      "type": "header",
+      "content": "Reviewer"
+    },
+    {
+      "type": "number",
+      "id": "name_size",
+      "label": "Name size (px)",
+      "default": 15
+    },
+    {
+      "type": "color",
+      "id": "name_color",
+      "label": "Name colour",
+      "default": "#10232B"
+    },
+    {
+      "type": "range",
+      "id": "avatar_size",
+      "label": "Avatar size",
+      "min": 28,
+      "max": 88,
+      "step": 2,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "text",
+      "id": "verified_label",
+      "label": "Verified label",
+      "default": "Verified"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "number",
+          "id": "rating",
+          "label": "Star rating (1-5)",
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "Her breath went from awful to barely noticeable in about a week. She actually sits still for it now."
+        },
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Category tag",
+          "default": "Dental"
+        },
+        {
+          "type": "text",
+          "id": "product_name",
+          "label": "Product name",
+          "default": "FreshWipes Plaque Relief Kit"
+        },
+        {
+          "type": "url",
+          "id": "product_link",
+          "label": "Product link"
+        },
+        {
+          "type": "header",
+          "content": "Reviewer"
+        },
+        {
+          "type": "text",
+          "id": "reviewer_name",
+          "label": "Reviewer name",
+          "default": "Sarah M."
+        },
+        {
+          "type": "image_picker",
+          "id": "reviewer_image",
+          "label": "Reviewer image"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Verified",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Review slider",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "Her breath went from awful to barely noticeable in about a week. She actually sits still for it now.",
+            "category": "Dental",
+            "product_name": "FreshWipes Plaque Relief Kit",
+            "reviewer_name": "Sarah M."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "No more head shaking at 3am. Two weeks in and the smell is completely gone.",
+            "category": "Ears",
+            "product_name": "Ear Cleaning Wipes",
+            "reviewer_name": "Daniel K."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "quote": "He stopped chewing his paws after the first few days. Wish I had found these sooner.",
+            "category": "Paws",
+            "product_name": "Paw Soothing Balm",
+            "reviewer_name": "Emma L."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
