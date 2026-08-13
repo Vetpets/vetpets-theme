@@ -202,7 +202,7 @@
       "type": "header",
       "settings": {
         "sticky_header_type": "always",
-        "show_line_separator": false,
+        "show_line_separator": true,
         "color_scheme": "background-2",
         "logo_link": "/",
         "logo_position": "middle-left",
