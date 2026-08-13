@@ -44,9 +44,17 @@
     assign anim_name = 'vp-ticker-right'
   endif
 
-  assign root_class = 'vp-ticker'
+  comment
+    Root class is vp-tickerbar, not vp-ticker: a custom Liquid block in
+    header-group.json ships a hand-rolled ticker whose global <style> defines
+    .vp-ticker (beige background, green hairline borders, an animated ::before
+    shine). Sharing that class name would drag all of it onto this section.
+    The vp-ticker__* child names are unrelated to that block's .vp-item /
+    .vp-track / .vp-divider and stay as they are.
+  endcomment
+  assign root_class = 'vp-tickerbar'
   if st.pause_on_hover
-    assign root_class = 'vp-ticker vp-ticker--pause-hover'
+    assign root_class = 'vp-tickerbar vp-tickerbar--pause-hover'
   endif
 -%}
 
@@ -170,7 +178,7 @@
 {%- endif -%}
 
 {% style %}
-  .vp-ticker {
+  .vp-tickerbar {
     background-color: var(--vp-ticker-bg, #47b5e9);
     padding-block: var(--vp-ticker-pad-top, 12px) var(--vp-ticker-pad-bottom, 12px);
     font-family: var(--font-body-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
@@ -280,8 +288,8 @@
 
   /* ---------- pausing ---------- */
 
-  .vp-ticker--pause-hover:hover .vp-ticker__track,
-  .vp-ticker--paused .vp-ticker__track {
+  .vp-tickerbar--pause-hover:hover .vp-ticker__track,
+  .vp-tickerbar--paused .vp-ticker__track {
     animation-play-state: paused;
   }
 
@@ -336,7 +344,7 @@
       intersectionObserver = new IntersectionObserver(
         function (entries) {
           entries.forEach(function (entry) {
-            root.classList.toggle('vp-ticker--paused', !entry.isIntersecting);
+            root.classList.toggle('vp-tickerbar--paused', !entry.isIntersecting);
           });
         },
         { rootMargin: '100px' }
