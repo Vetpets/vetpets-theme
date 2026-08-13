@@ -22,17 +22,6 @@
         "url": "shopify://collections/valentine-sale-2026"
       },
       "blocks": {}
-    },
-    "ss_hero_pro_PGyKJy": {
-      "disabled": true,
-      "settings": {
-        "hero_height": "fixed_height",
-        "hero_fixed_height_mobile": 780,
-        "content_vertical_align_mobile": "start",
-        "bg_image": "shopify://shop_images/Namnlos_design_-_2026-07-01T094629.525.jpg",
-        "bg_image_mobile": "shopify://shop_images/Namnlos_design_-_2026-07-01T094829.441.jpg"
-      },
-      "blocks": {}
     }
   }
 }
