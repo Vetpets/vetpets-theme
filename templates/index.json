@@ -15,62 +15,74 @@
         "image_WccWX7": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/Image_Milou_owner_Product_1.jpg"
+            "image": "shopify://shop_images/Namnlos_design_-_2026-08-13T102652.511.jpg"
           }
         },
         "image_YhNg6G": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/IMG_2249.jpg"
+            "image": "shopify://shop_images/Namnlos_design_-_2026-08-13T102700.495.jpg"
           }
         },
         "image_7FMF9z": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/Bandit_Kitten_Product_shot.jpg"
+            "image": "shopify://shop_images/UGC_BILDER_HOMEPAGE.jpg"
           }
         },
         "image_mQhBDk": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/DOG_GLOVEWIPES.jpg"
+            "image": "shopify://shop_images/UGC_BILDER_HOMEPAGE_1.jpg"
           }
         },
         "image_TFwDtx": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/Picture___Dog_with_Products.jpg"
+            "image": "shopify://shop_images/UGC_BILDER_HOMEPAGE_2.jpg"
           }
         },
         "image_wNPAcT": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/Dakota_Freshwipes.jpg"
+            "image": "shopify://shop_images/UGC_BILDER_HOMEPAGE_3.jpg"
           }
         },
         "image_8hx4U6": {
           "type": "image",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/UGC_BILDER_HOMEPAGE_4.jpg"
+          }
         },
         "image_reNnw6": {
           "type": "image",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/UGC_BILDER_HOMEPAGE_5.jpg"
+          }
         },
         "image_EGyYR7": {
           "type": "image",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/UGC_BILDER_HOMEPAGE_6.jpg"
+          }
         },
         "image_dmBwfh": {
           "type": "image",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/UGC_BILDER_HOMEPAGE_7.jpg"
+          }
         },
         "image_4dnANC": {
           "type": "image",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/UGC_BILDER_HOMEPAGE_8.jpg"
+          }
         },
         "image_4ezc7J": {
           "type": "image",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/UGC_BILDER_HOMEPAGE_9.jpg"
+          }
         }
       },
       "block_order": [
