@@ -12,6 +12,15 @@
   so half the track height is exactly one full copy - a flex gap would leave
   half a gap unaccounted for and the loop would visibly jump.
 
+  Every font size is an exact px setting with a separate mobile value; the
+  mobile values are the base rules and the desktop ones live in the 900px
+  media query, i.e. the type scale switches with the layout.
+
+  Headline, subtext and button can each run a 90deg gradient instead of their
+  solid colour. Text gradients only kick in inside @supports so a browser
+  without background-clip: text keeps the solid colour rather than rendering
+  invisible text.
+
   All classes are prefixed vp-hrc- so nothing collides with existing CSS.
 {%- endcomment -%}
 
@@ -33,10 +42,52 @@
       break
     endif
   endfor
+
+  comment
+    Number settings come back nil when the merchant clears the field, so every
+    size falls back to its documented default. 0 is truthy in Liquid, so an
+    intentional 0 still survives the default filter.
+  endcomment
+  assign badge_fs = st.badge_text_size | default: 14
+  assign badge_fs_m = st.badge_text_size_mobile | default: 13
+  assign heading_fs = st.heading_size | default: 56
+  assign heading_fs_m = st.heading_size_mobile | default: 34
+  assign subtext_fs = st.subtext_size | default: 18
+  assign subtext_fs_m = st.subtext_size_mobile | default: 16
+  assign button_fs = st.button_text_size | default: 18
+  assign button_fs_m = st.button_text_size_mobile | default: 16
+  assign guarantee_fs = st.guarantee_text_size | default: 15
+  assign guarantee_fs_m = st.guarantee_text_size_mobile | default: 14
+
+  assign heading_class = 'vp-hrc__heading'
+  if st.heading_gradient
+    assign heading_class = 'vp-hrc__heading vp-hrc__heading--grad'
+  endif
+
+  assign subtext_class = 'vp-hrc__subtext'
+  if st.subtext_gradient
+    assign subtext_class = 'vp-hrc__subtext vp-hrc__subtext--grad'
+  endif
+
+  assign cta_class = 'vp-hrc__cta'
+  if st.button_gradient
+    assign cta_class = 'vp-hrc__cta vp-hrc__cta--grad'
+  endif
 -%}
 
 {%- capture star_icon -%}
   <svg class="vp-hrc__star" width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false"><path d="M10 1.5l2.47 5.2 5.53.79-4 4.02.95 5.72L10 14.53 5.05 17.23l.95-5.72-4-4.02 5.53-.79L10 1.5z"/></svg>
+{%- endcapture -%}
+
+{%- capture guarantee_icon -%}
+  {%- case st.guarantee_icon -%}
+    {%- when 'shield' -%}
+      <svg class="vp-hrc__guarantee-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 2.5l7.5 3v5.6c0 4.6-3.1 8.4-7.5 10.4-4.4-2-7.5-5.8-7.5-10.4V5.5l7.5-3z"/><path d="M8.7 11.8l2.3 2.3 4.3-4.6"/></svg>
+    {%- when 'heart' -%}
+      <svg class="vp-hrc__guarantee-svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 20.7l-1.4-1.3C5.5 14.8 2.5 12 2.5 8.6 2.5 5.9 4.6 3.8 7.3 3.8c1.6 0 3.1.7 4.7 2.6 1.6-1.9 3.1-2.6 4.7-2.6 2.7 0 4.8 2.1 4.8 4.8 0 3.4-3 6.2-8.1 10.8L12 20.7z"/></svg>
+    {%- else -%}
+      <svg class="vp-hrc__guarantee-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9.2"/><path d="M7.8 12.3l2.9 2.9 5.5-6.1"/></svg>
+  {%- endcase -%}
 {%- endcapture -%}
 
 <div
@@ -51,6 +102,24 @@
     --vp-hrc-star: {{ st.star_color }};
     --vp-hrc-btn-bg: {{ st.button_bg }};
     --vp-hrc-btn-text: {{ st.button_text_color }};
+    --vp-hrc-head-g1: {{ st.heading_gradient_start }};
+    --vp-hrc-head-g2: {{ st.heading_gradient_end }};
+    --vp-hrc-sub-g1: {{ st.subtext_gradient_start }};
+    --vp-hrc-sub-g2: {{ st.subtext_gradient_end }};
+    --vp-hrc-btn-g1: {{ st.button_gradient_start }};
+    --vp-hrc-btn-g2: {{ st.button_gradient_end }};
+    --vp-hrc-guar-icon: {{ st.guarantee_icon_color }};
+    --vp-hrc-guar-text: {{ st.guarantee_text_color }};
+    --vp-hrc-badge-fs: {{ badge_fs }}px;
+    --vp-hrc-badge-fs-m: {{ badge_fs_m }}px;
+    --vp-hrc-head-fs: {{ heading_fs }}px;
+    --vp-hrc-head-fs-m: {{ heading_fs_m }}px;
+    --vp-hrc-sub-fs: {{ subtext_fs }}px;
+    --vp-hrc-sub-fs-m: {{ subtext_fs_m }}px;
+    --vp-hrc-btn-fs: {{ button_fs }}px;
+    --vp-hrc-btn-fs-m: {{ button_fs_m }}px;
+    --vp-hrc-guar-fs: {{ guarantee_fs }}px;
+    --vp-hrc-guar-fs-m: {{ guarantee_fs_m }}px;
     --vp-hrc-wall-h: {{ st.wall_height }}px;
     --vp-hrc-d1: {{ dur_1 }}s;
     --vp-hrc-d2: {{ dur_2 }}s;
@@ -75,20 +144,27 @@
       {%- endif -%}
 
       {%- if st.heading != blank -%}
-        <h1 class="vp-hrc__heading">{{ st.heading | escape }}</h1>
+        <h1 class="{{ heading_class }}">{{ st.heading | escape }}</h1>
       {%- endif -%}
 
       {%- if st.subtext != blank -%}
-        <div class="vp-hrc__subtext">{{ st.subtext }}</div>
+        <div class="{{ subtext_class }}">{{ st.subtext }}</div>
       {%- endif -%}
 
       {%- if st.button_label != blank -%}
         <a
-          class="vp-hrc__cta"
+          class="{{ cta_class }}"
           {% if st.button_link != blank %}href="{{ st.button_link }}"{% else %}href="#" aria-disabled="true"{% endif %}
         >
           {{- st.button_label | escape -}}
         </a>
+      {%- endif -%}
+
+      {%- if st.show_guarantee and st.guarantee_text != blank -%}
+        <p class="vp-hrc__guarantee">
+          <span class="vp-hrc__guarantee-icon">{{ guarantee_icon }}</span>
+          <span class="vp-hrc__guarantee-text">{{ st.guarantee_text | escape }}</span>
+        </p>
       {%- endif -%}
 
       {%- comment -%} Mobile marquee: same images, horizontal, decorative. {%- endcomment -%}
@@ -200,7 +276,7 @@
     border-radius: 999px;
     background-color: var(--vp-hrc-badge-bg, #ffffff);
     color: var(--vp-hrc-badge-text, #10232b);
-    font-size: 14px;
+    font-size: var(--vp-hrc-badge-fs-m, 13px);
     font-weight: 600;
     line-height: 1.2;
   }
@@ -224,7 +300,7 @@
     margin: 0;
     font-family: var(--font-heading-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
     font-weight: 700;
-    font-size: clamp(32px, 6vw, 54px);
+    font-size: var(--vp-hrc-head-fs-m, 34px);
     line-height: 1.1;
     letter-spacing: -0.02em;
     color: var(--vp-hrc-heading, #10232b);
@@ -234,7 +310,7 @@
   .vp-hrc__subtext {
     margin: 16px 0 0;
     max-width: 46ch;
-    font-size: clamp(15px, 1.9vw, 18px);
+    font-size: var(--vp-hrc-sub-fs-m, 16px);
     line-height: 1.6;
     color: var(--vp-hrc-text, #2c4650);
   }
@@ -247,6 +323,36 @@
     margin-bottom: 0;
   }
 
+  /* ---------- text gradients ----------
+     The solid colour above stays as the fallback: only inside @supports do we
+     paint a gradient and knock the glyph fill out to transparent, so a browser
+     without background-clip: text never renders invisible text. */
+
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .vp-hrc__heading--grad,
+    .vp-hrc__subtext--grad {
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .vp-hrc__heading--grad {
+      background-image: linear-gradient(90deg, var(--vp-hrc-head-g1, #47b5e9), var(--vp-hrc-head-g2, #13b6b5));
+    }
+
+    .vp-hrc__subtext--grad {
+      background-image: linear-gradient(90deg, var(--vp-hrc-sub-g1, #47b5e9), var(--vp-hrc-sub-g2, #13b6b5));
+    }
+
+    /* Richtext can contain <strong>, <em> or links - let the container's
+       gradient show through them instead of their own colour. */
+    .vp-hrc__subtext--grad * {
+      color: inherit;
+      -webkit-text-fill-color: inherit;
+    }
+  }
+
   .vp-hrc__cta {
     display: inline-flex;
     align-items: center;
@@ -256,23 +362,62 @@
     border-radius: 999px;
     background-color: var(--vp-hrc-btn-bg, #47b5e9);
     color: var(--vp-hrc-btn-text, #ffffff);
-    font-size: 17px;
+    font-size: var(--vp-hrc-btn-fs-m, 16px);
     font-weight: 700;
     line-height: 1;
     text-decoration: none;
     transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
   }
 
+  /* The solid background-color stays underneath as the fallback layer. */
+  .vp-hrc__cta--grad {
+    background-image: linear-gradient(90deg, var(--vp-hrc-btn-g1, #47b5e9), var(--vp-hrc-btn-g2, #13b6b5));
+  }
+
+  /* brightness() darkens the painted result, so one rule covers both the
+     solid and the gradient button. */
   .vp-hrc__cta:hover {
     transform: translateY(-2px);
-    filter: brightness(1.04);
+    filter: brightness(0.93);
     box-shadow: 0 8px 20px rgba(16, 35, 43, 0.18);
     text-decoration: none;
+  }
+
+  .vp-hrc__cta:active {
+    transform: translateY(0);
+    filter: brightness(0.88);
   }
 
   .vp-hrc__cta:focus-visible {
     outline: 2px solid var(--vp-hrc-heading, #10232b);
     outline-offset: 3px;
+  }
+
+  /* ---------- guarantee row ---------- */
+
+  .vp-hrc__guarantee {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin: 12px 0 0;
+    font-size: var(--vp-hrc-guar-fs-m, 14px);
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--vp-hrc-guar-text, #2c4650);
+  }
+
+  .vp-hrc__guarantee-icon {
+    display: inline-flex;
+    flex: 0 0 auto;
+    color: var(--vp-hrc-guar-icon, #13b6b5);
+  }
+
+  .vp-hrc__guarantee-svg {
+    display: block;
+    width: 1.25em;
+    height: 1.25em;
   }
 
   /* ---------- shared image styling ---------- */
@@ -395,6 +540,30 @@
     .vp-hrc__content {
       flex: 1 1 45%;
       max-width: 560px;
+    }
+
+    /* Desktop type scale. Mobile values are the base rules above, so this is
+       the only place the desktop sizes apply - the switch happens at the same
+       breakpoint as the layout. */
+    .vp-hrc__badge {
+      font-size: var(--vp-hrc-badge-fs, 14px);
+    }
+
+    .vp-hrc__heading {
+      font-size: var(--vp-hrc-head-fs, 56px);
+    }
+
+    .vp-hrc__subtext {
+      font-size: var(--vp-hrc-sub-fs, 18px);
+    }
+
+    .vp-hrc__cta {
+      font-size: var(--vp-hrc-btn-fs, 18px);
+    }
+
+    .vp-hrc__guarantee {
+      justify-content: flex-start;
+      font-size: var(--vp-hrc-guar-fs, 15px);
     }
 
     .vp-hrc__marquee {
@@ -602,6 +771,170 @@
       "step": 4,
       "unit": "px",
       "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Typography",
+      "info": "Exact pixel sizes. Mobile values apply below 900px, where the layout stacks."
+    },
+    {
+      "type": "number",
+      "id": "badge_text_size",
+      "label": "Badge text size (px)",
+      "default": 14
+    },
+    {
+      "type": "number",
+      "id": "badge_text_size_mobile",
+      "label": "Badge text size mobile (px)",
+      "default": 13
+    },
+    {
+      "type": "number",
+      "id": "heading_size",
+      "label": "Headline size (px)",
+      "default": 56
+    },
+    {
+      "type": "number",
+      "id": "heading_size_mobile",
+      "label": "Headline size mobile (px)",
+      "default": 34
+    },
+    {
+      "type": "number",
+      "id": "subtext_size",
+      "label": "Subtext size (px)",
+      "default": 18
+    },
+    {
+      "type": "number",
+      "id": "subtext_size_mobile",
+      "label": "Subtext size mobile (px)",
+      "default": 16
+    },
+    {
+      "type": "number",
+      "id": "button_text_size",
+      "label": "Button text size (px)",
+      "default": 18
+    },
+    {
+      "type": "number",
+      "id": "button_text_size_mobile",
+      "label": "Button text size mobile (px)",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Gradients"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_gradient",
+      "label": "Use gradient on headline",
+      "default": false,
+      "info": "When off, the solid heading colour above is used."
+    },
+    {
+      "type": "color",
+      "id": "heading_gradient_start",
+      "label": "Headline gradient start",
+      "default": "#47B5E9"
+    },
+    {
+      "type": "color",
+      "id": "heading_gradient_end",
+      "label": "Headline gradient end",
+      "default": "#13B6B5"
+    },
+    {
+      "type": "checkbox",
+      "id": "subtext_gradient",
+      "label": "Use gradient on subtext",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "subtext_gradient_start",
+      "label": "Subtext gradient start",
+      "default": "#47B5E9"
+    },
+    {
+      "type": "color",
+      "id": "subtext_gradient_end",
+      "label": "Subtext gradient end",
+      "default": "#13B6B5"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_gradient",
+      "label": "Use gradient on button",
+      "default": false,
+      "info": "When off, the solid button background above is used."
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_start",
+      "label": "Button gradient start",
+      "default": "#47B5E9"
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_end",
+      "label": "Button gradient end",
+      "default": "#13B6B5"
+    },
+    {
+      "type": "header",
+      "content": "Guarantee"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_guarantee",
+      "label": "Show guarantee row",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "guarantee_text",
+      "label": "Guarantee text",
+      "default": "100-Day Money-Back Guarantee"
+    },
+    {
+      "type": "select",
+      "id": "guarantee_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "shield", "label": "Shield" },
+        { "value": "heart", "label": "Heart" }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "color",
+      "id": "guarantee_icon_color",
+      "label": "Guarantee icon color",
+      "default": "#13B6B5"
+    },
+    {
+      "type": "color",
+      "id": "guarantee_text_color",
+      "label": "Guarantee text color",
+      "default": "#2C4650"
+    },
+    {
+      "type": "number",
+      "id": "guarantee_text_size",
+      "label": "Guarantee text size (px)",
+      "default": 15
+    },
+    {
+      "type": "number",
+      "id": "guarantee_text_size_mobile",
+      "label": "Guarantee text size mobile (px)",
+      "default": 14
     }
   ],
   "blocks": [
