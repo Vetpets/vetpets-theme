@@ -9,6 +9,106 @@
  */
 {
   "sections": {
+    "hero_review_carousel_NNBphJ": {
+      "type": "hero-review-carousel",
+      "blocks": {
+        "image_WccWX7": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Image_Milou_owner_Product_1.jpg"
+          }
+        },
+        "image_YhNg6G": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_2249.jpg"
+          }
+        },
+        "image_7FMF9z": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Bandit_Kitten_Product_shot.jpg"
+          }
+        },
+        "image_mQhBDk": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/DOG_GLOVEWIPES.jpg"
+          }
+        },
+        "image_TFwDtx": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Picture___Dog_with_Products.jpg"
+          }
+        },
+        "image_wNPAcT": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Dakota_Freshwipes.jpg"
+          }
+        },
+        "image_8hx4U6": {
+          "type": "image",
+          "settings": {}
+        },
+        "image_reNnw6": {
+          "type": "image",
+          "settings": {}
+        },
+        "image_EGyYR7": {
+          "type": "image",
+          "settings": {}
+        },
+        "image_dmBwfh": {
+          "type": "image",
+          "settings": {}
+        },
+        "image_4dnANC": {
+          "type": "image",
+          "settings": {}
+        },
+        "image_4ezc7J": {
+          "type": "image",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "image_WccWX7",
+        "image_YhNg6G",
+        "image_7FMF9z",
+        "image_mQhBDk",
+        "image_TFwDtx",
+        "image_wNPAcT",
+        "image_8hx4U6",
+        "image_reNnw6",
+        "image_EGyYR7",
+        "image_dmBwfh",
+        "image_4dnANC",
+        "image_4ezc7J"
+      ],
+      "name": "Hero review carousel",
+      "settings": {
+        "badge_text": "Rated 4.8/5 by 12,000+ pet parents",
+        "show_stars": true,
+        "badge_bg": "#FFFFFF",
+        "badge_text_color": "#10232B",
+        "star_color": "#FFB800",
+        "heading": "Clean teeth and fresh breath in 30 seconds a day",
+        "subtext": "<p>Textured finger wipes that scrub plaque off the gumline — no brushing, no fight, no expensive vet cleanings.</p>",
+        "heading_color": "#10232B",
+        "text_color": "#2C4650",
+        "button_label": "Shop now",
+        "button_link": "",
+        "button_bg": "#47B5E9",
+        "button_text_color": "#FFFFFF",
+        "bg_color": "#D5F7FF",
+        "wall_height": 380,
+        "scroll_speed": 45,
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
     "image_banner_gUTUbM": {
       "type": "image-banner",
       "name": "t:sections.image-banner.presets.name",
@@ -2171,6 +2271,7 @@
         "disclaimer_zBQK9n",
         "no_thanks_W9MTik"
       ],
+      "disabled": true,
       "name": "SS - Modal popup #6",
       "settings": {
         "display_options": "after_seconds",
@@ -2535,6 +2636,7 @@
     }
   },
   "order": [
+    "hero_review_carousel_NNBphJ",
     "image_banner_gUTUbM",
     "image_banner_NBXkrF",
     "ss_hero_pro_PGyKJy",
