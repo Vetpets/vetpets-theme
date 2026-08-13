@@ -663,24 +663,6 @@
                     {% endif %}
                   </span>
                 </button>
-
-                <button
-                  type="submit"
-                  id="CartDrawer-Checkout"
-                  class="cart__checkout-button button{% if block.settings.prefix_icon != blank %} button--prefix-icon{% endif %}{% if block.settings.suffix_icon != blank %} button--suffix-icon{% endif %}"
-                  name="checkout"
-                  form="CartDrawer-Form"
-                  {% if cart == empty %}
-                    disabled
-                  {% endif %}
-                >
-                  <span class='button__label'>
-                    {{ 'sections.cart.checkout' | t }}
-                    {% if block.settings.display_price %}
-                      • {{ cart.total_price | money }}
-                    {% endif %}
-                  </span>
-                </button>
                 {%- if block.settings.show_additional_checkout_buttons and additional_checkout_buttons -%}
                   <div class="cart__dynamic-checkout-buttons additional-checkout-buttons">
                     {{ content_for_additional_checkout_buttons }}
