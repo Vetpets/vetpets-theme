@@ -31,6 +31,7 @@
         "text_Aiypdp",
         "text_RK7pqQ"
       ],
+      "disabled": true,
       "name": "Horizontal Ticker",
       "settings": {
         "display_id": false,
@@ -60,6 +61,54 @@
         "custom_colors_background": "#ffffff",
         "custom_gradient_background": "",
         "custom_colors_text": "#2e2a39"
+      }
+    },
+    "announcement_ticker_dFNndP": {
+      "type": "announcement-ticker",
+      "blocks": {
+        "item_ETbLk6": {
+          "type": "item",
+          "settings": {
+            "text": "SAVE UP TO 64%",
+            "icon": "paw",
+            "icon_color": ""
+          }
+        },
+        "item_CbgW6C": {
+          "type": "item",
+          "settings": {
+            "text": "BUY 2 GET 2 + FREE GIFTS",
+            "icon": "shield",
+            "icon_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_ETbLk6",
+        "item_CbgW6C"
+      ],
+      "name": "Announcement ticker",
+      "settings": {
+        "bg_color": "#47B5E9",
+        "text_color": "#FFFFFF",
+        "icon_color": "#FFFFFF",
+        "icon_style": "filled",
+        "font_size": 14,
+        "font_size_mobile": 13,
+        "font_weight": "600",
+        "letter_spacing": 0.5,
+        "uppercase": true,
+        "divider_style": "line",
+        "divider_color": "#FFFFFF",
+        "divider_thickness": 1,
+        "divider_height": 16,
+        "divider_gap": 28,
+        "divider_gap_mobile": 18,
+        "scroll_speed": 60,
+        "direction": "left",
+        "pause_on_hover": true,
+        "padding_top": 12,
+        "padding_bottom": 12
       }
     },
     "fe1c8c67-b84c-4466-a515-70df3134c1c0": {
@@ -191,6 +240,7 @@
   },
   "order": [
     "horizontal_ticker_7D8jfx",
+    "announcement_ticker_dFNndP",
     "fe1c8c67-b84c-4466-a515-70df3134c1c0",
     "header",
     "custom_liquid_kCx7ix"
