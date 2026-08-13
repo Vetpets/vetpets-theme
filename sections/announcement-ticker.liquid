@@ -12,10 +12,17 @@
   item + divider. Divider style "none" keeps the element and its margins and
   only drops the visual mark, so spacing survives.
 
-  Speed is px per second, not a fixed duration: the inline JS measures one
-  copy and sets --vp-ticker-dur = width / speed. That keeps the visual speed
+  Liquid renders two groups, each one full copy of the list. A short list is
+  narrower than a desktop viewport, and a half-track that narrow would drag
+  empty space into view, so the JS repeats the list until one half of the
+  track is at least twice the viewport width. Clones are added in pairs to
+  keep the two halves identical, and are cloned from the second (aria-hidden,
+  attribute-free) group so no theme editor block id is ever duplicated.
+
+  Speed is px per second, not a fixed duration: the JS sets
+  --vp-ticker-dur = half-track width / speed. That keeps the visual speed
   identical whether the merchant adds 2 items or 20. Without JS the CSS
-  default duration applies.
+  default duration applies to the two server-rendered copies.
 
   The second copy is aria-hidden so screen readers read the announcements
   once, and shopify_attributes is only emitted on the first copy so theme
@@ -94,6 +101,12 @@
             {%- assign is_dup = true -%}
           {%- endunless -%}
 
+          <div
+            class="vp-ticker__group"
+            {% if is_dup %}
+              aria-hidden="true" data-vp-ticker-clonable
+            {% endif %}
+          >
           {%- for block in ticker_blocks -%}
             {%- liquid
               assign icon_color = block.settings.icon_color
@@ -171,6 +184,7 @@
             </div>
             {{ divider_markup }}
           {%- endfor -%}
+          </div>
         {%- endfor -%}
       </div>
     </div>
@@ -202,6 +216,16 @@
     animation-duration: var(--vp-ticker-dur, 30s);
     animation-timing-function: linear;
     animation-iteration-count: infinite;
+  }
+
+  /* One group = one full copy of the item list. The track always holds an
+     even number of identical groups, so translateX(-50%) lands exactly on a
+     group boundary however many copies the JS added. */
+  .vp-ticker__group {
+    display: flex;
+    flex: 0 0 auto;
+    flex-wrap: nowrap;
+    align-items: center;
   }
 
   .vp-ticker__item {
@@ -305,37 +329,89 @@
     var root = document.querySelector('[data-vp-ticker="{{ section.id }}"]');
     if (!root) return;
 
+    var viewport = root.querySelector('.vp-ticker__viewport');
     var track = root.querySelector('.vp-ticker__track');
-    if (!track) return;
+    if (!viewport || !track) return;
 
-    // Duration is derived from the measured width of one copy, so the ticker
-    // moves at the configured px/second no matter how many items there are.
+    // The two groups Liquid rendered. Everything beyond these is a JS clone
+    // and gets removed before every measurement.
+    var baseGroups = Array.prototype.slice.call(track.children);
+    if (baseGroups.length < 2) return;
+
+    // The second group is the aria-hidden duplicate: it carries no
+    // shopify_attributes, so cloning it can never duplicate a theme editor
+    // block id.
+    var cloneSource = track.querySelector('[data-vp-ticker-clonable]') || baseGroups[1];
+    var clones = [];
+
     function sync() {
+      var i;
+      for (i = 0; i < clones.length; i++) {
+        if (clones[i].parentNode) clones[i].parentNode.removeChild(clones[i]);
+      }
+      clones = [];
+
+      // getBoundingClientRect is sub-pixel accurate; translateX changes the
+      // position, not the reported width.
+      var groupWidth = baseGroups[0].getBoundingClientRect().width;
+      var containerWidth = viewport.getBoundingClientRect().width;
+      if (!groupWidth || !containerWidth) return;
+
+      // A single copy of a short item list is narrower than a desktop
+      // viewport, so translateX(-50%) would drag empty space into view. Repeat
+      // the list until one half of the track is at least twice the container:
+      // one full band is then always on screen, with 2 items or with 10.
+      var groupsPerHalf = Math.max(1, Math.ceil((containerWidth * 2) / groupWidth));
+
+      // Both halves must stay identical, so clones are added in pairs.
+      var missingPairs = groupsPerHalf - 1;
+      if (missingPairs > 0) {
+        var fragment = document.createDocumentFragment();
+        for (i = 0; i < missingPairs * 2; i++) {
+          var clone = cloneSource.cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          clones.push(clone);
+          fragment.appendChild(clone);
+        }
+        track.appendChild(fragment);
+      }
+
       var speed = parseFloat(root.dataset.speed);
       if (!speed || speed <= 0) speed = 60;
 
-      // getBoundingClientRect is sub-pixel accurate; translateX does not
-      // affect the reported width, only the position.
-      var trackWidth = track.getBoundingClientRect().width || track.scrollWidth;
-      var copyWidth = trackWidth / 2;
-      if (!copyWidth) return;
-
-      root.style.setProperty('--vp-ticker-dur', copyWidth / speed + 's');
+      // One loop travels exactly one half of the track, so the configured
+      // px/second holds no matter how many copies were needed.
+      root.style.setProperty('--vp-ticker-dur', (groupsPerHalf * groupWidth) / speed + 's');
     }
 
+    // Runs before first paint: the band is full width from the first frame.
     sync();
+
+    var pending = false;
+    function schedule() {
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(function () {
+        pending = false;
+        sync();
+      });
+    }
 
     // Web fonts land after first paint and change the text width.
     if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(sync).catch(function () {});
+      document.fonts.ready.then(schedule).catch(function () {});
     }
 
     var resizeObserver;
     if ('ResizeObserver' in window) {
-      resizeObserver = new ResizeObserver(sync);
-      resizeObserver.observe(track);
+      // Observing the viewport and the first group, never the track: sync()
+      // mutates the track's children, and observing it would feed back into
+      // itself. Neither of these is resized by cloning.
+      resizeObserver = new ResizeObserver(schedule);
+      resizeObserver.observe(viewport);
+      resizeObserver.observe(baseGroups[0]);
     } else {
-      window.addEventListener('resize', sync);
+      window.addEventListener('resize', schedule);
     }
 
     // Stop burning frames while the ticker is scrolled out of view.
@@ -356,7 +432,7 @@
       if (!event.detail || event.detail.sectionId !== '{{ section.id }}') return;
       if (resizeObserver) resizeObserver.disconnect();
       if (intersectionObserver) intersectionObserver.disconnect();
-      window.removeEventListener('resize', sync);
+      window.removeEventListener('resize', schedule);
     });
   })();
 </script>
