@@ -1,0 +1,1094 @@
+{%- comment -%}
+  Symptom nav cards
+  -----------------
+  Heading top left, optional product image top right, then a grid of linked
+  cards - coloured circle with an icon, title, subtitle, arrow - and an
+  optional secondary CTA under the grid.
+
+  Whole-card link: the card is position: relative and the title's <a> carries
+  a ::after that covers the card. One link per card, so the accessible name is
+  the title and there are no nested interactive elements - the arrow is a
+  decorative span, not a button, and is aria-hidden.
+
+  Columns: mobile is two by default and never collapses to one unless the
+  merchant picks one; tablet is always two; desktop follows the setting.
+
+  Width reuses the theme's own .page-width class exactly like
+  hero-review-carousel, so the section lines up with the header and the
+  sections around it. Custom overrides --page-width on that element only.
+
+  All classes are prefixed vp-symptomnav- so nothing collides.
+{%- endcomment -%}
+
+{%- liquid
+  assign st = section.settings
+  assign cards = section.blocks | where: 'type', 'card'
+
+  assign width_mode = st.section_width | default: 'page'
+  assign inner_class = 'vp-symptomnav__inner page-width'
+  if width_mode == 'full'
+    assign inner_class = 'vp-symptomnav__inner page-width page-width--full'
+  endif
+  assign custom_max_width = st.custom_max_width | default: 1200
+
+  comment
+    Number settings come back nil when the field is cleared, so every size
+    falls back to its documented default. 0 is truthy in Liquid, so a
+    deliberate 0 still survives the default filter.
+  endcomment
+  assign heading_fs = st.heading_size | default: 40
+  assign heading_fs_m = st.heading_size_mobile | default: 26
+  assign title_fs = st.title_size | default: 17
+  assign title_fs_m = st.title_size_mobile | default: 15
+  assign sub_fs = st.sub_size | default: 14
+  assign sub_fs_m = st.sub_size_mobile | default: 13
+  assign image_w = st.image_width | default: 320
+
+  comment
+    The CTA radius range is 0-100 step 2. Shopify requires (max - min) / step
+    to be a whole number no greater than 101, and a schema that breaks that
+    rule is rejected outright - the file never reaches the theme and the
+    section never appears in Add section. 50 steps here.
+
+    From 50 up the button renders fully round: at that point the radius is
+    already at least half the button's height, so clamping to 999px keeps the
+    pill shape stable whatever the font size or padding.
+  endcomment
+  assign cta_radius = st.cta_radius | default: 100
+  if cta_radius >= 50
+    assign cta_radius_css = 999
+  else
+    assign cta_radius_css = cta_radius
+  endif
+
+  assign grid_class = 'vp-symptomnav__grid'
+  if st.hide_sub_mobile
+    assign grid_class = 'vp-symptomnav__grid vp-symptomnav__grid--hide-sub-m'
+  endif
+
+  assign heading_class = 'vp-symptomnav__heading'
+  if st.heading_gradient
+    assign heading_class = 'vp-symptomnav__heading vp-symptomnav__heading--grad'
+  endif
+
+  assign media_class = 'vp-symptomnav__media'
+  if st.hide_image_mobile
+    assign media_class = 'vp-symptomnav__media vp-symptomnav__media--hide-m'
+  endif
+-%}
+
+<div
+  class="vp-symptomnav"
+  style="
+    --vp-sn-bg: {{ st.bg_color }};
+    --vp-sn-heading: {{ st.heading_color }};
+    --vp-sn-head-g1: {{ st.heading_gradient_start }};
+    --vp-sn-head-g2: {{ st.heading_gradient_end }};
+    --vp-sn-head-fs: {{ heading_fs }}px;
+    --vp-sn-head-fs-m: {{ heading_fs_m }}px;
+    --vp-sn-image-w: {{ image_w }}px;
+    --vp-sn-card-bg: {{ st.card_bg }};
+    --vp-sn-card-border: {{ st.card_border_color }};
+    --vp-sn-card-radius: {{ st.card_radius }}px;
+    --vp-sn-title: {{ st.title_color }};
+    --vp-sn-title-fs: {{ title_fs }}px;
+    --vp-sn-title-fs-m: {{ title_fs_m }}px;
+    --vp-sn-sub: {{ st.sub_color }};
+    --vp-sn-sub-fs: {{ sub_fs }}px;
+    --vp-sn-sub-fs-m: {{ sub_fs_m }}px;
+    --vp-sn-weight: {{ st.font_weight }};
+    --vp-sn-circle: {{ st.circle_size }}px;
+    --vp-sn-circle-m: {{ st.circle_size_mobile }}px;
+    --vp-sn-arrow-bg: {{ st.arrow_bg }};
+    --vp-sn-arrow-color: {{ st.arrow_color }};
+    --vp-sn-arrow-size: {{ st.arrow_size }}px;
+    --vp-sn-cta-text: {{ st.cta_text_color }};
+    --vp-sn-cta-bg: {{ st.cta_bg }};
+    --vp-sn-cta-border: {{ st.cta_border_color }};
+    --vp-sn-cta-radius: {{ cta_radius_css }}px;
+    --vp-sn-cols-d: {{ st.columns_desktop }};
+    --vp-sn-cols-m: {{ st.columns_mobile }};
+    --vp-sn-gap: {{ st.grid_gap }}px;
+    --vp-sn-pad-top: {{ st.padding_top }}px;
+    --vp-sn-pad-bottom: {{ st.padding_bottom }}px;
+    --vp-sn-pad-top-m: {{ st.padding_top_mobile }}px;
+    --vp-sn-pad-bottom-m: {{ st.padding_bottom_mobile }}px;
+  "
+>
+  <div
+    class="{{ inner_class }}"
+    {% if width_mode == 'custom' %}
+      style="--page-width: {{ custom_max_width }}px;"
+    {% endif %}
+  >
+    {%- if st.heading != blank or st.image != blank -%}
+      <div class="vp-symptomnav__top">
+        {%- if st.heading != blank -%}
+          <div class="{{ heading_class }}">{{ st.heading }}</div>
+        {%- endif -%}
+
+        {%- if st.image != blank -%}
+          <div class="{{ media_class }}">
+            {{
+              st.image
+              | image_url: width: 900
+              | image_tag: loading: 'lazy', widths: '300,450,600,900', sizes: '(min-width: 990px) 30vw, 60vw', class: 'vp-symptomnav__image', alt: st.image.alt
+            }}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if cards.size > 0 -%}
+      <div class="{{ grid_class }}">
+        {%- for block in cards -%}
+          {%- liquid
+            assign bs = block.settings
+
+            if bs.circle_gradient
+              capture circle_bg
+                echo 'linear-gradient('
+                echo bs.circle_angle
+                echo 'deg, '
+                echo bs.circle_color_start
+                echo ', '
+                echo bs.circle_color_end
+                echo ')'
+              endcapture
+            else
+              assign circle_bg = bs.circle_color_start
+            endif
+          -%}
+
+          <div
+            class="vp-symptomnav__card{% if st.card_shadow %} vp-symptomnav__card--shadow{% endif %}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="vp-symptomnav__card-top">
+              <span
+                class="vp-symptomnav__circle"
+                style="background: {{ circle_bg }};"
+                aria-hidden="true"
+              >
+                <span
+                  class="vp-symptomnav__icon"
+                  style="
+                    color: {{ bs.icon_color }};
+                    --vp-sn-icon-size: {{ bs.icon_size }}px;
+                    --vp-sn-icon-rotate: {{ bs.icon_rotation }}deg;
+                  "
+                >
+                  {%- if bs.icon_image != blank -%}
+                    {{
+                      bs.icon_image
+                      | image_url: width: 200
+                      | image_tag: loading: 'lazy', widths: '60,100,140,200', class: 'vp-symptomnav__icon-img', alt: ''
+                    }}
+                  {%- else -%}
+                    {%- case bs.icon -%}
+                      {%- when 'eye' -%}
+                        <svg class="vp-symptomnav__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 12s3.7-6.4 10-6.4S22 12 22 12s-3.7 6.4-10 6.4S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></svg>
+                      {%- when 'ear' -%}
+                        <svg class="vp-symptomnav__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8.6 21c-1.3 0-2.1-1-2.1-2.4 0-2.4-1.9-3.4-1.9-6.7a7.4 7.4 0 1 1 14.8 0c0 2.6-1.7 3.7-3.1 4.6-1.3.8-1.9 1.7-2.5 2.8-.5 1-1.1 1.6-2 1.6-.9 0-1.2-.6-1.8-.6-.6 0-.8.7-1.4.7z"/><path d="M9.4 11.7a2.6 2.6 0 1 1 5.2 0c0 1.5-1.2 2.1-2 3"/></svg>
+                      {%- when 'paw' -%}
+                        <svg class="vp-symptomnav__svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><ellipse cx="6.6" cy="10.2" rx="2.1" ry="2.6"/><ellipse cx="11.9" cy="7.6" rx="2.2" ry="2.9"/><ellipse cx="17.3" cy="10.2" rx="2.1" ry="2.6"/><path d="M12 11.8c3.2 0 5.6 2.4 5.6 4.9 0 2-1.6 3.4-3.6 3.4-1.1 0-1.5-.4-2-.4s-.9.4-2 .4c-2 0-3.6-1.4-3.6-3.4 0-2.5 2.4-4.9 5.6-4.9z"/></svg>
+                      {%- when 'stomach' -%}
+                        <svg class="vp-symptomnav__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 3v4.8c0 1.9-1.1 2.6-2.3 3.4-1.4.9-2.4 2-2.4 4A4.8 4.8 0 0 0 9.2 20c3.5 0 5.2-2.2 7.2-3.7 1.8-1.4 2.9-2.7 2.9-5 0-3.3-2.5-5.5-5.3-5.5-.9 0-1.7.2-2.3.6"/><path d="M9 3h3.4"/><path d="M19.3 11.3h1.9"/></svg>
+                      {%- when 'heart' -%}
+                        <svg class="vp-symptomnav__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                      {%- when 'shield' -%}
+                        <svg class="vp-symptomnav__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 2.5l7.5 3v5.6c0 4.6-3.1 8.4-7.5 10.4-4.4-2-7.5-5.8-7.5-10.4V5.5l7.5-3z"/><path d="M8.7 11.8l2.3 2.3 4.3-4.6"/></svg>
+                      {%- when 'sparkle' -%}
+                        <svg class="vp-symptomnav__svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M10 2.2l1.7 4.9 4.9 1.7-4.9 1.7L10 15.4 8.3 10.5 3.4 8.8l4.9-1.7L10 2.2z"/><path d="M17.6 13.6l.9 2.6 2.6.9-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9.9-2.6z"/></svg>
+                      {%- when 'drop' -%}
+                        <svg class="vp-symptomnav__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3.2s6 6.6 6 10.3a6 6 0 0 1-12 0C6 9.8 12 3.2 12 3.2z"/></svg>
+                      {%- when 'clock' -%}
+                        <svg class="vp-symptomnav__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 6.6V12l3.5 2.1"/></svg>
+                      {%- else -%}
+                        <svg class="vp-symptomnav__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3.2c-1.6 0-2.4.7-4 .7-1.4 0-2.4-.5-3.3.4-1 1-1 3 0 5.6.5 1.4.7 2.3.9 3.8.2 1.7.3 3.5 1 5.6.3.9.8 1.4 1.5 1.4.9 0 1.3-.8 1.6-2.2.4-1.9.6-3.4 2.3-3.4s1.9 1.5 2.3 3.4c.3 1.4.7 2.2 1.6 2.2.7 0 1.2-.5 1.5-1.4.7-2.1.8-3.9 1-5.6.2-1.5.4-2.4.9-3.8 1-2.6 1-4.6 0-5.6-.9-.9-1.9-.4-3.3-.4-1.6 0-2.4-.7-4-.7z"/></svg>
+                    {%- endcase -%}
+                  {%- endif -%}
+                </span>
+              </span>
+
+              {%- if st.show_arrow -%}
+                <span class="vp-symptomnav__arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M5 12h13"/><path d="M12.5 6l6 6-6 6"/></svg>
+                </span>
+              {%- endif -%}
+            </div>
+
+            {%- if bs.title != blank -%}
+              <h3 class="vp-symptomnav__title">
+                {%- if bs.link != blank -%}
+                  <a class="vp-symptomnav__link" href="{{ bs.link }}">{{ bs.title | escape }}</a>
+                {%- else -%}
+                  {{ bs.title | escape }}
+                {%- endif -%}
+              </h3>
+            {%- endif -%}
+
+            {%- if bs.subtitle != blank -%}
+              <p class="vp-symptomnav__sub">{{ bs.subtitle | escape }}</p>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if st.show_cta and st.cta_text != blank -%}
+      <div class="vp-symptomnav__cta-row">
+        <a
+          class="vp-symptomnav__cta"
+          {% if st.cta_link != blank %}href="{{ st.cta_link }}"{% else %}href="#" aria-disabled="true"{% endif %}
+        >
+          {{- st.cta_text | escape -}}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% style %}
+  .vp-symptomnav {
+    background-color: var(--vp-sn-bg, #ffffff);
+    padding-block: var(--vp-sn-pad-top-m, 40px) var(--vp-sn-pad-bottom-m, 40px);
+    font-family: var(--font-body-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+  }
+
+  /* max-width, margin and horizontal padding all come from .page-width. */
+  .vp-symptomnav__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* ---------- top: heading + image ---------- */
+
+  .vp-symptomnav__top {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .vp-symptomnav__heading {
+    font-family: var(--font-heading-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+    font-weight: 700;
+    font-size: var(--vp-sn-head-fs-m, 26px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--vp-sn-heading, #10232B);
+    text-wrap: balance;
+  }
+
+  .vp-symptomnav__heading > *:first-child {
+    margin-top: 0;
+  }
+
+  .vp-symptomnav__heading > *:last-child {
+    margin-bottom: 0;
+  }
+
+  /* The solid colour above stays as the fallback: only inside @supports is a
+     gradient painted and the glyph fill knocked out, so a browser without
+     background-clip: text never renders invisible text. */
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .vp-symptomnav__heading--grad {
+      background-image: linear-gradient(90deg, var(--vp-sn-head-g1, #47B5E9), var(--vp-sn-head-g2, #13B6B5));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .vp-symptomnav__heading--grad * {
+      color: inherit;
+      -webkit-text-fill-color: inherit;
+    }
+  }
+
+  .vp-symptomnav__media {
+    flex: 0 0 auto;
+  }
+
+  .vp-symptomnav__image {
+    display: block;
+    width: 100%;
+    max-width: var(--vp-sn-image-w, 320px);
+    height: auto;
+  }
+
+  /* ---------- grid ---------- */
+
+  .vp-symptomnav__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--vp-sn-cols-m, 2), minmax(0, 1fr));
+    gap: var(--vp-sn-gap, 14px);
+  }
+
+  /* ---------- card ---------- */
+
+  .vp-symptomnav__card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px;
+    background-color: var(--vp-sn-card-bg, #ffffff);
+    border: 1px solid var(--vp-sn-card-border, #E3EEF2);
+    border-radius: var(--vp-sn-card-radius, 16px);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  }
+
+  .vp-symptomnav__card--shadow {
+    box-shadow: 0 2px 10px rgba(16, 35, 43, 0.06);
+  }
+
+  .vp-symptomnav__card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .vp-symptomnav__circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: var(--vp-sn-circle-m, 52px);
+    height: var(--vp-sn-circle-m, 52px);
+    border-radius: 50%;
+  }
+
+  .vp-symptomnav__icon {
+    display: inline-flex;
+    transform: rotate(var(--vp-sn-icon-rotate, 0deg));
+  }
+
+  .vp-symptomnav__svg {
+    display: block;
+    width: var(--vp-sn-icon-size, 30px);
+    height: var(--vp-sn-icon-size, 30px);
+  }
+
+  .vp-symptomnav__icon-img {
+    display: block;
+    width: var(--vp-sn-icon-size, 30px);
+    height: var(--vp-sn-icon-size, 30px);
+    object-fit: contain;
+  }
+
+  .vp-symptomnav__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: var(--vp-sn-arrow-size, 36px);
+    height: var(--vp-sn-arrow-size, 36px);
+    border-radius: 50%;
+    background-color: var(--vp-sn-arrow-bg, #47B5E9);
+    color: var(--vp-sn-arrow-color, #ffffff);
+    transition: transform 0.18s ease;
+  }
+
+  .vp-symptomnav__arrow svg {
+    display: block;
+    width: 55%;
+    height: 55%;
+  }
+
+  .vp-symptomnav__title {
+    margin: 0;
+    font-size: var(--vp-sn-title-fs-m, 15px);
+    font-weight: var(--vp-sn-weight, 600);
+    line-height: 1.25;
+    color: var(--vp-sn-title, #10232B);
+  }
+
+  /* The card-wide hit area. One link per card, so the accessible name stays
+     the title and the arrow needs no separate control. */
+  .vp-symptomnav__link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .vp-symptomnav__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .vp-symptomnav__link:hover {
+    text-decoration: none;
+  }
+
+  .vp-symptomnav__sub {
+    margin: 0;
+    font-size: var(--vp-sn-sub-fs-m, 13px);
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--vp-sn-sub, #5A737D);
+  }
+
+  .vp-symptomnav__grid--hide-sub-m .vp-symptomnav__sub {
+    display: none;
+  }
+
+  /* ---------- secondary CTA ---------- */
+
+  .vp-symptomnav__cta-row {
+    display: flex;
+    justify-content: center;
+  }
+
+  .vp-symptomnav__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 28px;
+    border: 1px solid var(--vp-sn-cta-border, #47B5E9);
+    border-radius: var(--vp-sn-cta-radius, 999px);
+    background-color: var(--vp-sn-cta-bg, #ffffff);
+    color: var(--vp-sn-cta-text, #47B5E9);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    transition: filter 0.18s ease, transform 0.18s ease;
+  }
+
+  .vp-symptomnav__cta:hover {
+    filter: brightness(0.96);
+    text-decoration: none;
+  }
+
+  /* ---------- tablet ---------- */
+
+  @media screen and (min-width: 750px) {
+    .vp-symptomnav {
+      padding-block: var(--vp-sn-pad-top, 64px) var(--vp-sn-pad-bottom, 64px);
+    }
+
+    .vp-symptomnav__inner {
+      gap: 32px;
+    }
+
+    .vp-symptomnav__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .vp-symptomnav__card {
+      gap: 12px;
+      padding: 20px;
+    }
+
+    .vp-symptomnav__circle {
+      width: var(--vp-sn-circle, 72px);
+      height: var(--vp-sn-circle, 72px);
+    }
+
+    .vp-symptomnav__heading {
+      font-size: var(--vp-sn-head-fs, 40px);
+    }
+
+    .vp-symptomnav__title {
+      font-size: var(--vp-sn-title-fs, 17px);
+    }
+
+    .vp-symptomnav__sub {
+      font-size: var(--vp-sn-sub-fs, 14px);
+    }
+
+    /* Subtitles are only ever hidden on mobile. */
+    .vp-symptomnav__grid--hide-sub-m .vp-symptomnav__sub {
+      display: block;
+    }
+  }
+
+  /* ---------- desktop ---------- */
+
+  @media screen and (min-width: 990px) {
+    .vp-symptomnav__top {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    .vp-symptomnav__heading {
+      flex: 1 1 auto;
+      max-width: 620px;
+    }
+
+    .vp-symptomnav__grid {
+      grid-template-columns: repeat(var(--vp-sn-cols-d, 3), minmax(0, 1fr));
+    }
+
+    /* Hover lift is desktop only - it reads as a stuck state on touch. */
+    .vp-symptomnav__card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(16, 35, 43, 0.12);
+    }
+
+    .vp-symptomnav__card:hover .vp-symptomnav__arrow {
+      transform: translateX(2px);
+    }
+  }
+
+  /* Keyboard users get the same affordance as the hover state. */
+  .vp-symptomnav__card:focus-within {
+    border-color: var(--vp-sn-arrow-bg, #47B5E9);
+  }
+
+  .vp-symptomnav__link:focus-visible::after {
+    outline: 2px solid var(--vp-sn-arrow-bg, #47B5E9);
+    outline-offset: 3px;
+  }
+
+  .vp-symptomnav__media--hide-m {
+    display: none;
+  }
+
+  @media screen and (min-width: 750px) {
+    .vp-symptomnav__media--hide-m {
+      display: block;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vp-symptomnav__card,
+    .vp-symptomnav__arrow,
+    .vp-symptomnav__cta {
+      transition: none;
+    }
+
+    .vp-symptomnav__card:hover {
+      transform: none;
+    }
+
+    .vp-symptomnav__card:hover .vp-symptomnav__arrow {
+      transform: none;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Symptom nav cards",
+  "tag": "section",
+  "class": "section-symptom-nav-cards",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        { "value": "page", "label": "Page width" },
+        { "value": "full", "label": "Full width" },
+        { "value": "custom", "label": "Custom" }
+      ],
+      "default": "page",
+      "info": "Page width matches the theme's page width setting, so the section lines up with the header and the sections around it."
+    },
+    {
+      "type": "number",
+      "id": "custom_max_width",
+      "label": "Custom max width (px)",
+      "default": 1200,
+      "info": "Only used when Section width is set to Custom."
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Columns on desktop",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "2",
+      "info": "Tablet is always 2 columns."
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Space between cards",
+      "min": 6,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding desktop",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding desktop",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>What is your dog struggling with?</p>"
+    },
+    {
+      "type": "number",
+      "id": "heading_size",
+      "label": "Heading size desktop (px)",
+      "default": 40
+    },
+    {
+      "type": "number",
+      "id": "heading_size_mobile",
+      "label": "Heading size mobile (px)",
+      "default": 26
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading colour",
+      "default": "#10232B"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_gradient",
+      "label": "Use gradient on heading",
+      "default": false,
+      "info": "When off, the solid heading colour is used."
+    },
+    {
+      "type": "color",
+      "id": "heading_gradient_start",
+      "label": "Heading gradient start",
+      "default": "#47B5E9"
+    },
+    {
+      "type": "color",
+      "id": "heading_gradient_end",
+      "label": "Heading gradient end",
+      "default": "#13B6B5"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image (top right)"
+    },
+    {
+      "type": "number",
+      "id": "image_width",
+      "label": "Image width (px)",
+      "default": 320
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_image_mobile",
+      "label": "Hide image on mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Cards"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border",
+      "default": "#E3EEF2"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "checkbox",
+      "id": "card_shadow",
+      "label": "Card shadow",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "circle_size",
+      "label": "Icon circle size desktop",
+      "min": 40,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "circle_size_mobile",
+      "label": "Icon circle size mobile",
+      "min": 32,
+      "max": 88,
+      "step": 2,
+      "unit": "px",
+      "default": 52
+    },
+    {
+      "type": "number",
+      "id": "title_size",
+      "label": "Title size desktop (px)",
+      "default": 17
+    },
+    {
+      "type": "number",
+      "id": "title_size_mobile",
+      "label": "Title size mobile (px)",
+      "default": 15
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title colour",
+      "default": "#10232B"
+    },
+    {
+      "type": "number",
+      "id": "sub_size",
+      "label": "Subtitle size desktop (px)",
+      "default": 14
+    },
+    {
+      "type": "number",
+      "id": "sub_size_mobile",
+      "label": "Subtitle size mobile (px)",
+      "default": 13
+    },
+    {
+      "type": "color",
+      "id": "sub_color",
+      "label": "Subtitle colour",
+      "default": "#5A737D"
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Title weight",
+      "options": [
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "600", "label": "Semibold (600)" },
+        { "value": "700", "label": "Bold (700)" }
+      ],
+      "default": "600",
+      "info": "Only these weights are loaded by the theme's Geist setup."
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_sub_mobile",
+      "label": "Hide subtitle on mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Arrow button"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrow",
+      "label": "Show arrow button",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "arrow_bg",
+      "label": "Arrow background",
+      "default": "#47B5E9"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Arrow colour",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "arrow_size",
+      "label": "Arrow size",
+      "min": 20,
+      "max": 56,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Secondary button"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Show button under the grid",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button text",
+      "default": "View all symptoms"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "color",
+      "id": "cta_text_color",
+      "label": "Button text colour",
+      "default": "#47B5E9"
+    },
+    {
+      "type": "color",
+      "id": "cta_bg",
+      "label": "Button background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "cta_border_color",
+      "label": "Button border",
+      "default": "#47B5E9"
+    },
+    {
+      "type": "range",
+      "id": "cta_radius",
+      "label": "Button corner radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 100,
+      "info": "50 and above renders a fully round pill."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Bad breath"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Fresh breath in 30 seconds"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Icon"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Icon image",
+          "info": "Overrides the icon below when set."
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "tooth", "label": "Tooth" },
+            { "value": "eye", "label": "Eye" },
+            { "value": "ear", "label": "Ear" },
+            { "value": "paw", "label": "Paw" },
+            { "value": "stomach", "label": "Stomach" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "sparkle", "label": "Sparkle" },
+            { "value": "drop", "label": "Drop" },
+            { "value": "clock", "label": "Clock" }
+          ],
+          "default": "tooth"
+        },
+        {
+          "type": "color",
+          "id": "icon_color",
+          "label": "Icon colour",
+          "default": "#10232B"
+        },
+        {
+          "type": "range",
+          "id": "icon_size",
+          "label": "Icon size",
+          "min": 14,
+          "max": 64,
+          "step": 2,
+          "unit": "px",
+          "default": 30
+        },
+        {
+          "type": "range",
+          "id": "icon_rotation",
+          "label": "Icon rotation",
+          "min": -180,
+          "max": 180,
+          "step": 5,
+          "unit": "deg",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Circle"
+        },
+        {
+          "type": "checkbox",
+          "id": "circle_gradient",
+          "label": "Use gradient",
+          "default": true,
+          "info": "When off, the start colour is used as a solid fill."
+        },
+        {
+          "type": "color",
+          "id": "circle_color_start",
+          "label": "Circle colour start",
+          "default": "#D5F7FF"
+        },
+        {
+          "type": "color",
+          "id": "circle_color_end",
+          "label": "Circle colour end",
+          "default": "#A8E6F7"
+        },
+        {
+          "type": "range",
+          "id": "circle_angle",
+          "label": "Gradient angle",
+          "min": 0,
+          "max": 360,
+          "step": 15,
+          "unit": "deg",
+          "default": 135
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Symptom nav cards",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "title": "Bad breath",
+            "subtitle": "Fresh breath in 30 seconds",
+            "icon": "tooth"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Plaque & tartar",
+            "subtitle": "Scrub it off at the gumline",
+            "icon": "sparkle"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Itchy paws",
+            "subtitle": "Soothe licking and chewing",
+            "icon": "paw"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Ear odour",
+            "subtitle": "Gentle weekly cleaning",
+            "icon": "ear"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
