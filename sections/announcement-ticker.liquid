@@ -102,28 +102,60 @@
               {% endif %}
             >
               <span class="vp-ticker__icon" style="color: {{ icon_color }};">
-                {%- case block.settings.icon -%}
-                  {%- when 'shield' -%}
-                    <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 2.5l7.5 3v5.6c0 4.6-3.1 8.4-7.5 10.4-4.4-2-7.5-5.8-7.5-10.4V5.5l7.5-3z"/><path d="M8.7 11.8l2.3 2.3 4.3-4.6"/></svg>
-                  {%- when 'heart' -%}
-                    <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                  {%- when 'leaf' -%}
-                    <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10z"/><path d="M2 21c0-3 1.9-5.4 5.1-6C9.5 14.5 12 13 13 12"/></svg>
-                  {%- when 'truck' -%}
-                    <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M1.8 4.5h13.4v10.9H1.8z"/><path d="M15.2 8.4h4l3 3v4h-7z"/><circle cx="6.3" cy="18.3" r="2.2"/><circle cx="18" cy="18.3" r="2.2"/></svg>
-                  {%- when 'coin' -%}
-                    <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v10"/><path d="M14.5 9.4c-.5-.8-1.4-1.3-2.5-1.3-1.5 0-2.6.8-2.6 2s1 1.7 2.6 2c1.6.3 2.6.8 2.6 2s-1.1 2-2.6 2c-1.1 0-2-.5-2.5-1.3"/></svg>
-                  {%- when 'package' -%}
-                    <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7l8.7 5 8.7-5"/><path d="M12 22V12"/><path d="M16.5 9.4L7.5 4.2"/></svg>
-                  {%- when 'paw' -%}
-                    <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><ellipse cx="6.6" cy="10.2" rx="2.1" ry="2.6"/><ellipse cx="11.9" cy="7.6" rx="2.2" ry="2.9"/><ellipse cx="17.3" cy="10.2" rx="2.1" ry="2.6"/><path d="M12 11.8c3.2 0 5.6 2.4 5.6 4.9 0 2-1.6 3.4-3.6 3.4-1.1 0-1.5-.4-2-.4s-.9.4-2 .4c-2 0-3.6-1.4-3.6-3.4 0-2.5 2.4-4.9 5.6-4.9z"/></svg>
-                  {%- when 'clock' -%}
-                    <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 6.6V12l3.5 2.1"/></svg>
-                  {%- when 'sparkle' -%}
-                    <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M10 2.2l1.7 4.9 4.9 1.7-4.9 1.7L10 15.4 8.3 10.5 3.4 8.8l4.9-1.7L10 2.2z"/><path d="M17.6 13.6l.9 2.6 2.6.9-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9.9-2.6z"/></svg>
-                  {%- else -%}
-                    <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M7.9 12.3l2.9 2.9 5.3-6.1"/></svg>
-                {%- endcase -%}
+                {%- comment -%}
+                  Filled icons knock their interior detail out in the section
+                  background colour rather than in white: the icon colour is
+                  usually white here, so a white detail on a white shape would
+                  be invisible. var(--vp-ticker-bg) makes the detail read as a
+                  hole whatever the merchant picks.
+                {%- endcomment -%}
+                {%- if st.icon_style == 'outline' -%}
+                  {%- case block.settings.icon -%}
+                    {%- when 'shield' -%}
+                      <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 2.5l7.5 3v5.6c0 4.6-3.1 8.4-7.5 10.4-4.4-2-7.5-5.8-7.5-10.4V5.5l7.5-3z"/><path d="M8.7 11.8l2.3 2.3 4.3-4.6"/></svg>
+                    {%- when 'heart' -%}
+                      <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    {%- when 'leaf' -%}
+                      <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10z"/><path d="M2 21c0-3 1.9-5.4 5.1-6C9.5 14.5 12 13 13 12"/></svg>
+                    {%- when 'truck' -%}
+                      <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M1.8 4.5h13.4v10.9H1.8z"/><path d="M15.2 8.4h4l3 3v4h-7z"/><circle cx="6.3" cy="18.3" r="2.2"/><circle cx="18" cy="18.3" r="2.2"/></svg>
+                    {%- when 'coin' -%}
+                      <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v10"/><path d="M14.5 9.4c-.5-.8-1.4-1.3-2.5-1.3-1.5 0-2.6.8-2.6 2s1 1.7 2.6 2c1.6.3 2.6.8 2.6 2s-1.1 2-2.6 2c-1.1 0-2-.5-2.5-1.3"/></svg>
+                    {%- when 'package' -%}
+                      <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7l8.7 5 8.7-5"/><path d="M12 22V12"/><path d="M16.5 9.4L7.5 4.2"/></svg>
+                    {%- when 'paw' -%}
+                      <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><ellipse cx="6.6" cy="10.2" rx="2.1" ry="2.6"/><ellipse cx="11.9" cy="7.6" rx="2.2" ry="2.9"/><ellipse cx="17.3" cy="10.2" rx="2.1" ry="2.6"/><path d="M12 11.8c3.2 0 5.6 2.4 5.6 4.9 0 2-1.6 3.4-3.6 3.4-1.1 0-1.5-.4-2-.4s-.9.4-2 .4c-2 0-3.6-1.4-3.6-3.4 0-2.5 2.4-4.9 5.6-4.9z"/></svg>
+                    {%- when 'clock' -%}
+                      <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 6.6V12l3.5 2.1"/></svg>
+                    {%- when 'sparkle' -%}
+                      <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 2.2l1.7 4.9 4.9 1.7-4.9 1.7L10 15.4 8.3 10.5 3.4 8.8l4.9-1.7L10 2.2z"/><path d="M17.6 13.6l.9 2.6 2.6.9-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9.9-2.6z"/></svg>
+                    {%- else -%}
+                      <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M7.9 12.3l2.9 2.9 5.3-6.1"/></svg>
+                  {%- endcase -%}
+                {%- else -%}
+                  {%- case block.settings.icon -%}
+                    {%- when 'shield' -%}
+                      <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 2.3l7.7 3.1v5.7c0 4.8-3.2 8.7-7.7 10.7-4.5-2-7.7-5.9-7.7-10.7V5.4L12 2.3z" fill="currentColor"/><path d="M8.5 11.7l2.4 2.4 4.6-5" style="stroke:var(--vp-ticker-bg,#47b5e9)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    {%- when 'heart' -%}
+                      <svg class="vp-ticker__svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="currentColor"/></svg>
+                    {%- when 'leaf' -%}
+                      <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10z" fill="currentColor"/><path d="M2 21c0-3 1.9-5.4 5.1-6C9.5 14.5 12 13 13 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    {%- when 'truck' -%}
+                      <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><rect x="1.8" y="4.5" width="13.4" height="10.9" rx="1.4" fill="currentColor"/><path d="M15.2 8.4h4l3 3v4h-7z" fill="currentColor"/><circle cx="6.3" cy="18.3" r="2.7" fill="currentColor"/><circle cx="18" cy="18.3" r="2.7" fill="currentColor"/><circle cx="6.3" cy="18.3" r="1" style="fill:var(--vp-ticker-bg,#47b5e9)"/><circle cx="18" cy="18.3" r="1" style="fill:var(--vp-ticker-bg,#47b5e9)"/></svg>
+                    {%- when 'coin' -%}
+                      <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 6.8v10.4M14.5 9.6c-.5-.8-1.4-1.3-2.5-1.3-1.5 0-2.6.8-2.6 1.9s1 1.7 2.6 2c1.6.3 2.6.8 2.6 1.9s-1.1 1.9-2.6 1.9c-1.1 0-2-.5-2.5-1.3" style="stroke:var(--vp-ticker-bg,#47b5e9)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    {%- when 'package' -%}
+                      <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" fill="currentColor"/><path d="M3.3 7l8.7 5 8.7-5M12 22V12M16.5 9.4L7.5 4.2" style="stroke:var(--vp-ticker-bg,#47b5e9)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    {%- when 'paw' -%}
+                      <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><ellipse cx="6.6" cy="10.2" rx="2.1" ry="2.6"/><ellipse cx="11.9" cy="7.6" rx="2.2" ry="2.9"/><ellipse cx="17.3" cy="10.2" rx="2.1" ry="2.6"/><path d="M12 11.8c3.2 0 5.6 2.4 5.6 4.9 0 2-1.6 3.4-3.6 3.4-1.1 0-1.5-.4-2-.4s-.9.4-2 .4c-2 0-3.6-1.4-3.6-3.4 0-2.5 2.4-4.9 5.6-4.9z"/></svg>
+                    {%- when 'clock' -%}
+                      <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 6.4V12l3.6 2.2" style="stroke:var(--vp-ticker-bg,#47b5e9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    {%- when 'sparkle' -%}
+                      <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M10 2.2l1.7 4.9 4.9 1.7-4.9 1.7L10 15.4 8.3 10.5 3.4 8.8l4.9-1.7L10 2.2z"/><path d="M17.6 13.6l.9 2.6 2.6.9-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9.9-2.6z"/></svg>
+                    {%- else -%}
+                      <svg class="vp-ticker__svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M7.6 12.3l3 3 5.8-6.4" style="stroke:var(--vp-ticker-bg,#47b5e9)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  {%- endcase -%}
+                {%- endif -%}
               </span>
               {%- if block.settings.text != blank -%}
                 <span class="vp-ticker__text">{{ block.settings.text | escape }}</span>
@@ -350,6 +382,17 @@
       "label": "Icon (default)",
       "default": "#FFFFFF",
       "info": "Used by every item that has no icon colour of its own."
+    },
+    {
+      "type": "select",
+      "id": "icon_style",
+      "label": "Icon style",
+      "options": [
+        { "value": "filled", "label": "Filled" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "default": "filled",
+      "info": "Applies to all 10 icons. Filled shapes knock their detail out in the background colour."
     },
     {
       "type": "header",
