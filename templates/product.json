@@ -593,24 +593,13 @@
             "desc_alignment": "center",
             "desc_color_scheme": "background-2"
           }
-        },
-        "image_slide_Pc94Pp": {
-          "type": "image_slide",
-          "settings": {
-            "image": "shopify://shop_images/Ai_AVATARS_25.png",
-            "link": "",
-            "description": "",
-            "desc_alignment": "center",
-            "desc_color_scheme": "background-2"
-          }
         }
       },
       "block_order": [
         "image_slide_bk64Fk",
         "image_slide_CrCqJT",
         "image_slide_AKJ7Rk",
-        "image_slide_pBGtCV",
-        "image_slide_Pc94Pp"
+        "image_slide_pBGtCV"
       ],
       "name": "Image/Video Slider",
       "settings": {
