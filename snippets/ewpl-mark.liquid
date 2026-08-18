@@ -1,0 +1,27 @@
+{%- comment -%}
+  EyeWipes pre-lander — one comparison-table cell marker.
+
+  Accepts:
+    code   'y' | 'n' | 'd' | 't:<text>'
+    winner truthy for the EyeWipes column (bigger, brand-coloured treatment)
+{%- endcomment -%}
+{%- assign ewpl_mark_code = code -%}
+{%- if ewpl_mark_code contains 't:' -%}
+  {%- assign ewpl_mark_text = ewpl_mark_code | remove_first: 't:' -%}
+  {%- if winner -%}
+    <span class="ewpl-mark-wintext">{{ ewpl_mark_text }}</span>
+  {%- else -%}
+    <span class="ewpl-mark-text">{{ ewpl_mark_text }}</span>
+  {%- endif -%}
+{%- elsif ewpl_mark_code == 'y' -%}
+  {%- if winner -%}
+    <span class="ewpl-mark-win"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12.5 5 5 9-11" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="ewpl-sr">Yes</span>
+  {%- else -%}
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" role="img" aria-label="Yes"><path d="m5 12.5 5 5 9-11" stroke="#8C99A3" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  {%- endif -%}
+{%- elsif ewpl_mark_code == 'n' -%}
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" role="img" aria-label="No"><path d="M6 6l12 12M18 6 6 18" stroke="#B9C4CC" stroke-width="2.6" stroke-linecap="round"/></svg>
+{%- else -%}
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" role="img" aria-label="Partly"><path d="M6 12h12" stroke="#8C99A3" stroke-width="2.6" stroke-linecap="round"/></svg>
+{%- endif -%}

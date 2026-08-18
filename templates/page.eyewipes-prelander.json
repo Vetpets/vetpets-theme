@@ -1,0 +1,13 @@
+{
+  "layout": "eyewipes-prelander",
+  "sections": {
+    "eyewipes-prelander": {
+      "type": "eyewipes-prelander",
+      "settings": {
+        "cta_url": "",
+        "show_sticky_cta": true
+      }
+    }
+  },
+  "order": ["eyewipes-prelander"]
+}

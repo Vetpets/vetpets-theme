@@ -1,0 +1,51 @@
+<!doctype html>
+{%- comment -%}
+  EyeWipes pre-lander — dedicated layout.
+
+  Used only by templates/page.eyewipes-prelander.json. Deliberately excludes the
+  store header, main navigation, announcement bar, footer and every other global
+  theme element so the approved Claude Design page renders exactly as designed.
+
+  Everything Shopify needs is still here: content_for_header, content_for_layout,
+  viewport metadata, title/meta and canonical.
+{%- endcomment -%}
+<html class="eyewipes-prelander-html" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#47B5E9">
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    <title>{{ page_title }}{% if shop.name != page_title %} &ndash; {{ shop.name }}{% endif %}</title>
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    {%- comment -%} Preload the two assets that gate the first paint. {%- endcomment -%}
+    <link rel="preload" as="font" type="font/woff2" href="{{ 'ewpl-geist-bold.woff2' | asset_url }}" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="{{ 'ewpl-geist-regular.woff2' | asset_url }}" crossorigin>
+    <link rel="stylesheet" href="{{ 'eyewipes-prelander.css' | asset_url }}">
+
+    <style>
+      @font-face { font-family: "GeistEwpl"; src: url("{{ 'ewpl-geist-regular.woff2' | asset_url }}") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+      @font-face { font-family: "GeistEwpl"; src: url("{{ 'ewpl-geist-medium.woff2' | asset_url }}") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+      @font-face { font-family: "GeistEwpl"; src: url("{{ 'ewpl-geist-semibold.woff2' | asset_url }}") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+      @font-face { font-family: "GeistEwpl"; src: url("{{ 'ewpl-geist-bold.woff2' | asset_url }}") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+      @font-face { font-family: "GeistEwpl"; src: url("{{ 'ewpl-geist-extrabold.woff2' | asset_url }}") format("woff2"); font-weight: 800; font-style: normal; font-display: swap; }
+    </style>
+
+    {{ content_for_header }}
+  </head>
+
+  <body class="eyewipes-prelander-body">
+    {{ content_for_layout }}
+
+    <script src="{{ 'eyewipes-prelander.js' | asset_url }}" defer></script>
+  </body>
+</html>
