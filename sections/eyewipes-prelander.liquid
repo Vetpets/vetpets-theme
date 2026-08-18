@@ -1,0 +1,477 @@
+{%- comment -%}
+  EyeWipes pre-lander
+  ===================
+  Faithful Shopify implementation of the approved Claude Design page
+  "EyeWipes Pre-Lander v2" (project: VetPets EyeWipes Pre-Lander).
+
+  Rendered only through templates/page.eyewipes-prelander.json, which uses
+  layout/eyewipes-prelander.liquid — a dedicated layout with no header,
+  navigation, announcement bar or footer.
+
+  Everything is scoped under #eyewipes-prelander:
+    assets/eyewipes-prelander.css   presentation
+    assets/eyewipes-prelander.js    countdown, comparison tabs, review rail,
+                                    attribution forwarding
+
+  CTA routing: every call to action goes to the canonical EyeWipes PDP. The
+  only exception is "Skip to offer", which scrolls to #eyewipes-offer on this
+  same page.
+{%- endcomment -%}
+
+{%- liquid
+  assign pdp_url = section.settings.cta_url | default: 'https://shopvetpets.com/products/eyewipes-prevention-that-keeps-eyes-clear'
+  assign offer_anchor = '#eyewipes-offer'
+
+  # server-rendered countdown seed (shop time). eyewipes-prelander.js corrects
+  # it to the visitor's own clock within a second.
+  assign now_h = 'now' | date: '%H' | times: 1
+  assign now_m = 'now' | date: '%M' | times: 1
+  assign now_s = 'now' | date: '%S' | times: 1
+  assign hour_seconds = now_h | times: 3600
+  assign minute_seconds = now_m | times: 60
+  assign elapsed = hour_seconds | plus: minute_seconds | plus: now_s
+  assign left = 86400 | minus: elapsed
+  assign cd_h = left | divided_by: 3600
+  assign cd_rem = left | modulo: 3600
+  assign cd_m = cd_rem | divided_by: 60
+  assign cd_s = cd_rem | modulo: 60
+  assign cd_h = cd_h | prepend: '0' | slice: -2, 2
+  assign cd_m = cd_m | prepend: '0' | slice: -2, 2
+  assign cd_s = cd_s | prepend: '0' | slice: -2, 2
+
+  assign marquee_claims = '45,000+ Happy Dog Owners|100-Day Money-Back Guarantee|Hypoallergenic &amp; Fragrance-Free|Works In 30 Seconds A Day' | split: '|'
+
+  assign cmp_rows = 'Physically removes the buildup~y~n~n~n~y||Textured surface lifts debris off the skin~y~n~n~n~n||Antibacterial — stops it coming back~y~n~d~n~n||Safe for daily use around the eyes~y~n~n~y~d||Works from day one~y~d~d~n~y||No struggle, no stress~y~d~n~y~n||Time per day~t:30 sec~t:1–2 min~t:5–10 min~t:—~t:—' | split: '||'
+  assign cmp_rivals = 'Baby Wipes~ewpl-cmp-babywipes.webp~Baby wipes||Coconut Oil &amp; Home Remedies~ewpl-cmp-coconut.webp~Coconut oil and home remedies||Tear-Stain Supplements~ewpl-cmp-supplements.webp~Tear-stain supplements||Grooming Visits~ewpl-cmp-grooming.webp~Grooming visits' | split: '||'
+
+  assign kit_name = 'EyeWipes Kit – Prevention That Keeps Eyes Clear'
+-%}
+
+<div id="eyewipes-prelander">
+
+  {%- comment -%} ---------- top offer bar ---------- {%- endcomment -%}
+  <div class="ewpl-topbar">
+    <div class="ewpl-topbar__inner">
+      <div class="ewpl-topbar__text">
+        Buy 2, Get 2 Free + Free Gifts
+        <span class="ewpl-topbar__sub">· 100-Day Risk-Free Home Trial</span>
+      </div>
+      <div class="ewpl-countdown">
+        <div class="ewpl-countdown__box">
+          <div class="ewpl-countdown__num" data-ewpl-cd="h">{{ cd_h }}</div>
+          <div class="ewpl-countdown__label">HRS</div>
+        </div>
+        <div class="ewpl-countdown__sep" aria-hidden="true">:</div>
+        <div class="ewpl-countdown__box">
+          <div class="ewpl-countdown__num" data-ewpl-cd="m">{{ cd_m }}</div>
+          <div class="ewpl-countdown__label">MIN</div>
+        </div>
+        <div class="ewpl-countdown__sep" aria-hidden="true">:</div>
+        <div class="ewpl-countdown__box">
+          <div class="ewpl-countdown__num" data-ewpl-cd="s">{{ cd_s }}</div>
+          <div class="ewpl-countdown__label">SEC</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ---------- 1. hero ---------- {%- endcomment -%}
+  <section class="ewpl-hero" aria-labelledby="ewpl-hero-title">
+    <div class="ewpl-wrap">
+      <div class="ewpl-hero__grid">
+        <div class="ewpl-hero__copy">
+          <h1 class="ewpl-hero__title" id="ewpl-hero-title">How To Stop Crusty Eyes <span class="ewpl-accent">In 30 Seconds A Day</span> — Without Baby Wipes, Grooming, Or Home Remedies</h1>
+          <p class="ewpl-hero__sub">A simple daily routine that removes the bacteria causing the problem — so the gunk stops coming back.</p>
+          <div class="ewpl-hero__btns">
+            <a class="ewpl-cta ewpl-btn-primary" href="{{ pdp_url }}" data-ewpl-pdp>See Why It Works ↓</a>
+            <a class="ewpl-cta ewpl-btn-outline" href="{{ offer_anchor }}">Skip to offer ↓</a>
+          </div>
+          <div class="ewpl-rating"><span class="ewpl-stars" role="img" aria-label="Rated 4.8 out of 5">★★★★★</span>&nbsp; Rated 4.8/5 · 45,000+ Dog Owners</div>
+        </div>
+        <div class="ewpl-hero__media">
+          <div class="ewpl-hero__fade" aria-hidden="true"></div>
+          <img
+            class="ewpl-hero__img"
+            src="{{ 'ewpl-hero-before-after.webp' | asset_url }}"
+            alt="A small white dog's eye area before and after the EyeWipes routine — crusty build-up on one side, clean bright fur on the other"
+            width="1600"
+            height="1197"
+            fetchpriority="high"
+            decoding="async">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ---------- marquee ---------- {%- endcomment -%}
+  <div class="ewpl-marquee" aria-hidden="true">
+    <div class="ewpl-marquee__track">
+      {%- for half in (1..2) -%}
+        <div class="ewpl-marquee__half">
+          {%- for claim in marquee_claims -%}
+            <span class="ewpl-marquee__item">
+              <span>{{ claim }}</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><ellipse cx="7" cy="8" rx="2.1" ry="2.7"/><ellipse cx="12" cy="6.4" rx="2.1" ry="2.7"/><ellipse cx="17" cy="8" rx="2.1" ry="2.7"/><path d="M12 11c3 0 5.2 2.4 5.2 4.7 0 1.9-1.6 2.9-3.3 2.6-.7-.1-1.3-.3-1.9-.3s-1.2.2-1.9.3c-1.7.3-3.3-.7-3.3-2.6C6.8 13.4 9 11 12 11Z"/></svg>
+            </span>
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {%- comment -%} ---------- 2. mechanism badges ---------- {%- endcomment -%}
+  <section class="ewpl-badges" aria-label="Why EyeWipes works">
+    <div class="ewpl-badges__grid">
+      <div class="ewpl-badge">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="#47B5E9" aria-hidden="true"><circle cx="5" cy="5" r="2.1"/><circle cx="12" cy="5" r="2.1"/><circle cx="19" cy="5" r="2.1"/><circle cx="5" cy="12" r="2.1"/><circle cx="12" cy="12" r="2.1"/><circle cx="19" cy="12" r="2.1"/><circle cx="5" cy="19" r="2.1"/><circle cx="12" cy="19" r="2.1"/><circle cx="19" cy="19" r="2.1"/></svg>
+        <span>Textured Surface — Removes, Doesn't Spread</span>
+      </div>
+      <div class="ewpl-badge">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="#47B5E9" aria-hidden="true"><path d="M12 2.5C8.5 7 5.5 10.3 5.5 14a6.5 6.5 0 0 0 13 0c0-3.7-3-7-6.5-11.5Zm0 16.5a4 4 0 0 1-4-4c0-.4.06-.8.17-1.2A5.5 5.5 0 0 0 12 15.5c1.5 0 2.9-.6 3.9-1.6.07.35.1.72.1 1.1a4 4 0 0 1-4 4Z"/></svg>
+        <span>Aloe + Chamomile Antibacterial Formula</span>
+      </div>
+      <div class="ewpl-badge">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" stroke="#47B5E9" stroke-width="2"/><circle cx="12" cy="12" r="3.2" fill="#47B5E9"/></svg>
+        <span>No Stinging — Made For Sensitive Eyes</span>
+      </div>
+      <div class="ewpl-badge">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.2C9 7.1 6.6 9.9 6.6 13a5.4 5.4 0 0 0 10.8 0c0-3.1-2.4-5.9-5.4-9.8Z" stroke="#47B5E9" stroke-width="2"/><path d="M4 20.5 20 4.2" stroke="#47B5E9" stroke-width="2.4" stroke-linecap="round"/></svg>
+        <span>No Rinsing, No Mixing — One Pass And Done</span>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ---------- 3. proof on the wipe ---------- {%- endcomment -%}
+  <section class="ewpl-proof" id="why-eye-care" aria-labelledby="ewpl-proof-title">
+    <div class="ewpl-proof__inner">
+      <div class="ewpl-eyebrow">See it for yourself</div>
+      <h2 class="ewpl-h2" id="ewpl-proof-title">The proof is <span class="ewpl-accent">on the wipe</span></h2>
+      <p class="ewpl-proof__lead">One pass around the eye area. Look at the wipe.</p>
+      <div class="ewpl-proof__grid">
+        {%- for i in (1..3) -%}
+          {%- assign proof_asset = 'ewpl-proof-pad-' | append: i | append: '.webp' -%}
+          <div class="ewpl-proof__tile">
+            <img
+              src="{{ proof_asset | asset_url }}"
+              alt="A used EyeWipes pad, brown with the build-up lifted off a dog's eye area"
+              width="700"
+              height="700"
+              loading="lazy"
+              decoding="async">
+          </div>
+        {%- endfor -%}
+      </div>
+      <p class="ewpl-proof__body"><strong>That brown? That's what was sitting on your dog's skin.</strong> It's what baby wipes and home remedies just slide over — and what keeps the crust coming back.</p>
+      <a class="ewpl-skip ewpl-skip--hero-gap" href="{{ offer_anchor }}">Skip to offer ↓</a>
+    </div>
+  </section>
+
+  <div class="ewpl-wave" aria-hidden="true"><svg viewBox="0 0 1440 64" preserveAspectRatio="none" focusable="false"><path d="M0 40 C240 8 480 64 720 40 C960 16 1200 56 1440 28 L1440 64 L0 64 Z" fill="#D5F7FF"/></svg></div>
+
+  {%- comment -%} ---------- 4. mechanism cards ---------- {%- endcomment -%}
+  <section class="ewpl-mech" aria-labelledby="ewpl-mech-title">
+    <div class="ewpl-mech__inner">
+      <h2 class="ewpl-h2 ewpl-mech__title" id="ewpl-mech-title">Why this <span class="ewpl-accent">works</span> when nothing else did</h2>
+      <div class="ewpl-mech__grid">
+        <div class="ewpl-mech__card">
+          <div class="ewpl-mech__media"><img src="{{ 'ewpl-mech-texture.webp' | asset_url }}" alt="Macro close-up of the textured EyeWipes pad surface" width="700" height="524" loading="lazy" decoding="async"></div>
+          <div class="ewpl-mech__head">
+            <div class="ewpl-mech__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="#47B5E9" aria-hidden="true"><circle cx="5" cy="5" r="2.1"/><circle cx="12" cy="5" r="2.1"/><circle cx="19" cy="5" r="2.1"/><circle cx="5" cy="12" r="2.1"/><circle cx="12" cy="12" r="2.1"/><circle cx="19" cy="12" r="2.1"/><circle cx="5" cy="19" r="2.1"/><circle cx="12" cy="19" r="2.1"/><circle cx="19" cy="19" r="2.1"/></svg></div>
+            <div class="ewpl-mech__name">Textured surface lifts bacteria off</div>
+          </div>
+          <p class="ewpl-mech__copy">Smooth wipes move the mess around. The textured surface removes it.</p>
+        </div>
+        <div class="ewpl-mech__card">
+          <div class="ewpl-mech__media"><img src="{{ 'ewpl-mech-aloe.webp' | asset_url }}" alt="Aloe vera and chamomile, the gentle antibacterial ingredients in EyeWipes" width="700" height="524" loading="lazy" decoding="async"></div>
+          <div class="ewpl-mech__head">
+            <div class="ewpl-mech__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="#47B5E9" aria-hidden="true"><path d="M12 2.5C8.5 7 5.5 10.3 5.5 14a6.5 6.5 0 0 0 13 0c0-3.7-3-7-6.5-11.5Zm0 16.5a4 4 0 0 1-4-4c0-.4.06-.8.17-1.2A5.5 5.5 0 0 0 12 15.5c1.5 0 2.9-.6 3.9-1.6.07.35.1.72.1 1.1a4 4 0 0 1-4 4Z"/></svg></div>
+            <div class="ewpl-mech__name">Aloe + chamomile stop regrowth</div>
+          </div>
+          <p class="ewpl-mech__copy">Gentle antibacterial ingredients keep it from coming back between wipes.</p>
+        </div>
+        <div class="ewpl-mech__card">
+          <div class="ewpl-mech__media"><img src="{{ 'ewpl-mech-apply.webp' | asset_url }}" alt="An EyeWipes pad being wiped gently around a calm dog's eye" width="700" height="524" loading="lazy" decoding="async"></div>
+          <div class="ewpl-mech__head">
+            <div class="ewpl-mech__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#47B5E9" stroke-width="2.2"/><path d="M12 7v5.2l3.4 2" stroke="#47B5E9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="ewpl-mech__name">30 seconds, no struggle</div>
+          </div>
+          <p class="ewpl-mech__copy">Soft, rounded, and gentle enough for daily use — even on sensitive dogs.</p>
+        </div>
+      </div>
+      <a class="ewpl-skip" href="{{ offer_anchor }}">Skip to offer ↓</a>
+    </div>
+  </section>
+
+  <div class="ewpl-wave" aria-hidden="true"><svg viewBox="0 0 1440 64" preserveAspectRatio="none" focusable="false"><path d="M0 28 C240 56 480 8 720 32 C960 56 1200 12 1440 36 L1440 0 L0 0 Z" fill="#D5F7FF"/></svg></div>
+
+  {%- comment -%} ---------- 5. what to expect ---------- {%- endcomment -%}
+  <section class="ewpl-expect" aria-labelledby="ewpl-expect-title">
+    <div class="ewpl-expect__inner">
+      <h2 class="ewpl-h2 ewpl-expect__title" id="ewpl-expect-title">What to <span class="ewpl-accent">expect</span></h2>
+      <div class="ewpl-tl">
+        <div class="ewpl-tl__line" aria-hidden="true"></div>
+        <div class="ewpl-tl__item">
+          <div class="ewpl-tl__avatar ewpl-tl__avatar--1"><img src="{{ 'ewpl-week-1.webp' | asset_url }}" alt="Week 1 — a Maltese with hard crust and a red, irritated eye area" width="420" height="420" loading="lazy" decoding="async"></div>
+          <div class="ewpl-tl__copy">
+            <div class="ewpl-tl__chip">Week 1</div>
+            <p class="ewpl-tl__text">Less gunk waiting for you each morning.</p>
+          </div>
+        </div>
+        <div class="ewpl-tl__item">
+          <div class="ewpl-tl__avatar ewpl-tl__avatar--2"><img src="{{ 'ewpl-week-2.webp' | asset_url }}" alt="Week 2 — the same Maltese with less crust, some staining still visible" width="420" height="420" loading="lazy" decoding="async"></div>
+          <div class="ewpl-tl__copy">
+            <div class="ewpl-tl__chip">Week 2</div>
+            <p class="ewpl-tl__text">Discharge slows down. The fur around the eyes starts to brighten.</p>
+          </div>
+        </div>
+        <div class="ewpl-tl__item">
+          <div class="ewpl-tl__avatar ewpl-tl__avatar--3"><img src="{{ 'ewpl-week-3.webp' | asset_url }}" alt="Week 3 — the same Maltese with a completely clear, bright eye area" width="420" height="420" loading="lazy" decoding="async"></div>
+          <div class="ewpl-tl__copy">
+            <div class="ewpl-tl__chip">Week 3</div>
+            <p class="ewpl-tl__text">Clean, bright, comfortable — she leans into your hand instead of bracing for it.</p>
+          </div>
+        </div>
+      </div>
+      <a class="ewpl-skip" href="{{ offer_anchor }}">Skip to offer ↓</a>
+    </div>
+  </section>
+
+  {%- comment -%} ---------- 6. comparison ---------- {%- endcomment -%}
+  <section class="ewpl-cmp" aria-labelledby="ewpl-cmp-title">
+    <div class="ewpl-cmp__inner">
+      <h2 class="ewpl-h2 ewpl-cmp__title" id="ewpl-cmp-title"><span class="ewpl-accent">EyeWipes</span> vs. what you've already tried</h2>
+
+      <div class="ewpl-cmp__desktop">
+        <div class="ewpl-cmp__row">
+          <div></div>
+          <div class="ewpl-cmp__hero-col">
+            <img class="ewpl-cmp__hero-img" src="{{ 'ewpl-packshot.webp' | asset_url }}" alt="EyeWipes" width="500" height="500" loading="lazy" decoding="async">
+            <div class="ewpl-cmp__hero-name">EyeWipes</div>
+          </div>
+          {%- for rival in cmp_rivals -%}
+            {%- assign r = rival | split: '~' -%}
+            <div class="ewpl-cmp__col">
+              <img src="{{ r[1] | asset_url }}" alt="{{ r[2] }}" width="260" height="260" loading="lazy" decoding="async">
+              <div class="ewpl-cmp__col-name">{{ r[0] }}</div>
+            </div>
+          {%- endfor -%}
+        </div>
+        {%- for row in cmp_rows -%}
+          {%- assign c = row | split: '~' -%}
+          <div class="ewpl-cmp__row">
+            <div class="ewpl-cmp__label">{{ c[0] }}</div>
+            <div class="ewpl-cmp__cell-win">{% render 'ewpl-mark', code: c[1], winner: true %}</div>
+            <div class="ewpl-cmp__cell">{% render 'ewpl-mark', code: c[2] %}</div>
+            <div class="ewpl-cmp__cell">{% render 'ewpl-mark', code: c[3] %}</div>
+            <div class="ewpl-cmp__cell">{% render 'ewpl-mark', code: c[4] %}</div>
+            <div class="ewpl-cmp__cell">{% render 'ewpl-mark', code: c[5] %}</div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div class="ewpl-cmp__mobile">
+        <div class="ewpl-cmp__tabs" role="tablist" aria-label="Compare EyeWipes with">
+          {%- for rival in cmp_rivals -%}
+            {%- assign r = rival | split: '~' -%}
+            {%- assign idx = forloop.index -%}
+            <button
+              type="button"
+              class="ewpl-cmp__tab"
+              role="tab"
+              id="ewpl-cmp-tab-{{ idx }}"
+              aria-controls="ewpl-cmp-panel-{{ idx }}"
+              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+              tabindex="{% if forloop.first %}0{% else %}-1{% endif %}">{{ r[0] }}</button>
+          {%- endfor -%}
+        </div>
+        {%- for rival in cmp_rivals -%}
+          {%- assign r = rival | split: '~' -%}
+          {%- assign idx = forloop.index -%}
+          {%- assign col = forloop.index | plus: 1 -%}
+          <div
+            class="ewpl-cmp__panel"
+            role="tabpanel"
+            id="ewpl-cmp-panel-{{ idx }}"
+            aria-labelledby="ewpl-cmp-tab-{{ idx }}"
+            {% unless forloop.first %}hidden{% endunless %}>
+            <div class="ewpl-cmp__mhead">
+              <div class="ewpl-cmp__mhead-title">Compare</div>
+              <div class="ewpl-cmp__mcol">
+                <img src="{{ 'ewpl-packshot.webp' | asset_url }}" alt="EyeWipes" width="500" height="500" loading="lazy" decoding="async">
+                <div class="ewpl-cmp__mcol-name">EyeWipes</div>
+              </div>
+              <div class="ewpl-cmp__mcol">
+                <img class="ewpl-cmp__mrival-img" src="{{ r[1] | asset_url }}" alt="{{ r[2] }}" width="260" height="260" loading="lazy" decoding="async">
+                <div class="ewpl-cmp__mrival-name">{{ r[0] }}</div>
+              </div>
+            </div>
+            {%- for row in cmp_rows -%}
+              {%- assign c = row | split: '~' -%}
+              <div class="ewpl-cmp__mrow">
+                <div class="ewpl-cmp__mlabel">{{ c[0] }}</div>
+                <div class="ewpl-cmp__mcell-win">{% render 'ewpl-mark', code: c[1], winner: true %}</div>
+                <div class="ewpl-cmp__mcell">{% render 'ewpl-mark', code: c[col] %}</div>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <a class="ewpl-skip" href="{{ offer_anchor }}">Skip to offer ↓</a>
+    </div>
+  </section>
+
+  <div class="ewpl-wave" aria-hidden="true"><svg viewBox="0 0 1440 64" preserveAspectRatio="none" focusable="false"><path d="M0 40 C240 8 480 64 720 40 C960 16 1200 56 1440 28 L1440 64 L0 64 Z" fill="#D5F7FF"/></svg></div>
+
+  {%- comment -%} ---------- 7. reviews ---------- {%- endcomment -%}
+  <section class="ewpl-reviews" aria-labelledby="ewpl-reviews-title">
+    <div class="ewpl-reviews__inner">
+      <h2 class="ewpl-h2 ewpl-reviews__title" id="ewpl-reviews-title">45,000+ dog owners finally found <span class="ewpl-accent">a routine that works</span></h2>
+      <div>
+        <ul class="ewpl-reviews__rail">
+          {%- capture rv1 -%}"I love how these pads work!!! … They are fabulous in that the bumpy side of the wipes grab the dried out mucus really well and it is easier to massage the dried mucus out of their hair without accidentally pulling it out. … These are definitely worth the expense!!! … Happy wiping!!!😊"{%- endcapture -%}
+          {% render 'ewpl-review', name: 'Caroline G.', quote: rv1, product: 'The #1 Add-On for Eye-Prone Breeds – EyeWipes Kit', pdp_url: pdp_url %}
+          {%- capture rv2 -%}"These are the only things I have used , which are many, that has actually worked. Very happy"{%- endcapture -%}
+          {% render 'ewpl-review', name: 'Barbara M.', quote: rv2, product: kit_name, pdp_url: pdp_url %}
+          {%- capture rv3 -%}"The wipes softens the crusty buildup over night and makes it easier to remove. Eyes are looking much cleaner and Argo is much happier."{%- endcapture -%}
+          {% render 'ewpl-review', name: 'Pauline L.', quote: rv3, product: kit_name, pdp_url: pdp_url %}
+          {%- capture rv4 -%}"Works like a charm do we aren't having to spend so much time to get those eye winkies off the hair by his eyes. Thank you!"{%- endcapture -%}
+          {% render 'ewpl-review', name: 'Sharon M.', quote: rv4, product: kit_name, pdp_url: pdp_url %}
+          {%- capture rv5 -%}"VetPet Eyewipes works very well on one of my toy poodle's eye stains. I use them every morning. And for the other toy poodle with crustier eye stains, I use a warm damp microfiber cloth followed by VetPet Eyewipes."{%- endcapture -%}
+          {% render 'ewpl-review', name: 'Vicki M.', quote: rv5, product: kit_name, pdp_url: pdp_url %}
+          {%- capture rv6 -%}"Working. Up to the present.will advise you after 30days as recomended.Got my daughter to purchase some as well.After she had seen Buddy."{%- endcapture -%}
+          {% render 'ewpl-review', name: 'John B.', quote: rv6, product: kit_name, pdp_url: pdp_url %}
+        </ul>
+        <div class="ewpl-reviews__nav">
+          <button type="button" class="ewpl-reviews__navbtn" data-ewpl-rail="prev" aria-label="Previous reviews">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14.5 5 8 12l6.5 7" stroke="#47B5E9" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="ewpl-reviews__navbtn" data-ewpl-rail="next" aria-label="More reviews">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.5 5 16 12l-6.5 7" stroke="#47B5E9" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="ewpl-reviews__skip"><a class="ewpl-skip" href="{{ offer_anchor }}">Skip to offer ↓</a></div>
+    </div>
+  </section>
+
+  <div class="ewpl-wave" aria-hidden="true"><svg viewBox="0 0 1440 64" preserveAspectRatio="none" focusable="false"><path d="M0 28 C240 56 480 8 720 32 C960 56 1200 12 1440 36 L1440 0 L0 0 Z" fill="#D5F7FF"/></svg></div>
+
+  {%- comment -%} ---------- 8. guarantee ---------- {%- endcomment -%}
+  <section class="ewpl-guarantee" aria-labelledby="ewpl-guarantee-title">
+    <div class="ewpl-guarantee__grid">
+      <div class="ewpl-guarantee__card">
+        <svg width="44" height="50" viewBox="0 0 44 50" fill="none" aria-hidden="true"><path d="M22 1.5 41.5 8.8v14.4c0 11.6-8.3 20.4-19.5 24.8C10.8 43.6 2.5 34.8 2.5 23.2V8.8L22 1.5Z" fill="#47B5E9"/><path d="m13.5 24.5 5.5 5.5 11.5-11.5" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        <h2 class="ewpl-guarantee__title" id="ewpl-guarantee-title">Healthy, clear eyes — or <span class="ewpl-accent">every penny back</span></h2>
+        <p class="ewpl-guarantee__copy">Use EyeWipes daily for up to 100 days. If you don't see the difference, you get a full refund. No questions, no forms, no hassle.</p>
+      </div>
+      <div class="ewpl-guarantee__media">
+        <img src="{{ 'ewpl-guarantee.webp' | asset_url }}" alt="A happy dog owner with her dog, jars of EyeWipes in frame" width="1098" height="618" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <div class="ewpl-wave" aria-hidden="true"><svg viewBox="0 0 1440 64" preserveAspectRatio="none" focusable="false"><path d="M0 40 C240 8 480 64 720 40 C960 16 1200 56 1440 28 L1440 64 L0 64 Z" fill="#D5F7FF"/></svg></div>
+
+  {%- comment -%} ---------- 9. offer ---------- {%- endcomment -%}
+  <section class="ewpl-offer" id="eyewipes-offer" aria-labelledby="ewpl-offer-title">
+    <div class="ewpl-offer__inner">
+      <div class="ewpl-offer__head">
+        <h2 class="ewpl-h2 ewpl-offer__title" id="ewpl-offer-title">You're the kind of owner who notices. The tools failed — <span class="ewpl-accent">not you</span>.</h2>
+        <p class="ewpl-offer__sub">Three weeks from now you're not managing the gunk. You ended it.</p>
+      </div>
+      <div class="ewpl-offer__cardwrap">
+        <div class="ewpl-offer__ribbon">Buy 2, Get 2 Free + Free Gifts (Limited Time!)</div>
+        <div class="ewpl-offer__card">
+          <div class="ewpl-offer__media">
+            <div class="ewpl-offer__toprated"><span class="ewpl-offer__dot" aria-hidden="true"></span>Top rated</div>
+            <img class="ewpl-offer__jar" src="{{ 'ewpl-offer-jar.webp' | asset_url }}" alt="EyeWipes jar — 100 pcs, for dogs &amp; cats" width="800" height="800" loading="lazy" decoding="async">
+          </div>
+          <div class="ewpl-offer__body">
+            <div class="ewpl-rating"><span class="ewpl-stars" role="img" aria-label="Rated 4.8 out of 5">★★★★★</span>&nbsp; Rated 4.8/5 · Trusted by 45,000+ Dog Owners</div>
+            <h2 class="ewpl-offer__name">EyeWipes — Gentle Care for Sensitive Eyes</h2>
+            <div class="ewpl-offer__bullets">
+              <div class="ewpl-offer__bullet">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="#47B5E9"/><path d="m7.5 12.2 3 3 6-6.4" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+                <span>Removes the buildup that causes crusty eyes</span>
+              </div>
+              <div class="ewpl-offer__bullet">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="#47B5E9"/><path d="m7.5 12.2 3 3 6-6.4" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+                <span>Gentle enough for daily use — hypoallergenic &amp; fragrance-free</span>
+              </div>
+              <div class="ewpl-offer__bullet">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="#47B5E9"/><path d="m7.5 12.2 3 3 6-6.4" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+                <span>Visible difference in 3 weeks — or every penny back</span>
+              </div>
+            </div>
+            <div class="ewpl-offer__scarcity">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 22 20H2L12 3Z" fill="#D64545"/><path d="M12 9.5v4.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="17" r="1.2" fill="#FFFFFF"/></svg>
+              <span>High demand — EyeWipes tend to sell out. If this page is live, they're still in stock.</span>
+            </div>
+            <a class="ewpl-cta ewpl-offer__cta" href="{{ pdp_url }}" data-ewpl-pdp>Apply Discount and Check Availability →</a>
+            <div class="ewpl-offer__perkwrap"><span class="ewpl-offer__perk">🎁 Save 20% with RoutineCare</span></div>
+            <div class="ewpl-offer__trust">
+              <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11" stroke="#47B5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>100-Day Money-Back Guarantee</span>
+              <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11" stroke="#47B5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Free &amp; Fast Shipping</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ewpl-wave" aria-hidden="true"><svg viewBox="0 0 1440 64" preserveAspectRatio="none" focusable="false"><path d="M0 28 C240 56 480 8 720 32 C960 56 1200 12 1440 36 L1440 0 L0 0 Z" fill="#D5F7FF"/></svg></div>
+
+  {%- comment -%} ---------- sticky CTA ---------- {%- endcomment -%}
+  {%- if section.settings.show_sticky_cta -%}
+    <div class="ewpl-sticky" role="region" aria-label="EyeWipes offer">
+      <div class="ewpl-sticky__inner">
+        <div class="ewpl-sticky__copy">
+          <div class="ewpl-sticky__head">Get 70% Off Today Only <span class="ewpl-arrow-right" aria-hidden="true">👉</span><span class="ewpl-arrow-down" aria-hidden="true">👇</span></div>
+          <div class="ewpl-sticky__sub"><span class="ewpl-sticky__stars" aria-hidden="true">★★★★★</span><span>45,000+ Happy Customers</span></div>
+        </div>
+        <a class="ewpl-cta ewpl-sticky__btn" href="{{ pdp_url }}" data-ewpl-pdp>Apply Discount and Check Availability →</a>
+      </div>
+    </div>
+  {%- endif -%}
+
+</div>
+
+{% schema %}
+{
+  "name": "EyeWipes pre-lander",
+  "tag": "div",
+  "class": "eyewipes-prelander-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Call to action"
+    },
+    {
+      "type": "paragraph",
+      "content": "Every CTA on this page opens the EyeWipes PDP. \"Skip to offer\" is the only exception — it scrolls to the offer block further down this page."
+    },
+    {
+      "type": "text",
+      "id": "cta_url",
+      "label": "PDP link",
+      "info": "Leave empty to use the canonical EyeWipes product page: https://shopvetpets.com/products/eyewipes-prevention-that-keeps-eyes-clear"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sticky_cta",
+      "label": "Show sticky CTA bar",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "EyeWipes pre-lander"
+    }
+  ]
+}
+{% endschema %}
