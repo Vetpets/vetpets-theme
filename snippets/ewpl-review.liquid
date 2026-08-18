@@ -1,0 +1,19 @@
+{%- comment -%}
+  EyeWipes pre-lander — one customer review card.
+
+  Accepts: name, quote, product, pdp_url
+{%- endcomment -%}
+<li class="ewpl-review">
+  <div class="ewpl-review__card">
+    <div class="ewpl-review__stars" role="img" aria-label="Rated 5 out of 5">★★★★★</div>
+    <p class="ewpl-review__quote">{{ quote }}</p>
+    <div class="ewpl-review__tagwrap"><span class="ewpl-review__tag">Eyes</span></div>
+    <div class="ewpl-review__product">Product: <a href="{{ pdp_url }}" data-ewpl-pdp>{{ product }}</a></div>
+    <div class="ewpl-review__tail" aria-hidden="true"></div>
+  </div>
+  <div class="ewpl-review__by">
+    <span class="ewpl-review__name">{{ name }}</span>
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="#47B5E9"/><path d="m7.5 12.2 3 3 6-6.4" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    <span class="ewpl-review__verified">Verified</span>
+  </div>
+</li>

@@ -1,0 +1,1102 @@
+/*
+  EyeWipes pre-lander — scoped stylesheet
+  ---------------------------------------
+  Source of truth: Claude Design project "VetPets EyeWipes Pre-Lander",
+  file "EyeWipes Pre-Lander v2.dc.html".
+
+  Loaded only by layout/eyewipes-prelander.liquid, which is used only by
+  templates/page.eyewipes-prelander.json. Every component selector is
+  additionally scoped under #eyewipes-prelander, so nothing here can reach
+  another page of the storefront even if the stylesheet is ever loaded
+  somewhere else.
+
+  Values are px, matching the approved design 1:1 (this page does not inherit
+  the Dawn 62.5% root font-size, so px == px).
+*/
+
+/* ---------- page shell (dedicated layout only) ---------- */
+
+.eyewipes-prelander-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+.eyewipes-prelander-body {
+  margin: 0;
+  background: #ffffff;
+  color: #1a1a1a;
+  font-family: "GeistEwpl", system-ui, -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eyewipes-prelander-html { scroll-behavior: auto; }
+}
+
+/* ---------- root ---------- */
+
+#eyewipes-prelander {
+  --ewpl-blue: #47b5e9;
+  --ewpl-blue-dark: #2e9fd8;
+  --ewpl-pale: #d5f7ff;
+  --ewpl-mist: #edfaff;
+  --ewpl-ink: #1a1a1a;
+  --ewpl-muted: #6b7a85;
+  --ewpl-star: #f5a623;
+  --ewpl-sticky-h: 104px;
+  /* marquee: one claim sequence takes --ewpl-mq-sequence to travel its own
+     width; each group holds --ewpl-mq-copies sequences (kept in step with
+     `ewpl_mq_copies` in the section), so the duration scales with the group
+     and the scroll speed never changes. */
+  --ewpl-mq-sequence: 34s;
+  --ewpl-mq-copies: 3;
+
+  min-height: 100vh;
+  background: #ffffff;
+  padding-bottom: var(--ewpl-sticky-h);
+  box-sizing: border-box;
+}
+
+#eyewipes-prelander *,
+#eyewipes-prelander *::before,
+#eyewipes-prelander *::after { box-sizing: border-box; }
+
+#eyewipes-prelander img,
+#eyewipes-prelander svg { max-width: 100%; }
+
+#eyewipes-prelander a { color: var(--ewpl-blue); }
+#eyewipes-prelander a:hover { color: var(--ewpl-blue-dark); }
+
+#eyewipes-prelander :focus-visible {
+  outline: 3px solid var(--ewpl-blue-dark);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+#eyewipes-prelander .ewpl-sr {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+#eyewipes-prelander .ewpl-wrap { max-width: 1280px; margin: 0 auto; }
+
+/* ---------- buttons ---------- */
+
+#eyewipes-prelander .ewpl-cta {
+  transition: transform 140ms ease-out, background 140ms ease-out, box-shadow 140ms ease-out;
+}
+#eyewipes-prelander .ewpl-cta:hover { transform: scale(1.02); }
+#eyewipes-prelander .ewpl-cta:active { transform: scale(.985); }
+
+@media (prefers-reduced-motion: reduce) {
+  #eyewipes-prelander .ewpl-cta { transition: none; }
+  #eyewipes-prelander .ewpl-cta:hover,
+  #eyewipes-prelander .ewpl-cta:active { transform: none; }
+}
+
+#eyewipes-prelander .ewpl-btn-primary {
+  display: inline-block;
+  background: var(--ewpl-blue);
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 16.5px;
+  font-weight: 700;
+  padding: 14px 28px;
+  border-radius: 999px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(71, 181, 233, .4);
+  white-space: nowrap;
+}
+#eyewipes-prelander .ewpl-btn-primary:hover { background: var(--ewpl-blue-dark); color: #ffffff; }
+
+#eyewipes-prelander .ewpl-btn-outline {
+  display: inline-block;
+  background: transparent;
+  color: var(--ewpl-blue-dark);
+  border: 2px solid var(--ewpl-blue);
+  text-decoration: none;
+  font-size: 16.5px;
+  font-weight: 700;
+  padding: 12px 28px;
+  border-radius: 999px;
+  text-align: center;
+  white-space: nowrap;
+}
+#eyewipes-prelander .ewpl-btn-outline:hover { background: rgba(71, 181, 233, .1); color: var(--ewpl-blue-dark); }
+
+/* the repeated small "Skip to offer" pill */
+#eyewipes-prelander .ewpl-skip {
+  display: inline-block;
+  color: var(--ewpl-blue-dark);
+  border: 1.5px solid var(--ewpl-blue);
+  background: transparent;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 9px 20px;
+  border-radius: 999px;
+}
+#eyewipes-prelander .ewpl-skip:hover { background: rgba(71, 181, 233, .1); color: var(--ewpl-blue-dark); }
+#eyewipes-prelander .ewpl-skip--hero-gap { margin-top: 6px; }
+
+/* ---------- top offer bar ---------- */
+
+#eyewipes-prelander .ewpl-topbar { background: var(--ewpl-blue); }
+#eyewipes-prelander .ewpl-topbar__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 16px;
+  padding: 13px 16px;
+}
+#eyewipes-prelander .ewpl-topbar__text {
+  color: #ffffff;
+  font-size: clamp(15px, 2vw, 19px);
+  font-weight: 800;
+  letter-spacing: .04em;
+  line-height: 1.25;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .12);
+}
+#eyewipes-prelander .ewpl-topbar__sub {
+  font-weight: 600;
+  font-size: .78em;
+  text-transform: none;
+  letter-spacing: .02em;
+  opacity: .95;
+}
+#eyewipes-prelander .ewpl-countdown { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
+#eyewipes-prelander .ewpl-countdown__box {
+  background: #ffffff;
+  color: var(--ewpl-blue-dark);
+  border-radius: 8px;
+  padding: 5px 8px;
+  text-align: center;
+  min-width: 36px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .12);
+}
+#eyewipes-prelander .ewpl-countdown__num { font-size: 15px; font-weight: 800; font-variant-numeric: tabular-nums; }
+#eyewipes-prelander .ewpl-countdown__label { font-size: 8px; font-weight: 700; letter-spacing: .1em; }
+#eyewipes-prelander .ewpl-countdown__sep { color: #ffffff; font-weight: 800; }
+
+/* ---------- 1. hero ---------- */
+
+#eyewipes-prelander .ewpl-hero {
+  background: linear-gradient(180deg, #ffffff 0%, var(--ewpl-mist) 60%, var(--ewpl-pale) 100%);
+  overflow: hidden;
+}
+#eyewipes-prelander .ewpl-hero__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: stretch;
+}
+#eyewipes-prelander .ewpl-hero__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  text-align: center;
+  padding: 36px 20px 8px;
+  justify-content: center;
+}
+#eyewipes-prelander .ewpl-hero__title {
+  margin: 0;
+  font-size: clamp(25px, 2.7vw, 33px);
+  line-height: 1.14;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  color: var(--ewpl-ink);
+  text-wrap: pretty;
+}
+#eyewipes-prelander .ewpl-hero__sub {
+  margin: 0;
+  font-size: 16.5px;
+  line-height: 1.5;
+  color: var(--ewpl-ink);
+  text-wrap: pretty;
+}
+#eyewipes-prelander .ewpl-hero__btns { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+#eyewipes-prelander .ewpl-hero__media { position: relative; min-height: 340px; }
+#eyewipes-prelander .ewpl-hero__fade { display: none; }
+#eyewipes-prelander .ewpl-hero__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+#eyewipes-prelander .ewpl-rating { font-size: 14.5px; font-weight: 600; color: var(--ewpl-ink); }
+#eyewipes-prelander .ewpl-stars { color: var(--ewpl-star); letter-spacing: .06em; }
+
+/* ---------- marquee ---------- */
+
+#eyewipes-prelander .ewpl-marquee { background: var(--ewpl-blue); overflow: hidden; padding: 16px 0; }
+#eyewipes-prelander .ewpl-marquee__track {
+  display: flex;
+  width: max-content;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  backface-visibility: hidden;
+  animation: ewpl-marquee calc(var(--ewpl-mq-sequence) * var(--ewpl-mq-copies)) linear infinite;
+}
+#eyewipes-prelander .ewpl-marquee__group {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding-right: 30px;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+#eyewipes-prelander .ewpl-marquee__item { display: flex; align-items: center; gap: 30px; }
+
+@keyframes ewpl-marquee { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
+
+@media (prefers-reduced-motion: reduce) {
+  #eyewipes-prelander .ewpl-marquee__track {
+    animation: none;
+    transform: none;
+    will-change: auto;
+  }
+}
+
+/* ---------- 2. mechanism badges ---------- */
+
+#eyewipes-prelander .ewpl-badges {
+  background: #ffffff;
+  border-bottom: 1px solid rgba(71, 181, 233, .2);
+  padding: 28px 20px;
+}
+#eyewipes-prelander .ewpl-badges__grid {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 18px 24px;
+}
+#eyewipes-prelander .ewpl-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--ewpl-ink);
+  text-align: left;
+  line-height: 1.3;
+}
+#eyewipes-prelander .ewpl-badge svg { flex-shrink: 0; }
+
+/* ---------- 3. proof on the wipe ---------- */
+
+#eyewipes-prelander .ewpl-proof {
+  background: #ffffff;
+  padding: 56px 20px 40px;
+  scroll-margin-top: 8px;
+}
+#eyewipes-prelander .ewpl-proof__inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+}
+#eyewipes-prelander .ewpl-eyebrow {
+  display: inline-block;
+  background: var(--ewpl-pale);
+  color: var(--ewpl-blue-dark);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  border-radius: 999px;
+}
+#eyewipes-prelander .ewpl-h2 {
+  margin: 0;
+  font-size: clamp(26px, 3vw, 32px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  color: var(--ewpl-ink);
+}
+#eyewipes-prelander .ewpl-accent { color: var(--ewpl-blue); }
+#eyewipes-prelander .ewpl-proof__lead { margin: 0; font-size: 16px; color: var(--ewpl-ink); }
+#eyewipes-prelander .ewpl-proof__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  width: 100%;
+  max-width: 720px;
+}
+#eyewipes-prelander .ewpl-proof__tile {
+  aspect-ratio: 1 / 1;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 14px;
+}
+#eyewipes-prelander .ewpl-proof__tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+#eyewipes-prelander .ewpl-proof__body {
+  margin: 0;
+  max-width: 640px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ewpl-ink);
+  text-wrap: pretty;
+}
+
+/* ---------- wave dividers ---------- */
+
+#eyewipes-prelander .ewpl-wave { background: #ffffff; line-height: 0; }
+#eyewipes-prelander .ewpl-wave svg { display: block; width: 100%; height: 56px; }
+
+/* ---------- 4. mechanism cards ---------- */
+
+#eyewipes-prelander .ewpl-mech { background: var(--ewpl-pale); padding: 40px 20px 48px; }
+#eyewipes-prelander .ewpl-mech__inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+}
+#eyewipes-prelander .ewpl-mech__title { margin: 0 0 6px; line-height: 1.12; text-align: center; text-wrap: pretty; }
+#eyewipes-prelander .ewpl-mech__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  width: 100%;
+  align-items: stretch;
+}
+#eyewipes-prelander .ewpl-mech__card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(71, 181, 233, .18);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+#eyewipes-prelander .ewpl-mech__media { height: 160px; border-radius: 12px; overflow: hidden; }
+#eyewipes-prelander .ewpl-mech__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+#eyewipes-prelander .ewpl-mech__head { display: flex; align-items: center; gap: 12px; }
+#eyewipes-prelander .ewpl-mech__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--ewpl-pale);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+#eyewipes-prelander .ewpl-mech__name { font-size: 18px; font-weight: 700; color: var(--ewpl-ink); }
+#eyewipes-prelander .ewpl-mech__copy { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ewpl-ink); }
+
+/* ---------- 5. what to expect (timeline) ---------- */
+
+#eyewipes-prelander .ewpl-expect { background: #ffffff; padding: 40px 24px 56px; }
+#eyewipes-prelander .ewpl-expect__inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+}
+#eyewipes-prelander .ewpl-expect__title { margin: 0; text-align: center; }
+#eyewipes-prelander .ewpl-tl {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+  width: 100%;
+}
+#eyewipes-prelander .ewpl-tl__line {
+  position: absolute;
+  left: 52px;
+  top: 40px;
+  bottom: 40px;
+  width: 4px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--ewpl-blue), var(--ewpl-blue-dark));
+}
+#eyewipes-prelander .ewpl-tl__item {
+  position: relative;
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  text-align: left;
+}
+#eyewipes-prelander .ewpl-tl__avatar {
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 4px 12px rgba(71, 181, 233, .22);
+  background: #ffffff;
+}
+#eyewipes-prelander .ewpl-tl__avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+#eyewipes-prelander .ewpl-tl__avatar--1 { border: 4px solid #47b5e9; }
+#eyewipes-prelander .ewpl-tl__avatar--2 { border: 4px solid #3aaae0; }
+#eyewipes-prelander .ewpl-tl__avatar--3 { border: 4px solid #2e9fd8; }
+#eyewipes-prelander .ewpl-tl__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  padding-top: 8px;
+}
+#eyewipes-prelander .ewpl-tl__chip {
+  display: inline-block;
+  background: var(--ewpl-pale);
+  color: var(--ewpl-ink);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 999px;
+}
+#eyewipes-prelander .ewpl-tl__text {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--ewpl-ink);
+  text-wrap: pretty;
+}
+
+/* ---------- 6. comparison ---------- */
+
+#eyewipes-prelander .ewpl-cmp { background: #ffffff; padding: 0 16px 56px; }
+#eyewipes-prelander .ewpl-cmp__inner {
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+#eyewipes-prelander .ewpl-cmp__title { margin: 0; line-height: 1.12; text-align: center; text-wrap: pretty; }
+
+#eyewipes-prelander .ewpl-cmp__desktop {
+  display: none;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 22px;
+  box-shadow: 0 12px 34px rgba(71, 181, 233, .22);
+  overflow: hidden;
+  border: 1px solid rgba(71, 181, 233, .18);
+}
+#eyewipes-prelander .ewpl-cmp__row {
+  display: grid;
+  grid-template-columns: 1.4fr 200px 1fr 1fr 1fr 1fr;
+}
+#eyewipes-prelander .ewpl-cmp__row + .ewpl-cmp__row { border-top: 1px solid rgba(71, 181, 233, .16); }
+#eyewipes-prelander .ewpl-cmp__hero-col {
+  background: var(--ewpl-pale);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 14px 10px 12px;
+}
+#eyewipes-prelander .ewpl-cmp__hero-img {
+  display: block;
+  width: 100%;
+  max-width: 158px;
+  height: 150px;
+  object-fit: contain;
+}
+#eyewipes-prelander .ewpl-cmp__hero-name { color: var(--ewpl-ink); font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
+#eyewipes-prelander .ewpl-cmp__col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 18px 8px 14px;
+}
+#eyewipes-prelander .ewpl-cmp__col img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(13, 35, 64, .12);
+}
+#eyewipes-prelander .ewpl-cmp__col-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ewpl-muted);
+  text-align: center;
+  line-height: 1.25;
+}
+#eyewipes-prelander .ewpl-cmp__label {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ewpl-ink);
+  padding: 19px 20px;
+  line-height: 1.35;
+  align-self: center;
+}
+#eyewipes-prelander .ewpl-cmp__cell-win {
+  background: var(--ewpl-pale);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 19px 8px;
+}
+#eyewipes-prelander .ewpl-cmp__cell { display: flex; align-items: center; justify-content: center; padding: 19px 6px; }
+
+#eyewipes-prelander .ewpl-mark-win {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--ewpl-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#eyewipes-prelander .ewpl-mark-wintext { font-size: 15px; font-weight: 800; color: var(--ewpl-blue-dark); white-space: nowrap; }
+#eyewipes-prelander .ewpl-mark-text { font-size: 13.5px; font-weight: 600; color: var(--ewpl-muted); white-space: nowrap; }
+
+#eyewipes-prelander .ewpl-cmp__mobile { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+#eyewipes-prelander .ewpl-cmp__tabs { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+#eyewipes-prelander .ewpl-cmp__tab {
+  background: #ffffff;
+  color: var(--ewpl-blue-dark);
+  border: 1.5px solid var(--ewpl-blue);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+  padding: 9px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+#eyewipes-prelander .ewpl-cmp__tab[aria-selected="true"] { background: var(--ewpl-blue); color: #ffffff; }
+#eyewipes-prelander .ewpl-cmp__panel {
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 8px 22px rgba(71, 181, 233, .2);
+  overflow: hidden;
+  border: 1px solid rgba(71, 181, 233, .18);
+}
+#eyewipes-prelander .ewpl-cmp__panel[hidden] { display: none; }
+#eyewipes-prelander .ewpl-cmp__mhead {
+  display: grid;
+  grid-template-columns: 1fr 124px 88px;
+  align-items: stretch;
+  background: var(--ewpl-blue);
+}
+#eyewipes-prelander .ewpl-cmp__mhead-title {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.25;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  align-self: stretch;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+#eyewipes-prelander .ewpl-cmp__mcol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 6px;
+}
+#eyewipes-prelander .ewpl-cmp__mcol img { display: block; width: 66px; height: 66px; object-fit: contain; }
+#eyewipes-prelander .ewpl-cmp__mcol-name { color: #ffffff; font-size: 14px; font-weight: 800; text-align: center; line-height: 1.2; }
+#eyewipes-prelander .ewpl-cmp__mcol img.ewpl-cmp__mrival-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 9px;
+  background-color: #ffffff;
+  object-fit: cover;
+  display: block;
+}
+#eyewipes-prelander .ewpl-cmp__mrival-name { color: #ffffff; font-size: 11.5px; font-weight: 600; text-align: center; line-height: 1.2; }
+#eyewipes-prelander .ewpl-cmp__mrow {
+  display: grid;
+  grid-template-columns: 1fr 124px 88px;
+  align-items: center;
+  border-top: 1px solid rgba(71, 181, 233, .14);
+}
+#eyewipes-prelander .ewpl-cmp__mlabel {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--ewpl-ink);
+  padding: 15px 14px;
+  line-height: 1.35;
+  min-width: 0;            /* let the label column shrink on very narrow phones */
+  overflow-wrap: anywhere;
+}
+#eyewipes-prelander .ewpl-cmp__mcell-win {
+  background: var(--ewpl-pale);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 4px;
+  align-self: stretch;
+}
+#eyewipes-prelander .ewpl-cmp__mcell { display: flex; align-items: center; justify-content: center; padding: 15px 4px; }
+
+/* ---------- 7. reviews ---------- */
+
+#eyewipes-prelander .ewpl-reviews { background: var(--ewpl-pale); padding: 40px 0 48px; position: relative; }
+#eyewipes-prelander .ewpl-reviews__inner {
+  max-width: 1060px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+#eyewipes-prelander .ewpl-reviews__title { margin: 0; padding: 0 20px; line-height: 1.15; text-align: center; text-wrap: pretty; }
+#eyewipes-prelander .ewpl-reviews__rail {
+  list-style: none;
+  margin: 0;
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 16px;
+  padding: 8px 20px 26px;
+  scrollbar-width: none;
+}
+#eyewipes-prelander .ewpl-reviews__rail::-webkit-scrollbar { display: none; }
+#eyewipes-prelander .ewpl-review { flex: 0 0 min(320px, 82vw); scroll-snap-align: start; display: flex; flex-direction: column; }
+#eyewipes-prelander .ewpl-review__card {
+  background: #ffffff;
+  border: 1px solid rgba(71, 181, 233, .18);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  position: relative;
+  box-shadow: 0 6px 16px rgba(71, 181, 233, .14);
+}
+#eyewipes-prelander .ewpl-review__stars { color: var(--ewpl-star); font-size: 16px; letter-spacing: .08em; }
+#eyewipes-prelander .ewpl-review__quote { margin: 0; font-size: 15px; line-height: 1.55; color: var(--ewpl-ink); font-style: normal; }
+#eyewipes-prelander .ewpl-review__tagwrap { display: inline-flex; }
+#eyewipes-prelander .ewpl-review__tag {
+  background: var(--ewpl-pale);
+  color: var(--ewpl-blue-dark);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+#eyewipes-prelander .ewpl-review__product { font-size: 13px; color: var(--ewpl-ink); }
+#eyewipes-prelander .ewpl-review__product a { color: var(--ewpl-blue-dark); font-weight: 600; text-decoration: none; }
+#eyewipes-prelander .ewpl-review__tail {
+  position: absolute;
+  left: 28px;
+  bottom: -10px;
+  width: 20px;
+  height: 20px;
+  background: #ffffff;
+  transform: rotate(45deg);
+  border-right: 1px solid rgba(71, 181, 233, .18);
+  border-bottom: 1px solid rgba(71, 181, 233, .18);
+}
+#eyewipes-prelander .ewpl-review__by { display: flex; align-items: center; gap: 8px; padding: 16px 6px 0; }
+#eyewipes-prelander .ewpl-review__name { font-size: 14px; font-weight: 700; color: var(--ewpl-ink); }
+#eyewipes-prelander .ewpl-review__verified { font-size: 13px; font-weight: 600; color: var(--ewpl-blue-dark); }
+#eyewipes-prelander .ewpl-reviews__nav { display: flex; justify-content: center; gap: 10px; }
+#eyewipes-prelander .ewpl-reviews__navbtn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(71, 181, 233, .3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#eyewipes-prelander .ewpl-reviews__skip { display: flex; justify-content: center; }
+
+/* ---------- 8. guarantee ---------- */
+
+#eyewipes-prelander .ewpl-guarantee { background: #ffffff; padding: 16px 20px 56px; }
+#eyewipes-prelander .ewpl-guarantee__grid {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  align-items: stretch;
+}
+#eyewipes-prelander .ewpl-guarantee__card {
+  background: #ffffff;
+  border: 1px solid rgba(71, 181, 233, .3);
+  border-radius: 18px;
+  box-shadow: 0 8px 22px rgba(71, 181, 233, .18);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 14px;
+  justify-content: center;
+}
+#eyewipes-prelander .ewpl-guarantee__title {
+  margin: 0;
+  font-size: clamp(24px, 3vw, 28px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  color: var(--ewpl-ink);
+  text-wrap: pretty;
+}
+#eyewipes-prelander .ewpl-guarantee__copy { margin: 0; font-size: 15.5px; line-height: 1.55; color: var(--ewpl-ink); text-wrap: pretty; }
+#eyewipes-prelander .ewpl-guarantee__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1098 / 618;
+  border-radius: 18px;
+  box-shadow: 0 8px 22px rgba(71, 181, 233, .18);
+  overflow: hidden;
+}
+#eyewipes-prelander .ewpl-guarantee__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* ---------- 9. offer ---------- */
+
+#eyewipes-prelander .ewpl-offer {
+  background: var(--ewpl-pale);
+  padding: 40px 20px 72px;
+  scroll-margin-top: 12px;
+}
+#eyewipes-prelander .ewpl-offer__inner {
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+#eyewipes-prelander .ewpl-offer__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+#eyewipes-prelander .ewpl-offer__title { margin: 0; line-height: 1.15; text-wrap: pretty; }
+#eyewipes-prelander .ewpl-offer__sub { margin: 0; font-size: 16px; line-height: 1.5; color: var(--ewpl-ink); }
+#eyewipes-prelander .ewpl-offer__cardwrap { position: relative; margin-top: 18px; }
+#eyewipes-prelander .ewpl-offer__ribbon {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  background: #13b6b5;
+  color: #ffffff;
+  font-size: clamp(12px, 1.6vw, 15px);
+  font-weight: 800;
+  letter-spacing: .05em;
+  padding: 10px 22px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 0 6px 16px rgba(19, 182, 181, .4);
+}
+#eyewipes-prelander .ewpl-offer__card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 22px;
+  background: #ffffff;
+  border-radius: 22px;
+  box-shadow: 0 14px 40px rgba(71, 181, 233, .28);
+  padding: 44px 36px 36px;
+}
+#eyewipes-prelander .ewpl-offer__media {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: #f4fbff;
+  border-radius: 16px;
+}
+#eyewipes-prelander .ewpl-offer__toprated {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--ewpl-blue);
+  color: #ffffff;
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 999px;
+  z-index: 1;
+}
+#eyewipes-prelander .ewpl-offer__dot { width: 7px; height: 7px; border-radius: 50%; background: #ffffff; }
+#eyewipes-prelander .ewpl-offer__jar {
+  max-width: 100%;
+  max-height: 100%;
+  width: 800px;
+  height: auto;
+  object-fit: contain;
+  aspect-ratio: 800 / 800;
+}
+#eyewipes-prelander .ewpl-offer__body { display: flex; flex-direction: column; gap: 20px; align-items: flex-start; }
+#eyewipes-prelander .ewpl-offer__name {
+  margin: 0;
+  font-size: clamp(24px, 2.8vw, 30px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  color: var(--ewpl-ink);
+  text-wrap: pretty;
+}
+#eyewipes-prelander .ewpl-offer__bullets { display: flex; flex-direction: column; gap: 13px; }
+#eyewipes-prelander .ewpl-offer__bullet {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 15.5px;
+  line-height: 1.45;
+  color: var(--ewpl-ink);
+}
+#eyewipes-prelander .ewpl-offer__bullet svg { flex-shrink: 0; margin-top: 1px; }
+#eyewipes-prelander .ewpl-offer__scarcity {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  background: #fdecec;
+  border: 2px solid #d64545;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 15.5px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #b32020;
+  text-wrap: pretty;
+}
+#eyewipes-prelander .ewpl-offer__scarcity svg { flex-shrink: 0; }
+#eyewipes-prelander .ewpl-offer__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: var(--ewpl-blue);
+  color: #ffffff;
+  text-decoration: none;
+  font-size: clamp(13px, 1.15vw, 17px);
+  font-weight: 800;
+  letter-spacing: .015em;
+  text-transform: uppercase;
+  /*
+    The approved design sets `white-space: nowrap` here. At viewports below the
+    900px breakpoint that label is wider than the card, which pushed the whole
+    document into horizontal scroll (the design preview does the same). The
+    label wraps on phones and stays on one line from 900px up, where the design
+    intends it.
+  */
+  white-space: normal;
+  padding: 19px 30px;
+  border-radius: 999px;
+  text-align: center;
+  box-shadow: 0 10px 26px rgba(71, 181, 233, .45);
+}
+#eyewipes-prelander .ewpl-offer__cta:hover { background: var(--ewpl-blue-dark); color: #ffffff; }
+#eyewipes-prelander .ewpl-offer__perkwrap { display: flex; margin-top: -12px; }
+#eyewipes-prelander .ewpl-offer__perk {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #eaf6fd;
+  border: 1px solid rgba(71, 181, 233, .35);
+  color: var(--ewpl-blue-dark);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .01em;
+  padding: 7px 14px;
+  border-radius: 999px;
+}
+#eyewipes-prelander .ewpl-offer__trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ewpl-ink);
+}
+#eyewipes-prelander .ewpl-offer__trust span { display: flex; align-items: center; gap: 6px; }
+
+/* ---------- sticky CTA ---------- */
+
+#eyewipes-prelander .ewpl-sticky {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  background: #ffffff;
+  border-top: 2px solid var(--ewpl-blue);
+  box-shadow: 0 -8px 22px rgba(71, 181, 233, .24);
+}
+#eyewipes-prelander .ewpl-sticky__inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+#eyewipes-prelander .ewpl-sticky__copy { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+#eyewipes-prelander .ewpl-sticky__head {
+  font-size: clamp(16px, 4.6vw, 23.5px);
+  font-weight: 800;
+  color: var(--ewpl-ink);
+  line-height: 1.25;
+  white-space: nowrap;
+}
+#eyewipes-prelander .ewpl-sticky__sub {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ewpl-ink);
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+#eyewipes-prelander .ewpl-sticky__stars { color: var(--ewpl-star); letter-spacing: .04em; }
+#eyewipes-prelander .ewpl-sticky__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: var(--ewpl-blue);
+  color: #ffffff;
+  text-decoration: none;
+  font-size: clamp(13px, 1.15vw, 17px);
+  font-weight: 800;
+  letter-spacing: .015em;
+  text-transform: uppercase;
+  padding: 18px 30px;
+  border-radius: 999px;
+  white-space: normal;  /* see .ewpl-offer__cta — one line again from 900px up */
+  box-shadow: 0 6px 16px rgba(71, 181, 233, .4);
+  text-align: center;
+}
+#eyewipes-prelander .ewpl-sticky__btn:hover { background: var(--ewpl-blue-dark); color: #ffffff; }
+#eyewipes-prelander .ewpl-arrow-right { display: none; }
+#eyewipes-prelander .ewpl-arrow-down { display: inline; }
+
+/*
+  Below the 900px breakpoint the sticky label is trimmed just enough to keep it
+  on one line, as the design intends, without pushing the bar past the design's
+  ~104px height. It still wraps rather than overflows on very narrow phones.
+*/
+@media (max-width: 899px) {
+  #eyewipes-prelander .ewpl-sticky__btn {
+    font-size: clamp(11.5px, 3.3vw, 13px);
+    padding: 18px 16px;
+  }
+}
+
+
+/* ---------- desktop ---------- */
+
+@media (min-width: 900px) {
+  #eyewipes-prelander .ewpl-hero__grid { grid-template-columns: 45fr 55fr; gap: 0; }
+  #eyewipes-prelander .ewpl-hero__copy { align-items: flex-start; text-align: left; padding: 56px 48px 56px 40px; }
+  #eyewipes-prelander .ewpl-hero__btns { justify-content: flex-start; }
+  #eyewipes-prelander .ewpl-hero__media { min-height: 560px; }
+  #eyewipes-prelander .ewpl-hero__fade {
+    display: block;
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 140px;
+    background: linear-gradient(90deg, #edfaff 0%, rgba(237, 250, 255, 0) 100%);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  #eyewipes-prelander .ewpl-tl { grid-template-columns: 1fr 1fr 1fr; gap: 28px; }
+  #eyewipes-prelander .ewpl-tl__line {
+    left: 16%;
+    right: 16%;
+    top: 52px;
+    bottom: auto;
+    width: auto;
+    height: 4px;
+    background: linear-gradient(90deg, var(--ewpl-blue), var(--ewpl-blue-dark));
+  }
+  #eyewipes-prelander .ewpl-tl__item { flex-direction: column; align-items: center; text-align: center; gap: 14px; }
+  #eyewipes-prelander .ewpl-tl__copy { align-items: center; padding-top: 0; }
+
+  #eyewipes-prelander .ewpl-cmp__desktop { display: block; }
+  #eyewipes-prelander .ewpl-cmp__mobile { display: none; }
+
+  #eyewipes-prelander .ewpl-guarantee__grid { grid-template-columns: 44fr 56fr; gap: 32px; align-items: center; }
+
+  #eyewipes-prelander .ewpl-offer__card { grid-template-columns: 52fr 48fr; align-items: center; gap: 32px; }
+
+  #eyewipes-prelander .ewpl-offer__cta { white-space: nowrap; }
+
+  #eyewipes-prelander .ewpl-sticky__inner { flex-direction: row; align-items: center; justify-content: space-between; gap: 14px; }
+  #eyewipes-prelander .ewpl-sticky__btn { width: auto; flex-shrink: 0; white-space: nowrap; }
+  #eyewipes-prelander .ewpl-arrow-right { display: inline; }
+  #eyewipes-prelander .ewpl-arrow-down { display: none; }
+}
+
+/*
+  Ultra-narrow safety net (below 360px, outside the design's target range):
+  the two remaining `nowrap` labels are allowed to wrap so the document never
+  scrolls sideways. Nothing here applies at 360px and up.
+*/
+@media (max-width: 359px) {
+  #eyewipes-prelander .ewpl-offer__ribbon {
+    white-space: normal;
+    max-width: calc(100% - 24px);
+    text-align: center;
+  }
+  #eyewipes-prelander .ewpl-sticky__head { white-space: normal; }
+}
