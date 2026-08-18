@@ -40,10 +40,18 @@ Every call to action opens the canonical PDP:
 https://shopvetpets.com/products/eyewipes-prevention-that-keeps-eyes-clear
 ```
 
-That covers the hero button, the offer-card CTA, the sticky-bar CTA and the
-"Product:" link on each review card (9 links in total). The single exception is
-**"Skip to offer"** (6 instances), which scrolls to `#eyewipes-offer` on this
-same page.
+That covers the offer-card CTA, the sticky-bar CTA and the "Product:" link on
+each review card (8 links in total). Two buttons are in-page anchors instead:
+
+| Button | Target |
+|---|---|
+| **"See Why It Works ↓"** (hero, 1×) | `#eyewipes-proof` — the "The proof is on the wipe" section |
+| **"Skip to offer ↓"** (6×) | `#eyewipes-offer` — the offer block |
+
+Both are plain `href` anchors, so they work with JavaScript disabled. They smooth
+scroll via `html { scroll-behavior: smooth }` and fall back to an immediate jump
+under `prefers-reduced-motion`. Neither carries `data-ewpl-pdp`, so advertising
+parameters are never appended to an internal anchor.
 
 The PDP link is overridable per page in the theme editor under **Call to
 action → PDP link**. It is a `text` setting, not a `url` setting, because
@@ -57,12 +65,43 @@ pre-lander URL onto every PDP link: any `utm_*` parameter plus `fbclid`,
 in the query string is dropped, and a parameter already present on the link is
 never overwritten.
 
+## The rolling announcement bar
+
+The ticker is a pure CSS transform animation with no JavaScript and no runtime
+cloning.
+
+The track holds exactly **two identical groups** and animates
+`translate3d(0,0,0)` → `translate3d(-50%,0,0)`. Half the track is exactly one
+group, so when the animation wraps, group two sits precisely where group one
+started — no gap and no visible reset.
+
+The one thing that has to be right is the group width. One pass of the four
+claims measures ~1505px; if a group is narrower than the viewport, the tail of
+the track exposes a blank strip on wide desktops (the original build left 23% of
+a 1920px viewport and 42% of a 2560px viewport empty at the worst phase). Each
+group therefore repeats the sequence **three times** (~4516px), which stays
+wider than any viewport up to 4516px.
+
+Two values must move together:
+
+* `ewpl_mq_copies` in `sections/eyewipes-prelander.liquid` — copies rendered per group
+* `--ewpl-mq-copies` in `assets/eyewipes-prelander.css` — multiplies `--ewpl-mq-sequence` (34s) to give the duration
+
+Because the duration scales with the group, the scroll speed is pinned at the
+design's ~44.3 px/s whatever the copy count is. Change one, change the other.
+
+The groups are decorative duplicates and both carry `aria-hidden="true"`; the
+four claims are exposed to assistive technology exactly once through a
+visually-hidden list immediately above the track. `prefers-reduced-motion` stops
+the animation and parks the track at its start, leaving a readable static row.
+
 ## Progressive enhancement
 
 The page is fully readable with JavaScript disabled. Only four things are
 enhancements:
 
 * the countdown ticks (Liquid seeds it from shop time on render);
+* the announcement ticker rolls (it renders as a static readable row without it);
 * the mobile comparison tabs (all four panels are rendered server-side; the
   first is shown);
 * the review-rail arrows (the rail is touch/trackpad scrollable regardless);
@@ -73,12 +112,11 @@ smooth scrolling.
 
 ## Deliberate deviations from the design file
 
-Three, all forced and all documented here:
+Three, all documented here:
 
-1. **"See Why It Works" points at the PDP.** In the design file it scrolled to
-   `#why-eye-care`. The implementation brief lists it explicitly among the CTAs
-   that must open the canonical PDP, and that rule was marked as overriding
-   everything else. The `#why-eye-care` section id is still present.
+1. **The proof section anchor is `#eyewipes-proof`.** The design file used
+   `#why-eye-care`; the id was renamed so the hero anchor has a stable, named
+   target. Nothing else referenced the old id.
 2. **The offer CTA and the sticky CTA wrap below 900px.** The design sets
    `white-space: nowrap` on both. At 375px and 390px that pushes the document
    into horizontal scroll — the design preview does the same. The labels wrap on
