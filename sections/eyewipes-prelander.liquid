@@ -13,14 +13,15 @@
     assets/eyewipes-prelander.js    countdown, comparison tabs, review rail,
                                     attribution forwarding
 
-  CTA routing: every call to action goes to the canonical EyeWipes PDP. The
-  only exception is "Skip to offer", which scrolls to #eyewipes-offer on this
-  same page.
+  CTA routing: every purchase / availability CTA goes to the canonical EyeWipes
+  PDP. The two in-page buttons are exceptions: "See Why It Works" scrolls to
+  #eyewipes-proof and "Skip to offer" scrolls to #eyewipes-offer.
 {%- endcomment -%}
 
 {%- liquid
   assign pdp_url = section.settings.cta_url | default: 'https://shopvetpets.com/products/eyewipes-prevention-that-keeps-eyes-clear'
   assign offer_anchor = '#eyewipes-offer'
+  assign proof_anchor = '#eyewipes-proof'
 
   # server-rendered countdown seed (shop time). eyewipes-prelander.js corrects
   # it to the visitor's own clock within a second.
@@ -83,7 +84,7 @@
           <h1 class="ewpl-hero__title" id="ewpl-hero-title">How To Stop Crusty Eyes <span class="ewpl-accent">In 30 Seconds A Day</span> — Without Baby Wipes, Grooming, Or Home Remedies</h1>
           <p class="ewpl-hero__sub">A simple daily routine that removes the bacteria causing the problem — so the gunk stops coming back.</p>
           <div class="ewpl-hero__btns">
-            <a class="ewpl-cta ewpl-btn-primary" href="{{ pdp_url }}" data-ewpl-pdp>See Why It Works ↓</a>
+            <a class="ewpl-cta ewpl-btn-primary" href="{{ proof_anchor }}">See Why It Works ↓</a>
             <a class="ewpl-cta ewpl-btn-outline" href="{{ offer_anchor }}">Skip to offer ↓</a>
           </div>
           <div class="ewpl-rating"><span class="ewpl-stars" role="img" aria-label="Rated 4.8 out of 5">★★★★★</span>&nbsp; Rated 4.8/5 · 45,000+ Dog Owners</div>
@@ -103,16 +104,38 @@
     </div>
   </section>
 
-  {%- comment -%} ---------- marquee ---------- {%- endcomment -%}
-  <div class="ewpl-marquee" aria-hidden="true">
+  {%- comment -%}
+    ---------- marquee ----------
+
+    Seamless ticker. The track holds exactly two identical groups and animates
+    translate3d(0) -> translate3d(-50%), which is exactly one group width, so
+    group two arrives precisely where group one started: no gap, no reset jump.
+
+    Each group repeats the claim sequence `ewpl_mq_copies` times. One sequence
+    measures ~1505px, so a single copy leaves a blank strip on wide desktops
+    once the track scrolls past it; three copies (~4515px) keep a group wider
+    than any supported viewport. `--ewpl-mq-copies` in the stylesheet carries
+    the same number and scales the duration with it, so the scroll speed stays
+    exactly what the design specifies (~44px/s) whatever this value is.
+
+    The groups are decorative duplicates and are hidden from assistive tech;
+    the claim list is exposed once, visually hidden, immediately above.
+  {%- endcomment -%}
+  {%- assign ewpl_mq_copies = 3 -%}
+  <div class="ewpl-marquee">
+    <ul class="ewpl-sr">
+      {%- for claim in marquee_claims -%}<li>{{ claim }}</li>{%- endfor -%}
+    </ul>
     <div class="ewpl-marquee__track">
-      {%- for half in (1..2) -%}
-        <div class="ewpl-marquee__half">
-          {%- for claim in marquee_claims -%}
-            <span class="ewpl-marquee__item">
-              <span>{{ claim }}</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><ellipse cx="7" cy="8" rx="2.1" ry="2.7"/><ellipse cx="12" cy="6.4" rx="2.1" ry="2.7"/><ellipse cx="17" cy="8" rx="2.1" ry="2.7"/><path d="M12 11c3 0 5.2 2.4 5.2 4.7 0 1.9-1.6 2.9-3.3 2.6-.7-.1-1.3-.3-1.9-.3s-1.2.2-1.9.3c-1.7.3-3.3-.7-3.3-2.6C6.8 13.4 9 11 12 11Z"/></svg>
-            </span>
+      {%- for group in (1..2) -%}
+        <div class="ewpl-marquee__group" aria-hidden="true">
+          {%- for copy in (1..ewpl_mq_copies) -%}
+            {%- for claim in marquee_claims -%}
+              <span class="ewpl-marquee__item">
+                <span>{{ claim }}</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><ellipse cx="7" cy="8" rx="2.1" ry="2.7"/><ellipse cx="12" cy="6.4" rx="2.1" ry="2.7"/><ellipse cx="17" cy="8" rx="2.1" ry="2.7"/><path d="M12 11c3 0 5.2 2.4 5.2 4.7 0 1.9-1.6 2.9-3.3 2.6-.7-.1-1.3-.3-1.9-.3s-1.2.2-1.9.3c-1.7.3-3.3-.7-3.3-2.6C6.8 13.4 9 11 12 11Z"/></svg>
+              </span>
+            {%- endfor -%}
           {%- endfor -%}
         </div>
       {%- endfor -%}
@@ -142,7 +165,7 @@
   </section>
 
   {%- comment -%} ---------- 3. proof on the wipe ---------- {%- endcomment -%}
-  <section class="ewpl-proof" id="why-eye-care" aria-labelledby="ewpl-proof-title">
+  <section class="ewpl-proof" id="eyewipes-proof" aria-labelledby="ewpl-proof-title">
     <div class="ewpl-proof__inner">
       <div class="ewpl-eyebrow">See it for yourself</div>
       <h2 class="ewpl-h2" id="ewpl-proof-title">The proof is <span class="ewpl-accent">on the wipe</span></h2>
@@ -449,7 +472,7 @@
     },
     {
       "type": "paragraph",
-      "content": "Every CTA on this page opens the EyeWipes PDP. \"Skip to offer\" is the only exception — it scrolls to the offer block further down this page."
+      "content": "Every purchase CTA on this page opens the EyeWipes PDP. The two in-page buttons are exceptions: \"See Why It Works\" scrolls to the proof section (#eyewipes-proof) and \"Skip to offer\" scrolls to the offer block (#eyewipes-offer)."
     },
     {
       "type": "text",

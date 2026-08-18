@@ -41,6 +41,12 @@
   --ewpl-muted: #6b7a85;
   --ewpl-star: #f5a623;
   --ewpl-sticky-h: 104px;
+  /* marquee: one claim sequence takes --ewpl-mq-sequence to travel its own
+     width; each group holds --ewpl-mq-copies sequences (kept in step with
+     `ewpl_mq_copies` in the section), so the duration scales with the group
+     and the scroll speed never changes. */
+  --ewpl-mq-sequence: 34s;
+  --ewpl-mq-copies: 3;
 
   min-height: 100vh;
   background: #ffffff;
@@ -237,9 +243,12 @@
 #eyewipes-prelander .ewpl-marquee__track {
   display: flex;
   width: max-content;
-  animation: ewpl-marquee 34s linear infinite;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  backface-visibility: hidden;
+  animation: ewpl-marquee calc(var(--ewpl-mq-sequence) * var(--ewpl-mq-copies)) linear infinite;
 }
-#eyewipes-prelander .ewpl-marquee__half {
+#eyewipes-prelander .ewpl-marquee__group {
   display: flex;
   align-items: center;
   gap: 30px;
@@ -253,10 +262,14 @@
 }
 #eyewipes-prelander .ewpl-marquee__item { display: flex; align-items: center; gap: 30px; }
 
-@keyframes ewpl-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes ewpl-marquee { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
 
 @media (prefers-reduced-motion: reduce) {
-  #eyewipes-prelander .ewpl-marquee__track { animation: none; }
+  #eyewipes-prelander .ewpl-marquee__track {
+    animation: none;
+    transform: none;
+    will-change: auto;
+  }
 }
 
 /* ---------- 2. mechanism badges ---------- */
