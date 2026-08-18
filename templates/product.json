@@ -554,6 +554,46 @@
     "image_slider_mYdxDt": {
       "type": "image-slider",
       "blocks": {
+        "image_slide_VeLXzj": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/8_79a5321c-32e9-4b9f-8bec-64c318f2b60d.png",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_CrCqJT": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/1_e6636315-f4ab-4ecb-9a36-c7d05b2ca39c.png",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_HzGxzW": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/6_8099b1c3-ba0f-4a75-b88b-a14ce9b3d611.png",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_pBGtCV": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Ai_AVATARS_1.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
         "image_slide_zAwHwt": {
           "type": "image_slide",
           "settings": {
@@ -584,16 +624,6 @@
             "desc_color_scheme": "background-2"
           }
         },
-        "image_slide_CrCqJT": {
-          "type": "image_slide",
-          "settings": {
-            "image": "shopify://shop_images/1_e6636315-f4ab-4ecb-9a36-c7d05b2ca39c.png",
-            "link": "",
-            "description": "",
-            "desc_alignment": "center",
-            "desc_color_scheme": "background-2"
-          }
-        },
         "image_slide_AKJ7Rk": {
           "type": "image_slide",
           "settings": {
@@ -604,10 +634,10 @@
             "desc_color_scheme": "background-2"
           }
         },
-        "image_slide_pBGtCV": {
+        "image_slide_YMQbHm": {
           "type": "image_slide",
           "settings": {
-            "image": "shopify://shop_images/Ai_AVATARS_1.jpg",
+            "image": "shopify://shop_images/7_c6357828-c1b0-4ae8-be75-7d1bc5a3c6c3.png",
             "link": "",
             "description": "",
             "desc_alignment": "center",
@@ -616,12 +646,15 @@
         }
       },
       "block_order": [
+        "image_slide_VeLXzj",
+        "image_slide_CrCqJT",
+        "image_slide_HzGxzW",
+        "image_slide_pBGtCV",
         "image_slide_zAwHwt",
         "image_slide_MBjpTD",
         "image_slide_bk64Fk",
-        "image_slide_CrCqJT",
         "image_slide_AKJ7Rk",
-        "image_slide_pBGtCV"
+        "image_slide_YMQbHm"
       ],
       "name": "Image/Video Slider",
       "settings": {
