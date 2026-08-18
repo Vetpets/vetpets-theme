@@ -554,10 +554,30 @@
     "image_slider_mYdxDt": {
       "type": "image-slider",
       "blocks": {
+        "image_slide_zAwHwt": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/5_c536dd7d-9353-4f79-a6dc-b321ef2b4998.png",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_MBjpTD": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/3_a9a929fa-d1e0-4743-a675-2f277ca505a6.png",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
         "image_slide_bk64Fk": {
           "type": "image_slide",
           "settings": {
-            "image": "shopify://shop_images/Ai_AVATARS.jpg",
+            "image": "shopify://shop_images/2_87df560e-c123-4c1e-afff-4c27528d14f3.png",
             "link": "",
             "description": "",
             "desc_alignment": "center",
@@ -567,7 +587,7 @@
         "image_slide_CrCqJT": {
           "type": "image_slide",
           "settings": {
-            "image": "shopify://shop_images/Ai_AVATARS_2.jpg",
+            "image": "shopify://shop_images/1_e6636315-f4ab-4ecb-9a36-c7d05b2ca39c.png",
             "link": "",
             "description": "",
             "desc_alignment": "center",
@@ -577,7 +597,7 @@
         "image_slide_AKJ7Rk": {
           "type": "image_slide",
           "settings": {
-            "image": "shopify://shop_images/Ai_AVATARS_4.jpg",
+            "image": "shopify://shop_images/4_8089de08-e51d-4268-adde-efeeffb5ba4e.png",
             "link": "",
             "description": "",
             "desc_alignment": "center",
@@ -596,6 +616,8 @@
         }
       },
       "block_order": [
+        "image_slide_zAwHwt",
+        "image_slide_MBjpTD",
         "image_slide_bk64Fk",
         "image_slide_CrCqJT",
         "image_slide_AKJ7Rk",
