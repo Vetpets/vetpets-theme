@@ -1,0 +1,11 @@
+{%- comment -%}
+  FreshWipes pre-lander — one competitor cell glyph in the comparison table.
+  Accepts: glyph ('check' | 'cross' | 'dash')
+{%- endcomment -%}
+{%- if glyph == 'check' -%}
+  <span class="fwpl-glyph" role="img" aria-label="Yes">&#10003;</span>
+{%- elsif glyph == 'cross' -%}
+  <span class="fwpl-glyph" role="img" aria-label="No">&#10005;</span>
+{%- else -%}
+  <span class="fwpl-glyph" role="img" aria-label="Partly">&#8212;</span>
+{%- endif -%}

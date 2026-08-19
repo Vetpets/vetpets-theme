@@ -1,0 +1,14 @@
+{
+  "layout": "freshwipes-prelander",
+  "sections": {
+    "freshwipes-prelander": {
+      "type": "freshwipes-prelander",
+      "settings": {
+        "cta_url": "",
+        "show_sticky_cta": true,
+        "show_routinecare": true
+      }
+    }
+  },
+  "order": ["freshwipes-prelander"]
+}

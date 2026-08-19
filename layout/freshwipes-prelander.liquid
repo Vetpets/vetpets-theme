@@ -1,0 +1,49 @@
+<!doctype html>
+{%- comment -%}
+  FreshWipes pre-lander — dedicated layout.
+
+  Used only by templates/page.freshwipes-prelander.json. Deliberately excludes
+  the store header, main navigation, announcement bar, footer and every other
+  global theme element so the approved Claude Design page renders as designed.
+
+  Everything Shopify needs is still here: content_for_header, content_for_layout,
+  viewport metadata, title/meta and canonical.
+{%- endcomment -%}
+<html class="freshwipes-prelander-html" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#47B5E9">
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    <title>{{ page_title }}{% if shop.name != page_title %} &ndash; {{ shop.name }}{% endif %}</title>
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    <link rel="preload" as="font" type="font/woff2" href="{{ 'fwpl-geist-bold.woff2' | asset_url }}" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="{{ 'fwpl-geist-regular.woff2' | asset_url }}" crossorigin>
+    <link rel="stylesheet" href="{{ 'freshwipes-prelander.css' | asset_url }}">
+
+    <style>
+      @font-face { font-family: "GeistFwpl"; src: url("{{ 'fwpl-geist-regular.woff2' | asset_url }}") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+      @font-face { font-family: "GeistFwpl"; src: url("{{ 'fwpl-geist-semibold.woff2' | asset_url }}") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+      @font-face { font-family: "GeistFwpl"; src: url("{{ 'fwpl-geist-bold.woff2' | asset_url }}") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+      @font-face { font-family: "GeistFwpl"; src: url("{{ 'fwpl-geist-extrabold.woff2' | asset_url }}") format("woff2"); font-weight: 800; font-style: normal; font-display: swap; }
+    </style>
+
+    {{ content_for_header }}
+  </head>
+
+  <body class="freshwipes-prelander-body">
+    {{ content_for_layout }}
+
+    <script src="{{ 'freshwipes-prelander.js' | asset_url }}" defer></script>
+  </body>
+</html>
