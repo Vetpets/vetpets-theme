@@ -710,7 +710,7 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    padding: 22px 20px 10px;
+    padding: 22px 20px 28px;   /* bottom 28px: review text -> blue trust strip */
     min-height: 0;
   }
   #freshwipes-prelander .fwpl-hero__copy { display: contents; }
@@ -720,7 +720,13 @@
   #freshwipes-prelander .fwpl-hero__ctas { order: 4; }
   #freshwipes-prelander .fwpl-hero__rating { order: 5; }
 
-  #freshwipes-prelander .fwpl-hero__mediacol { width: 100%; padding: 2px 0 0; }
+  /*
+    The base column carries min-width: 320px for the desktop two-column layout.
+    Left in place it makes the hero wider than the content box at a 320px
+    viewport, pushing the whole hero 20px right (clipped by overflow-x: hidden)
+    and leaving the rating block off-centre.
+  */
+  #freshwipes-prelander .fwpl-hero__mediacol { width: 100%; min-width: 0; padding: 2px 0 0; }
   #freshwipes-prelander .fwpl-hero__media { width: 100%; height: auto; min-height: 0; max-height: none; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 14px; }
 
   #freshwipes-prelander .fwpl-announce { height: 70px; min-height: 70px; max-height: 70px; padding: 0; overflow: hidden; }
@@ -761,7 +767,7 @@
     flex-wrap: nowrap;
     gap: 8px;
     width: 100%;
-    margin-top: 0;
+    margin-top: 18px;   /* + the 10px flex gap = 28px below the hero image */
   }
   #freshwipes-prelander .fwpl-hero__ctas a {
     /*
@@ -778,7 +784,44 @@
     font-size: clamp(10px, 2.86vw, 12.5px);
     white-space: nowrap;
   }
-  #freshwipes-prelander .fwpl-hero__rating { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; text-align: center; width: 100%; margin-top: 0; }
+  #freshwipes-prelander .fwpl-hero__rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    text-align: center;
+    width: 100%;
+    margin-top: 16px;   /* + the 10px flex gap = 26px below the CTA row */
+    gap: 6px;           /* stars and review line read as one trust unit */
+  }
+
+  /*
+    Benefit strip: two columns instead of four stacked rows, so the block uses
+    the mobile width instead of running ~214px tall. Grid items stretch, so the
+    icons line up across each row whatever the headings wrap to.
+  */
+  #freshwipes-prelander .fwpl-badges__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 20px;
+    row-gap: 26px;
+  }
+  #freshwipes-prelander .fwpl-badge { align-items: flex-start; gap: 10px; }
+  #freshwipes-prelander .fwpl-badge__icon { margin-top: 1px; }
+  #freshwipes-prelander .fwpl-badge__text { min-width: 0; }
+  #freshwipes-prelander .fwpl-badge__label,
+  #freshwipes-prelander .fwpl-badge__sub { overflow-wrap: break-word; }
+
+  /*
+    Very narrow phones: buy the two columns more text width (tighter section
+    padding, gap and icon) so the headings stop wrapping to four lines. Font
+    sizes are untouched.
+  */
+  @media (max-width: 359px) {
+    #freshwipes-prelander .fwpl-badges { padding-left: 12px; padding-right: 12px; }
+    #freshwipes-prelander .fwpl-badges__grid { column-gap: 14px; row-gap: 22px; }
+    #freshwipes-prelander .fwpl-badge { gap: 8px; }
+    #freshwipes-prelander .fwpl-badge__icon svg { width: 22px; height: 22px; }
+  }
 
   #freshwipes-prelander .fwpl-step__line { display: none; }
 
