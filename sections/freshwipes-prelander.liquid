@@ -16,6 +16,11 @@
   CTA routing: every purchase / availability CTA goes to the FreshWipes PDP.
   The two in-page buttons stay internal anchors: "See Why It Works" scrolls to
   #freshwipes-proof and "Skip to the offer" scrolls to #freshwipes-offer.
+
+  Released 2026-08-19. The page was published a few minutes before the template
+  reached the live theme, so some Shopify page-cache pods held the fallback
+  render. This line exists to bump the theme and invalidate those entries; it
+  is a comment and changes nothing about the rendered output.
 {%- endcomment -%}
 
 {%- liquid
