@@ -1,0 +1,21 @@
+{%- comment -%}
+  FreshWipes pre-lander — one customer review card.
+  Accepts: text, name, pdp_url
+{%- endcomment -%}
+<li class="fwpl-review">
+  <div class="fwpl-review__card">
+    <div class="fwpl-review__stars" role="img" aria-label="5 out of 5 stars">
+      {%- for i in (1..5) -%}<svg width="15" height="15" viewBox="0 0 24 24" fill="#F5A623" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8-6.2 3.8 1.6-7L2 9.2l7.1-.6z"/></svg>{%- endfor -%}
+    </div>
+    <p class="fwpl-review__text">{{ text }}</p>
+    <span class="fwpl-review__tag">Dental</span>
+    <span class="fwpl-review__product">Product: <a href="{{ pdp_url }}" data-fwpl-pdp>FreshWipes Plaque Relief Kit</a></span>
+  </div>
+  <div class="fwpl-review__by">
+    <span class="fwpl-review__name">{{ name }}</span>
+    <span class="fwpl-review__verified">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 1.3 2.7-.4 1.3 2.4 2.4 1.3-.4 2.7 1.3 2.4-1.3 2.4.4 2.7-2.4 1.3-1.3 2.4-2.7-.4L12 22l-2.4-1.3-2.7.4-1.3-2.4-2.4-1.3.4-2.7L2.2 12l1.3-2.4-.4-2.7 2.4-1.3 1.3-2.4 2.7.4z"/></svg>
+      Verified
+    </span>
+  </div>
+</li>
