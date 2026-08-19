@@ -637,6 +637,7 @@
     var timer = null;
     var hovered = false;
     var dragging = false;
+    var dragMoved = false;
     var startX = 0;
     var startTranslate = 0;
     var activePointer = null;
@@ -817,20 +818,42 @@
 
     // ---- free drag / swipe ----
 
+    // Capturing the pointer retargets pointerup - and with it the click - to
+    // the viewport, so a press that starts on a product link would never
+    // activate that link. Capture is therefore taken only once the pointer has
+    // actually travelled DRAG_SLOP, i.e. once this is a drag rather than a
+    // click. Up to that point nothing is moved either, so a click cannot nudge
+    // the track by a pixel.
+    var DRAG_SLOP = 6;
+
+    // Pressing on a link or an image and moving otherwise starts a native
+    // drag-and-drop, which cancels the pointer stream and kills the swipe.
+    viewport.addEventListener('dragstart', function (event) {
+      event.preventDefault();
+    });
+
     viewport.addEventListener('pointerdown', function (event) {
       if (!looping || event.button !== 0) return;
       dragging = true;
+      dragMoved = false;
       activePointer = event.pointerId;
       startX = event.clientX;
       startTranslate = translate;
       stop();
-      root.classList.add('vp-reviewslider--dragging');
-      if (viewport.setPointerCapture) viewport.setPointerCapture(event.pointerId);
     });
 
     viewport.addEventListener('pointermove', function (event) {
       if (!dragging || event.pointerId !== activePointer) return;
-      setPos(startTranslate + (event.clientX - startX), true);
+
+      var dx = event.clientX - startX;
+      if (!dragMoved) {
+        if (Math.abs(dx) <= DRAG_SLOP) return;
+        dragMoved = true;
+        root.classList.add('vp-reviewslider--dragging');
+        if (viewport.setPointerCapture) viewport.setPointerCapture(event.pointerId);
+      }
+
+      setPos(startTranslate + dx, true);
     });
 
     function endDrag(event) {
@@ -853,13 +876,22 @@
     }
 
     viewport.addEventListener('pointerup', endDrag);
-    viewport.addEventListener('pointercancel', endDrag);
+    viewport.addEventListener('pointercancel', function (event) {
+      endDrag(event);
+      // A cancelled gesture is not followed by a click, so the guard
+      // below never gets to clear itself - do it here.
+      dragMoved = false;
+    });
 
-    // A drag that ends on a link must not also follow it.
+    // A drag that ends on a link must not also follow it. This has to look
+    // at how far *this* gesture moved: `translate` also moves on autoplay,
+    // on arrow and dot navigation and on layout, so comparing it against
+    // startTranslate suppressed every click, including the very first one.
     viewport.addEventListener('click', function (event) {
-      if (Math.abs(translate - startTranslate) > 6 && event.target.closest('a')) {
+      if (dragMoved && event.target.closest('a')) {
         event.preventDefault();
       }
+      dragMoved = false;
     }, true);
 
     layout();
