@@ -720,7 +720,13 @@
   #freshwipes-prelander .fwpl-hero__ctas { order: 4; }
   #freshwipes-prelander .fwpl-hero__rating { order: 5; }
 
-  #freshwipes-prelander .fwpl-hero__mediacol { width: 100%; padding: 2px 0 0; }
+  /*
+    The base column carries min-width: 320px for the desktop two-column layout.
+    Left in place it makes the hero wider than the content box at a 320px
+    viewport, pushing the whole hero 20px right (clipped by overflow-x: hidden)
+    and leaving the rating block off-centre.
+  */
+  #freshwipes-prelander .fwpl-hero__mediacol { width: 100%; min-width: 0; padding: 2px 0 0; }
   #freshwipes-prelander .fwpl-hero__media { width: 100%; height: auto; min-height: 0; max-height: none; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 14px; }
 
   #freshwipes-prelander .fwpl-announce { height: 70px; min-height: 70px; max-height: 70px; padding: 0; overflow: hidden; }
