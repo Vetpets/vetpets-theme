@@ -695,7 +695,32 @@
   #freshwipes-prelander .fwpl-mech__image { height: 100%; min-height: 160px; aspect-ratio: auto; }
   #freshwipes-prelander .fwpl-mech__content { display: flex; flex-direction: column; justify-content: center; padding: 16px; text-align: left; }
 
-  #freshwipes-prelander .fwpl-hero__mediacol { padding: 0 16px 20px; }
+  /*
+    Mobile hero order: headline, subheadline, image, buttons, rating.
+
+    The image lives in a sibling column (.fwpl-hero__mediacol) so it cannot be
+    interleaved with the copy by `order` alone. Flattening .fwpl-hero__copy with
+    `display: contents` puts its children and the media column on the same flex
+    line, so a single `order` per item gives the required sequence with no
+    duplicated markup and no change to the DOM or the accessibility tree.
+    The copy column's own padding/gap move to .fwpl-hero__inner for the same reason.
+  */
+  #freshwipes-prelander .fwpl-hero__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 22px 20px 10px;
+    min-height: 0;
+  }
+  #freshwipes-prelander .fwpl-hero__copy { display: contents; }
+  #freshwipes-prelander .fwpl-hero__title { order: 1; }
+  #freshwipes-prelander .fwpl-hero__sub { order: 2; }
+  #freshwipes-prelander .fwpl-hero__mediacol { order: 3; }
+  #freshwipes-prelander .fwpl-hero__ctas { order: 4; }
+  #freshwipes-prelander .fwpl-hero__rating { order: 5; }
+
+  #freshwipes-prelander .fwpl-hero__mediacol { width: 100%; padding: 2px 0 0; }
   #freshwipes-prelander .fwpl-hero__media { width: 100%; height: auto; min-height: 0; max-height: none; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 14px; }
 
   #freshwipes-prelander .fwpl-announce { height: 70px; min-height: 70px; max-height: 70px; padding: 0; overflow: hidden; }
@@ -717,10 +742,43 @@
 
   #freshwipes-prelander .fwpl-hero__copy { text-align: center; align-items: center; }
   #freshwipes-prelander .fwpl-hero__title { margin-left: auto; margin-right: auto; text-align: center; }
-  #freshwipes-prelander .fwpl-hero__sub { margin-left: auto; margin-right: auto; text-align: center; max-width: 500px; }
-  #freshwipes-prelander .fwpl-hero__ctas { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; width: 100%; }
-  #freshwipes-prelander .fwpl-hero__ctas a { min-height: 48px; padding: 0 19px; font-size: 13px; }
-  #freshwipes-prelander .fwpl-hero__rating { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; text-align: center; width: 100%; }
+  #freshwipes-prelander .fwpl-hero__sub {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    max-width: 500px;
+    font-size: 13.5px;   /* was 16px — compact, still comfortably readable */
+    line-height: 1.42;
+  }
+  /*
+    One row, equal widths. `flex: 1 1 0` splits the row evenly; the label size
+    scales with the viewport so both stay on a single line without clipping.
+  */
+  #freshwipes-prelander .fwpl-hero__ctas {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    gap: 8px;
+    width: 100%;
+    margin-top: 0;
+  }
+  #freshwipes-prelander .fwpl-hero__ctas a {
+    /*
+      An explicit half-width (minus half the 8px gap) rather than `flex: 1 1 0`.
+      With flex-basis 0 the outline button's 2px border is added on top of its
+      share, which left the two buttons 4px apart; a border-box width makes them
+      exactly equal whatever borders each variant carries.
+    */
+    flex: 0 0 calc(50% - 4px);
+    width: calc(50% - 4px);
+    min-width: 0;
+    min-height: 46px;
+    padding: 0 8px;
+    font-size: clamp(10px, 2.86vw, 12.5px);
+    white-space: nowrap;
+  }
+  #freshwipes-prelander .fwpl-hero__rating { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; text-align: center; width: 100%; margin-top: 0; }
 
   #freshwipes-prelander .fwpl-step__line { display: none; }
 
