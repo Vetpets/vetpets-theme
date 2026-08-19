@@ -1,0 +1,497 @@
+{%- comment -%}
+  FreshWipes pre-lander
+  =====================
+  Faithful Shopify implementation of the approved Claude Design page
+  "FreshWipes Pre-Lander v2".
+
+  Rendered only through templates/page.freshwipes-prelander.json, which uses
+  layout/freshwipes-prelander.liquid — a dedicated layout with no header,
+  navigation, announcement bar or footer.
+
+  Everything is scoped under #freshwipes-prelander:
+    assets/freshwipes-prelander.css   presentation
+    assets/freshwipes-prelander.js    countdown, comparison tabs, review rail,
+                                      sticky clearance, attribution forwarding
+
+  CTA routing: every purchase / availability CTA goes to the FreshWipes PDP.
+  The two in-page buttons stay internal anchors: "See Why It Works" scrolls to
+  #freshwipes-proof and "Skip to the offer" scrolls to #freshwipes-offer.
+{%- endcomment -%}
+
+{%- liquid
+  assign pdp_url = section.settings.cta_url | default: 'https://shopvetpets.com/products/freshwipes-kit-protects-against-dental-diseases'
+  assign proof_anchor = '#freshwipes-proof'
+  assign offer_anchor = '#freshwipes-offer'
+
+  assign marquee_claims = '45,000+ HAPPY DOG OWNERS|100-DAY MONEY-BACK GUARANTEE|50 TEXTURED FINGER WIPES|BUY 2, GET 2 FREE + FREE GIFTS|FREE &amp; FAST SHIPPING' | split: '|'
+
+  assign badges = 'TEXTURED FINGER SLEEVE~Direct, controlled cleaning~texture||CPC + GREEN TEA~Oral-care ingredients~drop||FINGER-GUIDED CONTACT~Clean where you can see and feel~finger||pH-BALANCED FORMULA~Fragrance and alcohol free~shield' | split: '||'
+
+  assign mech_cards = 'sparkle~Textured Surface Makes Direct Contact~The finger wipe physically scrubs plaque and food debris from the accessible tooth surface and along the gumline.~fwpl-mech-1.webp||hand~Control at Your Fingertip~Guide the wipe where you can see and feel it making contact — without balancing a brush and toothpaste.~fwpl-mech-2.webp||clock~No Brush Handle or Toothpaste~Slip it over one finger, clean the accessible surfaces and discard it when you are done.~fwpl-mech-3.webp' | split: '||'
+
+  assign steps = 'SLIP IT ON~Place one FreshWipes finger wipe securely over your index finger.~fwpl-step-1.webp||CLEAN GENTLY~Use small circular motions across the accessible outer tooth surfaces and gumline.~fwpl-step-2.webp||CHECK THE WIPE~See where the textured surface made contact, then discard the used wipe.~fwpl-step-3.webp' | split: '||'
+
+  assign compare_rows = 'Physically scrubs the tooth surface~check~dash~cross||Owner-guided contact along the gumline~check~cross~cross||No toothbrush required~cross~check~check||Visible cleaning action~check~dash~cross||Fits over one finger~cross~cross~cross||No toothpaste or mixing~cross~check~check' | split: '||'
+
+  assign compare_cols = 'Toothbrush + Paste~fwpl-cmp-toothbrush.webp~Toothbrush and paste||Dental Treats~fwpl-cmp-treats.webp~Dental treats||Powders &amp; Water Additives~fwpl-cmp-powders.webp~Powders and water additives' | split: '||'
+
+  assign offer_bullets = '~Physically scrubs plaque and food debris from accessible tooth surfaces||~Finger-guided contact along the gumline||~Fits over one finger — no toothbrush required||By Week 3~ — visibly cleaner-looking teeth and fresher breath with consistent use' | split: '||'
+-%}
+
+{%- capture icon_texture -%}<svg width="26" height="26" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="2.4"/><circle cx="24" cy="12" r="2.4"/><circle cx="36" cy="12" r="2.4"/><circle cx="12" cy="24" r="2.4"/><circle cx="24" cy="24" r="2.4"/><circle cx="36" cy="24" r="2.4"/><circle cx="12" cy="36" r="2.4"/><circle cx="24" cy="36" r="2.4"/><circle cx="36" cy="36" r="2.4"/></svg>{%- endcapture -%}
+{%- capture icon_drop -%}<svg width="26" height="26" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 6c-4 6-12 9-12 17a12 12 0 0 0 24 0c0-8-8-11-12-17Z"/><path d="M19 27c0 4 2 6 5 7"/></svg>{%- endcapture -%}
+{%- capture icon_finger -%}<svg width="26" height="26" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a5 5 0 0 1 10 0v14"/><path d="M28 22V10a5 5 0 0 1 10 0v20c0 8-6 13-15 13s-14-5-14-12V20a4 4 0 0 1 8 0v6"/></svg>{%- endcapture -%}
+{%- capture icon_shield -%}<svg width="26" height="26" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 5l15 6v11c0 10-6.5 16.5-15 21-8.5-4.5-15-11-15-21V11z"/><path d="M17 24h14"/></svg>{%- endcapture -%}
+{%- capture icon_sparkle -%}<svg width="17" height="17" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 6v12M24 30v12M6 24h12M30 24h12"/></svg>{%- endcapture -%}
+{%- capture icon_hand -%}<svg width="17" height="17" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 8a4 4 0 0 1 8 0v16"/><path d="M28 24V12a4 4 0 0 1 8 0v18c0 8-6 12-14 12s-12-5-12-11V22a4 4 0 0 1 8 0v4"/></svg>{%- endcapture -%}
+{%- capture icon_clock -%}<svg width="17" height="17" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="17"/><path d="M24 14v11l8 5"/></svg>{%- endcapture -%}
+{%- capture icon_shield_check -%}<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l8 3v6c0 5-3.4 8.7-8 11-4.6-2.3-8-6-8-11V5z"/><path d="M9 12l2 2 4-4" stroke="#47B5E9" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>{%- endcapture -%}
+{%- capture stars_row -%}{%- for i in (1..5) -%}<svg width="14" height="14" viewBox="0 0 24 24" fill="#F5A623" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8-6.2 3.8 1.6-7L2 9.2l7.1-.6z"/></svg>{%- endfor -%}{%- endcapture -%}
+{%- capture check_circle -%}<span class="fwpl-check" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>{%- endcapture -%}
+
+<div id="freshwipes-prelander">
+
+  {%- comment -%} ---------- top offer bar ---------- {%- endcomment -%}
+  <div class="fwpl-announce">
+    <div class="fwpl-announce__inner">
+      <div class="fwpl-announce__text">
+        <span class="fwpl-announce__main">BUY 2, GET 2 FREE + FREE GIFTS</span>
+        <span class="fwpl-announce__sub"><span class="fwpl-announce__dot">· </span>100-Day Risk-Free Home Trial</span>
+      </div>
+      <div class="fwpl-announce__timer" aria-label="Offer countdown">
+        <div class="fwpl-timer__box"><div class="fwpl-timer__num" data-fwpl-cd="h">04</div><div class="fwpl-timer__label">HRS</div></div>
+        <span class="fwpl-timer__sep" aria-hidden="true">:</span>
+        <div class="fwpl-timer__box"><div class="fwpl-timer__num" data-fwpl-cd="m">05</div><div class="fwpl-timer__label">MIN</div></div>
+        <span class="fwpl-timer__sep" aria-hidden="true">:</span>
+        <div class="fwpl-timer__box"><div class="fwpl-timer__num" data-fwpl-cd="s">15</div><div class="fwpl-timer__label">SEC</div></div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ---------- hero ---------- {%- endcomment -%}
+  <div class="fwpl-hero">
+    <section class="fwpl-hero__inner" aria-labelledby="fwpl-hero-title">
+      <div class="fwpl-hero__copy">
+        <h1 class="fwpl-hero__title" id="fwpl-hero-title">How To Physically Remove The Plaque That Keeps Coming Back — <span class="fwpl-accent">Without Toothbrushes, Dental Chews, Or Messy Powders</span></h1>
+        <p class="fwpl-hero__sub">FreshWipes slips over your finger, giving you direct, textured contact across accessible tooth surfaces and along the gumline — so you can clean where passive routines can't.</p>
+        <div class="fwpl-hero__ctas">
+          <a class="fwpl-btn fwpl-btn--primary" href="{{ proof_anchor }}">SEE WHY IT WORKS ↓</a>
+          <a class="fwpl-btn fwpl-btn--outline" href="{{ offer_anchor }}">SKIP TO THE OFFER ↓</a>
+        </div>
+        <div class="fwpl-hero__rating">
+          <span class="fwpl-stars" aria-hidden="true">{{ stars_row }}</span>
+          <span class="fwpl-rating__text">Rated 4.8/5 · Trusted by 45,000+ Dog Owners</span>
+        </div>
+      </div>
+      <div class="fwpl-hero__mediacol">
+        <div class="fwpl-hero__media">
+          <img src="{{ 'fwpl-hero.webp' | asset_url }}" alt="Documented FreshWipes before and after result on a dog's teeth" width="1200" height="675" fetchpriority="high" decoding="async">
+        </div>
+      </div>
+    </section>
+  </div>
+
+  {%- comment -%}
+    ---------- rolling marquee ----------
+    Two identical groups, track animates translate3d(0) -> translate3d(-50%),
+    which is exactly one group, so the wrap is seamless. Each group repeats the
+    claim sequence `fwpl_mq_copies` times so a group always stays wider than the
+    viewport; the duration in CSS scales with the same number, holding the
+    design's scroll speed. Groups are decorative; the claims are exposed once to
+    assistive technology through the visually hidden list.
+  {%- endcomment -%}
+  {%- assign fwpl_mq_copies = 2 -%}
+  <div class="fwpl-marquee">
+    <ul class="fwpl-sr">
+      {%- for claim in marquee_claims -%}<li>{{ claim }}</li>{%- endfor -%}
+    </ul>
+    <div class="fwpl-marquee__track">
+      {%- for group in (1..2) -%}
+        <div class="fwpl-marquee__group" aria-hidden="true">
+          {%- for copy in (1..fwpl_mq_copies) -%}
+            {%- for claim in marquee_claims -%}
+              <div class="fwpl-marquee__item">
+                <span class="fwpl-marquee__claim">{{ claim }}</span>
+                <span class="fwpl-marquee__paw" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8.5 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm7 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM5 15.5a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6Zm14 0a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6ZM12 20c-2.5 0-4.5-1.6-4.5-3.6S9.5 12 12 12s4.5 2.4 4.5 4.4S14.5 20 12 20Z"/></svg></span>
+              </div>
+            {%- endfor -%}
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {%- comment -%} ---------- mechanism badge bar ---------- {%- endcomment -%}
+  <div class="fwpl-badges">
+    <div class="fwpl-badges__grid">
+      {%- for badge in badges -%}
+        {%- assign b = badge | split: '~' -%}
+        <div class="fwpl-badge">
+          <span class="fwpl-badge__icon">
+            {%- case b[2] -%}
+              {%- when 'texture' -%}{{ icon_texture }}
+              {%- when 'drop' -%}{{ icon_drop }}
+              {%- when 'finger' -%}{{ icon_finger }}
+              {%- else -%}{{ icon_shield }}
+            {%- endcase -%}
+          </span>
+          <span class="fwpl-badge__text">
+            <span class="fwpl-badge__label">{{ b[0] }}</span>
+            <span class="fwpl-badge__sub">{{ b[1] }}</span>
+          </span>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {%- comment -%} ---------- visible proof ---------- {%- endcomment -%}
+  <section class="fwpl-proof" id="freshwipes-proof" aria-labelledby="fwpl-proof-title">
+    <div class="fwpl-proof__head">
+      <span class="fwpl-eyebrow">SEE IT FOR YOURSELF</span>
+      <h2 class="fwpl-h2" id="fwpl-proof-title">The Proof Is <span class="fwpl-accent">on the Wipe</span></h2>
+      <p class="fwpl-proof__lead">Clean across the accessible tooth surface and along the gumline. Then look at the wipe.</p>
+    </div>
+    <div class="fwpl-proof__gallery">
+      <img src="{{ 'fwpl-proof-1.webp' | asset_url }}" alt="FreshWipes finger sleeve cleaning along a dog's teeth and gumline" width="900" height="673" loading="lazy" decoding="async">
+      <img src="{{ 'fwpl-proof-2.webp' | asset_url }}" alt="Owner inspecting the used FreshWipes sleeve after cleaning" width="900" height="673" loading="lazy" decoding="async">
+      <img src="{{ 'fwpl-proof-3.webp' | asset_url }}" alt="Used FreshWipes finger sleeve held up with a happy small dog behind it" width="900" height="673" loading="lazy" decoding="async">
+    </div>
+    <div class="fwpl-proof__foot">
+      <p class="fwpl-proof__note">What you see on the wipe is what the textured surface lifted away.</p>
+      <a class="fwpl-skip" href="{{ offer_anchor }}">SKIP TO THE OFFER ↓</a>
+    </div>
+  </section>
+
+  <svg class="fwpl-wave" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 20C240 62 420 62 720 34S1200 -8 1440 24V64H0Z" fill="#D5F7FF"/></svg>
+
+  {%- comment -%} ---------- mechanism cards ---------- {%- endcomment -%}
+  <section class="fwpl-mech" aria-labelledby="fwpl-mech-title">
+    <div class="fwpl-mech__inner">
+      <h2 class="fwpl-h2 fwpl-mech__title" id="fwpl-mech-title">Why This <span class="fwpl-accent">Works</span> When Passive Routines Fall Short</h2>
+      <div class="fwpl-mech__cards">
+        {%- for card in mech_cards -%}
+          {%- assign c = card | split: '~' -%}
+          <div class="fwpl-mech__card">
+            <div class="fwpl-mech__image">
+              <img src="{{ c[3] | asset_url }}" alt="{{ c[1] | escape }}" width="840" height="629" loading="lazy" decoding="async">
+            </div>
+            <div class="fwpl-mech__content">
+              <div class="fwpl-mech__head">
+                <span class="fwpl-mech__icon">
+                  {%- case c[0] -%}
+                    {%- when 'sparkle' -%}{{ icon_sparkle }}
+                    {%- when 'hand' -%}{{ icon_hand }}
+                    {%- else -%}{{ icon_clock }}
+                  {%- endcase -%}
+                </span>
+                <h3 class="fwpl-mech__name">{{ c[1] }}</h3>
+              </div>
+              <p class="fwpl-mech__copy">{{ c[2] }}</p>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+      <div class="fwpl-center"><a class="fwpl-skip fwpl-skip--onblue" href="{{ offer_anchor }}">SKIP TO THE OFFER ↓</a></div>
+    </div>
+  </section>
+
+  <svg class="fwpl-wave" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 24C240 -8 480 -8 720 24S1200 62 1440 30V64H0Z" fill="#ffffff"/></svg>
+
+  {%- comment -%} ---------- veterinarian reviewed ---------- {%- endcomment -%}
+  <section class="fwpl-vet" aria-labelledby="fwpl-vet-title">
+    <div class="fwpl-vet__card">
+      <svg class="fwpl-vet__pattern" width="100%" height="100%" aria-hidden="true" focusable="false">
+        <defs>
+          <pattern id="fwplVetPaw" width="152" height="152" patternUnits="userSpaceOnUse">
+            <g fill="#ffffff" fill-opacity="0.085">
+              <g transform="translate(12,14) rotate(-13)"><ellipse cx="20" cy="27" rx="11.5" ry="9"/><circle cx="7.5" cy="14" r="4.4"/><circle cx="16" cy="8" r="4.6"/><circle cx="25.5" cy="8" r="4.6"/><circle cx="34" cy="14" r="4.4"/></g>
+              <g transform="translate(92,54) rotate(17) scale(0.92)"><ellipse cx="20" cy="27" rx="11.5" ry="9"/><circle cx="7.5" cy="14" r="4.4"/><circle cx="16" cy="8" r="4.6"/><circle cx="25.5" cy="8" r="4.6"/><circle cx="34" cy="14" r="4.4"/></g>
+              <g transform="translate(30,92) rotate(9) scale(0.86)"><ellipse cx="20" cy="27" rx="11.5" ry="9"/><circle cx="7.5" cy="14" r="4.4"/><circle cx="16" cy="8" r="4.6"/><circle cx="25.5" cy="8" r="4.6"/><circle cx="34" cy="14" r="4.4"/></g>
+            </g>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#fwplVetPaw)"/>
+      </svg>
+      <div class="fwpl-vet__grid">
+        <div class="fwpl-vet__copy">
+          <span class="fwpl-vet__eyebrow">{{ icon_shield_check }} Veterinarian Reviewed</span>
+          <h2 class="fwpl-vet__title" id="fwpl-vet-title">A Practical Approach to At-Home Dental Care</h2>
+          <p class="fwpl-vet__lead">FreshWipes gives pet owners direct, finger-guided control over a textured cleaning surface — helping lift plaque and food debris from accessible teeth and along the gumline without the toothbrush struggle.</p>
+          <p class="fwpl-vet__body">A routine is only useful when it is simple enough to use consistently. The finger-sleeve format makes it easier to see, feel and control where you are cleaning.</p>
+          <div class="fwpl-vet__attrib">
+            <div class="fwpl-vet__divider"></div>
+            <div class="fwpl-vet__attribrow">
+              <span class="fwpl-vet__who">
+                <span class="fwpl-vet__name">Reviewed by Dr. Michael Thompson</span>
+                <span class="fwpl-vet__role">Veterinarian · VetPets</span>
+              </span>
+              <span class="fwpl-vet__badge">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l8 3v6c0 5-3.4 8.7-8 11-4.6-2.3-8-6-8-11V5z"/><path d="M9 12l2 2 4-4" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                VET REVIEWED
+              </span>
+            </div>
+          </div>
+          <div class="fwpl-vet__mobileattrib">
+            <div class="fwpl-vet__avatar">
+              <img src="{{ 'fwpl-vet-portrait.webp' | asset_url }}" alt="Dr. Michael Thompson, Veterinarian at VetPets" width="720" height="900" loading="lazy" decoding="async">
+            </div>
+            <div class="fwpl-vet__mobilewho">
+              <strong>Reviewed by Dr. Michael Thompson</strong>
+              <span class="fwpl-vet__mobilerole">Veterinarian · VetPets</span>
+              <span class="fwpl-vet__badge fwpl-vet__badge--sm">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l8 3v6c0 5-3.4 8.7-8 11-4.6-2.3-8-6-8-11V5z"/><path d="M9 12l2 2 4-4" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                VET REVIEWED
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="fwpl-vet__portraitcol">
+          <div class="fwpl-vet__frame">
+            <img src="{{ 'fwpl-vet-portrait.webp' | asset_url }}" alt="Dr. Michael Thompson, Veterinarian at VetPets" width="720" height="900" loading="lazy" decoding="async">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fwpl-vet__cta"><a class="fwpl-skip fwpl-skip--solid" href="{{ offer_anchor }}">SKIP TO THE OFFER ↓</a></div>
+  </section>
+
+  {%- comment -%} ---------- how to use ---------- {%- endcomment -%}
+  <section class="fwpl-steps" aria-labelledby="fwpl-steps-title">
+    <div class="fwpl-steps__inner">
+      <h2 class="fwpl-h2 fwpl-steps__title" id="fwpl-steps-title">Three Simple Steps. <span class="fwpl-accent">One Controlled Clean.</span></h2>
+      <div class="fwpl-steps__row">
+        {%- for step in steps -%}
+          {%- assign s = step | split: '~' -%}
+          <div class="fwpl-step">
+            {%- unless forloop.first -%}<div class="fwpl-step__line" aria-hidden="true"></div>{%- endunless -%}
+            <div class="fwpl-step__ring">
+              <img src="{{ s[2] | asset_url }}" alt="{{ s[0] | escape }}" width="340" height="340" loading="lazy" decoding="async">
+            </div>
+            <span class="fwpl-step__chip">{{ s[0] }}</span>
+            <p class="fwpl-step__copy">{{ s[1] }}</p>
+          </div>
+        {%- endfor -%}
+      </div>
+      <div class="fwpl-center"><a class="fwpl-skip" href="{{ offer_anchor }}">SKIP TO THE OFFER ↓</a></div>
+    </div>
+  </section>
+
+  <svg class="fwpl-wave" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 30C260 62 500 58 780 28S1220 -6 1440 22V64H0Z" fill="#D5F7FF"/></svg>
+
+  {%- comment -%} ---------- comparison ---------- {%- endcomment -%}
+  <section class="fwpl-cmp" aria-labelledby="fwpl-cmp-title">
+    <div class="fwpl-cmp__inner">
+      <h2 class="fwpl-h2 fwpl-cmp__title" id="fwpl-cmp-title"><span class="fwpl-accent">FreshWipes</span> vs. What You've Already Tried</h2>
+
+      {%- comment -%} desktop table {%- endcomment -%}
+      <div class="fwpl-cmp__desktop">
+        <div class="fwpl-cmp__headrow">
+          <div></div>
+          <div class="fwpl-cmp__hero">
+            <img src="{{ 'fwpl-jar-cutout.webp' | asset_url }}" alt="FreshWipes container with textured finger sleeves" width="520" height="520" loading="lazy" decoding="async">
+            <span class="fwpl-cmp__heroname">FreshWipes</span>
+          </div>
+          {%- for col in compare_cols -%}
+            {%- assign cc = col | split: '~' -%}
+            <div class="fwpl-cmp__col">
+              <div class="fwpl-cmp__colimg"><img src="{{ cc[1] | asset_url }}" alt="{{ cc[2] }}" width="240" height="240" loading="lazy" decoding="async"></div>
+              <span class="fwpl-cmp__colname">{{ cc[0] }}</span>
+            </div>
+          {%- endfor -%}
+        </div>
+        {%- for row in compare_rows -%}
+          {%- assign r = row | split: '~' -%}
+          <div class="fwpl-cmp__row">
+            <div class="fwpl-cmp__label">{{ r[0] }}</div>
+            <div class="fwpl-cmp__win">{{ check_circle }}<span class="fwpl-sr">Yes</span></div>
+            <div class="fwpl-cmp__cell">{% render 'fwpl-compare-glyph', glyph: r[1] %}</div>
+            <div class="fwpl-cmp__cell">{% render 'fwpl-compare-glyph', glyph: r[2] %}</div>
+            <div class="fwpl-cmp__cell">{% render 'fwpl-compare-glyph', glyph: r[3] %}</div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- comment -%} mobile tabbed card {%- endcomment -%}
+      <div class="fwpl-cmp__mobile">
+        <div class="fwpl-cmp__tabs" role="tablist" aria-label="Compare FreshWipes with">
+          {%- for col in compare_cols -%}
+            {%- assign cc = col | split: '~' -%}
+            {%- assign idx = forloop.index -%}
+            <button type="button" class="fwpl-cmp__tab" role="tab" id="fwpl-cmp-tab-{{ idx }}" aria-controls="fwpl-cmp-panel-{{ idx }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" tabindex="{% if forloop.first %}0{% else %}-1{% endif %}">{{ cc[0] }}</button>
+          {%- endfor -%}
+        </div>
+        {%- for col in compare_cols -%}
+          {%- assign cc = col | split: '~' -%}
+          {%- assign idx = forloop.index -%}
+          <div class="fwpl-cmp__panel" role="tabpanel" id="fwpl-cmp-panel-{{ idx }}" aria-labelledby="fwpl-cmp-tab-{{ idx }}" {% unless forloop.first %}hidden{% endunless %}>
+            {%- for row in compare_rows -%}
+              {%- assign r = row | split: '~' -%}
+              {%- assign gi = idx | plus: 0 -%}
+              <div class="fwpl-cmp__mrow">
+                <div class="fwpl-cmp__mlabel">{{ r[0] }}</div>
+                <div class="fwpl-cmp__mpair">
+                  <div class="fwpl-cmp__mwin">
+                    <span class="fwpl-cmp__mtag">FRESHWIPES</span>
+                    {{ check_circle }}
+                  </div>
+                  <div class="fwpl-cmp__mother">
+                    <span class="fwpl-cmp__mtag fwpl-cmp__mtag--muted">{{ cc[0] }}</span>
+                    {% render 'fwpl-compare-glyph', glyph: r[gi] %}
+                  </div>
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <p class="fwpl-cmp__note">FreshWipes is for owners who want direct, visible cleaning without the toothbrush battle.</p>
+      <div class="fwpl-center"><a class="fwpl-skip fwpl-skip--onblue" href="{{ offer_anchor }}">SKIP TO THE OFFER ↓</a></div>
+    </div>
+  </section>
+
+  <svg class="fwpl-wave" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 26C240 -6 520 -2 760 26S1200 60 1440 28V64H0Z" fill="#ffffff"/></svg>
+
+  {%- comment -%} ---------- reviews ---------- {%- endcomment -%}
+  <section class="fwpl-reviews" aria-labelledby="fwpl-reviews-title">
+    <div class="fwpl-reviews__head">
+      <h2 class="fwpl-h2" id="fwpl-reviews-title"><span class="fwpl-accent">Real FreshWipes Routines.</span> Real Dog Owners.</h2>
+    </div>
+    <ul class="fwpl-reviews__rail">
+      {% render 'fwpl-review', text: 'My Pom loves the wipes! Way less hassle than when I used to brush her teeth. Thank you!', name: 'Marilú P.', pdp_url: pdp_url %}
+      {% render 'fwpl-review', text: 'My two 8 month old dogs are really good at having their teeth cleaned. I can get to their back teeth and all around their mouth.', name: 'Lynn H.', pdp_url: pdp_url %}
+      {% render 'fwpl-review', text: "These are really great. So easy to use &amp; doesn’t stress the dog out while I'm using them. Would recommend", name: 'Alison Christoforidou', pdp_url: pdp_url %}
+      {% render 'fwpl-review', text: 'Since I started using the finger wipes the plaque on Lucy’s teeth has definitely started to disappear.', name: 'Jackie A.', pdp_url: pdp_url %}
+      {% render 'fwpl-review', text: 'Excellent ease of use, dogs tolerate the action and teeth are cleaner!!', name: 'Clare C J Whitehead', pdp_url: pdp_url %}
+    </ul>
+    <div class="fwpl-reviews__nav">
+      <button type="button" class="fwpl-reviews__btn" data-fwpl-rail="prev" aria-label="Scroll reviews left"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button type="button" class="fwpl-reviews__btn" data-fwpl-rail="next" aria-label="Scroll reviews right"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>
+  </section>
+
+  {%- comment -%} ---------- guarantee ---------- {%- endcomment -%}
+  <section class="fwpl-guarantee" aria-labelledby="fwpl-guarantee-title">
+    <div class="fwpl-guarantee__grid">
+      <div class="fwpl-guarantee__col">
+        <div class="fwpl-guarantee__card">
+          <span class="fwpl-guarantee__icon" aria-hidden="true"><svg width="46" height="46" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l8 3v6c0 5-3.4 8.7-8 11-4.6-2.3-8-6-8-11V5z"/><path d="M9 12l2 2 4-4" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <h2 class="fwpl-guarantee__title" id="fwpl-guarantee-title">See Less Visible Plaque — or <span class="fwpl-accent">Every Penny Back</span></h2>
+          <p class="fwpl-guarantee__copy">Use FreshWipes consistently for up to 100 days. If you don't see a cleaner-looking difference, you get a full refund. No questions, no forms, no hassle.</p>
+        </div>
+      </div>
+      <div class="fwpl-guarantee__col">
+        <div class="fwpl-guarantee__media">
+          <img src="{{ 'fwpl-guarantee.webp' | asset_url }}" alt="FreshWipes owners and their dogs at home" width="1098" height="618" loading="lazy" decoding="async">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <svg class="fwpl-wave" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 22C240 58 480 60 760 30S1200 -6 1440 26V64H0Z" fill="#D5F7FF"/></svg>
+
+  {%- comment -%} ---------- final offer ---------- {%- endcomment -%}
+  <section class="fwpl-offer" id="freshwipes-offer" aria-labelledby="fwpl-offer-title">
+    <div class="fwpl-offer__inner">
+      <h2 class="fwpl-h2 fwpl-offer__title" id="fwpl-offer-title">You're the Kind of Owner Who Notices. The Tools Failed — <span class="fwpl-accent">Not You</span>.</h2>
+      <p class="fwpl-offer__sub">A better dental routine starts with direct, controlled contact.</p>
+      <div class="fwpl-offer__cardwrap">
+        <div class="fwpl-offer__ribbon">BUY 2, GET 2 FREE + FREE GIFTS (LIMITED TIME!)</div>
+        <div class="fwpl-offer__card">
+          <div class="fwpl-offer__media">
+            <span class="fwpl-offer__bestseller"><span class="fwpl-offer__dot" aria-hidden="true"></span>Best seller</span>
+            <img src="{{ 'fwpl-offer-jar.webp' | asset_url }}" alt="FreshWipes container with two textured finger sleeves" width="500" height="678" loading="lazy" decoding="async">
+          </div>
+          <div class="fwpl-offer__copy">
+            <div class="fwpl-offer__rating">
+              <span class="fwpl-stars" aria-hidden="true">{{ stars_row }}</span>
+              <span class="fwpl-rating__text">Rated 4.8/5 · Trusted by 45,000+ Dog Owners</span>
+            </div>
+            <h3 class="fwpl-offer__name">FreshWipes Plaque Relief Kit</h3>
+            <ul class="fwpl-offer__bullets">
+              {%- for bullet in offer_bullets -%}
+                {%- assign bb = bullet | split: '~' -%}
+                <li>
+                  {{ check_circle }}
+                  <span>{% if bb.size > 1 and bb[0] != blank %}<span class="fwpl-offer__lead">{{ bb[0] }}</span>{{ bb[1] }}{% else %}{{ bb | last }}{% endif %}</span>
+                </li>
+              {%- endfor -%}
+            </ul>
+            <div class="fwpl-offer__scarcity">
+              <span class="fwpl-offer__warn" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4"/><path d="M12 17h.01"/></svg></span>
+              <span class="fwpl-offer__warntext">High demand — FreshWipes tend to sell out. If this page is live, they're still in stock.</span>
+            </div>
+            <a class="fwpl-offer__cta" href="{{ pdp_url }}" data-fwpl-pdp>APPLY DISCOUNT AND CHECK AVAILABILITY →</a>
+            {%- if section.settings.show_routinecare -%}
+              <span class="fwpl-offer__perk">🎁 Save 20% with RoutineCare</span>
+            {%- endif -%}
+            <div class="fwpl-offer__trust">
+              <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#47B5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>100-Day Money-Back Guarantee</span>
+              <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#47B5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>Free &amp; Fast Shipping</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ---------- sticky CTA ---------- {%- endcomment -%}
+  {%- if section.settings.show_sticky_cta -%}
+    <div class="fwpl-sticky__spacer" aria-hidden="true"></div>
+    <div class="fwpl-sticky" role="region" aria-label="FreshWipes offer">
+      <div class="fwpl-sticky__inner">
+        <div class="fwpl-sticky__copy">
+          <span class="fwpl-sticky__headline">Get 70% Off Today Only <span class="fwpl-arrow-right" aria-hidden="true">👉</span><span class="fwpl-arrow-down" aria-hidden="true">👇</span></span>
+          <span class="fwpl-sticky__trust"><span class="fwpl-stars fwpl-stars--sm" aria-hidden="true">{{ stars_row }}</span>45,000+ Happy Customers</span>
+        </div>
+        <a class="fwpl-sticky__btn" href="{{ pdp_url }}" data-fwpl-pdp>APPLY DISCOUNT AND CHECK AVAILABILITY →</a>
+      </div>
+    </div>
+  {%- endif -%}
+
+</div>
+
+{% schema %}
+{
+  "name": "FreshWipes pre-lander",
+  "tag": "div",
+  "class": "freshwipes-prelander-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Call to action"
+    },
+    {
+      "type": "paragraph",
+      "content": "Every purchase CTA on this page opens the FreshWipes PDP. The two in-page buttons are exceptions: \"See Why It Works\" scrolls to the proof section (#freshwipes-proof) and \"Skip to the offer\" scrolls to the offer block (#freshwipes-offer)."
+    },
+    {
+      "type": "text",
+      "id": "cta_url",
+      "label": "PDP link",
+      "info": "Leave empty to use the FreshWipes product page: https://shopvetpets.com/products/freshwipes-kit-protects-against-dental-diseases"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sticky_cta",
+      "label": "Show sticky CTA bar",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_routinecare",
+      "label": "Show the RoutineCare badge",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "FreshWipes pre-lander"
+    }
+  ]
+}
+{% endschema %}
