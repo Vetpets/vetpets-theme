@@ -416,23 +416,30 @@
   }
 
   /* ---------------------------------------------------------------
-     7. sticky bar — genuinely fixed, revealed once the hero CTA leaves
+     7. sticky bar — genuinely viewport-fixed. Shown once the hero purchase
+     controls have scrolled out, hidden again before the footer.
      --------------------------------------------------------------- */
   var sticky = $('.ewof-sticky');
   var anchor = $('.ewof-form-host');
-  if (sticky && anchor && 'IntersectionObserver' in window) {
-    var footer = $('.foot');
-    var heroOut = false, footIn = false;
-    var paint = function () { sticky.classList.toggle('show', heroOut && !footIn); };
-    new IntersectionObserver(function (entries) {
-      heroOut = !entries[0].isIntersecting;
-      paint();
-    }, { rootMargin: '0px 0px -40px 0px' }).observe(anchor);
-    if (footer) {
-      new IntersectionObserver(function (entries) {
-        footIn = entries[0].isIntersecting;
-        paint();
-      }, { rootMargin: '0px 0px 0px 0px' }).observe(footer);
-    }
+  var footer = $('.foot');
+
+  function paintSticky() {
+    if (!sticky || !anchor) return;
+    var a = anchor.getBoundingClientRect();
+    var pastHero = a.bottom <= 0;
+    var beforeFooter = true;
+    if (footer) beforeFooter = footer.getBoundingClientRect().top > window.innerHeight;
+    sticky.classList.toggle('show', pastHero && beforeFooter);
   }
+
+  var stickyTick = false;
+  function onScroll() {
+    if (stickyTick) return;
+    stickyTick = true;
+    requestAnimationFrame(function () { stickyTick = false; paintSticky(); });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  window.addEventListener('load', paintSticky);
+  paintSticky();
 })();
