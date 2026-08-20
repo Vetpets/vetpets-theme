@@ -1,0 +1,484 @@
+/*
+  EyeWipes offer page — scoped stylesheet
+  ---------------------------------------
+  Source of truth: Claude Design project "VetPets EyeWipes Offer Page",
+  file "EyeWipes Offer Page v1.dc.html".
+
+  Loaded only by sections/eyewipes-offer-page.liquid, which is used only by
+  templates/product.eyewipes-offer-page.json. Every selector is scoped under
+  #eyewipes-offer-page so nothing here can reach another page of the storefront.
+
+  The purchase module is NOT a clone. Kaching Bundles renders its own real
+  controls (radio inputs, subscription card, free-gift rows) and this file
+  restyles those exact nodes — see "KACHING RESTYLE" near the bottom.
+*/
+
+/* ---------- self-hosted Geist (shared with the pre-lander) ---------- */
+@font-face{font-family:"GeistEwof";src:url("ewpl-geist-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"GeistEwof";src:url("ewpl-geist-medium.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"GeistEwof";src:url("ewpl-geist-semibold.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"GeistEwof";src:url("ewpl-geist-bold.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"GeistEwof";src:url("ewpl-geist-extrabold.woff2") format("woff2");font-weight:800;font-style:normal;font-display:swap}
+
+/* ---------- page shell ----------
+   The approved design has no theme header, announcement bar or footer.
+   :has() scopes this to pages that actually contain this section, so no
+   other template is affected and layout/theme.liquid stays untouched. */
+body:has(#eyewipes-offer-page) .shopify-section-group-header-group,
+body:has(#eyewipes-offer-page) .shopify-section-group-footer-group,
+body:has(#eyewipes-offer-page) #shopify-section-header,
+body:has(#eyewipes-offer-page) #shopify-section-footer,
+body:has(#eyewipes-offer-page) .announcement-bar,
+body:has(#eyewipes-offer-page) #shopify-section-scroll-to-top-btn,
+body:has(#eyewipes-offer-page) #shopify-section-promo-popup,
+body:has(#eyewipes-offer-page) #shopify-section-global-music-player{display:none!important}
+body:has(#eyewipes-offer-page) main#MainContent{padding:0!important;margin:0!important}
+body:has(#eyewipes-offer-page){overflow-x:hidden}
+
+#eyewipes-offer-page{
+  --blue:#47B5E9; --blue-dark:#2E9FD8; --pale:#D5F7FF; --mist:#EDFAFF;
+  --ink:#1A1A1A; --muted:#6B7A85; --star:#F5A623; --teal:#13B6B5;
+  --red:#D64545; --red-ink:#B32020; --red-bg:#FDECEC; --orange:#F5921E;
+  --blue-ink:#1F7FB8;
+  --sticky-h:80px;
+
+  background:#FFFFFF;
+  color:var(--ink);
+  font-family:"GeistEwof",system-ui,-apple-system,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:var(--sticky-h);
+  overflow-x:hidden;
+}
+#eyewipes-offer-page *,#eyewipes-offer-page *::before,#eyewipes-offer-page *::after{box-sizing:border-box}
+#eyewipes-offer-page img,#eyewipes-offer-page svg{max-width:100%}
+#eyewipes-offer-page a{color:var(--blue);text-decoration:none}
+#eyewipes-offer-page a:hover{color:var(--blue-dark)}
+#eyewipes-offer-page :focus-visible{outline:3px solid var(--blue-dark);outline-offset:3px;border-radius:4px}
+#eyewipes-offer-page p,#eyewipes-offer-page h1,#eyewipes-offer-page h2,#eyewipes-offer-page h3,#eyewipes-offer-page ul{margin:0}
+#eyewipes-offer-page .ewof-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ---------- shared primitives ---------- */
+#eyewipes-offer-page .cta{transition:transform 140ms ease-out,background 140ms ease-out,box-shadow 140ms ease-out;cursor:pointer}
+#eyewipes-offer-page .cta:hover{transform:scale(1.02)}
+#eyewipes-offer-page .cta:active{transform:scale(.985)}
+#eyewipes-offer-page .btn-buy{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--blue);color:#FFFFFF;text-decoration:none;font-family:inherit;font-size:14.5px;font-weight:800;letter-spacing:.01em;text-transform:uppercase;line-height:1.2;white-space:nowrap;padding:19px 18px;border:0;border-radius:999px;text-align:center;box-shadow:0 10px 26px rgba(71,181,233,.45)}
+#eyewipes-offer-page .btn-buy:hover{background:var(--blue-dark);color:#FFFFFF}
+#eyewipes-offer-page .btn-buy[disabled]{opacity:.6;cursor:progress;transform:none}
+#eyewipes-offer-page .btn-outline{display:inline-flex;align-items:center;justify-content:center;background:transparent;color:var(--blue-dark);border:2px solid var(--blue);text-decoration:none;font-size:14.5px;font-weight:700;padding:11px 24px;border-radius:999px;text-align:center}
+#eyewipes-offer-page .btn-outline:hover{background:rgba(71,181,233,.1);color:var(--blue-dark)}
+#eyewipes-offer-page .h2{margin:0;font-size:26px;line-height:1.12;letter-spacing:-0.02em;font-weight:700;color:var(--ink);text-wrap:pretty}
+#eyewipes-offer-page .accent{color:var(--blue)}
+#eyewipes-offer-page .stars{color:var(--star);letter-spacing:.06em}
+#eyewipes-offer-page .rating{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--ink);flex-wrap:wrap}
+#eyewipes-offer-page .eyebrow{display:inline-block;background:var(--pale);color:var(--blue-dark);font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:7px 14px;border-radius:999px}
+#eyewipes-offer-page .eyebrow-red{background:var(--red-bg);color:var(--red-ink);border:1.5px solid var(--red)}
+#eyewipes-offer-page .wave{background:#FFFFFF;line-height:0}
+#eyewipes-offer-page .wave svg{display:block;width:100%;height:48px}
+#eyewipes-offer-page .im{display:block;width:100%;height:100%;object-fit:cover;background:var(--mist)}
+#eyewipes-offer-page .im-fit{object-fit:contain}
+#eyewipes-offer-page .imw{position:relative;overflow:hidden;background:var(--mist)}
+
+/* ---------- top bar ---------- */
+#eyewipes-offer-page .topbar{background:var(--blue)}
+#eyewipes-offer-page .topbar-in{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 14px}
+#eyewipes-offer-page .topbar-l1{color:#FFFFFF;font-size:clamp(10.5px,3.1vw,18px);font-weight:800;letter-spacing:.02em;line-height:1.2;text-transform:uppercase;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.12)}
+#eyewipes-offer-page .topbar-l2{color:#FFFFFF;font-size:clamp(10px,2.9vw,13.5px);font-weight:600;letter-spacing:.01em;line-height:1.3;opacity:.95;margin-top:3px}
+#eyewipes-offer-page .cd{display:flex;align-items:center;gap:4px;background:#FFFFFF;border-radius:10px;padding:5px 9px;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.14)}
+#eyewipes-offer-page .cd-u{display:flex;flex-direction:column;align-items:center;min-width:19px}
+#eyewipes-offer-page .cd-n{font-size:15px;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1.05}
+#eyewipes-offer-page .cd-l{font-size:7.5px;font-weight:700;letter-spacing:.1em;color:var(--muted);margin-top:1px}
+#eyewipes-offer-page .cd-s{font-size:13px;font-weight:800;color:var(--blue-dark);line-height:1;margin-bottom:8px}
+
+/* ---------- above the fold ---------- */
+#eyewipes-offer-page .hero{background:linear-gradient(180deg,#FFFFFF 0%,#FFFFFF 46%,var(--mist) 100%)}
+#eyewipes-offer-page .hero-in{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+
+#eyewipes-offer-page .gal{position:relative;min-width:0}
+#eyewipes-offer-page .railwrap{position:relative;min-width:0}
+#eyewipes-offer-page .rail{display:flex;width:100%;min-width:0;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+#eyewipes-offer-page .rail::-webkit-scrollbar{display:none}
+#eyewipes-offer-page .slide{flex:0 0 100%;max-width:100%;scroll-snap-align:center;aspect-ratio:1/1;position:relative;display:flex;flex-direction:column}
+#eyewipes-offer-page .s-offer{background:#EAF7FD;padding:0;gap:0}
+#eyewipes-offer-page .s-pdp{background:#FFFFFF}
+#eyewipes-offer-page .s-pdp .im{flex:1;min-height:0}
+#eyewipes-offer-page .dots{display:flex;align-items:center;justify-content:center;gap:6px;padding:9px 0 1px}
+#eyewipes-offer-page .dot{width:7px;height:7px;border-radius:999px;background:rgba(71,181,233,.32);border:0;padding:0;cursor:pointer;transition:width 160ms ease,background 160ms ease}
+#eyewipes-offer-page .dot.on{width:22px;background:var(--blue)}
+#eyewipes-offer-page .thumbs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:10px 12px 2px;scroll-snap-type:x proximity;overscroll-behavior-x:contain}
+#eyewipes-offer-page .thumbs::-webkit-scrollbar{display:none}
+#eyewipes-offer-page .thumb{flex:0 0 54px;aspect-ratio:1/1;border-radius:10px;border:2px solid rgba(71,181,233,.3);background:#FFFFFF;padding:0;cursor:pointer;overflow:hidden;scroll-snap-align:center;transition:border-color 140ms ease,box-shadow 140ms ease}
+#eyewipes-offer-page .thumb img{width:100%;height:100%;object-fit:contain;display:block;padding:2px}
+#eyewipes-offer-page .thumb.on{border-color:var(--blue);box-shadow:0 2px 9px rgba(71,181,233,.35)}
+#eyewipes-offer-page .navbtn{display:none}
+#eyewipes-offer-page .g-badges{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:7px;padding:10px 12px;background:#FFFFFF}
+#eyewipes-offer-page .g-badges.off{visibility:hidden}
+#eyewipes-offer-page .g-pill{display:inline-flex;align-items:center;background:var(--teal);color:#FFFFFF;font-size:11.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;line-height:1.2;padding:7px 14px;border-radius:999px;box-shadow:0 5px 14px rgba(19,182,181,.34);text-align:center}
+#eyewipes-offer-page .g-pill2{display:inline-flex;align-items:center;background:#EAF6FD;border:1px solid rgba(71,181,233,.5);color:var(--blue-ink);font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;line-height:1.2;padding:5px 10px;border-radius:999px;text-align:center}
+#eyewipes-offer-page .g-pill2[hidden]{display:none}
+
+/* ---------- buy box ---------- */
+#eyewipes-offer-page .buy{padding:16px 16px 26px;display:flex;flex-direction:column;min-width:0}
+#eyewipes-offer-page .h1{margin:0;font-size:25px;line-height:1.08;letter-spacing:-0.015em;font-weight:800;color:var(--ink);text-transform:uppercase;text-wrap:pretty}
+#eyewipes-offer-page .h1-sub{display:block;margin-top:7px;font-size:14px;line-height:1.4;font-weight:400;letter-spacing:0;text-transform:none;color:var(--ink);text-wrap:pretty}
+#eyewipes-offer-page .bullets{display:flex;flex-direction:column;gap:6px;margin-top:12px}
+#eyewipes-offer-page .bullet{display:flex;align-items:flex-start;gap:9px;font-size:14px;line-height:1.35;color:var(--ink)}
+#eyewipes-offer-page .bullet svg{flex-shrink:0;margin-top:1px}
+#eyewipes-offer-page .pick-h{font-size:12.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:15px}
+
+#eyewipes-offer-page .stock{display:flex;align-items:center;gap:8px;margin-top:11px;font-size:13px;font-weight:600;color:var(--ink)}
+#eyewipes-offer-page .pulse{width:8px;height:8px;border-radius:50%;background:var(--orange);flex-shrink:0;box-shadow:0 0 0 0 rgba(245,146,30,.55);animation:ewof-pulse 1.8s ease-out infinite}
+@keyframes ewof-pulse{0%{box-shadow:0 0 0 0 rgba(245,146,30,.55)}70%{box-shadow:0 0 0 7px rgba(245,146,30,0)}100%{box-shadow:0 0 0 0 rgba(245,146,30,0)}}
+#eyewipes-offer-page .guar-row{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:9px;font-size:12.5px;font-weight:600;color:var(--ink);line-height:1.3;white-space:nowrap}
+#eyewipes-offer-page .pay{display:flex;align-items:center;justify-content:center;margin-top:11px}
+#eyewipes-offer-page .pay-strip{display:block;width:290px;max-width:calc(100% - 24px);height:auto}
+#eyewipes-offer-page .secure{display:flex;align-items:center;justify-content:center;gap:5px;margin-top:7px;font-size:10.5px;font-weight:400;color:#8B9AA6;text-align:center}
+
+/* ---------- information panel ---------- */
+#eyewipes-offer-page .info{width:100%;margin-top:14px;background:#FFFFFF;border:1px solid rgba(71,181,233,.32);border-radius:16px;overflow:hidden}
+#eyewipes-offer-page .info-tabs{display:flex;overflow-x:auto;scrollbar-width:none;background:var(--mist);border-bottom:1px solid rgba(71,181,233,.28)}
+#eyewipes-offer-page .info-tabs::-webkit-scrollbar{display:none}
+#eyewipes-offer-page .info-tab{flex:1 0 auto;background:transparent;border:0;border-bottom:3px solid transparent;padding:11px 13px;font-family:inherit;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;white-space:nowrap}
+#eyewipes-offer-page .info-tab.on{color:var(--blue-ink);border-bottom-color:var(--blue);background:#FFFFFF}
+#eyewipes-offer-page .info-body{padding:14px}
+#eyewipes-offer-page .info-panel[hidden]{display:none}
+#eyewipes-offer-page .info-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+#eyewipes-offer-page .info-li{display:flex;gap:8px;font-size:12.5px;line-height:1.45;color:var(--ink)}
+#eyewipes-offer-page .info-li svg{flex-shrink:0;margin-top:2px}
+#eyewipes-offer-page .info-ing{display:flex;flex-direction:column;gap:5px}
+#eyewipes-offer-page .info-ing-r{font-size:12px;line-height:1.45;color:var(--ink)}
+#eyewipes-offer-page .info-ing-r strong{font-weight:700}
+#eyewipes-offer-page .info-free{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+#eyewipes-offer-page .info-free span{background:var(--mist);border:1px solid rgba(71,181,233,.35);color:var(--blue-ink);font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:999px}
+
+/* ---------- vet review ---------- */
+#eyewipes-offer-page .vet{display:flex;flex-direction:column;gap:7px;background:linear-gradient(180deg,#EAF7FD 0%,#DBEFFB 100%);border:1px solid rgba(71,181,233,.28);border-radius:12px;padding:11px 12px}
+#eyewipes-offer-page .vet-eyebrow{display:flex;align-items:center;gap:5px;font-size:9px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--blue-dark)}
+#eyewipes-offer-page .vet-h{margin:0;font-size:15.5px;line-height:1.15;letter-spacing:-0.015em;font-weight:800;color:var(--ink);text-wrap:pretty}
+#eyewipes-offer-page .vet-grid{display:flex;flex-direction:column;gap:9px}
+#eyewipes-offer-page .vet-row{order:-1;display:flex;align-items:center;gap:10px}
+#eyewipes-offer-page .vet-por{width:58px;height:58px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid #FFFFFF;box-shadow:0 4px 10px rgba(13,35,64,.16);background:#CFE8F5}
+#eyewipes-offer-page .vet-por img{width:100%;height:100%;object-fit:cover;display:block}
+#eyewipes-offer-page .vet-who{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0}
+#eyewipes-offer-page .vet-name{font-size:12px;font-weight:800;color:var(--ink);line-height:1.25}
+#eyewipes-offer-page .vet-role{font-size:10.5px;font-weight:500;color:var(--muted);line-height:1.2}
+#eyewipes-offer-page .vet-badge{display:inline-flex;align-items:center;gap:4px;background:var(--teal);color:#FFFFFF;font-size:8.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:999px}
+#eyewipes-offer-page .vet-p{margin:0;font-size:12px;line-height:1.5;color:var(--ink);text-wrap:pretty}
+
+/* ---------- urgency ---------- */
+#eyewipes-offer-page .urg{display:flex;align-items:center;gap:11px;width:100%;background:var(--red-bg);border:1.5px solid rgba(214,69,69,.45);border-radius:14px;padding:13px 14px;margin-top:12px}
+#eyewipes-offer-page .urg svg{flex-shrink:0}
+#eyewipes-offer-page .urg-t{font-size:13.5px;line-height:1.4;color:#0D2340;text-wrap:pretty}
+#eyewipes-offer-page .urg-t strong{font-weight:800}
+
+/* ---------- marquee ---------- */
+#eyewipes-offer-page .mq{background:var(--blue);overflow:hidden;padding:15px 0}
+#eyewipes-offer-page .mq-track{display:flex;width:max-content;animation:ewof-mq 40s linear infinite;will-change:transform}
+#eyewipes-offer-page .mq-group{display:flex;align-items:center;gap:26px;padding-right:26px;color:#FFFFFF;font-size:13.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;white-space:nowrap}
+#eyewipes-offer-page .mq-item{display:flex;align-items:center;gap:26px}
+@keyframes ewof-mq{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+
+/* ---------- content sections ---------- */
+#eyewipes-offer-page .sec{padding:38px 16px 34px}
+#eyewipes-offer-page .sec-pale{background:var(--pale)}
+#eyewipes-offer-page .col-c{max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center;gap:13px}
+#eyewipes-offer-page .lead{margin:0;font-size:15px;line-height:1.5;color:var(--ink)}
+#eyewipes-offer-page .body-copy{margin:0;max-width:640px;font-size:15px;line-height:1.55;color:var(--ink);text-wrap:pretty}
+#eyewipes-offer-page .proof-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;width:100%;max-width:720px}
+#eyewipes-offer-page .proof-tile{aspect-ratio:1/1;border-radius:14px}
+
+/* ---------- mechanism ---------- */
+#eyewipes-offer-page .mech-grid{display:grid;grid-template-columns:1fr;gap:12px;width:100%;max-width:900px}
+#eyewipes-offer-page .mech-card{display:flex;flex-direction:column;gap:9px;border-radius:16px;padding:13px;text-align:left}
+#eyewipes-offer-page .mech-plain{background:#F3F6F8;border:1px solid rgba(13,35,64,.1)}
+#eyewipes-offer-page .mech-blue{background:var(--pale);border:1.5px solid rgba(71,181,233,.45)}
+#eyewipes-offer-page .mech-label{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;background:#FFFFFF;border:1px solid rgba(13,35,64,.14);color:#5C6B77;font-size:9.5px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;padding:5px 10px;border-radius:999px}
+#eyewipes-offer-page .mech-label-on{border-color:rgba(19,182,181,.55);color:#0E8F8E}
+#eyewipes-offer-page .mech-media{aspect-ratio:16/10;border-radius:12px;background:#FFFFFF}
+#eyewipes-offer-page .mech-h{margin:0;font-size:16px;line-height:1.2;font-weight:800;letter-spacing:-0.01em;color:var(--ink);text-wrap:pretty}
+#eyewipes-offer-page .mech-p{margin:0;font-size:13px;line-height:1.5;color:var(--ink);text-wrap:pretty}
+#eyewipes-offer-page .mech-row{display:grid;grid-template-columns:1fr;gap:9px;width:100%;max-width:900px}
+#eyewipes-offer-page .mech-item{display:flex;align-items:flex-start;gap:10px;background:#FFFFFF;border:1px solid rgba(71,181,233,.28);border-radius:12px;padding:11px 12px;text-align:left}
+#eyewipes-offer-page .mech-ic{width:34px;height:34px;border-radius:50%;background:var(--pale);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+#eyewipes-offer-page .mech-it{display:block;font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--blue-dark);line-height:1.2}
+#eyewipes-offer-page .mech-id{display:block;font-size:12.5px;line-height:1.45;color:var(--ink);margin-top:3px;text-wrap:pretty}
+
+/* ---------- timeline ---------- */
+#eyewipes-offer-page .tl{position:relative;display:grid;grid-template-columns:1fr;gap:22px;width:100%;max-width:960px}
+#eyewipes-offer-page .tl-line{position:absolute;left:48px;top:38px;bottom:38px;width:4px;border-radius:2px;background:linear-gradient(180deg,var(--blue),var(--blue-dark))}
+#eyewipes-offer-page .tl-item{position:relative;display:flex;gap:16px;align-items:flex-start;text-align:left}
+#eyewipes-offer-page .tl-av{width:96px;height:96px;border-radius:50%;overflow:hidden;flex-shrink:0;position:relative;z-index:1;box-shadow:0 4px 12px rgba(71,181,233,.22);background:#FFFFFF}
+#eyewipes-offer-page .tl-av-1{border:4px solid #47B5E9}
+#eyewipes-offer-page .tl-av-2{border:4px solid #3AAAE0}
+#eyewipes-offer-page .tl-av-3{border:4px solid #2E9FD8}
+#eyewipes-offer-page .tl-av img{width:100%;height:100%;object-fit:cover;display:block}
+#eyewipes-offer-page .tl-copy{display:flex;flex-direction:column;gap:7px;align-items:flex-start;padding-top:8px}
+#eyewipes-offer-page .tl-chip{display:inline-block;background:#FFFFFF;color:var(--ink);font-size:12.5px;font-weight:700;padding:5px 14px;border-radius:999px}
+#eyewipes-offer-page .tl-text{margin:0;font-size:14.5px;line-height:1.45;color:var(--ink);text-wrap:pretty}
+
+/* ---------- reviews ---------- */
+#eyewipes-offer-page .rv-grid{display:grid;grid-template-columns:1fr;gap:12px;width:100%;max-width:1060px;text-align:left}
+#eyewipes-offer-page .rv{background:#FFFFFF;border:1px solid rgba(71,181,233,.18);border-radius:16px;padding:17px;display:flex;flex-direction:column;gap:9px;box-shadow:0 6px 16px rgba(71,181,233,.14)}
+#eyewipes-offer-page .rv-stars{color:var(--star);font-size:15px;letter-spacing:.08em}
+#eyewipes-offer-page .rv-quote{margin:0;font-size:14.5px;line-height:1.55;color:var(--ink)}
+#eyewipes-offer-page .rv-by{display:flex;align-items:center;flex-wrap:wrap;gap:6px 9px}
+#eyewipes-offer-page .rv-name{font-size:13.5px;font-weight:700;color:var(--ink)}
+#eyewipes-offer-page .rv-ver{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:var(--blue-dark)}
+#eyewipes-offer-page .rv-prod{font-size:12px;color:var(--muted);font-weight:500}
+
+/* ---------- guarantee + final offer ---------- */
+#eyewipes-offer-page .guar{display:grid;grid-template-columns:1fr;gap:14px;width:100%;max-width:1000px;margin:0 auto;text-align:left}
+#eyewipes-offer-page .guar-card{background:#FFFFFF;border:1px solid rgba(71,181,233,.3);border-radius:18px;box-shadow:0 8px 22px rgba(71,181,233,.18);padding:24px 22px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;justify-content:center}
+#eyewipes-offer-page .guar-t{margin:0;font-size:21px;line-height:1.15;letter-spacing:-0.02em;font-weight:700;color:var(--ink);text-wrap:pretty}
+#eyewipes-offer-page .guar-c{margin:0;font-size:14.5px;line-height:1.55;color:var(--ink);text-wrap:pretty}
+#eyewipes-offer-page .guar-media{aspect-ratio:1098/618;border-radius:18px;box-shadow:0 8px 22px rgba(71,181,233,.18);overflow:hidden}
+#eyewipes-offer-page .guar-media img{width:100%;height:100%;object-fit:cover;display:block}
+#eyewipes-offer-page .offer-wrap{position:relative;margin:34px auto 0;max-width:1000px}
+#eyewipes-offer-page .offer-badge{position:absolute;top:0;left:0;right:0;margin:0 auto;width:fit-content;transform:translateY(-50%);z-index:2;background:var(--teal);color:#FFFFFF;font-size:11.5px;font-weight:800;letter-spacing:.02em;padding:8px 16px;border-radius:999px;text-transform:uppercase;text-align:center;box-shadow:0 6px 16px rgba(19,182,181,.4);max-width:calc(100% - 8px);line-height:1.3}
+#eyewipes-offer-page .offer-card{display:grid;grid-template-columns:1fr;gap:18px;background:#FFFFFF;border-radius:22px;box-shadow:0 14px 40px rgba(71,181,233,.28);padding:40px 18px 24px;text-align:left}
+#eyewipes-offer-page .offer-media{aspect-ratio:1/1;width:100%;background:#F4FBFF;border-radius:16px;padding:22px;display:flex}
+#eyewipes-offer-page .offer-media img{width:100%;height:100%;object-fit:contain;display:block}
+#eyewipes-offer-page .offer-body{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+#eyewipes-offer-page .offer-name{margin:0;font-size:22px;line-height:1.15;letter-spacing:-0.02em;font-weight:700;color:var(--ink);text-wrap:pretty}
+#eyewipes-offer-page .offer-bullets{display:flex;flex-direction:column;gap:11px}
+#eyewipes-offer-page .scarcity{display:flex;align-items:center;gap:10px;width:100%;background:var(--red-bg);border:2px solid var(--red);border-radius:12px;padding:13px 14px;font-size:14px;font-weight:700;line-height:1.4;color:var(--red-ink);text-wrap:pretty}
+#eyewipes-offer-page .scarcity svg{flex-shrink:0}
+#eyewipes-offer-page .trustline{margin-top:11px;font-size:12px;font-weight:600;line-height:1.5;color:var(--ink);text-align:center;text-wrap:pretty}
+#eyewipes-offer-page .routine{display:inline-flex;align-items:center;gap:7px;background:#EAF6FD;border:1.5px solid rgba(71,181,233,.45);color:var(--blue-ink);font-size:12.5px;font-weight:700;line-height:1.2;padding:7px 14px;border-radius:999px;font-family:inherit;cursor:pointer}
+
+/* ---------- faq ---------- */
+#eyewipes-offer-page .faq{width:100%;max-width:860px;text-align:left;display:flex;flex-direction:column}
+#eyewipes-offer-page .faq-row{border-bottom:1px solid rgba(71,181,233,.28);padding:0 10px;transition:background 160ms ease}
+#eyewipes-offer-page .faq-row.on{background:#F4FBFE}
+#eyewipes-offer-page .faq-wrap{overflow:hidden;max-height:0;opacity:0;visibility:hidden;transition:max-height 240ms ease,opacity 180ms ease,visibility 240ms ease}
+#eyewipes-offer-page .faq-wrap.on{max-height:560px;opacity:1;visibility:visible}
+#eyewipes-offer-page .faq-q{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;min-height:56px;background:transparent;border:0;padding:10px 0;font-family:inherit;font-size:14px;font-weight:700;color:var(--ink);text-align:left;cursor:pointer;line-height:1.35}
+#eyewipes-offer-page .faq-ic{width:24px;height:24px;border-radius:50%;background:var(--pale);color:var(--blue-dark);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;line-height:1;transition:transform 220ms ease,background 160ms ease}
+#eyewipes-offer-page .faq-ic.on{transform:rotate(180deg);background:#D6EDFA}
+#eyewipes-offer-page .faq-a{margin:0;padding:0 30px 16px 0;max-width:70ch;font-size:13.5px;line-height:1.6;color:#33404B;text-wrap:pretty}
+
+/* ---------- footer ---------- */
+#eyewipes-offer-page .foot{background:#FFFFFF;border-top:1px solid rgba(71,181,233,.2);padding:16px 16px 20px;display:flex;flex-direction:column;align-items:center;gap:8px}
+#eyewipes-offer-page .foot-logo{width:104px;height:auto;display:block}
+
+/* ---------- sticky ---------- */
+#eyewipes-offer-page .sticky{position:fixed;left:0;right:0;bottom:0;width:100%;max-width:100%;z-index:900;background:#FFFFFF;border-top:2px solid var(--blue);box-shadow:0 -8px 22px rgba(71,181,233,.24);transform:translateY(115%);transition:transform 220ms ease-out;visibility:hidden}
+#eyewipes-offer-page .sticky.show{transform:translateY(0);visibility:visible}
+#eyewipes-offer-page .sticky-in{max-width:1080px;margin:0 auto;padding:9px 12px calc(9px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:10px}
+#eyewipes-offer-page .sticky-r1{display:flex;align-items:center;gap:9px;min-width:0;flex:1}
+#eyewipes-offer-page .sticky-thumb{width:44px;height:44px;border-radius:10px;flex-shrink:0;overflow:hidden;background:var(--mist)}
+#eyewipes-offer-page .sticky-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+#eyewipes-offer-page .sticky-copy{display:flex;flex-direction:column;gap:2px;min-width:0}
+#eyewipes-offer-page .sticky-offer{font-size:12px;font-weight:800;letter-spacing:.01em;text-transform:uppercase;color:var(--ink);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#eyewipes-offer-page .sticky-sub{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--muted);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#eyewipes-offer-page .sticky-price{font-weight:800;color:var(--ink)}
+#eyewipes-offer-page .sticky-rc{display:inline-flex;align-items:center;gap:4px;background:#EAF6FD;border:1px solid rgba(71,181,233,.5);color:var(--blue-ink);font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:999px;flex-shrink:0}
+#eyewipes-offer-page .sticky-rc[hidden]{display:none}
+#eyewipes-offer-page .sticky-in .btn-buy{width:auto;flex-shrink:0;max-width:52%;font-size:12.5px;letter-spacing:.01em;padding:15px 16px;box-shadow:0 6px 16px rgba(71,181,233,.4)}
+#eyewipes-offer-page .sticky-cta-full,#eyewipes-offer-page .sticky-sub-full,#eyewipes-offer-page .sticky-rc-full{display:none}
+
+/* ============================================================
+   KACHING RESTYLE
+   Kaching Bundles renders the real radio inputs, the real
+   subscription card and the real free-gift rows. Everything below
+   restyles those exact nodes to the approved design — no clone,
+   no hidden mirror. Kaching stays the authoritative control.
+   ============================================================ */
+#eyewipes-offer-page .ewof-kaching{margin-top:8px}
+#eyewipes-offer-page .kaching-bundles{margin:0!important;padding:0!important}
+#eyewipes-offer-page .kaching-bundles__block{margin:0!important;padding:0!important;border:0!important;background:transparent!important}
+#eyewipes-offer-page .kaching-bundles__bars{display:flex!important;flex-direction:column!important;gap:12px!important;margin:0!important;padding:0!important;background:transparent!important;border:0!important}
+
+/* one tier card */
+/* Kaching lays the bar out as a flex row; force block so the card, the gift
+   toggle and the injected "discount applied" line stack instead of competing
+   for width. */
+#eyewipes-offer-page .kaching-bundles__bar{display:block!important;position:relative!important;width:100%!important;margin:0!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+#eyewipes-offer-page .kaching-bundles__bar-container{display:flex!important;flex-direction:column!important;gap:9px!important;width:100%!important;background:#FFFFFF!important;border:2px solid rgba(71,181,233,.3)!important;border-radius:16px!important;padding:12px 14px!important;margin:0!important;cursor:pointer;text-align:left;transition:border-color 140ms ease,box-shadow 140ms ease,background 140ms ease;box-shadow:none!important}
+#eyewipes-offer-page .kaching-bundles__bar--selected .kaching-bundles__bar-container{border-color:var(--blue)!important;background:#F7FCFF!important;box-shadow:0 8px 22px rgba(71,181,233,.24)!important}
+
+/* keep the real radio operable but visually replace it with the design dot */
+#eyewipes-offer-page .kaching-bundles__bar > input[type="radio"]{position:absolute!important;width:1px;height:1px;opacity:0;margin:0;pointer-events:none}
+#eyewipes-offer-page .kaching-bundles__bar > input[type="radio"]:focus-visible + .kaching-bundles__bar-container{outline:3px solid var(--blue-dark);outline-offset:3px}
+#eyewipes-offer-page .kaching-bundles__bar-wrapper{margin:0!important;padding:0!important;background:transparent!important;border:0!important}
+#eyewipes-offer-page .kaching-bundles__bar-main{display:flex!important;align-items:center!important;gap:11px!important;margin:0!important;padding:0!important}
+#eyewipes-offer-page .kaching-bundles__bar-main::before{content:"";width:20px;height:20px;border-radius:50%;border:2px solid rgba(71,181,233,.5);background:#FFFFFF;flex-shrink:0;box-shadow:inset 0 0 0 0 var(--blue);transition:box-shadow 140ms ease,border-color 140ms ease}
+#eyewipes-offer-page .kaching-bundles__bar--selected .kaching-bundles__bar-main::before{border-color:var(--blue);box-shadow:inset 0 0 0 5px var(--blue)}
+
+/* Kaching's own per-tier thumbnail is redundant next to the gallery */
+#eyewipes-offer-page .kaching-bundles__bar-image{display:none!important}
+
+#eyewipes-offer-page .kaching-bundles__bar-content{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;flex:1!important;min-width:0!important;margin:0!important;padding:0!important}
+#eyewipes-offer-page .kaching-bundles__bar-content-left{display:flex!important;flex-direction:column!important;gap:2px!important;min-width:0!important;flex:1!important;text-align:left!important}
+#eyewipes-offer-page .kaching-bundles__bar-content-left > *:first-child{font-size:15px!important;font-weight:800!important;color:var(--ink)!important;line-height:1.15!important;letter-spacing:-0.01em!important}
+#eyewipes-offer-page .kaching-bundles__bar-content-left > *:not(:first-child){display:block!important;background:none!important;background-color:transparent!important;border:0!important;border-radius:0!important;padding:0!important;margin:0!important;max-width:100%!important;font-size:12.5px!important;font-weight:500!important;font-style:normal!important;color:var(--muted)!important;line-height:1.25!important}
+#eyewipes-offer-page .kaching-bundles__bar-pricing{display:flex!important;flex-direction:column!important;align-items:flex-end!important;gap:1px!important;flex-shrink:0!important;text-align:right!important}
+#eyewipes-offer-page .kaching-bundles__bar-pricing > *{margin:0!important}
+#eyewipes-offer-page .kaching-bundles__bar-pricing > *:first-child{font-size:17px!important;font-weight:800!important;color:var(--ink)!important;line-height:1.1!important}
+#eyewipes-offer-page .kaching-bundles__bar-pricing > *:not(:first-child){font-size:11.5px!important;font-weight:500!important;color:var(--muted)!important;line-height:1.1!important;white-space:nowrap!important}
+
+/* tier badge — the design's compact pill, overlapping the card edge */
+#eyewipes-offer-page .kaching-bundles__bar-most-popular{position:absolute!important;top:-9px!important;right:12px!important;left:auto!important;z-index:2!important;margin:0!important;padding:0!important;background:transparent!important;border:0!important;width:auto!important;max-width:calc(100% - 24px)!important;overflow:visible!important;filter:none!important}
+#eyewipes-offer-page .kaching-bundles__bar-most-popular::before,
+#eyewipes-offer-page .kaching-bundles__bar-most-popular::after,
+#eyewipes-offer-page .kaching-bundles__bar-most-popular__content::before,
+#eyewipes-offer-page .kaching-bundles__bar-most-popular__content::after{display:none!important;content:none!important}
+#eyewipes-offer-page .kaching-bundles__bar-most-popular__content{display:inline-block!important;background:var(--blue)!important;color:#FFFFFF!important;font-size:10px!important;font-weight:800!important;letter-spacing:.1em!important;text-transform:uppercase!important;padding:4px 11px!important;border-radius:999px!important;box-shadow:0 4px 10px rgba(71,181,233,.4)!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;max-width:100%!important;line-height:1.3!important}
+
+/* free-gift rows -> the design's perks row + expandable gift panel */
+#eyewipes-offer-page .kaching-bundles__free-gift{display:flex!important;align-items:center!important;gap:8px!important;margin:0!important;padding:0!important;background:transparent!important;border:0!important}
+#eyewipes-offer-page .kaching-bundles__free-gift__main{display:flex!important;align-items:center!important;gap:8px!important;flex:1!important;min-width:0!important;margin:0!important;padding:0!important}
+#eyewipes-offer-page .kaching-bundles__free-gift__image{width:22px!important;height:22px!important;object-fit:contain!important;border-radius:6px!important;background:#FFFFFF!important;flex-shrink:0!important}
+#eyewipes-offer-page .kaching-bundles__free-gift__text{font-size:12px!important;font-weight:600!important;color:var(--ink)!important;line-height:1.3!important}
+#eyewipes-offer-page .kaching-bundles__free-gift__full-price{font-size:11px!important;font-weight:600!important;color:var(--muted)!important;text-decoration:line-through!important;flex-shrink:0!important}
+#eyewipes-offer-page .kaching-bundles__free-gift__divider{display:none!important}
+
+/* the shipping perk always shows; product gifts collapse behind the toggle */
+#eyewipes-offer-page .kaching-bundles__bar-container > .kaching-bundles__free-gift:first-of-type{padding-top:8px!important;border-top:1px dashed rgba(71,181,233,.35)!important}
+#eyewipes-offer-page .kaching-bundles__free-gift[data-ewof-gift="product"]{display:none!important}
+#eyewipes-offer-page .kaching-bundles__bar[data-ewof-gifts="open"] .kaching-bundles__free-gift[data-ewof-gift="product"]{display:flex!important}
+
+/* injected gift toggle — progressive enhancement, appended by the theme JS */
+#eyewipes-offer-page .ewof-gift-toggle{display:inline-flex;align-items:center;gap:7px;align-self:flex-start;background:#EAF6FD;border:1px solid rgba(71,181,233,.35);color:var(--blue-ink);font-size:12px;font-weight:700;padding:6px 12px;border-radius:999px;font-family:inherit;cursor:pointer;margin:0}
+#eyewipes-offer-page .ewof-gift-toggle .ewof-caret{transition:transform 140ms ease}
+#eyewipes-offer-page .kaching-bundles__bar[data-ewof-gifts="open"] .ewof-caret{transform:rotate(180deg)}
+
+/* teal "discount applied" line under the selected tier */
+#eyewipes-offer-page .ewof-applied{display:none;align-items:center;gap:8px;margin-top:9px;padding-left:2px;font-size:13.5px;font-weight:700;color:var(--teal);line-height:1.3}
+#eyewipes-offer-page .kaching-bundles__bar--selected .ewof-applied{display:flex}
+
+/* RoutineCare — Kaching's real subscription card, restyled compact */
+#eyewipes-offer-page .kaching-bundles__subscriptions-wrapper{margin:10px 0 0!important;padding:0!important;background:transparent!important;border:0!important}
+#eyewipes-offer-page .kaching-bundles__subscriptions{margin:0!important;padding:0!important;gap:0!important;background:transparent!important;border:0!important}
+#eyewipes-offer-page .kaching-bundles__subscriptions__card{display:flex!important;align-items:center!important;gap:9px!important;width:100%!important;min-height:54px!important;background:var(--mist)!important;border:1px solid rgba(71,181,233,.38)!important;border-radius:11px!important;padding:8px 11px!important;margin:0!important;cursor:pointer;text-align:left;box-shadow:none!important;transition:border-color 140ms ease,background 140ms ease}
+#eyewipes-offer-page .kaching-bundles__subscriptions__card:hover{border-color:var(--blue)!important}
+#eyewipes-offer-page[data-rc="on"] .kaching-bundles__subscriptions__card{border-color:rgba(71,181,233,.7)!important;background:#EAF6FD!important}
+#eyewipes-offer-page .kaching-bundles__subscriptions__checkbox{width:17px!important;height:17px!important;border-radius:5px!important;border:1.5px solid rgba(71,181,233,.6)!important;background:#FFFFFF!important;flex-shrink:0!important;display:flex!important;align-items:center!important;justify-content:center!important;position:relative}
+#eyewipes-offer-page[data-rc="on"] .kaching-bundles__subscriptions__checkbox{background:var(--blue)!important;border-color:var(--blue)!important}
+#eyewipes-offer-page[data-rc="on"] .kaching-bundles__subscriptions__checkbox::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;border:solid #FFFFFF;border-width:0 2.4px 2.4px 0;transform:rotate(45deg)}
+#eyewipes-offer-page .kaching-bundles__subscriptions__title{font-size:12.5px!important;font-weight:700!important;color:var(--ink)!important;line-height:1.2!important;letter-spacing:-0.005em!important}
+#eyewipes-offer-page .kaching-bundles__subscriptions__subtitle{font-size:11px!important;font-weight:500!important;color:var(--muted)!important;line-height:1.3!important;margin-top:1px!important}
+#eyewipes-offer-page .kaching-bundles__subscriptions .kaching-bundles__bar-main::before{display:none!important}
+#eyewipes-offer-page .kaching-bundles__subscriptions .kaching-bundles__bar-main{gap:9px!important}
+/* the RoutineCare free-shipping note, right aligned like the design */
+#eyewipes-offer-page .ewof-rc-note{margin-left:auto;flex-shrink:0;max-width:33%;font-size:9.5px;font-weight:700;color:#0E8F8E;line-height:1.25;text-align:right}
+#eyewipes-offer-page:not([data-rc="on"]) .ewof-rc-note{display:none}
+
+/* Kaching's own sticky ATC must never coexist with the approved sticky bar */
+#eyewipes-offer-page .kaching-bundles__sticky,
+body:has(#eyewipes-offer-page) .kaching-bundles__sticky-atc,
+body:has(#eyewipes-offer-page) .kaching-bundles__sticky,
+body:has(#eyewipes-offer-page) .sticky-atc,
+body:has(#eyewipes-offer-page) product-sticky-atc{display:none!important}
+
+/* ---------- the one authoritative product form ---------- */
+#eyewipes-offer-page .ewof-form-host{margin-top:12px}
+#eyewipes-offer-page .ewof-form-host .product-form__error-message-wrapper{display:flex;align-items:center;gap:8px;margin-bottom:9px;font-size:13px;font-weight:600;color:var(--red-ink);background:var(--red-bg);border:1.5px solid var(--red);border-radius:10px;padding:10px 12px}
+#eyewipes-offer-page .ewof-form-host .product-form__error-message-wrapper[hidden]{display:none}
+#eyewipes-offer-page .ewof-form-host form{margin:0}
+
+/* ============================================================
+   DESKTOP — derived from the mobile layout. 1280px container.
+   ============================================================ */
+@media (min-width:900px){
+  #eyewipes-offer-page{--sticky-h:84px}
+  #eyewipes-offer-page .topbar-in{padding:14px 32px}
+  #eyewipes-offer-page .topbar-l1{font-size:18px}
+  #eyewipes-offer-page .topbar-l2{font-size:13.5px}
+  #eyewipes-offer-page .cd{gap:9px;padding:7px 14px}
+  #eyewipes-offer-page .cd-n{font-size:19px}
+  #eyewipes-offer-page .cd-u{min-width:26px}
+
+  #eyewipes-offer-page .hero-in{grid-template-columns:minmax(0,53fr) minmax(0,47fr);gap:36px;padding:28px 32px 46px;align-items:start}
+  #eyewipes-offer-page .gal{position:sticky;top:20px}
+  #eyewipes-offer-page .slide{border-radius:0 0 20px 20px;overflow:hidden}
+  #eyewipes-offer-page .rail{border-radius:0 0 20px 20px}
+  #eyewipes-offer-page .g-badges{padding:12px 16px;border-radius:20px 20px 0 0}
+  #eyewipes-offer-page .g-pill{font-size:13px;padding:8px 16px}
+  #eyewipes-offer-page .g-pill2{font-size:10.5px}
+  #eyewipes-offer-page .thumbs{padding:12px 0 2px;gap:9px}
+  #eyewipes-offer-page .thumb{flex:0 0 calc((100% - 54px) / 7)}
+  #eyewipes-offer-page .dots{display:none}
+  #eyewipes-offer-page .navbtn{display:flex;position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;border:1px solid rgba(71,181,233,.4);background:rgba(255,255,255,.94);color:var(--blue-dark);align-items:center;justify-content:center;cursor:pointer;z-index:3;padding:0 0 3px;font-family:inherit;font-size:20px;font-weight:700;line-height:1;box-shadow:0 4px 12px rgba(13,35,64,.12);transition:background 140ms ease,opacity 140ms ease}
+  #eyewipes-offer-page .navbtn:hover{background:#FFFFFF}
+  #eyewipes-offer-page .navbtn[disabled]{opacity:.25;cursor:default}
+  #eyewipes-offer-page .navbtn-p{left:12px}
+  #eyewipes-offer-page .navbtn-n{right:12px}
+
+  #eyewipes-offer-page .buy{padding:0}
+  #eyewipes-offer-page .h1{font-size:34px}
+  #eyewipes-offer-page .h1-sub{font-size:16px}
+  #eyewipes-offer-page .bullet{font-size:15px}
+  #eyewipes-offer-page .kaching-bundles__bar-content-left > *:first-child{font-size:16px!important}
+  #eyewipes-offer-page .kaching-bundles__bar-pricing > *:first-child{font-size:19px!important}
+  #eyewipes-offer-page .kaching-bundles__subscriptions__card{min-height:50px!important}
+  #eyewipes-offer-page .kaching-bundles__subscriptions__title{font-size:13px!important}
+  #eyewipes-offer-page .kaching-bundles__subscriptions__subtitle{font-size:11.5px!important}
+  #eyewipes-offer-page .ewof-rc-note{font-size:10.5px}
+  #eyewipes-offer-page .urg-t{font-size:14.5px}
+  #eyewipes-offer-page .info-tabs{overflow-x:visible}
+  #eyewipes-offer-page .info-tab{flex:1 1 0;min-width:0;font-size:12.5px;padding:12px 8px}
+  #eyewipes-offer-page .info-body{padding:16px}
+  #eyewipes-offer-page .info-li{font-size:13.5px}
+  #eyewipes-offer-page .info-ing-r{font-size:13px}
+  #eyewipes-offer-page .trustline{text-align:left}
+  #eyewipes-offer-page .guar-row{font-size:13.5px;margin-top:10px}
+  #eyewipes-offer-page .pay-strip{width:340px}
+  #eyewipes-offer-page .secure{font-size:11px}
+  #eyewipes-offer-page .vet{padding:13px 14px;gap:8px}
+  #eyewipes-offer-page .vet-h{font-size:17.5px}
+  #eyewipes-offer-page .vet-grid{flex-direction:row;align-items:center;gap:14px}
+  #eyewipes-offer-page .vet-p{flex:1;min-width:0;font-size:12.5px}
+  #eyewipes-offer-page .vet-row{order:0;flex-direction:column;align-items:center;text-align:center;width:118px;flex-shrink:0;gap:6px}
+  #eyewipes-offer-page .vet-who{align-items:center;gap:2px}
+  #eyewipes-offer-page .vet-por{width:64px;height:64px}
+
+  #eyewipes-offer-page .sec{padding:56px 32px 48px}
+  #eyewipes-offer-page .h2{font-size:32px}
+  #eyewipes-offer-page .proof-grid{gap:14px}
+  #eyewipes-offer-page .body-copy{font-size:16px}
+  #eyewipes-offer-page .mech-grid{grid-template-columns:1fr 1fr;gap:16px}
+  #eyewipes-offer-page .mech-card{padding:16px;gap:11px}
+  #eyewipes-offer-page .mech-row{grid-template-columns:1fr 1fr 1fr;gap:12px}
+  #eyewipes-offer-page .mech-h{font-size:18px}
+  #eyewipes-offer-page .mech-p{font-size:13.5px}
+
+  #eyewipes-offer-page .tl{grid-template-columns:1fr 1fr 1fr;gap:28px}
+  #eyewipes-offer-page .tl-line{left:16%;right:16%;top:52px;bottom:auto;width:auto;height:4px;background:linear-gradient(90deg,var(--blue),var(--blue-dark))}
+  #eyewipes-offer-page .tl-item{flex-direction:column;align-items:center;text-align:center;gap:14px}
+  #eyewipes-offer-page .tl-av{width:112px;height:112px}
+  #eyewipes-offer-page .tl-copy{align-items:center;padding-top:0}
+
+  #eyewipes-offer-page .rv-grid{grid-template-columns:1fr 1fr 1fr;gap:16px}
+
+  #eyewipes-offer-page .guar{grid-template-columns:44fr 56fr;gap:30px;align-items:center}
+  #eyewipes-offer-page .guar-card{padding:34px 30px}
+  #eyewipes-offer-page .guar-t{font-size:27px}
+  #eyewipes-offer-page .offer-wrap{margin-top:52px}
+  #eyewipes-offer-page .offer-badge{font-size:15px;padding:11px 26px;white-space:nowrap;max-width:none}
+  #eyewipes-offer-page .offer-card{grid-template-columns:48fr 52fr;gap:34px;align-items:center;padding:44px 40px 40px}
+  #eyewipes-offer-page .offer-name{font-size:29px}
+  #eyewipes-offer-page .offer-body .btn-buy{align-self:stretch;width:100%;min-height:58px}
+
+  #eyewipes-offer-page .faq-q{font-size:15.5px;min-height:60px;padding:11px 0}
+  #eyewipes-offer-page .faq-a{font-size:14.5px;padding-bottom:18px}
+
+  #eyewipes-offer-page .sticky-in{justify-content:space-between;gap:18px;padding:11px 32px}
+  #eyewipes-offer-page .sticky-thumb{width:52px;height:52px}
+  #eyewipes-offer-page .sticky-offer{font-size:15px;white-space:normal}
+  #eyewipes-offer-page .sticky-sub{font-size:12.5px}
+  #eyewipes-offer-page .sticky-in .btn-buy{font-size:15px;padding:16px 28px;max-width:none}
+  #eyewipes-offer-page .sticky-cta-full{display:inline}
+  #eyewipes-offer-page .sticky-cta-short{display:none}
+  #eyewipes-offer-page .sticky-sub-full{display:inline}
+  #eyewipes-offer-page .sticky-rc-full{display:inline}
+  #eyewipes-offer-page .sticky-rc-short{display:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  #eyewipes-offer-page .mq-track{animation:none}
+  #eyewipes-offer-page .pulse{animation:none}
+  #eyewipes-offer-page .cta{transition:none}
+  #eyewipes-offer-page .cta:hover,#eyewipes-offer-page .cta:active{transform:none}
+  #eyewipes-offer-page .sticky{transition:none}
+  #eyewipes-offer-page .faq-wrap{transition:none}
+}
