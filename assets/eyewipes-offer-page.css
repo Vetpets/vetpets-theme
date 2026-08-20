@@ -125,9 +125,6 @@ body:has(#eyewipes-offer-page){overflow-x:hidden}
 #eyewipes-offer-page .bullet svg{flex-shrink:0;margin-top:1px}
 #eyewipes-offer-page .pick-h{font-size:12.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:15px}
 
-#eyewipes-offer-page .stock{display:flex;align-items:center;gap:8px;margin-top:11px;font-size:13px;font-weight:600;color:var(--ink)}
-#eyewipes-offer-page .pulse{width:8px;height:8px;border-radius:50%;background:var(--orange);flex-shrink:0;box-shadow:0 0 0 0 rgba(245,146,30,.55);animation:ewof-pulse 1.8s ease-out infinite}
-@keyframes ewof-pulse{0%{box-shadow:0 0 0 0 rgba(245,146,30,.55)}70%{box-shadow:0 0 0 7px rgba(245,146,30,0)}100%{box-shadow:0 0 0 0 rgba(245,146,30,0)}}
 #eyewipes-offer-page .guar-row{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:9px;font-size:12.5px;font-weight:600;color:var(--ink);line-height:1.3;white-space:nowrap}
 #eyewipes-offer-page .pay{display:flex;align-items:center;justify-content:center;margin-top:11px}
 #eyewipes-offer-page .pay-strip{display:block;width:290px;max-width:calc(100% - 24px);height:auto}
@@ -374,7 +371,7 @@ body:has(#eyewipes-offer-page) .sticky-atc,
 body:has(#eyewipes-offer-page) product-sticky-atc{display:none!important}
 
 /* ---------- the one authoritative product form ---------- */
-#eyewipes-offer-page .ewof-form-host{margin-top:12px}
+#eyewipes-offer-page .ewof-form-host{margin-top:14px}
 #eyewipes-offer-page .ewof-form-host .product-form__error-message-wrapper{display:flex;align-items:center;gap:8px;margin-bottom:9px;font-size:13px;font-weight:600;color:var(--red-ink);background:var(--red-bg);border:1.5px solid var(--red);border-radius:10px;padding:10px 12px}
 #eyewipes-offer-page .ewof-form-host .product-form__error-message-wrapper[hidden]{display:none}
 #eyewipes-offer-page .ewof-form-host form{margin:0}
@@ -479,7 +476,6 @@ body:has(#eyewipes-offer-page) product-sticky-atc{display:none!important}
 
 @media (prefers-reduced-motion:reduce){
   #eyewipes-offer-page .mq-track{animation:none}
-  #eyewipes-offer-page .pulse{animation:none}
   #eyewipes-offer-page .cta{transition:none}
   #eyewipes-offer-page .cta:hover,#eyewipes-offer-page .cta:active{transform:none}
   #eyewipes-offer-page .sticky{transition:none}

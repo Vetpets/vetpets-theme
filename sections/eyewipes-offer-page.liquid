@@ -149,11 +149,6 @@
           {%- endfor -%}
         </div>
 
-        <div class="stock">
-          <span class="pulse" aria-hidden="true"></span>
-          <span>{{ section.settings.stock_line }}</span>
-        </div>
-
         {%- comment -%} the ONE authoritative add-to-cart pathway {%- endcomment -%}
         <div class="ewof-form-host">
           {%- if product != blank -%}
@@ -206,6 +201,11 @@
         <div class="secure">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="2.2" fill="#6B7A85"></rect><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="#6B7A85" stroke-width="2.2" stroke-linecap="round"></path></svg>
           <span>All transactions are secure and encrypted</span>
+        </div>
+
+        <div class="urg">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 22 20H2L12 3Z" fill="#D64545"></path><path d="M12 9.5v4.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path><circle cx="12" cy="17" r="1.2" fill="#FFFFFF"></circle></svg>
+          <div class="urg-t">We are selling out more than expected. <strong>Order now before we run out again.</strong></div>
         </div>
 
         {%- comment -%} information panel {%- endcomment -%}
@@ -279,10 +279,6 @@
           </div>
         </div>
 
-        <div class="urg">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 22 20H2L12 3Z" fill="#D64545"></path><path d="M12 9.5v4.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path><circle cx="12" cy="17" r="1.2" fill="#FFFFFF"></circle></svg>
-          <div class="urg-t">We are selling out more than expected. <strong>Order now before we run out again.</strong></div>
-        </div>
       </div>
 
     </div>
@@ -582,7 +578,6 @@
     { "type": "text", "id": "heading", "label": "Heading", "default": "End The Crusty Eyes In 30 Seconds A Day" },
     { "type": "text", "id": "subheading", "label": "Subheading", "default": "Textured antibacterial wipes for dogs with gunk, discharge & crusty eyes" },
     { "type": "text", "id": "picker_heading", "label": "Plan picker heading", "default": "Choose Your Plan" },
-    { "type": "text", "id": "stock_line", "label": "Stock line", "default": "Selling fast — limited stock at this price" },
     { "type": "text", "id": "rc_note", "label": "RoutineCare note", "default": "Free shipping on every order" },
     { "type": "header", "content": "Kaching deal IDs" },
     {

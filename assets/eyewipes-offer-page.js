@@ -265,11 +265,21 @@
     }
   }
 
-  /* read Kaching + the authoritative form, then repaint presentation */
+  /* read Kaching + the authoritative form, then repaint presentation.
+     Guarded by a cheap state signature so repeated observer hits during a
+     cart request do no DOM work. */
+  var lastSig = null;
   function sync() {
+    var barNow = selectedBar();
+    var sig = (barNow ? barNow.getAttribute('data-deal-bar-id') : '-') + '|' +
+      (fieldValue('selling_plan') || '-') + '|' + (fieldValue('quantity') || '-') + '|' +
+      (barNow ? barNow.querySelectorAll('.kaching-bundles__free-gift').length : 0);
+    if (sig === lastSig) return;
+    lastSig = sig;
+
     decorateGifts();
     decorateStatics();
-    var bar = selectedBar();
+    var bar = barNow;
     var tier = tierForBar(bar);
     var plan = fieldValue('selling_plan');
     var rcOn = !!plan;
@@ -342,7 +352,13 @@
   // Kaching's radios and its subscription card are the real controls; listening
   // in the capture phase means we see them whatever Kaching does downstream.
   root.addEventListener('change', settleSync, true);
-  root.addEventListener('click', settleSync, true);
+  root.addEventListener('click', function (e) {
+    // An add-to-cart click cannot change Kaching's selection, so skip the
+    // settle ladder entirely — it would otherwise run four full DOM passes
+    // while the cart request and drawer render are competing for the main thread.
+    if (e.target.closest && e.target.closest('[data-ewof-submit], [name="add"]')) return;
+    settleSync();
+  }, true);
   document.addEventListener('visibilitychange', queueSync);
   settleSync();
   window.addEventListener('load', settleSync);
@@ -379,20 +395,20 @@
     if (typeof f.requestSubmit === 'function') f.requestSubmit(b);
     else b.click();
 
-    // release once the theme's drawer opens, or on a safety timeout
+    watchForDrawer();
+  }
+
+  // Release the CTAs the moment the theme's own drawer opens — no fixed delay.
+  function watchForDrawer() {
     var drawer = document.querySelector('cart-drawer');
-    if (drawer) {
-      var obs = new MutationObserver(function () {
-        if (drawer.classList.contains('active') || drawer.classList.contains('is-open')) {
-          obs.disconnect();
-          releaseButtons();
-        }
-      });
-      obs.observe(drawer, { attributes: true, attributeFilter: ['class'] });
-      setTimeout(function () { obs.disconnect(); releaseButtons(); }, 8000);
-    } else {
-      setTimeout(releaseButtons, 4000);
-    }
+    if (!drawer) { setTimeout(releaseButtons, 4000); return; }
+    var done = false;
+    var finish = function () { if (done) return; done = true; obs.disconnect(); releaseButtons(); };
+    var obs = new MutationObserver(function () {
+      if (drawer.classList.contains('active') || drawer.classList.contains('is-open')) finish();
+    });
+    obs.observe(drawer, { attributes: true, attributeFilter: ['class'] });
+    setTimeout(finish, 8000);
   }
 
   // the sticky and final CTAs are proxies for the one real form
@@ -407,11 +423,14 @@
   // the real submit button is inside the form; just guard double taps
   var realBtn = submitBtn();
   if (realBtn) {
-    realBtn.addEventListener('click', function () {
-      if (pending) return;
+    realBtn.addEventListener('click', function (e) {
+      if (pending) { e.preventDefault(); e.stopImmediatePropagation(); return; }
       pending = true;
-      $$('[data-ewof-submit]').forEach(function (x) { if (x !== realBtn) x.disabled = true; });
-      setTimeout(releaseButtons, 4000);
+      // Disabling on a later task so this click still produces the submit event.
+      setTimeout(function () {
+        $$('[data-ewof-submit]').forEach(function (x) { x.disabled = true; x.setAttribute('aria-busy', 'true'); });
+      }, 0);
+      watchForDrawer();
     });
   }
 
