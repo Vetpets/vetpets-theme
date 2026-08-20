@@ -103,12 +103,12 @@
 
         <div class="thumbs" role="tablist" aria-label="Gallery thumbnails">
           <button type="button" class="thumb on" aria-label="Selected kit bundle" aria-selected="true">
-            <img src="{{ 'ewof-eyewipes-offer-approved.webp' | asset_url }}" data-ewof-tier-thumb alt="">
+            <img src="{{ 'ewof-eyewipes-offer-approved.webp' | asset_url }}" data-ewof-tier-thumb width="900" height="900" alt="">
           </button>
           {%- for s in pdp_slides -%}
             {%- assign parts = s | split: '|' -%}
             <button type="button" class="thumb" aria-label="{{ parts[1] }}" aria-selected="false">
-              <img src="{{ parts[0] | asset_url }}" loading="lazy" alt="">
+              <img src="{{ parts[0] | asset_url }}" width="823" height="823" loading="lazy" alt="">
             </button>
           {%- endfor -%}
         </div>
@@ -501,7 +501,7 @@
   <div class="sticky ewof-sticky" role="region" aria-label="EyeWipes offer">
     <div class="sticky-in">
       <div class="sticky-r1">
-        <div class="sticky-thumb"><img src="{{ 'ewof-eyewipes-offer-approved.webp' | asset_url }}" data-ewof-tier-thumb loading="lazy" alt=""></div>
+        <div class="sticky-thumb"><img src="{{ 'ewof-eyewipes-offer-approved.webp' | asset_url }}" data-ewof-tier-thumb width="900" height="900" loading="lazy" alt=""></div>
         <div class="sticky-copy">
           <div class="sticky-offer">Build The Habit Kit</div>
           <div class="sticky-sub">
