@@ -256,17 +256,17 @@
       bar.appendChild(d);
     });
 
-    // The note belongs under the subtitle, inside Kaching's text column — as a
-    // sibling of the card it became a flex item and floated to the bottom-right.
-    var col = document.querySelector('#eyewipes-offer-page .kaching-bundles__subscriptions .kaching-bundles__bar-content-left');
-    if (col && CFG.rc_note) {
-      var stale = document.querySelector('#eyewipes-offer-page .kaching-bundles__subscriptions__card > .ewof-rc-note');
-      if (stale) stale.remove();
-      if (!col.querySelector('.ewof-rc-note')) {
+    // The note is an inline continuation of Kaching's own subtitle, so the card
+    // keeps two rows instead of three. Any copy left in an older position by a
+    // previous render is removed first.
+    var sub = document.querySelector('#eyewipes-offer-page .kaching-bundles__subscriptions__subtitle');
+    if (CFG.rc_note) {
+      $$('.ewof-rc-note').forEach(function (n) { if (!sub || n.parentElement !== sub) n.remove(); });
+      if (sub && !sub.querySelector('.ewof-rc-note')) {
         var n = document.createElement('span');
         n.className = 'ewof-rc-note';
-        n.textContent = CFG.rc_note;
-        col.appendChild(n);
+        n.textContent = ' \u00b7 ' + CFG.rc_note;
+        sub.appendChild(n);
       }
     }
   }
@@ -279,7 +279,8 @@
     var barNow = selectedBar();
     var sig = (barNow ? barNow.getAttribute('data-deal-bar-id') : '-') + '|' +
       (fieldValue('selling_plan') || '-') + '|' + (fieldValue('quantity') || '-') + '|' +
-      (barNow ? barNow.querySelectorAll('.kaching-bundles__free-gift').length : 0);
+      (barNow ? barNow.querySelectorAll('.kaching-bundles__free-gift').length : 0) + '|' +
+      (document.querySelector('#eyewipes-offer-page .ewof-rc-note') ? '1' : '0');
     if (sig === lastSig) return;
     lastSig = sig;
 
@@ -447,6 +448,25 @@
   var sticky = $('.ewof-sticky');
   var anchor = $('.ewof-form-host');
   var footer = $('.foot');
+
+  /* Shopify's theme-preview bar is fixed to the bottom of the viewport and
+     renders in the browser top layer, so no z-index can sit above it. Measure
+     it and lift the sticky bar clear. It does not exist on the live
+     storefront, where this resolves to 0px. */
+  function syncPreviewBarOffset() {
+    var pb = document.querySelector('#PBarNextFrameWrapper, #preview-bar-iframe, .shopify-preview-bar');
+    var h = 0;
+    if (pb) {
+      var r = pb.getBoundingClientRect();
+      if (r.height > 0 && r.bottom >= window.innerHeight - 4) h = Math.ceil(r.height);
+    }
+    root.style.setProperty('--ewof-pbar', h + 'px');
+  }
+  syncPreviewBarOffset();
+  window.addEventListener('resize', syncPreviewBarOffset, { passive: true });
+  window.addEventListener('load', syncPreviewBarOffset);
+  setTimeout(syncPreviewBarOffset, 1500);
+  setTimeout(syncPreviewBarOffset, 4000);
 
   function paintSticky() {
     if (!sticky || !anchor) return;
