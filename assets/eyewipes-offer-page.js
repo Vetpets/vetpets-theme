@@ -318,29 +318,34 @@
 
   }
 
-  var syncQueued = false;
+  /* Kaching re-renders its block and rewrites the form inputs asynchronously
+     after every interaction, and it does not emit a public event. We therefore
+     re-read its state on a short settle ladder after any signal, rather than
+     polling continuously: the ladder stops on its own and there is no interval. */
+  var syncTimer = null;
   function queueSync() {
-    if (syncQueued) return;
-    syncQueued = true;
-    requestAnimationFrame(function () { syncQueued = false; sync(); });
+    if (syncTimer) return;
+    syncTimer = setTimeout(function () { syncTimer = null; sync(); }, 0);
+  }
+  var ladder = [];
+  function settleSync() {
+    ladder.forEach(clearTimeout);
+    ladder = [80, 350, 900, 1800].map(function (d) { return setTimeout(sync, d); });
+    queueSync();
   }
 
-  // event driven: Kaching re-renders its block and rewrites the form inputs
-  var host = $('.ewof-kaching');
-  if (host) {
-    new MutationObserver(queueSync).observe(host, {
-      subtree: true, childList: true, attributes: true, attributeFilter: ['class', 'data-deal-bar-id']
-    });
-    host.addEventListener('change', queueSync);
-    host.addEventListener('click', function () { setTimeout(queueSync, 60); });
-  }
-  var fh = $('.ewof-form-host');
-  if (fh) {
-    new MutationObserver(queueSync).observe(fh, {
-      subtree: true, childList: true, attributes: true, attributeFilter: ['value', 'name']
-    });
-  }
-  queueSync();
+  var mo = new MutationObserver(queueSync);
+  mo.observe(root, {
+    subtree: true, childList: true, attributes: true,
+    attributeFilter: ['class', 'data-deal-bar-id', 'value']
+  });
+  // Kaching's radios and its subscription card are the real controls; listening
+  // in the capture phase means we see them whatever Kaching does downstream.
+  root.addEventListener('change', settleSync, true);
+  root.addEventListener('click', settleSync, true);
+  document.addEventListener('visibilitychange', queueSync);
+  settleSync();
+  window.addEventListener('load', settleSync);
 
   /* ---------------------------------------------------------------
      6. one authoritative add-to-cart path
