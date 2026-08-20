@@ -256,12 +256,18 @@
       bar.appendChild(d);
     });
 
-    var card = document.querySelector('#eyewipes-offer-page .kaching-bundles__subscriptions__card');
-    if (card && !card.querySelector('.ewof-rc-note') && CFG.rc_note) {
-      var n = document.createElement('span');
-      n.className = 'ewof-rc-note';
-      n.textContent = CFG.rc_note;
-      card.appendChild(n);
+    // The note belongs under the subtitle, inside Kaching's text column — as a
+    // sibling of the card it became a flex item and floated to the bottom-right.
+    var col = document.querySelector('#eyewipes-offer-page .kaching-bundles__subscriptions .kaching-bundles__bar-content-left');
+    if (col && CFG.rc_note) {
+      var stale = document.querySelector('#eyewipes-offer-page .kaching-bundles__subscriptions__card > .ewof-rc-note');
+      if (stale) stale.remove();
+      if (!col.querySelector('.ewof-rc-note')) {
+        var n = document.createElement('span');
+        n.className = 'ewof-rc-note';
+        n.textContent = CFG.rc_note;
+        col.appendChild(n);
+      }
     }
   }
 
