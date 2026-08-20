@@ -1,0 +1,611 @@
+{%- comment -%}
+  EyeWipes offer page
+  ===================
+  Faithful Shopify implementation of the approved Claude Design page
+  "EyeWipes Offer Page v1" (project: VetPets EyeWipes Offer Page).
+
+  Rendered only through templates/product.eyewipes-offer-page.json, assigned to
+  the existing live EyeWipes product. The canonical product URL is unchanged.
+
+  COMMERCE OWNERSHIP
+  ------------------
+  Kaching Bundles is the source of truth for tier, quantity, deal, selling plan,
+  bundle properties and free gifts. Its app block is rendered below inside the
+  purchase module and its real controls stay authoritative — assets/eyewipes-offer-page.css
+  restyles those exact nodes to the approved design rather than cloning them.
+
+  There is exactly ONE add-to-cart pathway: the theme's <product-form> rendered
+  in `.ewof-form-host`. The sticky bar and the final offer CTA are proxies that
+  submit that same form; they carry no quantity, gift or selling-plan logic.
+
+  Everything is scoped under #eyewipes-offer-page.
+{%- endcomment -%}
+
+{%- liquid
+  assign v = product.selected_or_first_available_variant
+  assign product_form_id = 'ewof-product-form-' | append: section.id
+
+  # countdown seed from shop time — the JS re-seeds against the visitor clock
+  assign now_h = 'now' | date: '%H' | times: 1
+  assign now_m = 'now' | date: '%M' | times: 1
+  assign now_s = 'now' | date: '%S' | times: 1
+  assign hh = now_h | times: 3600
+  assign mm = now_m | times: 60
+  assign elapsed = hh | plus: mm | plus: now_s
+  assign cd_left = 86400 | minus: elapsed
+-%}
+
+{{ 'eyewipes-offer-page.css' | asset_url | stylesheet_tag }}
+
+<link rel="preload" as="image" href="{{ 'ewof-tier-2jars.webp' | asset_url }}">
+<link rel="preload" as="image" href="{{ 'ewof-eyewipes-offer-approved.webp' | asset_url }}">
+<link rel="preload" as="image" href="{{ 'ewof-tier-6jars.webp' | asset_url }}">
+
+<div id="eyewipes-offer-page" data-cd-seconds="{{ cd_left }}" data-rc="off">
+
+  {%- comment -%} ---------- top offer bar ---------- {%- endcomment -%}
+  <div class="topbar">
+    <div class="topbar-in">
+      <div>
+        <div class="topbar-l1">{{ section.settings.topbar_line1 }}</div>
+        <div class="topbar-l2">{{ section.settings.topbar_line2 }}</div>
+      </div>
+      <div class="cd" role="timer" aria-label="Offer ends in">
+        <div class="cd-u"><div class="cd-n" id="ewof-cd-h">11</div><div class="cd-l">HRS</div></div>
+        <div class="cd-s" aria-hidden="true">:</div>
+        <div class="cd-u"><div class="cd-n" id="ewof-cd-m">32</div><div class="cd-l">MIN</div></div>
+        <div class="cd-s" aria-hidden="true">:</div>
+        <div class="cd-u"><div class="cd-n" id="ewof-cd-s">45</div><div class="cd-l">SEC</div></div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ---------- SECTION 1 — above the fold ---------- {%- endcomment -%}
+  <section class="hero" id="ewof-hero">
+    <div class="hero-in">
+
+      {%- comment -%} gallery: tier-driven slide 1 + approved PDP squares {%- endcomment -%}
+      <div class="gal">
+        <div class="g-badges" aria-live="polite">
+          <span class="g-pill">Buy 2, Get 2 Free + 3 Free Gifts</span>
+          <span class="g-pill2">Limited-Time Offer</span>
+        </div>
+        <div class="railwrap">
+          <div class="rail" id="ewof-rail" tabindex="0" role="group" aria-label="EyeWipes gallery — use left and right arrow keys">
+            <div class="slide s-offer">
+              <img
+                class="im im-fit"
+                id="ewof-tier-img"
+                src="{{ 'ewof-eyewipes-offer-approved.webp' | asset_url }}"
+                width="900"
+                height="900"
+                fetchpriority="high"
+                decoding="async"
+                alt="Four jars of VetPets EyeWipes with the Tear Stain Comb, the Bright Eyes Routine Tracker and the Bright Eyes in 30 Days e-book">
+            </div>
+            {%- assign pdp_slides = 'ewof-pdp-2-daily-care.webp|EyeWipes daily eye-cleaning benefits for dogs;ewof-pdp-3-buildup-returns.webp|Why daily eye buildup and tear stains return;ewof-pdp-4-textured-pad.webp|Close-up of the textured EyeWipes pad;ewof-pdp-5-before-after.webp|EyeWipes daily routine before-and-after presentation;ewof-pdp-6-three-steps.webp|How to use EyeWipes in three steps;ewof-pdp-7-comparison.webp|EyeWipes product-feature comparison;ewof-pdp-8-ingredients.webp|EyeWipes gentle ingredient overview;ewof-pdp-9-guarantee.webp|100-Day Money-Back Guarantee — try EyeWipes risk-free' | split: ';' -%}
+            {%- for s in pdp_slides -%}
+              {%- assign parts = s | split: '|' -%}
+              <div class="slide s-pdp">
+                <img class="im im-fit" src="{{ parts[0] | asset_url }}" width="823" height="823" loading="lazy" decoding="async" alt="{{ parts[1] }}">
+              </div>
+            {%- endfor -%}
+          </div>
+          <button type="button" class="navbtn navbtn-p" aria-label="Previous image">&lsaquo;</button>
+          <button type="button" class="navbtn navbtn-n" aria-label="Next image">&rsaquo;</button>
+        </div>
+
+        <div class="dots" role="tablist" aria-label="Gallery slides">
+          {%- for i in (1..9) -%}
+            <button type="button" class="dot{% if forloop.first %} on{% endif %}" aria-label="Slide {{ i }}"></button>
+          {%- endfor -%}
+        </div>
+
+        <div class="thumbs" role="tablist" aria-label="Gallery thumbnails">
+          <button type="button" class="thumb on" aria-label="Selected kit bundle" aria-selected="true">
+            <img src="{{ 'ewof-eyewipes-offer-approved.webp' | asset_url }}" data-ewof-tier-thumb alt="">
+          </button>
+          {%- for s in pdp_slides -%}
+            {%- assign parts = s | split: '|' -%}
+            <button type="button" class="thumb" aria-label="{{ parts[1] }}" aria-selected="false">
+              <img src="{{ parts[0] | asset_url }}" loading="lazy" alt="">
+            </button>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      {%- comment -%} purchase module {%- endcomment -%}
+      <div class="buy">
+        <h1 class="h1">{{ section.settings.heading }}
+          <span class="h1-sub">{{ section.settings.subheading }}</span>
+        </h1>
+
+        <div class="rating" style="margin-top:11px">
+          <span class="stars" role="img" aria-label="Rated 4.8 out of 5">★★★★★</span>
+          <span>4.8/5 · Trusted by 45,000+ Dog Owners</span>
+        </div>
+
+        <div class="bullets">
+          {%- assign bullets = 'Textured surface lifts the buildup off the skin|Aloe + chamomile stop it growing back overnight|30 seconds a day — no rinsing, no mixing, no fight' | split: '|' -%}
+          {%- for b in bullets -%}
+            <div class="bullet">
+              {% render 'ewof-check', size: 19 %}
+              <span>{{ b }}</span>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <div class="pick-h">{{ section.settings.picker_heading }}</div>
+
+        {%- comment -%}
+          Kaching Bundles app block — the real tier radios, the real RoutineCare
+          subscription card and the real free-gift rows. Restyled by CSS, never cloned.
+        {%- endcomment -%}
+        <div class="ewof-kaching">
+          {%- for block in section.blocks -%}
+            {%- if block.type == '@app' -%}
+              {% render block %}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        <div class="stock">
+          <span class="pulse" aria-hidden="true"></span>
+          <span>{{ section.settings.stock_line }}</span>
+        </div>
+
+        {%- comment -%} the ONE authoritative add-to-cart pathway {%- endcomment -%}
+        <div class="ewof-form-host">
+          {%- if product != blank -%}
+            <product-form
+              id="ProductForm-{{ section.id }}"
+              class="product-form main-product-form"
+              data-section="{{ section.id }}"
+              data-main="true"
+            >
+              <div class="product-form__error-message-wrapper" role="alert" hidden>
+                <svg aria-hidden="true" focusable="false" class="icon icon-error" viewBox="0 0 13 13" width="13" height="13">
+                  <circle cx="6.5" cy="6.5" r="5.5" fill="#EB001B" stroke="#EB001B" stroke-width="0.7"></circle>
+                  <path d="M5.87413 3.52832L5.97439 7.57216H7.02713L7.12739 3.52832H5.87413ZM6.50076 9.66091C6.88091 9.66091 7.18169 9.37267 7.18169 9.00504C7.18169 8.63742 6.88091 8.34917 6.50076 8.34917C6.12061 8.34917 5.81982 8.63742 5.81982 9.00504C5.81982 9.37267 6.12061 9.66091 6.50076 9.66091Z" fill="white"></path>
+                </svg>
+                <span class="product-form__error-message"></span>
+              </div>
+
+              {%- form 'product',
+                product,
+                id: product_form_id,
+                class: 'form',
+                novalidate: 'novalidate',
+                data-type: 'add-to-cart-form'
+              -%}
+                <input type="hidden" name="id" value="{{ v.id }}" class="product-variant-id">
+                <button
+                  id="ProductSubmitButton-{{ section.id }}"
+                  type="submit"
+                  name="add"
+                  data-ewof-submit
+                  class="atc-button product-form__submit main-product-atc cta btn-buy"
+                  {% if v.available == false %}disabled{% endif %}
+                >
+                  <span><span data-ewof-cta-label>Add To Cart — Buy 2, Get 2 Free</span> <span aria-hidden="true">→</span></span>
+                </button>
+              {%- endform -%}
+            </product-form>
+          {%- endif -%}
+        </div>
+
+        <div class="guar-row">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#13B6B5"></circle><path d="m7.4 12.3 3 3 6.2-6.6" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <span>100-Day Money-Back Guarantee</span>
+        </div>
+
+        <div class="pay">
+          <img class="pay-strip" src="{{ 'ewof-payment-badges.webp' | asset_url }}" width="700" height="64" loading="lazy" decoding="async" alt="Accepted payment methods: Mastercard, Visa, PayPal, American Express, Discover and Apple Pay">
+        </div>
+
+        <div class="secure">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="2.2" fill="#6B7A85"></rect><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="#6B7A85" stroke-width="2.2" stroke-linecap="round"></path></svg>
+          <span>All transactions are secure and encrypted</span>
+        </div>
+
+        {%- comment -%} information panel {%- endcomment -%}
+        <div class="info">
+          <div class="info-tabs" role="tablist" aria-label="About EyeWipes">
+            <button type="button" class="info-tab on" role="tab" aria-selected="true">Vet Reviewed</button>
+            <button type="button" class="info-tab" role="tab" aria-selected="false">Ingredients</button>
+            <button type="button" class="info-tab" role="tab" aria-selected="false">How To Use</button>
+            <button type="button" class="info-tab" role="tab" aria-selected="false">Benefits</button>
+          </div>
+          <div class="info-body">
+            <div class="info-panel" role="tabpanel">
+              <div class="vet">
+                <div class="vet-eyebrow">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.6 4.8 5.4v6.1c0 4.5 3 8.6 7.2 9.9 4.2-1.3 7.2-5.4 7.2-9.9V5.4L12 2.6Z" fill="#1F7FB8"></path><path d="m8.6 12.2 2.6 2.6 4.4-4.7" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  Veterinarian Reviewed
+                </div>
+                <h3 class="vet-h">A Practical Approach to Daily Eye Care</h3>
+                <div class="vet-grid">
+                  <p class="vet-p">EyeWipes gives pet owners a simple, controlled way to remove the buildup that collects around the eyes each day. The textured pads help lift residue from the fur and skin without rinsing or complicated grooming, making the routine easy to repeat consistently.</p>
+                  <div class="vet-row">
+                    <div class="vet-por"><img src="{{ 'ewof-vet-dr-michael-thompson.webp' | asset_url }}" width="200" height="200" loading="lazy" alt="Dr. Michael Thompson, veterinarian at VetPets"></div>
+                    <div class="vet-who">
+                      <div class="vet-name">Reviewed by Dr. Michael Thompson</div>
+                      <div class="vet-role">Veterinarian · VetPets</div>
+                      <span class="vet-badge">
+                        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.6 4.8 5.4v6.1c0 4.5 3 8.6 7.2 9.9 4.2-1.3 7.2-5.4 7.2-9.9V5.4L12 2.6Z" fill="#FFFFFF"></path><path d="m8.6 12.2 2.6 2.6 4.4-4.7" stroke="#13B6B5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        Vet Reviewed
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="info-panel" role="tabpanel" hidden>
+              <div class="info-ing">
+                <div class="info-ing-r"><strong>EDI-purified water</strong> — base solution</div>
+                <div class="info-ing-r"><strong>Aloe Vera (Aloe Barbadensis)</strong> — soothes and moisturizes the skin around the eyes</div>
+                <div class="info-ing-r"><strong>Chamomile (Chamomilla Recutita)</strong> — known for its mild, anti-inflammatory properties</div>
+                <div class="info-ing-r"><strong>Glycerin</strong> — binds moisture and protects the skin</div>
+                <div class="info-ing-r"><strong>Ethylhexylglycerin</strong> — gentle preservation and antibacterial effect</div>
+                <div class="info-ing-r"><strong>Decyl Glucoside</strong> — mild cleansing surfactant from plants</div>
+                <div class="info-ing-r"><strong>Polyhexamethylene Biguanide Hydrochloride</strong> — antibacterial, counteracts irritation</div>
+                <div class="info-ing-r"><strong>Vitamin E</strong> — strengthens and protects sensitive skin</div>
+              </div>
+              <div class="info-free">
+                <span>pH-balanced &amp; fragrance-free</span>
+                <span>Cruelty-free</span>
+                <span>No alcohol, parabens or sulfates</span>
+              </div>
+            </div>
+
+            <div class="info-panel" role="tabpanel" hidden>
+              <ul class="info-list">
+                {%- assign howto = 'Once daily is ideal for most dogs — one wipe per eye.|Wipe gently from the inner corner outward.|No rinsing needed — use the wipe, then discard it.|Heavy discharge or allergy season: twice daily is fine. Consistency matters more than frequency.' | split: '|' -%}
+                {%- for h in howto -%}
+                  <li class="info-li">{% render 'ewof-check', size: 16 %}<span>{{ h }}</span></li>
+                {%- endfor -%}
+              </ul>
+            </div>
+
+            <div class="info-panel" role="tabpanel" hidden>
+              <ul class="info-list">
+                {%- assign benefits = 'Textured surface lifts away buildup instead of moving it around.|Antibacterial ingredients help prevent regrowth between wipes.|Safe for sensitive eyes and puppies — pH-balanced and hypoallergenic.|A 30-second routine you can actually keep up with.|Safe for cats as well as dogs.' | split: '|' -%}
+                {%- for b in benefits -%}
+                  <li class="info-li">{% render 'ewof-check', size: 16 %}<span>{{ b }}</span></li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="urg">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 22 20H2L12 3Z" fill="#D64545"></path><path d="M12 9.5v4.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path><circle cx="12" cy="17" r="1.2" fill="#FFFFFF"></circle></svg>
+          <div class="urg-t">We are selling out more than expected. <strong>Order now before we run out again.</strong></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  {%- comment -%} ---------- SECTION 2 — marquee ---------- {%- endcomment -%}
+  {%- assign claims = '45,000+ Happy Dog Owners|100-Day Money-Back Guarantee|Hypoallergenic &amp; Fragrance-Free|Works In 30 Seconds A Day' | split: '|' -%}
+  <div class="mq">
+    <ul class="ewof-sr">
+      {%- for c in claims -%}<li>{{ c }}</li>{%- endfor -%}
+    </ul>
+    <div class="mq-track">
+      {%- for group in (1..2) -%}
+        <div class="mq-group" aria-hidden="true">
+          {%- for copy in (1..2) -%}
+            {%- for c in claims -%}
+              <span class="mq-item"><span>{{ c }}</span>{% render 'ewof-paw' %}</span>
+            {%- endfor -%}
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {%- comment -%} ---------- SECTION 3 — proof ---------- {%- endcomment -%}
+  <section class="sec">
+    <div class="col-c">
+      <div class="eyebrow eyebrow-red">See it for yourself</div>
+      <h2 class="h2">The proof is <span class="accent">on the pad</span></h2>
+      <p class="lead">One pass around the eye area. Then look at the pad.</p>
+      <div class="proof-grid">
+        {%- for i in (1..3) -%}
+          {%- assign pad_asset = 'ewpl-proof-pad-' | append: i | append: '.webp' -%}
+          <div class="imw proof-tile">
+            <img class="im" src="{{ pad_asset | asset_url }}" width="700" height="700" loading="lazy" decoding="async" alt="A used EyeWipes pad, brown with the build-up lifted off a dog's eye area">
+          </div>
+        {%- endfor -%}
+      </div>
+      <p class="body-copy">That brown is what was sitting on your dog's skin. It's what baby wipes and home remedies slide straight over — and it's why the crust keeps coming back every morning.</p>
+      <a class="cta btn-outline" href="#ewof-hero">Get Buy 2, Get 2 Free ↑</a>
+    </div>
+  </section>
+
+  {%- comment -%} ---------- SECTION 3B — why texture matters ---------- {%- endcomment -%}
+  <section class="sec" id="ewof-mech">
+    <div class="col-c">
+      <div class="eyebrow" style="white-space:nowrap">Why texture matters</div>
+      <h2 class="h2">Why <span class="accent">textured wipes</span> lift what smooth wipes leave behind</h2>
+      <p class="lead">A smooth wipe glides across the surface. EyeWipes' raised texture creates more contact points to catch and lift dried buildup from the fur around the eye.</p>
+
+      <div class="mech-grid">
+        <div class="mech-card mech-plain">
+          <span class="mech-label">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="#8494A0" stroke-width="2"></circle><path d="m8.6 8.6 6.8 6.8m0-6.8-6.8 6.8" stroke="#8494A0" stroke-width="2" stroke-linecap="round"></path></svg>
+            Ordinary smooth wipe
+          </span>
+          <div class="imw mech-media"><img class="im" src="{{ 'ewof-mech-smooth-wipe.webp' | asset_url }}" width="900" height="600" loading="lazy" decoding="async" alt="Macro photograph of a single smooth circular wipe with a little dried residue left beside it"></div>
+          <h3 class="mech-h">Slides over stubborn buildup</h3>
+          <p class="mech-p">A flat surface makes limited contact with dried residue, allowing buildup to remain caught between the hairs.</p>
+        </div>
+
+        <div class="mech-card mech-blue">
+          <span class="mech-label mech-label-on">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#13B6B5"></circle><path d="m7.4 12.3 3 3 6.2-6.6" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            Textured EyeWipes pad
+          </span>
+          <div class="imw mech-media"><img class="im" src="{{ 'ewpl-mech-texture.webp' | asset_url }}" width="700" height="524" loading="lazy" decoding="async" alt="Macro close-up of the raised, textured EyeWipes pad surface"></div>
+          <h3 class="mech-h">Raised texture helps lift it away</h3>
+          <p class="mech-p">The soft raised pattern reaches around the buildup, helping catch and lift residue during the daily wipe.</p>
+        </div>
+      </div>
+
+      <div class="mech-row">
+        <div class="mech-item">
+          <span class="mech-ic" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="#1F7FB8"><circle cx="6" cy="6" r="2"></circle><circle cx="12" cy="6" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="6" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="18" cy="12" r="2"></circle><circle cx="6" cy="18" r="2"></circle><circle cx="12" cy="18" r="2"></circle><circle cx="18" cy="18" r="2"></circle></svg></span>
+          <span><span class="mech-it">Textured surface</span><span class="mech-id">More contact with residue caught around the fur.</span></span>
+        </div>
+        <div class="mech-item">
+          <span class="mech-ic" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="#1F7FB8"><path d="M12 2.8c3.4 4.3 6.4 8 6.4 11.4A6.4 6.4 0 0 1 12 21.2a6.4 6.4 0 0 1-6.4-7c0-3.4 3-7.1 6.4-11.4Z"></path></svg></span>
+          <span><span class="mech-it">Pre-moistened</span><span class="mech-id">Ready to use without rinsing, mixing or preparation.</span></span>
+        </div>
+        <div class="mech-item">
+          <span class="mech-ic" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#1F7FB8" stroke-width="2.2"></circle><path d="M12 7.4V12l3.4 2.2" stroke="#1F7FB8" stroke-width="2.2" stroke-linecap="round"></path></svg></span>
+          <span><span class="mech-it">30-second routine</span><span class="mech-id">Simple enough to repeat as part of daily care.</span></span>
+        </div>
+      </div>
+
+      <a class="cta btn-outline" href="#ewof-hero">Get Buy 2, Get 2 Free ↑</a>
+    </div>
+  </section>
+
+  {% render 'ewof-wave', down: true %}
+
+  {%- comment -%} ---------- SECTION 4 — first three weeks ---------- {%- endcomment -%}
+  <section class="sec sec-pale">
+    <div class="col-c">
+      <h2 class="h2">What the <span class="accent">first three weeks</span> look like</h2>
+      <div class="tl">
+        <div class="tl-line" aria-hidden="true"></div>
+        {%- assign weeks = 'Week 1|Less gunk waiting for you each morning.|Week 1 — a Maltese with hard crust and a red, irritated eye area;Week 2|The discharge slows down. The fur around the eyes starts to brighten.|Week 2 — the same Maltese with less crust, some staining still visible;Week 3|Clean, bright, comfortable — she leans into your hand instead of bracing for it.|Week 3 — the same Maltese with a clear, bright eye area' | split: ';' -%}
+        {%- for w in weeks -%}
+          {%- assign wp = w | split: '|' -%}
+          {%- assign wi = forloop.index -%}
+          {%- assign wasset = 'ewpl-week-' | append: wi | append: '.webp' -%}
+          <div class="tl-item">
+            <div class="tl-av tl-av-{{ wi }}"><img src="{{ wasset | asset_url }}" width="420" height="420" loading="lazy" decoding="async" alt="{{ wp[2] }}"></div>
+            <div class="tl-copy">
+              <div class="tl-chip">{{ wp[0] }}</div>
+              <p class="tl-text">{{ wp[1] }}</p>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+      <a class="cta btn-outline" href="#ewof-hero">Get Buy 2, Get 2 Free ↑</a>
+    </div>
+  </section>
+
+  {% render 'ewof-wave' %}
+
+  {%- comment -%} ---------- SECTION 5 — reviews ---------- {%- endcomment -%}
+  <section class="sec">
+    <div class="col-c">
+      <h2 class="h2">45,000+ dog owners finally found <span class="accent">a routine that works</span></h2>
+      <div class="rv-grid">
+        {% render 'ewof-review', name: 'Caroline G.', quote: '"I love how these pads work!!! … They are fabulous in that the bumpy side of the wipes grab the dried out mucus really well…These are definitely worth the expense!!! … Happy wiping!!!😊"' %}
+        {% render 'ewof-review', name: 'Barbara M.', quote: '"These are the only things I have used , which are many, that has actually worked. Very happy"' %}
+        {% render 'ewof-review', name: 'Pauline L.', quote: '"The wipes softens the crusty buildup over night and makes it easier to remove. Eyes are looking much cleaner and Argo is much happier."' %}
+        {% render 'ewof-review', name: 'Sharon M.', quote: '"Works like a charm do we aren&#39;t having to spend so much time to get those eye winkies off the hair by his eyes. Thank you!"' %}
+        {% render 'ewof-review', name: 'Vicki M.', quote: '"VetPet Eyewipes works very well on one of my toy poodle&#39;s eye stains. I use them every morning. And for the other toy poodle with crustier eye stains, I use a warm damp microfiber cloth followed by VetPet Eyewipes."' %}
+        {% render 'ewof-review', name: 'John B.', quote: '"Working. Up to the present.will advise you after 30days as recomended.Got my daughter to purchase some as well.After she had seen Buddy."' %}
+      </div>
+    </div>
+  </section>
+
+  {% render 'ewof-wave', down: true %}
+
+  {%- comment -%} ---------- SECTION 6 — guarantee + final offer ---------- {%- endcomment -%}
+  <section class="sec sec-pale" id="ewof-offer">
+    <div class="col-c" style="gap:9px">
+      <h2 class="h2">You're the kind of owner who notices. <span class="accent">The tools failed — not you.</span></h2>
+      <p class="lead" style="margin-bottom:8px">Three weeks from now you're not managing the gunk. You ended it.</p>
+    </div>
+
+    <div class="guar">
+      <div class="guar-card">
+        <svg width="40" height="45" viewBox="0 0 44 50" fill="none" aria-hidden="true"><path d="M22 1.5 41.5 8.8v14.4c0 11.6-8.3 20.4-19.5 24.8C10.8 43.6 2.5 34.8 2.5 23.2V8.8L22 1.5Z" fill="#47B5E9"></path><path d="m13.5 24.5 5.5 5.5 11.5-11.5" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></svg>
+        <h3 class="guar-t">Healthy, clear eyes — or <span class="accent">every penny back</span></h3>
+        <p class="guar-c">Use EyeWipes daily for up to 100 days. If you don't see the difference, you get a full refund. No questions, no forms, no hassle.</p>
+      </div>
+      <div class="guar-media"><img src="{{ 'ewpl-guarantee.webp' | asset_url }}" width="1098" height="618" loading="lazy" decoding="async" alt="A happy dog owner with her dog, jars of EyeWipes in frame"></div>
+    </div>
+
+    <div class="offer-wrap">
+      <div class="offer-badge">Buy 2, Get 2 Free + Free Gifts (Limited Time!)</div>
+      <div class="offer-card">
+        <div class="offer-media"><img src="{{ 'ewpl-offer-jar.webp' | asset_url }}" width="800" height="800" loading="lazy" decoding="async" alt="An EyeWipes jar — gentle care for sensitive eyes, for dogs and cats"></div>
+        <div class="offer-body">
+          <div class="rating">
+            <span class="stars" role="img" aria-label="Rated 4.8 out of 5">★★★★★</span>
+            <span>4.8/5 · Trusted by 45,000+ Dog Owners</span>
+          </div>
+          <h3 class="offer-name">EyeWipes — Gentle Care for Sensitive Eyes</h3>
+          <div class="offer-bullets">
+            {%- assign obullets = 'Removes the buildup that causes crusty eyes|Gentle enough for daily use — hypoallergenic &amp; fragrance-free|Visible difference in 3 weeks — or every penny back' | split: '|' -%}
+            {%- for b in obullets -%}
+              <div class="bullet">{% render 'ewof-check', size: 20 %}<span>{{ b }}</span></div>
+            {%- endfor -%}
+          </div>
+          <div class="scarcity">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 22 20H2L12 3Z" fill="#D64545"></path><path d="M12 9.5v4.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path><circle cx="12" cy="17" r="1.2" fill="#FFFFFF"></circle></svg>
+            <span>High demand — EyeWipes tend to sell out. If this page is live, they're still in stock.</span>
+          </div>
+          <button type="button" class="cta btn-buy" data-ewof-submit>
+            <span><span data-ewof-cta-label>Add To Cart — Buy 2, Get 2 Free</span> <span aria-hidden="true">→</span></span>
+          </button>
+          <div class="trustline" style="text-align:left">100-Day Money-Back Guarantee · Free &amp; Fast Shipping</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% render 'ewof-wave' %}
+
+  {%- comment -%} ---------- SECTION 7 — FAQ (8) ---------- {%- endcomment -%}
+  <section class="sec">
+    <div class="col-c">
+      <div class="eyebrow" style="white-space:nowrap">Questions, answered</div>
+      <h2 class="h2">Everything you need to know <span class="accent">before starting</span></h2>
+      <div class="faq">
+        {%- assign faq_q = section.settings.faq_questions | newline_to_br | split: '<br />' -%}
+        {%- assign faq_a = section.settings.faq_answers | newline_to_br | split: '<br />' -%}
+        {%- for q in faq_q -%}
+          {%- assign qt = q | strip_newlines | strip -%}
+          {%- if qt != blank -%}
+            {%- assign at = faq_a[forloop.index0] | strip_newlines | strip -%}
+            <div class="faq-row">
+              <button type="button" class="faq-q" aria-expanded="false" aria-controls="ewof-faq-a{{ forloop.index0 }}">
+                <span>{{ qt }}</span><span class="faq-ic" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-wrap" id="ewof-faq-a{{ forloop.index0 }}">
+                <p class="faq-a">{{ at }}</p>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ---------- SECTION 8 — footer ---------- {%- endcomment -%}
+  <footer class="foot">
+    <img class="foot-logo" src="{{ 'ewof-vetpets-logo.webp' | asset_url }}" width="290" height="110" loading="lazy" decoding="async" alt="VetPets">
+  </footer>
+
+  {%- comment -%} ---------- sticky purchase bar ---------- {%- endcomment -%}
+  <div class="sticky ewof-sticky" role="region" aria-label="EyeWipes offer">
+    <div class="sticky-in">
+      <div class="sticky-r1">
+        <div class="sticky-thumb"><img src="{{ 'ewof-eyewipes-offer-approved.webp' | asset_url }}" data-ewof-tier-thumb loading="lazy" alt=""></div>
+        <div class="sticky-copy">
+          <div class="sticky-offer">Build The Habit Kit</div>
+          <div class="sticky-sub">
+            <span class="sticky-price"></span>
+            <span class="sticky-rc" hidden><span class="sticky-rc-short">RC −20%</span><span class="sticky-rc-full">RoutineCare −20%</span></span>
+            <span class="sticky-sub-full">· 4.8/5 · 45,000+ Happy Customers</span>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="cta btn-buy" data-ewof-submit>
+        <span class="sticky-cta-full"><span data-ewof-cta-label>Add To Cart — Buy 2, Get 2 Free</span> <span aria-hidden="true">→</span></span>
+        <span class="sticky-cta-short">Add To Cart <span aria-hidden="true">→</span></span>
+      </button>
+    </div>
+  </div>
+
+  {%- comment -%} tier map: deal ids are settings, not hardcoded constants {%- endcomment -%}
+  <script type="application/json" id="ewof-config">
+    {
+      "rc_note": {{ section.settings.rc_note | json }},
+      "error_text": "Something went wrong adding this to your cart. Please try again.",
+      "tiers": [
+        {
+          "key": "start",
+          "deal_id": {{ section.settings.deal_start | json }},
+          "name": "Start The Routine Kit",
+          "cta": "Add To Cart — Start The Routine",
+          "badge": "Start The Routine Kit · 2-Month Supply",
+          "pill": "",
+          "applied_label": "",
+          "image": {{ 'ewof-tier-2jars.webp' | asset_url | json }},
+          "image_alt": "Two jars of VetPets EyeWipes"
+        },
+        {
+          "key": "build",
+          "deal_id": {{ section.settings.deal_build | json }},
+          "name": "Build The Habit Kit",
+          "cta": "Add To Cart — Buy 2, Get 2 Free",
+          "badge": "Buy 2, Get 2 Free + 3 Free Gifts",
+          "pill": "Limited-Time Offer",
+          "applied_label": "Your Buy 2, Get 2 Free discount is applied",
+          "image": {{ 'ewof-eyewipes-offer-approved.webp' | asset_url | json }},
+          "image_alt": "Four jars of VetPets EyeWipes with the Tear Stain Comb, the Bright Eyes Routine Tracker and the Bright Eyes in 30 Days e-book"
+        },
+        {
+          "key": "multi",
+          "deal_id": {{ section.settings.deal_multi | json }},
+          "name": "Multi-Pet Relief Plan",
+          "cta": "Add To Cart — Multi-Pet Relief Plan",
+          "badge": "Multi-Pet Relief Plan · 6-Month Supply",
+          "pill": "Best For Multi-Pet Households",
+          "applied_label": "Your Multi-Pet Relief Plan discount is applied",
+          "image": {{ 'ewof-tier-6jars.webp' | asset_url | json }},
+          "image_alt": "Six jars of VetPets EyeWipes with the Tear Stain Comb, the Bright Eyes Routine Tracker and the Bright Eyes in 30 Days e-book"
+        }
+      ]
+    }
+  </script>
+</div>
+
+<script src="{{ 'eyewipes-offer-page.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "EyeWipes offer page",
+  "tag": "div",
+  "class": "eyewipes-offer-page-section",
+  "blocks": [{ "type": "@app" }],
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Add the Kaching Bundles app block to this section. Kaching stays the source of truth for tier, quantity, selling plan and free gifts — this section only restyles it."
+    },
+    { "type": "header", "content": "Top bar" },
+    { "type": "text", "id": "topbar_line1", "label": "Line 1", "default": "Buy 2, Get 2 Free + Free Gifts" },
+    { "type": "text", "id": "topbar_line2", "label": "Line 2", "default": "100-Day Risk-Free Home Trial" },
+    { "type": "header", "content": "Hero" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "End The Crusty Eyes In 30 Seconds A Day" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Textured antibacterial wipes for dogs with gunk, discharge & crusty eyes" },
+    { "type": "text", "id": "picker_heading", "label": "Plan picker heading", "default": "Choose Your Plan" },
+    { "type": "text", "id": "stock_line", "label": "Stock line", "default": "Selling fast — limited stock at this price" },
+    { "type": "text", "id": "rc_note", "label": "RoutineCare note", "default": "Free shipping on every order" },
+    { "type": "header", "content": "Kaching deal IDs" },
+    {
+      "type": "paragraph",
+      "content": "Resolved from the live storefront. If a deal is rebuilt in Kaching, update the ID here — the page falls back to on-page order if an ID no longer matches."
+    },
+    { "type": "text", "id": "deal_start", "label": "Start deal ID", "default": "4b8bf6d0-e6b1-4c44-af66-16e0ce39a9bb" },
+    { "type": "text", "id": "deal_build", "label": "Build deal ID", "default": "508699d0-94c0-4818-af7b-59b2f44de961" },
+    { "type": "text", "id": "deal_multi", "label": "Multi-Pet deal ID", "default": "43fd589f-426a-4e6c-b650-a63de934f2d0" },
+    { "type": "header", "content": "FAQ" },
+    {
+      "type": "textarea",
+      "id": "faq_questions",
+      "label": "Questions (one per line, max 8)",
+      "default": "How soon will I see a difference?\nAre EyeWipes safe for sensitive eyes, puppies and cats?\nWill they help with old tear stains—and can the buildup return?\nHow often should I use EyeWipes, and do I need to rinse afterward?\nWhat if my dog dislikes having the eye area touched?\nHow long does one jar last, and which plan should I choose?\nWhat makes EyeWipes different from baby wipes and smooth wipes?\nHow do RoutineCare and the 100-day money-back guarantee work?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_answers",
+      "label": "Answers (one per line, same order)",
+      "default": "You may see the buildup EyeWipes removes on the pad from the very first use. How quickly the eye area looks cleaner depends on how much buildup is present, how long it has been there and how consistently you follow the routine. Older discoloration in the fur may take longer to fade or grow out.\nEyeWipes are designed for gentle external use around the eye area of dogs and cats, including puppies, when used as directed. Use a fresh pad for each eye and never wipe directly across the eyeball. If your pet has persistent redness, swelling, pain, an injury or unusual discharge, contact your veterinarian.\nEyeWipes help remove the daily residue and buildup collecting around the eyes, but they do not bleach already-discolored fur. Older staining may take time to fade or grow out. Because moisture and eye discharge can be ongoing, buildup may gradually return if the daily routine is stopped.\nUse EyeWipes once daily as part of your pet's regular care routine. With a fresh pad for each eye, gently wipe outward from the inner corner across the surrounding fur and skin, then discard the pad. No rinsing, mixing or preparation is needed.\nStart slowly and let your dog sniff the pad first. Choose a calm moment, keep the first sessions short and reward relaxed behavior afterward. Never force the routine. Most pets become more comfortable when the process stays gentle, predictable and quick.\nEach jar contains 100 pads. With one fresh pad per eye each day, one jar typically lasts approximately six to seven weeks for one pet. Start The Routine Kit is the smallest option, Build The Habit Kit provides a longer routine, and the Multi-Pet Relief Plan is best suited to longer use or homes with more than one pet. Actual duration depends on the number of pets and pads used.\nEyeWipes are made specifically for daily external care around the eyes. Their raised textured surface creates more contact with residue caught around the fur, while an ordinary smooth wipe can glide across the surface. EyeWipes are also pre-moistened, pH-balanced, fragrance-free and alcohol-free.\nRoutineCare saves 20% and includes free shipping on every recurring order. Deliveries can be skipped, changed or cancelled when needed. Your purchase is also protected by our 100-day money-back guarantee—if EyeWipes are not right for your pet, contact VetPets within 100 days of purchase for help with your refund."
+    }
+  ],
+  "presets": [{ "name": "EyeWipes offer page" }]
+}
+{% endschema %}
