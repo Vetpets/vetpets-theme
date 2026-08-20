@@ -379,6 +379,9 @@ body:has(#eyewipes-offer-page){overflow-x:hidden}
 #eyewipes-offer-page .kaching-bundles__subscriptions .kaching-bundles__subscriptions__checkbox{margin:1px 0 0!important;flex:0 0 auto!important;align-self:flex-start!important}
 #eyewipes-offer-page .kaching-bundles__subscriptions .kaching-bundles__bar-first-line{margin:0!important;padding:0!important;justify-content:flex-start!important}
 /* the RoutineCare free-shipping note, right aligned like the design */
+/* The generic bar-content-left descendant rule above is (1,2,0); this must
+   outspecify it or the note inherits the muted subtitle colour. */
+#eyewipes-offer-page .kaching-bundles__subscriptions .kaching-bundles__subscriptions__subtitle .ewof-rc-note{color:#0E8F8E!important;font-weight:700!important}
 /* Secondary copy is one inline row: subtitle + teal free-shipping note. */
 #eyewipes-offer-page .ewof-rc-note{display:inline!important;position:static!important;float:none!important;margin:0!important;padding:0!important;max-width:none!important;width:auto!important;color:#0E8F8E!important;font-weight:700!important;font-size:inherit!important;line-height:inherit!important;text-align:left!important;white-space:normal!important}
 #eyewipes-offer-page:not([data-rc="on"]) .ewof-rc-note{display:none}
