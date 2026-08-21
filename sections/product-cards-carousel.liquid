@@ -799,6 +799,12 @@
     var startX = 0;
     var startTranslate = 0;
     var activePointer = null;
+    // Real pointer travel during the current gesture. `translate` cannot be used
+    // for this: autoplay, arrows, dots and the initial loop layout all move the
+    // track without a pointer ever going down.
+    var dragMoved = false;
+    var suppressClick = false;
+    var DRAG_SLOP = 6;
 
     function readPerView() {
       var v = parseInt(getComputedStyle(root).getPropertyValue('--vp-pc-pv'), 10);
@@ -1019,12 +1025,15 @@
       activePointer = event.pointerId;
       startX = event.clientX;
       startTranslate = translate;
+      dragMoved = false;
+      suppressClick = false;
       stop();
       if (viewport.setPointerCapture) viewport.setPointerCapture(event.pointerId);
     });
 
     viewport.addEventListener('pointermove', function (event) {
       if (!dragging || event.pointerId !== activePointer) return;
+      if (Math.abs(event.clientX - startX) > DRAG_SLOP) dragMoved = true;
       setPos(startTranslate + (event.clientX - startX), true);
     });
 
@@ -1032,6 +1041,9 @@
       if (!dragging || (event && event.pointerId !== activePointer)) return;
       dragging = false;
       activePointer = null;
+      // Only a gesture that actually travelled cancels the click it produces.
+      suppressClick = dragMoved;
+      dragMoved = false;
 
       var dx = translate - startTranslate;
       var delta = Math.round(-dx / step);
@@ -1050,12 +1062,13 @@
 
     viewport.addEventListener('pointerup', endDrag);
     viewport.addEventListener('pointercancel', endDrag);
+    viewport.addEventListener('lostpointercapture', endDrag);
 
-    // A drag that ends on a link must not also follow it.
+    // Only the single click produced by a real drag is cancelled. A plain click
+    // or a keyboard activation follows the anchor normally.
     viewport.addEventListener('click', function (event) {
-      if (Math.abs(translate - startTranslate) > 6 && event.target.closest('a')) {
-        event.preventDefault();
-      }
+      if (suppressClick && event.target.closest('a')) event.preventDefault();
+      suppressClick = false;
     }, true);
 
     layout();
