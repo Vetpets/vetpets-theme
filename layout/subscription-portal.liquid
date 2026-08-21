@@ -25,7 +25,17 @@
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
     {%- endif -%}
 
-    <title>{{ page_title }}{% if shop.name != page_title %} &ndash; {{ shop.name }}{% endif %}</title>
+    {%- comment -%}
+      The document title is fixed to the portal's own identity rather than
+      inherited from `page_title`.
+
+      Until /pages/subscriptions can be published, this template is previewed
+      through an existing page acting as a carrier, and `page_title` would
+      otherwise show that carrier's name ("Subscription Policy") in the tab.
+      This layout is used by the portal template and nothing else, so a fixed
+      title is correct here and stays correct once the real page goes live.
+    {%- endcomment -%}
+    <title>Subscription Portal &ndash; VetPets</title>
 
     {%- if page_description -%}
       <meta name="description" content="{{ page_description | escape }}">
