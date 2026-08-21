@@ -1,0 +1,80 @@
+{%- comment -%}
+  Review-only screen switcher.
+
+  Hidden unless the URL carries ?spp_dev=1 (or the section setting is on).
+  It exists so the founder and QA can reach every screen, sheet, state and
+  currency without a live backend. It is never shown to a customer and it
+  performs no mutation beyond the mock adapter.
+
+  This replaces the prototype's index/state panels, which were harness
+  chrome around the design rather than part of the portal itself.
+{%- endcomment -%}
+
+<aside class="spp__dev" data-spp-dev hidden aria-label="Portal review switcher">
+  <button type="button" class="spp__dev-toggle" data-spp-dev-toggle style="width:auto;min-height:24px;padding:0;">
+    Review tools
+  </button>
+
+  <div class="spp__dev-body">
+    <div class="spp__dev-title" style="margin-top:10px;">Screens</div>
+
+    <div class="spp__dev-group">Sign in</div>
+    <button type="button" data-spp-go="login">Magic-link login</button>
+    <button type="button" data-spp-go="sent">Link sent</button>
+
+    <div class="spp__dev-group">Portal</div>
+    <button type="button" data-spp-go="dashboard">Dashboard</button>
+    <button type="button" data-spp-go="subscription">Subscription details</button>
+    <button type="button" data-spp-go="deliveries">Deliveries</button>
+    <button type="button" data-spp-go="loyalty">VetPoints</button>
+    <button type="button" data-spp-go="rewards">Rewards catalogue</button>
+    <button type="button" data-spp-go="account">Help &amp; account</button>
+
+    <div class="spp__dev-group">Change flows</div>
+    <button type="button" data-spp-go="swap">Swap product</button>
+    <button type="button" data-spp-go="addon">Add one-time item</button>
+    <button type="button" data-spp-go="address">Delivery address</button>
+    <button type="button" data-spp-go="payment">Payment redirect</button>
+
+    <div class="spp__dev-group">Cancel &amp; restart</div>
+    <button type="button" data-spp-go="cancel-reason">1 · Reason</button>
+    <button type="button" data-spp-go="cancel-alt">2 · Alternatives</button>
+    <button type="button" data-spp-go="cancel-confirm">3 · Confirm</button>
+    <button type="button" data-spp-go="cancel-done">4 · Cancelled</button>
+    <button type="button" data-spp-go="reactivate">Reactivate</button>
+    <button type="button" data-spp-go="inactive">Inactive list</button>
+    <button type="button" data-spp-go="empty">Empty account</button>
+
+    <div class="spp__dev-group">Sheets</div>
+    <button type="button" data-spp-sheet="skip">Skip delivery</button>
+    <button type="button" data-spp-sheet="delay">Delay / reschedule</button>
+    <button type="button" data-spp-sheet="freq">Change frequency</button>
+    <button type="button" data-spp-sheet="pause">Pause 1–3 months</button>
+    <button type="button" data-spp-sheet="resume">Resume</button>
+    <button type="button" data-spp-sheet="qty">Change quantity</button>
+
+    <div class="spp__dev-group">System states</div>
+    <button type="button" data-spp-go="loading">Loading</button>
+    <button type="button" data-spp-go="expired">Expired link</button>
+    <button type="button" data-spp-go="error">API error</button>
+    <button type="button" data-spp-go="success">Success</button>
+    <button type="button" data-spp-dev-pending>Mutation pending (skip)</button>
+
+    <div class="spp__dev-group">Subscription status</div>
+    <button type="button" data-spp-dev-status="active">Active</button>
+    <button type="button" data-spp-dev-status="paused">Paused</button>
+    <button type="button" data-spp-dev-status="cancelled">Cancelled</button>
+
+    <div class="spp__dev-group">Market currency</div>
+    <select data-spp-dev-currency aria-label="Market currency">
+      <option value="USD">USD — prototype example</option>
+      <option value="GBP">GBP</option>
+      <option value="EUR">EUR</option>
+      <option value="SEK">SEK</option>
+    </select>
+
+    <p class="spp__note" style="margin-top:12px;">
+      Mock data. USD is the prototype example only — currency stays locale-aware in implementation.
+    </p>
+  </div>
+</aside>

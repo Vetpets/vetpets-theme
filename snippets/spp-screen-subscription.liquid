@@ -1,0 +1,125 @@
+{%- comment -%} Screen: subscription details. {%- endcomment -%}
+
+<section class="spp__screen" data-spp-screen="subscription" hidden aria-labelledby="spp-sub-h">
+  <button type="button" class="spp__back" data-spp-go="dashboard">
+    {% render 'spp-icon', icon: 'chevron-left' %}Overview
+  </button>
+
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px;">
+    <h1 class="spp__h1" id="spp-sub-h" style="margin:0;">Daily routine subscription</h1>
+    <span class="spp__badge spp__badge--plain" data-spp-field="subscription.statusLabel" data-spp-status-badge>Active</span>
+  </div>
+  <p class="spp__lede" style="font-size:14.5px;color:var(--spp-muted);">
+    <span data-spp-field="subscription.reference">#VP-48210</span> ·
+    started <span data-spp-field="subscription.startedLong">12 March 2025</span> ·
+    <span data-spp-field="subscription.deliveriesSoFar">9</span> deliveries so far
+  </p>
+
+  <div class="spp__split">
+    <div class="spp__split-main">
+
+      {%- comment -%} Cadence + price breakdown {%- endcomment -%}
+      <div class="spp__card">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:14px;border-bottom:1px solid rgba(13,35,64,.08);">
+          <div>
+            <div class="spp__eyebrow" style="margin-bottom:7px;">Cadence</div>
+            <div style="font:600 16px/1.3 var(--spp-font);color:var(--spp-ink);">
+              Every <span data-spp-field="subscription.intervalDays">60</span> days ·
+              next <span data-spp-field="subscription.nextOrderShort">Sep 8</span>
+            </div>
+          </div>
+          <button type="button" class="spp__qty-pill" style="padding:0 16px;" data-spp-sheet="freq">Change</button>
+        </div>
+
+        <div class="spp__lines">
+          <div data-spp-list="lineSummary">
+            <template data-spp-tpl="lineSummary">
+              <div class="spp__line" style="margin-bottom:12px;">
+                <span><span data-spp-field="title">FreshWipes jar</span> × <span data-spp-field="quantity">2</span></span>
+                <b data-spp-field="linePrice">$49.80</b>
+              </div>
+            </template>
+          </div>
+          <div class="spp__line">
+            <span>Subscriber discount (<span data-spp-field="subscription.discountPercent">10</span>%)</span>
+            <b>−<span data-spp-field="pricing.discount">$6.97</span></b>
+          </div>
+          <div class="spp__line"><span>Shipping</span><b>Free</b></div>
+          <hr class="spp__hr">
+          <div class="spp__line spp__line--total"><span>Per delivery</span><b data-spp-field="pricing.total">$62.73</b></div>
+        </div>
+      </div>
+
+      {%- comment -%} Change actions {%- endcomment -%}
+      <div class="spp__card spp__card--rows">
+        <button type="button" class="spp__row" data-spp-sheet="freq">
+          <span class="spp__row-label">Change delivery frequency
+            <span class="spp__row-hint">Currently every <span data-spp-field="subscription.intervalDays">60</span> days</span>
+          </span>
+          {% render 'spp-icon', icon: 'chevron-right' %}
+        </button>
+        <button type="button" class="spp__row" data-spp-sheet="skip">
+          <span class="spp__row-label">Skip next delivery
+            <span class="spp__row-hint">Move <span data-spp-field="subscription.nextOrderShort">Sep 8</span> on by <span data-spp-field="subscription.intervalDays">60</span> days</span>
+          </span>
+          {% render 'spp-icon', icon: 'chevron-right' %}
+        </button>
+        <button type="button" class="spp__row" data-spp-sheet="delay">
+          <span class="spp__row-label">Delay or reschedule
+            <span class="spp__row-hint">7, 15 or 30 days later</span>
+          </span>
+          {% render 'spp-icon', icon: 'chevron-right' %}
+        </button>
+        <button type="button" class="spp__row" data-spp-sheet="pause">
+          <span class="spp__row-label">Pause subscription
+            <span class="spp__row-hint">1, 2 or 3 months</span>
+          </span>
+          {% render 'spp-icon', icon: 'chevron-right' %}
+        </button>
+        <button type="button" class="spp__row" data-spp-sheet="qty">
+          <span class="spp__row-label">Change quantities
+            <span class="spp__row-hint" data-spp-field="subscription.quantitySummary">FreshWipes ×2, EyeWipes ×1</span>
+          </span>
+          {% render 'spp-icon', icon: 'chevron-right' %}
+        </button>
+        <button type="button" class="spp__row" data-spp-go="swap">
+          <span class="spp__row-label">Swap a product
+            <span class="spp__row-hint">From your <span data-spp-field="subscription.nextOrderShort">Sep 8</span> delivery</span>
+          </span>
+          {% render 'spp-icon', icon: 'chevron-right' %}
+        </button>
+        <button type="button" class="spp__row" data-spp-go="addon">
+          <span class="spp__row-label">Add a one-time item
+            <span class="spp__row-hint">Ships with the next order only</span>
+          </span>
+          {% render 'spp-icon', icon: 'chevron-right' %}
+        </button>
+      </div>
+    </div>
+
+    <div class="spp__split-side">
+      <div class="spp__card spp__card--soft">
+        <h2 class="spp__h2" style="font-size:16px;">Delivering to</h2>
+        <p style="margin:0 0 14px;font:500 14.5px/1.55 var(--spp-font);color:var(--spp-body);" data-spp-field-html="subscription.addressLines">
+          Margaret Ellis<br>214 Wren Street, Apt 3B<br>Portland, OR 97209<br>United States
+        </p>
+        <button type="button" class="spp__btn spp__btn--secondary spp__btn--inline" style="min-height:46px;" data-spp-go="address">Update address</button>
+      </div>
+
+      <div class="spp__card spp__card--soft">
+        <h2 class="spp__h2" style="font-size:16px;">Payment</h2>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+          <span style="width:44px;height:30px;border-radius:6px;background:var(--spp-ink);color:#fff;font:700 10px/30px var(--spp-font);text-align:center;display:block;" data-spp-field="subscription.paymentBrand">VISA</span>
+          <span style="font:500 14.5px/1.3 var(--spp-font);color:var(--spp-body);">
+            ···· <span data-spp-field="subscription.paymentLast4">4242</span> ·
+            expires <span data-spp-field="subscription.paymentExpiry">04/28</span>
+          </span>
+        </div>
+        <button type="button" class="spp__btn spp__btn--secondary spp__btn--inline" style="min-height:46px;" data-spp-go="payment">Update card</button>
+        <p class="spp__note" style="margin-top:12px;">Card details are entered on our secure payment page, never in this portal.</p>
+      </div>
+
+      <button type="button" class="spp__btn spp__btn--quiet" data-spp-go="cancel-reason">Cancel subscription</button>
+    </div>
+  </div>
+</section>
