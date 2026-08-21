@@ -1,0 +1,58 @@
+<!doctype html>
+{%- comment -%}
+  VetPets Subscription Portal — dedicated layout.
+
+  Used only by templates/page.subscription-portal.liquid. Deliberately
+  excludes the store header, navigation, announcement bar, footer and
+  every other global theme element: the approved design is a standalone
+  account experience, not a storefront page.
+
+  Everything Shopify needs is still present: content_for_header,
+  content_for_layout, viewport metadata, title/meta and canonical.
+
+  The portal is not indexable while it is a mock-backed prototype.
+{%- endcomment -%}
+<html class="spp-html" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#47B5E9">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    <title>{{ page_title }}{% if shop.name != page_title %} &ndash; {{ shop.name }}{% endif %}</title>
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    {%- comment -%} Preload the faces that gate first paint. {%- endcomment -%}
+    <link rel="preload" as="font" type="font/woff2" href="{{ 'spp-geist-regular.woff2' | asset_url }}" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="{{ 'spp-geist-semibold.woff2' | asset_url }}" crossorigin>
+    <link rel="stylesheet" href="{{ 'subscription-portal.css' | asset_url }}">
+
+    <style>
+      @font-face { font-family: "GeistSpp"; src: url("{{ 'spp-geist-regular.woff2'  | asset_url }}") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+      @font-face { font-family: "GeistSpp"; src: url("{{ 'spp-geist-medium.woff2'   | asset_url }}") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+      @font-face { font-family: "GeistSpp"; src: url("{{ 'spp-geist-semibold.woff2' | asset_url }}") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+      @font-face { font-family: "GeistSpp"; src: url("{{ 'spp-geist-bold.woff2'     | asset_url }}") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+
+      html, body { margin: 0; padding: 0; background: #F7FCFE; }
+      body { overflow-x: hidden; }
+    </style>
+
+    {{ content_for_header }}
+  </head>
+
+  <body class="spp-body">
+    {{ content_for_layout }}
+
+    <script src="{{ 'subscription-portal-adapter.js' | asset_url }}" defer></script>
+    <script src="{{ 'subscription-portal.js' | asset_url }}" defer></script>
+  </body>
+</html>
