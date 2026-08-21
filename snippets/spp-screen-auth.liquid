@@ -1,0 +1,79 @@
+{%- comment -%}
+  Screens: magic-link login, link sent.
+  Both are mock frontend states — no credential is exchanged here.
+{%- endcomment -%}
+
+{%- comment -%} ---------- 1. Magic-link login ---------- {%- endcomment -%}
+<section class="spp__screen spp__centred" data-spp-screen="login" hidden aria-labelledby="spp-login-h">
+  <div style="padding:26px 4px;">
+    <div class="spp__disc spp__disc--sm" style="background:#EAF6FD;color:#47B5E9;">
+      {% render 'spp-icon', icon: 'paw', size: 30 %}
+    </div>
+
+    <h1 class="spp__h1 spp__h1--lg" id="spp-login-h" style="font-size:27px;line-height:1.15;margin-bottom:10px;">Manage your VetPets routine</h1>
+    <p class="spp__lede" style="max-width:340px;margin:0 auto 26px;font-weight:400;font-size:16px;line-height:1.5;">
+      Enter the email you used at checkout. We&rsquo;ll send a sign-in link &mdash; no password to remember.
+    </p>
+
+    <form class="spp__card" style="text-align:left;border-radius:18px;" data-spp-form="login" novalidate>
+      <label class="spp__field-label" for="spp-email">Email address</label>
+      <input
+        class="spp__input spp__input--lg"
+        id="spp-email"
+        name="email"
+        type="email"
+        inputmode="email"
+        autocomplete="email"
+        placeholder="you@email.com"
+        value="margaret.ellis@gmail.com"
+        required
+      >
+      <p class="spp__note" data-spp-error="login" role="alert" hidden style="color:#D92D20;margin-top:8px;"></p>
+
+      <button type="submit" class="spp__btn spp__btn--primary" style="margin-top:14px;" data-spp-act="sendLink">
+        <span data-spp-field="label.sendLink">Email me a sign-in link</span>
+        {% render 'spp-icon', icon: 'arrow-right', stroke: '#fff' %}
+      </button>
+
+      <p class="spp__note" style="margin-top:14px;font-size:13px;line-height:1.5;">
+        The link stays valid for 15 minutes and opens straight into your subscriptions.
+      </p>
+    </form>
+
+    <p style="margin:22px 0 0;font:500 14px/1.5 var(--spp-font);color:var(--spp-body);">
+      Bought as a guest? <a href="#" data-spp-go="account">Contact support</a>
+    </p>
+  </div>
+</section>
+
+{%- comment -%} ---------- 2. Link sent ---------- {%- endcomment -%}
+<section class="spp__screen spp__centred" data-spp-screen="sent" hidden aria-labelledby="spp-sent-h">
+  <div style="padding:34px 4px;">
+    <div class="spp__disc spp__disc--light" style="width:74px;height:74px;margin-bottom:22px;">
+      {% render 'spp-icon', icon: 'check', size: 34, stroke: '#47B5E9' %}
+    </div>
+
+    <h1 class="spp__h1" id="spp-sent-h" style="font-size:26px;margin-bottom:10px;">Check your inbox</h1>
+    <p class="spp__lede" style="max-width:330px;margin:0 auto 8px;font-weight:400;font-size:16px;line-height:1.55;">
+      We sent a sign-in link to <strong style="color:var(--spp-ink);" data-spp-field="customer.email">margaret.ellis@gmail.com</strong>.
+      Open it on this device to land straight in your account.
+    </p>
+
+    <div class="spp__card" style="margin:24px 0 18px;text-align:left;border-radius:18px;box-shadow:none;">
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <span style="flex:0 0 auto;margin-top:2px;color:var(--spp-accent);">
+          {% render 'spp-icon', icon: 'clock', size: 20 %}
+        </span>
+        <p style="margin:0;font:500 14.5px/1.5 var(--spp-font);color:var(--spp-body);">
+          Links expire after 15 minutes. Requesting a new one cancels the previous link.
+        </p>
+      </div>
+    </div>
+
+    <button type="button" class="spp__btn spp__btn--primary" data-spp-act="openLink">Open the link (demo)</button>
+    <button type="button" class="spp__btn spp__btn--secondary" style="margin-top:10px;" data-spp-act="resend">
+      <span data-spp-field="label.resend">Resend link</span>
+    </button>
+    <button type="button" class="spp__btn spp__btn--link" style="margin-top:6px;" data-spp-go="login">Use a different email</button>
+  </div>
+</section>
