@@ -188,7 +188,7 @@
                       {{
                         card_image
                         | image_url: width: 800
-                        | image_tag: loading: 'lazy', widths: '200,300,400,600,800', sizes: '(min-width: 990px) 25vw, 80vw', class: 'vp-prodcards__image', alt: card_title
+                        | image_tag: loading: 'lazy', widths: '200,300,400,600,800', sizes: '(min-width: 990px) 25vw, 80vw', class: 'vp-prodcards__image', draggable: 'false', alt: card_title
                       }}
                     {%- else -%}
                       {{ 'product-1' | placeholder_svg_tag: 'vp-prodcards__image vp-prodcards__image--placeholder' }}
@@ -235,7 +235,7 @@
                     {%- if card_title != blank -%}
                       <h3 class="vp-prodcards__title">
                         {%- if card_link != blank -%}
-                          <a class="vp-prodcards__title-link" href="{{ card_link }}">{{ card_title | escape }}</a>
+                          <a class="vp-prodcards__title-link" draggable="false" href="{{ card_link }}">{{ card_title | escape }}</a>
                         {%- else -%}
                           {{ card_title | escape }}
                         {%- endif -%}
@@ -280,6 +280,7 @@
                       {%- if bs.cta_text != blank -%}
                         <a
                           class="vp-prodcards__cta"
+                          draggable="false"
                           style="background-color: {{ bs.cta_bg }}; color: {{ bs.cta_text_color }}; border-radius: {{ bs.cta_radius }}px;"
                           {% if bs.cta_link != blank %}
                             href="{{ bs.cta_link }}"
@@ -805,6 +806,12 @@
     var dragMoved = false;
     var suppressClick = false;
     var DRAG_SLOP = 6;
+    // Controls are native interaction zones, never drag surfaces. Only the
+    // media and card background start a swipe, so this list costs no gesture.
+    var INTERACTIVE = 'a[href], button, input, select, textarea, label,' +
+      ' [role="button"], .vp-prodcards__cta, .vp-prodcards__dot,' +
+      ' [data-vp-pc-prev], [data-vp-pc-next]';
+    var ctaHold = false;
 
     function readPerView() {
       var v = parseInt(getComputedStyle(root).getPropertyValue('--vp-pc-pv'), 10);
@@ -975,7 +982,7 @@
 
     function start() {
       stop();
-      if (!autoplayOn || reduced.matches || mode === 'static' || hovered || dragging) return;
+      if (!autoplayOn || reduced.matches || mode === 'static' || hovered || dragging || ctaHold) return;
       timer = setInterval(autoNext, autoplayMs);
     }
 
@@ -1021,6 +1028,18 @@
 
     viewport.addEventListener('pointerdown', function (event) {
       if (mode === 'static' || event.button !== 0) return;
+      // Capturing the pointer retargets the compatibility mouse events to the
+      // viewport, so the click lands on the viewport instead of the anchor and
+      // the browser never follows the link. Leave controls entirely alone.
+      if (event.target.closest && event.target.closest(INTERACTIVE)) {
+        if (event.target.closest('.vp-prodcards__cta')) {
+          // Hold autoplay for the whole press so no transition can slide the
+          // button out from under the pointer before pointerup.
+          ctaHold = true;
+          stop();
+        }
+        return;
+      }
       dragging = true;
       activePointer = event.pointerId;
       startX = event.clientX;
@@ -1064,9 +1083,25 @@
     viewport.addEventListener('pointercancel', endDrag);
     viewport.addEventListener('lostpointercapture', endDrag);
 
+    // On document: a press that began on the CTA may end anywhere.
+    function releaseCtaHold() {
+      if (!ctaHold) return;
+      ctaHold = false;
+      start();
+    }
+    document.addEventListener('pointerup', releaseCtaHold);
+    document.addEventListener('pointercancel', releaseCtaHold);
+
     // Only the single click produced by a real drag is cancelled. A plain click
     // or a keyboard activation follows the anchor normally.
     viewport.addEventListener('click', function (event) {
+      // A drag can no longer begin on a control, so a click on one is always
+      // genuine: never cancel it, and drop stale suppression from an earlier
+      // gesture, pointercancel or lost capture so it cannot strike later.
+      if (event.target.closest && event.target.closest(INTERACTIVE)) {
+        suppressClick = false;
+        return;
+      }
       if (suppressClick && event.target.closest('a')) event.preventDefault();
       suppressClick = false;
     }, true);
@@ -1092,6 +1127,8 @@
       stop();
       if (resizeObserver) resizeObserver.disconnect();
       window.removeEventListener('resize', layout);
+      document.removeEventListener('pointerup', releaseCtaHold);
+      document.removeEventListener('pointercancel', releaseCtaHold);
     });
   })();
 </script>
