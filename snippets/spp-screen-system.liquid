@@ -1,0 +1,76 @@
+{%- comment -%}
+  System states: loading, expired link, API/connection error, and the
+  post-mutation success confirmation.
+
+  These are real portal states, not a gallery: the controller shows
+  `loading` while the first fetch is in flight, `expired` when a magic
+  link is rejected, `error` when a call fails, and `success` after a
+  mutation that confirms on its own screen. Mutation-pending is rendered
+  in place on the button and sheet that triggered it.
+{%- endcomment -%}
+
+{%- comment -%} ---------- Loading ---------- {%- endcomment -%}
+<section class="spp__screen" data-spp-screen="loading" hidden aria-label="Loading your subscription" aria-busy="true">
+  <div class="spp__skeleton">
+    <div class="spp__sk-title"></div>
+    <div class="spp__sk-sub"></div>
+    <div class="spp__sk-hero"></div>
+    <div class="spp__sk-row"></div>
+    <div class="spp__sk-row"></div>
+  </div>
+  <p class="spp__sr" role="status">Loading your subscription…</p>
+</section>
+
+{%- comment -%} ---------- Expired link ---------- {%- endcomment -%}
+<section class="spp__screen spp__centred" data-spp-screen="expired" hidden aria-labelledby="spp-exp-h">
+  <div class="spp__narrow" style="padding:26px 4px;">
+    <div class="spp__disc spp__disc--neutral spp__disc--sm" style="width:56px;height:56px;">
+      <span style="font:700 22px/1 var(--spp-font);color:var(--spp-danger);">!</span>
+    </div>
+    <h1 class="spp__h1" id="spp-exp-h" style="font-size:19px;line-height:1.25;margin-bottom:8px;">This link has expired</h1>
+    <p class="spp__lede" style="font-size:14px;line-height:1.5;margin-bottom:18px;">
+      Sign-in links last 15 minutes. Request a fresh one and we&rsquo;ll email it straight away.
+    </p>
+    <button type="button" class="spp__btn spp__btn--primary" style="min-height:50px;font-size:15px;" data-spp-act="resend">Send a new link</button>
+    <button type="button" class="spp__btn spp__btn--link" style="margin-top:8px;min-height:46px;font-size:14px;" data-spp-go="login">Use a different email</button>
+  </div>
+</section>
+
+{%- comment -%} ---------- Connection / API error ---------- {%- endcomment -%}
+<section class="spp__screen" data-spp-screen="error" hidden aria-labelledby="spp-err-h">
+  <div class="spp__narrow">
+    <div class="spp__banner spp__banner--error" style="margin-bottom:0;">
+      <span class="spp__banner-icon spp__banner-icon--error" style="width:26px;height:26px;font:700 15px/26px var(--spp-font);">!</span>
+      <div>
+        <div class="spp__banner-title" id="spp-err-h" style="font-size:14.5px;">We couldn&rsquo;t load your subscription</div>
+        <p style="font-size:13px;line-height:1.45;margin:0;">
+          Nothing has changed on your account. Try again, or contact support if it keeps happening.
+        </p>
+      </div>
+    </div>
+
+    <button type="button" class="spp__btn spp__btn--primary" style="margin-top:14px;min-height:50px;font-size:15px;" data-spp-act="retry">Try again</button>
+    <button type="button" class="spp__btn spp__btn--secondary" style="margin-top:8px;min-height:48px;font-size:15px;" data-spp-act="support">Message support</button>
+
+    <div class="spp__info spp__info--dashed" style="margin-top:16px;">
+      Reference: <span data-spp-field="error.reference">SUB-503 · 21 Aug 2026, 09:14</span>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ---------- Success confirmation ---------- {%- endcomment -%}
+<section class="spp__screen spp__centred" data-spp-screen="success" hidden aria-labelledby="spp-suc-h">
+  <div class="spp__narrow" style="padding:26px 4px;">
+    <div class="spp__disc spp__disc--light" style="width:62px;height:62px;margin-bottom:18px;">
+      {% render 'spp-icon', icon: 'success-check' %}
+    </div>
+    <h1 class="spp__h1" id="spp-suc-h" style="font-size:19px;line-height:1.25;margin-bottom:8px;" data-spp-field="success.title">Delivery skipped</h1>
+    <p class="spp__lede" style="font-size:14px;line-height:1.5;margin-bottom:18px;" data-spp-field-html="success.body">
+      Nothing ships on 8 September and you won&rsquo;t be charged.
+    </p>
+    <button type="button" class="spp__btn spp__btn--primary" style="min-height:50px;font-size:15px;" data-spp-go="dashboard">Back to overview</button>
+    <button type="button" class="spp__btn spp__btn--link" style="margin-top:8px;min-height:46px;font-size:14px;" data-spp-act="undo" data-spp-undo hidden>
+      <span data-spp-field="success.undoLabel">Undo skip</span>
+    </button>
+  </div>
+</section>
