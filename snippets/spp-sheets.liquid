@@ -1,0 +1,162 @@
+{%- comment -%}
+  Sheets / modals: skip, delay, frequency, pause, resume, quantity.
+
+  One overlay hosts all six. On mobile it is a bottom sheet; from 1024px
+  it becomes a centred modal, matching the approved desktop behaviour.
+  The controller traps focus while open and restores it on close.
+{%- endcomment -%}
+
+<div class="spp__overlay" data-spp-overlay hidden>
+  <div class="spp__sheet" data-spp-sheet-host role="dialog" aria-modal="true" aria-labelledby="spp-sheet-h" tabindex="-1">
+    <div class="spp__grip" aria-hidden="true"></div>
+
+    {%- comment -%} ---------- Skip ---------- {%- endcomment -%}
+    <div data-spp-sheet-panel="skip" hidden>
+      <h2 id="spp-sheet-h-skip">Skip the <span data-spp-field="subscription.nextOrderShort">Sep 8</span> delivery?</h2>
+      <p>
+        You won&rsquo;t be charged for it. Your next delivery moves to
+        <strong style="color:var(--spp-ink);" data-spp-field="sheet.skipToLong">Saturday, November 7</strong>
+        and the <span data-spp-field="subscription.intervalDays">60</span>-day cadence continues from there.
+      </p>
+
+      <div class="spp__info spp__info--icon" style="margin-bottom:18px;">
+        <span style="flex:0 0 auto;color:var(--spp-accent);">{% render 'spp-icon', icon: 'sparkle', size: 22 %}</span>
+        <p>A skipped delivery doesn&rsquo;t earn VetPoints. You can unskip until <span data-spp-field="subscription.nextOrderShort">Sep 8</span>.</p>
+      </div>
+
+      <button type="button" class="spp__btn spp__btn--primary" data-spp-act="skip">
+        <span data-spp-field="label.skip">Skip this delivery</span>
+      </button>
+      <button type="button" class="spp__btn spp__btn--quiet" data-spp-act="close">Keep this delivery</button>
+    </div>
+
+    {%- comment -%} ---------- Delay / reschedule ---------- {%- endcomment -%}
+    <div data-spp-sheet-panel="delay" hidden>
+      <h2 id="spp-sheet-h-delay">Delay your delivery</h2>
+      <p>
+        Currently arriving <span data-spp-field="subscription.nextOrderShort">Sep 8</span>.
+        Later deliveries shift by the same amount, so your cadence stays
+        <span data-spp-field="subscription.intervalDays">60</span> days.
+      </p>
+
+      <div class="spp__choices spp__choices--row" style="margin-bottom:14px;" role="radiogroup" aria-label="Delay by" data-spp-list="delayOptions">
+        <template data-spp-tpl="delayOptions">
+          <button type="button" class="spp__tile" role="radio" aria-checked="false" data-spp-pick="delay">
+            <span data-spp-field="label">7 days</span>
+          </button>
+        </template>
+      </div>
+
+      <div class="spp__info" style="margin-bottom:18px;">
+        New delivery date: <b data-spp-field="sheet.delayToLong">Tuesday, September 15</b>
+      </div>
+
+      <button type="button" class="spp__btn spp__btn--primary" data-spp-act="delay">
+        <span data-spp-field="label.delay">Move to Sep 15</span>
+      </button>
+      <button type="button" class="spp__btn spp__btn--quiet" data-spp-act="close">Cancel</button>
+    </div>
+
+    {%- comment -%} ---------- Frequency ---------- {%- endcomment -%}
+    <div data-spp-sheet-panel="freq" hidden>
+      <h2 id="spp-sheet-h-freq">Delivery frequency</h2>
+      <p>Pick the gap that matches how often you use it. Changing the cadence keeps your subscriber price.</p>
+
+      <div class="spp__choices" style="gap:9px;margin-bottom:18px;" role="radiogroup" aria-label="Delivery frequency" data-spp-list="freqOptions">
+        <template data-spp-tpl="freqOptions">
+          <button type="button" class="spp__choice" role="radio" aria-checked="false" data-spp-pick="freq">
+            <span>
+              <span data-spp-field="label">Every 60 days</span>
+              <span class="spp__choice-hint" data-spp-field="hint">Your current cadence</span>
+            </span>
+            <span class="spp__radio"></span>
+          </button>
+        </template>
+      </div>
+
+      <button type="button" class="spp__btn spp__btn--primary" data-spp-act="freq">
+        <span data-spp-field="label.freq">Save frequency</span>
+      </button>
+      <button type="button" class="spp__btn spp__btn--quiet" data-spp-act="close">Cancel</button>
+    </div>
+
+    {%- comment -%} ---------- Pause ---------- {%- endcomment -%}
+    <div data-spp-sheet-panel="pause" hidden>
+      <h2 id="spp-sheet-h-pause">Pause your subscription</h2>
+      <p>No charges and no deliveries while paused. Everything resumes automatically &mdash; you can also resume early at any time.</p>
+
+      <div class="spp__choices spp__choices--row" style="margin-bottom:14px;" role="radiogroup" aria-label="Pause length" data-spp-list="pauseOptions">
+        <template data-spp-tpl="pauseOptions">
+          <button type="button" class="spp__tile spp__tile--tall" role="radio" aria-checked="false" data-spp-pick="pause">
+            <span data-spp-field="n">2</span>
+            <span data-spp-field="unit">months</span>
+          </button>
+        </template>
+      </div>
+
+      <div class="spp__info" style="margin-bottom:18px;">
+        Deliveries stop after today and restart on
+        <b data-spp-field="sheet.pauseUntilLong">Wednesday, October 21</b>.
+        Your <span data-spp-field="loyalty.points">640</span> VetPoints are kept.
+      </div>
+
+      <button type="button" class="spp__btn spp__btn--primary" data-spp-act="pause">
+        <span data-spp-field="label.pause">Pause for 2 months</span>
+      </button>
+      <button type="button" class="spp__btn spp__btn--quiet" data-spp-act="close">Cancel</button>
+    </div>
+
+    {%- comment -%} ---------- Resume ---------- {%- endcomment -%}
+    <div data-spp-sheet-panel="resume" hidden>
+      <h2 id="spp-sheet-h-resume">Resume your subscription?</h2>
+      <p>
+        Your next delivery will be prepared for
+        <strong style="color:var(--spp-ink);" data-spp-field="sheet.resumeSoonLong">Monday, August 24</strong>
+        and charged to <span data-spp-field="subscription.paymentShort">Visa ···· 4242</span> on that day.
+        The <span data-spp-field="subscription.intervalDays">60</span>-day cadence continues after it.
+      </p>
+
+      <button type="button" class="spp__btn spp__btn--primary" data-spp-act="resume">
+        <span data-spp-field="label.resume">Resume subscription</span>
+      </button>
+      <button type="button" class="spp__btn spp__btn--quiet" data-spp-act="close">Stay paused</button>
+    </div>
+
+    {%- comment -%} ---------- Quantity ---------- {%- endcomment -%}
+    <div data-spp-sheet-panel="qty" hidden>
+      <h2 id="spp-sheet-h-qty">Change quantities</h2>
+      <p>Applies from the <span data-spp-field="subscription.nextOrderShort">Sep 8</span> delivery. Maximum 50 per item.</p>
+
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;" data-spp-list="qtyLines" data-spp-separators>
+        <template data-spp-tpl="qtyLines">
+          <div class="spp__media" style="gap:14px;">
+            <span class="spp__thumb spp__thumb--sm" data-spp-thumb><img data-spp-img alt=""></span>
+            <div class="spp__media-body">
+              <div style="font:600 15px/1.3 var(--spp-font);color:var(--spp-ink);" data-spp-field="title">FreshWipes jar</div>
+              <div style="font:500 13px/1.4 var(--spp-font);color:var(--spp-muted);margin-top:3px;">
+                <span data-spp-field="unitPrice">$24.90</span> each
+              </div>
+            </div>
+            <div class="spp__stepper">
+              <button type="button" data-spp-qty="minus" aria-label="Decrease quantity">&minus;</button>
+              <output data-spp-field="draftQuantity" aria-live="polite">2</output>
+              <button type="button" data-spp-qty="plus" aria-label="Increase quantity">+</button>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <div class="spp__total-strip" style="margin-bottom:16px;">
+        <span>New per-delivery total</span>
+        <span data-spp-field="qty.total">$62.73</span>
+      </div>
+
+      <button type="button" class="spp__btn spp__btn--primary" data-spp-act="qty">
+        <span data-spp-field="label.qty">Save quantities</span>
+      </button>
+      <button type="button" class="spp__btn spp__btn--quiet" data-spp-act="close">Cancel</button>
+    </div>
+
+    <p class="spp__pending-note" data-spp-pending-note hidden>Don&rsquo;t close this window &mdash; we&rsquo;re updating your schedule.</p>
+  </div>
+</div>

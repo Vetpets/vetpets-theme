@@ -1,0 +1,221 @@
+{%- comment -%}
+  Screen: dashboard / overview.
+  Priority order is the approved one: status → next delivery → primary
+  actions → products → deliveries → VetPoints → account rows → guarantee.
+{%- endcomment -%}
+
+<section class="spp__screen" data-spp-screen="dashboard" hidden aria-labelledby="spp-dash-h">
+
+  {%- comment -%} Greeting + pets {%- endcomment -%}
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px;">
+    <div>
+      <h1 class="spp__h1 spp__h1--lg" id="spp-dash-h" style="margin-bottom:6px;">
+        Hi <span data-spp-field="customer.firstName">Margaret</span>
+      </h1>
+      <p style="margin:0;font:500 15px/1.4 var(--spp-font);color:var(--spp-body);">
+        Two dogs, one routine. Everything for Bella and Max is on track.
+      </p>
+    </div>
+    <div class="spp__chips" data-spp-list="pets">
+      <template data-spp-tpl="pets">
+        <span class="spp__chip">
+          <span class="spp__chip-dot" data-spp-field="initial">B</span>
+          <span data-spp-field="name">Bella</span>
+        </span>
+      </template>
+    </div>
+  </div>
+
+  {%- comment -%} Paused banner {%- endcomment -%}
+  <div class="spp__banner spp__banner--paused" data-spp-when="status:paused" hidden>
+    <span class="spp__banner-icon">{% render 'spp-icon', icon: 'pause' %}</span>
+    <div style="flex:1;">
+      <div class="spp__banner-title">Subscription paused</div>
+      <p>
+        Nothing will ship or be charged until
+        <strong style="color:var(--spp-ink);" data-spp-field="subscription.pausedUntilLong">21 October</strong>,
+        when your <span data-spp-field="subscription.intervalDays">60</span>-day cadence picks up again.
+      </p>
+      <button type="button" class="spp__btn spp__btn--primary spp__btn--inline" style="min-height:44px;padding:0 22px;font-size:14.5px;" data-spp-sheet="resume">Resume now</button>
+    </div>
+  </div>
+
+  {%- comment -%} Cancelled banner {%- endcomment -%}
+  <div class="spp__banner spp__banner--cancelled" data-spp-when="status:cancelled" hidden>
+    <span class="spp__banner-icon">&mdash;</span>
+    <div style="flex:1;">
+      <div class="spp__banner-title">Subscription cancelled</div>
+      <p>
+        No further charges will be made. Your details and VetPoints are kept, so you can pick the routine
+        back up whenever you want.
+      </p>
+      <button type="button" class="spp__btn spp__btn--primary spp__btn--inline" style="min-height:44px;font-size:14.5px;" data-spp-go="reactivate">Reactivate subscription</button>
+    </div>
+  </div>
+
+  <div class="spp__split">
+
+    {%- comment -%} ===== Main column ===== {%- endcomment -%}
+    <div class="spp__split-main">
+
+      {%- comment -%} Next delivery {%- endcomment -%}
+      <div class="spp__card spp__card--flush">
+        <div class="spp__next-head">
+          <span class="spp__badge">Next delivery</span>
+          <span class="spp__next-ref" data-spp-field="subscription.reference">#VP-48210</span>
+        </div>
+
+        <div class="spp__next-body">
+          <div style="flex:1;min-width:0;">
+            <div class="spp__next-date" data-spp-field="subscription.nextOrderMedium">Tue, Sep 8</div>
+            <div class="spp__next-meta">
+              <span data-spp-field="pricing.total">$62.73</span> ·
+              every <span data-spp-field="subscription.intervalDays">60</span> days · free shipping
+            </div>
+          </div>
+          <div class="spp__next-thumbs" data-spp-list="lineThumbs">
+            <template data-spp-tpl="lineThumbs">
+              <span class="spp__thumb" data-spp-thumb>
+                <img data-spp-img alt="">
+              </span>
+            </template>
+          </div>
+        </div>
+
+        <div style="padding:0 18px 16px;">
+          <div class="spp__progress" role="img" data-spp-field-aria="subscription.progressLabel">
+            <span data-spp-style-width="subscription.shipProgress"></span>
+          </div>
+          <div class="spp__progress-legend">
+            <span>Order builds now</span>
+            <span data-spp-field="subscription.daysAway">18 days away</span>
+          </div>
+        </div>
+
+        <div class="spp__actions-3">
+          <button type="button" class="spp__action" data-spp-sheet="skip">
+            {% render 'spp-icon', icon: 'skip' %}
+            Skip
+          </button>
+          <button type="button" class="spp__action" data-spp-sheet="delay">
+            {% render 'spp-icon', icon: 'clock-action' %}
+            Delay
+          </button>
+          <button type="button" class="spp__action" data-spp-go="subscription">
+            {% render 'spp-icon', icon: 'list' %}
+            Manage
+          </button>
+        </div>
+      </div>
+
+      {%- comment -%} In this subscription {%- endcomment -%}
+      <div class="spp__card">
+        <div class="spp__card-head">
+          <h2 class="spp__h2" style="margin:0;">In this subscription</h2>
+          <button type="button" style="border:none;background:transparent;font:600 14px/1 var(--spp-font);color:var(--spp-ink);padding:8px 0;" data-spp-go="subscription">Details</button>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px;" data-spp-list="lines" data-spp-separators>
+          <template data-spp-tpl="lines">
+            <div class="spp__media">
+              <span class="spp__thumb" data-spp-thumb><img data-spp-img alt=""></span>
+              <div class="spp__media-body">
+                <div class="spp__media-title" data-spp-field="title">FreshWipes jar</div>
+                <div class="spp__media-meta">
+                  <span data-spp-field="unitPrice">$24.90</span> each ·
+                  <span data-spp-field="subtitle">for Bella &amp; Max</span>
+                </div>
+              </div>
+              <button type="button" class="spp__qty-pill" data-spp-sheet="qty">
+                ×<span data-spp-field="quantity">2</span>
+                {% render 'spp-icon', icon: 'chevron-down' %}
+              </button>
+            </div>
+          </template>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;">
+          <p class="spp__note" style="width:100%;">Products, prices and dates in this prototype are mock data.</p>
+          <button type="button" class="spp__btn spp__btn--secondary" style="flex:1 1 140px;width:auto;min-height:48px;font-size:14.5px;" data-spp-go="addon">Add a one-time item</button>
+          <button type="button" class="spp__btn" style="flex:1 1 140px;width:auto;min-height:48px;font-size:14.5px;background:var(--spp-surface-soft);border:1px solid rgba(13,35,64,.14);color:var(--spp-ink);" data-spp-go="swap">Swap a product</button>
+        </div>
+      </div>
+
+      {%- comment -%} Deliveries preview {%- endcomment -%}
+      <div class="spp__card">
+        <div class="spp__card-head">
+          <h2 class="spp__h2" style="margin:0;">Deliveries</h2>
+          <button type="button" style="border:none;background:transparent;font:600 14px/1 var(--spp-font);color:var(--spp-ink);padding:8px 0;" data-spp-go="deliveries">View all</button>
+        </div>
+        <div data-spp-list="deliveriesPreview">
+          <template data-spp-tpl="deliveriesPreview">
+            <div class="spp__delivery">
+              <span class="spp__date-tile">
+                <span data-spp-field="mon">SEP</span>
+                <b data-spp-field="day">8</b>
+              </span>
+              <div style="flex:1;min-width:0;">
+                <div class="spp__delivery-title" data-spp-field="title">Next delivery</div>
+                <div class="spp__delivery-meta" data-spp-field="meta">FreshWipes ×2, EyeWipes ×1</div>
+              </div>
+              <span class="spp__delivery-status" data-spp-field="status">Scheduled</span>
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} ===== Side column ===== {%- endcomment -%}
+    <div class="spp__split-side">
+
+      {%- comment -%} VetPoints — solid blue, white text/icons {%- endcomment -%}
+      <div class="spp__points">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <span class="spp__badge">VetPoints</span>
+          <span style="opacity:.9;">{% render 'spp-icon', icon: 'sparkle', size: 22, stroke: '#FFFFFF' %}</span>
+        </div>
+        <div class="spp__points-value">
+          <b data-spp-field="loyalty.points">640</b>
+          <span>points</span>
+        </div>
+        <div class="spp__progress spp__progress--on-blue">
+          <span data-spp-style-width="loyalty.progressPercent"></span>
+        </div>
+        <p>
+          <span data-spp-field="loyalty.toNextReward">160</span> more points unlock
+          <span data-spp-field="loyalty.nextRewardName">a free plush toy</span>.
+          Each renewal adds <span data-spp-field="loyalty.perRenewal">100</span> points.
+        </p>
+        <p class="spp__points-fine">Placeholder points logic &mdash; thresholds and rewards are configurable.</p>
+        <button type="button" class="spp__btn" data-spp-go="loyalty">View rewards</button>
+      </div>
+
+      {%- comment -%} Quick account rows {%- endcomment -%}
+      <div class="spp__card spp__card--rows">
+        <button type="button" class="spp__row" data-spp-go="address">
+          <span class="spp__row-label">Delivery address</span>
+          <span class="spp__row-value" data-spp-field="subscription.addressShort">Portland, OR</span>
+          {% render 'spp-icon', icon: 'chevron-right' %}
+        </button>
+        <button type="button" class="spp__row" data-spp-go="payment">
+          <span class="spp__row-label">Payment method</span>
+          <span class="spp__row-value" data-spp-field="subscription.paymentShort">Visa ···· 4242</span>
+          {% render 'spp-icon', icon: 'chevron-right' %}
+        </button>
+        <button type="button" class="spp__row" data-spp-go="account">
+          <span class="spp__row-label">Help &amp; account settings</span>
+          {% render 'spp-icon', icon: 'chevron-right' %}
+        </button>
+      </div>
+
+      {%- comment -%} 100-day money-back guarantee — final approved native card {%- endcomment -%}
+      <div class="spp__guarantee">
+        <span class="spp__guarantee-icon">{% render 'spp-icon', icon: 'shield-check' %}</span>
+        <div style="flex:1;min-width:0;">
+          <h2><b>100-day</b> money-back guarantee</h2>
+          <p>Your routine is protected for 100 days. If you&rsquo;re not satisfied, contact us for a full refund.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
