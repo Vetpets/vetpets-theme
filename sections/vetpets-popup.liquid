@@ -1,0 +1,806 @@
+{%- comment -%}
+  VetPets Welcome Popup — self-contained section.
+  Ported from Claude Design project "VetPets Welcome Popup"
+  (artboards: Desktop/Mobile · before scratch, after scratch, interactive).
+  Render once, globally: {% section 'vetpets-popup' %} immediately before </body>.
+  All classes are prefixed .vpp- ; no global selectors.
+{%- endcomment -%}
+
+{%- liquid
+  assign vpp_blocked = false
+  assign path = request.path
+  if request.page_type == 'cart' or request.page_type == 'customers/login' or request.page_type == 'customers/register' or request.page_type == 'customers/account' or request.page_type == 'customers/order' or request.page_type == 'customers/addresses' or request.page_type == 'customers/reset_password' or request.page_type == 'customers/activate_account'
+    assign vpp_blocked = true
+  endif
+  if path contains '/cart' or path contains '/checkout' or path contains '/account'
+    assign vpp_blocked = true
+  endif
+  unless section.settings.enable
+    assign vpp_blocked = true
+  endunless
+-%}
+
+{%- unless vpp_blocked -%}
+{%- liquid
+  assign mark_hex = section.settings.color_mark | remove: '#' | downcase
+  assign mark_enc = '%23' | append: mark_hex
+  assign paw = "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35zM10.4 6.4h3.2v2.9h2.9v3.2h-2.9v2.9h-3.2v-2.9H7.5V9.3h2.9z"
+-%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+
+<style>
+  #vpp-{{ section.id }}.vpp-root {
+    --vpp-brand: {{ section.settings.color_brand }};
+    --vpp-brand-hover: {{ section.settings.color_brand_hover }};
+    --vpp-accent: {{ section.settings.color_accent }};
+    --vpp-ink: {{ section.settings.color_ink }};
+    --vpp-body: {{ section.settings.color_body }};
+    --vpp-muted: {{ section.settings.color_muted }};
+    --vpp-error: {{ section.settings.color_error }};
+    --vpp-field-bg: {{ section.settings.color_field_bg }};
+    --vpp-field-border: {{ section.settings.color_field_border }};
+    --vpp-surface: {{ section.settings.color_surface }};
+    --vpp-grad-top: {{ section.settings.color_gradient_top }};
+    --vpp-grad-mid: {{ section.settings.color_gradient_mid }};
+    --vpp-grad-bottom: {{ section.settings.color_gradient_bottom }};
+    --vpp-font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  #vpp-{{ section.id }}.vpp-root { position: fixed; inset: 0; z-index: 2147483000; display: none; }
+  #vpp-{{ section.id }}.vpp-root.vpp-open { display: block; }
+
+  #vpp-{{ section.id }} .vpp-surface {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--vpp-grad-top) 0%, var(--vpp-grad-mid) 46%, var(--vpp-grad-bottom) 100%);
+    font-family: var(--vpp-font);
+    -webkit-font-smoothing: antialiased;
+    animation: vpp-fade .28s ease both;
+  }
+
+  @keyframes vpp-fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes vpp-fade-up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  #vpp-{{ section.id }} .vpp-tile {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='138' height='138' viewBox='0 0 138 138'%3E%3Cg fill='{{ mark_enc }}' fill-opacity='0.15' fill-rule='evenodd'%3E%3Cg transform='translate(7 13) rotate(-10) scale(1.93)'%3E%3Cpath d='{{ paw }}'/%3E%3C/g%3E%3Cg transform='translate(84 34) rotate(-10) scale(1.22)'%3E%3Cpath d='{{ paw }}'/%3E%3C/g%3E%3Cg transform='translate(39 84) rotate(-10) scale(1.56)'%3E%3Cpath d='{{ paw }}'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-size: 138px 138px;
+  }
+
+  #vpp-{{ section.id }} .vpp-close {
+    position: absolute; top: 18px; right: 18px; z-index: 6;
+    width: 44px; height: 44px; border-radius: 999px; border: none; padding: 0;
+    background: rgba(0,0,0,.06); color: var(--vpp-body);
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+  }
+  #vpp-{{ section.id }} .vpp-close:hover { background: rgba(0,0,0,.11); }
+
+  #vpp-{{ section.id }} .vpp-photo { position: absolute; display: none; border-radius: 16px; object-fit: cover; object-position: center; }
+  #vpp-{{ section.id }} .vpp-photo--a { left: 700px; top: 90px; width: 400px; height: 500px; box-shadow: 0 28px 54px -22px rgba(0,0,0,.30); }
+  #vpp-{{ section.id }} .vpp-photo--b { left: 968px; top: 372px; width: 400px; height: 424px; box-shadow: 0 32px 60px -22px rgba(0,0,0,.32); }
+
+  #vpp-{{ section.id }} .vpp-col {
+    position: absolute; inset: 0; z-index: 3;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 0 25px; box-sizing: border-box;
+  }
+
+  #vpp-{{ section.id }} .vpp-logo { height: 28px; width: auto; display: block; margin-bottom: 18px; }
+  #vpp-{{ section.id }} .vpp-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--vpp-brand); margin-bottom: 12px; }
+  #vpp-{{ section.id }} .vpp-title { margin: 0; font-size: 40px; font-weight: 800; line-height: 1; letter-spacing: -.035em; color: var(--vpp-ink); }
+  #vpp-{{ section.id }} .vpp-sub { margin: 14px 0 0; font-size: 16px; font-weight: 500; line-height: 1.45; color: var(--vpp-body); max-width: 310px; text-wrap: pretty; }
+
+  #vpp-{{ section.id }} .vpp-stack { margin-top: 26px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+
+  #vpp-{{ section.id }} .vpp-card {
+    position: relative; width: 340px; height: 250px; border-radius: 18px; overflow: hidden;
+    box-shadow: 0 22px 44px -16px rgba(0,40,70,.30); background: var(--vpp-surface);
+  }
+  #vpp-{{ section.id }} .vpp-canvas {
+    position: absolute; inset: 0; z-index: 2; display: block;
+    width: 100%; height: 100%; touch-action: none; cursor: grab;
+  }
+  #vpp-{{ section.id }} .vpp-pill {
+    position: absolute; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 3;
+    pointer-events: none; display: flex; align-items: center; gap: 10px;
+    height: 40px; padding: 0 18px; border-radius: 100px;
+    background: rgba(0,0,0,.28); color: #FFFFFF; font-size: 15px; font-weight: 700;
+    white-space: nowrap; transition: opacity .2s ease;
+  }
+
+  #vpp-{{ section.id }} .vpp-panel {
+    width: 330px; box-sizing: border-box; background: var(--vpp-surface);
+    border-radius: 18px; padding: 26px; box-shadow: 0 22px 44px -16px rgba(0,40,70,.24);
+  }
+  #vpp-{{ section.id }} .vpp-step { display: flex; flex-direction: column; align-items: center; animation: vpp-fade-up .3s ease both; }
+
+  #vpp-{{ section.id }} .vpp-check { width: 44px; height: 44px; border-radius: 999px; background: var(--vpp-accent); display: flex; align-items: center; justify-content: center; flex: none; }
+  #vpp-{{ section.id }} .vpp-kicker { margin-top: 14px; font-size: 13px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--vpp-brand); }
+  #vpp-{{ section.id }} .vpp-offer { margin-top: 6px; font-size: 42px; font-weight: 800; line-height: 1; letter-spacing: -.03em; color: var(--vpp-ink); }
+  #vpp-{{ section.id }} .vpp-ask { margin-top: 10px; font-size: 15px; font-weight: 500; color: var(--vpp-body); }
+
+  #vpp-{{ section.id }} .vpp-input {
+    margin-top: 18px; width: 100%; height: 54px; box-sizing: border-box; border-radius: 12px;
+    background: var(--vpp-field-bg); border: 1.5px solid var(--vpp-field-border);
+    padding: 0 16px; font-size: 15px; font-weight: 500; color: var(--vpp-body);
+    outline: none; font-family: var(--vpp-font);
+  }
+  #vpp-{{ section.id }} .vpp-input::placeholder { color: {{ section.settings.color_placeholder }}; }
+  #vpp-{{ section.id }} .vpp-input:focus { box-shadow: 0 0 0 3px rgba(71,181,233,.14); }
+  #vpp-{{ section.id }} .vpp-input.vpp-invalid { border-color: var(--vpp-error); }
+
+  #vpp-{{ section.id }} .vpp-error { align-self: flex-start; margin-top: 8px; font-size: 13px; font-weight: 600; color: var(--vpp-error); text-align: left; }
+  #vpp-{{ section.id }} .vpp-error[hidden] { display: none; }
+
+  #vpp-{{ section.id }} .vpp-submit {
+    margin-top: 12px; width: 100%; height: 54px; border-radius: 12px; border: none;
+    background: var(--vpp-brand); color: #FFFFFF; font-size: 15px; font-weight: 800;
+    letter-spacing: .04em; text-transform: uppercase; cursor: pointer; font-family: var(--vpp-font);
+  }
+  #vpp-{{ section.id }} .vpp-submit:hover { background: var(--vpp-brand-hover); }
+  #vpp-{{ section.id }} .vpp-submit[disabled] { opacity: .65; cursor: default; }
+
+  #vpp-{{ section.id }} .vpp-fine { margin-top: 14px; font-size: 13px; font-weight: 500; line-height: 1.45; color: var(--vpp-muted); text-align: center; }
+  #vpp-{{ section.id }} .vpp-consent { margin-top: 10px; font-size: 12px; font-weight: 400; line-height: 1.5; color: var(--vpp-muted); text-align: center; text-wrap: pretty; }
+
+  #vpp-{{ section.id }} .vpp-sms-title { margin-top: 10px; font-size: 22px; font-weight: 800; line-height: 1.15; letter-spacing: -.02em; color: var(--vpp-ink); text-align: center; }
+  #vpp-{{ section.id }} .vpp-tel {
+    margin-top: 18px; width: 100%; display: flex; align-items: center; height: 54px;
+    border-radius: 12px; background: var(--vpp-field-bg); border: 1.5px solid var(--vpp-field-border);
+    box-sizing: border-box; overflow: hidden;
+  }
+  #vpp-{{ section.id }} .vpp-tel.vpp-invalid { border-color: var(--vpp-error); }
+  #vpp-{{ section.id }} .vpp-prefix {
+    display: flex; align-items: center; height: 100%; padding: 0 14px;
+    font-size: 15px; font-weight: 700; color: var(--vpp-body);
+    background: {{ section.settings.color_prefix_bg }}; border-right: 1.5px solid var(--vpp-field-border);
+  }
+  #vpp-{{ section.id }} .vpp-tel input {
+    flex: 1; min-width: 0; height: 100%; border: none; background: transparent; padding: 0 12px;
+    font-size: 15px; font-weight: 500; color: var(--vpp-body); outline: none; font-family: var(--vpp-font);
+  }
+  #vpp-{{ section.id }} .vpp-tel input::placeholder { color: {{ section.settings.color_placeholder }}; }
+
+  #vpp-{{ section.id }} .vpp-skip {
+    margin-top: 12px; background: none; border: none; padding: 8px 12px;
+    font-size: 15px; font-weight: 600; color: var(--vpp-brand); text-decoration: underline;
+    cursor: pointer; font-family: var(--vpp-font);
+  }
+
+  #vpp-{{ section.id }} .vpp-done-title { margin-top: 14px; font-size: 22px; font-weight: 800; letter-spacing: -.02em; color: var(--vpp-ink); text-align: center; }
+  #vpp-{{ section.id }} .vpp-code {
+    margin-top: 16px; width: 100%; height: 54px; border-radius: 12px;
+    background: var(--vpp-field-bg); border: 1.5px dashed var(--vpp-brand);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 19px; font-weight: 800; letter-spacing: .14em; color: var(--vpp-ink);
+  }
+  #vpp-{{ section.id }} .vpp-code-note { margin-top: 12px; font-size: 15px; font-weight: 500; color: var(--vpp-body); text-align: center; }
+
+  #vpp-{{ section.id }} .vpp-decline {
+    background: none; border: none; padding: 8px 12px; font-size: 15px; font-weight: 500;
+    color: var(--vpp-muted); text-decoration: underline; cursor: pointer; white-space: nowrap;
+    font-family: var(--vpp-font);
+  }
+  #vpp-{{ section.id }} .vpp-decline:hover { color: var(--vpp-body); }
+
+  #vpp-{{ section.id }} [hidden] { display: none !important; }
+
+  @media (min-width: 1100px) {
+    #vpp-{{ section.id }} .vpp-tile {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='164' height='164' viewBox='0 0 164 164'%3E%3Cg fill='{{ mark_enc }}' fill-opacity='0.15' fill-rule='evenodd'%3E%3Cg transform='translate(8 16) rotate(-10) scale(2.3)'%3E%3Cpath d='{{ paw }}'/%3E%3C/g%3E%3Cg transform='translate(100 40) rotate(-10) scale(1.45)'%3E%3Cpath d='{{ paw }}'/%3E%3C/g%3E%3Cg transform='translate(46 100) rotate(-10) scale(1.85)'%3E%3Cpath d='{{ paw }}'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      background-size: 164px 164px;
+    }
+    #vpp-{{ section.id }} .vpp-close { top: 26px; right: 26px; }
+    #vpp-{{ section.id }} .vpp-photo { display: block; }
+    #vpp-{{ section.id }} .vpp-col { left: 118px; right: auto; width: 480px; padding: 0; }
+    #vpp-{{ section.id }} .vpp-logo { height: 34px; margin-bottom: 22px; }
+    #vpp-{{ section.id }} .vpp-eyebrow { font-size: 12px; margin-bottom: 14px; }
+    #vpp-{{ section.id }} .vpp-title { font-size: 54px; }
+    #vpp-{{ section.id }} .vpp-sub { margin-top: 16px; font-size: 17px; line-height: 1.5; max-width: 400px; }
+    #vpp-{{ section.id }} .vpp-stack { margin-top: 34px; gap: 26px; }
+    #vpp-{{ section.id }} .vpp-card { width: 460px; height: 320px; }
+    #vpp-{{ section.id }} .vpp-pill { bottom: 22px; }
+    #vpp-{{ section.id }} .vpp-panel { width: 396px; padding: 32px; }
+    #vpp-{{ section.id }} .vpp-kicker { margin-top: 16px; }
+    #vpp-{{ section.id }} .vpp-offer { font-size: 46px; }
+    #vpp-{{ section.id }} .vpp-ask { margin-top: 12px; }
+    #vpp-{{ section.id }} .vpp-input { margin-top: 20px; }
+    #vpp-{{ section.id }} .vpp-sms-title { font-size: 24px; }
+    #vpp-{{ section.id }} .vpp-tel { margin-top: 20px; }
+    #vpp-{{ section.id }} .vpp-tel input { padding: 0 14px; }
+    #vpp-{{ section.id }} .vpp-prefix { padding: 0 14px; }
+    #vpp-{{ section.id }} .vpp-skip { margin-top: 14px; }
+    #vpp-{{ section.id }} .vpp-consent { margin-top: 12px; }
+    #vpp-{{ section.id }} .vpp-done-title { margin-top: 16px; font-size: 24px; }
+    #vpp-{{ section.id }} .vpp-code { font-size: 20px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #vpp-{{ section.id }} .vpp-surface,
+    #vpp-{{ section.id }} .vpp-step { animation: none; }
+    #vpp-{{ section.id }} .vpp-pill { transition: none; }
+  }
+</style>
+
+<div id="vpp-{{ section.id }}" class="vpp-root" data-vpp-root aria-hidden="true">
+  <div class="vpp-surface" data-vpp-surface role="dialog" aria-modal="true" aria-label="{{ section.settings.text_title | escape }}">
+    <div class="vpp-tile"></div>
+
+    <button type="button" class="vpp-close" data-vpp-close aria-label="{{ section.settings.text_close_label | escape }}">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+    </button>
+
+    {%- if section.settings.photo_primary != blank -%}
+      {{ section.settings.photo_primary | image_url: width: 800 | image_tag: class: 'vpp-photo vpp-photo--a', widths: '400, 600, 800', sizes: '400px', loading: 'lazy', alt: section.settings.photo_primary_alt }}
+    {%- endif -%}
+    {%- if section.settings.photo_secondary != blank -%}
+      {{ section.settings.photo_secondary | image_url: width: 800 | image_tag: class: 'vpp-photo vpp-photo--b', widths: '400, 600, 800', sizes: '400px', loading: 'lazy', alt: section.settings.photo_secondary_alt }}
+    {%- endif -%}
+
+    <div class="vpp-col">
+      {%- if section.settings.logo != blank -%}
+        {{ section.settings.logo | image_url: width: 400 | image_tag: class: 'vpp-logo', widths: '200, 300, 400', sizes: '170px', loading: 'lazy', alt: shop.name }}
+      {%- endif -%}
+
+      {%- comment -%} STATE 1 — before scratch {%- endcomment -%}
+      <div data-vpp-before>
+        <div class="vpp-eyebrow">{{ section.settings.text_eyebrow }}</div>
+        <h1 class="vpp-title">{{ section.settings.text_title }}</h1>
+        <p class="vpp-sub">{{ section.settings.text_subtitle }}</p>
+
+        <div class="vpp-stack">
+          <div class="vpp-card">
+            <canvas class="vpp-canvas" data-vpp-canvas width="460" height="320" aria-label="{{ section.settings.text_scratch_pill | escape }}" role="img"></canvas>
+            <div class="vpp-pill" data-vpp-pill>
+              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><g fill="#FFFFFF" transform="translate(12 12) rotate(-11)"><rect x="-9.4" y="-12" width="3.4" height="11" rx="1.7"></rect><rect x="-4.7" y="-12" width="3.4" height="13.5" rx="1.7"></rect><rect x="0" y="-12" width="3.4" height="12.5" rx="1.7"></rect><rect x="4.7" y="-12" width="3.4" height="10.5" rx="1.7"></rect><rect x="-9.8" y="-2.5" width="19.5" height="13" rx="5.5"></rect></g></svg>
+              <span>{{ section.settings.text_scratch_pill }}</span>
+            </div>
+          </div>
+          <button type="button" class="vpp-decline" data-vpp-close>{{ section.settings.text_decline }}</button>
+        </div>
+      </div>
+
+      {%- comment -%} STATE 2/3/4 — after scratch {%- endcomment -%}
+      <div data-vpp-after hidden>
+        <div class="vpp-stack">
+          <div class="vpp-panel">
+
+            <div class="vpp-step" data-vpp-step="email">
+              <div class="vpp-check">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+              </div>
+              <div class="vpp-kicker">{{ section.settings.text_unlocked }}</div>
+              <div class="vpp-offer">{{ section.settings.text_offer }}</div>
+              <div class="vpp-ask">{{ section.settings.text_email_ask }}</div>
+              <input class="vpp-input" data-vpp-email type="email" inputmode="email" autocomplete="email" aria-label="{{ section.settings.text_email_ask | escape }}" placeholder="{{ section.settings.text_email_placeholder | escape }}">
+              <div class="vpp-error" data-vpp-email-error hidden role="alert"></div>
+              <button type="button" class="vpp-submit" data-vpp-email-submit>{{ section.settings.text_claim_button }}</button>
+              <div class="vpp-fine">{{ section.settings.text_email_fine_print }}</div>
+            </div>
+
+            {%- if section.settings.enable_sms_step -%}
+            <div class="vpp-step" data-vpp-step="sms" hidden>
+              <div class="vpp-kicker" style="margin-top:0">{{ section.settings.text_sms_kicker }}</div>
+              <div class="vpp-sms-title">{{ section.settings.text_sms_title }}</div>
+              <div class="vpp-tel" data-vpp-tel-wrap>
+                <span class="vpp-prefix">{{ section.settings.text_sms_prefix }}</span>
+                <input data-vpp-phone type="tel" inputmode="tel" autocomplete="tel-national" aria-label="{{ section.settings.text_sms_title | escape }}" placeholder="{{ section.settings.text_sms_placeholder | escape }}">
+              </div>
+              <div class="vpp-error" data-vpp-sms-error hidden role="alert"></div>
+              <button type="button" class="vpp-submit" data-vpp-sms-submit>{{ section.settings.text_sms_button }}</button>
+              <button type="button" class="vpp-skip" data-vpp-sms-skip>{{ section.settings.text_sms_skip }}</button>
+              <div class="vpp-consent">{{ section.settings.text_sms_consent }}</div>
+            </div>
+            {%- endif -%}
+
+            <div class="vpp-step" data-vpp-step="done" hidden>
+              <div class="vpp-check">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+              </div>
+              <div class="vpp-done-title">{{ section.settings.text_done_title }}</div>
+              <div class="vpp-code">{{ section.settings.discount_code }}</div>
+              <div class="vpp-code-note">{{ section.settings.text_done_note }}</div>
+            </div>
+
+          </div>
+          <button type="button" class="vpp-decline" data-vpp-close>{{ section.settings.text_decline }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="application/json" data-vpp-config="{{ section.id }}">
+{
+  "scratchImage": {{ section.settings.scratch_image | image_url: width: 920 | json }},
+  "trigger": {{ section.settings.trigger | json }},
+  "delaySeconds": {{ section.settings.delay_seconds | json }},
+  "scrollPercent": {{ section.settings.scroll_percent | json }},
+  "hideDays": {{ section.settings.hide_days | json }},
+  "storageKey": {{ section.settings.storage_key | json }},
+  "companyId": {{ section.settings.klaviyo_company_id | json }},
+  "emailListId": {{ section.settings.klaviyo_email_list_id | json }},
+  "smsListId": {{ section.settings.klaviyo_sms_list_id | json }},
+  "smsEnabled": {{ section.settings.enable_sms_step | json }},
+  "smsPrefix": {{ section.settings.text_sms_prefix | json }},
+  "errEmail": {{ section.settings.text_error_email | json }},
+  "errPhone": {{ section.settings.text_error_phone | json }},
+  "errGeneric": {{ section.settings.text_error_generic | json }},
+  "designMode": {{ request.design_mode | default: false | json }}
+}
+</script>
+
+<script>
+(function () {
+  var root = document.getElementById('vpp-{{ section.id }}');
+  if (!root || root.dataset.vppReady === '1') return;
+  root.dataset.vppReady = '1';
+
+  var cfgEl = document.querySelector('script[data-vpp-config="{{ section.id }}"]');
+  var cfg;
+  try { cfg = JSON.parse(cfgEl.textContent); } catch (e) { return; }
+
+  var designMode = !!(window.Shopify && window.Shopify.designMode);
+  var q = function (sel) { return root.querySelector(sel); };
+  var qa = function (sel) { return Array.prototype.slice.call(root.querySelectorAll(sel)); };
+
+  var surface = q('[data-vpp-surface]');
+  var beforeEl = q('[data-vpp-before]');
+  var afterEl = q('[data-vpp-after]');
+  var canvas = q('[data-vpp-canvas]');
+  var pill = q('[data-vpp-pill]');
+  var emailInput = q('[data-vpp-email]');
+  var emailError = q('[data-vpp-email-error]');
+  var emailSubmit = q('[data-vpp-email-submit]');
+  var phoneInput = q('[data-vpp-phone]');
+  var telWrap = q('[data-vpp-tel-wrap]');
+  var smsError = q('[data-vpp-sms-error]');
+  var smsSubmit = q('[data-vpp-sms-submit]');
+  var smsSkip = q('[data-vpp-sms-skip]');
+
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var isOpen = false;
+  var scrollY = 0;
+  var scratchedOnce = false;
+
+  /* ---------- measurement ---------- */
+  function track(event, props) {
+    if (!window.klaviyo || typeof window.klaviyo.push !== 'function') return;
+    try { window.klaviyo.push(['track', event, props || {}]); } catch (e) {}
+  }
+
+  /* ---------- storage gate ---------- */
+  function gateKey() { return cfg.storageKey || 'vetpets_welcome_popup'; }
+  function suppressed() {
+    if (designMode) return false;
+    try {
+      var raw = window.localStorage.getItem(gateKey());
+      if (!raw) return false;
+      var until = parseInt(raw, 10);
+      if (!until || isNaN(until)) return true;
+      if (Date.now() > until) { window.localStorage.removeItem(gateKey()); return false; }
+      return true;
+    } catch (e) { return false; }
+  }
+  function suppress() {
+    if (designMode) return;
+    try {
+      var days = parseInt(cfg.hideDays, 10);
+      if (isNaN(days) || days < 0) days = 7;
+      window.localStorage.setItem(gateKey(), String(Date.now() + days * 86400000));
+    } catch (e) {}
+  }
+
+  /* ---------- open / close ---------- */
+  function open() {
+    if (isOpen) return;
+    isOpen = true;
+    scrollY = window.scrollY || window.pageYOffset || 0;
+    root.classList.add('vpp-open');
+    root.setAttribute('aria-hidden', 'false');
+    document.body.style.top = '-' + scrollY + 'px';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+    paintScratch();
+    track('Popup Viewed');
+    var focusable = q('[data-vpp-close]');
+    if (focusable) { try { focusable.focus({ preventScroll: true }); } catch (e) {} }
+  }
+
+  function close() {
+    if (!isOpen) return;
+    isOpen = false;
+    root.classList.remove('vpp-open');
+    root.setAttribute('aria-hidden', 'true');
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    window.scrollTo(0, scrollY);
+    suppress();
+  }
+
+  qa('[data-vpp-close]').forEach(function (btn) { btn.addEventListener('click', close); });
+
+  document.addEventListener('keydown', function (e) {
+    if (!isOpen) return;
+    if (e.key === 'Escape' || e.key === 'Esc') { e.preventDefault(); close(); }
+  });
+
+  /* Scrim click: a click landing on the popup background itself (not on content). */
+  surface.addEventListener('click', function (e) {
+    if (e.target === surface || (e.target.classList && e.target.classList.contains('vpp-tile'))) close();
+  });
+
+  /* ---------- scratch canvas ---------- */
+  var COLS = 40, ROWS = 28, BRUSH = 56;
+  var cells = null, lastPt = null, dragging = false, finished = false;
+  var bellyImg = null, bellyReady = false, painted = false;
+
+  function loadBelly() {
+    if (bellyImg || !cfg.scratchImage) return;
+    bellyImg = new Image();
+    bellyImg.crossOrigin = 'anonymous';
+    bellyImg.src = cfg.scratchImage;
+    bellyImg.decode().then(function () {
+      bellyReady = true;
+      if (isOpen) paintScratch();
+    }).catch(function () {
+      /* Image unavailable — reveal the offer rather than trapping the visitor. */
+      bellyReady = false;
+      reveal(true);
+    });
+  }
+
+  function paintScratch() {
+    if (!canvas || !bellyReady || !bellyImg || painted || finished) return;
+    var ctx = canvas.getContext('2d');
+    var rect = canvas.getBoundingClientRect();
+    if (rect.width) { canvas.width = Math.round(rect.width); canvas.height = Math.round(rect.height); }
+    var w = canvas.width, h = canvas.height;
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.clearRect(0, 0, w, h);
+    var s = Math.max(w / bellyImg.width, h / bellyImg.height);
+    var dw = bellyImg.width * s, dh = bellyImg.height * s;
+    ctx.drawImage(bellyImg, (w - dw) / 2, (h - dh) / 2, dw, dh);
+    cells = {};
+    marked = 0;
+    lastPt = null;
+    dragging = false;
+    painted = true;
+    canvas.style.opacity = '1';
+    canvas.style.display = 'block';
+    canvas.style.pointerEvents = 'auto';
+    if (pill) pill.style.opacity = '1';
+  }
+
+  function ptFor(e) {
+    var r = canvas.getBoundingClientRect();
+    return {
+      x: (e.clientX - r.left) * (canvas.width / r.width),
+      y: (e.clientY - r.top) * (canvas.height / r.height)
+    };
+  }
+
+  var marked = 0;
+  function mark(px, py) {
+    var cw = canvas.width / COLS, ch = canvas.height / ROWS, rad = BRUSH / 2;
+    var c0 = Math.max(0, Math.floor((px - rad) / cw)), c1 = Math.min(COLS - 1, Math.floor((px + rad) / cw));
+    var r0 = Math.max(0, Math.floor((py - rad) / ch)), r1 = Math.min(ROWS - 1, Math.floor((py + rad) / ch));
+    for (var ci = c0; ci <= c1; ci++) {
+      for (var ri = r0; ri <= r1; ri++) {
+        var dx = (ci + 0.5) * cw - px, dy = (ri + 0.5) * ch - py;
+        if (dx * dx + dy * dy <= rad * rad) {
+          var key = ci + ':' + ri;
+          if (!cells[key]) { cells[key] = 1; marked++; }
+        }
+      }
+    }
+  }
+
+  function erase(e) {
+    if (!canvas || finished || !painted) return;
+    var ctx = canvas.getContext('2d');
+    var p = ptFor(e), l = lastPt || p;
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.lineWidth = BRUSH;
+    ctx.strokeStyle = 'rgba(0,0,0,1)';
+    ctx.beginPath();
+    ctx.moveTo(l.x, l.y);
+    ctx.lineTo(p.x, p.y);
+    ctx.stroke();
+    var dist = Math.hypot(p.x - l.x, p.y - l.y), steps = Math.max(1, Math.ceil(dist / 6));
+    for (var i = 0; i <= steps; i++) mark(l.x + (p.x - l.x) * (i / steps), l.y + (p.y - l.y) * (i / steps));
+    lastPt = p;
+    if (marked / (COLS * ROWS) >= 0.5) reveal(false);
+  }
+
+  function reveal(immediate) {
+    if (finished) return;
+    finished = true;
+    dragging = false;
+    var swap = function () {
+      if (beforeEl) beforeEl.hidden = true;
+      if (afterEl) afterEl.hidden = false;
+      if (emailInput) { try { emailInput.focus({ preventScroll: true }); } catch (e) {} }
+    };
+    if (!canvas || immediate || reduced) { swap(); return; }
+    canvas.style.pointerEvents = 'none';
+    canvas.style.transition = 'opacity .4s ease';
+    canvas.style.opacity = '0';
+    window.setTimeout(function () { canvas.style.display = 'none'; swap(); }, 430);
+  }
+
+  if (canvas) {
+    canvas.addEventListener('pointerdown', function (e) {
+      if (finished || !painted) return;
+      dragging = true;
+      try { e.currentTarget.setPointerCapture(e.pointerId); } catch (err) {}
+      lastPt = null;
+      if (pill) pill.style.opacity = '0';
+      if (!scratchedOnce) { scratchedOnce = true; track('Popup Scratched'); }
+      erase(e);
+    });
+    canvas.addEventListener('pointermove', function (e) { if (dragging) erase(e); });
+    canvas.addEventListener('pointerup', function () { dragging = false; lastPt = null; });
+    canvas.addEventListener('pointercancel', function () { dragging = false; lastPt = null; });
+  }
+
+  /* ---------- Klaviyo ---------- */
+  function subscribe(payloadProfile) {
+    var listId = payloadProfile.channel === 'sms' ? cfg.smsListId : cfg.emailListId;
+    var body = {
+      data: {
+        type: 'subscription',
+        attributes: {
+          custom_source: 'Website Popup',
+          profile: { data: { type: 'profile', attributes: payloadProfile.attributes } }
+        },
+        relationships: { list: { data: { type: 'list', id: listId } } }
+      }
+    };
+    return fetch('https://a.klaviyo.com/client/subscriptions/?company_id=' + encodeURIComponent(cfg.companyId), {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', revision: '2024-10-15' },
+      body: JSON.stringify(body)
+    }).then(function (res) {
+      if (res.status !== 202) throw new Error('Klaviyo responded ' + res.status);
+      return true;
+    });
+  }
+
+  function showError(el, wrap, msg) {
+    if (el) { el.textContent = msg; el.hidden = false; }
+    if (wrap) wrap.classList.add('vpp-invalid');
+  }
+  function clearError(el, wrap) {
+    if (el) { el.textContent = ''; el.hidden = true; }
+    if (wrap) wrap.classList.remove('vpp-invalid');
+  }
+
+  function goStep(name) {
+    qa('[data-vpp-step]').forEach(function (s) { s.hidden = s.getAttribute('data-vpp-step') !== name; });
+  }
+
+  var emailSaved = false;
+
+  if (emailSubmit) {
+    emailSubmit.addEventListener('click', function () {
+      var val = (emailInput.value || '').trim();
+      if (!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(val)) {
+        showError(emailError, emailInput, cfg.errEmail);
+        emailInput.focus();
+        return;
+      }
+      clearError(emailError, emailInput);
+      emailSubmit.disabled = true;
+      subscribe({
+        channel: 'email',
+        attributes: {
+          email: val,
+          subscriptions: { email: { marketing: { consent: 'SUBSCRIBED' } } }
+        }
+      }).then(function () {
+        emailSaved = true;
+        track('Popup Submitted', { channel: 'email' });
+        suppress();
+        goStep(cfg.smsEnabled ? 'sms' : 'done');
+        if (cfg.smsEnabled && phoneInput) { try { phoneInput.focus({ preventScroll: true }); } catch (e) {} }
+      }).catch(function () {
+        showError(emailError, emailInput, cfg.errGeneric);
+      }).then(function () {
+        emailSubmit.disabled = false;
+      });
+    });
+  }
+
+  if (smsSubmit) {
+    smsSubmit.addEventListener('click', function () {
+      var digits = (phoneInput.value || '').replace(/\D/g, '');
+      if (digits.length !== 10) {
+        showError(smsError, telWrap, cfg.errPhone);
+        phoneInput.focus();
+        return;
+      }
+      clearError(smsError, telWrap);
+      smsSubmit.disabled = true;
+      var e164 = (cfg.smsPrefix || '+1').replace(/[^\d+]/g, '') + digits;
+      subscribe({
+        channel: 'sms',
+        attributes: {
+          email: (emailInput.value || '').trim(),
+          phone_number: e164,
+          subscriptions: { sms: { marketing: { consent: 'SUBSCRIBED' } } }
+        }
+      }).then(function () {
+        track('Popup Submitted', { channel: 'sms' });
+        goStep('done');
+      }).catch(function () {
+        showError(smsError, telWrap, cfg.errGeneric);
+      }).then(function () {
+        smsSubmit.disabled = false;
+      });
+    });
+  }
+
+  if (smsSkip) smsSkip.addEventListener('click', function () { goStep('done'); });
+
+  /* ---------- triggers ---------- */
+  function arm() {
+    if (suppressed()) return;
+    loadBelly();
+
+    if (designMode) { open(); return; }
+
+    var trigger = cfg.trigger || 'delay';
+
+    if (trigger === 'scroll') {
+      var onScroll = function () {
+        var doc = document.documentElement;
+        var max = (doc.scrollHeight - window.innerHeight) || 1;
+        var pct = ((window.scrollY || window.pageYOffset || 0) / max) * 100;
+        if (pct >= (parseFloat(cfg.scrollPercent) || 40)) {
+          window.removeEventListener('scroll', onScroll);
+          open();
+        }
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      return;
+    }
+
+    if (trigger === 'exit') {
+      var onLeave = function (e) {
+        if (e.clientY > 0) return;
+        document.removeEventListener('mouseout', onLeave);
+        open();
+      };
+      document.addEventListener('mouseout', onLeave);
+      /* Touch devices never fire exit intent — fall back to the delay. */
+      window.setTimeout(function () {
+        if (!isOpen && window.matchMedia('(hover: none)').matches) {
+          document.removeEventListener('mouseout', onLeave);
+          open();
+        }
+      }, (parseFloat(cfg.delaySeconds) || 8) * 1000);
+      return;
+    }
+
+    window.setTimeout(function () { open(); }, (parseFloat(cfg.delaySeconds) || 8) * 1000);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', arm);
+  } else {
+    arm();
+  }
+
+  if (designMode) {
+    document.addEventListener('shopify:section:select', function (e) {
+      if (e.detail && e.target === root.parentElement) open();
+    });
+  }
+})();
+</script>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "VetPets Welcome Popup",
+  "settings": [
+    { "type": "checkbox", "id": "enable", "label": "Enable popup", "default": true },
+
+    { "type": "header", "content": "Trigger" },
+    {
+      "type": "select",
+      "id": "trigger",
+      "label": "Trigger type",
+      "options": [
+        { "value": "delay", "label": "Time delay" },
+        { "value": "scroll", "label": "Scroll depth" },
+        { "value": "exit", "label": "Exit intent" }
+      ],
+      "default": "delay"
+    },
+    { "type": "range", "id": "delay_seconds", "label": "Delay (seconds)", "min": 0, "max": 60, "step": 1, "unit": "s", "default": 8 },
+    { "type": "range", "id": "scroll_percent", "label": "Scroll depth", "min": 5, "max": 100, "step": 5, "unit": "%", "default": 40 },
+    { "type": "range", "id": "hide_days", "label": "Hide after dismiss (days)", "min": 0, "max": 90, "step": 1, "unit": "d", "default": 7 },
+    { "type": "text", "id": "storage_key", "label": "localStorage key", "default": "vetpets_welcome_popup" },
+
+    { "type": "header", "content": "Images" },
+    { "type": "image_picker", "id": "logo", "label": "Logo lockup" },
+    { "type": "image_picker", "id": "scratch_image", "label": "Scratch photo (belly)", "info": "Shopify Files: hf_20260822_113024_e5868d33-6f0f-4c6f-b0c5-fbc36b342b49.png" },
+    { "type": "image_picker", "id": "photo_primary", "label": "Floating photo — upper left" },
+    { "type": "text", "id": "photo_primary_alt", "label": "Upper-left photo alt text", "default": "French bulldog on a sofa behind three VetPets tubs" },
+    { "type": "image_picker", "id": "photo_secondary", "label": "Floating photo — lower right" },
+    { "type": "text", "id": "photo_secondary_alt", "label": "Lower-right photo alt text", "default": "VetPets FreshWipes, EarWipes and EyeWipes tubs on a kitchen counter" },
+
+    { "type": "header", "content": "Copy — before scratch" },
+    { "type": "text", "id": "text_eyebrow", "label": "Eyebrow", "default": "Exclusive offer" },
+    { "type": "text", "id": "text_title", "label": "Headline", "default": "TRY YOUR LUCK" },
+    { "type": "text", "id": "text_subtitle", "label": "Subheadline", "default": "Give the belly a scratch to reveal today's offer." },
+    { "type": "text", "id": "text_scratch_pill", "label": "Scratch pill", "default": "Scratch the belly" },
+    { "type": "text", "id": "text_decline", "label": "Decline link", "default": "No thanks" },
+    { "type": "text", "id": "text_close_label", "label": "Close button aria-label", "default": "Close" },
+
+    { "type": "header", "content": "Copy — email step" },
+    { "type": "text", "id": "text_unlocked", "label": "Kicker", "default": "You unlocked" },
+    { "type": "text", "id": "text_offer", "label": "Offer label", "default": "10% OFF" },
+    { "type": "text", "id": "text_email_ask", "label": "Ask", "default": "Where should we send it?" },
+    { "type": "text", "id": "text_email_placeholder", "label": "Email placeholder", "default": "Your email address" },
+    { "type": "text", "id": "text_claim_button", "label": "Claim button", "default": "Claim my 10% OFF" },
+    { "type": "text", "id": "text_email_fine_print", "label": "Fine print", "default": "100-day money-back guarantee · Unsubscribe any time" },
+
+    { "type": "header", "content": "Copy — SMS step" },
+    { "type": "checkbox", "id": "enable_sms_step", "label": "Ask for phone number after email", "default": true },
+    { "type": "text", "id": "text_sms_kicker", "label": "Kicker", "default": "One more thing" },
+    { "type": "text", "id": "text_sms_title", "label": "Headline", "default": "Want the code by text too?" },
+    { "type": "text", "id": "text_sms_prefix", "label": "Country prefix", "default": "+1" },
+    { "type": "text", "id": "text_sms_placeholder", "label": "Phone placeholder", "default": "(555) 000-0000" },
+    { "type": "text", "id": "text_sms_button", "label": "Submit button", "default": "Yes, text me the code" },
+    { "type": "text", "id": "text_sms_skip", "label": "Skip link", "default": "Skip this" },
+    { "type": "textarea", "id": "text_sms_consent", "label": "Consent fine print", "default": "By submitting you agree to receive recurring automated marketing texts at the number provided. Consent is not a condition of purchase. Msg & data rates may apply. Reply STOP to cancel." },
+
+    { "type": "header", "content": "Copy — success" },
+    { "type": "text", "id": "text_done_title", "label": "Headline", "default": "Your code is on its way" },
+    { "type": "text", "id": "discount_code", "label": "Discount code", "default": "SCRATCH10" },
+    { "type": "text", "id": "text_done_note", "label": "Note", "default": "Use it at checkout on your first order." },
+
+    { "type": "header", "content": "Copy — errors" },
+    { "type": "text", "id": "text_error_email", "label": "Invalid email", "default": "Please enter a valid email address." },
+    { "type": "text", "id": "text_error_phone", "label": "Invalid phone", "default": "Please enter a valid 10-digit phone number." },
+    { "type": "text", "id": "text_error_generic", "label": "Submission failed", "default": "Something went wrong. Please try again." },
+
+    { "type": "header", "content": "Klaviyo" },
+    { "type": "text", "id": "klaviyo_company_id", "label": "Public API key (company_id)", "default": "V3XAJ6" },
+    { "type": "text", "id": "klaviyo_email_list_id", "label": "Email list id", "default": "VH4We7" },
+    { "type": "text", "id": "klaviyo_sms_list_id", "label": "SMS list id", "default": "T2TNN5" },
+
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "color_brand", "label": "Brand blue", "default": "#47B5E9" },
+    { "type": "color", "id": "color_brand_hover", "label": "Brand blue — hover", "default": "#41A6D6" },
+    { "type": "color", "id": "color_accent", "label": "Accent teal", "default": "#13B6B5" },
+    { "type": "color", "id": "color_mark", "label": "Tiled mark", "default": "#13B6B5" },
+    { "type": "color", "id": "color_ink", "label": "Headline ink", "default": "#000000" },
+    { "type": "color", "id": "color_body", "label": "Body text", "default": "#333333" },
+    { "type": "color", "id": "color_muted", "label": "Muted text", "default": "#7A8791" },
+    { "type": "color", "id": "color_placeholder", "label": "Placeholder text", "default": "#9AA9B7" },
+    { "type": "color", "id": "color_error", "label": "Error", "default": "#E5484D" },
+    { "type": "color", "id": "color_surface", "label": "Card surface", "default": "#FFFFFF" },
+    { "type": "color", "id": "color_field_bg", "label": "Field background", "default": "#F7FAFC" },
+    { "type": "color", "id": "color_field_border", "label": "Field border", "default": "#DDE7EF" },
+    { "type": "color", "id": "color_prefix_bg", "label": "Phone prefix background", "default": "#EDF3F8" },
+    { "type": "color", "id": "color_gradient_top", "label": "Background gradient — top", "default": "#D5F7FF" },
+    { "type": "color", "id": "color_gradient_mid", "label": "Background gradient — middle", "default": "#EAFBFF" },
+    { "type": "color", "id": "color_gradient_bottom", "label": "Background gradient — bottom", "default": "#FFFFFF" }
+  ]
+}
+{% endschema %}
