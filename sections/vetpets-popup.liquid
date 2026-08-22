@@ -42,6 +42,7 @@
     --vpp-field-bg: {{ section.settings.color_field_bg }};
     --vpp-field-border: {{ section.settings.color_field_border }};
     --vpp-surface: {{ section.settings.color_surface }};
+    --vpp-panel: {{ section.settings.color_panel }};
     --vpp-font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   }
 
@@ -116,12 +117,20 @@
 
   #vpp-{{ uid }} .vpp-stack { margin-top: 26px; display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; min-width: 0; }
 
-  /* ---------- scratch card: the form lives INSIDE it, under the canvas ---------- */
+  /* ---------- scratch card: blue panel outside, photo + canvas inside -------- */
+  #vpp-{{ uid }} .vpp-panel {
+    width: 100%; max-width: 100%; box-sizing: border-box;
+    background: var(--vpp-panel);
+    border-radius: 24px; padding: 12px;
+    box-shadow: 0 22px 44px -16px rgba(0,40,70,.28);
+  }
+  /* The inner card is 128:85 - the scratch photo's exact ratio - so nothing is
+     cropped at any width. The canvas fills it, so scratch coordinates map to
+     the photo and to nothing around it. */
   #vpp-{{ uid }} .vpp-card {
     position: relative; display: flex;
-    width: calc(100% - 40px); max-width: 100%; aspect-ratio: 23 / 16;
-    border-radius: 18px; overflow: hidden;
-    box-shadow: 0 22px 44px -16px rgba(0,40,70,.30);
+    width: 100%; max-width: 100%; aspect-ratio: 128 / 85;
+    border-radius: 16px; overflow: hidden;
     background: var(--vpp-surface);
   }
   #vpp-{{ uid }} .vpp-canvas {
@@ -231,7 +240,7 @@
     #vpp-{{ uid }} .vpp-close { top: 26px; right: 26px; }
 
     #vpp-{{ uid }} .vpp-wrap { display: block; padding: 24px 0; }
-    #vpp-{{ uid }} .vpp-col { width: 40%; }
+    #vpp-{{ uid }} .vpp-col { width: 42%; }
 
     #vpp-{{ uid }} .vpp-logo { height: 34px; margin-bottom: 22px; }
     #vpp-{{ uid }} .vpp-eyebrow { font-size: 12px; margin-bottom: 14px; }
@@ -240,6 +249,7 @@
 
     #vpp-{{ uid }} .vpp-stack { margin-top: 34px; gap: 18px; }
 
+    #vpp-{{ uid }} .vpp-panel { width: auto; padding: 14px; }
     #vpp-{{ uid }} .vpp-card { width: 560px; max-width: 100%; }
     #vpp-{{ uid }} .vpp-pill { bottom: 22px; }
 
@@ -268,13 +278,13 @@
        centred at any width from the 1280px breakpoint up to the 1400px cap. */
     #vpp-{{ uid }} .vpp-photo { display: block; position: absolute; height: auto; }
     #vpp-{{ uid }} .vpp-photo--a {
-      left: 47.93%; width: 31.14%; aspect-ratio: 436 / 545;
+      left: 49.69%; width: 30.14%; aspect-ratio: 422 / 527;
       top: 50%; transform: translateY(-72%);
       box-shadow: 0 28px 54px -22px rgba(0,0,0,.30);
     }
     #vpp-{{ uid }} .vpp-photo--b {
-      left: 68.79%; width: 31.14%; aspect-ratio: 436 / 462;
-      top: 50%; transform: translateY(-18.4%);
+      left: 69.87%; width: 30.14%; aspect-ratio: 422 / 447;
+      top: 50%; transform: translateY(-18.5%);
       box-shadow: 0 32px 60px -22px rgba(0,0,0,.32);
     }
   }
@@ -337,6 +347,7 @@
       <p class="vpp-sub">{{ section.settings.text_subtitle }}</p>
 
       <div class="vpp-stack">
+        <div class="vpp-panel">
         <div class="vpp-card">
 
           <div class="vpp-step" data-vpp-step="email">
@@ -381,6 +392,7 @@
             <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><g fill="#FFFFFF" transform="translate(12 12) rotate(-11)"><rect x="-9.4" y="-12" width="3.4" height="11" rx="1.7"></rect><rect x="-4.7" y="-12" width="3.4" height="13.5" rx="1.7"></rect><rect x="0" y="-12" width="3.4" height="12.5" rx="1.7"></rect><rect x="4.7" y="-12" width="3.4" height="10.5" rx="1.7"></rect><rect x="-9.8" y="-2.5" width="19.5" height="13" rx="5.5"></rect></g></svg>
             <span>{{ section.settings.text_scratch_pill }}</span>
           </div>
+        </div>
         </div>
 
         <button type="button" class="vpp-decline" data-vpp-close>{{ section.settings.text_decline }}</button>
@@ -878,6 +890,7 @@
     { "type": "color", "id": "color_placeholder", "label": "Placeholder text", "default": "#9AA9B7" },
     { "type": "color", "id": "color_error", "label": "Error", "default": "#E5484D" },
     { "type": "color", "id": "color_surface", "label": "Card surface", "default": "#FFFFFF" },
+    { "type": "color", "id": "color_panel", "label": "Scratch card frame", "default": "#C9EEF9" },
     { "type": "color", "id": "color_field_bg", "label": "Field background", "default": "#F7FAFC" },
     { "type": "color", "id": "color_field_border", "label": "Field border", "default": "#DDE7EF" },
     { "type": "color", "id": "color_prefix_bg", "label": "Phone prefix background", "default": "#EDF3F8" },
