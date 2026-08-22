@@ -1,1 +1,62 @@
-{"sections":{"main":{"type":"main-blog","settings":{"layout":"grid","show_image":true,"image_height":"medium","show_date":true,"show_author":false,"padding_top":0,"padding_bottom":64}},"newsletter":{"type":"newsletter","blocks":{"heading":{"type":"heading","settings":{"heading_size":"h1"}},"paragraph":{"type":"paragraph","settings":{"text":"<p>Join our email list for exclusive offers and the latest news. <\/p>"}},"email-form":{"type":"email_form","settings":{}}},"block_order":["heading","paragraph","email-form"],"settings":{"color_scheme":"background-2","full_width":true,"padding_top":68,"padding_bottom":52}}},"order":["main","newsletter"]}
+{
+  "sections": {
+    "main": {
+      "type": "main-blog",
+      "settings": {
+        "layout": "grid",
+        "show_image": true,
+        "image_height": "medium",
+        "show_date": true,
+        "show_author": false,
+        "padding_top": 0,
+        "padding_bottom": 64
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading_size": "h1"
+          }
+        },
+        "paragraph": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Join our email list for exclusive offers and the latest news. </p>"
+          }
+        },
+        "email-form": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "heading",
+        "paragraph",
+        "email-form"
+      ],
+      "settings": {
+        "color_scheme": "background-2",
+        "full_width": true,
+        "padding_top": 68,
+        "padding_bottom": 52
+      }
+    },
+    "vetpets_popup": {
+      "type": "vetpets-popup",
+      "settings": {
+        "logo": "shopify://shop_images/Vetpets_Logo_11_3e42d63d-8554-4b1f-b85e-bf905293a7a2.png",
+        "scratch_image": "shopify://shop_images/hf_20260822_113024_e5868d33-6f0f-4c6f-b0c5-fbc36b342b49.png",
+        "photo_primary": "shopify://shop_images/vetpets-popup-ugc-frenchie-sofa.png",
+        "photo_secondary": "shopify://shop_images/vetpets-popup-ugc-tubs-kitchen.png"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "newsletter",
+    "vetpets_popup"
+  ]
+}
