@@ -670,11 +670,6 @@
     },
     "content_for_index": [],
     "blocks": {
-      "10312807297210203588": {
-        "type": "shopify://apps/aftersell-by-rokt/blocks/utm-triggers/509ec35d-0632-4dfc-a105-fa799cd9d149",
-        "disabled": false,
-        "settings": {}
-      },
       "11532412952436166569": {
         "type": "shopify://apps/loox-reviews/blocks/loox-inject/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
         "disabled": false,
@@ -718,6 +713,11 @@
       "17453258828962521766": {
         "type": "shopify://apps/captain-protection/blocks/app/a7ef2f88-bc96-4a68-ba4e-f042ccbc8beb",
         "disabled": true,
+        "settings": {}
+      },
+      "377650522495455440": {
+        "type": "shopify://apps/elevate-ab-testing/blocks/abtester/4ce51acb-a9f5-4e05-ae92-4c018aa51124",
+        "disabled": false,
         "settings": {}
       }
     }
