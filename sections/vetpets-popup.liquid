@@ -657,6 +657,9 @@
   }
 
   /* ---------- Klaviyo ---------- */
+  /* /client/subscriptions/ takes identifiers only - it derives consent from the
+     list and from which identifier fields the profile carries. A "subscriptions"
+     object is server-side-API only and is rejected here with a 400. */
   function subscribe(payloadProfile) {
     var listId = payloadProfile.channel === 'sms' ? cfg.smsListId : cfg.emailListId;
     var body = {
@@ -704,10 +707,7 @@
       emailSubmit.disabled = true;
       subscribe({
         channel: 'email',
-        attributes: {
-          email: val,
-          subscriptions: { email: { marketing: { consent: 'SUBSCRIBED' } } }
-        }
+        attributes: { email: val }
       }).then(function () {
         track('Popup Submitted', { channel: 'email' });
         suppress();
@@ -736,8 +736,7 @@
         channel: 'sms',
         attributes: {
           email: (emailInput.value || '').trim(),
-          phone_number: e164,
-          subscriptions: { sms: { marketing: { consent: 'SUBSCRIBED' } } }
+          phone_number: e164
         }
       }).then(function () {
         track('Popup Submitted', { channel: 'sms' });
