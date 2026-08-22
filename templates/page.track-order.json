@@ -1,1 +1,49 @@
-{"sections":{"main":{"type":"main-page","disabled":true,"settings":{"padding_top":36,"padding_bottom":36}},"48a61bc7-365a-4136-bce5-4aa7f7623d0a":{"type":"track-order","settings":{"display_id":false,"visibility":"always-display","title":"Track your order","title_highlight_color":"#6d388b","heading_size":"h1","text":"<p>Welcome to our tracking page! Here you can easily track the status of your order by simply entering the tracking number we provided in your confirmation email. Stay up-to-date with the latest information on your delivery and ensure a hassle-free experience. Thank you for choosing our services! If you have any questions don't hesitate to contact us.<\/p>","input_label":"Tracking number","button_label":"TRACK","button_full_width":true,"color_scheme":"background-1","padding_top":36,"padding_bottom":36,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#2e2a39","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff"}}},"order":["main","48a61bc7-365a-4136-bce5-4aa7f7623d0a"]}
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "48a61bc7-365a-4136-bce5-4aa7f7623d0a": {
+      "type": "track-order",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Track your order",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "text": "<p>Welcome to our tracking page! Here you can easily track the status of your order by simply entering the tracking number we provided in your confirmation email. Stay up-to-date with the latest information on your delivery and ensure a hassle-free experience. Thank you for choosing our services! If you have any questions don't hesitate to contact us.</p>",
+        "input_label": "Tracking number",
+        "button_label": "TRACK",
+        "button_full_width": true,
+        "color_scheme": "background-1",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff"
+      }
+    },
+    "vetpets_popup": {
+      "type": "vetpets-popup",
+      "settings": {
+        "logo": "shopify://shop_images/Vetpets_Logo_11_3e42d63d-8554-4b1f-b85e-bf905293a7a2.png",
+        "scratch_image": "shopify://shop_images/hf_20260822_113024_e5868d33-6f0f-4c6f-b0c5-fbc36b342b49.png",
+        "photo_primary": "shopify://shop_images/vetpets-popup-ugc-frenchie-sofa.png",
+        "photo_secondary": "shopify://shop_images/vetpets-popup-ugc-tubs-kitchen.png",
+        "klaviyo_email_list_id": "TFfFDG"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "48a61bc7-365a-4136-bce5-4aa7f7623d0a",
+    "vetpets_popup"
+  ]
+}

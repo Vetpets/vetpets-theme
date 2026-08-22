@@ -1,1 +1,163 @@
-{"sections":{"main":{"type":"main-page","settings":{"padding_top":36,"padding_bottom":0}},"60910267-55e8-4e0d-a9f9-79b26b3533dc":{"type":"rich-text","blocks":{"template--18407212810569__60910267-55e8-4e0d-a9f9-79b26b3533dc-16795881913b1fb5f3-0":{"type":"heading","settings":{"title":"Talk about your brand","title_highlight_color":"#6d388b","heading_size":"h1"}},"template--18407212810569__60910267-55e8-4e0d-a9f9-79b26b3533dc-16795881913b1fb5f3-1":{"type":"text","settings":{"text":"<p>At [Your company], your satisfaction is our top priority. We encourage you to reach out with any questions, concerns, or feedback, as our dedicated team is always eager to assist you. Whether you need help with product inquiries or simply want to share your experience with us, we're just a message away. <\/p>"}}},"block_order":["template--18407212810569__60910267-55e8-4e0d-a9f9-79b26b3533dc-16795881913b1fb5f3-0","template--18407212810569__60910267-55e8-4e0d-a9f9-79b26b3533dc-16795881913b1fb5f3-1"],"disabled":true,"settings":{"display_id":false,"visibility":"always-display","desktop_content_position":"center","content_alignment":"center","full_width":true,"mobile_narrow_width":false,"color_scheme":"background-1","padding_top":40,"padding_bottom":12,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#2e2a39","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff","custom_colors_outline_button":"#dd1d1d"}},"contact_form_U9ptC4":{"type":"contact-form","blocks":{"field_row_B7EVcM":{"type":"field_row","settings":{"input_1_enabled":true,"input_1_type":"custom","input_1_required":true,"input_1_error_message":"This field is required","input_1_custom_name":"Full Name","input_2_enabled":true,"input_2_type":"custom","input_2_required":true,"input_2_error_message":"This field is required","input_2_custom_name":"Email Address"}},"field_row_AEyw9y":{"type":"field_row","settings":{"input_1_enabled":true,"input_1_type":"custom","input_1_required":true,"input_1_error_message":"This field is required","input_1_custom_name":"Order Number","input_2_enabled":false,"input_2_type":"custom","input_2_required":false,"input_2_error_message":"This field is required","input_2_custom_name":"What about your request?"}},"field_row_UdDW3C":{"type":"field_row","settings":{"input_1_enabled":true,"input_1_type":"custom","input_1_required":false,"input_1_error_message":"This field is required","input_1_custom_name":"Date Received (if applicable)","input_2_enabled":false,"input_2_type":"custom","input_2_required":false,"input_2_error_message":"This field is required","input_2_custom_name":"What about your request?"}},"textarea_trVaGc":{"type":"textarea","settings":{"input_type":"custom","input_required":false,"input_error_message":"This field is required","input_custom_name":"Withdrawal Request Details"}}},"block_order":["field_row_B7EVcM","field_row_AEyw9y","field_row_UdDW3C","textarea_trVaGc"],"settings":{"display_id":false,"visibility":"always-display","title":"Submit Your Withdrawal Request","title_highlight_color":"#6d388b","heading_size":"h1","button_full_width":true,"color_scheme":"background-1","success_icon":"check_circle","success_icon_filled":false,"success_text_color":"#28c100","success_bg_color":"#f2ffed","success_border_radius":8,"success_border_width":1,"success_border_color":"#28c100","errors_icon":"error","errors_icon_filled":false,"errors_text_color":"#ff0000","errors_bg_color":"#fff5f5","errors_border_radius":8,"errors_border_width":1,"errors_border_color":"#ff0000","padding_top":0,"padding_bottom":24,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#2e2a39","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff"}}},"order":["main","60910267-55e8-4e0d-a9f9-79b26b3533dc","contact_form_U9ptC4"]}
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
+    "60910267-55e8-4e0d-a9f9-79b26b3533dc": {
+      "type": "rich-text",
+      "blocks": {
+        "template--18407212810569__60910267-55e8-4e0d-a9f9-79b26b3533dc-16795881913b1fb5f3-0": {
+          "type": "heading",
+          "settings": {
+            "title": "Talk about your brand",
+            "title_highlight_color": "#6d388b",
+            "heading_size": "h1"
+          }
+        },
+        "template--18407212810569__60910267-55e8-4e0d-a9f9-79b26b3533dc-16795881913b1fb5f3-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>At [Your company], your satisfaction is our top priority. We encourage you to reach out with any questions, concerns, or feedback, as our dedicated team is always eager to assist you. Whether you need help with product inquiries or simply want to share your experience with us, we're just a message away. </p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--18407212810569__60910267-55e8-4e0d-a9f9-79b26b3533dc-16795881913b1fb5f3-0",
+        "template--18407212810569__60910267-55e8-4e0d-a9f9-79b26b3533dc-16795881913b1fb5f3-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "full_width": true,
+        "mobile_narrow_width": false,
+        "color_scheme": "background-1",
+        "padding_top": 40,
+        "padding_bottom": 12,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d"
+      }
+    },
+    "contact_form_U9ptC4": {
+      "type": "contact-form",
+      "blocks": {
+        "field_row_B7EVcM": {
+          "type": "field_row",
+          "settings": {
+            "input_1_enabled": true,
+            "input_1_type": "custom",
+            "input_1_required": true,
+            "input_1_error_message": "This field is required",
+            "input_1_custom_name": "Full Name",
+            "input_2_enabled": true,
+            "input_2_type": "custom",
+            "input_2_required": true,
+            "input_2_error_message": "This field is required",
+            "input_2_custom_name": "Email Address"
+          }
+        },
+        "field_row_AEyw9y": {
+          "type": "field_row",
+          "settings": {
+            "input_1_enabled": true,
+            "input_1_type": "custom",
+            "input_1_required": true,
+            "input_1_error_message": "This field is required",
+            "input_1_custom_name": "Order Number",
+            "input_2_enabled": false,
+            "input_2_type": "custom",
+            "input_2_required": false,
+            "input_2_error_message": "This field is required",
+            "input_2_custom_name": "What about your request?"
+          }
+        },
+        "field_row_UdDW3C": {
+          "type": "field_row",
+          "settings": {
+            "input_1_enabled": true,
+            "input_1_type": "custom",
+            "input_1_required": false,
+            "input_1_error_message": "This field is required",
+            "input_1_custom_name": "Date Received (if applicable)",
+            "input_2_enabled": false,
+            "input_2_type": "custom",
+            "input_2_required": false,
+            "input_2_error_message": "This field is required",
+            "input_2_custom_name": "What about your request?"
+          }
+        },
+        "textarea_trVaGc": {
+          "type": "textarea",
+          "settings": {
+            "input_type": "custom",
+            "input_required": false,
+            "input_error_message": "This field is required",
+            "input_custom_name": "Withdrawal Request Details"
+          }
+        }
+      },
+      "block_order": [
+        "field_row_B7EVcM",
+        "field_row_AEyw9y",
+        "field_row_UdDW3C",
+        "textarea_trVaGc"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Submit Your Withdrawal Request",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "button_full_width": true,
+        "color_scheme": "background-1",
+        "success_icon": "check_circle",
+        "success_icon_filled": false,
+        "success_text_color": "#28c100",
+        "success_bg_color": "#f2ffed",
+        "success_border_radius": 8,
+        "success_border_width": 1,
+        "success_border_color": "#28c100",
+        "errors_icon": "error",
+        "errors_icon_filled": false,
+        "errors_text_color": "#ff0000",
+        "errors_bg_color": "#fff5f5",
+        "errors_border_radius": 8,
+        "errors_border_width": 1,
+        "errors_border_color": "#ff0000",
+        "padding_top": 0,
+        "padding_bottom": 24,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff"
+      }
+    },
+    "vetpets_popup": {
+      "type": "vetpets-popup",
+      "settings": {
+        "logo": "shopify://shop_images/Vetpets_Logo_11_3e42d63d-8554-4b1f-b85e-bf905293a7a2.png",
+        "scratch_image": "shopify://shop_images/hf_20260822_113024_e5868d33-6f0f-4c6f-b0c5-fbc36b342b49.png",
+        "photo_primary": "shopify://shop_images/vetpets-popup-ugc-frenchie-sofa.png",
+        "photo_secondary": "shopify://shop_images/vetpets-popup-ugc-tubs-kitchen.png",
+        "klaviyo_email_list_id": "TFfFDG"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "60910267-55e8-4e0d-a9f9-79b26b3533dc",
+    "contact_form_U9ptC4",
+    "vetpets_popup"
+  ]
+}

@@ -1,1 +1,1999 @@
-{"sections":{"main":{"type":"main-product","blocks":{"a6eb81db-40e4-43e0-972f-32db010a4a56":{"type":"rating_stars","settings":{"rating":4.8,"star_color":"#ffcc00","bg_stars_style":"full","bg_star_color":"#ececec","label":"4,86\/5 (2000+ arviota)","size":14,"alignment":"flex-start","scroll_id":"","margin_top":0,"margin_bottom":9}},"title":{"type":"title","settings":{"text_size":"h2","title_alignment":"left","uppercase_title":false,"margin_top":0,"margin_bottom":0}},"price":{"type":"price","settings":{"layout":"price_first","price_color":"accent-1","compare_price_color":"text","displayed_badge":"sale","icon_scale":140,"custom_badge_text":"[icon_1] SPECIAL OFFER","icon_1":"redeem","filled_icon_1":false,"icon_2":"check_circle","filled_icon_2":false,"margin_top":9,"margin_bottom":15}},"divider_i9d8VK":{"type":"divider","settings":{"color":"#e1e1e1","height":1,"width":100,"Full_mobile_width":false,"alignment":"center","border_radius":0,"margin_top":15,"margin_bottom":15}},"text_cn7XQg":{"type":"text","settings":{"mobile_text_size":14,"desktop_text_size":16,"alignment":"left","text_color":"#121212","text_1":"Tehokkaasti torjuu plakkia ja bakteereja","text_2":"pH-tasapainotetut ja hajusteettomat pyyhkeet","text_3":"Hellävarainen ja helppokäyttöinen","icon_scale":140,"icon_color":"#118fcb","icon_1":"pets","filled_icon_1":true,"icon_2":"pets","filled_icon_2":true,"icon_3":"pets","filled_icon_3":true,"width":"100%","direction":"vertical","column_gap":5,"enable_bg":false,"bg_color":"#f3f3f3","corner_radius":40,"padding":3,"border_size":0,"border_color":"#b7b7b7","margin_top":15,"margin_bottom":15}},"text_kEd4Nj":{"type":"text","settings":{"mobile_text_size":14,"desktop_text_size":16,"alignment":"left","text_color":"#121212","text_1":"Eläinlääkärien hyväksymät ainesosat","text_2":"","text_3":"","icon_scale":140,"icon_color":"#118fcb","icon_1":"pets","filled_icon_1":true,"icon_2":"check_circle","filled_icon_2":true,"icon_3":"check_circle","filled_icon_3":true,"width":"100%","direction":"vertical","column_gap":5,"enable_bg":false,"bg_color":"#f3f3f3","corner_radius":40,"padding":3,"border_size":0,"border_color":"#b7b7b7","margin_top":15,"margin_bottom":15}},"5fcc0428-e768-4cb7-bea3-eb0274198dd1":{"type":"variant_picker","disabled":true,"settings":{"picker_types":"swatches, dropdown, dropdown","custom_labels":"[name] - [selected]","skip_unavailable":false,"swatches_size":"medium","swatches_custom_colors":"disabled","swatches_custom_colors_list":"#000000, #6D388B, #0000FF, #FFCC00","full_width_dropdowns":false,"breaks_style":"normal","breaks_headline":"BUNDLE & SAVE","breaks_display_selected_indicator":true,"breaks_border_radius":10,"breaks_border_width":2,"breaks_color_scheme":"accent-1","breaks_badges":"[empty], Most popular, [empty]","breaks_badge_style":"1","breaks_badge_color":"accent-1","breaks_displayed_images":"variant_images","breaks_custom_images":"","breaks_image_width":70,"breaks_space_images":true,"breaks_vertical_images_position":"top","breaks_vertical_prices_layout":"vertical","breaks_labels":"[name], [name], [name]","breaks_benefits":"[empty], Free Shipping, Free Shipping","breaks_benefit_position":"top","breaks_benefit_style":"outlined","breaks_benefit_color":"accent-1","breaks_captions":"Variant 1 caption, Variant 2 caption, Variant 3 caption","breaks_price_texts":"[price], [price], [price]","breaks_compare_price_texts":"[compare_price], [compare_price], [compare_price]","margin_top":15,"margin_bottom":15}},"kaching_bundles_app_block_f8NfBp":{"type":"shopify:\/\/apps\/kaching-bundles\/blocks\/app-block\/6c637362-a106-4a32-94ac-94dcfd68cdb8","settings":{"product":"{{product}}","manual_deal_block_id":""}},"04ba004e-2f54-4936-8b1c-8bcadf6573f6":{"type":"quantity_selector","settings":{"full_width_classic":false,"atc_append":"none","atc_append_heights":"stretch-quantity","enable_quantity_discounts":false,"style":"normal","headline":"Kesäale – Ilmainen toimitus","preselected":"option_2","display_selected_indicator":true,"border_radius":10,"border_width":2,"color_scheme":"accent-1","enable_variant_selectors":true,"enable_variant_selectors_on_quantity_of_1":false,"update_prices":false,"skip_unavailable":false,"full_width_pickers":false,"hide_pickers_overlay":true,"pickers_label":"","image_width":70,"space_images":true,"vertical_images_position":"top","vertical_prices_layout":"vertical","option_1_quantity":1,"option_1_badge":"","option_1_badge_style":"1","option_1_badge_color":"accent-1","option_1_label":"1-pakkaus – 50 kpl","option_1_benefit":"Säästä 40 %","option_1_benefit_position":"top","option_1_benefit_style":"solid","option_1_benefit_color":"accent-2","option_1_caption":"5 kr per käyttökerta","option_1_percentage_off_text":"0","option_1_fixed_amount_off":"0","option_1_price_text":"[price]","option_1_compare_price":"compare_price","option_1_compare_price_text":"[compare_price]","option_2_quantity":2,"option_2_badge":"Osta 2, saat 50 % alennusta","option_2_badge_style":"1","option_2_badge_color":"accent-2","option_2_label":"2-pakkaus – 100 kpl","option_2_benefit":"Säästä 50 %","option_2_benefit_position":"top","option_2_benefit_style":"solid","option_2_benefit_color":"accent-2","option_2_caption":"4 kr per käyttökerta","option_2_percentage_off_text":"0","option_2_fixed_amount_off":"99","option_2_price_text":"[price]","option_2_compare_price":"compare_price","option_2_compare_price_text":"[compare_price]","option_3_quantity":4,"option_3_badge":"Voimassa tämän viikon","option_3_badge_style":"1","option_3_badge_color":"accent-2","option_3_label":"4-pakkaus – 200 kpl","option_3_benefit":"Säästä 60 %","option_3_benefit_position":"top","option_3_benefit_style":"solid","option_3_benefit_color":"accent-2","option_3_caption":"3 kr per käyttökerta","option_3_percentage_off_text":"0","option_3_fixed_amount_off":"397","option_3_price_text":"[price]","option_3_compare_price":"compare_price","option_3_compare_price_text":"[compare_price]","option_4_quantity":0,"option_4_badge":"","option_4_badge_style":"1","option_4_badge_color":"accent-1","option_4_label":"Buy [quantity]","option_4_benefit":"","option_4_benefit_position":"top","option_4_benefit_style":"outlined","option_4_benefit_color":"accent-1","option_4_caption":"You save [amount_saved]","option_4_percentage_off_text":"0","option_4_fixed_amount_off":"0","option_4_price_text":"[price]","option_4_compare_price":"compare_price","option_4_compare_price_text":"[compare_price]","margin_top":15,"margin_bottom":15}},"text_F7RwtY":{"type":"text","disabled":true,"settings":{"mobile_text_size":15,"desktop_text_size":18,"alignment":"left","text_color":"#f7941d","text_1":"Almost sold out due to Halloween sale","text_2":"","text_3":"","icon_scale":140,"icon_color":"#118fcb","icon_1":"pets","filled_icon_1":true,"custom_icon_1":"shopify:\/\/shop_images\/Namnlos_design_-_2025-10-01T144230.866.png","icon_2":"check_circle","filled_icon_2":true,"icon_3":"check_circle","filled_icon_3":true,"width":"100%","direction":"vertical","column_gap":5,"enable_bg":false,"bg_color":"#f3f3f3","corner_radius":40,"padding":3,"border_size":0,"border_color":"#b7b7b7","margin_top":15,"margin_bottom":15}},"custom_liquid_qmqTUE":{"type":"custom_liquid","settings":{"custom_liquid":"<!-- Snippet: stock-status.liquid -->\n<div class=\"stock-status-wrapper\">\n  <span class=\"stock-status-dot\"><\/span>\n  <span class=\"stock-status-text\">Melkein loppuunmyyty<\/span>\n<\/div>\n\n<style>\n  .stock-status-wrapper {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n  }\n\n  .stock-status-dot {\n    width: 14px;\n    height: 14px;\n    background-color: #ff9900;\n    border-radius: 50%;\n    animation: stockPulse 1.5s ease-in-out infinite;\n    display: inline-block;\n  }\n\n  .stock-status-text {\n    color: #ff9900;\n    font-weight: 700;\n    font-size: 14px;\n  }\n\n  @keyframes stockPulse {\n    0% { transform: scale(1); opacity: 1; }\n    50% { transform: scale(1.3); opacity: 0.7; }\n    100% { transform: scale(1); opacity: 1; }\n  }\n<\/style>"}},"buy_buttons":{"type":"buy_buttons","settings":{"show_dynamic_checkout":false,"skip_cart":false,"uppercase_text":true,"icon_scale":120,"icon_spacing":10,"atc_custom_label":"","display_price":false,"enable_custom_color":false,"custom_color":"#53af01","enable_secondary_btn":false,"secondary_btn_label":"Buy It Now","secondary_btn_enable_custom_color":false,"secondary_btn_custom_color":"#dd1d1d","margin_top":24,"margin_bottom":24}},"payment_badges_XtWzKz":{"type":"payment_badges","settings":{"enabled_payment_types":"","margin_top":15,"margin_bottom":15}},"custom_liquid_8TN4AP":{"type":"custom_liquid","settings":{"custom_liquid":"<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <style>\n    .custom-shipping-container {\n      display: flex;\n      padding: 6px 16px;\n      justify-content: space-between;\n      align-items: center;\n      background-color: #f6f6f6;\n      border-radius: 20px;\n      margin-top: 10px;\n    }\n\n    .custom-shipping-item {\n      display: flex;\n      align-items: center;\n      gap: 6px;\n    }\n\n    .text-block-shipping {\n      font-size: 12px;\n      color: #000;\n    }\n\n    .shipping-date {\n      font-weight: bold;\n    }\n\n    .shipping-worldwide {\n      font-size: 12px;\n      color: #000;\n    }\n\n    .shipping-worldwide .bold {\n      font-weight: bold;\n    }\n\n    .green-circle {\n      animation: fade 1s ease-in-out infinite;\n    }\n\n    @keyframes fade {\n      0%, 100% { opacity: 1; }\n      50% { opacity: 0.5; }\n    }\n\n    .flags-container {\n      display: flex;\n      gap: 6px;\n      align-items: center;\n    }\n    \n    .custom-icon {\n      width: 16px;\n      height: 12px;\n    }\n  <\/style>\n  <script>\n    document.addEventListener(\"DOMContentLoaded\", function() {\n      function getNextWeekday(date) {\n        var day = date.getDay();\n        var daysToAdd = (day === 5) ? 3 : (day === 6) ? 2 : 1;\n        return new Date(date.setDate(date.getDate() + daysToAdd));\n      }\n\n      var today = new Date();\n      var shipDate = getNextWeekday(today);\n      \n      \/\/ Format date to have short month (e.g., \"Thu, Feb 22\")\n      var options = { weekday: 'short', month: 'short', day: 'numeric' };\n      var formattedDate = shipDate.toLocaleDateString('en-US', options);\n      document.getElementById('shipping-date').textContent = formattedDate;\n\n      \/\/ Fetch country data using GeoJS API\n      fetch('https:\/\/get.geojs.io\/v1\/ip\/geo.json')\n        .then(response => response.json())\n        .then(data => {\n          console.log(\"Geolocation API Response:\", data); \/\/ Debugging log\n\n          if (!data || !data.country_code) {\n            throw new Error(\"Invalid data from API\");\n          }\n          \n          var countryCode = data.country_code.toUpperCase(); \/\/ Get country code (e.g., \"GB\", \"US\")\n          var flagUrl = `https:\/\/flagcdn.com\/w40\/${countryCode.toLowerCase()}.png`;\n\n          \/\/ Set flag and country code\n          document.getElementById('country-flag').src = flagUrl;\n          document.getElementById('country-flag').alt = countryCode + \" Flag\";\n          document.getElementById('country-flag').style.display = \"inline\";\n          document.getElementById('country-text').innerHTML = `Fast <span class=\"bold\">${countryCode}<\/span> Shipping`;\n        })\n        .catch(error => {\n          console.error('Error fetching the IP information:', error);\n          document.getElementById('country-flag').style.display = \"none\"; \n          document.getElementById('country-text').innerHTML = \"Fast Worldwide Shipping\";\n        });\n    });\n  <\/script>\n<\/head>\n<body>\n  <div class=\"custom-shipping-container\">\n    <div class=\"custom-shipping-item\">\n      <svg class=\"green-circle\" xmlns=\"http:\/\/www.w3.org\/2000\/svg\" width=\"12\" height=\"13\" viewBox=\"0 0 12 13\" fill=\"none\">\n        <circle cx=\"6\" cy=\"6.5\" r=\"6\" fill=\"#137333\"\/>\n      <\/svg>\n      <div class=\"text-block-shipping\">Lähetetään viimeistään <span id=\"shipping-date\" class=\"shipping-date\"><\/span><\/div>\n    <\/div>\n    <div class=\"custom-shipping-item flags-container\">\n      <img id=\"country-flag\" class=\"custom-icon\" src=\"\" alt=\"Country Flag\" style=\"display: none;\">\n      <div id=\"country-text\" class=\"shipping-worldwide\">Loading...<\/div>\n    <\/div>\n  <\/div>\n<\/body>\n<\/html>"}},"text_rerK7N":{"type":"text","settings":{"mobile_text_size":14,"desktop_text_size":16,"alignment":"left","text_color":"#121212","text_1":"100 päivän rahat takaisin -takuu","text_2":"Yli 15 000 tyytyväistä asiakasta","text_3":"ILMAINEN e-kirja sisältyy jokaiseen tilaukseen","icon_scale":140,"icon_color":"#118fcb","icon_1":"new_releases","filled_icon_1":true,"icon_2":"favorite","filled_icon_2":true,"icon_3":"book_2","filled_icon_3":true,"width":"100%","direction":"vertical","column_gap":5,"enable_bg":true,"bg_color":"#f3f3f3","corner_radius":40,"padding":3,"border_size":0,"border_color":"#b7b7b7","margin_top":15,"margin_bottom":15}},"e7a28cbe-03cb-4c9d-a2c4-0e3e76ffb3e5":{"type":"sticky_atc","settings":{"function":"add_to_cart","display_when":"after_scroll","button_label":"LISÄÄ OSTOSKORIIN","enable_custom_btn_color":false,"custom_btn_color":"#dd1d1d","color_scheme":"background-1","star_color":"#ffcc00","stars_label":"4,86\/5 (2 000+ arvostelua)","picker_type":"combined","desktop_show_image":false,"desktop_show_title":true,"desktop_rating_stars":true,"desktop_show_price":true,"desktop_show_sale_badge":true,"desktop_variant_picker":true,"desktop_full_button_width":true,"desktop_show_price_in_button":false,"desktop_transparent_bg":false,"mobile_show_image":false,"mobile_show_title":true,"mobile_rating_stars":true,"mobile_show_price":false,"mobile_show_sale_badge":false,"mobile_variant_picker":false,"mobile_full_button_width":true,"mobile_show_price_in_button":false,"mobile_transparent_bg":false}},"description":{"type":"description","disabled":true,"settings":{"margin_top":24,"margin_bottom":24}},"collapsible_tab_t3jLVn":{"type":"collapsible_tab","settings":{"heading":"Vetpetsin täydellinen hampaidenhoito-opas","heading_size":"medium","icon":"","filled_icon":false,"collapse_icon":"carret","display_top_border":true,"open":false,"content":"","page":"vetpets-full-dental-care-guide","margin_top":24,"margin_bottom":0}},"de158e68-5d0d-4819-a625-e2dabdff87d1":{"type":"collapsible_tab","settings":{"heading":"100 päivän rahat takaisin -takuu","heading_size":"medium","icon":"","filled_icon":false,"collapse_icon":"carret","display_top_border":true,"open":false,"content":"<p>Me todella uskomme, että FreshWipes tekee eron – sekä sinulle että koirallesi.<br\/><br\/>Siksi tarjoamme<strong> 100 päivän rahat takaisin -takuu.<\/strong><br\/><br\/>Voit kokeilla tuotetta kotona, omassa tahdissasi.<br\/><br\/>Etkö ole täysin tyytyväinen? Saat rahasi takaisin – ei stressiä, ei säätöä.<\/p><p>Meille on tärkeämpää, että koirasi saa ansaitsemaansa hoitoa, kuin että pidät jotain, mistä et pidä.<\/p><p>Voit lukea lisää tyytyväisyystakuustamme täältä.<strong><br\/><\/strong><a href=\"\/pages\/100-dagers-fornoydgaranti\" title=\"100-Day Satisfaction Guarantee\">100 päivän tyytyväisyystakuu<\/a><\/p>","page":"","margin_top":24,"margin_bottom":0}},"collapsible_tab_EGhYxC":{"type":"collapsible_tab","settings":{"heading":"Ainesosat","heading_size":"medium","icon":"","filled_icon":false,"collapse_icon":"carret","display_top_border":true,"open":false,"content":"<p>• <strong>EDI-puhdistettu vesi<\/strong> – perusliuos<br\/><br\/>• <strong>Glyseriini<\/strong> – lisää kosteutta<br\/><br\/>• <strong>Sitruunahappo<\/strong> – tasapainottaa pH:n<br\/><br\/>• <strong>Setyylipyridiniumkloridi-mono­hydraatti<\/strong> – antibakteerinen vaikutus<br\/><br\/>• <strong>Teepolyfenolit<\/strong> – raikastaa hengitystä<br\/><br\/>• <strong>Allantoiini<\/strong> – rauhoittava<br\/><br\/>• <strong>Vihreä tee -uute<\/strong> – luonnollinen antibakteerinen & suojaava<\/p><p>✔️<strong> <\/strong>pH-tasapainotettu ja hajusteeton<br\/><br\/>✔️ Ei testattu eläimillä (cruelty-free)<br\/><br\/>✔️ Ei sisällä alkoholia, fluoria tai voimakkaita kemikaaleja<\/p>","page":"free-e-book-the-secret-to-a-sparkling-home-in-just-15-minutes-a-day","margin_top":24,"margin_bottom":0}},"collapsible_tab_aFAiwA":{"type":"collapsible_tab","settings":{"heading":"Maksu & toimitus","heading_size":"medium","icon":"","filled_icon":false,"collapse_icon":"carret","display_top_border":true,"open":false,"content":"<h4>Maksu<\/h4><p>Voit maksaa turvallisesti Klarnalla, luottokortilla tai tilisiirrolla – valitse sinulle sopivin vaihtoehto.<br\/><\/p><h4>Toimitus<\/h4><p>Tarjoamme eri toimitushinnat Yhdistyneelle kuningaskunnalle ja muille maille:<\/p><ul><li><strong>Yhdistynyt kuningaskunta (UK):<\/strong><br\/>Standarditoimitus:<strong> £2.00<\/strong> (ilmainen yli £37 tilauksille)<br\/>Priority-toimitus: <strong>£4.50<\/strong><\/li><li><strong>Muu maailma:<\/strong><br\/>Standarditoimitus: <strong>$2.95 <\/strong>(ilmainen yli $49 tilauksille)<br\/>Priority-toimitus: <strong>$6.00<\/strong><br\/><\/li><\/ul><p><strong>Toimitusaika<\/strong><br\/><br\/>Koska UK-varastomme on tilapäisesti loppu, tilauksesi lähetetään kansainvälisestä varastostamme. Tarjoamme kaksi toimitusvaihtoehtoa kassalla:<\/p><ul><li><strong>Standarditoimitus:<\/strong> 1–2 päivän käsittely + 5–10 päivän toimitusaika<\/li><li><strong>Priority-toimitus<\/strong>: 1–2 päivän käsittely + 4–7 päivän toimitusaika<\/li><\/ul><p>Seurantakoodi lähetetään sähköpostiisi heti, kun tilauksesi on poistunut varastolta.<\/p><p><strong>Kysyttävää?<\/strong><br\/>Lähetä meille sähköpostia osoitteeseen info@shopvetpets.com<br\/> – vastaamme aina 24 tunnin sisällä arkipäivinä.<\/p>","page":"","margin_top":24,"margin_bottom":0}},"reviews_8UgFbe":{"type":"reviews","disabled":true,"settings":{"color_scheme":"background-1","show_custom_bg":false,"custom_bg_color":"#f2f2f2","corner_radius":12,"border_width":0,"border_color":"#b7b7b7","avatar_alignment":"top","avatar_corner_radius":40,"star_color":"#ffcc00","stars_translate":0,"checkmark_color":"#6d388b","checkmark_icon_color":"#ffffff","slider_type":"slide","autoplay":false,"autoplay_speed":5,"display_arrows":false,"display_dots":true,"author_1":"– Anna, 34 år [stars]","image_1":"shopify:\/\/shop_images\/Profilbild_3.jpg","text_1":"<p>Har brukt FreshWipes i omtrent en uke og ble overrasket over hvor lett det gikk. Hunden vår er vanligvis skeptisk, men lot meg faktisk rengjøre uten problemer.<\/p>","author_2":"– Mats, 52 år [stars]","image_2":"shopify:\/\/shop_images\/Profilbild5_1a47da8b-0488-41c4-af0b-4e3b8857192b.webp","text_2":"<p>Etter to måneder er pusten mye friskere og misfargingene har blitt redusert. Vi har det som en fast rutine på søndager – og det fungerer kjempebra.<\/p>","author_3":"– Sofia, 41 år [stars]","image_3":"shopify:\/\/shop_images\/Profilbild111.webp","text_3":"<p>Vi har brukt dem i over ett år nå. Vår labrador har ikke trengt noe veterinærbesøk for tennene siden. Enkelt å ta med, og det føles trygt.<\/p>","margin_top":24,"margin_bottom":24}}},"block_order":["a6eb81db-40e4-43e0-972f-32db010a4a56","title","price","divider_i9d8VK","text_cn7XQg","text_kEd4Nj","5fcc0428-e768-4cb7-bea3-eb0274198dd1","kaching_bundles_app_block_f8NfBp","04ba004e-2f54-4936-8b1c-8bcadf6573f6","text_F7RwtY","custom_liquid_qmqTUE","buy_buttons","payment_badges_XtWzKz","custom_liquid_8TN4AP","text_rerK7N","e7a28cbe-03cb-4c9d-a2c4-0e3e76ffb3e5","description","collapsible_tab_t3jLVn","de158e68-5d0d-4819-a625-e2dabdff87d1","collapsible_tab_EGhYxC","collapsible_tab_aFAiwA","reviews_8UgFbe"],"custom_css":[],"settings":{"display_id":false,"enable_sticky_info":true,"display_variant_image_first":false,"disable_prepend":true,"hide_variants":false,"variant_image_filtering":"none","image_zoom":"none","thumbnails_ratio":"square","arrows_color_scheme":"inverse","transparent_arrows":false,"dots_color_scheme":"inverse","video_player":"play_btn","enable_video_looping":false,"autoplay_videos_pause_btn":false,"video_sound_btn":false,"video_timeline":false,"play_btn_color_scheme":"accent-1","sound_btn_color_scheme":"inverse","timeline_color":"accent-1","media_size":"medium","media_position":"left","gallery_layout":"thumbnail_slider","desktop_thumbnails_position":"bottom","desktop_thumbnails_count":5,"desktop_vertical_thumbnails_width":16,"desktop_vertical_thumbnails_hide_arrows":false,"constrain_to_viewport":true,"media_fit":"contain","desktop_arrows_position":"hidden","mobile_media_corner_radius":16,"mobile_spacing_pixels":0,"mobile_arrows_position":"sides","mobile_pagination":"hidden","mobile_thumbnails_position":"bottom","mobile_thumbnails_count":5,"mobile_vertical_thumbnails_width":22,"mobile_vertical_thumbnails_hide_arrows":true,"mobile_scroll_padding_percentage":0,"mobile_scroll_padding_pixels":2,"enable_mobile_outher_spacing":false,"mobile_slides_container_width":100,"mobile_slides_inner_width":100,"trust_badge_position":"top-right","trust_badge_size":"medium","mobile_padding_top":0,"mobile_padding_bottom":16,"desktop_padding_top":36,"desktop_padding_bottom":36}},"related-products":{"type":"related-products","disabled":true,"settings":{"display_id":false,"title":"You may also like","title_highlight_color":"#6d388b","heading_size":"h2","products_to_show":4,"stretch_cards":false,"columns_desktop":4,"color_scheme":"background-1","image_ratio":"adapt","show_secondary_image":false,"show_vendor":false,"show_rating":false,"enable_quick_add":false,"columns_mobile":"2","padding_top":36,"padding_bottom":24}},"image_slider_8HnbpY":{"type":"image-slider","blocks":{"video_slide_pYXTW3":{"type":"video_slide","settings":{"video":"shopify:\/\/files\/videos\/Produktvideos reviews.mov","loop":true,"muted_autoplay":true,"display_play_btn":true,"btn_animation":false,"btn_color_scheme":"accent-1","display_sound_btn":false,"sound_btn_color_scheme":"inverse","display_timeline":false,"timeline_color":"accent-1","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"video_slide_4LLCQV":{"type":"video_slide","settings":{"video":"shopify:\/\/files\/videos\/Produktvideo review 4.mov","loop":true,"muted_autoplay":true,"display_play_btn":true,"btn_animation":false,"btn_color_scheme":"accent-1","display_sound_btn":false,"sound_btn_color_scheme":"inverse","display_timeline":false,"timeline_color":"accent-1","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"video_slide_brtX4E":{"type":"video_slide","settings":{"video":"shopify:\/\/files\/videos\/Produktvideo review 3.mov","loop":true,"muted_autoplay":true,"display_play_btn":true,"btn_animation":false,"btn_color_scheme":"accent-1","display_sound_btn":false,"sound_btn_color_scheme":"inverse","display_timeline":false,"timeline_color":"accent-1","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"video_slide_LYFhDt":{"type":"video_slide","settings":{"video":"shopify:\/\/files\/videos\/Produktvideo review 5.mov","loop":true,"muted_autoplay":true,"display_play_btn":true,"btn_animation":false,"btn_color_scheme":"accent-1","display_sound_btn":false,"sound_btn_color_scheme":"inverse","display_timeline":false,"timeline_color":"accent-1","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"video_slide_HWhYJw":{"type":"video_slide","settings":{"video":"shopify:\/\/files\/videos\/Produktvideo review 2.mov","loop":true,"muted_autoplay":true,"display_play_btn":true,"btn_animation":false,"btn_color_scheme":"accent-1","display_sound_btn":false,"sound_btn_color_scheme":"inverse","display_timeline":false,"timeline_color":"accent-1","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}}},"block_order":["video_slide_pYXTW3","video_slide_4LLCQV","video_slide_brtX4E","video_slide_LYFhDt","video_slide_HWhYJw"],"disabled":true,"settings":{"display_id":false,"visibility":"always-display","title":"Tusenvis av fornøyde <strong>hunder og kjæledyreiere!<\/strong>","title_highlight_color":"#118fcb","heading_size":"h2","color_scheme":"background-2","type":"slide","drag":"enabled","autoplay":true,"autoplay_speed":3,"center_mode":false,"arrows_color_scheme":"inverse","transparent_arrows":true,"dots_color_scheme":"inverse","desktop_page_width":"normal","desktop_border_radius":16,"slides_desktop":3,"per_move_desktop":1,"desktop_spacing":28,"desktop_side_padding":0,"desktop_padding_calc":true,"desktop_adaptive_height":false,"desktop_dots_position":"under","desktop_arrows_position":"hidden","mobile_full_page":false,"mobile_border_radius":0,"slides_mobile":2,"per_move_mobile":1,"mobile_spacing":12,"mobile_side_padding":0,"mobile_padding_calc":true,"mobile_adaptive_height":false,"mobile_dots_position":"under","mobile_arrows_position":"hidden","padding_top":36,"padding_bottom":36,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#121212"}},"image_slider_X8iFJF":{"type":"image-slider","blocks":{"image_slide_fDQd63":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Din_Hunds_Leende_spelar_ocksa_roll_35.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_YPPbRJ":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Review_tackkort.png","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_r9DHFr":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/META_ADS_4.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_LeBfnC":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/META_ADS_3_4607e2fa-34d4-4f4e-9628-12d88855ac29.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_FQxDQg":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Reviews_hundhalsan_freshwipes_19.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_KqCyQa":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Reviews_hundhalsan_freshwipes_17.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_AW8tMc":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Reviews_hundhalsan_freshwipes_20.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_x8JVWg":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Reviews_hundhalsan_freshwipes_16.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_LfXJit":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Skarmavbild_2025-06-20_kl._12.41.33_7db4482a-3a46-4fe6-9a4d-2bb59749859d.webp","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_hrJR8i":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Skarmavbild_2025-06-20_kl._12.36.03_58fcab1c-8e81-4125-90db-87d075584004.webp","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_HzrYwH":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Din_Hunds_Leende_spelar_ocksa_roll_34.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_pRnbPQ":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Din_Hunds_Leende_spelar_ocksa_roll_8.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_GN7c44":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Din_Hunds_Leende_spelar_ocksa_roll_9.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_hgi3nY":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Din_Hunds_Leende_spelar_ocksa_roll_12.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_U3dWYb":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Din_Hunds_Leende_spelar_ocksa_roll_11.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_nD4Rb9":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Din_Hunds_Leende_spelar_ocksa_roll_13.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_jKFGxn":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Din_Hunds_Leende_spelar_ocksa_roll_10.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}}},"block_order":["image_slide_fDQd63","image_slide_YPPbRJ","image_slide_r9DHFr","image_slide_LeBfnC","image_slide_FQxDQg","image_slide_KqCyQa","image_slide_AW8tMc","image_slide_x8JVWg","image_slide_LfXJit","image_slide_hrJR8i","image_slide_HzrYwH","image_slide_pRnbPQ","image_slide_GN7c44","image_slide_hgi3nY","image_slide_U3dWYb","image_slide_nD4Rb9","image_slide_jKFGxn"],"settings":{"display_id":false,"visibility":"always-display","title":"Tuhansia tyytyväisiä <strong>koiria ja lemmikinomistajia!<\/strong>","title_highlight_color":"#118fcb","heading_size":"h2","color_scheme":"background-2","type":"loop","drag":"enabled","autoplay":true,"autoplay_speed":6,"center_mode":false,"arrows_color_scheme":"inverse","transparent_arrows":true,"dots_color_scheme":"inverse","desktop_page_width":"normal","desktop_border_radius":16,"slides_desktop":5,"per_move_desktop":1,"desktop_spacing":28,"desktop_side_padding":0,"desktop_padding_calc":true,"desktop_adaptive_height":false,"desktop_dots_position":"under","desktop_arrows_position":"hidden","mobile_full_page":false,"mobile_border_radius":16,"slides_mobile":2,"per_move_mobile":1,"mobile_spacing":12,"mobile_side_padding":0,"mobile_padding_calc":true,"mobile_adaptive_height":false,"mobile_dots_position":"under","mobile_arrows_position":"hidden","padding_top":36,"padding_bottom":36,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#121212"}},"section_divider_iXCmE9":{"type":"section-divider","settings":{"visibility":"always-display","shape":"waves_2","flip_horizontal":false,"flip_vertical":false,"shape_color":"custom","custom_shape_color":"#118fcb","background_color":"background-1","custom_background_color":"#ffffff","padding_top":0,"padding_bottom":0}},"image_with_text_LkDiE9":{"type":"image-with-text","blocks":{"caption_NgwaCz":{"type":"caption","settings":{"caption":"Suojaa koirasi hammassairauksilta!","text_style":"caption-with-letter-spacing","text_size":"medium"}},"heading_KC4Cfi":{"type":"heading","settings":{"title":"Koirasi ei aina näytä, <strong>kun sillä on kipuja<\/strong>","title_highlight_color":"#121212","heading_size":"h2"}},"text_wgGMJL":{"type":"text","settings":{"text":"<p>Värjäytyneet hampaat ja pahanhajuinen hengitys eivät ole vain epämiellyttäviä – ne voivat olla merkkejä plakista, hammaskivestä tai tulehduksesta.<\/p><p>Ja aivan kuten haluat suojella lastasi, haluat suojella myös koiraasi.<br\/><br\/>Mutta toisin kuin lapset, useimmat koirat eivät näytä, milloin niillä on kipuja.<\/p><p><strong>VetPetsin FreshWipes antaa sinulle helpon tavan huolehtia koirasi suun terveydestä – ilman eläinlääkärikäyntejä, stressiä tai epävarmuutta.<\/strong><\/p>","text_style":"body"}}},"block_order":["caption_NgwaCz","heading_KC4Cfi","text_wgGMJL"],"settings":{"display_id":false,"visibility":"always-display","image":"shopify:\/\/shop_images\/Dental_Wipes_1.webp","video_autoplay":true,"video_loop":true,"height":"adapt","color_scheme":"custom","section_color_scheme":"custom","full_desktop_width":false,"content_layout":"no-overlap","desktop_media_width":50,"layout":"image_first","desktop_content_position":"top","desktop_content_alignment":"left","mobile_full_media_width":false,"mobile_direction":"normal","mobile_image_quanlity":"2","mobile_content_alignment":"left","mobile_padding_top":0,"mobile_padding_bottom":16,"desktop_padding_top":36,"desktop_padding_bottom":36,"custom_colors_background":"#118fcb","custom_gradient_background":"","custom_colors_text":"#ffffff","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff","custom_colors_outline_button":"#dd1d1d","custom_section_colors_background":"#118fcb","custom_section_gradient_background":""}},"section_divider_MjaRJC":{"type":"section-divider","settings":{"visibility":"always-display","shape":"waves_2","flip_horizontal":false,"flip_vertical":true,"shape_color":"custom","custom_shape_color":"#118fcb","background_color":"background-1","custom_background_color":"#d6fdfd","padding_top":0,"padding_bottom":0}},"image_with_text_kiAL7m":{"type":"image-with-text","blocks":{"heading_bXGAFf":{"type":"heading","settings":{"title":"Saat eläinlääkärintason <strong>tulokset kotona<\/strong>","title_highlight_color":"#118fcb","heading_size":"h2"}},"text_GjNNAg":{"type":"text","settings":{"text":"<p><strong>FreshWipes puhdistaa hellävaraisesti koirasi hampaat ja ikenet.<\/strong><br\/><br\/>Se poistaa plakkia, raikastaa hengityksen ja ehkäisee tulehduksia – nopeasti ja vaivattomasti.<\/p><p>Kaikki yhdessä kätevässä, helppokäyttöisessä sormipyyhkeessä.<br\/><br\/>Ei hammasharjaa, ei sotkua – ei stressiä.<\/p>","text_style":"body"}}},"block_order":["heading_bXGAFf","text_GjNNAg"],"settings":{"display_id":false,"visibility":"always-display","image":"shopify:\/\/shop_images\/Gif_1.gif","video_autoplay":true,"video_loop":true,"height":"adapt","color_scheme":"background-1","section_color_scheme":"background-1","full_desktop_width":false,"content_layout":"no-overlap","desktop_media_width":50,"layout":"text_first","desktop_content_position":"top","desktop_content_alignment":"left","mobile_full_media_width":false,"mobile_direction":"normal","mobile_image_quanlity":"2","mobile_content_alignment":"left","mobile_padding_top":0,"mobile_padding_bottom":16,"desktop_padding_top":36,"desktop_padding_bottom":36,"custom_colors_background":"#2e2a39","custom_gradient_background":"","custom_colors_text":"#ffffff","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff","custom_colors_outline_button":"#dd1d1d","custom_section_colors_background":"#ffffff","custom_section_gradient_background":""}},"section_divider_kAW6L6":{"type":"section-divider","settings":{"visibility":"always-display","shape":"waves_2","flip_horizontal":false,"flip_vertical":false,"shape_color":"custom","custom_shape_color":"#d5f7ff","background_color":"background-1","custom_background_color":"#d5f7ff","padding_top":0,"padding_bottom":0}},"image_with_text_jpGEnV":{"type":"image-with-text","blocks":{"heading_xgchUK":{"type":"heading","settings":{"title":"Yksinkertainen tapa, joka <strong>tekee suuren eron<\/strong>","title_highlight_color":"#118fcb","heading_size":"h2"}},"text_jBQGVq":{"type":"text","settings":{"text":"<p>Monet koiranomistajat luulevat, että hampaiden hoidon täytyy olla monimutkaista.<\/p><p>Mutta FreshWipesin kanssa se on niin helppoa, että tulet oikeasti käyttämään niitä.<\/p><p>1–2 kertaa viikossa riittää ehkäisemään tulevat, kivuliaat ongelmat.<br\/><\/p><h4>Raikkaampi hengitys, vahvemmat hampaat, onnellisempi koira<\/h4><p>Terve suu vaikuttaa koko kehoon.<br\/><br\/>FreshWipesin avulla koirasi saa paitsi raikkaamman hengityksen ja valkoisemmat hampaat –<br\/><br\/>se voi paremmin ja sillä on enemmän energiaa.<\/p><p><strong>Vähemmän infektioita. Enemmän leikkiä. Enemmän iloa.<\/strong><\/p>","text_style":"body"}}},"block_order":["heading_xgchUK","text_jBQGVq"],"settings":{"display_id":false,"visibility":"always-display","image":"shopify:\/\/shop_images\/Gif_2.gif","video_autoplay":true,"video_loop":true,"height":"adapt","color_scheme":"custom","section_color_scheme":"custom","full_desktop_width":false,"content_layout":"no-overlap","desktop_media_width":50,"layout":"image_first","desktop_content_position":"top","desktop_content_alignment":"left","mobile_full_media_width":false,"mobile_direction":"normal","mobile_image_quanlity":"2","mobile_content_alignment":"left","mobile_padding_top":0,"mobile_padding_bottom":16,"desktop_padding_top":36,"desktop_padding_bottom":36,"custom_colors_background":"#d5f7ff","custom_gradient_background":"","custom_colors_text":"#000000","custom_colors_solid_button_background":"#118fcb","custom_colors_solid_button_text":"#ffffff","custom_colors_outline_button":"#dd1d1d","custom_section_colors_background":"#d5f7ff","custom_section_gradient_background":""}},"section_divider_BJPHP4":{"type":"section-divider","settings":{"visibility":"always-display","shape":"waves_2","flip_horizontal":false,"flip_vertical":true,"shape_color":"custom","custom_shape_color":"#d5f7ff","background_color":"background-1","custom_background_color":"#d5f7ff","padding_top":0,"padding_bottom":0}},"image_with_text_zpzP4w":{"type":"image-with-text","blocks":{"heading_p8UPgK":{"type":"heading","settings":{"title":"Hammashoito <strong>ei saisi olla ylellisyyttä<\/strong>","title_highlight_color":"#118fcb","heading_size":"h2"}},"text_EgwQE8":{"type":"text","settings":{"text":"<p>Eläinlääkärin tekemä hammaskiven poisto voi maksaa tuhansia kruunuja ja vaatii usein nukutuksen.<\/p><p>FreshWipes maksaa murto-osan – ja on täysin riskitön käyttää.<br\/><br\/>Meille kyse ei ole rahasta – vaan siitä, että koirat voivat paremmin.<br\/><strong><br\/>Hellävarainen. Turvallinen. Koirallesi kehitetty.<\/strong><\/p><p>Pyyhkeemme ovat hajusteettomia, pH-tasapainotettuja ja suunniteltu turvalliseen käyttöön suussa.<\/p><p>Ne sopivat kaikille koiraroduille ja on helppo ottaa mukaan lenkille, matkalle tai lomalle.<\/p><p><strong>Hammashoito ei saisi koskaan olla este.<\/strong><\/p>","text_style":"body"}}},"block_order":["heading_p8UPgK","text_EgwQE8"],"settings":{"display_id":false,"visibility":"always-display","image":"shopify:\/\/shop_images\/Engelska_23.jpg","video_autoplay":true,"video_loop":true,"height":"adapt","color_scheme":"background-1","section_color_scheme":"background-1","full_desktop_width":false,"content_layout":"no-overlap","desktop_media_width":50,"layout":"text_first","desktop_content_position":"top","desktop_content_alignment":"left","mobile_full_media_width":false,"mobile_direction":"normal","mobile_image_quanlity":"2","mobile_content_alignment":"left","mobile_padding_top":0,"mobile_padding_bottom":16,"desktop_padding_top":36,"desktop_padding_bottom":36,"custom_colors_background":"#2e2a39","custom_gradient_background":"","custom_colors_text":"#ffffff","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff","custom_colors_outline_button":"#dd1d1d","custom_section_colors_background":"#ffffff","custom_section_gradient_background":""}},"multicolumn_r3Fa8U":{"type":"multicolumn","blocks":{"column_bKkKHH":{"type":"column","settings":{"image":"shopify:\/\/shop_images\/Namnlos_design_14.svg","muted_autoplay":true,"title":"Teepolyfenolit","text":"<p>Teepolyfenolit ovat luonnollisia antioksidantteja, jotka auttavat vähentämään bakteereja suussa, raikastavat hengitystä ja suojaavat ikeniä tulehduksilta.<\/p>","link_label":"","link":""}},"column_yXWzdC":{"type":"column","settings":{"image":"shopify:\/\/shop_images\/Namnlos_design_12.svg","muted_autoplay":true,"title":"Glyseriini","text":"<p>Glyseriini kosteuttaa suun limakalvoja ja ikeniä – vähentäen ärsytyksen riskiä ja tarjoten hellävaraisemman puhdistuksen.<\/p>","link_label":"","link":""}},"column_c9FKpR":{"type":"column","settings":{"image":"shopify:\/\/shop_images\/Namnlos_design_13.svg","muted_autoplay":true,"title":"Sitruunahappo","text":"<p>Sitruunahappo auttaa tasapainottamaan suun pH-tasoa – mikä suojaa kudoksia ja ehkäisee pahanhajuista hengitystä.<\/p>","link_label":"","link":""}},"column_QCjHRw":{"type":"column","settings":{"image":"shopify:\/\/shop_images\/Namnlos_design_15.svg","muted_autoplay":true,"title":"Allantoiini","text":"<p>Allantoiini suojaa ja rauhoittaa herkkiä ikeniä. Auttaa vähentämään ärsytystä ja edistää paranemista.<\/p>","link_label":"","link":""}},"column_zLHyXq":{"type":"column","settings":{"image":"shopify:\/\/shop_images\/assets_task_01jwzy13s9efnbfcxbccj3f6tg_1749123413_img_0.webp","muted_autoplay":true,"title":"Setyylipyridiniumkloridi","text":"<p>Tunnettu antibakteerinen ainesosa, jota käytetään suunhoidossa. Auttaa vähentämään plakkia, bakteereja ja pahanhajuista hengitystä.<\/p>","link_label":"","link":""}},"column_deznN8":{"type":"column","settings":{"image":"shopify:\/\/shop_images\/540f0b38-c0db-4b70-a19d-8781871e78f7.png","muted_autoplay":true,"title":"Natriumbentsoaatti","text":"<p>Hellävarainen ja turvallinen säilöntäaine, joka pidentää tuotteen säilyvyyttä vaikuttamatta suun herkkään ympäristöön.<\/p>","link_label":"","link":""}}},"block_order":["column_bKkKHH","column_yXWzdC","column_c9FKpR","column_QCjHRw","column_zLHyXq","column_deznN8"],"settings":{"display_id":false,"visibility":"always-display","title":"Safe and carefully <strong>selected ingredients<\/strong>","title_highlight_color":"#118fcb","heading_size":"h1","button_label":"","button_link":"","atc_button_label":"","atc_product":"","atc_skip_cart":false,"color_scheme":"background-1","cards_color_scheme":"bg-overlay","cards_corner_radius":20,"stretch_cards":false,"stretched_cards_content_alignment":"center","image_width":"half","image_ratio":"square","media_position":"top","column_alignment":"center","desktop_heading_size":24,"mobile_heading_size":22,"desktop_text_size":16,"mobile_text_size":15,"desktop_text_top_margin":10,"mobile_text_top_margin":10,"desktop_container_padding_y":24,"desktop_container_padding_x":24,"mobile_container_padding_y":24,"mobile_container_padding_x":24,"type":"slide","autoplay":false,"autoplay_speed":5,"arrows_color_scheme":"inverse","transparent_arrows":true,"dots_color_scheme":"inverse","desktop_full_page":false,"columns_desktop":6,"slider_desktop":true,"per_move_desktop":1,"desktop_spacing":40,"desktop_side_padding":0,"desktop_padding_calc":true,"desktop_adaptive_height":false,"desktop_dots_position":"under","desktop_arrows_position":"sides","columns_mobile":"1","slider_mobile":true,"enable_mobile_preview":false,"mobile_adaptive_height":false,"mobile_dots_position":"under","mobile_arrows_position":"under","padding_top":36,"padding_bottom":36,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#2e2a39","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff","custom_colors_outline_button":"#dd1d1d","custom_cards_colors_background":"#f3f3f3","custom_cards_gradient_background":"","custom_cards_colors_heading":"#222126","custom_cards_colors_text":"#2e2a39"}},"image_banner_Jkg3ye":{"type":"image-banner","blocks":{"heading_hbj7Ji":{"type":"heading","settings":{"title":"<strong>Riskitön sijoitus<\/strong> koirasi terveyteen","title_highlight_color":"#118fcb","heading_size":"h1"}},"text_WEzjkg":{"type":"text","settings":{"text":"FreshWipes on yksinkertainen ja turvallinen ratkaisu koirasi suun terveyteen.Haluamme, että sekä sinä että koirasi olette tyytyväisiä – siksi tarjoamme 100 päivän rahat takaisin -takuu.Pyyhkeemme on suunniteltu olemaan sekä tehokkaita että hellävaraisia, ja ne sujautetaan helposti sormen päälle käytön helpottamiseksi. Anna koirallesi kivuton tulevaisuus tuotteella, johon voit luottaa – täysin riskittömästi!","text_style":"body"}},"buttons_tViWYx":{"type":"buttons","settings":{"button_label_1":"100 päivän tyytyväisyystakuu","button_link_1":"shopify:\/\/pages\/100-day-money-back-guarantee","button_style_secondary_1":true,"button_label_2":"","button_link_2":"","button_style_secondary_2":false}},"atc_button_FCrBJM":{"type":"atc_button","settings":{"button_label":"LISÄÄ OSTOSKORIIN","atc_product":"","atc_skip_cart":false}},"rating_stars_hpmwWq":{"type":"rating_stars","settings":{"rating":4.8,"star_color":"#ffcc00","bg_stars_style":"full","bg_star_color":"#ececec","label":"4,86\/5 (2 000+ arvostelua)","size":16,"scroll_id":""}}},"block_order":["heading_hbj7Ji","text_WEzjkg","buttons_tViWYx","atc_button_FCrBJM","rating_stars_hpmwWq"],"settings":{"display_id":false,"visibility":"always-display","image":"shopify:\/\/shop_images\/irish-setter-dog-close-up.jpg","image_1_visibility":"always-display","image_2_visibility":"always-display","image_overlay_opacity":10,"image_height":"large","url":"","desktop_content_position":"middle-center","show_text_box":false,"desktop_content_alignment":"center","color_scheme":"background-2","transparent_container_color":"white","mobile_content_alignment":"center","stack_images_on_mobile":true,"show_text_below":true}},"55bd100e-3bbd-426c-a5cf-eed7b2a3706f":{"type":"testimonials","blocks":{"column_zJ6zMR":{"type":"column","settings":{"star_rating":5,"title":"Niin paljon helpompaa kuin harjaaminen","text":"<p>Olen todella yrittänyt harjata spanielini hampaita usean vuoden ajan, mutta hän stressaantuu joka kerta. Näiden kanssa homma sujuu paljon helpommin – hän ei näytä välittävän yhtä paljon. Iltaisin menee ehkä minuutti, ja pyyhe likaantuu käytön jälkeen, mikä antaa minulle toivoa siitä, että se oikeasti toimii. Hänen hengityksensäkin on parantunut hieman, ei enää yhtä paha kuin ennen, kun hän tulee antamaan pusuja.<\/p>","author":"Jennifer M, 58 - 2025-11-12"}},"column_qUghpJ":{"type":"column","settings":{"star_rating":5,"title":"Eläinlääkäri käski tehdä jotain – tämä toimii","text":"<p>Keskustelin eläinlääkärini kanssa hampaiden hoidosta, ja hän sanoi, että tärkeintä on tehdä JOTAIN säännöllisesti – vaikka harjaaminen ei onnistuisikaan. Näiden pyyhkeiden ansiosta rutiinin ylläpitäminen on ollut minulle paljon helpompaa.<br\/><br\/>11-vuotiaan mäyräkoirani hampaat ovat selvästi valkoisemmat, ja tunnen oloni turvalliseksi luonnollisten ainesosien ansiosta. Hommaan menee tuskin minuutti päivässä. Suosittelen lämpimästi!<\/p>","author":"Anne B, 57 - 2025-11-09"}},"column_FGVAjz":{"type":"column","settings":{"star_rating":5,"title":"Viimein jotain, joka oikeasti toimii","text":"<p>Todella hyvä. Olen kokeillut puruleluja, vesilisäaineita, ihan kaikkea mahdollista. Mikään ei auttanut ja koirani hengitys oli KARMEA. Näillä pyyhkeillä lika oikeasti irtoaa – näet sen suoraan pyyhkeessä. Hommaan menee korkeintaan 2 minuuttia ja voin tehdä sen vaikka televisiota katsoessa. Olisi pitänyt ostaa nämä jo aikoja sitten.<\/p>","author":"Sophie H, 43 - 2025-10-28"}},"column_8RKF7m":{"type":"column","settings":{"star_rating":5,"title":"Turvallinen koko perheelle","text":"<p>Meillä on 3-vuotias kotona, ja koira nuolee häntä jatkuvasti. Halusin jotain koiran hengitykseen, mikä ei olisi vaarallista, jos lapsille joutuu sitä iholle. Nämä ovat luonnollisia ja toimivat todella hyvin.<br\/><br\/>Iltaisin menee 2 minuuttia, kun lapset ovat nukkumassa. Koira istuu rauhassa, ja hänen hengityksensä on nyt paljon raikkaampi. Ihanaa, ettei tarvitse enää huolehtia, kun hän antaa pusuja lapsille!<\/p>","author":"Sarah E, 39 - 2025-10-03"}},"column_ya4rpx":{"type":"column","settings":{"star_rating":5,"title":"Paranee kerta kerralta","text":"<p>Koirani ei ensin tykännyt tästä. Mutta nyt se sujuu paremmin. Ja toimii.<\/p>","author":"Christine B - 2025-09-21"}},"column_R3wwEK":{"type":"column","settings":{"star_rating":5,"title":"Joka pennin arvoinen","text":"<p>Pystyn vihdoin huolehtimaan koirani hampaiden hoidosta 😊 Joka pennin arvoinen.<\/p>","author":"Emily R, 41 - 2025-09-15"}},"column_gCBCNY":{"type":"column","settings":{"star_rating":5,"title":"Toimii todella hyvin pahanhajuiseen hengitykseen","text":"<p>Ranskanbulldoggillani oli todella paha hengitys ja hänen hampaansa olivat vaikeat hoidettavat. Tämä toimii todella hyvin!<\/p>","author":"Jessica T, 36 - 2025-09-15"}},"column_89igQU":{"type":"column","settings":{"star_rating":5,"title":"Hampaat paljon valkoisemmat nyt","text":"<p>Koirani on 9-vuotias ja on aina ollut hankala saada yhteistyöhön niin kuin pitäisi. Hampaissa näkyy selvä ero parin viikon jälkeen – paljon valkoisemmat. Suosittelen!<\/p>","author":"Susan M, 47 - 2025-09-02"}},"column_8ANdnq":{"type":"column","settings":{"star_rating":5,"title":"Uusi iltarutiinimme","text":"<p>Joka ilta viimeisen lenkin jälkeen laitan “sormisukan” sormeeni ja käyn koirani hampaat läpi. Siitä on tullut meidän yhteinen iltarutiini. Hampaät näyttävät nyt hieman puhtaammilta parin viikon jälkeen. Tuntuu hyvältä, että teen edes jotain enkä jätä kaikkea tekemättä – kuten eläinlääkäri sanoi.<\/p>","author":"Karen A, 61 - 2025-08-29"}},"template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-1":{"type":"column","settings":{"star_rating":5,"title":"Erittäin suositeltava!!","text":"<p>Koirani on aina pelännyt hampaiden harjaamista, mikä on tehnyt hampaiden puhtaanapidon vaikeaksi.<br\/><br\/>Mutta sen jälkeen kun aloitimme näiden pyyhkeiden käytön, hän on ollut täysin rauhallinen.<br\/><br\/>On ihan uskomatonta nähdä, ettei hän enää juokse pois tai hermostu, kun on aika puhdistaa hampaat.<\/p>","author_avatar":"shopify:\/\/shop_images\/Profilbild1_b3680c3c-3c9b-4f7c-aaa0-1c5e71863e67.webp","author":"– Erik A"}},"template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-2":{"type":"column","settings":{"star_rating":5,"title":"Hän on nyt täysin peloton!","text":"<p>Koirani hampaiden harjaaminen on ollut vuosia hankalaa, koska hän pelkäsi sitä niin paljon. <br\/><br\/>Mutta nämä pyyhkeet muuttivat kaiken. <br\/><br\/>Hän on nyt täysin peloton ja antaa minun puhdistaa hampaansa ilman mitään ongelmia. <br\/><br\/>Tämä on todella parantanut koko suuhygieniarutiinimme.<\/p>","author_avatar":"shopify:\/\/shop_images\/Profilbild1_78735bd1-dd93-45c0-b80c-27246ca5802d.webp","author":"– Johan E"}},"template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-3":{"type":"column","settings":{"star_rating":5,"title":"Suosittelen lämpimästi kaikille koiranomistajille","text":"<p>Hampaiden harjaaminen on ollut minulle aina vaikeaa, koska koirani pelkäsi sitä. <br\/><br\/>Näiden pyyhkeiden avulla hän on nyt täysin rauhallinen. <br\/><br\/>On valtava helpotus voida puhdistaa hänen hampaansa ilman taistelua. <br\/><br\/><strong>Suosittelen tätä lämpimästi kaikille koiranomistajille.<\/strong><\/p>","author_avatar":"shopify:\/\/shop_images\/Profilbild_3.webp","author":"– Sara Johansen"}},"column_7KVQn9":{"type":"column","settings":{"star_rating":5,"title":"Olen erittäin tyytyväinen","text":"<p>Olen käyttänyt tätä tuotetta koirallani nyt muutaman viikon, ja olen erittäin tyytyväinen. <br\/><br\/>Hänen hampaansa näyttävät paljon puhtaammilta, ja hengitys on selvästi parantunut. <br\/><br\/>Tuote on myös todella helppokäyttöinen, mikä on suuri plussa.<\/p>","author_avatar":"shopify:\/\/shop_images\/Profilbild1.webp","author":"– Simen Kristoffersen"}},"column_UHg797":{"type":"column","settings":{"star_rating":5,"title":"Hänen hampaansa ovat nyt paljon paremmassa kunnossa!","text":"<p>Olen käyttänyt tätä tuotetta päivittäin koirallani, ja näen oikeita tuloksia. <br\/><br\/>Hänen hampaansa näyttävät paljon puhtaammilta ja hengitys on parempaa. <br\/><br\/>On myös turvallinen tunne käyttää tuotetta, joka on valmistettu luonnollisista ainesosista.<\/p>","author_avatar":"shopify:\/\/shop_images\/Profilbild344.webp","author":"– Lene Karlsen"}},"column_Ri7g3K":{"type":"column","settings":{"star_rating":5,"title":"Erinomainen tuote, joka todella tekee eron","text":"<p>Erinomainen tuote, joka todella tekee eron. Olen huomannut, että koirani hammaskivi on vähentynyt selvästi ja hengitys on paljon raikkaampi. <br\/><br\/>Lisäksi tuote on erittäin helppokäyttöinen.<\/p>","author_avatar":"shopify:\/\/shop_images\/profilbild.webp","author":"– Oskar Johansrud"}},"column_NmmfXF":{"type":"column","settings":{"star_rating":5,"title":"Antaa erinomaisia tuloksia","text":"<p>Koirani pitää tästä, ja sitä on helppo käyttää joka päivä. <br\/><br\/>Antaa erinomaisia tuloksia.<\/p>","author_avatar":"shopify:\/\/shop_images\/Profilbild1.jpg","author":"– Sofie Nilsen"}},"column_GNBeVt":{"type":"column","settings":{"star_rating":5,"title":"Näen parannusta hänen suun terveydessä","text":"<p>Koirani näyttää pitävän tästä, ja näen parannusta hänen suun terveydessä.<\/p>","author_avatar":"shopify:\/\/shop_images\/Profilbild3_98453ffc-28e5-4418-89bd-9cc2393e092a.webp","author":"– Ingrid Thorsen"}}},"block_order":["column_zJ6zMR","column_qUghpJ","column_FGVAjz","column_8RKF7m","column_ya4rpx","column_R3wwEK","column_gCBCNY","column_89igQU","column_8ANdnq","template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-1","template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-2","template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-3","column_7KVQn9","column_UHg797","column_Ri7g3K","column_NmmfXF","column_GNBeVt"],"settings":{"display_id":false,"visibility":"always-display","title":"Vahvistetut arvostelut","title_highlight_color":"#6d388b","heading_size":"h1","text":"<p><strong>15 000+ koiranomistajaa <\/strong>pitää hampaat puhtaina ilman harjataistelua<\/p>","color_scheme":"background-1","image_width":"full","image_ratio":"square","column_alignment":"center","show_stars":true,"inactive_stars_style":"solid","star_color":"#ffcc00","bg_star_color":"#ececec","show_quotes":true,"quotes_color_scheme":"accent-1","cards_color_scheme":"bg-overlay","type":"slide","autoplay":true,"autoplay_speed":7,"arrows_color_scheme":"inverse","transparent_arrows":true,"dots_color_scheme":"inverse","desktop_full_page":true,"columns_desktop":4,"slider_desktop":true,"per_move_desktop":1,"desktop_spacing":40,"desktop_side_padding":0,"desktop_padding_calc":true,"desktop_adaptive_height":false,"desktop_dots_position":"under","desktop_arrows_position":"sides","slider_mobile":true,"enable_mobile_preview":false,"mobile_adaptive_height":false,"mobile_dots_position":"under","mobile_arrows_position":"under","padding_top":36,"padding_bottom":36,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#2e2a39","custom_cards_colors_background":"#f3f3f3","custom_cards_gradient_background":"","custom_cards_colors_text":"#2e2a39"}},"section_divider_pFE63Q":{"type":"section-divider","settings":{"visibility":"always-display","shape":"waves_1","flip_horizontal":false,"flip_vertical":false,"shape_color":"background-2","custom_shape_color":"#dd1d1d","background_color":"background-1","custom_background_color":"#ffffff","padding_top":0,"padding_bottom":0}},"collapsible_content_TbfYVV":{"type":"collapsible-content","blocks":{"collapsible_row_tR8CwM":{"type":"collapsible_row","settings":{"heading":"Onko tämä 100 % turvallista lemmikilleni?","icon":"","filled_icon":false,"row_content":"<p>✅ <strong>Kyllä! Pyyhkeet on suunniteltu olemaan yhtä hellävaraisia kuin ne ovat tehokkaita.<br\/><\/strong><br\/>Ne eivät sisällä:<\/p><p>❌ Alkoholia<br\/><br\/>❌ Parabeeneja<br\/><br\/>❌ Eteerisiä öljyjä (jotka voivat ärsyttää joitakin lemmikkejä)<br\/><br\/>❌ Voimakkaita kemikaaleja tai keinotekoisia hajusteita<br\/><br\/>Kaava on kehitetty eläinlääkinnällisen asiantuntemuksen pohjalta, jotta se olisi turvallinen sekä koirille että kissoille – jopa niille, joilla on herkät ikenet tai herkkä iho.<\/p>","page":""}},"collapsible_row_wWEXkL":{"type":"collapsible_row","settings":{"heading":"Kuinka käytän tuotetta?","icon":"","filled_icon":false,"row_content":"<p>1 Liu’uta pyyhe sormesi päälle.<br\/>2 Hieroa hellästi lemmikkisi hampaita ja ikeniä pyörivin liikkein.<br\/>3 Keskity erityisesti ienrajaan sekä kohtiin, joissa näkyy plakkia tai värjäytymiä.<br\/><br\/>Ei hammasharjaa. Ei sotkua. Ei stressiä.<br\/><br\/>Käytä päivittäin tai 1–2 kertaa viikossa parhaiden tulosten saamiseksi.<\/p>","page":""}},"collapsible_row_3fRqLL":{"type":"collapsible_row","settings":{"heading":"Onko tämä hammasharjauksen korvike?","icon":"","filled_icon":false,"row_content":"<p>Useimmille lemmikinomistajille: kyllä.<br\/><br\/>Harjaaminen on paras vaihtoehto – mutta usein epärealistista arjessa.<br\/><br\/><strong>FreshWipes tarjoaa yksinkertaisen ja luotettavan tavan huolehtia lemmikkisi suun terveydestä – ilman kamppailua.<\/strong><\/p>","page":""}},"collapsible_row_4GGYLx":{"type":"collapsible_row","settings":{"heading":"Mitä kaava sisältää?","icon":"","filled_icon":false,"row_content":"<p>Vain se, mitä lemmikkisi tarvitsee – ei mitään ylimääräistä.<br\/><br\/>Jokainen ainesosa on valittu huolellisesti turvallista ja tehokasta suunhoitoa varten:<\/p><ul><li><strong>Puhdistettu vesi<\/strong> – hellä pohja, joka lisää kosteutta<br\/><\/li><li><strong>Aloe vera<\/strong> – rauhoittaa ikeniä ja auttaa vähentämään ärsytystä<br\/><\/li><li><strong>Luonnolliset kasviuutteet<\/strong> – tarjoavat antibakteerista suojaa<br\/><\/li><li><strong>Sinkkiyhdisteet<\/strong> – raikastavat hengitystä ja torjuvat plakkia<br\/><\/li><li><strong>pH-tasapainotettu & hajusteeton<\/strong> – turvallinen herkille lemmikeille<br\/><\/li><li><strong>Ei eläinkokeita<\/strong> – ei koskaan testattu eläimillä<br\/><\/li><\/ul><p>Ei alkoholia, fluoria tai voimakkaita kemikaaleja.<\/p><p>Vain turvallista, yksinkertaista ja tehokasta hammashoitoa – jokaisessa pyyhkeessä.<\/p>","page":""}},"collapsible_row_X6j8jm":{"type":"collapsible_row","settings":{"heading":"Milloin voin odottaa tuloksia?","icon":"","filled_icon":false,"row_content":"<p>🦷 <strong>Raikas hengitys?<\/strong> Jo muutamassa päivässä.<br\/><br\/>🦷 <strong>Puhdistetummat hampaat ja terveemmät ikenet?<\/strong> 2–3 viikossa säännöllisellä käytöllä.<\/p><p><strong>Ole vain kärsivällinen – lemmikkisi suu tulee kiittämään!<\/strong><\/p>","page":""}},"collapsible_row_DDddPH":{"type":"collapsible_row","settings":{"heading":"Sopivatko FreshWipes-pyyhkeet kaikille roduille ja kokoluokille?","icon":"","filled_icon":false,"row_content":"<p>Kyllä, pyyhkeet ovat joustavia ja toimivat hyvin sekä pienille toy-roduille että suurille koirille – ja myös kissoille.<\/p>","page":""}},"collapsible_row_MXzfid":{"type":"collapsible_row","settings":{"heading":"Auttaako pyyhkeet pahanhajuiseen hengitykseen?","icon":"","filled_icon":false,"row_content":"<p>Kyllä! Antibakteeriset ainesosat ja luonnolliset hengityksen raikastajat auttavat vähentämään plakkia ja pahaa hajua.<\/p>","page":""}},"collapsible_row_xUbf8N":{"type":"collapsible_row","settings":{"heading":"Miten FreshWipes-pyyhkeitä tulisi säilyttää?","icon":"","filled_icon":false,"row_content":"<p>Säilytä pakkaus viileässä ja kuivassa paikassa.  Vältä suoraa auringonvaloa, jotta pyyhkeet säilyttävät kosteutensa.<\/p>","page":""}},"collapsible_row_pA7czt":{"type":"collapsible_row","settings":{"heading":"Mitä tapahtuu, jos en ole tyytyväinen?","icon":"","filled_icon":false,"row_content":"<p>Me seisomme tuotteemme takana <strong>100 päivän tyytyväisyystakuulla.<\/strong><br\/><br\/>Jos et näe näkyvää muutosta – tai jos tuote ei yksinkertaisesti toimi lemmikilläsi – ota vain yhteyttä.<br\/><br\/>Saat täyden hyvityksen, ei kysymyksiä.<br\/><br\/>Ei stressiä. Ei vaivaa. Vain mielenrauhaa.<\/p>","page":""}}},"block_order":["collapsible_row_tR8CwM","collapsible_row_wWEXkL","collapsible_row_3fRqLL","collapsible_row_4GGYLx","collapsible_row_X6j8jm","collapsible_row_DDddPH","collapsible_row_MXzfid","collapsible_row_xUbf8N","collapsible_row_pA7czt"],"settings":{"display_id":false,"visibility":"always-display","caption":"","title":"Usein kysytyt kysymykset","title_highlight_color":"#6d388b","heading_size":"h1","heading_alignment":"center","layout":"row","color_scheme":"background-2","container_color_scheme":"accent-1","open_first_collapsible_row":false,"video_muted_autoplay":true,"image_ratio":"adapt","desktop_layout":"image_second","row_heading_size":"medium","collapse_icon":"carret","display_top_border":true,"padding_top":36,"padding_bottom":36,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#2e2a39","custom_contaner_colors_background":"#ffffff","custom_container_gradient_background":"","custom_contaner_colors_text":"#2e2a39"}},"section_divider_HfUqqg":{"type":"section-divider","settings":{"visibility":"always-display","shape":"waves_1","flip_horizontal":false,"flip_vertical":false,"shape_color":"background-1","custom_shape_color":"#dd1d1d","background_color":"background-2","custom_background_color":"#ffffff","padding_top":0,"padding_bottom":0}},"icon_bar_KHKwKc":{"type":"icon-bar","blocks":{"column_QHckr6":{"type":"column","settings":{"icon":"favorite","filled_icon":true,"title":"YLI 15 000 TYYTYVÄISTÄ ASIAKASTA","text":"<p>Olemme tehneet koiranomistajat ja koirat ympäri maailmaa onnellisiksi!<\/p>"}},"column_tPk8Rq":{"type":"column","settings":{"icon":"new_releases","filled_icon":true,"title":"100 PÄIVÄN RAHAT TAKAISIN -TAKUU","text":"<p>Etkö ole tyytyväinen? Ota vain yhteyttä meihin 100 päivän kuluessa ostosta, niin hoidamme asian puolestasi.<\/p>"}},"column_FkbetQ":{"type":"column","settings":{"icon":"support_agent","filled_icon":true,"title":"ASIAKASTUKI MAANANTAI–PERJANTAI","text":"<p>Kysymyksiä? Älä epäröi ottaa yhteyttä – vastaamme 24 tunnin sisällä!<\/p>"}}},"block_order":["column_QHckr6","column_tPk8Rq","column_FkbetQ"],"settings":{"display_id":false,"visibility":"always-display","title":"","title_highlight_color":"#6d388b","heading_size":"h1","text":"","color_scheme":"background-1","icon_layout":"vertical","icon_size":"medium","icon_color":"accent-1","cards_color_scheme":"background-1","type":"slide","autoplay":false,"autoplay_speed":5,"arrows_color_scheme":"inverse","transparent_arrows":true,"dots_color_scheme":"inverse","desktop_full_page":false,"columns_desktop":3,"slider_desktop":false,"per_move_desktop":1,"desktop_spacing":40,"desktop_side_padding":0,"desktop_padding_calc":true,"desktop_adaptive_height":false,"desktop_dots_position":"under","desktop_arrows_position":"sides","columns_mobile":"1","slider_mobile":true,"enable_mobile_preview":false,"mobile_adaptive_height":false,"mobile_dots_position":"under","mobile_arrows_position":"under","padding_top":36,"padding_bottom":36,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#2e2a39","custom_cards_colors_background":"#f3f3f3","custom_cards_gradient_background":"","custom_cards_colors_text":"#2e2a39"}}},"order":["main","related-products","image_slider_8HnbpY","image_slider_X8iFJF","section_divider_iXCmE9","image_with_text_LkDiE9","section_divider_MjaRJC","image_with_text_kiAL7m","section_divider_kAW6L6","image_with_text_jpGEnV","section_divider_BJPHP4","image_with_text_zpzP4w","multicolumn_r3Fa8U","image_banner_Jkg3ye","55bd100e-3bbd-426c-a5cf-eed7b2a3706f","section_divider_pFE63Q","collapsible_content_TbfYVV","section_divider_HfUqqg","icon_bar_KHKwKc"]}
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "a6eb81db-40e4-43e0-972f-32db010a4a56": {
+          "type": "rating_stars",
+          "settings": {
+            "rating": 4.8,
+            "star_color": "#ffcc00",
+            "bg_stars_style": "full",
+            "bg_star_color": "#ececec",
+            "label": "4,86/5 (2000+ arviota)",
+            "size": 14,
+            "alignment": "flex-start",
+            "scroll_id": "",
+            "margin_top": 0,
+            "margin_bottom": 9
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "text_size": "h2",
+            "title_alignment": "left",
+            "uppercase_title": false,
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "layout": "price_first",
+            "price_color": "accent-1",
+            "compare_price_color": "text",
+            "displayed_badge": "sale",
+            "icon_scale": 140,
+            "custom_badge_text": "[icon_1] SPECIAL OFFER",
+            "icon_1": "redeem",
+            "filled_icon_1": false,
+            "icon_2": "check_circle",
+            "filled_icon_2": false,
+            "margin_top": 9,
+            "margin_bottom": 15
+          }
+        },
+        "divider_i9d8VK": {
+          "type": "divider",
+          "settings": {
+            "color": "#e1e1e1",
+            "height": 1,
+            "width": 100,
+            "Full_mobile_width": false,
+            "alignment": "center",
+            "border_radius": 0,
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "text_cn7XQg": {
+          "type": "text",
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "text_color": "#121212",
+            "text_1": "Tehokkaasti torjuu plakkia ja bakteereja",
+            "text_2": "pH-tasapainotetut ja hajusteettomat pyyhkeet",
+            "text_3": "Hellävarainen ja helppokäyttöinen",
+            "icon_scale": 140,
+            "icon_color": "#118fcb",
+            "icon_1": "pets",
+            "filled_icon_1": true,
+            "icon_2": "pets",
+            "filled_icon_2": true,
+            "icon_3": "pets",
+            "filled_icon_3": true,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 5,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "text_kEd4Nj": {
+          "type": "text",
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "text_color": "#121212",
+            "text_1": "Eläinlääkärien hyväksymät ainesosat",
+            "text_2": "",
+            "text_3": "",
+            "icon_scale": 140,
+            "icon_color": "#118fcb",
+            "icon_1": "pets",
+            "filled_icon_1": true,
+            "icon_2": "check_circle",
+            "filled_icon_2": true,
+            "icon_3": "check_circle",
+            "filled_icon_3": true,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 5,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "5fcc0428-e768-4cb7-bea3-eb0274198dd1": {
+          "type": "variant_picker",
+          "disabled": true,
+          "settings": {
+            "picker_types": "swatches, dropdown, dropdown",
+            "custom_labels": "[name] - [selected]",
+            "skip_unavailable": false,
+            "swatches_size": "medium",
+            "swatches_custom_colors": "disabled",
+            "swatches_custom_colors_list": "#000000, #6D388B, #0000FF, #FFCC00",
+            "full_width_dropdowns": false,
+            "breaks_style": "normal",
+            "breaks_headline": "BUNDLE & SAVE",
+            "breaks_display_selected_indicator": true,
+            "breaks_border_radius": 10,
+            "breaks_border_width": 2,
+            "breaks_color_scheme": "accent-1",
+            "breaks_badges": "[empty], Most popular, [empty]",
+            "breaks_badge_style": "1",
+            "breaks_badge_color": "accent-1",
+            "breaks_displayed_images": "variant_images",
+            "breaks_custom_images": "",
+            "breaks_image_width": 70,
+            "breaks_space_images": true,
+            "breaks_vertical_images_position": "top",
+            "breaks_vertical_prices_layout": "vertical",
+            "breaks_labels": "[name], [name], [name]",
+            "breaks_benefits": "[empty], Free Shipping, Free Shipping",
+            "breaks_benefit_position": "top",
+            "breaks_benefit_style": "outlined",
+            "breaks_benefit_color": "accent-1",
+            "breaks_captions": "Variant 1 caption, Variant 2 caption, Variant 3 caption",
+            "breaks_price_texts": "[price], [price], [price]",
+            "breaks_compare_price_texts": "[compare_price], [compare_price], [compare_price]",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "kaching_bundles_app_block_f8NfBp": {
+          "type": "shopify://apps/kaching-bundles/blocks/app-block/6c637362-a106-4a32-94ac-94dcfd68cdb8",
+          "settings": {
+            "product": "{{product}}",
+            "manual_deal_block_id": ""
+          }
+        },
+        "04ba004e-2f54-4936-8b1c-8bcadf6573f6": {
+          "type": "quantity_selector",
+          "settings": {
+            "full_width_classic": false,
+            "atc_append": "none",
+            "atc_append_heights": "stretch-quantity",
+            "enable_quantity_discounts": false,
+            "style": "normal",
+            "headline": "Kesäale – Ilmainen toimitus",
+            "preselected": "option_2",
+            "display_selected_indicator": true,
+            "border_radius": 10,
+            "border_width": 2,
+            "color_scheme": "accent-1",
+            "enable_variant_selectors": true,
+            "enable_variant_selectors_on_quantity_of_1": false,
+            "update_prices": false,
+            "skip_unavailable": false,
+            "full_width_pickers": false,
+            "hide_pickers_overlay": true,
+            "pickers_label": "",
+            "image_width": 70,
+            "space_images": true,
+            "vertical_images_position": "top",
+            "vertical_prices_layout": "vertical",
+            "option_1_quantity": 1,
+            "option_1_badge": "",
+            "option_1_badge_style": "1",
+            "option_1_badge_color": "accent-1",
+            "option_1_label": "1-pakkaus – 50 kpl",
+            "option_1_benefit": "Säästä 40 %",
+            "option_1_benefit_position": "top",
+            "option_1_benefit_style": "solid",
+            "option_1_benefit_color": "accent-2",
+            "option_1_caption": "5 kr per käyttökerta",
+            "option_1_percentage_off_text": "0",
+            "option_1_fixed_amount_off": "0",
+            "option_1_price_text": "[price]",
+            "option_1_compare_price": "compare_price",
+            "option_1_compare_price_text": "[compare_price]",
+            "option_2_quantity": 2,
+            "option_2_badge": "Osta 2, saat 50 % alennusta",
+            "option_2_badge_style": "1",
+            "option_2_badge_color": "accent-2",
+            "option_2_label": "2-pakkaus – 100 kpl",
+            "option_2_benefit": "Säästä 50 %",
+            "option_2_benefit_position": "top",
+            "option_2_benefit_style": "solid",
+            "option_2_benefit_color": "accent-2",
+            "option_2_caption": "4 kr per käyttökerta",
+            "option_2_percentage_off_text": "0",
+            "option_2_fixed_amount_off": "99",
+            "option_2_price_text": "[price]",
+            "option_2_compare_price": "compare_price",
+            "option_2_compare_price_text": "[compare_price]",
+            "option_3_quantity": 4,
+            "option_3_badge": "Voimassa tämän viikon",
+            "option_3_badge_style": "1",
+            "option_3_badge_color": "accent-2",
+            "option_3_label": "4-pakkaus – 200 kpl",
+            "option_3_benefit": "Säästä 60 %",
+            "option_3_benefit_position": "top",
+            "option_3_benefit_style": "solid",
+            "option_3_benefit_color": "accent-2",
+            "option_3_caption": "3 kr per käyttökerta",
+            "option_3_percentage_off_text": "0",
+            "option_3_fixed_amount_off": "397",
+            "option_3_price_text": "[price]",
+            "option_3_compare_price": "compare_price",
+            "option_3_compare_price_text": "[compare_price]",
+            "option_4_quantity": 0,
+            "option_4_badge": "",
+            "option_4_badge_style": "1",
+            "option_4_badge_color": "accent-1",
+            "option_4_label": "Buy [quantity]",
+            "option_4_benefit": "",
+            "option_4_benefit_position": "top",
+            "option_4_benefit_style": "outlined",
+            "option_4_benefit_color": "accent-1",
+            "option_4_caption": "You save [amount_saved]",
+            "option_4_percentage_off_text": "0",
+            "option_4_fixed_amount_off": "0",
+            "option_4_price_text": "[price]",
+            "option_4_compare_price": "compare_price",
+            "option_4_compare_price_text": "[compare_price]",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "text_F7RwtY": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "mobile_text_size": 15,
+            "desktop_text_size": 18,
+            "alignment": "left",
+            "text_color": "#f7941d",
+            "text_1": "Almost sold out due to Halloween sale",
+            "text_2": "",
+            "text_3": "",
+            "icon_scale": 140,
+            "icon_color": "#118fcb",
+            "icon_1": "pets",
+            "filled_icon_1": true,
+            "custom_icon_1": "shopify://shop_images/Namnlos_design_-_2025-10-01T144230.866.png",
+            "icon_2": "check_circle",
+            "filled_icon_2": true,
+            "icon_3": "check_circle",
+            "filled_icon_3": true,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 5,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "custom_liquid_qmqTUE": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<!-- Snippet: stock-status.liquid -->\n<div class=\"stock-status-wrapper\">\n  <span class=\"stock-status-dot\"></span>\n  <span class=\"stock-status-text\">Melkein loppuunmyyty</span>\n</div>\n\n<style>\n  .stock-status-wrapper {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n  }\n\n  .stock-status-dot {\n    width: 14px;\n    height: 14px;\n    background-color: #ff9900;\n    border-radius: 50%;\n    animation: stockPulse 1.5s ease-in-out infinite;\n    display: inline-block;\n  }\n\n  .stock-status-text {\n    color: #ff9900;\n    font-weight: 700;\n    font-size: 14px;\n  }\n\n  @keyframes stockPulse {\n    0% { transform: scale(1); opacity: 1; }\n    50% { transform: scale(1.3); opacity: 0.7; }\n    100% { transform: scale(1); opacity: 1; }\n  }\n</style>"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "skip_cart": false,
+            "uppercase_text": true,
+            "icon_scale": 120,
+            "icon_spacing": 10,
+            "atc_custom_label": "",
+            "display_price": false,
+            "enable_custom_color": false,
+            "custom_color": "#53af01",
+            "enable_secondary_btn": false,
+            "secondary_btn_label": "Buy It Now",
+            "secondary_btn_enable_custom_color": false,
+            "secondary_btn_custom_color": "#dd1d1d",
+            "margin_top": 24,
+            "margin_bottom": 24
+          }
+        },
+        "payment_badges_XtWzKz": {
+          "type": "payment_badges",
+          "settings": {
+            "enabled_payment_types": "",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "custom_liquid_8TN4AP": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <style>\n    .custom-shipping-container {\n      display: flex;\n      padding: 6px 16px;\n      justify-content: space-between;\n      align-items: center;\n      background-color: #f6f6f6;\n      border-radius: 20px;\n      margin-top: 10px;\n    }\n\n    .custom-shipping-item {\n      display: flex;\n      align-items: center;\n      gap: 6px;\n    }\n\n    .text-block-shipping {\n      font-size: 12px;\n      color: #000;\n    }\n\n    .shipping-date {\n      font-weight: bold;\n    }\n\n    .shipping-worldwide {\n      font-size: 12px;\n      color: #000;\n    }\n\n    .shipping-worldwide .bold {\n      font-weight: bold;\n    }\n\n    .green-circle {\n      animation: fade 1s ease-in-out infinite;\n    }\n\n    @keyframes fade {\n      0%, 100% { opacity: 1; }\n      50% { opacity: 0.5; }\n    }\n\n    .flags-container {\n      display: flex;\n      gap: 6px;\n      align-items: center;\n    }\n    \n    .custom-icon {\n      width: 16px;\n      height: 12px;\n    }\n  </style>\n  <script>\n    document.addEventListener(\"DOMContentLoaded\", function() {\n      function getNextWeekday(date) {\n        var day = date.getDay();\n        var daysToAdd = (day === 5) ? 3 : (day === 6) ? 2 : 1;\n        return new Date(date.setDate(date.getDate() + daysToAdd));\n      }\n\n      var today = new Date();\n      var shipDate = getNextWeekday(today);\n      \n      // Format date to have short month (e.g., \"Thu, Feb 22\")\n      var options = { weekday: 'short', month: 'short', day: 'numeric' };\n      var formattedDate = shipDate.toLocaleDateString('en-US', options);\n      document.getElementById('shipping-date').textContent = formattedDate;\n\n      // Fetch country data using GeoJS API\n      fetch('https://get.geojs.io/v1/ip/geo.json')\n        .then(response => response.json())\n        .then(data => {\n          console.log(\"Geolocation API Response:\", data); // Debugging log\n\n          if (!data || !data.country_code) {\n            throw new Error(\"Invalid data from API\");\n          }\n          \n          var countryCode = data.country_code.toUpperCase(); // Get country code (e.g., \"GB\", \"US\")\n          var flagUrl = `https://flagcdn.com/w40/${countryCode.toLowerCase()}.png`;\n\n          // Set flag and country code\n          document.getElementById('country-flag').src = flagUrl;\n          document.getElementById('country-flag').alt = countryCode + \" Flag\";\n          document.getElementById('country-flag').style.display = \"inline\";\n          document.getElementById('country-text').innerHTML = `Fast <span class=\"bold\">${countryCode}</span> Shipping`;\n        })\n        .catch(error => {\n          console.error('Error fetching the IP information:', error);\n          document.getElementById('country-flag').style.display = \"none\"; \n          document.getElementById('country-text').innerHTML = \"Fast Worldwide Shipping\";\n        });\n    });\n  </script>\n</head>\n<body>\n  <div class=\"custom-shipping-container\">\n    <div class=\"custom-shipping-item\">\n      <svg class=\"green-circle\" xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"13\" viewBox=\"0 0 12 13\" fill=\"none\">\n        <circle cx=\"6\" cy=\"6.5\" r=\"6\" fill=\"#137333\"/>\n      </svg>\n      <div class=\"text-block-shipping\">Lähetetään viimeistään <span id=\"shipping-date\" class=\"shipping-date\"></span></div>\n    </div>\n    <div class=\"custom-shipping-item flags-container\">\n      <img id=\"country-flag\" class=\"custom-icon\" src=\"\" alt=\"Country Flag\" style=\"display: none;\">\n      <div id=\"country-text\" class=\"shipping-worldwide\">Loading...</div>\n    </div>\n  </div>\n</body>\n</html>"
+          }
+        },
+        "text_rerK7N": {
+          "type": "text",
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "text_color": "#121212",
+            "text_1": "100 päivän rahat takaisin -takuu",
+            "text_2": "Yli 15 000 tyytyväistä asiakasta",
+            "text_3": "ILMAINEN e-kirja sisältyy jokaiseen tilaukseen",
+            "icon_scale": 140,
+            "icon_color": "#118fcb",
+            "icon_1": "new_releases",
+            "filled_icon_1": true,
+            "icon_2": "favorite",
+            "filled_icon_2": true,
+            "icon_3": "book_2",
+            "filled_icon_3": true,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 5,
+            "enable_bg": true,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "e7a28cbe-03cb-4c9d-a2c4-0e3e76ffb3e5": {
+          "type": "sticky_atc",
+          "settings": {
+            "function": "add_to_cart",
+            "display_when": "after_scroll",
+            "button_label": "LISÄÄ OSTOSKORIIN",
+            "enable_custom_btn_color": false,
+            "custom_btn_color": "#dd1d1d",
+            "color_scheme": "background-1",
+            "star_color": "#ffcc00",
+            "stars_label": "4,86/5 (2 000+ arvostelua)",
+            "picker_type": "combined",
+            "desktop_show_image": false,
+            "desktop_show_title": true,
+            "desktop_rating_stars": true,
+            "desktop_show_price": true,
+            "desktop_show_sale_badge": true,
+            "desktop_variant_picker": true,
+            "desktop_full_button_width": true,
+            "desktop_show_price_in_button": false,
+            "desktop_transparent_bg": false,
+            "mobile_show_image": false,
+            "mobile_show_title": true,
+            "mobile_rating_stars": true,
+            "mobile_show_price": false,
+            "mobile_show_sale_badge": false,
+            "mobile_variant_picker": false,
+            "mobile_full_button_width": true,
+            "mobile_show_price_in_button": false,
+            "mobile_transparent_bg": false
+          }
+        },
+        "description": {
+          "type": "description",
+          "disabled": true,
+          "settings": {
+            "margin_top": 24,
+            "margin_bottom": 24
+          }
+        },
+        "collapsible_tab_t3jLVn": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Vetpetsin täydellinen hampaidenhoito-opas",
+            "heading_size": "medium",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "",
+            "page": "vetpets-full-dental-care-guide",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "de158e68-5d0d-4819-a625-e2dabdff87d1": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "100 päivän rahat takaisin -takuu",
+            "heading_size": "medium",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p>Me todella uskomme, että FreshWipes tekee eron – sekä sinulle että koirallesi.<br/><br/>Siksi tarjoamme<strong> 100 päivän rahat takaisin -takuu.</strong><br/><br/>Voit kokeilla tuotetta kotona, omassa tahdissasi.<br/><br/>Etkö ole täysin tyytyväinen? Saat rahasi takaisin – ei stressiä, ei säätöä.</p><p>Meille on tärkeämpää, että koirasi saa ansaitsemaansa hoitoa, kuin että pidät jotain, mistä et pidä.</p><p>Voit lukea lisää tyytyväisyystakuustamme täältä.<strong><br/></strong><a href=\"/pages/100-dagers-fornoydgaranti\" title=\"100-Day Satisfaction Guarantee\">100 päivän tyytyväisyystakuu</a></p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "collapsible_tab_EGhYxC": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Ainesosat",
+            "heading_size": "medium",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p>• <strong>EDI-puhdistettu vesi</strong> – perusliuos<br/><br/>• <strong>Glyseriini</strong> – lisää kosteutta<br/><br/>• <strong>Sitruunahappo</strong> – tasapainottaa pH:n<br/><br/>• <strong>Setyylipyridiniumkloridi-mono­hydraatti</strong> – antibakteerinen vaikutus<br/><br/>• <strong>Teepolyfenolit</strong> – raikastaa hengitystä<br/><br/>• <strong>Allantoiini</strong> – rauhoittava<br/><br/>• <strong>Vihreä tee -uute</strong> – luonnollinen antibakteerinen & suojaava</p><p>✔️<strong> </strong>pH-tasapainotettu ja hajusteeton<br/><br/>✔️ Ei testattu eläimillä (cruelty-free)<br/><br/>✔️ Ei sisällä alkoholia, fluoria tai voimakkaita kemikaaleja</p>",
+            "page": "free-e-book-the-secret-to-a-sparkling-home-in-just-15-minutes-a-day",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "collapsible_tab_aFAiwA": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Maksu & toimitus",
+            "heading_size": "medium",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<h4>Maksu</h4><p>Voit maksaa turvallisesti Klarnalla, luottokortilla tai tilisiirrolla – valitse sinulle sopivin vaihtoehto.<br/></p><h4>Toimitus</h4><p>Tarjoamme eri toimitushinnat Yhdistyneelle kuningaskunnalle ja muille maille:</p><ul><li><strong>Yhdistynyt kuningaskunta (UK):</strong><br/>Standarditoimitus:<strong> £2.00</strong> (ilmainen yli £37 tilauksille)<br/>Priority-toimitus: <strong>£4.50</strong></li><li><strong>Muu maailma:</strong><br/>Standarditoimitus: <strong>$2.95 </strong>(ilmainen yli $49 tilauksille)<br/>Priority-toimitus: <strong>$6.00</strong><br/></li></ul><p><strong>Toimitusaika</strong><br/><br/>Koska UK-varastomme on tilapäisesti loppu, tilauksesi lähetetään kansainvälisestä varastostamme. Tarjoamme kaksi toimitusvaihtoehtoa kassalla:</p><ul><li><strong>Standarditoimitus:</strong> 1–2 päivän käsittely + 5–10 päivän toimitusaika</li><li><strong>Priority-toimitus</strong>: 1–2 päivän käsittely + 4–7 päivän toimitusaika</li></ul><p>Seurantakoodi lähetetään sähköpostiisi heti, kun tilauksesi on poistunut varastolta.</p><p><strong>Kysyttävää?</strong><br/>Lähetä meille sähköpostia osoitteeseen info@shopvetpets.com<br/> – vastaamme aina 24 tunnin sisällä arkipäivinä.</p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "reviews_8UgFbe": {
+          "type": "reviews",
+          "disabled": true,
+          "settings": {
+            "color_scheme": "background-1",
+            "show_custom_bg": false,
+            "custom_bg_color": "#f2f2f2",
+            "corner_radius": 12,
+            "border_width": 0,
+            "border_color": "#b7b7b7",
+            "avatar_alignment": "top",
+            "avatar_corner_radius": 40,
+            "star_color": "#ffcc00",
+            "stars_translate": 0,
+            "checkmark_color": "#6d388b",
+            "checkmark_icon_color": "#ffffff",
+            "slider_type": "slide",
+            "autoplay": false,
+            "autoplay_speed": 5,
+            "display_arrows": false,
+            "display_dots": true,
+            "author_1": "– Anna, 34 år [stars]",
+            "image_1": "shopify://shop_images/Profilbild_3.jpg",
+            "text_1": "<p>Har brukt FreshWipes i omtrent en uke og ble overrasket over hvor lett det gikk. Hunden vår er vanligvis skeptisk, men lot meg faktisk rengjøre uten problemer.</p>",
+            "author_2": "– Mats, 52 år [stars]",
+            "image_2": "shopify://shop_images/Profilbild5_1a47da8b-0488-41c4-af0b-4e3b8857192b.webp",
+            "text_2": "<p>Etter to måneder er pusten mye friskere og misfargingene har blitt redusert. Vi har det som en fast rutine på søndager – og det fungerer kjempebra.</p>",
+            "author_3": "– Sofia, 41 år [stars]",
+            "image_3": "shopify://shop_images/Profilbild111.webp",
+            "text_3": "<p>Vi har brukt dem i over ett år nå. Vår labrador har ikke trengt noe veterinærbesøk for tennene siden. Enkelt å ta med, og det føles trygt.</p>",
+            "margin_top": 24,
+            "margin_bottom": 24
+          }
+        }
+      },
+      "block_order": [
+        "a6eb81db-40e4-43e0-972f-32db010a4a56",
+        "title",
+        "price",
+        "divider_i9d8VK",
+        "text_cn7XQg",
+        "text_kEd4Nj",
+        "5fcc0428-e768-4cb7-bea3-eb0274198dd1",
+        "kaching_bundles_app_block_f8NfBp",
+        "04ba004e-2f54-4936-8b1c-8bcadf6573f6",
+        "text_F7RwtY",
+        "custom_liquid_qmqTUE",
+        "buy_buttons",
+        "payment_badges_XtWzKz",
+        "custom_liquid_8TN4AP",
+        "text_rerK7N",
+        "e7a28cbe-03cb-4c9d-a2c4-0e3e76ffb3e5",
+        "description",
+        "collapsible_tab_t3jLVn",
+        "de158e68-5d0d-4819-a625-e2dabdff87d1",
+        "collapsible_tab_EGhYxC",
+        "collapsible_tab_aFAiwA",
+        "reviews_8UgFbe"
+      ],
+      "custom_css": [],
+      "settings": {
+        "display_id": false,
+        "enable_sticky_info": true,
+        "display_variant_image_first": false,
+        "disable_prepend": true,
+        "hide_variants": false,
+        "variant_image_filtering": "none",
+        "image_zoom": "none",
+        "thumbnails_ratio": "square",
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": false,
+        "dots_color_scheme": "inverse",
+        "video_player": "play_btn",
+        "enable_video_looping": false,
+        "autoplay_videos_pause_btn": false,
+        "video_sound_btn": false,
+        "video_timeline": false,
+        "play_btn_color_scheme": "accent-1",
+        "sound_btn_color_scheme": "inverse",
+        "timeline_color": "accent-1",
+        "media_size": "medium",
+        "media_position": "left",
+        "gallery_layout": "thumbnail_slider",
+        "desktop_thumbnails_position": "bottom",
+        "desktop_thumbnails_count": 5,
+        "desktop_vertical_thumbnails_width": 16,
+        "desktop_vertical_thumbnails_hide_arrows": false,
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "desktop_arrows_position": "hidden",
+        "mobile_media_corner_radius": 16,
+        "mobile_spacing_pixels": 0,
+        "mobile_arrows_position": "sides",
+        "mobile_pagination": "hidden",
+        "mobile_thumbnails_position": "bottom",
+        "mobile_thumbnails_count": 5,
+        "mobile_vertical_thumbnails_width": 22,
+        "mobile_vertical_thumbnails_hide_arrows": true,
+        "mobile_scroll_padding_percentage": 0,
+        "mobile_scroll_padding_pixels": 2,
+        "enable_mobile_outher_spacing": false,
+        "mobile_slides_container_width": 100,
+        "mobile_slides_inner_width": 100,
+        "trust_badge_position": "top-right",
+        "trust_badge_size": "medium",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "disabled": true,
+      "settings": {
+        "display_id": false,
+        "title": "You may also like",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "stretch_cards": false,
+        "columns_desktop": 4,
+        "color_scheme": "background-1",
+        "image_ratio": "adapt",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "columns_mobile": "2",
+        "padding_top": 36,
+        "padding_bottom": 24
+      }
+    },
+    "image_slider_8HnbpY": {
+      "type": "image-slider",
+      "blocks": {
+        "video_slide_pYXTW3": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/Produktvideos reviews.mov",
+            "loop": true,
+            "muted_autoplay": true,
+            "display_play_btn": true,
+            "btn_animation": false,
+            "btn_color_scheme": "accent-1",
+            "display_sound_btn": false,
+            "sound_btn_color_scheme": "inverse",
+            "display_timeline": false,
+            "timeline_color": "accent-1",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "video_slide_4LLCQV": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/Produktvideo review 4.mov",
+            "loop": true,
+            "muted_autoplay": true,
+            "display_play_btn": true,
+            "btn_animation": false,
+            "btn_color_scheme": "accent-1",
+            "display_sound_btn": false,
+            "sound_btn_color_scheme": "inverse",
+            "display_timeline": false,
+            "timeline_color": "accent-1",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "video_slide_brtX4E": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/Produktvideo review 3.mov",
+            "loop": true,
+            "muted_autoplay": true,
+            "display_play_btn": true,
+            "btn_animation": false,
+            "btn_color_scheme": "accent-1",
+            "display_sound_btn": false,
+            "sound_btn_color_scheme": "inverse",
+            "display_timeline": false,
+            "timeline_color": "accent-1",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "video_slide_LYFhDt": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/Produktvideo review 5.mov",
+            "loop": true,
+            "muted_autoplay": true,
+            "display_play_btn": true,
+            "btn_animation": false,
+            "btn_color_scheme": "accent-1",
+            "display_sound_btn": false,
+            "sound_btn_color_scheme": "inverse",
+            "display_timeline": false,
+            "timeline_color": "accent-1",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "video_slide_HWhYJw": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/Produktvideo review 2.mov",
+            "loop": true,
+            "muted_autoplay": true,
+            "display_play_btn": true,
+            "btn_animation": false,
+            "btn_color_scheme": "accent-1",
+            "display_sound_btn": false,
+            "sound_btn_color_scheme": "inverse",
+            "display_timeline": false,
+            "timeline_color": "accent-1",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        }
+      },
+      "block_order": [
+        "video_slide_pYXTW3",
+        "video_slide_4LLCQV",
+        "video_slide_brtX4E",
+        "video_slide_LYFhDt",
+        "video_slide_HWhYJw"
+      ],
+      "disabled": true,
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Tusenvis av fornøyde <strong>hunder og kjæledyreiere!</strong>",
+        "title_highlight_color": "#118fcb",
+        "heading_size": "h2",
+        "color_scheme": "background-2",
+        "type": "slide",
+        "drag": "enabled",
+        "autoplay": true,
+        "autoplay_speed": 3,
+        "center_mode": false,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_page_width": "normal",
+        "desktop_border_radius": 16,
+        "slides_desktop": 3,
+        "per_move_desktop": 1,
+        "desktop_spacing": 28,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "hidden",
+        "mobile_full_page": false,
+        "mobile_border_radius": 0,
+        "slides_mobile": 2,
+        "per_move_mobile": 1,
+        "mobile_spacing": 12,
+        "mobile_side_padding": 0,
+        "mobile_padding_calc": true,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "hidden",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#121212"
+      }
+    },
+    "image_slider_X8iFJF": {
+      "type": "image-slider",
+      "blocks": {
+        "image_slide_fDQd63": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_35.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_YPPbRJ": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Review_tackkort.png",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_r9DHFr": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/META_ADS_4.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_LeBfnC": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/META_ADS_3_4607e2fa-34d4-4f4e-9628-12d88855ac29.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_FQxDQg": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Reviews_hundhalsan_freshwipes_19.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_KqCyQa": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Reviews_hundhalsan_freshwipes_17.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_AW8tMc": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Reviews_hundhalsan_freshwipes_20.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_x8JVWg": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Reviews_hundhalsan_freshwipes_16.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_LfXJit": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Skarmavbild_2025-06-20_kl._12.41.33_7db4482a-3a46-4fe6-9a4d-2bb59749859d.webp",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_hrJR8i": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Skarmavbild_2025-06-20_kl._12.36.03_58fcab1c-8e81-4125-90db-87d075584004.webp",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_HzrYwH": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_34.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_pRnbPQ": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_8.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_GN7c44": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_9.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_hgi3nY": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_12.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_U3dWYb": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_11.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_nD4Rb9": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_13.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_jKFGxn": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_10.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        }
+      },
+      "block_order": [
+        "image_slide_fDQd63",
+        "image_slide_YPPbRJ",
+        "image_slide_r9DHFr",
+        "image_slide_LeBfnC",
+        "image_slide_FQxDQg",
+        "image_slide_KqCyQa",
+        "image_slide_AW8tMc",
+        "image_slide_x8JVWg",
+        "image_slide_LfXJit",
+        "image_slide_hrJR8i",
+        "image_slide_HzrYwH",
+        "image_slide_pRnbPQ",
+        "image_slide_GN7c44",
+        "image_slide_hgi3nY",
+        "image_slide_U3dWYb",
+        "image_slide_nD4Rb9",
+        "image_slide_jKFGxn"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Tuhansia tyytyväisiä <strong>koiria ja lemmikinomistajia!</strong>",
+        "title_highlight_color": "#118fcb",
+        "heading_size": "h2",
+        "color_scheme": "background-2",
+        "type": "loop",
+        "drag": "enabled",
+        "autoplay": true,
+        "autoplay_speed": 6,
+        "center_mode": false,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_page_width": "normal",
+        "desktop_border_radius": 16,
+        "slides_desktop": 5,
+        "per_move_desktop": 1,
+        "desktop_spacing": 28,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "hidden",
+        "mobile_full_page": false,
+        "mobile_border_radius": 16,
+        "slides_mobile": 2,
+        "per_move_mobile": 1,
+        "mobile_spacing": 12,
+        "mobile_side_padding": 0,
+        "mobile_padding_calc": true,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "hidden",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#121212"
+      }
+    },
+    "section_divider_iXCmE9": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "custom",
+        "custom_shape_color": "#118fcb",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_with_text_LkDiE9": {
+      "type": "image-with-text",
+      "blocks": {
+        "caption_NgwaCz": {
+          "type": "caption",
+          "settings": {
+            "caption": "Suojaa koirasi hammassairauksilta!",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "heading_KC4Cfi": {
+          "type": "heading",
+          "settings": {
+            "title": "Koirasi ei aina näytä, <strong>kun sillä on kipuja</strong>",
+            "title_highlight_color": "#121212",
+            "heading_size": "h2"
+          }
+        },
+        "text_wgGMJL": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Värjäytyneet hampaat ja pahanhajuinen hengitys eivät ole vain epämiellyttäviä – ne voivat olla merkkejä plakista, hammaskivestä tai tulehduksesta.</p><p>Ja aivan kuten haluat suojella lastasi, haluat suojella myös koiraasi.<br/><br/>Mutta toisin kuin lapset, useimmat koirat eivät näytä, milloin niillä on kipuja.</p><p><strong>VetPetsin FreshWipes antaa sinulle helpon tavan huolehtia koirasi suun terveydestä – ilman eläinlääkärikäyntejä, stressiä tai epävarmuutta.</strong></p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "caption_NgwaCz",
+        "heading_KC4Cfi",
+        "text_wgGMJL"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/Dental_Wipes_1.webp",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "custom",
+        "section_color_scheme": "custom",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "image_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#118fcb",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#ffffff",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#118fcb",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "section_divider_MjaRJC": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": true,
+        "shape_color": "custom",
+        "custom_shape_color": "#118fcb",
+        "background_color": "background-1",
+        "custom_background_color": "#d6fdfd",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_with_text_kiAL7m": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_bXGAFf": {
+          "type": "heading",
+          "settings": {
+            "title": "Saat eläinlääkärintason <strong>tulokset kotona</strong>",
+            "title_highlight_color": "#118fcb",
+            "heading_size": "h2"
+          }
+        },
+        "text_GjNNAg": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>FreshWipes puhdistaa hellävaraisesti koirasi hampaat ja ikenet.</strong><br/><br/>Se poistaa plakkia, raikastaa hengityksen ja ehkäisee tulehduksia – nopeasti ja vaivattomasti.</p><p>Kaikki yhdessä kätevässä, helppokäyttöisessä sormipyyhkeessä.<br/><br/>Ei hammasharjaa, ei sotkua – ei stressiä.</p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_bXGAFf",
+        "text_GjNNAg"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/Gif_1.gif",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "background-1",
+        "section_color_scheme": "background-1",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "text_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#2e2a39",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#ffffff",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#ffffff",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "section_divider_kAW6L6": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "custom",
+        "custom_shape_color": "#d5f7ff",
+        "background_color": "background-1",
+        "custom_background_color": "#d5f7ff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_with_text_jpGEnV": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_xgchUK": {
+          "type": "heading",
+          "settings": {
+            "title": "Yksinkertainen tapa, joka <strong>tekee suuren eron</strong>",
+            "title_highlight_color": "#118fcb",
+            "heading_size": "h2"
+          }
+        },
+        "text_jBQGVq": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Monet koiranomistajat luulevat, että hampaiden hoidon täytyy olla monimutkaista.</p><p>Mutta FreshWipesin kanssa se on niin helppoa, että tulet oikeasti käyttämään niitä.</p><p>1–2 kertaa viikossa riittää ehkäisemään tulevat, kivuliaat ongelmat.<br/></p><h4>Raikkaampi hengitys, vahvemmat hampaat, onnellisempi koira</h4><p>Terve suu vaikuttaa koko kehoon.<br/><br/>FreshWipesin avulla koirasi saa paitsi raikkaamman hengityksen ja valkoisemmat hampaat –<br/><br/>se voi paremmin ja sillä on enemmän energiaa.</p><p><strong>Vähemmän infektioita. Enemmän leikkiä. Enemmän iloa.</strong></p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_xgchUK",
+        "text_jBQGVq"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/Gif_2.gif",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "custom",
+        "section_color_scheme": "custom",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "image_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#d5f7ff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#000000",
+        "custom_colors_solid_button_background": "#118fcb",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#d5f7ff",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "section_divider_BJPHP4": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": true,
+        "shape_color": "custom",
+        "custom_shape_color": "#d5f7ff",
+        "background_color": "background-1",
+        "custom_background_color": "#d5f7ff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_with_text_zpzP4w": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_p8UPgK": {
+          "type": "heading",
+          "settings": {
+            "title": "Hammashoito <strong>ei saisi olla ylellisyyttä</strong>",
+            "title_highlight_color": "#118fcb",
+            "heading_size": "h2"
+          }
+        },
+        "text_EgwQE8": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Eläinlääkärin tekemä hammaskiven poisto voi maksaa tuhansia kruunuja ja vaatii usein nukutuksen.</p><p>FreshWipes maksaa murto-osan – ja on täysin riskitön käyttää.<br/><br/>Meille kyse ei ole rahasta – vaan siitä, että koirat voivat paremmin.<br/><strong><br/>Hellävarainen. Turvallinen. Koirallesi kehitetty.</strong></p><p>Pyyhkeemme ovat hajusteettomia, pH-tasapainotettuja ja suunniteltu turvalliseen käyttöön suussa.</p><p>Ne sopivat kaikille koiraroduille ja on helppo ottaa mukaan lenkille, matkalle tai lomalle.</p><p><strong>Hammashoito ei saisi koskaan olla este.</strong></p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_p8UPgK",
+        "text_EgwQE8"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/Engelska_23.jpg",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "background-1",
+        "section_color_scheme": "background-1",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "text_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#2e2a39",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#ffffff",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#ffffff",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "multicolumn_r3Fa8U": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_bKkKHH": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Namnlos_design_14.svg",
+            "muted_autoplay": true,
+            "title": "Teepolyfenolit",
+            "text": "<p>Teepolyfenolit ovat luonnollisia antioksidantteja, jotka auttavat vähentämään bakteereja suussa, raikastavat hengitystä ja suojaavat ikeniä tulehduksilta.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_yXWzdC": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Namnlos_design_12.svg",
+            "muted_autoplay": true,
+            "title": "Glyseriini",
+            "text": "<p>Glyseriini kosteuttaa suun limakalvoja ja ikeniä – vähentäen ärsytyksen riskiä ja tarjoten hellävaraisemman puhdistuksen.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_c9FKpR": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Namnlos_design_13.svg",
+            "muted_autoplay": true,
+            "title": "Sitruunahappo",
+            "text": "<p>Sitruunahappo auttaa tasapainottamaan suun pH-tasoa – mikä suojaa kudoksia ja ehkäisee pahanhajuista hengitystä.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_QCjHRw": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Namnlos_design_15.svg",
+            "muted_autoplay": true,
+            "title": "Allantoiini",
+            "text": "<p>Allantoiini suojaa ja rauhoittaa herkkiä ikeniä. Auttaa vähentämään ärsytystä ja edistää paranemista.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_zLHyXq": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/assets_task_01jwzy13s9efnbfcxbccj3f6tg_1749123413_img_0.webp",
+            "muted_autoplay": true,
+            "title": "Setyylipyridiniumkloridi",
+            "text": "<p>Tunnettu antibakteerinen ainesosa, jota käytetään suunhoidossa. Auttaa vähentämään plakkia, bakteereja ja pahanhajuista hengitystä.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_deznN8": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/540f0b38-c0db-4b70-a19d-8781871e78f7.png",
+            "muted_autoplay": true,
+            "title": "Natriumbentsoaatti",
+            "text": "<p>Hellävarainen ja turvallinen säilöntäaine, joka pidentää tuotteen säilyvyyttä vaikuttamatta suun herkkään ympäristöön.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_bKkKHH",
+        "column_yXWzdC",
+        "column_c9FKpR",
+        "column_QCjHRw",
+        "column_zLHyXq",
+        "column_deznN8"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Safe and carefully <strong>selected ingredients</strong>",
+        "title_highlight_color": "#118fcb",
+        "heading_size": "h1",
+        "button_label": "",
+        "button_link": "",
+        "atc_button_label": "",
+        "atc_product": "",
+        "atc_skip_cart": false,
+        "color_scheme": "background-1",
+        "cards_color_scheme": "bg-overlay",
+        "cards_corner_radius": 20,
+        "stretch_cards": false,
+        "stretched_cards_content_alignment": "center",
+        "image_width": "half",
+        "image_ratio": "square",
+        "media_position": "top",
+        "column_alignment": "center",
+        "desktop_heading_size": 24,
+        "mobile_heading_size": 22,
+        "desktop_text_size": 16,
+        "mobile_text_size": 15,
+        "desktop_text_top_margin": 10,
+        "mobile_text_top_margin": 10,
+        "desktop_container_padding_y": 24,
+        "desktop_container_padding_x": 24,
+        "mobile_container_padding_y": 24,
+        "mobile_container_padding_x": 24,
+        "type": "slide",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_full_page": false,
+        "columns_desktop": 6,
+        "slider_desktop": true,
+        "per_move_desktop": 1,
+        "desktop_spacing": 40,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "sides",
+        "columns_mobile": "1",
+        "slider_mobile": true,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "under",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_heading": "#222126",
+        "custom_cards_colors_text": "#2e2a39"
+      }
+    },
+    "image_banner_Jkg3ye": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_hbj7Ji": {
+          "type": "heading",
+          "settings": {
+            "title": "<strong>Riskitön sijoitus</strong> koirasi terveyteen",
+            "title_highlight_color": "#118fcb",
+            "heading_size": "h1"
+          }
+        },
+        "text_WEzjkg": {
+          "type": "text",
+          "settings": {
+            "text": "FreshWipes on yksinkertainen ja turvallinen ratkaisu koirasi suun terveyteen.Haluamme, että sekä sinä että koirasi olette tyytyväisiä – siksi tarjoamme 100 päivän rahat takaisin -takuu.Pyyhkeemme on suunniteltu olemaan sekä tehokkaita että hellävaraisia, ja ne sujautetaan helposti sormen päälle käytön helpottamiseksi. Anna koirallesi kivuton tulevaisuus tuotteella, johon voit luottaa – täysin riskittömästi!",
+            "text_style": "body"
+          }
+        },
+        "buttons_tViWYx": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "100 päivän tyytyväisyystakuu",
+            "button_link_1": "shopify://pages/100-day-money-back-guarantee",
+            "button_style_secondary_1": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        },
+        "atc_button_FCrBJM": {
+          "type": "atc_button",
+          "settings": {
+            "button_label": "LISÄÄ OSTOSKORIIN",
+            "atc_product": "",
+            "atc_skip_cart": false
+          }
+        },
+        "rating_stars_hpmwWq": {
+          "type": "rating_stars",
+          "settings": {
+            "rating": 4.8,
+            "star_color": "#ffcc00",
+            "bg_stars_style": "full",
+            "bg_star_color": "#ececec",
+            "label": "4,86/5 (2 000+ arvostelua)",
+            "size": 16,
+            "scroll_id": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_hbj7Ji",
+        "text_WEzjkg",
+        "buttons_tViWYx",
+        "atc_button_FCrBJM",
+        "rating_stars_hpmwWq"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/irish-setter-dog-close-up.jpg",
+        "image_1_visibility": "always-display",
+        "image_2_visibility": "always-display",
+        "image_overlay_opacity": 10,
+        "image_height": "large",
+        "url": "",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-2",
+        "transparent_container_color": "white",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
+    },
+    "55bd100e-3bbd-426c-a5cf-eed7b2a3706f": {
+      "type": "testimonials",
+      "blocks": {
+        "column_zJ6zMR": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Niin paljon helpompaa kuin harjaaminen",
+            "text": "<p>Olen todella yrittänyt harjata spanielini hampaita usean vuoden ajan, mutta hän stressaantuu joka kerta. Näiden kanssa homma sujuu paljon helpommin – hän ei näytä välittävän yhtä paljon. Iltaisin menee ehkä minuutti, ja pyyhe likaantuu käytön jälkeen, mikä antaa minulle toivoa siitä, että se oikeasti toimii. Hänen hengityksensäkin on parantunut hieman, ei enää yhtä paha kuin ennen, kun hän tulee antamaan pusuja.</p>",
+            "author": "Jennifer M, 58 - 2025-11-12"
+          }
+        },
+        "column_qUghpJ": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Eläinlääkäri käski tehdä jotain – tämä toimii",
+            "text": "<p>Keskustelin eläinlääkärini kanssa hampaiden hoidosta, ja hän sanoi, että tärkeintä on tehdä JOTAIN säännöllisesti – vaikka harjaaminen ei onnistuisikaan. Näiden pyyhkeiden ansiosta rutiinin ylläpitäminen on ollut minulle paljon helpompaa.<br/><br/>11-vuotiaan mäyräkoirani hampaat ovat selvästi valkoisemmat, ja tunnen oloni turvalliseksi luonnollisten ainesosien ansiosta. Hommaan menee tuskin minuutti päivässä. Suosittelen lämpimästi!</p>",
+            "author": "Anne B, 57 - 2025-11-09"
+          }
+        },
+        "column_FGVAjz": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Viimein jotain, joka oikeasti toimii",
+            "text": "<p>Todella hyvä. Olen kokeillut puruleluja, vesilisäaineita, ihan kaikkea mahdollista. Mikään ei auttanut ja koirani hengitys oli KARMEA. Näillä pyyhkeillä lika oikeasti irtoaa – näet sen suoraan pyyhkeessä. Hommaan menee korkeintaan 2 minuuttia ja voin tehdä sen vaikka televisiota katsoessa. Olisi pitänyt ostaa nämä jo aikoja sitten.</p>",
+            "author": "Sophie H, 43 - 2025-10-28"
+          }
+        },
+        "column_8RKF7m": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Turvallinen koko perheelle",
+            "text": "<p>Meillä on 3-vuotias kotona, ja koira nuolee häntä jatkuvasti. Halusin jotain koiran hengitykseen, mikä ei olisi vaarallista, jos lapsille joutuu sitä iholle. Nämä ovat luonnollisia ja toimivat todella hyvin.<br/><br/>Iltaisin menee 2 minuuttia, kun lapset ovat nukkumassa. Koira istuu rauhassa, ja hänen hengityksensä on nyt paljon raikkaampi. Ihanaa, ettei tarvitse enää huolehtia, kun hän antaa pusuja lapsille!</p>",
+            "author": "Sarah E, 39 - 2025-10-03"
+          }
+        },
+        "column_ya4rpx": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Paranee kerta kerralta",
+            "text": "<p>Koirani ei ensin tykännyt tästä. Mutta nyt se sujuu paremmin. Ja toimii.</p>",
+            "author": "Christine B - 2025-09-21"
+          }
+        },
+        "column_R3wwEK": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Joka pennin arvoinen",
+            "text": "<p>Pystyn vihdoin huolehtimaan koirani hampaiden hoidosta 😊 Joka pennin arvoinen.</p>",
+            "author": "Emily R, 41 - 2025-09-15"
+          }
+        },
+        "column_gCBCNY": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Toimii todella hyvin pahanhajuiseen hengitykseen",
+            "text": "<p>Ranskanbulldoggillani oli todella paha hengitys ja hänen hampaansa olivat vaikeat hoidettavat. Tämä toimii todella hyvin!</p>",
+            "author": "Jessica T, 36 - 2025-09-15"
+          }
+        },
+        "column_89igQU": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Hampaat paljon valkoisemmat nyt",
+            "text": "<p>Koirani on 9-vuotias ja on aina ollut hankala saada yhteistyöhön niin kuin pitäisi. Hampaissa näkyy selvä ero parin viikon jälkeen – paljon valkoisemmat. Suosittelen!</p>",
+            "author": "Susan M, 47 - 2025-09-02"
+          }
+        },
+        "column_8ANdnq": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Uusi iltarutiinimme",
+            "text": "<p>Joka ilta viimeisen lenkin jälkeen laitan “sormisukan” sormeeni ja käyn koirani hampaat läpi. Siitä on tullut meidän yhteinen iltarutiini. Hampaät näyttävät nyt hieman puhtaammilta parin viikon jälkeen. Tuntuu hyvältä, että teen edes jotain enkä jätä kaikkea tekemättä – kuten eläinlääkäri sanoi.</p>",
+            "author": "Karen A, 61 - 2025-08-29"
+          }
+        },
+        "template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-1": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Erittäin suositeltava!!",
+            "text": "<p>Koirani on aina pelännyt hampaiden harjaamista, mikä on tehnyt hampaiden puhtaanapidon vaikeaksi.<br/><br/>Mutta sen jälkeen kun aloitimme näiden pyyhkeiden käytön, hän on ollut täysin rauhallinen.<br/><br/>On ihan uskomatonta nähdä, ettei hän enää juokse pois tai hermostu, kun on aika puhdistaa hampaat.</p>",
+            "author_avatar": "shopify://shop_images/Profilbild1_b3680c3c-3c9b-4f7c-aaa0-1c5e71863e67.webp",
+            "author": "– Erik A"
+          }
+        },
+        "template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-2": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Hän on nyt täysin peloton!",
+            "text": "<p>Koirani hampaiden harjaaminen on ollut vuosia hankalaa, koska hän pelkäsi sitä niin paljon. <br/><br/>Mutta nämä pyyhkeet muuttivat kaiken. <br/><br/>Hän on nyt täysin peloton ja antaa minun puhdistaa hampaansa ilman mitään ongelmia. <br/><br/>Tämä on todella parantanut koko suuhygieniarutiinimme.</p>",
+            "author_avatar": "shopify://shop_images/Profilbild1_78735bd1-dd93-45c0-b80c-27246ca5802d.webp",
+            "author": "– Johan E"
+          }
+        },
+        "template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-3": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Suosittelen lämpimästi kaikille koiranomistajille",
+            "text": "<p>Hampaiden harjaaminen on ollut minulle aina vaikeaa, koska koirani pelkäsi sitä. <br/><br/>Näiden pyyhkeiden avulla hän on nyt täysin rauhallinen. <br/><br/>On valtava helpotus voida puhdistaa hänen hampaansa ilman taistelua. <br/><br/><strong>Suosittelen tätä lämpimästi kaikille koiranomistajille.</strong></p>",
+            "author_avatar": "shopify://shop_images/Profilbild_3.webp",
+            "author": "– Sara Johansen"
+          }
+        },
+        "column_7KVQn9": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Olen erittäin tyytyväinen",
+            "text": "<p>Olen käyttänyt tätä tuotetta koirallani nyt muutaman viikon, ja olen erittäin tyytyväinen. <br/><br/>Hänen hampaansa näyttävät paljon puhtaammilta, ja hengitys on selvästi parantunut. <br/><br/>Tuote on myös todella helppokäyttöinen, mikä on suuri plussa.</p>",
+            "author_avatar": "shopify://shop_images/Profilbild1.webp",
+            "author": "– Simen Kristoffersen"
+          }
+        },
+        "column_UHg797": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Hänen hampaansa ovat nyt paljon paremmassa kunnossa!",
+            "text": "<p>Olen käyttänyt tätä tuotetta päivittäin koirallani, ja näen oikeita tuloksia. <br/><br/>Hänen hampaansa näyttävät paljon puhtaammilta ja hengitys on parempaa. <br/><br/>On myös turvallinen tunne käyttää tuotetta, joka on valmistettu luonnollisista ainesosista.</p>",
+            "author_avatar": "shopify://shop_images/Profilbild344.webp",
+            "author": "– Lene Karlsen"
+          }
+        },
+        "column_Ri7g3K": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Erinomainen tuote, joka todella tekee eron",
+            "text": "<p>Erinomainen tuote, joka todella tekee eron. Olen huomannut, että koirani hammaskivi on vähentynyt selvästi ja hengitys on paljon raikkaampi. <br/><br/>Lisäksi tuote on erittäin helppokäyttöinen.</p>",
+            "author_avatar": "shopify://shop_images/profilbild.webp",
+            "author": "– Oskar Johansrud"
+          }
+        },
+        "column_NmmfXF": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Antaa erinomaisia tuloksia",
+            "text": "<p>Koirani pitää tästä, ja sitä on helppo käyttää joka päivä. <br/><br/>Antaa erinomaisia tuloksia.</p>",
+            "author_avatar": "shopify://shop_images/Profilbild1.jpg",
+            "author": "– Sofie Nilsen"
+          }
+        },
+        "column_GNBeVt": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Näen parannusta hänen suun terveydessä",
+            "text": "<p>Koirani näyttää pitävän tästä, ja näen parannusta hänen suun terveydessä.</p>",
+            "author_avatar": "shopify://shop_images/Profilbild3_98453ffc-28e5-4418-89bd-9cc2393e092a.webp",
+            "author": "– Ingrid Thorsen"
+          }
+        }
+      },
+      "block_order": [
+        "column_zJ6zMR",
+        "column_qUghpJ",
+        "column_FGVAjz",
+        "column_8RKF7m",
+        "column_ya4rpx",
+        "column_R3wwEK",
+        "column_gCBCNY",
+        "column_89igQU",
+        "column_8ANdnq",
+        "template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-1",
+        "template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-2",
+        "template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-3",
+        "column_7KVQn9",
+        "column_UHg797",
+        "column_Ri7g3K",
+        "column_NmmfXF",
+        "column_GNBeVt"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Vahvistetut arvostelut",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "text": "<p><strong>15 000+ koiranomistajaa </strong>pitää hampaat puhtaina ilman harjataistelua</p>",
+        "color_scheme": "background-1",
+        "image_width": "full",
+        "image_ratio": "square",
+        "column_alignment": "center",
+        "show_stars": true,
+        "inactive_stars_style": "solid",
+        "star_color": "#ffcc00",
+        "bg_star_color": "#ececec",
+        "show_quotes": true,
+        "quotes_color_scheme": "accent-1",
+        "cards_color_scheme": "bg-overlay",
+        "type": "slide",
+        "autoplay": true,
+        "autoplay_speed": 7,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_full_page": true,
+        "columns_desktop": 4,
+        "slider_desktop": true,
+        "per_move_desktop": 1,
+        "desktop_spacing": 40,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "sides",
+        "slider_mobile": true,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "under",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_text": "#2e2a39"
+      }
+    },
+    "section_divider_pFE63Q": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "background-2",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "collapsible_content_TbfYVV": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_tR8CwM": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Onko tämä 100 % turvallista lemmikilleni?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>✅ <strong>Kyllä! Pyyhkeet on suunniteltu olemaan yhtä hellävaraisia kuin ne ovat tehokkaita.<br/></strong><br/>Ne eivät sisällä:</p><p>❌ Alkoholia<br/><br/>❌ Parabeeneja<br/><br/>❌ Eteerisiä öljyjä (jotka voivat ärsyttää joitakin lemmikkejä)<br/><br/>❌ Voimakkaita kemikaaleja tai keinotekoisia hajusteita<br/><br/>Kaava on kehitetty eläinlääkinnällisen asiantuntemuksen pohjalta, jotta se olisi turvallinen sekä koirille että kissoille – jopa niille, joilla on herkät ikenet tai herkkä iho.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_wWEXkL": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Kuinka käytän tuotetta?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>1 Liu’uta pyyhe sormesi päälle.<br/>2 Hieroa hellästi lemmikkisi hampaita ja ikeniä pyörivin liikkein.<br/>3 Keskity erityisesti ienrajaan sekä kohtiin, joissa näkyy plakkia tai värjäytymiä.<br/><br/>Ei hammasharjaa. Ei sotkua. Ei stressiä.<br/><br/>Käytä päivittäin tai 1–2 kertaa viikossa parhaiden tulosten saamiseksi.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_3fRqLL": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Onko tämä hammasharjauksen korvike?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Useimmille lemmikinomistajille: kyllä.<br/><br/>Harjaaminen on paras vaihtoehto – mutta usein epärealistista arjessa.<br/><br/><strong>FreshWipes tarjoaa yksinkertaisen ja luotettavan tavan huolehtia lemmikkisi suun terveydestä – ilman kamppailua.</strong></p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_4GGYLx": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Mitä kaava sisältää?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Vain se, mitä lemmikkisi tarvitsee – ei mitään ylimääräistä.<br/><br/>Jokainen ainesosa on valittu huolellisesti turvallista ja tehokasta suunhoitoa varten:</p><ul><li><strong>Puhdistettu vesi</strong> – hellä pohja, joka lisää kosteutta<br/></li><li><strong>Aloe vera</strong> – rauhoittaa ikeniä ja auttaa vähentämään ärsytystä<br/></li><li><strong>Luonnolliset kasviuutteet</strong> – tarjoavat antibakteerista suojaa<br/></li><li><strong>Sinkkiyhdisteet</strong> – raikastavat hengitystä ja torjuvat plakkia<br/></li><li><strong>pH-tasapainotettu & hajusteeton</strong> – turvallinen herkille lemmikeille<br/></li><li><strong>Ei eläinkokeita</strong> – ei koskaan testattu eläimillä<br/></li></ul><p>Ei alkoholia, fluoria tai voimakkaita kemikaaleja.</p><p>Vain turvallista, yksinkertaista ja tehokasta hammashoitoa – jokaisessa pyyhkeessä.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_X6j8jm": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Milloin voin odottaa tuloksia?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>🦷 <strong>Raikas hengitys?</strong> Jo muutamassa päivässä.<br/><br/>🦷 <strong>Puhdistetummat hampaat ja terveemmät ikenet?</strong> 2–3 viikossa säännöllisellä käytöllä.</p><p><strong>Ole vain kärsivällinen – lemmikkisi suu tulee kiittämään!</strong></p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_DDddPH": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Sopivatko FreshWipes-pyyhkeet kaikille roduille ja kokoluokille?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Kyllä, pyyhkeet ovat joustavia ja toimivat hyvin sekä pienille toy-roduille että suurille koirille – ja myös kissoille.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_MXzfid": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Auttaako pyyhkeet pahanhajuiseen hengitykseen?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Kyllä! Antibakteeriset ainesosat ja luonnolliset hengityksen raikastajat auttavat vähentämään plakkia ja pahaa hajua.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_xUbf8N": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Miten FreshWipes-pyyhkeitä tulisi säilyttää?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Säilytä pakkaus viileässä ja kuivassa paikassa.  Vältä suoraa auringonvaloa, jotta pyyhkeet säilyttävät kosteutensa.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_pA7czt": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Mitä tapahtuu, jos en ole tyytyväinen?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Me seisomme tuotteemme takana <strong>100 päivän tyytyväisyystakuulla.</strong><br/><br/>Jos et näe näkyvää muutosta – tai jos tuote ei yksinkertaisesti toimi lemmikilläsi – ota vain yhteyttä.<br/><br/>Saat täyden hyvityksen, ei kysymyksiä.<br/><br/>Ei stressiä. Ei vaivaa. Vain mielenrauhaa.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_tR8CwM",
+        "collapsible_row_wWEXkL",
+        "collapsible_row_3fRqLL",
+        "collapsible_row_4GGYLx",
+        "collapsible_row_X6j8jm",
+        "collapsible_row_DDddPH",
+        "collapsible_row_MXzfid",
+        "collapsible_row_xUbf8N",
+        "collapsible_row_pA7czt"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "caption": "",
+        "title": "Usein kysytyt kysymykset",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "row",
+        "color_scheme": "background-2",
+        "container_color_scheme": "accent-1",
+        "open_first_collapsible_row": false,
+        "video_muted_autoplay": true,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "row_heading_size": "medium",
+        "collapse_icon": "carret",
+        "display_top_border": true,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_contaner_colors_background": "#ffffff",
+        "custom_container_gradient_background": "",
+        "custom_contaner_colors_text": "#2e2a39"
+      }
+    },
+    "section_divider_HfUqqg": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "background-1",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-2",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "icon_bar_KHKwKc": {
+      "type": "icon-bar",
+      "blocks": {
+        "column_QHckr6": {
+          "type": "column",
+          "settings": {
+            "icon": "favorite",
+            "filled_icon": true,
+            "title": "YLI 15 000 TYYTYVÄISTÄ ASIAKASTA",
+            "text": "<p>Olemme tehneet koiranomistajat ja koirat ympäri maailmaa onnellisiksi!</p>"
+          }
+        },
+        "column_tPk8Rq": {
+          "type": "column",
+          "settings": {
+            "icon": "new_releases",
+            "filled_icon": true,
+            "title": "100 PÄIVÄN RAHAT TAKAISIN -TAKUU",
+            "text": "<p>Etkö ole tyytyväinen? Ota vain yhteyttä meihin 100 päivän kuluessa ostosta, niin hoidamme asian puolestasi.</p>"
+          }
+        },
+        "column_FkbetQ": {
+          "type": "column",
+          "settings": {
+            "icon": "support_agent",
+            "filled_icon": true,
+            "title": "ASIAKASTUKI MAANANTAI–PERJANTAI",
+            "text": "<p>Kysymyksiä? Älä epäröi ottaa yhteyttä – vastaamme 24 tunnin sisällä!</p>"
+          }
+        }
+      },
+      "block_order": [
+        "column_QHckr6",
+        "column_tPk8Rq",
+        "column_FkbetQ"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "text": "",
+        "color_scheme": "background-1",
+        "icon_layout": "vertical",
+        "icon_size": "medium",
+        "icon_color": "accent-1",
+        "cards_color_scheme": "background-1",
+        "type": "slide",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_full_page": false,
+        "columns_desktop": 3,
+        "slider_desktop": false,
+        "per_move_desktop": 1,
+        "desktop_spacing": 40,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "sides",
+        "columns_mobile": "1",
+        "slider_mobile": true,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "under",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_text": "#2e2a39"
+      }
+    },
+    "vetpets_popup": {
+      "type": "vetpets-popup",
+      "settings": {
+        "logo": "shopify://shop_images/Vetpets_Logo_11_3e42d63d-8554-4b1f-b85e-bf905293a7a2.png",
+        "scratch_image": "shopify://shop_images/hf_20260822_113024_e5868d33-6f0f-4c6f-b0c5-fbc36b342b49.png",
+        "photo_primary": "shopify://shop_images/vetpets-popup-ugc-frenchie-sofa.png",
+        "photo_secondary": "shopify://shop_images/vetpets-popup-ugc-tubs-kitchen.png",
+        "klaviyo_email_list_id": "TFfFDG"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "related-products",
+    "image_slider_8HnbpY",
+    "image_slider_X8iFJF",
+    "section_divider_iXCmE9",
+    "image_with_text_LkDiE9",
+    "section_divider_MjaRJC",
+    "image_with_text_kiAL7m",
+    "section_divider_kAW6L6",
+    "image_with_text_jpGEnV",
+    "section_divider_BJPHP4",
+    "image_with_text_zpzP4w",
+    "multicolumn_r3Fa8U",
+    "image_banner_Jkg3ye",
+    "55bd100e-3bbd-426c-a5cf-eed7b2a3706f",
+    "section_divider_pFE63Q",
+    "collapsible_content_TbfYVV",
+    "section_divider_HfUqqg",
+    "icon_bar_KHKwKc",
+    "vetpets_popup"
+  ]
+}

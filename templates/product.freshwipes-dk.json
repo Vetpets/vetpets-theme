@@ -1,1 +1,1904 @@
-{"sections":{"main":{"type":"main-product","blocks":{"a6eb81db-40e4-43e0-972f-32db010a4a56":{"type":"rating_stars","settings":{"rating":4.8,"star_color":"#ffcc00","bg_stars_style":"full","bg_star_color":"#ececec","label":"4,86\/5 (2000+ Anmeldelser)","size":16,"alignment":"flex-start","scroll_id":"","margin_top":0,"margin_bottom":9}},"title":{"type":"title","settings":{"text_size":"h2","title_alignment":"left","uppercase_title":false,"margin_top":0,"margin_bottom":0}},"price":{"type":"price","disabled":true,"settings":{"layout":"price_first","price_color":"accent-1","compare_price_color":"text","displayed_badge":"sale","icon_scale":140,"custom_badge_text":"[icon_1] SPECIAL OFFER","icon_1":"redeem","filled_icon_1":false,"icon_2":"check_circle","filled_icon_2":false,"margin_top":9,"margin_bottom":15}},"divider_i9d8VK":{"type":"divider","settings":{"color":"#e1e1e1","height":1,"width":100,"Full_mobile_width":false,"alignment":"center","border_radius":0,"margin_top":15,"margin_bottom":15}},"text_cn7XQg":{"type":"text","settings":{"mobile_text_size":14,"desktop_text_size":16,"alignment":"left","text_color":"#121212","text_1":"Bekæmper plak og bakterier effektivt","text_2":"pH-balancerede og parfumefri servietter","text_3":"Skånsomme og nemme at bruge","icon_scale":140,"icon_color":"#47b5e9","icon_1":"pets","filled_icon_1":true,"icon_2":"pets","filled_icon_2":true,"icon_3":"pets","filled_icon_3":true,"width":"100%","direction":"vertical","column_gap":5,"enable_bg":false,"bg_color":"#f3f3f3","corner_radius":40,"padding":3,"border_size":0,"border_color":"#b7b7b7","margin_top":15,"margin_bottom":15}},"text_kEd4Nj":{"type":"text","settings":{"mobile_text_size":14,"desktop_text_size":16,"alignment":"left","text_color":"#121212","text_1":"Dyrlægegodkendte ingredienser","text_2":"","text_3":"","icon_scale":140,"icon_color":"#47b5e9","icon_1":"pets","filled_icon_1":true,"icon_2":"check_circle","filled_icon_2":true,"icon_3":"check_circle","filled_icon_3":true,"width":"100%","direction":"vertical","column_gap":5,"enable_bg":false,"bg_color":"#f3f3f3","corner_radius":40,"padding":3,"border_size":0,"border_color":"#b7b7b7","margin_top":15,"margin_bottom":15}},"5fcc0428-e768-4cb7-bea3-eb0274198dd1":{"type":"variant_picker","settings":{"picker_types":"swatches, dropdown, dropdown","custom_labels":"[name] - [selected]","skip_unavailable":false,"swatches_size":"medium","swatches_custom_colors":"disabled","swatches_custom_colors_list":"#000000, #6D388B, #0000FF, #FFCC00","full_width_dropdowns":false,"breaks_style":"normal","breaks_headline":"BUNDLE & SAVE","breaks_display_selected_indicator":true,"breaks_border_radius":10,"breaks_border_width":2,"breaks_color_scheme":"accent-1","breaks_badges":"[empty], Most popular, [empty]","breaks_badge_style":"1","breaks_badge_color":"accent-1","breaks_displayed_images":"variant_images","breaks_custom_images":"","breaks_image_width":70,"breaks_space_images":true,"breaks_vertical_images_position":"top","breaks_vertical_prices_layout":"vertical","breaks_labels":"[name], [name], [name]","breaks_benefits":"[empty], Free Shipping, Free Shipping","breaks_benefit_position":"top","breaks_benefit_style":"outlined","breaks_benefit_color":"accent-1","breaks_captions":"Variant 1 caption, Variant 2 caption, Variant 3 caption","breaks_price_texts":"[price], [price], [price]","breaks_compare_price_texts":"[compare_price], [compare_price], [compare_price]","margin_top":15,"margin_bottom":15}},"kaching_bundles_app_block_f8NfBp":{"type":"shopify:\/\/apps\/kaching-bundles\/blocks\/app-block\/6c637362-a106-4a32-94ac-94dcfd68cdb8","settings":{"product":"{{product}}","manual_deal_block_id":""}},"04ba004e-2f54-4936-8b1c-8bcadf6573f6":{"type":"quantity_selector","settings":{"full_width_classic":false,"atc_append":"none","atc_append_heights":"stretch-quantity","enable_quantity_discounts":false,"style":"normal","headline":"Sommersalg – Gratis frakt","preselected":"option_2","display_selected_indicator":true,"border_radius":10,"border_width":2,"color_scheme":"accent-1","enable_variant_selectors":true,"enable_variant_selectors_on_quantity_of_1":false,"update_prices":false,"skip_unavailable":false,"full_width_pickers":false,"hide_pickers_overlay":true,"pickers_label":"","image_width":70,"space_images":true,"vertical_images_position":"top","vertical_prices_layout":"vertical","option_1_quantity":1,"option_1_badge":"","option_1_badge_style":"1","option_1_badge_color":"accent-1","option_1_label":"1-Pakning – 50 stk","option_1_benefit":"Spar 40 %","option_1_benefit_position":"top","option_1_benefit_style":"solid","option_1_benefit_color":"accent-2","option_1_caption":"5 kr per bruk","option_1_percentage_off_text":"0","option_1_fixed_amount_off":"0","option_1_price_text":"[price]","option_1_compare_price":"compare_price","option_1_compare_price_text":"[compare_price]","option_2_quantity":2,"option_2_badge":"Kjøp 2 Få 50 % Rabatt","option_2_badge_style":"1","option_2_badge_color":"accent-2","option_2_label":"2-Pakning – 100 stk","option_2_benefit":"Spar 50 %","option_2_benefit_position":"top","option_2_benefit_style":"solid","option_2_benefit_color":"accent-2","option_2_caption":"4 kr per bruk","option_2_percentage_off_text":"0","option_2_fixed_amount_off":"99","option_2_price_text":"[price]","option_2_compare_price":"compare_price","option_2_compare_price_text":"[compare_price]","option_3_quantity":4,"option_3_badge":"Gjelder denne uken","option_3_badge_style":"1","option_3_badge_color":"accent-2","option_3_label":"4-Pakning – 200 stk","option_3_benefit":"Spar 60 %","option_3_benefit_position":"top","option_3_benefit_style":"solid","option_3_benefit_color":"accent-2","option_3_caption":"3 kr per bruk","option_3_percentage_off_text":"0","option_3_fixed_amount_off":"397","option_3_price_text":"[price]","option_3_compare_price":"compare_price","option_3_compare_price_text":"[compare_price]","option_4_quantity":0,"option_4_badge":"","option_4_badge_style":"1","option_4_badge_color":"accent-1","option_4_label":"Buy [quantity]","option_4_benefit":"","option_4_benefit_position":"top","option_4_benefit_style":"outlined","option_4_benefit_color":"accent-1","option_4_caption":"You save [amount_saved]","option_4_percentage_off_text":"0","option_4_fixed_amount_off":"0","option_4_price_text":"[price]","option_4_compare_price":"compare_price","option_4_compare_price_text":"[compare_price]","margin_top":15,"margin_bottom":15}},"inventory_TFawNK":{"type":"inventory","disabled":true,"settings":{"text_style":"body","inventory_threshold":10,"show_inventory_quantity":false,"margin_top":15,"margin_bottom":15}},"text_REHyXM":{"type":"text","disabled":true,"settings":{"mobile_text_size":14,"desktop_text_size":16,"alignment":"left","text_color":"#f6931e","text_1":"Nesten utsolgt under Halloween-salget","text_2":"","text_3":"","icon_scale":140,"icon_color":"#118fcb","icon_1":"","filled_icon_1":true,"custom_icon_1":"shopify:\/\/shop_images\/Namnlos_design_-_2025-10-01T144230.866_0c23455c-bcc7-4ef0-924e-3112eb41e31b.png","icon_2":"check_circle","filled_icon_2":true,"icon_3":"check_circle","filled_icon_3":true,"width":"100%","direction":"vertical","column_gap":5,"enable_bg":false,"bg_color":"#f3f3f3","corner_radius":40,"padding":3,"border_size":0,"border_color":"#b7b7b7","margin_top":15,"margin_bottom":15}},"custom_liquid_Gzb9VQ":{"type":"custom_liquid","settings":{"custom_liquid":"<!-- Snippet: stock-status.liquid -->\n<div class=\"stock-status-wrapper\">\n  <span class=\"stock-status-dot\"><\/span>\n  <span class=\"stock-status-text\">Næsten udsolgt – kun 89 tilbage!<\/span>\n<\/div>\n\n<style>\n  .stock-status-wrapper {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n  }\n\n  .stock-status-dot {\n    width: 14px;\n    height: 14px;\n    background-color: #ff9900;\n    border-radius: 50%;\n    animation: stockPulse 1.5s ease-in-out infinite;\n    display: inline-block;\n  }\n\n  .stock-status-text {\n    color: #ff9900;\n    font-weight: 700;\n    font-size: 13px;\n  }\n\n  @keyframes stockPulse {\n    0% { transform: scale(1); opacity: 1; }\n    50% { transform: scale(1.3); opacity: 0.7; }\n    100% { transform: scale(1); opacity: 1; }\n  }\n<\/style>"}},"buy_buttons":{"type":"buy_buttons","settings":{"show_dynamic_checkout":false,"skip_cart":false,"uppercase_text":true,"icon_scale":120,"icon_spacing":10,"atc_custom_label":"Læg i kurv","display_price":false,"enable_custom_color":true,"custom_color":"#47b5e9","enable_secondary_btn":false,"secondary_btn_label":"Buy It Now","secondary_btn_enable_custom_color":false,"secondary_btn_custom_color":"#dd1d1d","margin_top":12,"margin_bottom":12}},"payment_badges_XtWzKz":{"type":"payment_badges","settings":{"enabled_payment_types":"klarna, master, maestro, visa, dankort, american_express, paypal","margin_top":15,"margin_bottom":15}},"custom_liquid_8TN4AP":{"type":"custom_liquid","settings":{"custom_liquid":"<!-- SOSIALT BEVIS - ALT PÅ ÉN LINJE -->\n<style>\n  .sp-bar{\n    --bg:#fff; --radius:20px;\n    --shadow:0 2px 6px rgba(0,0,0,.08);\n    padding:8px 14px; background:var(--bg);\n    border-radius:var(--radius); box-shadow:var(--shadow);\n    width:fit-content; margin:14px auto 0;\n    font-size:12px; line-height:1.3;\n    display:flex; align-items:center; gap:5px;\n  }\n  .sp-avatars{ display:flex; align-items:center; }\n  .sp-avatar{\n    width:20px; height:22px; border-radius:9999px; overflow:hidden; flex:0 0 auto;\n    border:2px solid #fff; margin-right:-6px;\n  }\n  .sp-avatar img{ width:100%; height:100%; object-fit:cover; display:block; }\n  .sp-text{ display:flex; align-items:center; gap:5px; flex-wrap:nowrap; }\n  .sp-name{ font-weight:700; }\n  .sp-strong{ font-weight:700; }\n  .sp-check{ width:16px; height:16px; display:inline-block; }\n<\/style>\n\n{%- assign buyer_name = \"Lisa A\" -%}\n{%- assign buyer_count = 10.059 -%}\n\n<div class=\"sp-bar\">\n  <div class=\"sp-avatars\">\n    <span class=\"sp-avatar\">\n      <img src=\"https:\/\/randomuser.me\/api\/portraits\/women\/44.jpg\" alt=\"Kunde 1\">\n    <\/span>\n    <span class=\"sp-avatar\">\n      <img src=\"https:\/\/randomuser.me\/api\/portraits\/women\/65.jpg\" alt=\"Kunde 2\">\n    <\/span>\n    <span class=\"sp-avatar\">\n      <img src=\"https:\/\/randomuser.me\/api\/portraits\/women\/12.jpg\" alt=\"Kunde 3\">\n    <\/span>\n  <\/div>\n\n  <div class=\"sp-text\">\n    <span class=\"sp-name\">{{ buyer_name }}<\/span>\n    <span class=\"sp-check\">\n      <img src=\"https:\/\/cdn-icons-png.flaticon.com\/512\/7641\/7641727.png\" alt=\"Verifisert\" width=\"16\" height=\"16\">\n    <\/span>\n    <span>og<\/span>\n    <span class=\"sp-strong\">{{ buyer_count }}<\/span>\n    <span>personer har allerede købt<\/span>\n  <\/div>\n<\/div>"}},"text_rerK7N":{"type":"text","settings":{"mobile_text_size":14,"desktop_text_size":16,"alignment":"left","text_color":"#121212","text_1":"100 Dages Tilfredshedsgaranti","text_2":"Over 15.000 tilfredse kunder","text_3":"Gratis e-bog med hver bestilling","icon_scale":140,"icon_color":"#47b5e9","icon_1":"new_releases","filled_icon_1":true,"icon_2":"favorite","filled_icon_2":true,"icon_3":"book_2","filled_icon_3":true,"width":"100%","direction":"vertical","column_gap":5,"enable_bg":true,"bg_color":"#f3f3f3","corner_radius":40,"padding":3,"border_size":0,"border_color":"#b7b7b7","margin_top":15,"margin_bottom":15}},"e7a28cbe-03cb-4c9d-a2c4-0e3e76ffb3e5":{"type":"sticky_atc","settings":{"function":"add_to_cart","display_when":"after_scroll","button_label":"LÆG I KURV","enable_custom_btn_color":true,"custom_btn_color":"#47b5e9","color_scheme":"background-1","star_color":"#ffcc00","stars_label":"4,86\/5 (2000+ Anmeldelser)","picker_type":"combined","desktop_show_image":true,"desktop_show_title":true,"desktop_rating_stars":true,"desktop_show_price":true,"desktop_show_sale_badge":true,"desktop_variant_picker":true,"desktop_full_button_width":true,"desktop_show_price_in_button":false,"desktop_transparent_bg":false,"mobile_show_image":false,"mobile_show_title":true,"mobile_rating_stars":true,"mobile_show_price":false,"mobile_show_sale_badge":false,"mobile_variant_picker":false,"mobile_full_button_width":true,"mobile_show_price_in_button":false,"mobile_transparent_bg":false}},"description":{"type":"description","disabled":true,"settings":{"margin_top":24,"margin_bottom":24}},"de158e68-5d0d-4819-a625-e2dabdff87d1":{"type":"collapsible_tab","settings":{"heading":"100 dages pengene-tilbage-garanti","heading_size":"medium","icon":"","filled_icon":false,"collapse_icon":"carret","display_top_border":true,"open":false,"content":"<p>Vi har stor tillid til, at <strong>FreshWipes<\/strong> vil gøre en forskel – både for dig og din hund.<br\/><br\/>Derfor tilbyder vi <strong>100 dages pengene-tilbage-garanti.<\/strong><\/p><p>Du kan teste produktet i ro og mag derhjemme.<br\/><br\/>Ikke helt tilfreds? Så får du pengene tilbage – helt uden stress.<\/p><p>For os er det vigtigere, at din hund får den rigtige pleje, end at du beholder noget, du ikke elsker.<br\/><br\/>Du kan læse mere om vores tilfredshedsgaranti her.<\/p>","page":"","margin_top":24,"margin_bottom":0}},"collapsible_tab_t3jLVn":{"type":"collapsible_tab","disabled":true,"settings":{"heading":"Gratis E-bok i hver bestilling","heading_size":"medium","icon":"","filled_icon":false,"collapse_icon":"carret","display_top_border":true,"open":false,"content":"","page":"e-bok-hunden-din-kan-lide-uten-at-du-merker-det","margin_top":24,"margin_bottom":0}},"collapsible_tab_EGhYxC":{"type":"collapsible_tab","settings":{"heading":"Ingredienser","heading_size":"medium","icon":"","filled_icon":false,"collapse_icon":"carret","display_top_border":true,"open":false,"content":"<p><strong>EDI-renset vand<\/strong> – basisopløsning<br\/><br\/><strong>Glycerin<\/strong> – tilfører fugt<br\/><br\/><strong>Citronsyre<\/strong> – balancerer pH<br\/><br\/><strong>Cetylpyridiniumklorid-monohydrat<\/strong> – antibakteriel effekt<br\/><br\/><strong>Te-polyfenoler<\/strong> – giver frisk ånde<br\/><br\/><strong>Allantoin<\/strong> – beroligende<br\/><br\/><strong>Grøn te-ekstrakt<\/strong> – naturligt antibakteriel & beskyttende<\/p><p>✔️ pH-balanseret og parfumefri<br\/><br\/>✔️ Ikke testet på dyr (cruelty-free)<br\/><br\/>✔️ Fri for alkohol, fluor og stærke kemikalier<\/p>","page":"free-e-book-the-secret-to-a-sparkling-home-in-just-15-minutes-a-day","margin_top":24,"margin_bottom":0}},"collapsible_tab_aFAiwA":{"type":"collapsible_tab","settings":{"heading":"Betaling & Levering","heading_size":"medium","icon":"","filled_icon":false,"collapse_icon":"carret","display_top_border":true,"open":false,"content":"<p><strong>Betaling<\/strong><br\/><br\/>Du betaler trygt med Klarna, PayPal, Apple\/Google Pay og alle almindelige kreditkort. Vælg det, der passer dig bedst.<\/p><p><strong>Fragt<\/strong><br\/><br\/>Gratis fragt på alle bestillinger over <strong>399 kr<\/strong>.<br\/><br\/>For bestillinger under <strong>399 kr<\/strong> tillægges et fragtgebyr på <strong>49 kr<\/strong>.<\/p><p><strong>Leveringstid<\/strong><br\/><br\/>Da vores lager i Norge midlertidigt er tømt, bliver din bestilling sendt fra vores internationale lager.<br\/><br\/>Leveringstid: <strong>1–2 dages håndtering + 5–10 dages fragt<\/strong>.<br\/><br\/>Et sporingsnummer sendes på e-mail, så snart din bestilling forlader lageret.<\/p><p><strong>Spørgsmål?<\/strong><br\/><br\/>Skriv til os på <a><strong>info@vetpets.eu<\/strong><\/a> – vi svarer altid inden for <strong>24 timer<\/strong> på hverdage.<\/p>","page":"","margin_top":24,"margin_bottom":0}},"reviews_8UgFbe":{"type":"reviews","disabled":true,"settings":{"color_scheme":"background-1","show_custom_bg":false,"custom_bg_color":"#f2f2f2","corner_radius":12,"border_width":0,"border_color":"#b7b7b7","avatar_alignment":"top","avatar_corner_radius":40,"star_color":"#ffcc00","stars_translate":0,"checkmark_color":"#6d388b","checkmark_icon_color":"#ffffff","slider_type":"slide","autoplay":false,"autoplay_speed":5,"display_arrows":false,"display_dots":true,"author_1":"– Anna, 34 år [stars]","image_1":"shopify:\/\/shop_images\/Profilbild_3.jpg","text_1":"<p>Har brukt FreshWipes i omtrent en uke og ble overrasket over hvor lett det gikk. Hunden vår er vanligvis skeptisk, men lot meg faktisk rengjøre uten problemer.<\/p>","author_2":"– Mats, 52 år [stars]","image_2":"shopify:\/\/shop_images\/Profilbild5_1a47da8b-0488-41c4-af0b-4e3b8857192b.webp","text_2":"<p>Etter to måneder er pusten mye friskere og misfargingene har blitt redusert. Vi har det som en fast rutine på søndager – og det fungerer kjempebra.<\/p>","author_3":"– Sofia, 41 år [stars]","image_3":"shopify:\/\/shop_images\/Profilbild111.webp","text_3":"<p>Vi har brukt dem i over ett år nå. Vår labrador har ikke trengt noe veterinærbesøk for tennene siden. Enkelt å ta med, og det føles trygt.<\/p>","margin_top":24,"margin_bottom":24}}},"block_order":["a6eb81db-40e4-43e0-972f-32db010a4a56","title","price","divider_i9d8VK","text_cn7XQg","text_kEd4Nj","5fcc0428-e768-4cb7-bea3-eb0274198dd1","kaching_bundles_app_block_f8NfBp","04ba004e-2f54-4936-8b1c-8bcadf6573f6","inventory_TFawNK","text_REHyXM","custom_liquid_Gzb9VQ","buy_buttons","payment_badges_XtWzKz","custom_liquid_8TN4AP","text_rerK7N","e7a28cbe-03cb-4c9d-a2c4-0e3e76ffb3e5","description","de158e68-5d0d-4819-a625-e2dabdff87d1","collapsible_tab_t3jLVn","collapsible_tab_EGhYxC","collapsible_tab_aFAiwA","reviews_8UgFbe"],"custom_css":[],"settings":{"display_id":false,"enable_sticky_info":true,"display_variant_image_first":false,"disable_prepend":true,"hide_variants":false,"variant_image_filtering":"none","image_zoom":"none","thumbnails_ratio":"square","arrows_color_scheme":"inverse","transparent_arrows":false,"dots_color_scheme":"inverse","video_player":"play_btn","enable_video_looping":false,"autoplay_videos_pause_btn":false,"video_sound_btn":false,"video_timeline":false,"play_btn_color_scheme":"accent-1","sound_btn_color_scheme":"inverse","timeline_color":"accent-1","media_size":"medium","media_position":"left","gallery_layout":"thumbnail_slider","desktop_thumbnails_position":"bottom","desktop_thumbnails_count":5,"desktop_vertical_thumbnails_width":16,"desktop_vertical_thumbnails_hide_arrows":false,"constrain_to_viewport":true,"media_fit":"contain","desktop_arrows_position":"hidden","mobile_media_corner_radius":0,"mobile_spacing_pixels":0,"mobile_arrows_position":"sides","mobile_pagination":"hidden","mobile_thumbnails_position":"bottom","mobile_thumbnails_count":5,"mobile_vertical_thumbnails_width":22,"mobile_vertical_thumbnails_hide_arrows":true,"mobile_scroll_padding_percentage":0,"mobile_scroll_padding_pixels":2,"enable_mobile_outher_spacing":false,"mobile_slides_container_width":100,"mobile_slides_inner_width":100,"trust_badge_position":"top-right","trust_badge_size":"medium","mobile_padding_top":0,"mobile_padding_bottom":16,"desktop_padding_top":36,"desktop_padding_bottom":36}},"related-products":{"type":"related-products","disabled":true,"settings":{"display_id":false,"title":"You may also like","title_highlight_color":"#6d388b","heading_size":"h2","products_to_show":4,"stretch_cards":false,"columns_desktop":4,"color_scheme":"background-1","image_ratio":"adapt","show_secondary_image":false,"show_vendor":false,"show_rating":false,"enable_quick_add":false,"columns_mobile":"2","padding_top":36,"padding_bottom":24}},"image_slider_8HnbpY":{"type":"image-slider","blocks":{"video_slide_pYXTW3":{"type":"video_slide","settings":{"video":"shopify:\/\/files\/videos\/Produktvideos reviews.mov","loop":true,"muted_autoplay":true,"display_play_btn":true,"btn_animation":false,"btn_color_scheme":"accent-1","display_sound_btn":false,"sound_btn_color_scheme":"inverse","display_timeline":false,"timeline_color":"accent-1","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"video_slide_4LLCQV":{"type":"video_slide","settings":{"video":"shopify:\/\/files\/videos\/Produktvideo review 4.mov","loop":true,"muted_autoplay":true,"display_play_btn":true,"btn_animation":false,"btn_color_scheme":"accent-1","display_sound_btn":false,"sound_btn_color_scheme":"inverse","display_timeline":false,"timeline_color":"accent-1","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"video_slide_brtX4E":{"type":"video_slide","settings":{"video":"shopify:\/\/files\/videos\/Produktvideo review 3.mov","loop":true,"muted_autoplay":true,"display_play_btn":true,"btn_animation":false,"btn_color_scheme":"accent-1","display_sound_btn":false,"sound_btn_color_scheme":"inverse","display_timeline":false,"timeline_color":"accent-1","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"video_slide_LYFhDt":{"type":"video_slide","settings":{"video":"shopify:\/\/files\/videos\/Produktvideo review 5.mov","loop":true,"muted_autoplay":true,"display_play_btn":true,"btn_animation":false,"btn_color_scheme":"accent-1","display_sound_btn":false,"sound_btn_color_scheme":"inverse","display_timeline":false,"timeline_color":"accent-1","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"video_slide_HWhYJw":{"type":"video_slide","settings":{"video":"shopify:\/\/files\/videos\/Produktvideo review 2.mov","loop":true,"muted_autoplay":true,"display_play_btn":true,"btn_animation":false,"btn_color_scheme":"accent-1","display_sound_btn":false,"sound_btn_color_scheme":"inverse","display_timeline":false,"timeline_color":"accent-1","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}}},"block_order":["video_slide_pYXTW3","video_slide_4LLCQV","video_slide_brtX4E","video_slide_LYFhDt","video_slide_HWhYJw"],"disabled":true,"settings":{"display_id":false,"visibility":"always-display","title":"Tusenvis av fornøyde <strong>hunder og kjæledyreiere!<\/strong>","title_highlight_color":"#118fcb","heading_size":"h2","color_scheme":"background-2","type":"slide","drag":"enabled","autoplay":true,"autoplay_speed":3,"center_mode":false,"arrows_color_scheme":"inverse","transparent_arrows":true,"dots_color_scheme":"inverse","desktop_page_width":"normal","desktop_border_radius":16,"slides_desktop":3,"per_move_desktop":1,"desktop_spacing":28,"desktop_side_padding":0,"desktop_padding_calc":true,"desktop_adaptive_height":false,"desktop_dots_position":"under","desktop_arrows_position":"hidden","mobile_full_page":false,"mobile_border_radius":0,"slides_mobile":2,"per_move_mobile":1,"mobile_spacing":12,"mobile_side_padding":0,"mobile_padding_calc":true,"mobile_adaptive_height":false,"mobile_dots_position":"under","mobile_arrows_position":"hidden","padding_top":36,"padding_bottom":36,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#121212"}},"image_slider_X8iFJF":{"type":"image-slider","blocks":{"image_slide_9KKtti":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Din_Hunds_Leende_spelar_ocksa_roll_44.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_fBzCzf":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Din_Hunds_Leende_spelar_ocksa_roll_42.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_njzxqV":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Din_Hunds_Leende_spelar_ocksa_roll_34_f4d77496-5801-464a-9e46-fdeca1fac5e5.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_nPMxE8":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Review_tackkort_564829eb-2d8c-4368-90d8-bf6ffa53094e.png","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_Fb6nV7":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Din_Hunds_Leende_spelar_ocksa_roll_43.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_3jN9rX":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/META_ADS_3.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_V6NbRG":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/META_ADS_4.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_MLhtzc":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Skarmavbild_2025-06-20_kl._12.36.03.webp","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_rbrCcc":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Skarmavbild_2025-06-20_kl._12.41.33.webp","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_pRnbPQ":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Din_Hunds_Leende_spelar_ocksa_roll_8.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_GN7c44":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Din_Hunds_Leende_spelar_ocksa_roll_9.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_hgi3nY":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Din_Hunds_Leende_spelar_ocksa_roll_12.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_U3dWYb":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Din_Hunds_Leende_spelar_ocksa_roll_11.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_nD4Rb9":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Din_Hunds_Leende_spelar_ocksa_roll_13.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}},"image_slide_jKFGxn":{"type":"image_slide","settings":{"image":"shopify:\/\/shop_images\/Din_Hunds_Leende_spelar_ocksa_roll_10.jpg","link":"","description":"","desc_alignment":"center","desc_color_scheme":"background-2"}}},"block_order":["image_slide_9KKtti","image_slide_fBzCzf","image_slide_njzxqV","image_slide_nPMxE8","image_slide_Fb6nV7","image_slide_3jN9rX","image_slide_V6NbRG","image_slide_MLhtzc","image_slide_rbrCcc","image_slide_pRnbPQ","image_slide_GN7c44","image_slide_hgi3nY","image_slide_U3dWYb","image_slide_nD4Rb9","image_slide_jKFGxn"],"settings":{"display_id":false,"visibility":"always-display","title":"Tusindvis af tilfredse<strong> hunde og kæledyrsejere!<\/strong>","title_highlight_color":"#47b5e9","heading_size":"h2","color_scheme":"background-2","type":"slide","drag":"enabled","autoplay":true,"autoplay_speed":3,"center_mode":false,"arrows_color_scheme":"inverse","transparent_arrows":true,"dots_color_scheme":"inverse","desktop_page_width":"normal","desktop_border_radius":16,"slides_desktop":3,"per_move_desktop":1,"desktop_spacing":28,"desktop_side_padding":0,"desktop_padding_calc":true,"desktop_adaptive_height":false,"desktop_dots_position":"under","desktop_arrows_position":"hidden","mobile_full_page":false,"mobile_border_radius":0,"slides_mobile":2,"per_move_mobile":1,"mobile_spacing":12,"mobile_side_padding":0,"mobile_padding_calc":true,"mobile_adaptive_height":false,"mobile_dots_position":"under","mobile_arrows_position":"hidden","padding_top":36,"padding_bottom":36,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#121212"}},"section_divider_iXCmE9":{"type":"section-divider","settings":{"visibility":"always-display","shape":"waves_2","flip_horizontal":false,"flip_vertical":false,"shape_color":"custom","custom_shape_color":"#118fcb","background_color":"background-1","custom_background_color":"#ffffff","padding_top":0,"padding_bottom":0}},"image_with_text_LkDiE9":{"type":"image-with-text","blocks":{"caption_NgwaCz":{"type":"caption","settings":{"caption":"Beskyt din hund mod tandproblemer","text_style":"caption-with-letter-spacing","text_size":"medium"}},"heading_KC4Cfi":{"type":"heading","settings":{"title":"Din hund viser ikke altid, <strong>når den har ondt<\/strong>","title_highlight_color":"#121212","heading_size":"h2"}},"text_wgGMJL":{"type":"text","settings":{"text":"<p>Misfarvede tænder og dårlig ånde er ikke bare ufresht – det kan være tegn på tandsten, plak og betændelse.<\/p><p>Og ligesom du vil beskytte dit barn, vil du beskytte din hund.<\/p><p>Men i modsætning til børn fortæller hunde ikke, når de har smerter.<\/p><p><strong>FreshWipes fra VetPets giver dig en nem måde at passe på din hunds mundhygiejne – uden dyrlægebesøg, stress eller usikkerhed.<\/strong><\/p>","text_style":"body"}}},"block_order":["caption_NgwaCz","heading_KC4Cfi","text_wgGMJL"],"settings":{"display_id":false,"visibility":"always-display","image":"shopify:\/\/shop_images\/Dental_Wipes_1.webp","video_autoplay":true,"video_loop":true,"height":"adapt","color_scheme":"custom","section_color_scheme":"custom","full_desktop_width":false,"content_layout":"no-overlap","desktop_media_width":50,"layout":"image_first","desktop_content_position":"top","desktop_content_alignment":"left","mobile_full_media_width":false,"mobile_direction":"normal","mobile_image_quanlity":"2","mobile_content_alignment":"left","mobile_padding_top":0,"mobile_padding_bottom":16,"desktop_padding_top":36,"desktop_padding_bottom":36,"custom_colors_background":"#118fcb","custom_gradient_background":"","custom_colors_text":"#ffffff","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff","custom_colors_outline_button":"#dd1d1d","custom_section_colors_background":"#118fcb","custom_section_gradient_background":""}},"section_divider_MjaRJC":{"type":"section-divider","settings":{"visibility":"always-display","shape":"waves_2","flip_horizontal":false,"flip_vertical":true,"shape_color":"custom","custom_shape_color":"#118fcb","background_color":"background-1","custom_background_color":"#d6fdfd","padding_top":0,"padding_bottom":0}},"image_with_text_kiAL7m":{"type":"image-with-text","blocks":{"heading_bXGAFf":{"type":"heading","settings":{"title":"Få dyrlægeresultater derhjemme","title_highlight_color":"#0bb9c1","heading_size":"h2"}},"text_GjNNAg":{"type":"text","settings":{"text":"<p><strong>FreshWipes<\/strong> renser skånsomt din hunds tænder og tandkød på bare få sekunder.<\/p><p>Fjerner plak, frisker ånden op og forebygger betændelse.<\/p><p>Alt i en lille, nem serviet, du sætter på fingeren.<\/p><p><strong>Ingen tandbørste. Intet rod. Intet stress.<\/strong><\/p>","text_style":"body"}}},"block_order":["heading_bXGAFf","text_GjNNAg"],"settings":{"display_id":false,"visibility":"always-display","image":"shopify:\/\/shop_images\/Gif_1.gif","video_autoplay":true,"video_loop":true,"height":"adapt","color_scheme":"background-1","section_color_scheme":"background-1","full_desktop_width":false,"content_layout":"no-overlap","desktop_media_width":50,"layout":"text_first","desktop_content_position":"top","desktop_content_alignment":"left","mobile_full_media_width":false,"mobile_direction":"normal","mobile_image_quanlity":"2","mobile_content_alignment":"left","mobile_padding_top":0,"mobile_padding_bottom":16,"desktop_padding_top":36,"desktop_padding_bottom":36,"custom_colors_background":"#2e2a39","custom_gradient_background":"","custom_colors_text":"#ffffff","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff","custom_colors_outline_button":"#dd1d1d","custom_section_colors_background":"#ffffff","custom_section_gradient_background":""}},"section_divider_kAW6L6":{"type":"section-divider","settings":{"visibility":"always-display","shape":"waves_2","flip_horizontal":false,"flip_vertical":false,"shape_color":"custom","custom_shape_color":"#d5f7ff","background_color":"background-1","custom_background_color":"#d5f7ff","padding_top":0,"padding_bottom":0}},"image_with_text_jpGEnV":{"type":"image-with-text","blocks":{"heading_xgchUK":{"type":"heading","settings":{"title":"En nem vane, der <strong>gør en stor forskel<\/strong>","title_highlight_color":"#118fcb","heading_size":"h1"}},"text_jBQGVq":{"type":"text","settings":{"text":"<p>Mange hundeejere tror, at tandpleje skal være besværligt.<\/p><p>Men med <strong>FreshWipes<\/strong> er det så nemt, at du rent faktisk får det gjort.<\/p><p>1–2 gange om ugen er alt, der skal til for at forebygge smertefulde problemer i fremtiden.<\/p><h4><strong>Frisk ånde, stærkere tænder, gladere hund<\/strong><\/h4><p>En sund mund påvirker hele kroppen.<\/p><p>Med <strong>FreshWipes<\/strong> får din hund ikke kun friskere ånde og hvidere tænder –<br\/><br\/>men også bedre velvære og mere energi.<\/p><p>Færre infektioner. Mere leg. Mere glæde.<\/p>","text_style":"body"}}},"block_order":["heading_xgchUK","text_jBQGVq"],"settings":{"display_id":false,"visibility":"always-display","image":"shopify:\/\/shop_images\/Gif_2.gif","video_autoplay":true,"video_loop":true,"height":"adapt","color_scheme":"custom","section_color_scheme":"custom","full_desktop_width":false,"content_layout":"no-overlap","desktop_media_width":50,"layout":"image_first","desktop_content_position":"top","desktop_content_alignment":"left","mobile_full_media_width":false,"mobile_direction":"normal","mobile_image_quanlity":"2","mobile_content_alignment":"left","mobile_padding_top":0,"mobile_padding_bottom":16,"desktop_padding_top":36,"desktop_padding_bottom":36,"custom_colors_background":"#d5f7ff","custom_gradient_background":"","custom_colors_text":"#000000","custom_colors_solid_button_background":"#118fcb","custom_colors_solid_button_text":"#ffffff","custom_colors_outline_button":"#dd1d1d","custom_section_colors_background":"#d5f7ff","custom_section_gradient_background":""}},"section_divider_BJPHP4":{"type":"section-divider","settings":{"visibility":"always-display","shape":"waves_2","flip_horizontal":false,"flip_vertical":true,"shape_color":"custom","custom_shape_color":"#d5f7ff","background_color":"background-1","custom_background_color":"#d5f7ff","padding_top":0,"padding_bottom":0}},"multicolumn_r3Fa8U":{"type":"multicolumn","blocks":{"column_bKkKHH":{"type":"column","settings":{"image":"shopify:\/\/shop_images\/Namnlos_design_14.svg","muted_autoplay":true,"title":"Te-polyfenoler","text":"<p>Te-polyfenoler er naturlige antioxidanter, der hjælper med at reducere bakterier i munden, frisker ånden op og beskytter mod betændelse i tandkødet.<\/p>","link_label":"","link":""}},"column_zLHyXq":{"type":"column","settings":{"image":"shopify:\/\/shop_images\/assets_task_01jwzy13s9efnbfcxbccj3f6tg_1749123413_img_0.webp","muted_autoplay":true,"title":"Cetylpyridiniumklorid","text":"<p>En velkendt antibakteriel ingrediens, der bruges i mundpleje. Hjælper med at reducere plak, bakterier og dårlig ånde.<\/p>","link_label":"","link":""}},"column_yXWzdC":{"type":"column","settings":{"image":"shopify:\/\/shop_images\/Namnlos_design_12.svg","muted_autoplay":true,"title":"Glycerin","text":"<p>Glycerin fugter mundens slimhinder og tandkød – reducerer risikoen for irritation og giver en blidere rengøring.<\/p>","link_label":"","link":""}},"column_c9FKpR":{"type":"column","settings":{"image":"shopify:\/\/shop_images\/Namnlos_design_13.svg","muted_autoplay":true,"title":"Citronsyre","text":"<p>Citronsyre hjælper med at balancere pH-niveauet i munden – beskytter vævet og forebygger dårlig ånde.<\/p>","link_label":"","link":""}},"column_QCjHRw":{"type":"column","settings":{"image":"shopify:\/\/shop_images\/Namnlos_design_15.svg","muted_autoplay":true,"title":"Allantoin","text":"<p>Allantoin beskytter og beroliger følsomt tandkød. Hjælper med at reducere irritation og fremmer heling.<\/p>","link_label":"","link":""}},"column_deznN8":{"type":"column","settings":{"image":"shopify:\/\/shop_images\/540f0b38-c0db-4b70-a19d-8781871e78f7.png","muted_autoplay":true,"title":"Natriumbenzoat","text":"<p>Et skånsomt og sikkert konserveringsmiddel, der forlænger holdbarheden uden at påvirke mundens følsomme miljø.<\/p>","link_label":"","link":""}}},"block_order":["column_bKkKHH","column_zLHyXq","column_yXWzdC","column_c9FKpR","column_QCjHRw","column_deznN8"],"settings":{"display_id":false,"visibility":"always-display","title":"Sikre og nøje udvalgte ingredienser","title_highlight_color":"#6d388b","heading_size":"h1","button_label":"","button_link":"","atc_button_label":"","atc_product":"","atc_skip_cart":false,"color_scheme":"background-1","cards_color_scheme":"bg-overlay","cards_corner_radius":20,"stretch_cards":false,"stretched_cards_content_alignment":"center","image_width":"full","image_ratio":"square","media_position":"top","column_alignment":"center","desktop_heading_size":24,"mobile_heading_size":22,"desktop_text_size":16,"mobile_text_size":15,"desktop_text_top_margin":10,"mobile_text_top_margin":10,"desktop_container_padding_y":24,"desktop_container_padding_x":24,"mobile_container_padding_y":24,"mobile_container_padding_x":24,"type":"slide","autoplay":false,"autoplay_speed":5,"arrows_color_scheme":"inverse","transparent_arrows":true,"dots_color_scheme":"inverse","desktop_full_page":false,"columns_desktop":4,"slider_desktop":true,"per_move_desktop":1,"desktop_spacing":40,"desktop_side_padding":0,"desktop_padding_calc":true,"desktop_adaptive_height":false,"desktop_dots_position":"under","desktop_arrows_position":"sides","columns_mobile":"1","slider_mobile":true,"enable_mobile_preview":false,"mobile_adaptive_height":false,"mobile_dots_position":"under","mobile_arrows_position":"under","padding_top":36,"padding_bottom":36,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#2e2a39","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff","custom_colors_outline_button":"#dd1d1d","custom_cards_colors_background":"#f3f3f3","custom_cards_gradient_background":"","custom_cards_colors_heading":"#222126","custom_cards_colors_text":"#2e2a39"}},"image_with_text_zpzP4w":{"type":"image-with-text","blocks":{"heading_p8UPgK":{"type":"heading","settings":{"title":"Hundestell skal ikke <strong>være en luksusvare<\/strong>","title_highlight_color":"#118fcb","heading_size":"h1"}},"text_EgwQE8":{"type":"text","settings":{"text":"<p><strong>Pleje af hunde skal ikke være en luksus<\/strong><\/p><p>Et besøg hos dyrlægen for tandrensning kan koste flere tusinde kroner og kræver ofte bedøvelse.<\/p><p><strong>FreshWipes<\/strong> koster en brøkdel – og kan bruges helt uden risiko.<\/p><p>For os handler det ikke om at tjene mest – men om at give hunde et bedre liv.<\/p><p><strong>Skånsom. Sikker. Udviklet til din hund.<\/strong><\/p><p>Vores servietter er parfumefri, pH-balancerede og lavet til sikker brug i munden.<\/p><p>De passer til alle hunderacer og er nemme at tage med på tur, rejse eller ferie.<\/p><p>Tandpleje skal aldrig være en barriere.<\/p>","text_style":"body"}}},"block_order":["heading_p8UPgK","text_EgwQE8"],"settings":{"display_id":false,"visibility":"always-display","image":"shopify:\/\/shop_images\/Din_Hunds_Leende_spelar_ocksa_roll_38.jpg","video_autoplay":true,"video_loop":true,"height":"adapt","color_scheme":"background-1","section_color_scheme":"background-1","full_desktop_width":false,"content_layout":"no-overlap","desktop_media_width":50,"layout":"text_first","desktop_content_position":"top","desktop_content_alignment":"left","mobile_full_media_width":false,"mobile_direction":"normal","mobile_image_quanlity":"2","mobile_content_alignment":"left","mobile_padding_top":0,"mobile_padding_bottom":16,"desktop_padding_top":36,"desktop_padding_bottom":36,"custom_colors_background":"#2e2a39","custom_gradient_background":"","custom_colors_text":"#ffffff","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff","custom_colors_outline_button":"#dd1d1d","custom_section_colors_background":"#ffffff","custom_section_gradient_background":""}},"image_banner_Jkg3ye":{"type":"image-banner","blocks":{"heading_hbj7Ji":{"type":"heading","settings":{"title":"En risikofri investering i din hunds sundhed","title_highlight_color":"#6d388b","heading_size":"h1"}},"text_WEzjkg":{"type":"text","settings":{"text":"FreshWipes er en enkel og sikker løsning til din hunds mundhygiejne. Vi ønsker, at både du og din hund er tilfredse - derfor tilbyder vi 100 dages pengene-tilbage-garanti. Vores vådservietter er designet til at være både effektive og skånsomme, og de passer perfekt på fingeren for nem brug. Giv din hund en smertefri fremtid med et produkt, du kan stole på - helt risikofrit!","text_style":"body"}},"atc_button_FCrBJM":{"type":"atc_button","settings":{"button_label":"LÆG I KURV","atc_product":"","atc_skip_cart":false}},"rating_stars_hpmwWq":{"type":"rating_stars","settings":{"rating":4.8,"star_color":"#ffcc00","bg_stars_style":"full","bg_star_color":"#ececec","label":"4,86\/5 (2000+ Anmeldelser)","size":16,"scroll_id":""}}},"block_order":["heading_hbj7Ji","text_WEzjkg","atc_button_FCrBJM","rating_stars_hpmwWq"],"settings":{"display_id":false,"visibility":"always-display","image":"shopify:\/\/shop_images\/irish-setter-dog-close-up.jpg","image_1_visibility":"always-display","image_2_visibility":"always-display","image_overlay_opacity":10,"image_height":"large","url":"","desktop_content_position":"middle-center","show_text_box":false,"desktop_content_alignment":"center","color_scheme":"background-2","transparent_container_color":"white","mobile_content_alignment":"center","stack_images_on_mobile":true,"show_text_below":true}},"55bd100e-3bbd-426c-a5cf-eed7b2a3706f":{"type":"testimonials","blocks":{"template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-1":{"type":"column","settings":{"star_rating":5,"title":"Anbefaler stærkt!","text":"<p>Min hund har altid været bange for tandbørstning, hvilket gjorde det svært at holde tænderne rene.<br\/><br\/>Men efter jeg begyndte at bruge disse servietter, er han blevet helt rolig.<br\/><br\/>Det er fantastisk at se, at han ikke længere løber væk eller bliver nervøs, når det er tid til tandpleje.<\/p>","author_avatar":"shopify:\/\/shop_images\/Profilbild1_b3680c3c-3c9b-4f7c-aaa0-1c5e71863e67.webp","author":"– Erik A"}},"template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-2":{"type":"column","settings":{"star_rating":5,"title":"Han er nu helt frygtløs!","text":"<p>Det har været en kamp at børste min hunds tænder i flere år, fordi han var så bange.<br\/><br\/>Men med disse servietter har alt ændret sig. Han er nu helt frygtløs og lader mig rengøre tænderne uden problemer.<br\/><br\/>Dette har virkelig forbedret hans tandplejerutine.<\/p>","author_avatar":"shopify:\/\/shop_images\/Profilbild1_78735bd1-dd93-45c0-b80c-27246ca5802d.webp","author":"– Johan E"}},"template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-3":{"type":"column","settings":{"star_rating":5,"title":"Anbefaler disse stærkt til alle hundeejere","text":"<p>Jeg har altid haft svært ved at børste min hunds tænder, fordi han var bange.<br\/><br\/>Med disse servietter er han nu helt tryg.<br\/><br\/>Det er en enorm lettelse at kunne rengøre tænderne hans uden at skulle kæmpe med ham.<br\/><br\/><strong>Anbefaler disse stærkt til alle hundeejere.<\/strong><\/p>","author_avatar":"shopify:\/\/shop_images\/Profilbild_3.webp","author":"– Sara Johansen"}},"column_7KVQn9":{"type":"column","settings":{"star_rating":5,"title":"Jeg er meget tilfreds","text":"<p>Jeg har brugt dette produkt på min hund i nogle uger nu, og jeg er meget tilfreds.<br\/><br\/>Hundens tænder ser meget renere ud, og ånden er blevet mærkbart bedre.<br\/><br\/>Det er også utroligt nemt at bruge – en stor bonus.<\/p><p><\/p>","author_avatar":"shopify:\/\/shop_images\/Profilbild1.webp","author":"– Simen Kristoffersen"}},"column_UHg797":{"type":"column","settings":{"star_rating":5,"title":"Hans tænder ser meget renere ud","text":"<p>Jeg har brugt dette produkt dagligt på min hund og ser virkelig resultater.<br\/><br\/>Hans tænder ser meget renere ud, og ånden er blevet bedre.<br\/><br\/>Det føles trygt at bruge, især med de naturlige ingredienser.<\/p>","author_avatar":"shopify:\/\/shop_images\/Profilbild344.webp","author":"– Lene Karlsen"}},"column_Ri7g3K":{"type":"column","settings":{"star_rating":5,"title":"Et godt produkt, der virkelig gør en forskel","text":"<p>Et godt produkt, der virkelig gør en forskel.<br\/><br\/>Jeg har bemærket, at min hunds tandsten er blevet markant reduceret, og ånden er meget friskere.<br\/><br\/>Desuden er det utroligt nemt at bruge.<\/p>","author_avatar":"shopify:\/\/shop_images\/profilbild.webp","author":"– Oskar Johansrud"}},"column_NmmfXF":{"type":"column","settings":{"star_rating":5,"title":"Giver gode resultater","text":"<p>Min hund kan godt lide det, og det er nemt at bruge hver dag.<br\/><br\/><strong>Giver gode resultater.<\/strong><\/p>","author_avatar":"shopify:\/\/shop_images\/Profilbild1.jpg","author":"– Sofie Nilsen"}},"column_GNBeVt":{"type":"column","settings":{"star_rating":5,"title":"Jeg ser en forbedring i hans mundhygiejne","text":"<p>Min hund ser ud til at have det bedre, og jeg kan se en tydelig forbedring i hans mundhygiejne.<\/p>","author_avatar":"shopify:\/\/shop_images\/Profilbild3_98453ffc-28e5-4418-89bd-9cc2393e092a.webp","author":"– Ingrid Thorsen"}}},"block_order":["template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-1","template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-2","template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-3","column_7KVQn9","column_UHg797","column_Ri7g3K","column_NmmfXF","column_GNBeVt"],"settings":{"display_id":false,"visibility":"always-display","title":"Verificerede Anmeldelser","title_highlight_color":"#6d388b","heading_size":"h1","text":"","color_scheme":"background-1","image_width":"full","image_ratio":"square","column_alignment":"center","show_stars":true,"inactive_stars_style":"solid","star_color":"#ffcc00","bg_star_color":"#ececec","show_quotes":true,"quotes_color_scheme":"accent-1","cards_color_scheme":"bg-overlay","type":"slide","autoplay":true,"autoplay_speed":5,"arrows_color_scheme":"inverse","transparent_arrows":true,"dots_color_scheme":"inverse","desktop_full_page":true,"columns_desktop":3,"slider_desktop":true,"per_move_desktop":1,"desktop_spacing":40,"desktop_side_padding":0,"desktop_padding_calc":true,"desktop_adaptive_height":false,"desktop_dots_position":"under","desktop_arrows_position":"sides","slider_mobile":true,"enable_mobile_preview":false,"mobile_adaptive_height":false,"mobile_dots_position":"under","mobile_arrows_position":"under","padding_top":36,"padding_bottom":36,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#2e2a39","custom_cards_colors_background":"#f3f3f3","custom_cards_gradient_background":"","custom_cards_colors_text":"#2e2a39"}},"section_divider_pFE63Q":{"type":"section-divider","settings":{"visibility":"always-display","shape":"waves_1","flip_horizontal":false,"flip_vertical":false,"shape_color":"background-2","custom_shape_color":"#dd1d1d","background_color":"background-1","custom_background_color":"#ffffff","padding_top":0,"padding_bottom":0}},"collapsible_content_TbfYVV":{"type":"collapsible-content","blocks":{"collapsible_row_tR8CwM":{"type":"collapsible_row","settings":{"heading":"Er dette 100 % sikkert for kæledyrets mund?","icon":"","filled_icon":false,"row_content":"<p>✅ Ja! Servietterne er lavet til at være lige så milde, som de er effektive.<\/p><p><strong>De indeholder ikke:<\/strong><br\/><br\/>❌ Alkohol<br\/><br\/>❌ Parabener<br\/><br\/>❌ Æteriske olier (som kan irritere nogle dyr)<br\/><br\/>❌ Fluor<br\/><br\/>❌ Triclosan<\/p><p>Kun sikre, veterinærgodkendte ingredienser – som te-polyfenoler – der kan bruges dagligt på hunde og katte i alle størrelser.<\/p>","page":""}},"collapsible_row_wWEXkL":{"type":"collapsible_row","settings":{"heading":"Hvordan bruger jeg produktet?","icon":"","filled_icon":false,"row_content":"<p>1️⃣ Tag en serviet over fingeren.<br\/><br\/>2️⃣ Gnid forsigtigt tænder og tandkød i ca. 30 sekunder.<br\/><br\/>3️⃣ Smid servietten ud efter brug.<\/p><p>Ingen tandbørste. Intet rod. Intet stress.<\/p><p>Brug dagligt eller 1–2 gange om ugen for det bedste resultat.<\/p>","page":""}},"collapsible_row_3fRqLL":{"type":"collapsible_row","settings":{"heading":"Er dette et alternativ til tandbørstning?","icon":"","filled_icon":false,"row_content":"<p>For de fleste dyreejere – ja!<\/p><p>Tandbørstning er bedst – men ofte urealistisk i hverdagen.<\/p><p><strong>FreshWipes<\/strong> giver en enkel og pålidelig løsning for dig, der kæmper med at børste kæledyrets tænder uden stress.<\/p>","page":""}},"collapsible_row_4GGYLx":{"type":"collapsible_row","settings":{"heading":"Hvad indeholder servietterne?","icon":"","filled_icon":false,"row_content":"<ul><li><strong>EDI-renset vand<\/strong> – basisopløsning<br\/><\/li><li><br\/><strong>Glycerin<\/strong> – tilfører fugt<br\/><\/li><li><br\/><strong>Citronsyre<\/strong> – balancerer pH<br\/><\/li><li><br\/><strong>Cetylpyridiniumklorid-monohydrat<\/strong> – antibakteriel effekt<br\/><\/li><li><br\/><strong>Te-polyfenoler<\/strong> – giver frisk ånde<br\/><\/li><li><br\/><strong>Allantoin<\/strong> – beroligende<br\/><\/li><li><br\/><strong>Grøn te-ekstrakt<\/strong> – naturligt antibakteriel & beskyttende<br\/><\/li><li><br\/><strong>Natriumbenzoat<\/strong> – skånsomt konserveringsmiddel<br\/><\/li><\/ul><p>✔️ pH-balanseret og parfumefri<br\/><br\/>✔️ Ikke testet på dyr (cruelty-free)<br\/><br\/>✔️ Fri for alkohol, fluor og stærke kemikalier<\/p>","page":""}},"collapsible_row_X6j8jm":{"type":"collapsible_row","settings":{"heading":"Hvornår kan jeg forvente resultater?","icon":"","filled_icon":false,"row_content":"<p>✨ Frisk ånde? Efter få dage.<\/p><p>🦷 Renere tænder og sundere tandkød? 2–3 uger ved regelmæssig brug.<\/p><p>Vær tålmodig – din hund eller kats mund vil takke dig!<\/p>","page":""}},"collapsible_row_DDddPH":{"type":"collapsible_row","settings":{"heading":"Passer FreshWipes til alle racer og størrelser?","icon":"","filled_icon":false,"row_content":"<p>Ja, servietterne er fleksible og fungerer lige godt til både små og store hunde – og også til katte.<\/p>","page":""}},"collapsible_row_MXzfid":{"type":"collapsible_row","settings":{"heading":"Hjælper servietterne mod dårlig ånde?","icon":"","filled_icon":false,"row_content":"<p>Ja! Antibakterielle ingredienser og naturlige friskhedselementer hjælper med at reducere plak og dårlig ånde.<\/p>","page":""}},"collapsible_row_xUbf8N":{"type":"collapsible_row","settings":{"heading":"Hvordan opbevarer jeg FreshWipes?","icon":"","filled_icon":false,"row_content":"<p>Opbevar bøtten lukket på et køligt, tørt sted. Undgå direkte sollys for at bevare fugtigheden i servietterne.<\/p>","page":""}},"collapsible_row_pA7czt":{"type":"collapsible_row","settings":{"heading":"Hvad sker der, hvis jeg ikke er tilfreds?","icon":"","filled_icon":false,"row_content":"<p>Vi tilbyder <strong>100 dages tilfredshedsgaranti<\/strong>. Hvis du ikke er tilfreds, får du pengene tilbage – helt uden stress.<\/p>","page":""}}},"block_order":["collapsible_row_tR8CwM","collapsible_row_wWEXkL","collapsible_row_3fRqLL","collapsible_row_4GGYLx","collapsible_row_X6j8jm","collapsible_row_DDddPH","collapsible_row_MXzfid","collapsible_row_xUbf8N","collapsible_row_pA7czt"],"settings":{"display_id":false,"visibility":"always-display","caption":"","title":"Ofte stillede spørgsmål","title_highlight_color":"#6d388b","heading_size":"h1","heading_alignment":"center","layout":"row","color_scheme":"background-2","container_color_scheme":"accent-1","open_first_collapsible_row":false,"video_muted_autoplay":true,"image_ratio":"adapt","desktop_layout":"image_second","row_heading_size":"medium","collapse_icon":"carret","display_top_border":true,"padding_top":36,"padding_bottom":36,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#2e2a39","custom_contaner_colors_background":"#ffffff","custom_container_gradient_background":"","custom_contaner_colors_text":"#2e2a39"}},"section_divider_HfUqqg":{"type":"section-divider","settings":{"visibility":"always-display","shape":"waves_1","flip_horizontal":false,"flip_vertical":false,"shape_color":"background-1","custom_shape_color":"#dd1d1d","background_color":"background-2","custom_background_color":"#ffffff","padding_top":0,"padding_bottom":0}},"icon_bar_KHKwKc":{"type":"icon-bar","blocks":{"column_QHckr6":{"type":"column","settings":{"icon":"favorite","filled_icon":true,"title":"OVER 15.000 TILFREDSE KUNDER","text":"<p>Vi har glade hundeejere og hunde i hele Danmark!<\/p>"}},"column_tPk8Rq":{"type":"column","settings":{"icon":"new_releases","filled_icon":true,"title":"100 DAGES PENGE-TILBAGE-GARANTI","text":"<p>Ikke tilfreds? Kontakt os blot inden for 100 dage efter købet – så finder vi en løsning for dig.<\/p>"}},"column_FkbetQ":{"type":"column","settings":{"icon":"support_agent","filled_icon":true,"title":"SUPPORT MANDAG–FREDAG","text":"<p>Spørgsmål? Tøv ikke med at kontakte os – vi svarer altid inden for 24 timer!<\/p>"}}},"block_order":["column_QHckr6","column_tPk8Rq","column_FkbetQ"],"settings":{"display_id":false,"visibility":"always-display","title":"","title_highlight_color":"#6d388b","heading_size":"h1","text":"","color_scheme":"background-1","icon_layout":"vertical","icon_size":"medium","icon_color":"accent-1","cards_color_scheme":"background-1","type":"slide","autoplay":false,"autoplay_speed":5,"arrows_color_scheme":"inverse","transparent_arrows":true,"dots_color_scheme":"inverse","desktop_full_page":false,"columns_desktop":3,"slider_desktop":false,"per_move_desktop":1,"desktop_spacing":40,"desktop_side_padding":0,"desktop_padding_calc":true,"desktop_adaptive_height":false,"desktop_dots_position":"under","desktop_arrows_position":"sides","columns_mobile":"1","slider_mobile":true,"enable_mobile_preview":false,"mobile_adaptive_height":false,"mobile_dots_position":"under","mobile_arrows_position":"under","padding_top":36,"padding_bottom":36,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#2e2a39","custom_cards_colors_background":"#f3f3f3","custom_cards_gradient_background":"","custom_cards_colors_text":"#2e2a39"}},"1754837216bbfd1ae2":{"type":"apps","settings":{"display_id":false,"include_margins":true}},"176204455334cf5175":{"type":"apps","settings":{"display_id":false,"include_margins":true}}},"order":["main","related-products","image_slider_8HnbpY","image_slider_X8iFJF","section_divider_iXCmE9","image_with_text_LkDiE9","section_divider_MjaRJC","image_with_text_kiAL7m","section_divider_kAW6L6","image_with_text_jpGEnV","section_divider_BJPHP4","multicolumn_r3Fa8U","image_with_text_zpzP4w","image_banner_Jkg3ye","55bd100e-3bbd-426c-a5cf-eed7b2a3706f","section_divider_pFE63Q","collapsible_content_TbfYVV","section_divider_HfUqqg","icon_bar_KHKwKc","1754837216bbfd1ae2","176204455334cf5175"]}
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "a6eb81db-40e4-43e0-972f-32db010a4a56": {
+          "type": "rating_stars",
+          "settings": {
+            "rating": 4.8,
+            "star_color": "#ffcc00",
+            "bg_stars_style": "full",
+            "bg_star_color": "#ececec",
+            "label": "4,86/5 (2000+ Anmeldelser)",
+            "size": 16,
+            "alignment": "flex-start",
+            "scroll_id": "",
+            "margin_top": 0,
+            "margin_bottom": 9
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "text_size": "h2",
+            "title_alignment": "left",
+            "uppercase_title": false,
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "price": {
+          "type": "price",
+          "disabled": true,
+          "settings": {
+            "layout": "price_first",
+            "price_color": "accent-1",
+            "compare_price_color": "text",
+            "displayed_badge": "sale",
+            "icon_scale": 140,
+            "custom_badge_text": "[icon_1] SPECIAL OFFER",
+            "icon_1": "redeem",
+            "filled_icon_1": false,
+            "icon_2": "check_circle",
+            "filled_icon_2": false,
+            "margin_top": 9,
+            "margin_bottom": 15
+          }
+        },
+        "divider_i9d8VK": {
+          "type": "divider",
+          "settings": {
+            "color": "#e1e1e1",
+            "height": 1,
+            "width": 100,
+            "Full_mobile_width": false,
+            "alignment": "center",
+            "border_radius": 0,
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "text_cn7XQg": {
+          "type": "text",
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "text_color": "#121212",
+            "text_1": "Bekæmper plak og bakterier effektivt",
+            "text_2": "pH-balancerede og parfumefri servietter",
+            "text_3": "Skånsomme og nemme at bruge",
+            "icon_scale": 140,
+            "icon_color": "#47b5e9",
+            "icon_1": "pets",
+            "filled_icon_1": true,
+            "icon_2": "pets",
+            "filled_icon_2": true,
+            "icon_3": "pets",
+            "filled_icon_3": true,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 5,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "text_kEd4Nj": {
+          "type": "text",
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "text_color": "#121212",
+            "text_1": "Dyrlægegodkendte ingredienser",
+            "text_2": "",
+            "text_3": "",
+            "icon_scale": 140,
+            "icon_color": "#47b5e9",
+            "icon_1": "pets",
+            "filled_icon_1": true,
+            "icon_2": "check_circle",
+            "filled_icon_2": true,
+            "icon_3": "check_circle",
+            "filled_icon_3": true,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 5,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "5fcc0428-e768-4cb7-bea3-eb0274198dd1": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_types": "swatches, dropdown, dropdown",
+            "custom_labels": "[name] - [selected]",
+            "skip_unavailable": false,
+            "swatches_size": "medium",
+            "swatches_custom_colors": "disabled",
+            "swatches_custom_colors_list": "#000000, #6D388B, #0000FF, #FFCC00",
+            "full_width_dropdowns": false,
+            "breaks_style": "normal",
+            "breaks_headline": "BUNDLE & SAVE",
+            "breaks_display_selected_indicator": true,
+            "breaks_border_radius": 10,
+            "breaks_border_width": 2,
+            "breaks_color_scheme": "accent-1",
+            "breaks_badges": "[empty], Most popular, [empty]",
+            "breaks_badge_style": "1",
+            "breaks_badge_color": "accent-1",
+            "breaks_displayed_images": "variant_images",
+            "breaks_custom_images": "",
+            "breaks_image_width": 70,
+            "breaks_space_images": true,
+            "breaks_vertical_images_position": "top",
+            "breaks_vertical_prices_layout": "vertical",
+            "breaks_labels": "[name], [name], [name]",
+            "breaks_benefits": "[empty], Free Shipping, Free Shipping",
+            "breaks_benefit_position": "top",
+            "breaks_benefit_style": "outlined",
+            "breaks_benefit_color": "accent-1",
+            "breaks_captions": "Variant 1 caption, Variant 2 caption, Variant 3 caption",
+            "breaks_price_texts": "[price], [price], [price]",
+            "breaks_compare_price_texts": "[compare_price], [compare_price], [compare_price]",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "kaching_bundles_app_block_f8NfBp": {
+          "type": "shopify://apps/kaching-bundles/blocks/app-block/6c637362-a106-4a32-94ac-94dcfd68cdb8",
+          "settings": {
+            "product": "{{product}}",
+            "manual_deal_block_id": ""
+          }
+        },
+        "04ba004e-2f54-4936-8b1c-8bcadf6573f6": {
+          "type": "quantity_selector",
+          "settings": {
+            "full_width_classic": false,
+            "atc_append": "none",
+            "atc_append_heights": "stretch-quantity",
+            "enable_quantity_discounts": false,
+            "style": "normal",
+            "headline": "Sommersalg – Gratis frakt",
+            "preselected": "option_2",
+            "display_selected_indicator": true,
+            "border_radius": 10,
+            "border_width": 2,
+            "color_scheme": "accent-1",
+            "enable_variant_selectors": true,
+            "enable_variant_selectors_on_quantity_of_1": false,
+            "update_prices": false,
+            "skip_unavailable": false,
+            "full_width_pickers": false,
+            "hide_pickers_overlay": true,
+            "pickers_label": "",
+            "image_width": 70,
+            "space_images": true,
+            "vertical_images_position": "top",
+            "vertical_prices_layout": "vertical",
+            "option_1_quantity": 1,
+            "option_1_badge": "",
+            "option_1_badge_style": "1",
+            "option_1_badge_color": "accent-1",
+            "option_1_label": "1-Pakning – 50 stk",
+            "option_1_benefit": "Spar 40 %",
+            "option_1_benefit_position": "top",
+            "option_1_benefit_style": "solid",
+            "option_1_benefit_color": "accent-2",
+            "option_1_caption": "5 kr per bruk",
+            "option_1_percentage_off_text": "0",
+            "option_1_fixed_amount_off": "0",
+            "option_1_price_text": "[price]",
+            "option_1_compare_price": "compare_price",
+            "option_1_compare_price_text": "[compare_price]",
+            "option_2_quantity": 2,
+            "option_2_badge": "Kjøp 2 Få 50 % Rabatt",
+            "option_2_badge_style": "1",
+            "option_2_badge_color": "accent-2",
+            "option_2_label": "2-Pakning – 100 stk",
+            "option_2_benefit": "Spar 50 %",
+            "option_2_benefit_position": "top",
+            "option_2_benefit_style": "solid",
+            "option_2_benefit_color": "accent-2",
+            "option_2_caption": "4 kr per bruk",
+            "option_2_percentage_off_text": "0",
+            "option_2_fixed_amount_off": "99",
+            "option_2_price_text": "[price]",
+            "option_2_compare_price": "compare_price",
+            "option_2_compare_price_text": "[compare_price]",
+            "option_3_quantity": 4,
+            "option_3_badge": "Gjelder denne uken",
+            "option_3_badge_style": "1",
+            "option_3_badge_color": "accent-2",
+            "option_3_label": "4-Pakning – 200 stk",
+            "option_3_benefit": "Spar 60 %",
+            "option_3_benefit_position": "top",
+            "option_3_benefit_style": "solid",
+            "option_3_benefit_color": "accent-2",
+            "option_3_caption": "3 kr per bruk",
+            "option_3_percentage_off_text": "0",
+            "option_3_fixed_amount_off": "397",
+            "option_3_price_text": "[price]",
+            "option_3_compare_price": "compare_price",
+            "option_3_compare_price_text": "[compare_price]",
+            "option_4_quantity": 0,
+            "option_4_badge": "",
+            "option_4_badge_style": "1",
+            "option_4_badge_color": "accent-1",
+            "option_4_label": "Buy [quantity]",
+            "option_4_benefit": "",
+            "option_4_benefit_position": "top",
+            "option_4_benefit_style": "outlined",
+            "option_4_benefit_color": "accent-1",
+            "option_4_caption": "You save [amount_saved]",
+            "option_4_percentage_off_text": "0",
+            "option_4_fixed_amount_off": "0",
+            "option_4_price_text": "[price]",
+            "option_4_compare_price": "compare_price",
+            "option_4_compare_price_text": "[compare_price]",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "inventory_TFawNK": {
+          "type": "inventory",
+          "disabled": true,
+          "settings": {
+            "text_style": "body",
+            "inventory_threshold": 10,
+            "show_inventory_quantity": false,
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "text_REHyXM": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "text_color": "#f6931e",
+            "text_1": "Nesten utsolgt under Halloween-salget",
+            "text_2": "",
+            "text_3": "",
+            "icon_scale": 140,
+            "icon_color": "#118fcb",
+            "icon_1": "",
+            "filled_icon_1": true,
+            "custom_icon_1": "shopify://shop_images/Namnlos_design_-_2025-10-01T144230.866_0c23455c-bcc7-4ef0-924e-3112eb41e31b.png",
+            "icon_2": "check_circle",
+            "filled_icon_2": true,
+            "icon_3": "check_circle",
+            "filled_icon_3": true,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 5,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "custom_liquid_Gzb9VQ": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<!-- Snippet: stock-status.liquid -->\n<div class=\"stock-status-wrapper\">\n  <span class=\"stock-status-dot\"></span>\n  <span class=\"stock-status-text\">Næsten udsolgt – kun 89 tilbage!</span>\n</div>\n\n<style>\n  .stock-status-wrapper {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n  }\n\n  .stock-status-dot {\n    width: 14px;\n    height: 14px;\n    background-color: #ff9900;\n    border-radius: 50%;\n    animation: stockPulse 1.5s ease-in-out infinite;\n    display: inline-block;\n  }\n\n  .stock-status-text {\n    color: #ff9900;\n    font-weight: 700;\n    font-size: 13px;\n  }\n\n  @keyframes stockPulse {\n    0% { transform: scale(1); opacity: 1; }\n    50% { transform: scale(1.3); opacity: 0.7; }\n    100% { transform: scale(1); opacity: 1; }\n  }\n</style>"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "skip_cart": false,
+            "uppercase_text": true,
+            "icon_scale": 120,
+            "icon_spacing": 10,
+            "atc_custom_label": "Læg i kurv",
+            "display_price": false,
+            "enable_custom_color": true,
+            "custom_color": "#47b5e9",
+            "enable_secondary_btn": false,
+            "secondary_btn_label": "Buy It Now",
+            "secondary_btn_enable_custom_color": false,
+            "secondary_btn_custom_color": "#dd1d1d",
+            "margin_top": 12,
+            "margin_bottom": 12
+          }
+        },
+        "payment_badges_XtWzKz": {
+          "type": "payment_badges",
+          "settings": {
+            "enabled_payment_types": "klarna, master, maestro, visa, dankort, american_express, paypal",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "custom_liquid_8TN4AP": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<!-- SOSIALT BEVIS - ALT PÅ ÉN LINJE -->\n<style>\n  .sp-bar{\n    --bg:#fff; --radius:20px;\n    --shadow:0 2px 6px rgba(0,0,0,.08);\n    padding:8px 14px; background:var(--bg);\n    border-radius:var(--radius); box-shadow:var(--shadow);\n    width:fit-content; margin:14px auto 0;\n    font-size:12px; line-height:1.3;\n    display:flex; align-items:center; gap:5px;\n  }\n  .sp-avatars{ display:flex; align-items:center; }\n  .sp-avatar{\n    width:20px; height:22px; border-radius:9999px; overflow:hidden; flex:0 0 auto;\n    border:2px solid #fff; margin-right:-6px;\n  }\n  .sp-avatar img{ width:100%; height:100%; object-fit:cover; display:block; }\n  .sp-text{ display:flex; align-items:center; gap:5px; flex-wrap:nowrap; }\n  .sp-name{ font-weight:700; }\n  .sp-strong{ font-weight:700; }\n  .sp-check{ width:16px; height:16px; display:inline-block; }\n</style>\n\n{%- assign buyer_name = \"Lisa A\" -%}\n{%- assign buyer_count = 10.059 -%}\n\n<div class=\"sp-bar\">\n  <div class=\"sp-avatars\">\n    <span class=\"sp-avatar\">\n      <img src=\"https://randomuser.me/api/portraits/women/44.jpg\" alt=\"Kunde 1\">\n    </span>\n    <span class=\"sp-avatar\">\n      <img src=\"https://randomuser.me/api/portraits/women/65.jpg\" alt=\"Kunde 2\">\n    </span>\n    <span class=\"sp-avatar\">\n      <img src=\"https://randomuser.me/api/portraits/women/12.jpg\" alt=\"Kunde 3\">\n    </span>\n  </div>\n\n  <div class=\"sp-text\">\n    <span class=\"sp-name\">{{ buyer_name }}</span>\n    <span class=\"sp-check\">\n      <img src=\"https://cdn-icons-png.flaticon.com/512/7641/7641727.png\" alt=\"Verifisert\" width=\"16\" height=\"16\">\n    </span>\n    <span>og</span>\n    <span class=\"sp-strong\">{{ buyer_count }}</span>\n    <span>personer har allerede købt</span>\n  </div>\n</div>"
+          }
+        },
+        "text_rerK7N": {
+          "type": "text",
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "text_color": "#121212",
+            "text_1": "100 Dages Tilfredshedsgaranti",
+            "text_2": "Over 15.000 tilfredse kunder",
+            "text_3": "Gratis e-bog med hver bestilling",
+            "icon_scale": 140,
+            "icon_color": "#47b5e9",
+            "icon_1": "new_releases",
+            "filled_icon_1": true,
+            "icon_2": "favorite",
+            "filled_icon_2": true,
+            "icon_3": "book_2",
+            "filled_icon_3": true,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 5,
+            "enable_bg": true,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "e7a28cbe-03cb-4c9d-a2c4-0e3e76ffb3e5": {
+          "type": "sticky_atc",
+          "settings": {
+            "function": "add_to_cart",
+            "display_when": "after_scroll",
+            "button_label": "LÆG I KURV",
+            "enable_custom_btn_color": true,
+            "custom_btn_color": "#47b5e9",
+            "color_scheme": "background-1",
+            "star_color": "#ffcc00",
+            "stars_label": "4,86/5 (2000+ Anmeldelser)",
+            "picker_type": "combined",
+            "desktop_show_image": true,
+            "desktop_show_title": true,
+            "desktop_rating_stars": true,
+            "desktop_show_price": true,
+            "desktop_show_sale_badge": true,
+            "desktop_variant_picker": true,
+            "desktop_full_button_width": true,
+            "desktop_show_price_in_button": false,
+            "desktop_transparent_bg": false,
+            "mobile_show_image": false,
+            "mobile_show_title": true,
+            "mobile_rating_stars": true,
+            "mobile_show_price": false,
+            "mobile_show_sale_badge": false,
+            "mobile_variant_picker": false,
+            "mobile_full_button_width": true,
+            "mobile_show_price_in_button": false,
+            "mobile_transparent_bg": false
+          }
+        },
+        "description": {
+          "type": "description",
+          "disabled": true,
+          "settings": {
+            "margin_top": 24,
+            "margin_bottom": 24
+          }
+        },
+        "de158e68-5d0d-4819-a625-e2dabdff87d1": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "100 dages pengene-tilbage-garanti",
+            "heading_size": "medium",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p>Vi har stor tillid til, at <strong>FreshWipes</strong> vil gøre en forskel – både for dig og din hund.<br/><br/>Derfor tilbyder vi <strong>100 dages pengene-tilbage-garanti.</strong></p><p>Du kan teste produktet i ro og mag derhjemme.<br/><br/>Ikke helt tilfreds? Så får du pengene tilbage – helt uden stress.</p><p>For os er det vigtigere, at din hund får den rigtige pleje, end at du beholder noget, du ikke elsker.<br/><br/>Du kan læse mere om vores tilfredshedsgaranti her.</p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "collapsible_tab_t3jLVn": {
+          "type": "collapsible_tab",
+          "disabled": true,
+          "settings": {
+            "heading": "Gratis E-bok i hver bestilling",
+            "heading_size": "medium",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "",
+            "page": "e-bok-hunden-din-kan-lide-uten-at-du-merker-det",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "collapsible_tab_EGhYxC": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Ingredienser",
+            "heading_size": "medium",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p><strong>EDI-renset vand</strong> – basisopløsning<br/><br/><strong>Glycerin</strong> – tilfører fugt<br/><br/><strong>Citronsyre</strong> – balancerer pH<br/><br/><strong>Cetylpyridiniumklorid-monohydrat</strong> – antibakteriel effekt<br/><br/><strong>Te-polyfenoler</strong> – giver frisk ånde<br/><br/><strong>Allantoin</strong> – beroligende<br/><br/><strong>Grøn te-ekstrakt</strong> – naturligt antibakteriel & beskyttende</p><p>✔️ pH-balanseret og parfumefri<br/><br/>✔️ Ikke testet på dyr (cruelty-free)<br/><br/>✔️ Fri for alkohol, fluor og stærke kemikalier</p>",
+            "page": "free-e-book-the-secret-to-a-sparkling-home-in-just-15-minutes-a-day",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "collapsible_tab_aFAiwA": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Betaling & Levering",
+            "heading_size": "medium",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p><strong>Betaling</strong><br/><br/>Du betaler trygt med Klarna, PayPal, Apple/Google Pay og alle almindelige kreditkort. Vælg det, der passer dig bedst.</p><p><strong>Fragt</strong><br/><br/>Gratis fragt på alle bestillinger over <strong>399 kr</strong>.<br/><br/>For bestillinger under <strong>399 kr</strong> tillægges et fragtgebyr på <strong>49 kr</strong>.</p><p><strong>Leveringstid</strong><br/><br/>Da vores lager i Norge midlertidigt er tømt, bliver din bestilling sendt fra vores internationale lager.<br/><br/>Leveringstid: <strong>1–2 dages håndtering + 5–10 dages fragt</strong>.<br/><br/>Et sporingsnummer sendes på e-mail, så snart din bestilling forlader lageret.</p><p><strong>Spørgsmål?</strong><br/><br/>Skriv til os på <a><strong>info@vetpets.eu</strong></a> – vi svarer altid inden for <strong>24 timer</strong> på hverdage.</p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "reviews_8UgFbe": {
+          "type": "reviews",
+          "disabled": true,
+          "settings": {
+            "color_scheme": "background-1",
+            "show_custom_bg": false,
+            "custom_bg_color": "#f2f2f2",
+            "corner_radius": 12,
+            "border_width": 0,
+            "border_color": "#b7b7b7",
+            "avatar_alignment": "top",
+            "avatar_corner_radius": 40,
+            "star_color": "#ffcc00",
+            "stars_translate": 0,
+            "checkmark_color": "#6d388b",
+            "checkmark_icon_color": "#ffffff",
+            "slider_type": "slide",
+            "autoplay": false,
+            "autoplay_speed": 5,
+            "display_arrows": false,
+            "display_dots": true,
+            "author_1": "– Anna, 34 år [stars]",
+            "image_1": "shopify://shop_images/Profilbild_3.jpg",
+            "text_1": "<p>Har brukt FreshWipes i omtrent en uke og ble overrasket over hvor lett det gikk. Hunden vår er vanligvis skeptisk, men lot meg faktisk rengjøre uten problemer.</p>",
+            "author_2": "– Mats, 52 år [stars]",
+            "image_2": "shopify://shop_images/Profilbild5_1a47da8b-0488-41c4-af0b-4e3b8857192b.webp",
+            "text_2": "<p>Etter to måneder er pusten mye friskere og misfargingene har blitt redusert. Vi har det som en fast rutine på søndager – og det fungerer kjempebra.</p>",
+            "author_3": "– Sofia, 41 år [stars]",
+            "image_3": "shopify://shop_images/Profilbild111.webp",
+            "text_3": "<p>Vi har brukt dem i over ett år nå. Vår labrador har ikke trengt noe veterinærbesøk for tennene siden. Enkelt å ta med, og det føles trygt.</p>",
+            "margin_top": 24,
+            "margin_bottom": 24
+          }
+        }
+      },
+      "block_order": [
+        "a6eb81db-40e4-43e0-972f-32db010a4a56",
+        "title",
+        "price",
+        "divider_i9d8VK",
+        "text_cn7XQg",
+        "text_kEd4Nj",
+        "5fcc0428-e768-4cb7-bea3-eb0274198dd1",
+        "kaching_bundles_app_block_f8NfBp",
+        "04ba004e-2f54-4936-8b1c-8bcadf6573f6",
+        "inventory_TFawNK",
+        "text_REHyXM",
+        "custom_liquid_Gzb9VQ",
+        "buy_buttons",
+        "payment_badges_XtWzKz",
+        "custom_liquid_8TN4AP",
+        "text_rerK7N",
+        "e7a28cbe-03cb-4c9d-a2c4-0e3e76ffb3e5",
+        "description",
+        "de158e68-5d0d-4819-a625-e2dabdff87d1",
+        "collapsible_tab_t3jLVn",
+        "collapsible_tab_EGhYxC",
+        "collapsible_tab_aFAiwA",
+        "reviews_8UgFbe"
+      ],
+      "custom_css": [],
+      "settings": {
+        "display_id": false,
+        "enable_sticky_info": true,
+        "display_variant_image_first": false,
+        "disable_prepend": true,
+        "hide_variants": false,
+        "variant_image_filtering": "none",
+        "image_zoom": "none",
+        "thumbnails_ratio": "square",
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": false,
+        "dots_color_scheme": "inverse",
+        "video_player": "play_btn",
+        "enable_video_looping": false,
+        "autoplay_videos_pause_btn": false,
+        "video_sound_btn": false,
+        "video_timeline": false,
+        "play_btn_color_scheme": "accent-1",
+        "sound_btn_color_scheme": "inverse",
+        "timeline_color": "accent-1",
+        "media_size": "medium",
+        "media_position": "left",
+        "gallery_layout": "thumbnail_slider",
+        "desktop_thumbnails_position": "bottom",
+        "desktop_thumbnails_count": 5,
+        "desktop_vertical_thumbnails_width": 16,
+        "desktop_vertical_thumbnails_hide_arrows": false,
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "desktop_arrows_position": "hidden",
+        "mobile_media_corner_radius": 0,
+        "mobile_spacing_pixels": 0,
+        "mobile_arrows_position": "sides",
+        "mobile_pagination": "hidden",
+        "mobile_thumbnails_position": "bottom",
+        "mobile_thumbnails_count": 5,
+        "mobile_vertical_thumbnails_width": 22,
+        "mobile_vertical_thumbnails_hide_arrows": true,
+        "mobile_scroll_padding_percentage": 0,
+        "mobile_scroll_padding_pixels": 2,
+        "enable_mobile_outher_spacing": false,
+        "mobile_slides_container_width": 100,
+        "mobile_slides_inner_width": 100,
+        "trust_badge_position": "top-right",
+        "trust_badge_size": "medium",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "disabled": true,
+      "settings": {
+        "display_id": false,
+        "title": "You may also like",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "stretch_cards": false,
+        "columns_desktop": 4,
+        "color_scheme": "background-1",
+        "image_ratio": "adapt",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "columns_mobile": "2",
+        "padding_top": 36,
+        "padding_bottom": 24
+      }
+    },
+    "image_slider_8HnbpY": {
+      "type": "image-slider",
+      "blocks": {
+        "video_slide_pYXTW3": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/Produktvideos reviews.mov",
+            "loop": true,
+            "muted_autoplay": true,
+            "display_play_btn": true,
+            "btn_animation": false,
+            "btn_color_scheme": "accent-1",
+            "display_sound_btn": false,
+            "sound_btn_color_scheme": "inverse",
+            "display_timeline": false,
+            "timeline_color": "accent-1",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "video_slide_4LLCQV": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/Produktvideo review 4.mov",
+            "loop": true,
+            "muted_autoplay": true,
+            "display_play_btn": true,
+            "btn_animation": false,
+            "btn_color_scheme": "accent-1",
+            "display_sound_btn": false,
+            "sound_btn_color_scheme": "inverse",
+            "display_timeline": false,
+            "timeline_color": "accent-1",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "video_slide_brtX4E": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/Produktvideo review 3.mov",
+            "loop": true,
+            "muted_autoplay": true,
+            "display_play_btn": true,
+            "btn_animation": false,
+            "btn_color_scheme": "accent-1",
+            "display_sound_btn": false,
+            "sound_btn_color_scheme": "inverse",
+            "display_timeline": false,
+            "timeline_color": "accent-1",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "video_slide_LYFhDt": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/Produktvideo review 5.mov",
+            "loop": true,
+            "muted_autoplay": true,
+            "display_play_btn": true,
+            "btn_animation": false,
+            "btn_color_scheme": "accent-1",
+            "display_sound_btn": false,
+            "sound_btn_color_scheme": "inverse",
+            "display_timeline": false,
+            "timeline_color": "accent-1",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "video_slide_HWhYJw": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/Produktvideo review 2.mov",
+            "loop": true,
+            "muted_autoplay": true,
+            "display_play_btn": true,
+            "btn_animation": false,
+            "btn_color_scheme": "accent-1",
+            "display_sound_btn": false,
+            "sound_btn_color_scheme": "inverse",
+            "display_timeline": false,
+            "timeline_color": "accent-1",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        }
+      },
+      "block_order": [
+        "video_slide_pYXTW3",
+        "video_slide_4LLCQV",
+        "video_slide_brtX4E",
+        "video_slide_LYFhDt",
+        "video_slide_HWhYJw"
+      ],
+      "disabled": true,
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Tusenvis av fornøyde <strong>hunder og kjæledyreiere!</strong>",
+        "title_highlight_color": "#118fcb",
+        "heading_size": "h2",
+        "color_scheme": "background-2",
+        "type": "slide",
+        "drag": "enabled",
+        "autoplay": true,
+        "autoplay_speed": 3,
+        "center_mode": false,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_page_width": "normal",
+        "desktop_border_radius": 16,
+        "slides_desktop": 3,
+        "per_move_desktop": 1,
+        "desktop_spacing": 28,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "hidden",
+        "mobile_full_page": false,
+        "mobile_border_radius": 0,
+        "slides_mobile": 2,
+        "per_move_mobile": 1,
+        "mobile_spacing": 12,
+        "mobile_side_padding": 0,
+        "mobile_padding_calc": true,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "hidden",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#121212"
+      }
+    },
+    "image_slider_X8iFJF": {
+      "type": "image-slider",
+      "blocks": {
+        "image_slide_9KKtti": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_44.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_fBzCzf": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_42.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_njzxqV": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_34_f4d77496-5801-464a-9e46-fdeca1fac5e5.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_nPMxE8": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Review_tackkort_564829eb-2d8c-4368-90d8-bf6ffa53094e.png",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_Fb6nV7": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_43.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_3jN9rX": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/META_ADS_3.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_V6NbRG": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/META_ADS_4.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_MLhtzc": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Skarmavbild_2025-06-20_kl._12.36.03.webp",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_rbrCcc": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Skarmavbild_2025-06-20_kl._12.41.33.webp",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_pRnbPQ": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_8.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_GN7c44": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_9.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_hgi3nY": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_12.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_U3dWYb": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_11.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_nD4Rb9": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_13.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_jKFGxn": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_10.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        }
+      },
+      "block_order": [
+        "image_slide_9KKtti",
+        "image_slide_fBzCzf",
+        "image_slide_njzxqV",
+        "image_slide_nPMxE8",
+        "image_slide_Fb6nV7",
+        "image_slide_3jN9rX",
+        "image_slide_V6NbRG",
+        "image_slide_MLhtzc",
+        "image_slide_rbrCcc",
+        "image_slide_pRnbPQ",
+        "image_slide_GN7c44",
+        "image_slide_hgi3nY",
+        "image_slide_U3dWYb",
+        "image_slide_nD4Rb9",
+        "image_slide_jKFGxn"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Tusindvis af tilfredse<strong> hunde og kæledyrsejere!</strong>",
+        "title_highlight_color": "#47b5e9",
+        "heading_size": "h2",
+        "color_scheme": "background-2",
+        "type": "slide",
+        "drag": "enabled",
+        "autoplay": true,
+        "autoplay_speed": 3,
+        "center_mode": false,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_page_width": "normal",
+        "desktop_border_radius": 16,
+        "slides_desktop": 3,
+        "per_move_desktop": 1,
+        "desktop_spacing": 28,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "hidden",
+        "mobile_full_page": false,
+        "mobile_border_radius": 0,
+        "slides_mobile": 2,
+        "per_move_mobile": 1,
+        "mobile_spacing": 12,
+        "mobile_side_padding": 0,
+        "mobile_padding_calc": true,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "hidden",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#121212"
+      }
+    },
+    "section_divider_iXCmE9": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "custom",
+        "custom_shape_color": "#118fcb",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_with_text_LkDiE9": {
+      "type": "image-with-text",
+      "blocks": {
+        "caption_NgwaCz": {
+          "type": "caption",
+          "settings": {
+            "caption": "Beskyt din hund mod tandproblemer",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "heading_KC4Cfi": {
+          "type": "heading",
+          "settings": {
+            "title": "Din hund viser ikke altid, <strong>når den har ondt</strong>",
+            "title_highlight_color": "#121212",
+            "heading_size": "h2"
+          }
+        },
+        "text_wgGMJL": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Misfarvede tænder og dårlig ånde er ikke bare ufresht – det kan være tegn på tandsten, plak og betændelse.</p><p>Og ligesom du vil beskytte dit barn, vil du beskytte din hund.</p><p>Men i modsætning til børn fortæller hunde ikke, når de har smerter.</p><p><strong>FreshWipes fra VetPets giver dig en nem måde at passe på din hunds mundhygiejne – uden dyrlægebesøg, stress eller usikkerhed.</strong></p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "caption_NgwaCz",
+        "heading_KC4Cfi",
+        "text_wgGMJL"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/Dental_Wipes_1.webp",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "custom",
+        "section_color_scheme": "custom",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "image_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#118fcb",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#ffffff",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#118fcb",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "section_divider_MjaRJC": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": true,
+        "shape_color": "custom",
+        "custom_shape_color": "#118fcb",
+        "background_color": "background-1",
+        "custom_background_color": "#d6fdfd",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_with_text_kiAL7m": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_bXGAFf": {
+          "type": "heading",
+          "settings": {
+            "title": "Få dyrlægeresultater derhjemme",
+            "title_highlight_color": "#0bb9c1",
+            "heading_size": "h2"
+          }
+        },
+        "text_GjNNAg": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>FreshWipes</strong> renser skånsomt din hunds tænder og tandkød på bare få sekunder.</p><p>Fjerner plak, frisker ånden op og forebygger betændelse.</p><p>Alt i en lille, nem serviet, du sætter på fingeren.</p><p><strong>Ingen tandbørste. Intet rod. Intet stress.</strong></p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_bXGAFf",
+        "text_GjNNAg"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/Gif_1.gif",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "background-1",
+        "section_color_scheme": "background-1",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "text_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#2e2a39",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#ffffff",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#ffffff",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "section_divider_kAW6L6": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "custom",
+        "custom_shape_color": "#d5f7ff",
+        "background_color": "background-1",
+        "custom_background_color": "#d5f7ff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_with_text_jpGEnV": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_xgchUK": {
+          "type": "heading",
+          "settings": {
+            "title": "En nem vane, der <strong>gør en stor forskel</strong>",
+            "title_highlight_color": "#118fcb",
+            "heading_size": "h1"
+          }
+        },
+        "text_jBQGVq": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Mange hundeejere tror, at tandpleje skal være besværligt.</p><p>Men med <strong>FreshWipes</strong> er det så nemt, at du rent faktisk får det gjort.</p><p>1–2 gange om ugen er alt, der skal til for at forebygge smertefulde problemer i fremtiden.</p><h4><strong>Frisk ånde, stærkere tænder, gladere hund</strong></h4><p>En sund mund påvirker hele kroppen.</p><p>Med <strong>FreshWipes</strong> får din hund ikke kun friskere ånde og hvidere tænder –<br/><br/>men også bedre velvære og mere energi.</p><p>Færre infektioner. Mere leg. Mere glæde.</p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_xgchUK",
+        "text_jBQGVq"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/Gif_2.gif",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "custom",
+        "section_color_scheme": "custom",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "image_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#d5f7ff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#000000",
+        "custom_colors_solid_button_background": "#118fcb",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#d5f7ff",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "section_divider_BJPHP4": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": true,
+        "shape_color": "custom",
+        "custom_shape_color": "#d5f7ff",
+        "background_color": "background-1",
+        "custom_background_color": "#d5f7ff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "multicolumn_r3Fa8U": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_bKkKHH": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Namnlos_design_14.svg",
+            "muted_autoplay": true,
+            "title": "Te-polyfenoler",
+            "text": "<p>Te-polyfenoler er naturlige antioxidanter, der hjælper med at reducere bakterier i munden, frisker ånden op og beskytter mod betændelse i tandkødet.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_zLHyXq": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/assets_task_01jwzy13s9efnbfcxbccj3f6tg_1749123413_img_0.webp",
+            "muted_autoplay": true,
+            "title": "Cetylpyridiniumklorid",
+            "text": "<p>En velkendt antibakteriel ingrediens, der bruges i mundpleje. Hjælper med at reducere plak, bakterier og dårlig ånde.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_yXWzdC": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Namnlos_design_12.svg",
+            "muted_autoplay": true,
+            "title": "Glycerin",
+            "text": "<p>Glycerin fugter mundens slimhinder og tandkød – reducerer risikoen for irritation og giver en blidere rengøring.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_c9FKpR": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Namnlos_design_13.svg",
+            "muted_autoplay": true,
+            "title": "Citronsyre",
+            "text": "<p>Citronsyre hjælper med at balancere pH-niveauet i munden – beskytter vævet og forebygger dårlig ånde.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_QCjHRw": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Namnlos_design_15.svg",
+            "muted_autoplay": true,
+            "title": "Allantoin",
+            "text": "<p>Allantoin beskytter og beroliger følsomt tandkød. Hjælper med at reducere irritation og fremmer heling.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_deznN8": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/540f0b38-c0db-4b70-a19d-8781871e78f7.png",
+            "muted_autoplay": true,
+            "title": "Natriumbenzoat",
+            "text": "<p>Et skånsomt og sikkert konserveringsmiddel, der forlænger holdbarheden uden at påvirke mundens følsomme miljø.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_bKkKHH",
+        "column_zLHyXq",
+        "column_yXWzdC",
+        "column_c9FKpR",
+        "column_QCjHRw",
+        "column_deznN8"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Sikre og nøje udvalgte ingredienser",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "button_label": "",
+        "button_link": "",
+        "atc_button_label": "",
+        "atc_product": "",
+        "atc_skip_cart": false,
+        "color_scheme": "background-1",
+        "cards_color_scheme": "bg-overlay",
+        "cards_corner_radius": 20,
+        "stretch_cards": false,
+        "stretched_cards_content_alignment": "center",
+        "image_width": "full",
+        "image_ratio": "square",
+        "media_position": "top",
+        "column_alignment": "center",
+        "desktop_heading_size": 24,
+        "mobile_heading_size": 22,
+        "desktop_text_size": 16,
+        "mobile_text_size": 15,
+        "desktop_text_top_margin": 10,
+        "mobile_text_top_margin": 10,
+        "desktop_container_padding_y": 24,
+        "desktop_container_padding_x": 24,
+        "mobile_container_padding_y": 24,
+        "mobile_container_padding_x": 24,
+        "type": "slide",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_full_page": false,
+        "columns_desktop": 4,
+        "slider_desktop": true,
+        "per_move_desktop": 1,
+        "desktop_spacing": 40,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "sides",
+        "columns_mobile": "1",
+        "slider_mobile": true,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "under",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_heading": "#222126",
+        "custom_cards_colors_text": "#2e2a39"
+      }
+    },
+    "image_with_text_zpzP4w": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_p8UPgK": {
+          "type": "heading",
+          "settings": {
+            "title": "Hundestell skal ikke <strong>være en luksusvare</strong>",
+            "title_highlight_color": "#118fcb",
+            "heading_size": "h1"
+          }
+        },
+        "text_EgwQE8": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>Pleje af hunde skal ikke være en luksus</strong></p><p>Et besøg hos dyrlægen for tandrensning kan koste flere tusinde kroner og kræver ofte bedøvelse.</p><p><strong>FreshWipes</strong> koster en brøkdel – og kan bruges helt uden risiko.</p><p>For os handler det ikke om at tjene mest – men om at give hunde et bedre liv.</p><p><strong>Skånsom. Sikker. Udviklet til din hund.</strong></p><p>Vores servietter er parfumefri, pH-balancerede og lavet til sikker brug i munden.</p><p>De passer til alle hunderacer og er nemme at tage med på tur, rejse eller ferie.</p><p>Tandpleje skal aldrig være en barriere.</p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_p8UPgK",
+        "text_EgwQE8"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_38.jpg",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "background-1",
+        "section_color_scheme": "background-1",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "text_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#2e2a39",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#ffffff",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#ffffff",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "image_banner_Jkg3ye": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_hbj7Ji": {
+          "type": "heading",
+          "settings": {
+            "title": "En risikofri investering i din hunds sundhed",
+            "title_highlight_color": "#6d388b",
+            "heading_size": "h1"
+          }
+        },
+        "text_WEzjkg": {
+          "type": "text",
+          "settings": {
+            "text": "FreshWipes er en enkel og sikker løsning til din hunds mundhygiejne. Vi ønsker, at både du og din hund er tilfredse - derfor tilbyder vi 100 dages pengene-tilbage-garanti. Vores vådservietter er designet til at være både effektive og skånsomme, og de passer perfekt på fingeren for nem brug. Giv din hund en smertefri fremtid med et produkt, du kan stole på - helt risikofrit!",
+            "text_style": "body"
+          }
+        },
+        "atc_button_FCrBJM": {
+          "type": "atc_button",
+          "settings": {
+            "button_label": "LÆG I KURV",
+            "atc_product": "",
+            "atc_skip_cart": false
+          }
+        },
+        "rating_stars_hpmwWq": {
+          "type": "rating_stars",
+          "settings": {
+            "rating": 4.8,
+            "star_color": "#ffcc00",
+            "bg_stars_style": "full",
+            "bg_star_color": "#ececec",
+            "label": "4,86/5 (2000+ Anmeldelser)",
+            "size": 16,
+            "scroll_id": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_hbj7Ji",
+        "text_WEzjkg",
+        "atc_button_FCrBJM",
+        "rating_stars_hpmwWq"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/irish-setter-dog-close-up.jpg",
+        "image_1_visibility": "always-display",
+        "image_2_visibility": "always-display",
+        "image_overlay_opacity": 10,
+        "image_height": "large",
+        "url": "",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-2",
+        "transparent_container_color": "white",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
+    },
+    "55bd100e-3bbd-426c-a5cf-eed7b2a3706f": {
+      "type": "testimonials",
+      "blocks": {
+        "template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-1": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Anbefaler stærkt!",
+            "text": "<p>Min hund har altid været bange for tandbørstning, hvilket gjorde det svært at holde tænderne rene.<br/><br/>Men efter jeg begyndte at bruge disse servietter, er han blevet helt rolig.<br/><br/>Det er fantastisk at se, at han ikke længere løber væk eller bliver nervøs, når det er tid til tandpleje.</p>",
+            "author_avatar": "shopify://shop_images/Profilbild1_b3680c3c-3c9b-4f7c-aaa0-1c5e71863e67.webp",
+            "author": "– Erik A"
+          }
+        },
+        "template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-2": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Han er nu helt frygtløs!",
+            "text": "<p>Det har været en kamp at børste min hunds tænder i flere år, fordi han var så bange.<br/><br/>Men med disse servietter har alt ændret sig. Han er nu helt frygtløs og lader mig rengøre tænderne uden problemer.<br/><br/>Dette har virkelig forbedret hans tandplejerutine.</p>",
+            "author_avatar": "shopify://shop_images/Profilbild1_78735bd1-dd93-45c0-b80c-27246ca5802d.webp",
+            "author": "– Johan E"
+          }
+        },
+        "template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-3": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Anbefaler disse stærkt til alle hundeejere",
+            "text": "<p>Jeg har altid haft svært ved at børste min hunds tænder, fordi han var bange.<br/><br/>Med disse servietter er han nu helt tryg.<br/><br/>Det er en enorm lettelse at kunne rengøre tænderne hans uden at skulle kæmpe med ham.<br/><br/><strong>Anbefaler disse stærkt til alle hundeejere.</strong></p>",
+            "author_avatar": "shopify://shop_images/Profilbild_3.webp",
+            "author": "– Sara Johansen"
+          }
+        },
+        "column_7KVQn9": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Jeg er meget tilfreds",
+            "text": "<p>Jeg har brugt dette produkt på min hund i nogle uger nu, og jeg er meget tilfreds.<br/><br/>Hundens tænder ser meget renere ud, og ånden er blevet mærkbart bedre.<br/><br/>Det er også utroligt nemt at bruge – en stor bonus.</p><p></p>",
+            "author_avatar": "shopify://shop_images/Profilbild1.webp",
+            "author": "– Simen Kristoffersen"
+          }
+        },
+        "column_UHg797": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Hans tænder ser meget renere ud",
+            "text": "<p>Jeg har brugt dette produkt dagligt på min hund og ser virkelig resultater.<br/><br/>Hans tænder ser meget renere ud, og ånden er blevet bedre.<br/><br/>Det føles trygt at bruge, især med de naturlige ingredienser.</p>",
+            "author_avatar": "shopify://shop_images/Profilbild344.webp",
+            "author": "– Lene Karlsen"
+          }
+        },
+        "column_Ri7g3K": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Et godt produkt, der virkelig gør en forskel",
+            "text": "<p>Et godt produkt, der virkelig gør en forskel.<br/><br/>Jeg har bemærket, at min hunds tandsten er blevet markant reduceret, og ånden er meget friskere.<br/><br/>Desuden er det utroligt nemt at bruge.</p>",
+            "author_avatar": "shopify://shop_images/profilbild.webp",
+            "author": "– Oskar Johansrud"
+          }
+        },
+        "column_NmmfXF": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Giver gode resultater",
+            "text": "<p>Min hund kan godt lide det, og det er nemt at bruge hver dag.<br/><br/><strong>Giver gode resultater.</strong></p>",
+            "author_avatar": "shopify://shop_images/Profilbild1.jpg",
+            "author": "– Sofie Nilsen"
+          }
+        },
+        "column_GNBeVt": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Jeg ser en forbedring i hans mundhygiejne",
+            "text": "<p>Min hund ser ud til at have det bedre, og jeg kan se en tydelig forbedring i hans mundhygiejne.</p>",
+            "author_avatar": "shopify://shop_images/Profilbild3_98453ffc-28e5-4418-89bd-9cc2393e092a.webp",
+            "author": "– Ingrid Thorsen"
+          }
+        }
+      },
+      "block_order": [
+        "template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-1",
+        "template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-2",
+        "template--21507361800487__55bd100e-3bbd-426c-a5cf-eed7b2a3706f-column-3",
+        "column_7KVQn9",
+        "column_UHg797",
+        "column_Ri7g3K",
+        "column_NmmfXF",
+        "column_GNBeVt"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Verificerede Anmeldelser",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "text": "",
+        "color_scheme": "background-1",
+        "image_width": "full",
+        "image_ratio": "square",
+        "column_alignment": "center",
+        "show_stars": true,
+        "inactive_stars_style": "solid",
+        "star_color": "#ffcc00",
+        "bg_star_color": "#ececec",
+        "show_quotes": true,
+        "quotes_color_scheme": "accent-1",
+        "cards_color_scheme": "bg-overlay",
+        "type": "slide",
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_full_page": true,
+        "columns_desktop": 3,
+        "slider_desktop": true,
+        "per_move_desktop": 1,
+        "desktop_spacing": 40,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "sides",
+        "slider_mobile": true,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "under",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_text": "#2e2a39"
+      }
+    },
+    "section_divider_pFE63Q": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "background-2",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "collapsible_content_TbfYVV": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_tR8CwM": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Er dette 100 % sikkert for kæledyrets mund?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>✅ Ja! Servietterne er lavet til at være lige så milde, som de er effektive.</p><p><strong>De indeholder ikke:</strong><br/><br/>❌ Alkohol<br/><br/>❌ Parabener<br/><br/>❌ Æteriske olier (som kan irritere nogle dyr)<br/><br/>❌ Fluor<br/><br/>❌ Triclosan</p><p>Kun sikre, veterinærgodkendte ingredienser – som te-polyfenoler – der kan bruges dagligt på hunde og katte i alle størrelser.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_wWEXkL": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Hvordan bruger jeg produktet?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>1️⃣ Tag en serviet over fingeren.<br/><br/>2️⃣ Gnid forsigtigt tænder og tandkød i ca. 30 sekunder.<br/><br/>3️⃣ Smid servietten ud efter brug.</p><p>Ingen tandbørste. Intet rod. Intet stress.</p><p>Brug dagligt eller 1–2 gange om ugen for det bedste resultat.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_3fRqLL": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Er dette et alternativ til tandbørstning?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>For de fleste dyreejere – ja!</p><p>Tandbørstning er bedst – men ofte urealistisk i hverdagen.</p><p><strong>FreshWipes</strong> giver en enkel og pålidelig løsning for dig, der kæmper med at børste kæledyrets tænder uden stress.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_4GGYLx": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Hvad indeholder servietterne?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<ul><li><strong>EDI-renset vand</strong> – basisopløsning<br/></li><li><br/><strong>Glycerin</strong> – tilfører fugt<br/></li><li><br/><strong>Citronsyre</strong> – balancerer pH<br/></li><li><br/><strong>Cetylpyridiniumklorid-monohydrat</strong> – antibakteriel effekt<br/></li><li><br/><strong>Te-polyfenoler</strong> – giver frisk ånde<br/></li><li><br/><strong>Allantoin</strong> – beroligende<br/></li><li><br/><strong>Grøn te-ekstrakt</strong> – naturligt antibakteriel & beskyttende<br/></li><li><br/><strong>Natriumbenzoat</strong> – skånsomt konserveringsmiddel<br/></li></ul><p>✔️ pH-balanseret og parfumefri<br/><br/>✔️ Ikke testet på dyr (cruelty-free)<br/><br/>✔️ Fri for alkohol, fluor og stærke kemikalier</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_X6j8jm": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Hvornår kan jeg forvente resultater?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>✨ Frisk ånde? Efter få dage.</p><p>🦷 Renere tænder og sundere tandkød? 2–3 uger ved regelmæssig brug.</p><p>Vær tålmodig – din hund eller kats mund vil takke dig!</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_DDddPH": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Passer FreshWipes til alle racer og størrelser?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Ja, servietterne er fleksible og fungerer lige godt til både små og store hunde – og også til katte.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_MXzfid": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Hjælper servietterne mod dårlig ånde?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Ja! Antibakterielle ingredienser og naturlige friskhedselementer hjælper med at reducere plak og dårlig ånde.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_xUbf8N": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Hvordan opbevarer jeg FreshWipes?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Opbevar bøtten lukket på et køligt, tørt sted. Undgå direkte sollys for at bevare fugtigheden i servietterne.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_pA7czt": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Hvad sker der, hvis jeg ikke er tilfreds?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Vi tilbyder <strong>100 dages tilfredshedsgaranti</strong>. Hvis du ikke er tilfreds, får du pengene tilbage – helt uden stress.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_tR8CwM",
+        "collapsible_row_wWEXkL",
+        "collapsible_row_3fRqLL",
+        "collapsible_row_4GGYLx",
+        "collapsible_row_X6j8jm",
+        "collapsible_row_DDddPH",
+        "collapsible_row_MXzfid",
+        "collapsible_row_xUbf8N",
+        "collapsible_row_pA7czt"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "caption": "",
+        "title": "Ofte stillede spørgsmål",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "row",
+        "color_scheme": "background-2",
+        "container_color_scheme": "accent-1",
+        "open_first_collapsible_row": false,
+        "video_muted_autoplay": true,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "row_heading_size": "medium",
+        "collapse_icon": "carret",
+        "display_top_border": true,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_contaner_colors_background": "#ffffff",
+        "custom_container_gradient_background": "",
+        "custom_contaner_colors_text": "#2e2a39"
+      }
+    },
+    "section_divider_HfUqqg": {
+      "type": "section-divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "background-1",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-2",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "icon_bar_KHKwKc": {
+      "type": "icon-bar",
+      "blocks": {
+        "column_QHckr6": {
+          "type": "column",
+          "settings": {
+            "icon": "favorite",
+            "filled_icon": true,
+            "title": "OVER 15.000 TILFREDSE KUNDER",
+            "text": "<p>Vi har glade hundeejere og hunde i hele Danmark!</p>"
+          }
+        },
+        "column_tPk8Rq": {
+          "type": "column",
+          "settings": {
+            "icon": "new_releases",
+            "filled_icon": true,
+            "title": "100 DAGES PENGE-TILBAGE-GARANTI",
+            "text": "<p>Ikke tilfreds? Kontakt os blot inden for 100 dage efter købet – så finder vi en løsning for dig.</p>"
+          }
+        },
+        "column_FkbetQ": {
+          "type": "column",
+          "settings": {
+            "icon": "support_agent",
+            "filled_icon": true,
+            "title": "SUPPORT MANDAG–FREDAG",
+            "text": "<p>Spørgsmål? Tøv ikke med at kontakte os – vi svarer altid inden for 24 timer!</p>"
+          }
+        }
+      },
+      "block_order": [
+        "column_QHckr6",
+        "column_tPk8Rq",
+        "column_FkbetQ"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "text": "",
+        "color_scheme": "background-1",
+        "icon_layout": "vertical",
+        "icon_size": "medium",
+        "icon_color": "accent-1",
+        "cards_color_scheme": "background-1",
+        "type": "slide",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_full_page": false,
+        "columns_desktop": 3,
+        "slider_desktop": false,
+        "per_move_desktop": 1,
+        "desktop_spacing": 40,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "sides",
+        "columns_mobile": "1",
+        "slider_mobile": true,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "under",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_text": "#2e2a39"
+      }
+    },
+    "1754837216bbfd1ae2": {
+      "type": "apps",
+      "settings": {
+        "display_id": false,
+        "include_margins": true
+      }
+    },
+    "176204455334cf5175": {
+      "type": "apps",
+      "settings": {
+        "display_id": false,
+        "include_margins": true
+      }
+    },
+    "vetpets_popup": {
+      "type": "vetpets-popup",
+      "settings": {
+        "logo": "shopify://shop_images/Vetpets_Logo_11_3e42d63d-8554-4b1f-b85e-bf905293a7a2.png",
+        "scratch_image": "shopify://shop_images/hf_20260822_113024_e5868d33-6f0f-4c6f-b0c5-fbc36b342b49.png",
+        "photo_primary": "shopify://shop_images/vetpets-popup-ugc-frenchie-sofa.png",
+        "photo_secondary": "shopify://shop_images/vetpets-popup-ugc-tubs-kitchen.png",
+        "klaviyo_email_list_id": "TFfFDG"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "related-products",
+    "image_slider_8HnbpY",
+    "image_slider_X8iFJF",
+    "section_divider_iXCmE9",
+    "image_with_text_LkDiE9",
+    "section_divider_MjaRJC",
+    "image_with_text_kiAL7m",
+    "section_divider_kAW6L6",
+    "image_with_text_jpGEnV",
+    "section_divider_BJPHP4",
+    "multicolumn_r3Fa8U",
+    "image_with_text_zpzP4w",
+    "image_banner_Jkg3ye",
+    "55bd100e-3bbd-426c-a5cf-eed7b2a3706f",
+    "section_divider_pFE63Q",
+    "collapsible_content_TbfYVV",
+    "section_divider_HfUqqg",
+    "icon_bar_KHKwKc",
+    "1754837216bbfd1ae2",
+    "176204455334cf5175",
+    "vetpets_popup"
+  ]
+}

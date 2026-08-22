@@ -1676,6 +1676,16 @@
         "custom_cards_gradient_background": "",
         "custom_cards_colors_text": "#2e2a39"
       }
+    },
+    "vetpets_popup": {
+      "type": "vetpets-popup",
+      "settings": {
+        "logo": "shopify://shop_images/Vetpets_Logo_11_3e42d63d-8554-4b1f-b85e-bf905293a7a2.png",
+        "scratch_image": "shopify://shop_images/hf_20260822_113024_e5868d33-6f0f-4c6f-b0c5-fbc36b342b49.png",
+        "photo_primary": "shopify://shop_images/vetpets-popup-ugc-frenchie-sofa.png",
+        "photo_secondary": "shopify://shop_images/vetpets-popup-ugc-tubs-kitchen.png",
+        "klaviyo_email_list_id": "TFfFDG"
+      }
     }
   },
   "order": [
@@ -1697,6 +1707,7 @@
     "collapsible_content_r8iUdD",
     "section_divider_ckp9Ej",
     "featured_collection_MRf9GU",
-    "icon_bar_FXDFLd"
+    "icon_bar_FXDFLd",
+    "vetpets_popup"
   ]
 }

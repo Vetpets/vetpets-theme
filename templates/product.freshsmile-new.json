@@ -1,1 +1,1684 @@
-{"sections":{"main":{"type":"main-product","blocks":{"rating_stars_NytK7e":{"type":"rating_stars","settings":{"rating":4.8,"star_color":"#ffcc00","bg_stars_style":"full","bg_star_color":"#ececec","label":"4,86\/5 (10,000+ Reviews)","size":15,"alignment":"flex-start","scroll_id":"","margin_top":6,"margin_bottom":6}},"title":{"type":"title","settings":{"text_size":"h2","title_alignment":"left","uppercase_title":false,"margin_top":0,"margin_bottom":6}},"price":{"type":"price","disabled":true,"settings":{"layout":"price_first","price_color":"accent-1","compare_price_color":"text","displayed_badge":"sale","icon_scale":140,"custom_badge_text":"[icon_1] SPECIAL OFFER","icon_1":"redeem","filled_icon_1":false,"icon_2":"check_circle","filled_icon_2":false,"margin_top":3,"margin_bottom":3}},"text_LxKHa6":{"type":"text","settings":{"mobile_text_size":14,"desktop_text_size":16,"alignment":"left","text_color":"#121212","text_1":"Removes plaque, tartar and stains","text_2":"Gives a fresh breath","text_3":"Prevents inflammation and tooth loss","icon_scale":140,"icon_color":"#118fcb","icon_1":"pets","filled_icon_1":true,"icon_2":"pets","filled_icon_2":true,"icon_3":"pets","filled_icon_3":true,"width":"100%","direction":"vertical","column_gap":5,"enable_bg":false,"bg_color":"#f3f3f3","corner_radius":40,"padding":3,"border_size":0,"border_color":"#b7b7b7","margin_top":15,"margin_bottom":15}},"text_nyRh9f":{"type":"text","settings":{"mobile_text_size":14,"desktop_text_size":16,"alignment":"left","text_color":"#121212","text_1":"Saves stress and expensive vet visits","text_2":"","text_3":"","icon_scale":140,"icon_color":"#118fcb","icon_1":"pets","filled_icon_1":true,"icon_2":"new_releases","filled_icon_2":true,"icon_3":"new_releases","filled_icon_3":true,"width":"100%","direction":"vertical","column_gap":5,"enable_bg":false,"bg_color":"#f3f3f3","corner_radius":40,"padding":3,"border_size":0,"border_color":"#b7b7b7","margin_top":15,"margin_bottom":15}},"de244682-4323-4802-b4ba-b79b08e0c71d":{"type":"emoji_benefits","disabled":true,"settings":{"benefits":"<p>✅ Tar bort plack, tandsten & fläckar<\/p><p>✅ Ger en fräsch andedräkt<\/p><p>✅ Förebygger inflammation & tandlossning<\/p><p>✅ Sparar stress & dyra veterinärbesök<\/p>","margin_top":15,"margin_bottom":15}},"44f9cdc2-f4bf-466e-87d5-fb765ad4864a":{"type":"variant_picker","settings":{"picker_types":"pills, pills, pills","custom_labels":"","skip_unavailable":false,"swatches_size":"medium","swatches_custom_colors":"disabled","swatches_custom_colors_list":"#000000, #FFFFFF","full_width_dropdowns":false,"breaks_style":"normal","breaks_headline":"BUNDLE & SAVE","breaks_display_selected_indicator":true,"breaks_border_radius":10,"breaks_border_width":2,"breaks_color_scheme":"accent-1","breaks_badges":"[empty], Most popular, [empty]","breaks_badge_style":"1","breaks_badge_color":"accent-1","breaks_displayed_images":"none","breaks_custom_images":"","breaks_image_width":70,"breaks_space_images":true,"breaks_vertical_images_position":"top","breaks_vertical_prices_layout":"vertical","breaks_labels":"[name], [name], [name]","breaks_benefits":"[empty], Free Shipping, Free Shipping","breaks_benefit_position":"top","breaks_benefit_style":"outlined","breaks_benefit_color":"accent-1","breaks_captions":"Variant 1 caption, Variant 2 caption, Variant 3 caption","breaks_price_texts":"[price], [price], [price]","breaks_compare_price_texts":"[compare_price], [compare_price], [compare_price]","margin_top":15,"margin_bottom":15}},"074f248d-8d73-4c8f-a97e-d8e82c5be5fc":{"type":"quantity_selector","settings":{"full_width_classic":false,"atc_append":"none","atc_append_heights":"stretch-quantity","enable_quantity_discounts":false,"style":"normal","headline":"","preselected":"option_1","display_selected_indicator":true,"border_radius":10,"border_width":2,"color_scheme":"accent-1","enable_variant_selectors":true,"enable_variant_selectors_on_quantity_of_1":false,"update_prices":false,"skip_unavailable":false,"full_width_pickers":false,"hide_pickers_overlay":true,"pickers_label":"","image_width":70,"space_images":true,"vertical_images_position":"top","vertical_prices_layout":"vertical","option_1_quantity":1,"option_1_badge":"","option_1_badge_style":"1","option_1_badge_color":"accent-1","option_1_label":"1 FreshSmile Kit","option_1_benefit":"Spara 50%","option_1_benefit_position":"top","option_1_benefit_style":"outlined","option_1_benefit_color":"accent-1","option_1_caption":"Fri frakt + Nöjdhetsgaranti","option_1_percentage_off_text":"0","option_1_fixed_amount_off":"0","option_1_price_text":"[price]","option_1_compare_price":"compare_price","option_1_compare_price_text":"[compare_price]","option_2_quantity":2,"option_2_badge":"","option_2_badge_style":"1","option_2_badge_color":"accent-1","option_2_label":"2 FreshSmile Kit","option_2_benefit":"Spara 50%","option_2_benefit_position":"top","option_2_benefit_style":"outlined","option_2_benefit_color":"accent-1","option_2_caption":"Fri frakt + Nöjdhetsgaranti","option_2_percentage_off_text":"0","option_2_fixed_amount_off":"99","option_2_price_text":"[price]","option_2_compare_price":"compare_price","option_2_compare_price_text":"[compare_price]","option_3_quantity":0,"option_3_badge":"","option_3_badge_style":"1","option_3_badge_color":"accent-1","option_3_label":"3 Paket","option_3_benefit":"Spara 1250kr","option_3_benefit_position":"top","option_3_benefit_style":"outlined","option_3_benefit_color":"accent-1","option_3_caption":"Fri frakt + Nöjdhetsgaranti","option_3_percentage_off_text":"0","option_3_fixed_amount_off":"348","option_3_price_text":"[price]","option_3_compare_price":"compare_price","option_3_compare_price_text":"[compare_price]","option_4_quantity":0,"option_4_badge":"","option_4_badge_style":"1","option_4_badge_color":"accent-1","option_4_label":"","option_4_benefit":"","option_4_benefit_position":"top","option_4_benefit_style":"outlined","option_4_benefit_color":"accent-1","option_4_caption":"You save [amount]","option_4_percentage_off_text":"0","option_4_fixed_amount_off":"0","option_4_price_text":"[price]","option_4_compare_price":"compare_price","option_4_compare_price_text":"[compare_price]","margin_top":15,"margin_bottom":15}},"kaching_bundles_app_block_EDhUTk":{"type":"shopify:\/\/apps\/kaching-bundles\/blocks\/app-block\/6c637362-a106-4a32-94ac-94dcfd68cdb8","settings":{"product":"{{product}}","manual_deal_block_id":""}},"custom_liquid_HHdtfR":{"type":"custom_liquid","settings":{"custom_liquid":"<!-- Snippet: stock-status.liquid -->\n<div class=\"stock-status-wrapper\">\n  <span class=\"stock-status-dot\"><\/span>\n  <span class=\"stock-status-text\">Almost sold out - 48 left in stock<\/span>\n<\/div>\n\n<style>\n  .stock-status-wrapper {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n  }\n\n  .stock-status-dot {\n    width: 14px;\n    height: 14px;\n    background-color: #ff9900;\n    border-radius: 50%;\n    animation: stockPulse 1.5s ease-in-out infinite;\n    display: inline-block;\n  }\n\n  .stock-status-text {\n    color: #ff9900;\n    font-weight: 700;\n    font-size: 14px;\n  }\n\n  @keyframes stockPulse {\n    0% { transform: scale(1); opacity: 1; }\n    50% { transform: scale(1.3); opacity: 0.7; }\n    100% { transform: scale(1); opacity: 1; }\n  }\n<\/style>"}},"text_J9GQEF":{"type":"text","disabled":true,"settings":{"mobile_text_size":16,"desktop_text_size":18,"alignment":"left","text_color":"#f7941d","text_1":"Low Stock – Almost Sold Out","text_2":"","text_3":"","icon_scale":140,"icon_color":"#118fcb","icon_1":"pets","filled_icon_1":true,"custom_icon_1":"shopify:\/\/shop_images\/Namnlos_design_-_2025-10-01T144230.866_0c23455c-bcc7-4ef0-924e-3112eb41e31b.png","icon_2":"new_releases","filled_icon_2":true,"icon_3":"new_releases","filled_icon_3":true,"width":"100%","direction":"vertical","column_gap":5,"enable_bg":false,"bg_color":"#f3f3f3","corner_radius":40,"padding":3,"border_size":0,"border_color":"#b7b7b7","margin_top":15,"margin_bottom":15}},"buy_buttons":{"type":"buy_buttons","settings":{"show_dynamic_checkout":false,"skip_cart":false,"uppercase_text":true,"icon_scale":120,"icon_spacing":10,"atc_custom_label":"","display_price":false,"enable_custom_color":true,"custom_color":"#47b5e9","enable_secondary_btn":false,"secondary_btn_label":"Buy It Now","secondary_btn_enable_custom_color":false,"secondary_btn_custom_color":"#dd1d1d","margin_top":24,"margin_bottom":24}},"98db29ee-a7dc-429e-8129-bf71131627da":{"type":"payment_badges","settings":{"enabled_payment_types":"","margin_top":15,"margin_bottom":15}},"custom_liquid_Epc8Px":{"type":"custom_liquid","settings":{"custom_liquid":"<!-- GARANTIBADGE (PILL) -->\n<style>\n  .no-guarantee-pill{\n    --bg:#47B5E9;   \/* bakgrunnsfarge *\/\n    --fg:#ffffff;   \/* tekstfarge *\/\n    --px:22px;\n    --py:8px;\n    --radius:9999px;\n    --shadow:0 2px 10px rgba(0,0,0,.08);\n    display:inline-block; background:var(--bg); color:var(--fg);\n    padding:var(--py) var(--px); border-radius:var(--radius);\n    font-weight:700; letter-spacing:.06em; text-transform:uppercase;\n    box-shadow:var(--shadow); line-height:1; text-align:center;\n    font-size:12px;\n  }\n  .no-guarantee-wrap{ text-align:center; }\n  @media (min-width: 768px){ .no-guarantee-pill{ font-size:15px; } }\n<\/style>\n\n<div class=\"no-guarantee-wrap\">\n  {% assign guarantee_text = \"100 DAY MONEY-BACK GUARANTEE - TRY TODAY\" %}\n  <span class=\"no-guarantee-pill\">{{ guarantee_text }}<\/span>\n<\/div>"}},"custom_liquid_XcDwad":{"type":"custom_liquid","disabled":true,"settings":{"custom_liquid":"<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <style>\n    .custom-shipping-container {\n      display: flex;\n      padding: 6px 16px;\n      justify-content: space-between;\n      align-items: center;\n      background-color: #f6f6f6;\n      border-radius: 20px;\n      margin-top: 10px;\n    }\n\n    .custom-shipping-item {\n      display: flex;\n      align-items: center;\n      gap: 6px;\n    }\n\n    .text-block-shipping {\n      font-size: 12px;\n      color: #000;\n    }\n\n    .shipping-date {\n      font-weight: bold;\n    }\n\n    .shipping-worldwide {\n      font-size: 12px;\n      color: #000;\n    }\n\n    .shipping-worldwide .bold {\n      font-weight: bold;\n    }\n\n    .green-circle {\n      animation: fade 1s ease-in-out infinite;\n    }\n\n    @keyframes fade {\n      0%, 100% { opacity: 1; }\n      50% { opacity: 0.5; }\n    }\n\n    .flags-container {\n      display: flex;\n      gap: 6px;\n      align-items: center;\n    }\n    \n    .custom-icon {\n      width: 16px;\n      height: 12px;\n    }\n  <\/style>\n  <script>\n    document.addEventListener(\"DOMContentLoaded\", function() {\n      function getNextWeekday(date) {\n        var day = date.getDay();\n        var daysToAdd = (day === 5) ? 3 : (day === 6) ? 2 : 1;\n        return new Date(date.setDate(date.getDate() + daysToAdd));\n      }\n\n      var today = new Date();\n      var shipDate = getNextWeekday(today);\n      \n      \/\/ Format date to have short month (e.g., \"Thu, Feb 22\")\n      var options = { weekday: 'short', month: 'short', day: 'numeric' };\n      var formattedDate = shipDate.toLocaleDateString('en-US', options);\n      document.getElementById('shipping-date').textContent = formattedDate;\n\n      \/\/ Fetch country data using GeoJS API\n      fetch('https:\/\/get.geojs.io\/v1\/ip\/geo.json')\n        .then(response => response.json())\n        .then(data => {\n          console.log(\"Geolocation API Response:\", data); \/\/ Debugging log\n\n          if (!data || !data.country_code) {\n            throw new Error(\"Invalid data from API\");\n          }\n          \n          var countryCode = data.country_code.toUpperCase(); \/\/ Get country code (e.g., \"GB\", \"US\")\n          var flagUrl = `https:\/\/flagcdn.com\/w40\/${countryCode.toLowerCase()}.png`;\n\n          \/\/ Set flag and country code\n          document.getElementById('country-flag').src = flagUrl;\n          document.getElementById('country-flag').alt = countryCode + \" Flag\";\n          document.getElementById('country-flag').style.display = \"inline\";\n          document.getElementById('country-text').innerHTML = `Free <span class=\"bold\">${countryCode}<\/span> Shipping`;\n        })\n        .catch(error => {\n          console.error('Error fetching the IP information:', error);\n          document.getElementById('country-flag').style.display = \"none\"; \n          document.getElementById('country-text').innerHTML = \"Fast Worldwide Shipping\";\n        });\n    });\n  <\/script>\n<\/head>\n<body>\n  <div class=\"custom-shipping-container\">\n    <div class=\"custom-shipping-item\">\n      <svg class=\"green-circle\" xmlns=\"http:\/\/www.w3.org\/2000\/svg\" width=\"12\" height=\"13\" viewBox=\"0 0 12 13\" fill=\"none\">\n        <circle cx=\"6\" cy=\"6.5\" r=\"6\" fill=\"#137333\"\/>\n      <\/svg>\n      <div class=\"text-block-shipping\">Ships by <span id=\"shipping-date\" class=\"shipping-date\"><\/span><\/div>\n    <\/div>\n    <div class=\"custom-shipping-item flags-container\">\n      <img id=\"country-flag\" class=\"custom-icon\" src=\"\" alt=\"Country Flag\" style=\"display: none;\">\n      <div id=\"country-text\" class=\"shipping-worldwide\">Loading...<\/div>\n    <\/div>\n  <\/div>\n<\/body>\n<\/html>"}},"custom_liquid_RbJrHG":{"type":"custom_liquid","settings":{"custom_liquid":"<!-- SOSIALT BEVIS - ALT PÅ ÉN LINJE -->\n<style>\n  .sp-bar{\n    --bg:#fff; --radius:20px;\n    --shadow:0 2px 6px rgba(0,0,0,.08);\n    padding:8px 14px; background:var(--bg);\n    border-radius:var(--radius); box-shadow:var(--shadow);\n    width:fit-content; margin:14px auto 0;\n    font-size:12px; line-height:1.3;\n    display:flex; align-items:center; gap:5px;\n  }\n  .sp-avatars{ display:flex; align-items:center; }\n  .sp-avatar{\n    width:20px; height:22px; border-radius:9999px; overflow:hidden; flex:0 0 auto;\n    border:2px solid #fff; margin-right:-6px;\n  }\n  .sp-avatar img{ width:100%; height:100%; object-fit:cover; display:block; }\n  .sp-text{ display:flex; align-items:center; gap:5px; flex-wrap:nowrap; }\n  .sp-name{ font-weight:700; }\n  .sp-strong{ font-weight:700; }\n  .sp-check{ width:16px; height:16px; display:inline-block; }\n<\/style>\n\n{%- assign buyer_name = \"Maria N.\" -%}\n{%- assign buyer_count = 15.045 -%}\n\n<div class=\"sp-bar\">\n  <div class=\"sp-avatars\">\n    <span class=\"sp-avatar\">\n      <img src=\"https:\/\/randomuser.me\/api\/portraits\/women\/44.jpg\" alt=\"Kunde 1\">\n    <\/span>\n    <span class=\"sp-avatar\">\n      <img src=\"https:\/\/randomuser.me\/api\/portraits\/women\/65.jpg\" alt=\"Kunde 2\">\n    <\/span>\n    <span class=\"sp-avatar\">\n      <img src=\"https:\/\/randomuser.me\/api\/portraits\/women\/12.jpg\" alt=\"Kunde 3\">\n    <\/span>\n  <\/div>\n\n  <div class=\"sp-text\">\n    <span class=\"sp-name\">{{ buyer_name }}<\/span>\n    <span class=\"sp-check\">\n      <img src=\"https:\/\/cdn-icons-png.flaticon.com\/512\/7641\/7641727.png\" alt=\"Verifisert\" width=\"16\" height=\"16\">\n    <\/span>\n    <span>and<\/span>\n    <span class=\"sp-strong\">{{ buyer_count }}<\/span>\n    <span>dog owners has purchased<\/span>\n  <\/div>\n<\/div>"}},"d505cdfe-d5cf-4aff-8e9e-abca6dae66eb":{"type":"sticky_atc","settings":{"function":"add_to_cart","display_when":"after_scroll","button_label":"Add to cart","enable_custom_btn_color":false,"custom_btn_color":"#dd1d1d","color_scheme":"background-1","star_color":"#ffcc00","stars_label":"4,86\/5 (10,000+ Reviews)","picker_type":"combined","desktop_show_image":false,"desktop_show_title":true,"desktop_rating_stars":true,"desktop_show_price":true,"desktop_show_sale_badge":true,"desktop_variant_picker":false,"desktop_full_button_width":false,"desktop_show_price_in_button":false,"desktop_transparent_bg":false,"mobile_show_image":false,"mobile_show_title":true,"mobile_rating_stars":true,"mobile_show_price":false,"mobile_show_sale_badge":true,"mobile_variant_picker":false,"mobile_full_button_width":true,"mobile_show_price_in_button":false,"mobile_transparent_bg":false}},"149aabfb-9fd8-4472-a633-6032dbe01ed0":{"type":"reviews","disabled":true,"settings":{"color_scheme":"background-1","show_custom_bg":false,"custom_bg_color":"#f2f2f2","corner_radius":12,"border_width":0,"border_color":"#b7b7b7","avatar_alignment":"top","avatar_corner_radius":40,"star_color":"#ffcc00","stars_translate":0,"checkmark_color":"#6d388b","checkmark_icon_color":"#ffffff","slider_type":"slide","autoplay":false,"autoplay_speed":5,"display_arrows":false,"display_dots":true,"author_1":"Author","text_1":"<p>Share positive thoughts and feedback from your customer.<\/p>","author_2":"Author","text_2":"<p>Share positive thoughts and feedback from your customer.<\/p>","author_3":"Author","text_3":"<p>Share positive thoughts and feedback from your customer.<\/p>","margin_top":24,"margin_bottom":24}},"collapsible_tab_wNCAKj":{"type":"collapsible_tab","settings":{"heading":"The Complete Dog Dental Care Guide FREE","heading_size":"medium","icon":"","filled_icon":false,"collapse_icon":"carret","display_top_border":true,"open":false,"content":"","page":"free-digital-dog-dental-care-guide-freshsmile-kit","margin_top":24,"margin_bottom":0}},"collapsible_tab_eWGzcG":{"type":"collapsible_tab","settings":{"heading":"100 Day Money-Back Guarantee","heading_size":"medium","icon":"","filled_icon":false,"collapse_icon":"carret","display_top_border":true,"open":false,"content":"<p>We firmly believe that FreshSmile Kit will make a difference – for both you and your dog.<br\/><br\/>That’s why we offer a <strong>100-day money-back guarantee.<\/strong><br\/><br\/>You can test the product in the comfort of your own home.<br\/><br\/>Not completely satisfied? Then you get your money back – no hassle.<br\/><br\/>For us, it’s more important that your dog gets the right care than that you keep something you don’t love.<\/p>","page":"","margin_top":24,"margin_bottom":0}},"collapsible_tab_PqhzVJ":{"type":"collapsible_tab","settings":{"heading":"Features – What Makes FreshSmile Different","heading_size":"medium","icon":"","filled_icon":false,"collapse_icon":"carret","display_top_border":true,"open":false,"content":"<p>✅ <strong>Sonic Vibration Technology<\/strong><\/p><p>Removes plaque and tartar effectively with gentle micro-vibrations — completely safe and heat-free (not ultrasonic).<br\/><\/p><p>✅ <strong>5 Intensity Levels<\/strong><\/p><p>Adjust the power for your dog’s comfort and control — suitable even for small or sensitive dogs.<\/p><p><\/p><p>✅ <strong>Precision LED Light<\/strong><\/p><p>Improves visibility so you can easily spot buildup and clean safely at home.<br\/><\/p><p>✅ <strong>Interchangeable Heads<\/strong><\/p><p>Includes brushes and tartar tools for complete dental care — from cleaning to polishing.<br\/><\/p><p>✅ <strong>Ergonomic, Rechargeable Design<\/strong><\/p><p>Lightweight and cordless for easy handling. Long-lasting battery (up to 2–3 weeks per charge).<br\/><\/p><p>✅ <strong>Vet-Approved Safety<\/strong><\/p><p>Works only on hard surfaces (teeth), never on gums — completely safe for home use.<br\/><\/p><p>✅ <strong>Quiet & Stress-Free<\/strong><\/p><p>Operates under 60 dB, making it ideal even for anxious pets.an that you keep something you don’t love.<\/p>","page":"","margin_top":24,"margin_bottom":0}},"collapsible_tab_QGKJBE":{"type":"collapsible_tab","settings":{"heading":"What is included?","heading_size":"medium","icon":"","filled_icon":false,"collapse_icon":"carret","display_top_border":true,"open":false,"content":"<p><strong>In every FreshSmile™ Kit you ge<\/strong>t:<\/p><p><strong>1x Electric main device<\/strong> – high-quality, ergonomic & rechargeable<\/p><p><strong>3x Brush heads <\/strong>– for daily cleaning<\/p><p><strong>2x Tartar removers<\/strong> – for plaque & stubborn tartar<\/p><p><strong>1x Dental & oral mirror<\/strong> – for easy inspection of your dog’s teeth<\/p><p><strong>3x Extra cleaning tools<\/strong> – for detailed cleaning<\/p><p><strong>1x USB charging cable<\/strong> – fast charging, up to 2–3 weeks of battery life<\/p><p><strong>1x Holder<\/strong> – practical for storage<\/p><p><strong>1x User manual<\/strong> – step-by-step for safe use<\/p><p><strong>🎁 Bonus: E-book Guide <\/strong>“The complete dog dental care guide\"<\/p>","page":"","margin_top":24,"margin_bottom":0}},"collapsible_tab_WiqM8k":{"type":"collapsible_tab","settings":{"heading":"Payment & Delivery","heading_size":"medium","icon":"","filled_icon":false,"collapse_icon":"carret","display_top_border":true,"open":false,"content":"<h4><strong>Payment<\/strong><\/h4><p>You can safely pay with Klarna, credit card, or bank transfer – choose what works best for you.<br\/><\/p><h4><strong>Shipping<\/strong><\/h4><p><br\/>We offer different rates for the UK and the Rest of the World:<\/p><ul><li><strong>United Kingdom (UK): <\/strong>Standard Shipping: <strong>£2.00<\/strong> (Free on orders £37 and over)Priority Shipping: <strong>£4.50<\/strong><\/li><li><strong>Rest of the World:<\/strong>Standard Shipping: <strong>$2.95<\/strong> (Free on orders $49 and over)Priority Shipping: <strong>$6.00<\/strong><\/li><\/ul><p><strong>Delivery Time<\/strong><br\/><br\/>As our UK warehouse is temporarily out of stock, your order will be shipped from our international warehouse.<br\/>We offer two shipping options at checkout:<\/p><ul><li><strong>Standard Shipping:<\/strong> 1–2 days handling + 5–10 days shipping time<\/li><li><strong>Priority Shipping:<\/strong> 1–2 days handling + 4–7 days shipping time<\/li><\/ul><p>A tracking number will be sent by email as soon as your order leaves the warehouse.<\/p><p><strong>Questions?<\/strong><br\/>Email us at <strong>info@shopvetpets.com<\/strong> – we always reply within 24 hours on weekdays.<\/p>","page":"","margin_top":24,"margin_bottom":0}},"description":{"type":"description","disabled":true,"settings":{"margin_top":24,"margin_bottom":24}}},"block_order":["rating_stars_NytK7e","title","price","text_LxKHa6","text_nyRh9f","de244682-4323-4802-b4ba-b79b08e0c71d","44f9cdc2-f4bf-466e-87d5-fb765ad4864a","074f248d-8d73-4c8f-a97e-d8e82c5be5fc","kaching_bundles_app_block_EDhUTk","custom_liquid_HHdtfR","text_J9GQEF","buy_buttons","98db29ee-a7dc-429e-8129-bf71131627da","custom_liquid_Epc8Px","custom_liquid_XcDwad","custom_liquid_RbJrHG","d505cdfe-d5cf-4aff-8e9e-abca6dae66eb","149aabfb-9fd8-4472-a633-6032dbe01ed0","collapsible_tab_wNCAKj","collapsible_tab_eWGzcG","collapsible_tab_PqhzVJ","collapsible_tab_QGKJBE","collapsible_tab_WiqM8k","description"],"settings":{"display_id":false,"enable_sticky_info":true,"display_variant_image_first":false,"disable_prepend":false,"hide_variants":false,"variant_image_filtering":"none","image_zoom":"none","thumbnails_ratio":"square","arrows_color_scheme":"inverse","transparent_arrows":false,"dots_color_scheme":"inverse","video_player":"play_btn","enable_video_looping":false,"autoplay_videos_pause_btn":false,"video_sound_btn":false,"video_timeline":false,"play_btn_color_scheme":"accent-1","sound_btn_color_scheme":"inverse","timeline_color":"accent-1","media_size":"medium","media_position":"left","gallery_layout":"thumbnail_slider","desktop_thumbnails_position":"bottom","desktop_thumbnails_count":5,"desktop_vertical_thumbnails_width":16,"desktop_vertical_thumbnails_hide_arrows":false,"constrain_to_viewport":true,"media_fit":"contain","desktop_arrows_position":"hidden","mobile_media_corner_radius":12,"mobile_spacing_pixels":0,"mobile_arrows_position":"hidden","mobile_pagination":"hidden","mobile_thumbnails_position":"bottom","mobile_thumbnails_count":5,"mobile_vertical_thumbnails_width":22,"mobile_vertical_thumbnails_hide_arrows":true,"mobile_scroll_padding_percentage":0,"mobile_scroll_padding_pixels":2,"enable_mobile_outher_spacing":false,"mobile_slides_container_width":100,"mobile_slides_inner_width":100,"trust_badge_position":"top-right","trust_badge_size":"medium","mobile_padding_top":0,"mobile_padding_bottom":28,"desktop_padding_top":36,"desktop_padding_bottom":36}},"related-products":{"type":"related-products","disabled":true,"settings":{"display_id":false,"title":"You may also like","title_highlight_color":"#6d388b","heading_size":"h2","products_to_show":4,"stretch_cards":false,"columns_desktop":4,"color_scheme":"background-1","image_ratio":"adapt","show_secondary_image":false,"show_vendor":false,"show_rating":false,"enable_quick_add":false,"columns_mobile":"2","padding_top":36,"padding_bottom":24}},"03c08e95-f0ce-4379-bc05-787da4136202":{"type":"horizontal-ticker","blocks":{"template--18472096170313__03c08e95-f0ce-4379-bc05-787da4136202-1679864525e35c34e4-0":{"type":"text","settings":{"title":"Free Shipping"}},"template--18472096170313__03c08e95-f0ce-4379-bc05-787da4136202-1679864525e35c34e4-1":{"type":"text","settings":{"title":"100 Day Money-Back Guarantee"}},"template--18472096170313__03c08e95-f0ce-4379-bc05-787da4136202-1679864525e35c34e4-2":{"type":"text","settings":{"title":"Over 15,000 Happy Dogs Worldwide"}}},"block_order":["template--18472096170313__03c08e95-f0ce-4379-bc05-787da4136202-1679864525e35c34e4-0","template--18472096170313__03c08e95-f0ce-4379-bc05-787da4136202-1679864525e35c34e4-1","template--18472096170313__03c08e95-f0ce-4379-bc05-787da4136202-1679864525e35c34e4-2"],"settings":{"display_id":false,"visibility":"always-display","speed":2.5,"direction":"normal","stop_on_hover":false,"mobile_spacing":60,"desktop_spacing":100,"color_scheme":"custom","mobile_text_size":16,"desktop_text_size":18,"italic_text":false,"uppercase_text":true,"bold_text":true,"mobile_image_height":26,"desktop_image_height":40,"mobile_reviews_width":300,"desktop_reviews_width":400,"hidden_products":"","enable_specific_display":false,"displayed_products":"","mobile_padding_top":16,"mobile_padding_bottom":16,"desktop_padding_top":16,"desktop_padding_bottom":16,"custom_colors_background":"#47b5e9","custom_gradient_background":"","custom_colors_text":"#ffffff"}},"section_divider_mpJqcK":{"type":"section-divider","disabled":true,"name":"Section divider","settings":{"visibility":"always-display","shape":"waves_1","flip_horizontal":false,"flip_vertical":false,"shape_color":"background-2","custom_shape_color":"#dd1d1d","background_color":"background-1","custom_background_color":"#ffffff","padding_top":0,"padding_bottom":0}},"image_slider_VPRWTj":{"type":"image-slider","disabled":true,"name":"Image\/Video Slider","settings":{"display_id":false,"visibility":"always-display","title":"Over 10,000 <strong>Happy Dogs & Owners <\/strong>Worldwide!","title_highlight_color":"#118fcb","heading_size":"h2","color_scheme":"background-2","type":"slide","drag":"enabled","autoplay":true,"autoplay_speed":1,"center_mode":false,"arrows_color_scheme":"inverse","transparent_arrows":false,"dots_color_scheme":"inverse","desktop_page_width":"normal","desktop_border_radius":0,"slides_desktop":3,"per_move_desktop":1,"desktop_spacing":28,"desktop_side_padding":0,"desktop_padding_calc":true,"desktop_adaptive_height":false,"desktop_dots_position":"under","desktop_arrows_position":"sides","mobile_full_page":false,"mobile_border_radius":0,"slides_mobile":2,"per_move_mobile":1,"mobile_spacing":12,"mobile_side_padding":0,"mobile_padding_calc":true,"mobile_adaptive_height":false,"mobile_dots_position":"under","mobile_arrows_position":"sides","padding_top":36,"padding_bottom":36,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#121212"}},"section_divider_pE3qdc":{"type":"section-divider","disabled":true,"name":"Section divider","settings":{"visibility":"always-display","shape":"waves_1","flip_horizontal":false,"flip_vertical":true,"shape_color":"background-2","custom_shape_color":"#dd1d1d","background_color":"background-1","custom_background_color":"#ffffff","padding_top":0,"padding_bottom":0}},"image_with_text_pbPPGT":{"type":"image-with-text","blocks":{"heading_f9jdby":{"type":"heading","settings":{"title":"80% of dogs develop <strong>gingivitis<\/strong> by the age of 3","title_highlight_color":"#e34a55","heading_size":"h2"}},"text_BmNtng":{"type":"text","settings":{"text":"<p>Have you noticed <strong>bad breath, plaque, or tartar on your dog’s teeth?<\/strong> That’s often the beginning of a chain reaction that quickly gets worse.<\/p><p>Plaque that is left untreated <strong>hardens into tartar<\/strong> – something neither chews nor brushing can remove. <strong>This leads to inflammation, pain,<\/strong> and bacteria that can spread throughout the body. In the worst case, the heart and other organs are affected – <strong>and your dog’s life is shortened. 💔<\/strong><\/p><p><strong>With FreshSmile Kit you can stop this development in time.<\/strong><\/p><p>Remove tartar at home – safely, quietly, and without expensive vet visits. In just a few minutes a week, <strong>you can give your dog healthier teeth and a happier life.<\/strong><\/p>","text_style":"body"}}},"block_order":["heading_f9jdby","text_BmNtng"],"name":"t:sections.image-with-text.presets.name","settings":{"display_id":false,"visibility":"always-display","image":"shopify:\/\/shop_images\/bra_gif_9e0ff993-86c7-48ff-8c64-6c53032fb72a.webp","video":"shopify:\/\/files\/videos\/Freshsmile video.mp4","video_autoplay":true,"video_loop":true,"height":"adapt","color_scheme":"background-1","section_color_scheme":"background-1","full_desktop_width":false,"content_layout":"no-overlap","desktop_media_width":50,"layout":"image_first","desktop_content_position":"top","desktop_content_alignment":"left","mobile_full_media_width":false,"mobile_direction":"normal","mobile_image_quanlity":"2","mobile_content_alignment":"left","mobile_padding_top":24,"mobile_padding_bottom":24,"desktop_padding_top":36,"desktop_padding_bottom":36,"custom_colors_background":"#2e2a39","custom_gradient_background":"","custom_colors_text":"#ffffff","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff","custom_colors_outline_button":"#dd1d1d","custom_section_colors_background":"#ffffff","custom_section_gradient_background":""}},"section_divider_rfF4qA":{"type":"section-divider","name":"Section divider","settings":{"visibility":"always-display","shape":"waves_1","flip_horizontal":false,"flip_vertical":false,"shape_color":"background-2","custom_shape_color":"#dd1d1d","background_color":"background-1","custom_background_color":"#ffffff","padding_top":0,"padding_bottom":0}},"image_with_text_LxqdyB":{"type":"image-with-text","blocks":{"heading_8iGGCy":{"type":"heading","settings":{"title":"The same quality as at the vet – <strong>but easy at home!<\/strong>","title_highlight_color":"#118fcb","heading_size":"h2"}},"text_dfLUDF":{"type":"text","settings":{"text":"<p>At the vet, special tools are used to remove tartar – <strong>often under anesthesia and at high costs.<\/strong><br\/><\/p><p>FreshSmile™ uses the same type of technology, but is developed to be safe and easy in a home environment.<br\/><\/p><p>In just a few minutes a week, you can give <strong>your dog the same care as at the vet – without stress, risk, or expensive bills.<\/strong><\/p>","text_style":"body"}}},"block_order":["heading_8iGGCy","text_dfLUDF"],"name":"t:sections.image-with-text.presets.name","settings":{"display_id":false,"visibility":"always-display","image":"shopify:\/\/shop_images\/Engelska_22.jpg","video_autoplay":true,"video_loop":true,"height":"adapt","color_scheme":"background-2","section_color_scheme":"background-2","full_desktop_width":false,"content_layout":"no-overlap","desktop_media_width":50,"layout":"text_first","desktop_content_position":"top","desktop_content_alignment":"left","mobile_full_media_width":false,"mobile_direction":"normal","mobile_image_quanlity":"2","mobile_content_alignment":"left","mobile_padding_top":16,"mobile_padding_bottom":16,"desktop_padding_top":36,"desktop_padding_bottom":36,"custom_colors_background":"#2e2a39","custom_gradient_background":"","custom_colors_text":"#ffffff","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff","custom_colors_outline_button":"#dd1d1d","custom_section_colors_background":"#ffffff","custom_section_gradient_background":""}},"section_divider_FB6HTU":{"type":"section-divider","name":"Section divider","settings":{"visibility":"always-display","shape":"waves_1","flip_horizontal":false,"flip_vertical":true,"shape_color":"background-2","custom_shape_color":"#dd1d1d","background_color":"background-1","custom_background_color":"#ffffff","padding_top":0,"padding_bottom":0}},"image_with_text_dWLdtL":{"type":"image-with-text","blocks":{"heading_GbVHxi":{"type":"heading","settings":{"title":"A healthier mouth in just minutes","title_highlight_color":"#6d388b","heading_size":"h2"}},"text_LQ7PTe":{"type":"text","settings":{"text":"<p>FreshSmile uses <strong>sonic vibration technology<\/strong> – up to 31,000 vibrations per minute.<br\/><\/p><p>That means:<\/p><p>✅ It breaks down and <strong>removes plaque & tartar<\/strong> directly on the teeth<\/p><p>✅ It only <strong>activates on hard surfaces (<\/strong>teeth) – never on the gums<\/p><p>✅ That makes it <strong>gentle, safe, and low-risk<\/strong>, even for sensitive dogs<br\/><\/p><p><strong>The result is cleaner teeth, fresher breath, and a happier dog – without stress or pain.<\/strong><\/p>","text_style":"body"}}},"block_order":["heading_GbVHxi","text_LQ7PTe"],"name":"t:sections.image-with-text.presets.name","settings":{"display_id":false,"visibility":"always-display","image":"shopify:\/\/shop_images\/Engelska_15.jpg","video_autoplay":true,"video_loop":true,"height":"adapt","color_scheme":"background-1","section_color_scheme":"background-1","full_desktop_width":false,"content_layout":"no-overlap","desktop_media_width":50,"layout":"image_first","desktop_content_position":"top","desktop_content_alignment":"left","mobile_full_media_width":false,"mobile_direction":"normal","mobile_image_quanlity":"2","mobile_content_alignment":"left","mobile_padding_top":0,"mobile_padding_bottom":16,"desktop_padding_top":36,"desktop_padding_bottom":36,"custom_colors_background":"#2e2a39","custom_gradient_background":"","custom_colors_text":"#ffffff","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff","custom_colors_outline_button":"#dd1d1d","custom_section_colors_background":"#ffffff","custom_section_gradient_background":""}},"section_divider_pbhGpk":{"type":"section-divider","name":"Section divider","settings":{"visibility":"always-display","shape":"waves_1","flip_horizontal":false,"flip_vertical":false,"shape_color":"background-2","custom_shape_color":"#dd1d1d","background_color":"background-1","custom_background_color":"#ffffff","padding_top":0,"padding_bottom":0}},"6b7afe89-5595-4016-a10d-f260d82ca9cc":{"type":"comparison-table","blocks":{"template--18472096170313__6b7afe89-5595-4016-a10d-f260d82ca9cc-167986455514a8e470-0":{"type":"row","settings":{"benefit":"₤300-$600 per treatment","us":false,"others":true,"others_2":false,"others_3":false}},"template--18472096170313__6b7afe89-5595-4016-a10d-f260d82ca9cc-167986455514a8e470-1":{"type":"row","settings":{"benefit":"<strong>₤43 one-time cost<\/strong>","us":true,"others":false,"others_2":false,"others_3":false}},"row_9NizDw":{"type":"row","settings":{"benefit":"Anesthesia risk for senior dogs, requires sedation","us":false,"others":true,"others_2":false,"others_3":false}},"row_RhAVqY":{"type":"row","settings":{"benefit":"No anesthesia – completely safe at home","us":true,"others":false,"others_2":false,"others_3":false}},"row_EETaCi":{"type":"row","settings":{"benefit":"Book appointment, wait weeks, take time off work","us":false,"others":true,"others_2":false,"others_3":false}},"template--18472096170313__6b7afe89-5595-4016-a10d-f260d82ca9cc-167986455514a8e470-2":{"type":"row","settings":{"benefit":"<strong>10 minutes at home whenever it suits you<\/strong>","us":true,"others":false,"others_2":false,"others_3":false}},"row_cYGYd9":{"type":"row","settings":{"benefit":"Tartar returns – need repeat treatments yearly","us":false,"others":true,"others_2":false,"others_3":false}},"row_4MJy4h":{"type":"row","settings":{"benefit":"<strong>Quiet tool, low vibration – dog barely notices<\/strong>","us":true,"others":false,"others_2":false,"others_3":false}},"row_dVNnee":{"type":"row","settings":{"benefit":"Use at home regularly – keep teeth clean for years","us":true,"others":false,"others_2":false,"others_3":false}},"row_fUjWtf":{"type":"row","settings":{"benefit":"<strong>100-day money-back guarantee<\/strong>","us":true,"others":false,"others_2":false,"others_3":false}}},"block_order":["template--18472096170313__6b7afe89-5595-4016-a10d-f260d82ca9cc-167986455514a8e470-0","template--18472096170313__6b7afe89-5595-4016-a10d-f260d82ca9cc-167986455514a8e470-1","row_9NizDw","row_RhAVqY","row_EETaCi","template--18472096170313__6b7afe89-5595-4016-a10d-f260d82ca9cc-167986455514a8e470-2","row_cYGYd9","row_4MJy4h","row_dVNnee","row_fUjWtf"],"settings":{"display_id":false,"visibility":"always-display","title":"<strong>FreshSmile 3 in 1 Kit <\/strong>vs Vet Dental Cleaning","title_highlight_color":"#47b5e9","heading_size":"h2","text":"","button_label":"","link":"","button_style_secondary":false,"atc_button_label":"","atc_product":"","atc_skip_cart":false,"desktop_alignment":"center","mobile_alignment":"center","color_scheme":"background-2","layout":"table_second","style":"minimal","corner_radius":20,"number_of_competitors":1,"us_label":"FreshSmile","us_label_size":18,"logo":"shopify:\/\/shop_images\/FreshSmile_Kit.png","logo_width":110,"mobile_logo_width":100,"others_label":"Vet Dental Cleaning","others_label_size":18,"others_logo_width":90,"others_mobile_logo_width":60,"others_2_label":"Competitor 2","others_2_label_size":18,"others_2_logo_width":90,"others_2_mobile_logo_width":60,"others_3_label":"Competitor 3","others_3_label_size":18,"others_3_logo_width":90,"others_3_mobile_logo_width":60,"checkmark_style":"regular","checkmark_color":"#ffffff","checkmark_bg_color":"#47b5e9","x_style":"regular","x_color":"#121212","x_bg_color":"#dbdbdb","opposite_icon_colors":"original","highlighted_color_scheme":"accent-1","highlighted_separator_opacity":0,"highlighted_overlay_opacity":0,"other_cells_color_scheme":"background-1","regular_separator_opacity":10,"regular_overlay_opacity":0,"minimalistic_border_opacity":16,"padding_top":36,"padding_bottom":36,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#2e2a39","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff","custom_colors_outline_button":"#dd1d1d","custom_colors_highlighted_background":"#2e2a39","custom_colors_highlighted_text":"#ffffff","custom_colors_others_background":"#ffffff","custom_colors_others_text":"#2e2a39"}},"section_divider_GNqnAc":{"type":"section-divider","name":"Section divider","settings":{"visibility":"always-display","shape":"waves_1","flip_horizontal":false,"flip_vertical":true,"shape_color":"background-2","custom_shape_color":"#dd1d1d","background_color":"background-1","custom_background_color":"#ffffff","padding_top":0,"padding_bottom":0}},"image_with_text_FPxBtf":{"type":"image-with-text","blocks":{"heading_gNPBqY":{"type":"heading","settings":{"title":"100 Days Satisfaction Guarantee","title_highlight_color":"#6d388b","heading_size":"h1"}},"text_aTxCHi":{"type":"text","settings":{"text":"<p>We want you to feel completely confident.<\/p><p>That’s why you can <strong>try FreshSmile Kit for 100 days, completely risk-free.<\/strong><br\/><\/p><p>You only pay once you’ve received the product and feel 100% satisfied.<\/p><p><\/p><p>If you don’t see results – you’ll get a full refund.<\/p><p><\/p><p><strong>For us, the most important thing is that your dog gets the care it deserves.<\/strong><\/p>","text_style":"body"}}},"block_order":["heading_gNPBqY","text_aTxCHi"],"disabled":true,"name":"t:sections.image-with-text.presets.name","settings":{"display_id":false,"visibility":"always-display","image":"shopify:\/\/shop_images\/Generated_Image_September_15_2025_-_1_42PM.png","video_autoplay":true,"video_loop":true,"height":"adapt","color_scheme":"background-1","section_color_scheme":"background-1","full_desktop_width":false,"content_layout":"no-overlap","desktop_media_width":50,"layout":"image_first","desktop_content_position":"top","desktop_content_alignment":"left","mobile_full_media_width":false,"mobile_direction":"normal","mobile_image_quanlity":"2","mobile_content_alignment":"left","mobile_padding_top":0,"mobile_padding_bottom":16,"desktop_padding_top":36,"desktop_padding_bottom":36,"custom_colors_background":"#2e2a39","custom_gradient_background":"","custom_colors_text":"#ffffff","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff","custom_colors_outline_button":"#dd1d1d","custom_section_colors_background":"#ffffff","custom_section_gradient_background":""}},"854b8c46-40a3-4c74-9b36-360886558b1f":{"type":"testimonials","blocks":{"template--18472096170313__854b8c46-40a3-4c74-9b36-360886558b1f-16798646670717cf42-0":{"type":"column","settings":{"star_rating":5,"title":"Much better than anesthesia for senior dogs","text":"<p>My retriever is 11 years old and the vet wanted $650 for tartar removal with anesthesia. Didn't want to risk it at his age so I tested FreshSmile instead. Took a few tries to learn but the tartar actually came off after the third use. Tool is quiet and he doesn't seem to mind it anymore. Use it every other month now to keep clean. Much safer than risking an operation.<\/p>","author":"Linda B, 57"}},"template--18472096170313__854b8c46-40a3-4c74-9b36-360886558b1f-16798646670717cf42-1":{"type":"column","settings":{"star_rating":5,"title":"Saved $500 at the vet","text":"<p>My chihuahua lost 8 teeth last year due to tartar and it cost $900. Didn't want my other dog to go through the same thing. Bought FreshSmile even though I was skeptical. It took about 2 weeks before the tartar started coming off in small chunks but it really works! Saved me a new vet bill and he doesn't have to have surgery.<\/p>","author":"Amy H, 43"}},"template--18472096170313__854b8c46-40a3-4c74-9b36-360886558b1f-16798646670717cf42-2":{"type":"column","settings":{"star_rating":5,"title":"Took a few tries but works","text":"<p>Had tartar on my lab's teeth. Vet wanted $500 which felt like too much. Tested this and it took me 2-3 tries to learn the right technique but then it went fast. Tartar on the front teeth came off easily. Low vibration so the dog sat still. Do it myself now instead, saves money.<\/p>","author":"Robert B, 59"}},"column_edrjnC":{"type":"column","settings":{"star_rating":5,"title":"Better than I thought","text":"<p>Saw the price for the vet's tartar removal ($800 wtf) and started googling alternatives. FreshSmile seemed too good to be true but I tested it. First time was a bit awkward but after that it went smoothly. Tartar came off in small pieces after each use. His teeth are like 3 shades whiter now. So glad I didn't spend $800.<\/p>","author":"Michelle H, 38"}},"column_AkyB88":{"type":"column","settings":{"star_rating":5,"title":"Safer than surgery","text":"<p>My dachshund is 13 years old and the vet said he doesn't recommend anesthesia anymore. He suggested I try to remove the tartar at home instead. FreshSmile actually worked, removed the worst on his molars in a few uses. Tool is so quiet he didn't get scared. Much safer than risking surgery at his age.<\/p>","author":"Elizabeth S, 61"}},"column_GpUJG6":{"type":"column","settings":{"star_rating":5,"title":"Thought it was a scam but nope","text":"<p>Was 100% sure this was some scam product but I was desperate after my dog had serious tartar buildup. Tried it anyway and honestly couldn't believe it worked. The tartar on his canines started coming off after the second try. Low vibration, dog didn't mind it at all. Use it every third month now. Saved me a vet bill of $600. Would buy again in a heartbeat..<\/p>","author":"Jessica P, 38"}},"column_pPiUNw":{"type":"column","settings":{"star_rating":5,"title":"Works as it should","text":"<p>Had tartar issues on my lab's teeth. Vet wanted $500 so I bought this instead. Took me 2-3 tries to learn the right technique but then it was easy. The tartar on his front teeth came off easily. Low vibration so the dog sat still. Do it myself now instead, saves money. Good investment.<\/p>","author":"Michael G, 62"}},"column_U7RK9E":{"type":"column","settings":{"star_rating":5,"title":"Great to be able to do at home","text":"<p>Wanted to avoid putting the dog under anesthesia when we have small kids at home and money is tight. FreshSmile was a bit scary at first but I learned quickly. Tartar on his front teeth came off after about a week of use. The tool is quiet which is good for the kids too. Saved us $500 at the vet.<\/p>","author":"Sarah T, 39"}},"column_tTGdYH":{"type":"column","settings":{"star_rating":5,"title":"Good for regular maintenance","text":"<p>My dog had some tartar but not too bad yet. Vet said I should try to keep it under control at home before it gets worse. FreshSmile worked well for that, removed the little bit that was there and now I use it every third month to keep teeth clean. Tool is quiet and gentle. Much better than waiting until it becomes a big problem.<\/p>","author":"Karen L, 54"}},"column_JK7hNh":{"type":"column","settings":{"star_rating":5,"title":"Finally something that actually works","text":"<p>Have tried everything - chew toys, toothbrush, water additives. Nothing worked and the tartar just got worse. Vet wanted $680 which felt like too much. Googled and found FreshSmile. First time was a bit clumsy but after that it went quickly. Tartar on his teeth started coming off after about a week. So damn relieved to finally find something that actually works and doesn't cost a fortune.<\/p>","author":"Emma R, 40"}}},"block_order":["template--18472096170313__854b8c46-40a3-4c74-9b36-360886558b1f-16798646670717cf42-0","template--18472096170313__854b8c46-40a3-4c74-9b36-360886558b1f-16798646670717cf42-1","template--18472096170313__854b8c46-40a3-4c74-9b36-360886558b1f-16798646670717cf42-2","column_edrjnC","column_AkyB88","column_GpUJG6","column_pPiUNw","column_U7RK9E","column_tTGdYH","column_JK7hNh"],"settings":{"display_id":false,"visibility":"always-display","title":"Verified Reviews","title_highlight_color":"#6d388b","heading_size":"h1","text":"<p><strong>10,000+ dog owners <\/strong>have already saved hundreds on vet bills<\/p>","color_scheme":"background-1","image_width":"full","image_ratio":"square","column_alignment":"center","show_stars":true,"inactive_stars_style":"solid","star_color":"#ffcc00","bg_star_color":"#ececec","show_quotes":true,"quotes_color_scheme":"accent-1","cards_color_scheme":"bg-overlay","type":"slide","autoplay":true,"autoplay_speed":5,"arrows_color_scheme":"inverse","transparent_arrows":true,"dots_color_scheme":"inverse","desktop_full_page":true,"columns_desktop":5,"slider_desktop":true,"per_move_desktop":1,"desktop_spacing":68,"desktop_side_padding":0,"desktop_padding_calc":true,"desktop_adaptive_height":false,"desktop_dots_position":"under","desktop_arrows_position":"sides","slider_mobile":true,"enable_mobile_preview":false,"mobile_adaptive_height":false,"mobile_dots_position":"under","mobile_arrows_position":"under","padding_top":36,"padding_bottom":36,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#2e2a39","custom_cards_colors_background":"#f3f3f3","custom_cards_gradient_background":"","custom_cards_colors_text":"#2e2a39"}},"featured_collection_aRPgAb":{"type":"featured-collection","name":"t:sections.featured-collection.presets.name","settings":{"display_id":false,"visibility":"always-display","title":"You may also be interested in:","title_highlight_color":"#6d388b","heading_size":"h2","description":"","show_description":false,"description_style":"body","color_scheme":"background-1","collection":"frontpage","products_to_show":4,"stretch_cards":false,"show_view_all":false,"view_all_style":"solid","cards_color_scheme":"background-1","image_ratio":"adapt","show_secondary_image":false,"badges":"regular","show_vendor":false,"show_rating":false,"enable_quick_add":false,"swatches_option_name":"","swatches_position":"top","swatches_desktop_size":36,"swatches_mobile_size":24,"type":"slide","autoplay":false,"autoplay_speed":5,"arrows_color_scheme":"inverse","transparent_arrows":true,"dots_color_scheme":"inverse","desktop_full_page":false,"columns_desktop":4,"slider_desktop":false,"per_move_desktop":1,"desktop_spacing":40,"desktop_side_padding":0,"desktop_padding_calc":true,"desktop_adaptive_height":false,"desktop_dots_position":"under","desktop_arrows_position":"sides","columns_mobile":"2","slider_mobile":true,"enable_mobile_preview":false,"mobile_adaptive_height":false,"mobile_dots_position":"under","mobile_arrows_position":"under","padding_top":36,"padding_bottom":36,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#2e2a39","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff"}},"section_divider_E3REbR":{"type":"section-divider","name":"Section divider","settings":{"visibility":"always-display","shape":"waves_1","flip_horizontal":false,"flip_vertical":false,"shape_color":"background-2","custom_shape_color":"#dd1d1d","background_color":"background-1","custom_background_color":"#ffffff","padding_top":0,"padding_bottom":0}},"collapsible_content_p7mjJe":{"type":"collapsible-content","blocks":{"collapsible_row_P43e4z":{"type":"collapsible_row","settings":{"heading":"Is it safe for my dog?","icon":"","filled_icon":false,"row_content":"<p>Yes, FreshSmile Kit is designed for home use and only works on hard tooth surfaces – not on the gums. This makes it very safe and gentle to use.<\/p>","page":""}},"collapsible_row_q7TDhX":{"type":"collapsible_row","settings":{"heading":"Does it hurt the dog?","icon":"","filled_icon":false,"row_content":"<p>No, the treatment is completely painless when used as instructed. The device only vibrates against the teeth and does not damage the gums. Most dogs adapt quickly.<\/p>","page":""}},"collapsible_row_MxWYGH":{"type":"collapsible_row","settings":{"heading":"Does it work for all breeds and sizes?","icon":"","filled_icon":false,"row_content":"<p>Yes, FreshSmile Kit is suitable for all dog breeds and sizes – from small Chihuahuas to large breeds like German Shepherds.<\/p>","page":""}},"collapsible_row_QAJKrw":{"type":"collapsible_row","settings":{"heading":"Is it safe to use on puppies and older dogs?","icon":"","filled_icon":false,"row_content":"<p>Yes, but puppies should wait until they have their permanent teeth. Older dogs can use it just like younger ones, but extra care should be taken if their gums are sensitive.<\/p>","page":""}},"collapsible_row_wR4VKn":{"type":"collapsible_row","settings":{"heading":"How often should I use FreshSmile Kit?","icon":"","filled_icon":false,"row_content":"<p>We recommend 1–2 times per week. That’s enough to keep tartar away and prevent dental problems.<\/p>","page":""}},"collapsible_row_AzQGGG":{"type":"collapsible_row","settings":{"heading":"What if my dog is sensitive or afraid?","icon":"","filled_icon":false,"row_content":"<p>Start slowly and let your dog get used to the sound and feeling. Try short sessions at first and reward with treats and praise afterwards.<\/p>","page":""}},"collapsible_row_N6izTp":{"type":"collapsible_row","settings":{"heading":"Can I really remove tartar at home as effectively as a vet?","icon":"","filled_icon":false,"row_content":"<p>Vets often use anesthesia and special instruments. FreshSmile Kit is not a replacement for veterinary care, but it is an effective way to remove plaque and tartar at home – which helps reduce the need for expensive cleanings.<\/p>","page":""}},"collapsible_row_CktV8Q":{"type":"collapsible_row","settings":{"heading":"What if I’m not satisfied with the results?","icon":"","filled_icon":false,"row_content":"<p>We offer a 100-day money-back guarantee. If you’re not satisfied, you can return the product and get your money back – completely risk-free.<\/p>","page":""}}},"block_order":["collapsible_row_P43e4z","collapsible_row_q7TDhX","collapsible_row_MxWYGH","collapsible_row_QAJKrw","collapsible_row_wR4VKn","collapsible_row_AzQGGG","collapsible_row_N6izTp","collapsible_row_CktV8Q"],"name":"t:sections.collapsible_content.presets.name","settings":{"display_id":false,"visibility":"always-display","caption":"","title":"FAQ","title_highlight_color":"#6d388b","heading_size":"h1","heading_alignment":"center","layout":"none","color_scheme":"background-2","container_color_scheme":"background-2","open_first_collapsible_row":false,"video_muted_autoplay":true,"image_ratio":"adapt","desktop_layout":"image_second","row_heading_size":"medium","collapse_icon":"carret","display_top_border":true,"padding_top":36,"padding_bottom":36,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#000000","custom_contaner_colors_background":"#ffffff","custom_container_gradient_background":"","custom_contaner_colors_text":"#000000"}},"section_divider_LQG9Ja":{"type":"section-divider","name":"Section divider","settings":{"visibility":"always-display","shape":"waves_1","flip_horizontal":false,"flip_vertical":false,"shape_color":"background-1","custom_shape_color":"#dd1d1d","background_color":"background-2","custom_background_color":"#ffffff","padding_top":0,"padding_bottom":0}},"image_banner_7kDER8":{"type":"image-banner","blocks":{"heading_WLVFch":{"type":"heading","settings":{"title":"A risk-free investment in your dog's health","title_highlight_color":"#6d388b","heading_size":"h1"}},"text_Wx7LkM":{"type":"text","settings":{"text":"FreshSmile is an effective and gentle solution for your dog's oral health. 100-day money-back guarantee – try it at home in peace and quiet and get your money back as a gift card if you're not completely satisfied. Give your dog healthier teeth and a brighter future with a product you can trust.","text_style":"body"}},"buttons_kmVn8P":{"type":"buttons","settings":{"button_label_1":"Read about the guarantee","button_link_1":"shopify:\/\/pages\/100-day-money-back-guarantee","button_style_secondary_1":true,"button_label_2":"","button_link_2":"","button_style_secondary_2":false}},"atc_button_niPYzB":{"type":"atc_button","settings":{"button_label":"Add to Cart","atc_product":"","atc_skip_cart":false}},"rating_stars_hPWagy":{"type":"rating_stars","settings":{"rating":4.8,"star_color":"#ffcc00","bg_stars_style":"full","bg_star_color":"#ececec","label":"4,86\/5 (10,000+ Reviews)","size":14,"scroll_id":""}}},"block_order":["heading_WLVFch","text_Wx7LkM","buttons_kmVn8P","atc_button_niPYzB","rating_stars_hPWagy"],"name":"t:sections.image-banner.presets.name","settings":{"display_id":false,"visibility":"always-display","image":"shopify:\/\/shop_images\/irish-setter-dog-close-up.jpg","image_1_visibility":"always-display","image_2_visibility":"always-display","image_overlay_opacity":20,"image_height":"large","url":"","desktop_content_position":"middle-center","show_text_box":false,"desktop_content_alignment":"center","color_scheme":"background-1","transparent_container_color":"white","mobile_content_alignment":"center","stack_images_on_mobile":true,"show_text_below":false}}},"order":["main","related-products","03c08e95-f0ce-4379-bc05-787da4136202","section_divider_mpJqcK","image_slider_VPRWTj","section_divider_pE3qdc","image_with_text_pbPPGT","section_divider_rfF4qA","image_with_text_LxqdyB","section_divider_FB6HTU","image_with_text_dWLdtL","section_divider_pbhGpk","6b7afe89-5595-4016-a10d-f260d82ca9cc","section_divider_GNqnAc","image_with_text_FPxBtf","854b8c46-40a3-4c74-9b36-360886558b1f","featured_collection_aRPgAb","section_divider_E3REbR","collapsible_content_p7mjJe","section_divider_LQG9Ja","image_banner_7kDER8"]}
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "rating_stars_NytK7e": {
+          "type": "rating_stars",
+          "settings": {
+            "rating": 4.8,
+            "star_color": "#ffcc00",
+            "bg_stars_style": "full",
+            "bg_star_color": "#ececec",
+            "label": "4,86/5 (10,000+ Reviews)",
+            "size": 15,
+            "alignment": "flex-start",
+            "scroll_id": "",
+            "margin_top": 6,
+            "margin_bottom": 6
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "text_size": "h2",
+            "title_alignment": "left",
+            "uppercase_title": false,
+            "margin_top": 0,
+            "margin_bottom": 6
+          }
+        },
+        "price": {
+          "type": "price",
+          "disabled": true,
+          "settings": {
+            "layout": "price_first",
+            "price_color": "accent-1",
+            "compare_price_color": "text",
+            "displayed_badge": "sale",
+            "icon_scale": 140,
+            "custom_badge_text": "[icon_1] SPECIAL OFFER",
+            "icon_1": "redeem",
+            "filled_icon_1": false,
+            "icon_2": "check_circle",
+            "filled_icon_2": false,
+            "margin_top": 3,
+            "margin_bottom": 3
+          }
+        },
+        "text_LxKHa6": {
+          "type": "text",
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "text_color": "#121212",
+            "text_1": "Removes plaque, tartar and stains",
+            "text_2": "Gives a fresh breath",
+            "text_3": "Prevents inflammation and tooth loss",
+            "icon_scale": 140,
+            "icon_color": "#118fcb",
+            "icon_1": "pets",
+            "filled_icon_1": true,
+            "icon_2": "pets",
+            "filled_icon_2": true,
+            "icon_3": "pets",
+            "filled_icon_3": true,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 5,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "text_nyRh9f": {
+          "type": "text",
+          "settings": {
+            "mobile_text_size": 14,
+            "desktop_text_size": 16,
+            "alignment": "left",
+            "text_color": "#121212",
+            "text_1": "Saves stress and expensive vet visits",
+            "text_2": "",
+            "text_3": "",
+            "icon_scale": 140,
+            "icon_color": "#118fcb",
+            "icon_1": "pets",
+            "filled_icon_1": true,
+            "icon_2": "new_releases",
+            "filled_icon_2": true,
+            "icon_3": "new_releases",
+            "filled_icon_3": true,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 5,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "de244682-4323-4802-b4ba-b79b08e0c71d": {
+          "type": "emoji_benefits",
+          "disabled": true,
+          "settings": {
+            "benefits": "<p>✅ Tar bort plack, tandsten & fläckar</p><p>✅ Ger en fräsch andedräkt</p><p>✅ Förebygger inflammation & tandlossning</p><p>✅ Sparar stress & dyra veterinärbesök</p>",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "44f9cdc2-f4bf-466e-87d5-fb765ad4864a": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_types": "pills, pills, pills",
+            "custom_labels": "",
+            "skip_unavailable": false,
+            "swatches_size": "medium",
+            "swatches_custom_colors": "disabled",
+            "swatches_custom_colors_list": "#000000, #FFFFFF",
+            "full_width_dropdowns": false,
+            "breaks_style": "normal",
+            "breaks_headline": "BUNDLE & SAVE",
+            "breaks_display_selected_indicator": true,
+            "breaks_border_radius": 10,
+            "breaks_border_width": 2,
+            "breaks_color_scheme": "accent-1",
+            "breaks_badges": "[empty], Most popular, [empty]",
+            "breaks_badge_style": "1",
+            "breaks_badge_color": "accent-1",
+            "breaks_displayed_images": "none",
+            "breaks_custom_images": "",
+            "breaks_image_width": 70,
+            "breaks_space_images": true,
+            "breaks_vertical_images_position": "top",
+            "breaks_vertical_prices_layout": "vertical",
+            "breaks_labels": "[name], [name], [name]",
+            "breaks_benefits": "[empty], Free Shipping, Free Shipping",
+            "breaks_benefit_position": "top",
+            "breaks_benefit_style": "outlined",
+            "breaks_benefit_color": "accent-1",
+            "breaks_captions": "Variant 1 caption, Variant 2 caption, Variant 3 caption",
+            "breaks_price_texts": "[price], [price], [price]",
+            "breaks_compare_price_texts": "[compare_price], [compare_price], [compare_price]",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "074f248d-8d73-4c8f-a97e-d8e82c5be5fc": {
+          "type": "quantity_selector",
+          "settings": {
+            "full_width_classic": false,
+            "atc_append": "none",
+            "atc_append_heights": "stretch-quantity",
+            "enable_quantity_discounts": false,
+            "style": "normal",
+            "headline": "",
+            "preselected": "option_1",
+            "display_selected_indicator": true,
+            "border_radius": 10,
+            "border_width": 2,
+            "color_scheme": "accent-1",
+            "enable_variant_selectors": true,
+            "enable_variant_selectors_on_quantity_of_1": false,
+            "update_prices": false,
+            "skip_unavailable": false,
+            "full_width_pickers": false,
+            "hide_pickers_overlay": true,
+            "pickers_label": "",
+            "image_width": 70,
+            "space_images": true,
+            "vertical_images_position": "top",
+            "vertical_prices_layout": "vertical",
+            "option_1_quantity": 1,
+            "option_1_badge": "",
+            "option_1_badge_style": "1",
+            "option_1_badge_color": "accent-1",
+            "option_1_label": "1 FreshSmile Kit",
+            "option_1_benefit": "Spara 50%",
+            "option_1_benefit_position": "top",
+            "option_1_benefit_style": "outlined",
+            "option_1_benefit_color": "accent-1",
+            "option_1_caption": "Fri frakt + Nöjdhetsgaranti",
+            "option_1_percentage_off_text": "0",
+            "option_1_fixed_amount_off": "0",
+            "option_1_price_text": "[price]",
+            "option_1_compare_price": "compare_price",
+            "option_1_compare_price_text": "[compare_price]",
+            "option_2_quantity": 2,
+            "option_2_badge": "",
+            "option_2_badge_style": "1",
+            "option_2_badge_color": "accent-1",
+            "option_2_label": "2 FreshSmile Kit",
+            "option_2_benefit": "Spara 50%",
+            "option_2_benefit_position": "top",
+            "option_2_benefit_style": "outlined",
+            "option_2_benefit_color": "accent-1",
+            "option_2_caption": "Fri frakt + Nöjdhetsgaranti",
+            "option_2_percentage_off_text": "0",
+            "option_2_fixed_amount_off": "99",
+            "option_2_price_text": "[price]",
+            "option_2_compare_price": "compare_price",
+            "option_2_compare_price_text": "[compare_price]",
+            "option_3_quantity": 0,
+            "option_3_badge": "",
+            "option_3_badge_style": "1",
+            "option_3_badge_color": "accent-1",
+            "option_3_label": "3 Paket",
+            "option_3_benefit": "Spara 1250kr",
+            "option_3_benefit_position": "top",
+            "option_3_benefit_style": "outlined",
+            "option_3_benefit_color": "accent-1",
+            "option_3_caption": "Fri frakt + Nöjdhetsgaranti",
+            "option_3_percentage_off_text": "0",
+            "option_3_fixed_amount_off": "348",
+            "option_3_price_text": "[price]",
+            "option_3_compare_price": "compare_price",
+            "option_3_compare_price_text": "[compare_price]",
+            "option_4_quantity": 0,
+            "option_4_badge": "",
+            "option_4_badge_style": "1",
+            "option_4_badge_color": "accent-1",
+            "option_4_label": "",
+            "option_4_benefit": "",
+            "option_4_benefit_position": "top",
+            "option_4_benefit_style": "outlined",
+            "option_4_benefit_color": "accent-1",
+            "option_4_caption": "You save [amount]",
+            "option_4_percentage_off_text": "0",
+            "option_4_fixed_amount_off": "0",
+            "option_4_price_text": "[price]",
+            "option_4_compare_price": "compare_price",
+            "option_4_compare_price_text": "[compare_price]",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "kaching_bundles_app_block_EDhUTk": {
+          "type": "shopify://apps/kaching-bundles/blocks/app-block/6c637362-a106-4a32-94ac-94dcfd68cdb8",
+          "settings": {
+            "product": "{{product}}",
+            "manual_deal_block_id": ""
+          }
+        },
+        "custom_liquid_HHdtfR": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<!-- Snippet: stock-status.liquid -->\n<div class=\"stock-status-wrapper\">\n  <span class=\"stock-status-dot\"></span>\n  <span class=\"stock-status-text\">Almost sold out - 48 left in stock</span>\n</div>\n\n<style>\n  .stock-status-wrapper {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n  }\n\n  .stock-status-dot {\n    width: 14px;\n    height: 14px;\n    background-color: #ff9900;\n    border-radius: 50%;\n    animation: stockPulse 1.5s ease-in-out infinite;\n    display: inline-block;\n  }\n\n  .stock-status-text {\n    color: #ff9900;\n    font-weight: 700;\n    font-size: 14px;\n  }\n\n  @keyframes stockPulse {\n    0% { transform: scale(1); opacity: 1; }\n    50% { transform: scale(1.3); opacity: 0.7; }\n    100% { transform: scale(1); opacity: 1; }\n  }\n</style>"
+          }
+        },
+        "text_J9GQEF": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "mobile_text_size": 16,
+            "desktop_text_size": 18,
+            "alignment": "left",
+            "text_color": "#f7941d",
+            "text_1": "Low Stock – Almost Sold Out",
+            "text_2": "",
+            "text_3": "",
+            "icon_scale": 140,
+            "icon_color": "#118fcb",
+            "icon_1": "pets",
+            "filled_icon_1": true,
+            "custom_icon_1": "shopify://shop_images/Namnlos_design_-_2025-10-01T144230.866_0c23455c-bcc7-4ef0-924e-3112eb41e31b.png",
+            "icon_2": "new_releases",
+            "filled_icon_2": true,
+            "icon_3": "new_releases",
+            "filled_icon_3": true,
+            "width": "100%",
+            "direction": "vertical",
+            "column_gap": 5,
+            "enable_bg": false,
+            "bg_color": "#f3f3f3",
+            "corner_radius": 40,
+            "padding": 3,
+            "border_size": 0,
+            "border_color": "#b7b7b7",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "skip_cart": false,
+            "uppercase_text": true,
+            "icon_scale": 120,
+            "icon_spacing": 10,
+            "atc_custom_label": "",
+            "display_price": false,
+            "enable_custom_color": true,
+            "custom_color": "#47b5e9",
+            "enable_secondary_btn": false,
+            "secondary_btn_label": "Buy It Now",
+            "secondary_btn_enable_custom_color": false,
+            "secondary_btn_custom_color": "#dd1d1d",
+            "margin_top": 24,
+            "margin_bottom": 24
+          }
+        },
+        "98db29ee-a7dc-429e-8129-bf71131627da": {
+          "type": "payment_badges",
+          "settings": {
+            "enabled_payment_types": "",
+            "margin_top": 15,
+            "margin_bottom": 15
+          }
+        },
+        "custom_liquid_Epc8Px": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<!-- GARANTIBADGE (PILL) -->\n<style>\n  .no-guarantee-pill{\n    --bg:#47B5E9;   /* bakgrunnsfarge */\n    --fg:#ffffff;   /* tekstfarge */\n    --px:22px;\n    --py:8px;\n    --radius:9999px;\n    --shadow:0 2px 10px rgba(0,0,0,.08);\n    display:inline-block; background:var(--bg); color:var(--fg);\n    padding:var(--py) var(--px); border-radius:var(--radius);\n    font-weight:700; letter-spacing:.06em; text-transform:uppercase;\n    box-shadow:var(--shadow); line-height:1; text-align:center;\n    font-size:12px;\n  }\n  .no-guarantee-wrap{ text-align:center; }\n  @media (min-width: 768px){ .no-guarantee-pill{ font-size:15px; } }\n</style>\n\n<div class=\"no-guarantee-wrap\">\n  {% assign guarantee_text = \"100 DAY MONEY-BACK GUARANTEE - TRY TODAY\" %}\n  <span class=\"no-guarantee-pill\">{{ guarantee_text }}</span>\n</div>"
+          }
+        },
+        "custom_liquid_XcDwad": {
+          "type": "custom_liquid",
+          "disabled": true,
+          "settings": {
+            "custom_liquid": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <style>\n    .custom-shipping-container {\n      display: flex;\n      padding: 6px 16px;\n      justify-content: space-between;\n      align-items: center;\n      background-color: #f6f6f6;\n      border-radius: 20px;\n      margin-top: 10px;\n    }\n\n    .custom-shipping-item {\n      display: flex;\n      align-items: center;\n      gap: 6px;\n    }\n\n    .text-block-shipping {\n      font-size: 12px;\n      color: #000;\n    }\n\n    .shipping-date {\n      font-weight: bold;\n    }\n\n    .shipping-worldwide {\n      font-size: 12px;\n      color: #000;\n    }\n\n    .shipping-worldwide .bold {\n      font-weight: bold;\n    }\n\n    .green-circle {\n      animation: fade 1s ease-in-out infinite;\n    }\n\n    @keyframes fade {\n      0%, 100% { opacity: 1; }\n      50% { opacity: 0.5; }\n    }\n\n    .flags-container {\n      display: flex;\n      gap: 6px;\n      align-items: center;\n    }\n    \n    .custom-icon {\n      width: 16px;\n      height: 12px;\n    }\n  </style>\n  <script>\n    document.addEventListener(\"DOMContentLoaded\", function() {\n      function getNextWeekday(date) {\n        var day = date.getDay();\n        var daysToAdd = (day === 5) ? 3 : (day === 6) ? 2 : 1;\n        return new Date(date.setDate(date.getDate() + daysToAdd));\n      }\n\n      var today = new Date();\n      var shipDate = getNextWeekday(today);\n      \n      // Format date to have short month (e.g., \"Thu, Feb 22\")\n      var options = { weekday: 'short', month: 'short', day: 'numeric' };\n      var formattedDate = shipDate.toLocaleDateString('en-US', options);\n      document.getElementById('shipping-date').textContent = formattedDate;\n\n      // Fetch country data using GeoJS API\n      fetch('https://get.geojs.io/v1/ip/geo.json')\n        .then(response => response.json())\n        .then(data => {\n          console.log(\"Geolocation API Response:\", data); // Debugging log\n\n          if (!data || !data.country_code) {\n            throw new Error(\"Invalid data from API\");\n          }\n          \n          var countryCode = data.country_code.toUpperCase(); // Get country code (e.g., \"GB\", \"US\")\n          var flagUrl = `https://flagcdn.com/w40/${countryCode.toLowerCase()}.png`;\n\n          // Set flag and country code\n          document.getElementById('country-flag').src = flagUrl;\n          document.getElementById('country-flag').alt = countryCode + \" Flag\";\n          document.getElementById('country-flag').style.display = \"inline\";\n          document.getElementById('country-text').innerHTML = `Free <span class=\"bold\">${countryCode}</span> Shipping`;\n        })\n        .catch(error => {\n          console.error('Error fetching the IP information:', error);\n          document.getElementById('country-flag').style.display = \"none\"; \n          document.getElementById('country-text').innerHTML = \"Fast Worldwide Shipping\";\n        });\n    });\n  </script>\n</head>\n<body>\n  <div class=\"custom-shipping-container\">\n    <div class=\"custom-shipping-item\">\n      <svg class=\"green-circle\" xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"13\" viewBox=\"0 0 12 13\" fill=\"none\">\n        <circle cx=\"6\" cy=\"6.5\" r=\"6\" fill=\"#137333\"/>\n      </svg>\n      <div class=\"text-block-shipping\">Ships by <span id=\"shipping-date\" class=\"shipping-date\"></span></div>\n    </div>\n    <div class=\"custom-shipping-item flags-container\">\n      <img id=\"country-flag\" class=\"custom-icon\" src=\"\" alt=\"Country Flag\" style=\"display: none;\">\n      <div id=\"country-text\" class=\"shipping-worldwide\">Loading...</div>\n    </div>\n  </div>\n</body>\n</html>"
+          }
+        },
+        "custom_liquid_RbJrHG": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<!-- SOSIALT BEVIS - ALT PÅ ÉN LINJE -->\n<style>\n  .sp-bar{\n    --bg:#fff; --radius:20px;\n    --shadow:0 2px 6px rgba(0,0,0,.08);\n    padding:8px 14px; background:var(--bg);\n    border-radius:var(--radius); box-shadow:var(--shadow);\n    width:fit-content; margin:14px auto 0;\n    font-size:12px; line-height:1.3;\n    display:flex; align-items:center; gap:5px;\n  }\n  .sp-avatars{ display:flex; align-items:center; }\n  .sp-avatar{\n    width:20px; height:22px; border-radius:9999px; overflow:hidden; flex:0 0 auto;\n    border:2px solid #fff; margin-right:-6px;\n  }\n  .sp-avatar img{ width:100%; height:100%; object-fit:cover; display:block; }\n  .sp-text{ display:flex; align-items:center; gap:5px; flex-wrap:nowrap; }\n  .sp-name{ font-weight:700; }\n  .sp-strong{ font-weight:700; }\n  .sp-check{ width:16px; height:16px; display:inline-block; }\n</style>\n\n{%- assign buyer_name = \"Maria N.\" -%}\n{%- assign buyer_count = 15.045 -%}\n\n<div class=\"sp-bar\">\n  <div class=\"sp-avatars\">\n    <span class=\"sp-avatar\">\n      <img src=\"https://randomuser.me/api/portraits/women/44.jpg\" alt=\"Kunde 1\">\n    </span>\n    <span class=\"sp-avatar\">\n      <img src=\"https://randomuser.me/api/portraits/women/65.jpg\" alt=\"Kunde 2\">\n    </span>\n    <span class=\"sp-avatar\">\n      <img src=\"https://randomuser.me/api/portraits/women/12.jpg\" alt=\"Kunde 3\">\n    </span>\n  </div>\n\n  <div class=\"sp-text\">\n    <span class=\"sp-name\">{{ buyer_name }}</span>\n    <span class=\"sp-check\">\n      <img src=\"https://cdn-icons-png.flaticon.com/512/7641/7641727.png\" alt=\"Verifisert\" width=\"16\" height=\"16\">\n    </span>\n    <span>and</span>\n    <span class=\"sp-strong\">{{ buyer_count }}</span>\n    <span>dog owners has purchased</span>\n  </div>\n</div>"
+          }
+        },
+        "d505cdfe-d5cf-4aff-8e9e-abca6dae66eb": {
+          "type": "sticky_atc",
+          "settings": {
+            "function": "add_to_cart",
+            "display_when": "after_scroll",
+            "button_label": "Add to cart",
+            "enable_custom_btn_color": false,
+            "custom_btn_color": "#dd1d1d",
+            "color_scheme": "background-1",
+            "star_color": "#ffcc00",
+            "stars_label": "4,86/5 (10,000+ Reviews)",
+            "picker_type": "combined",
+            "desktop_show_image": false,
+            "desktop_show_title": true,
+            "desktop_rating_stars": true,
+            "desktop_show_price": true,
+            "desktop_show_sale_badge": true,
+            "desktop_variant_picker": false,
+            "desktop_full_button_width": false,
+            "desktop_show_price_in_button": false,
+            "desktop_transparent_bg": false,
+            "mobile_show_image": false,
+            "mobile_show_title": true,
+            "mobile_rating_stars": true,
+            "mobile_show_price": false,
+            "mobile_show_sale_badge": true,
+            "mobile_variant_picker": false,
+            "mobile_full_button_width": true,
+            "mobile_show_price_in_button": false,
+            "mobile_transparent_bg": false
+          }
+        },
+        "149aabfb-9fd8-4472-a633-6032dbe01ed0": {
+          "type": "reviews",
+          "disabled": true,
+          "settings": {
+            "color_scheme": "background-1",
+            "show_custom_bg": false,
+            "custom_bg_color": "#f2f2f2",
+            "corner_radius": 12,
+            "border_width": 0,
+            "border_color": "#b7b7b7",
+            "avatar_alignment": "top",
+            "avatar_corner_radius": 40,
+            "star_color": "#ffcc00",
+            "stars_translate": 0,
+            "checkmark_color": "#6d388b",
+            "checkmark_icon_color": "#ffffff",
+            "slider_type": "slide",
+            "autoplay": false,
+            "autoplay_speed": 5,
+            "display_arrows": false,
+            "display_dots": true,
+            "author_1": "Author",
+            "text_1": "<p>Share positive thoughts and feedback from your customer.</p>",
+            "author_2": "Author",
+            "text_2": "<p>Share positive thoughts and feedback from your customer.</p>",
+            "author_3": "Author",
+            "text_3": "<p>Share positive thoughts and feedback from your customer.</p>",
+            "margin_top": 24,
+            "margin_bottom": 24
+          }
+        },
+        "collapsible_tab_wNCAKj": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "The Complete Dog Dental Care Guide FREE",
+            "heading_size": "medium",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "",
+            "page": "free-digital-dog-dental-care-guide-freshsmile-kit",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "collapsible_tab_eWGzcG": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "100 Day Money-Back Guarantee",
+            "heading_size": "medium",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p>We firmly believe that FreshSmile Kit will make a difference – for both you and your dog.<br/><br/>That’s why we offer a <strong>100-day money-back guarantee.</strong><br/><br/>You can test the product in the comfort of your own home.<br/><br/>Not completely satisfied? Then you get your money back – no hassle.<br/><br/>For us, it’s more important that your dog gets the right care than that you keep something you don’t love.</p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "collapsible_tab_PqhzVJ": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Features – What Makes FreshSmile Different",
+            "heading_size": "medium",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p>✅ <strong>Sonic Vibration Technology</strong></p><p>Removes plaque and tartar effectively with gentle micro-vibrations — completely safe and heat-free (not ultrasonic).<br/></p><p>✅ <strong>5 Intensity Levels</strong></p><p>Adjust the power for your dog’s comfort and control — suitable even for small or sensitive dogs.</p><p></p><p>✅ <strong>Precision LED Light</strong></p><p>Improves visibility so you can easily spot buildup and clean safely at home.<br/></p><p>✅ <strong>Interchangeable Heads</strong></p><p>Includes brushes and tartar tools for complete dental care — from cleaning to polishing.<br/></p><p>✅ <strong>Ergonomic, Rechargeable Design</strong></p><p>Lightweight and cordless for easy handling. Long-lasting battery (up to 2–3 weeks per charge).<br/></p><p>✅ <strong>Vet-Approved Safety</strong></p><p>Works only on hard surfaces (teeth), never on gums — completely safe for home use.<br/></p><p>✅ <strong>Quiet & Stress-Free</strong></p><p>Operates under 60 dB, making it ideal even for anxious pets.an that you keep something you don’t love.</p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "collapsible_tab_QGKJBE": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "What is included?",
+            "heading_size": "medium",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<p><strong>In every FreshSmile™ Kit you ge</strong>t:</p><p><strong>1x Electric main device</strong> – high-quality, ergonomic & rechargeable</p><p><strong>3x Brush heads </strong>– for daily cleaning</p><p><strong>2x Tartar removers</strong> – for plaque & stubborn tartar</p><p><strong>1x Dental & oral mirror</strong> – for easy inspection of your dog’s teeth</p><p><strong>3x Extra cleaning tools</strong> – for detailed cleaning</p><p><strong>1x USB charging cable</strong> – fast charging, up to 2–3 weeks of battery life</p><p><strong>1x Holder</strong> – practical for storage</p><p><strong>1x User manual</strong> – step-by-step for safe use</p><p><strong>🎁 Bonus: E-book Guide </strong>“The complete dog dental care guide\"</p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "collapsible_tab_WiqM8k": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Payment & Delivery",
+            "heading_size": "medium",
+            "icon": "",
+            "filled_icon": false,
+            "collapse_icon": "carret",
+            "display_top_border": true,
+            "open": false,
+            "content": "<h4><strong>Payment</strong></h4><p>You can safely pay with Klarna, credit card, or bank transfer – choose what works best for you.<br/></p><h4><strong>Shipping</strong></h4><p><br/>We offer different rates for the UK and the Rest of the World:</p><ul><li><strong>United Kingdom (UK): </strong>Standard Shipping: <strong>£2.00</strong> (Free on orders £37 and over)Priority Shipping: <strong>£4.50</strong></li><li><strong>Rest of the World:</strong>Standard Shipping: <strong>$2.95</strong> (Free on orders $49 and over)Priority Shipping: <strong>$6.00</strong></li></ul><p><strong>Delivery Time</strong><br/><br/>As our UK warehouse is temporarily out of stock, your order will be shipped from our international warehouse.<br/>We offer two shipping options at checkout:</p><ul><li><strong>Standard Shipping:</strong> 1–2 days handling + 5–10 days shipping time</li><li><strong>Priority Shipping:</strong> 1–2 days handling + 4–7 days shipping time</li></ul><p>A tracking number will be sent by email as soon as your order leaves the warehouse.</p><p><strong>Questions?</strong><br/>Email us at <strong>info@shopvetpets.com</strong> – we always reply within 24 hours on weekdays.</p>",
+            "page": "",
+            "margin_top": 24,
+            "margin_bottom": 0
+          }
+        },
+        "description": {
+          "type": "description",
+          "disabled": true,
+          "settings": {
+            "margin_top": 24,
+            "margin_bottom": 24
+          }
+        }
+      },
+      "block_order": [
+        "rating_stars_NytK7e",
+        "title",
+        "price",
+        "text_LxKHa6",
+        "text_nyRh9f",
+        "de244682-4323-4802-b4ba-b79b08e0c71d",
+        "44f9cdc2-f4bf-466e-87d5-fb765ad4864a",
+        "074f248d-8d73-4c8f-a97e-d8e82c5be5fc",
+        "kaching_bundles_app_block_EDhUTk",
+        "custom_liquid_HHdtfR",
+        "text_J9GQEF",
+        "buy_buttons",
+        "98db29ee-a7dc-429e-8129-bf71131627da",
+        "custom_liquid_Epc8Px",
+        "custom_liquid_XcDwad",
+        "custom_liquid_RbJrHG",
+        "d505cdfe-d5cf-4aff-8e9e-abca6dae66eb",
+        "149aabfb-9fd8-4472-a633-6032dbe01ed0",
+        "collapsible_tab_wNCAKj",
+        "collapsible_tab_eWGzcG",
+        "collapsible_tab_PqhzVJ",
+        "collapsible_tab_QGKJBE",
+        "collapsible_tab_WiqM8k",
+        "description"
+      ],
+      "settings": {
+        "display_id": false,
+        "enable_sticky_info": true,
+        "display_variant_image_first": false,
+        "disable_prepend": false,
+        "hide_variants": false,
+        "variant_image_filtering": "none",
+        "image_zoom": "none",
+        "thumbnails_ratio": "square",
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": false,
+        "dots_color_scheme": "inverse",
+        "video_player": "play_btn",
+        "enable_video_looping": false,
+        "autoplay_videos_pause_btn": false,
+        "video_sound_btn": false,
+        "video_timeline": false,
+        "play_btn_color_scheme": "accent-1",
+        "sound_btn_color_scheme": "inverse",
+        "timeline_color": "accent-1",
+        "media_size": "medium",
+        "media_position": "left",
+        "gallery_layout": "thumbnail_slider",
+        "desktop_thumbnails_position": "bottom",
+        "desktop_thumbnails_count": 5,
+        "desktop_vertical_thumbnails_width": 16,
+        "desktop_vertical_thumbnails_hide_arrows": false,
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "desktop_arrows_position": "hidden",
+        "mobile_media_corner_radius": 12,
+        "mobile_spacing_pixels": 0,
+        "mobile_arrows_position": "hidden",
+        "mobile_pagination": "hidden",
+        "mobile_thumbnails_position": "bottom",
+        "mobile_thumbnails_count": 5,
+        "mobile_vertical_thumbnails_width": 22,
+        "mobile_vertical_thumbnails_hide_arrows": true,
+        "mobile_scroll_padding_percentage": 0,
+        "mobile_scroll_padding_pixels": 2,
+        "enable_mobile_outher_spacing": false,
+        "mobile_slides_container_width": 100,
+        "mobile_slides_inner_width": 100,
+        "trust_badge_position": "top-right",
+        "trust_badge_size": "medium",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 28,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "disabled": true,
+      "settings": {
+        "display_id": false,
+        "title": "You may also like",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "stretch_cards": false,
+        "columns_desktop": 4,
+        "color_scheme": "background-1",
+        "image_ratio": "adapt",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "columns_mobile": "2",
+        "padding_top": 36,
+        "padding_bottom": 24
+      }
+    },
+    "03c08e95-f0ce-4379-bc05-787da4136202": {
+      "type": "horizontal-ticker",
+      "blocks": {
+        "template--18472096170313__03c08e95-f0ce-4379-bc05-787da4136202-1679864525e35c34e4-0": {
+          "type": "text",
+          "settings": {
+            "title": "Free Shipping"
+          }
+        },
+        "template--18472096170313__03c08e95-f0ce-4379-bc05-787da4136202-1679864525e35c34e4-1": {
+          "type": "text",
+          "settings": {
+            "title": "100 Day Money-Back Guarantee"
+          }
+        },
+        "template--18472096170313__03c08e95-f0ce-4379-bc05-787da4136202-1679864525e35c34e4-2": {
+          "type": "text",
+          "settings": {
+            "title": "Over 15,000 Happy Dogs Worldwide"
+          }
+        }
+      },
+      "block_order": [
+        "template--18472096170313__03c08e95-f0ce-4379-bc05-787da4136202-1679864525e35c34e4-0",
+        "template--18472096170313__03c08e95-f0ce-4379-bc05-787da4136202-1679864525e35c34e4-1",
+        "template--18472096170313__03c08e95-f0ce-4379-bc05-787da4136202-1679864525e35c34e4-2"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "speed": 2.5,
+        "direction": "normal",
+        "stop_on_hover": false,
+        "mobile_spacing": 60,
+        "desktop_spacing": 100,
+        "color_scheme": "custom",
+        "mobile_text_size": 16,
+        "desktop_text_size": 18,
+        "italic_text": false,
+        "uppercase_text": true,
+        "bold_text": true,
+        "mobile_image_height": 26,
+        "desktop_image_height": 40,
+        "mobile_reviews_width": 300,
+        "desktop_reviews_width": 400,
+        "hidden_products": "",
+        "enable_specific_display": false,
+        "displayed_products": "",
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 16,
+        "custom_colors_background": "#47b5e9",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#ffffff"
+      }
+    },
+    "section_divider_mpJqcK": {
+      "type": "section-divider",
+      "disabled": true,
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "background-2",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_slider_VPRWTj": {
+      "type": "image-slider",
+      "disabled": true,
+      "name": "Image/Video Slider",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Over 10,000 <strong>Happy Dogs & Owners </strong>Worldwide!",
+        "title_highlight_color": "#118fcb",
+        "heading_size": "h2",
+        "color_scheme": "background-2",
+        "type": "slide",
+        "drag": "enabled",
+        "autoplay": true,
+        "autoplay_speed": 1,
+        "center_mode": false,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": false,
+        "dots_color_scheme": "inverse",
+        "desktop_page_width": "normal",
+        "desktop_border_radius": 0,
+        "slides_desktop": 3,
+        "per_move_desktop": 1,
+        "desktop_spacing": 28,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "sides",
+        "mobile_full_page": false,
+        "mobile_border_radius": 0,
+        "slides_mobile": 2,
+        "per_move_mobile": 1,
+        "mobile_spacing": 12,
+        "mobile_side_padding": 0,
+        "mobile_padding_calc": true,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "sides",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#121212"
+      }
+    },
+    "section_divider_pE3qdc": {
+      "type": "section-divider",
+      "disabled": true,
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_1",
+        "flip_horizontal": false,
+        "flip_vertical": true,
+        "shape_color": "background-2",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_with_text_pbPPGT": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_f9jdby": {
+          "type": "heading",
+          "settings": {
+            "title": "80% of dogs develop <strong>gingivitis</strong> by the age of 3",
+            "title_highlight_color": "#e34a55",
+            "heading_size": "h2"
+          }
+        },
+        "text_BmNtng": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Have you noticed <strong>bad breath, plaque, or tartar on your dog’s teeth?</strong> That’s often the beginning of a chain reaction that quickly gets worse.</p><p>Plaque that is left untreated <strong>hardens into tartar</strong> – something neither chews nor brushing can remove. <strong>This leads to inflammation, pain,</strong> and bacteria that can spread throughout the body. In the worst case, the heart and other organs are affected – <strong>and your dog’s life is shortened. 💔</strong></p><p><strong>With FreshSmile Kit you can stop this development in time.</strong></p><p>Remove tartar at home – safely, quietly, and without expensive vet visits. In just a few minutes a week, <strong>you can give your dog healthier teeth and a happier life.</strong></p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_f9jdby",
+        "text_BmNtng"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/bra_gif_9e0ff993-86c7-48ff-8c64-6c53032fb72a.webp",
+        "video": "shopify://files/videos/Freshsmile video.mp4",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "background-1",
+        "section_color_scheme": "background-1",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "image_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 24,
+        "mobile_padding_bottom": 24,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#2e2a39",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#ffffff",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#ffffff",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "section_divider_rfF4qA": {
+      "type": "section-divider",
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "background-2",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_with_text_LxqdyB": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_8iGGCy": {
+          "type": "heading",
+          "settings": {
+            "title": "The same quality as at the vet – <strong>but easy at home!</strong>",
+            "title_highlight_color": "#118fcb",
+            "heading_size": "h2"
+          }
+        },
+        "text_dfLUDF": {
+          "type": "text",
+          "settings": {
+            "text": "<p>At the vet, special tools are used to remove tartar – <strong>often under anesthesia and at high costs.</strong><br/></p><p>FreshSmile™ uses the same type of technology, but is developed to be safe and easy in a home environment.<br/></p><p>In just a few minutes a week, you can give <strong>your dog the same care as at the vet – without stress, risk, or expensive bills.</strong></p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_8iGGCy",
+        "text_dfLUDF"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/Engelska_22.jpg",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "background-2",
+        "section_color_scheme": "background-2",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "text_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#2e2a39",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#ffffff",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#ffffff",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "section_divider_FB6HTU": {
+      "type": "section-divider",
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_1",
+        "flip_horizontal": false,
+        "flip_vertical": true,
+        "shape_color": "background-2",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_with_text_dWLdtL": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_GbVHxi": {
+          "type": "heading",
+          "settings": {
+            "title": "A healthier mouth in just minutes",
+            "title_highlight_color": "#6d388b",
+            "heading_size": "h2"
+          }
+        },
+        "text_LQ7PTe": {
+          "type": "text",
+          "settings": {
+            "text": "<p>FreshSmile uses <strong>sonic vibration technology</strong> – up to 31,000 vibrations per minute.<br/></p><p>That means:</p><p>✅ It breaks down and <strong>removes plaque & tartar</strong> directly on the teeth</p><p>✅ It only <strong>activates on hard surfaces (</strong>teeth) – never on the gums</p><p>✅ That makes it <strong>gentle, safe, and low-risk</strong>, even for sensitive dogs<br/></p><p><strong>The result is cleaner teeth, fresher breath, and a happier dog – without stress or pain.</strong></p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_GbVHxi",
+        "text_LQ7PTe"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/Engelska_15.jpg",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "background-1",
+        "section_color_scheme": "background-1",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "image_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#2e2a39",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#ffffff",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#ffffff",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "section_divider_pbhGpk": {
+      "type": "section-divider",
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "background-2",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "6b7afe89-5595-4016-a10d-f260d82ca9cc": {
+      "type": "comparison-table",
+      "blocks": {
+        "template--18472096170313__6b7afe89-5595-4016-a10d-f260d82ca9cc-167986455514a8e470-0": {
+          "type": "row",
+          "settings": {
+            "benefit": "₤300-$600 per treatment",
+            "us": false,
+            "others": true,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "template--18472096170313__6b7afe89-5595-4016-a10d-f260d82ca9cc-167986455514a8e470-1": {
+          "type": "row",
+          "settings": {
+            "benefit": "<strong>₤43 one-time cost</strong>",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "row_9NizDw": {
+          "type": "row",
+          "settings": {
+            "benefit": "Anesthesia risk for senior dogs, requires sedation",
+            "us": false,
+            "others": true,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "row_RhAVqY": {
+          "type": "row",
+          "settings": {
+            "benefit": "No anesthesia – completely safe at home",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "row_EETaCi": {
+          "type": "row",
+          "settings": {
+            "benefit": "Book appointment, wait weeks, take time off work",
+            "us": false,
+            "others": true,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "template--18472096170313__6b7afe89-5595-4016-a10d-f260d82ca9cc-167986455514a8e470-2": {
+          "type": "row",
+          "settings": {
+            "benefit": "<strong>10 minutes at home whenever it suits you</strong>",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "row_cYGYd9": {
+          "type": "row",
+          "settings": {
+            "benefit": "Tartar returns – need repeat treatments yearly",
+            "us": false,
+            "others": true,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "row_4MJy4h": {
+          "type": "row",
+          "settings": {
+            "benefit": "<strong>Quiet tool, low vibration – dog barely notices</strong>",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "row_dVNnee": {
+          "type": "row",
+          "settings": {
+            "benefit": "Use at home regularly – keep teeth clean for years",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        },
+        "row_fUjWtf": {
+          "type": "row",
+          "settings": {
+            "benefit": "<strong>100-day money-back guarantee</strong>",
+            "us": true,
+            "others": false,
+            "others_2": false,
+            "others_3": false
+          }
+        }
+      },
+      "block_order": [
+        "template--18472096170313__6b7afe89-5595-4016-a10d-f260d82ca9cc-167986455514a8e470-0",
+        "template--18472096170313__6b7afe89-5595-4016-a10d-f260d82ca9cc-167986455514a8e470-1",
+        "row_9NizDw",
+        "row_RhAVqY",
+        "row_EETaCi",
+        "template--18472096170313__6b7afe89-5595-4016-a10d-f260d82ca9cc-167986455514a8e470-2",
+        "row_cYGYd9",
+        "row_4MJy4h",
+        "row_dVNnee",
+        "row_fUjWtf"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "<strong>FreshSmile 3 in 1 Kit </strong>vs Vet Dental Cleaning",
+        "title_highlight_color": "#47b5e9",
+        "heading_size": "h2",
+        "text": "",
+        "button_label": "",
+        "link": "",
+        "button_style_secondary": false,
+        "atc_button_label": "",
+        "atc_product": "",
+        "atc_skip_cart": false,
+        "desktop_alignment": "center",
+        "mobile_alignment": "center",
+        "color_scheme": "background-2",
+        "layout": "table_second",
+        "style": "minimal",
+        "corner_radius": 20,
+        "number_of_competitors": 1,
+        "us_label": "FreshSmile",
+        "us_label_size": 18,
+        "logo": "shopify://shop_images/FreshSmile_Kit.png",
+        "logo_width": 110,
+        "mobile_logo_width": 100,
+        "others_label": "Vet Dental Cleaning",
+        "others_label_size": 18,
+        "others_logo_width": 90,
+        "others_mobile_logo_width": 60,
+        "others_2_label": "Competitor 2",
+        "others_2_label_size": 18,
+        "others_2_logo_width": 90,
+        "others_2_mobile_logo_width": 60,
+        "others_3_label": "Competitor 3",
+        "others_3_label_size": 18,
+        "others_3_logo_width": 90,
+        "others_3_mobile_logo_width": 60,
+        "checkmark_style": "regular",
+        "checkmark_color": "#ffffff",
+        "checkmark_bg_color": "#47b5e9",
+        "x_style": "regular",
+        "x_color": "#121212",
+        "x_bg_color": "#dbdbdb",
+        "opposite_icon_colors": "original",
+        "highlighted_color_scheme": "accent-1",
+        "highlighted_separator_opacity": 0,
+        "highlighted_overlay_opacity": 0,
+        "other_cells_color_scheme": "background-1",
+        "regular_separator_opacity": 10,
+        "regular_overlay_opacity": 0,
+        "minimalistic_border_opacity": 16,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_colors_highlighted_background": "#2e2a39",
+        "custom_colors_highlighted_text": "#ffffff",
+        "custom_colors_others_background": "#ffffff",
+        "custom_colors_others_text": "#2e2a39"
+      }
+    },
+    "section_divider_GNqnAc": {
+      "type": "section-divider",
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_1",
+        "flip_horizontal": false,
+        "flip_vertical": true,
+        "shape_color": "background-2",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_with_text_FPxBtf": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_gNPBqY": {
+          "type": "heading",
+          "settings": {
+            "title": "100 Days Satisfaction Guarantee",
+            "title_highlight_color": "#6d388b",
+            "heading_size": "h1"
+          }
+        },
+        "text_aTxCHi": {
+          "type": "text",
+          "settings": {
+            "text": "<p>We want you to feel completely confident.</p><p>That’s why you can <strong>try FreshSmile Kit for 100 days, completely risk-free.</strong><br/></p><p>You only pay once you’ve received the product and feel 100% satisfied.</p><p></p><p>If you don’t see results – you’ll get a full refund.</p><p></p><p><strong>For us, the most important thing is that your dog gets the care it deserves.</strong></p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_gNPBqY",
+        "text_aTxCHi"
+      ],
+      "disabled": true,
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/Generated_Image_September_15_2025_-_1_42PM.png",
+        "video_autoplay": true,
+        "video_loop": true,
+        "height": "adapt",
+        "color_scheme": "background-1",
+        "section_color_scheme": "background-1",
+        "full_desktop_width": false,
+        "content_layout": "no-overlap",
+        "desktop_media_width": 50,
+        "layout": "image_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_full_media_width": false,
+        "mobile_direction": "normal",
+        "mobile_image_quanlity": "2",
+        "mobile_content_alignment": "left",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36,
+        "custom_colors_background": "#2e2a39",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#ffffff",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff",
+        "custom_colors_outline_button": "#dd1d1d",
+        "custom_section_colors_background": "#ffffff",
+        "custom_section_gradient_background": ""
+      }
+    },
+    "854b8c46-40a3-4c74-9b36-360886558b1f": {
+      "type": "testimonials",
+      "blocks": {
+        "template--18472096170313__854b8c46-40a3-4c74-9b36-360886558b1f-16798646670717cf42-0": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Much better than anesthesia for senior dogs",
+            "text": "<p>My retriever is 11 years old and the vet wanted $650 for tartar removal with anesthesia. Didn't want to risk it at his age so I tested FreshSmile instead. Took a few tries to learn but the tartar actually came off after the third use. Tool is quiet and he doesn't seem to mind it anymore. Use it every other month now to keep clean. Much safer than risking an operation.</p>",
+            "author": "Linda B, 57"
+          }
+        },
+        "template--18472096170313__854b8c46-40a3-4c74-9b36-360886558b1f-16798646670717cf42-1": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Saved $500 at the vet",
+            "text": "<p>My chihuahua lost 8 teeth last year due to tartar and it cost $900. Didn't want my other dog to go through the same thing. Bought FreshSmile even though I was skeptical. It took about 2 weeks before the tartar started coming off in small chunks but it really works! Saved me a new vet bill and he doesn't have to have surgery.</p>",
+            "author": "Amy H, 43"
+          }
+        },
+        "template--18472096170313__854b8c46-40a3-4c74-9b36-360886558b1f-16798646670717cf42-2": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Took a few tries but works",
+            "text": "<p>Had tartar on my lab's teeth. Vet wanted $500 which felt like too much. Tested this and it took me 2-3 tries to learn the right technique but then it went fast. Tartar on the front teeth came off easily. Low vibration so the dog sat still. Do it myself now instead, saves money.</p>",
+            "author": "Robert B, 59"
+          }
+        },
+        "column_edrjnC": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Better than I thought",
+            "text": "<p>Saw the price for the vet's tartar removal ($800 wtf) and started googling alternatives. FreshSmile seemed too good to be true but I tested it. First time was a bit awkward but after that it went smoothly. Tartar came off in small pieces after each use. His teeth are like 3 shades whiter now. So glad I didn't spend $800.</p>",
+            "author": "Michelle H, 38"
+          }
+        },
+        "column_AkyB88": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Safer than surgery",
+            "text": "<p>My dachshund is 13 years old and the vet said he doesn't recommend anesthesia anymore. He suggested I try to remove the tartar at home instead. FreshSmile actually worked, removed the worst on his molars in a few uses. Tool is so quiet he didn't get scared. Much safer than risking surgery at his age.</p>",
+            "author": "Elizabeth S, 61"
+          }
+        },
+        "column_GpUJG6": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Thought it was a scam but nope",
+            "text": "<p>Was 100% sure this was some scam product but I was desperate after my dog had serious tartar buildup. Tried it anyway and honestly couldn't believe it worked. The tartar on his canines started coming off after the second try. Low vibration, dog didn't mind it at all. Use it every third month now. Saved me a vet bill of $600. Would buy again in a heartbeat..</p>",
+            "author": "Jessica P, 38"
+          }
+        },
+        "column_pPiUNw": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Works as it should",
+            "text": "<p>Had tartar issues on my lab's teeth. Vet wanted $500 so I bought this instead. Took me 2-3 tries to learn the right technique but then it was easy. The tartar on his front teeth came off easily. Low vibration so the dog sat still. Do it myself now instead, saves money. Good investment.</p>",
+            "author": "Michael G, 62"
+          }
+        },
+        "column_U7RK9E": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Great to be able to do at home",
+            "text": "<p>Wanted to avoid putting the dog under anesthesia when we have small kids at home and money is tight. FreshSmile was a bit scary at first but I learned quickly. Tartar on his front teeth came off after about a week of use. The tool is quiet which is good for the kids too. Saved us $500 at the vet.</p>",
+            "author": "Sarah T, 39"
+          }
+        },
+        "column_tTGdYH": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Good for regular maintenance",
+            "text": "<p>My dog had some tartar but not too bad yet. Vet said I should try to keep it under control at home before it gets worse. FreshSmile worked well for that, removed the little bit that was there and now I use it every third month to keep teeth clean. Tool is quiet and gentle. Much better than waiting until it becomes a big problem.</p>",
+            "author": "Karen L, 54"
+          }
+        },
+        "column_JK7hNh": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Finally something that actually works",
+            "text": "<p>Have tried everything - chew toys, toothbrush, water additives. Nothing worked and the tartar just got worse. Vet wanted $680 which felt like too much. Googled and found FreshSmile. First time was a bit clumsy but after that it went quickly. Tartar on his teeth started coming off after about a week. So damn relieved to finally find something that actually works and doesn't cost a fortune.</p>",
+            "author": "Emma R, 40"
+          }
+        }
+      },
+      "block_order": [
+        "template--18472096170313__854b8c46-40a3-4c74-9b36-360886558b1f-16798646670717cf42-0",
+        "template--18472096170313__854b8c46-40a3-4c74-9b36-360886558b1f-16798646670717cf42-1",
+        "template--18472096170313__854b8c46-40a3-4c74-9b36-360886558b1f-16798646670717cf42-2",
+        "column_edrjnC",
+        "column_AkyB88",
+        "column_GpUJG6",
+        "column_pPiUNw",
+        "column_U7RK9E",
+        "column_tTGdYH",
+        "column_JK7hNh"
+      ],
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Verified Reviews",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "text": "<p><strong>10,000+ dog owners </strong>have already saved hundreds on vet bills</p>",
+        "color_scheme": "background-1",
+        "image_width": "full",
+        "image_ratio": "square",
+        "column_alignment": "center",
+        "show_stars": true,
+        "inactive_stars_style": "solid",
+        "star_color": "#ffcc00",
+        "bg_star_color": "#ececec",
+        "show_quotes": true,
+        "quotes_color_scheme": "accent-1",
+        "cards_color_scheme": "bg-overlay",
+        "type": "slide",
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_full_page": true,
+        "columns_desktop": 5,
+        "slider_desktop": true,
+        "per_move_desktop": 1,
+        "desktop_spacing": 68,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "sides",
+        "slider_mobile": true,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "under",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_cards_colors_background": "#f3f3f3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_text": "#2e2a39"
+      }
+    },
+    "featured_collection_aRPgAb": {
+      "type": "featured-collection",
+      "name": "t:sections.featured-collection.presets.name",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "You may also be interested in:",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "color_scheme": "background-1",
+        "collection": "frontpage",
+        "products_to_show": 4,
+        "stretch_cards": false,
+        "show_view_all": false,
+        "view_all_style": "solid",
+        "cards_color_scheme": "background-1",
+        "image_ratio": "adapt",
+        "show_secondary_image": false,
+        "badges": "regular",
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "swatches_option_name": "",
+        "swatches_position": "top",
+        "swatches_desktop_size": 36,
+        "swatches_mobile_size": 24,
+        "type": "slide",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_full_page": false,
+        "columns_desktop": 4,
+        "slider_desktop": false,
+        "per_move_desktop": 1,
+        "desktop_spacing": 40,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "sides",
+        "columns_mobile": "2",
+        "slider_mobile": true,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "under",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff"
+      }
+    },
+    "section_divider_E3REbR": {
+      "type": "section-divider",
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "background-2",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "collapsible_content_p7mjJe": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_P43e4z": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Is it safe for my dog?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Yes, FreshSmile Kit is designed for home use and only works on hard tooth surfaces – not on the gums. This makes it very safe and gentle to use.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_q7TDhX": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Does it hurt the dog?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>No, the treatment is completely painless when used as instructed. The device only vibrates against the teeth and does not damage the gums. Most dogs adapt quickly.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_MxWYGH": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Does it work for all breeds and sizes?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Yes, FreshSmile Kit is suitable for all dog breeds and sizes – from small Chihuahuas to large breeds like German Shepherds.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_QAJKrw": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Is it safe to use on puppies and older dogs?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Yes, but puppies should wait until they have their permanent teeth. Older dogs can use it just like younger ones, but extra care should be taken if their gums are sensitive.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_wR4VKn": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How often should I use FreshSmile Kit?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>We recommend 1–2 times per week. That’s enough to keep tartar away and prevent dental problems.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_AzQGGG": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What if my dog is sensitive or afraid?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Start slowly and let your dog get used to the sound and feeling. Try short sessions at first and reward with treats and praise afterwards.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_N6izTp": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can I really remove tartar at home as effectively as a vet?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>Vets often use anesthesia and special instruments. FreshSmile Kit is not a replacement for veterinary care, but it is an effective way to remove plaque and tartar at home – which helps reduce the need for expensive cleanings.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_CktV8Q": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What if I’m not satisfied with the results?",
+            "icon": "",
+            "filled_icon": false,
+            "row_content": "<p>We offer a 100-day money-back guarantee. If you’re not satisfied, you can return the product and get your money back – completely risk-free.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_P43e4z",
+        "collapsible_row_q7TDhX",
+        "collapsible_row_MxWYGH",
+        "collapsible_row_QAJKrw",
+        "collapsible_row_wR4VKn",
+        "collapsible_row_AzQGGG",
+        "collapsible_row_N6izTp",
+        "collapsible_row_CktV8Q"
+      ],
+      "name": "t:sections.collapsible_content.presets.name",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "caption": "",
+        "title": "FAQ",
+        "title_highlight_color": "#6d388b",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "none",
+        "color_scheme": "background-2",
+        "container_color_scheme": "background-2",
+        "open_first_collapsible_row": false,
+        "video_muted_autoplay": true,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "row_heading_size": "medium",
+        "collapse_icon": "carret",
+        "display_top_border": true,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#000000",
+        "custom_contaner_colors_background": "#ffffff",
+        "custom_container_gradient_background": "",
+        "custom_contaner_colors_text": "#000000"
+      }
+    },
+    "section_divider_LQG9Ja": {
+      "type": "section-divider",
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_1",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "background-1",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-2",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_banner_7kDER8": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_WLVFch": {
+          "type": "heading",
+          "settings": {
+            "title": "A risk-free investment in your dog's health",
+            "title_highlight_color": "#6d388b",
+            "heading_size": "h1"
+          }
+        },
+        "text_Wx7LkM": {
+          "type": "text",
+          "settings": {
+            "text": "FreshSmile is an effective and gentle solution for your dog's oral health. 100-day money-back guarantee – try it at home in peace and quiet and get your money back as a gift card if you're not completely satisfied. Give your dog healthier teeth and a brighter future with a product you can trust.",
+            "text_style": "body"
+          }
+        },
+        "buttons_kmVn8P": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Read about the guarantee",
+            "button_link_1": "shopify://pages/100-day-money-back-guarantee",
+            "button_style_secondary_1": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        },
+        "atc_button_niPYzB": {
+          "type": "atc_button",
+          "settings": {
+            "button_label": "Add to Cart",
+            "atc_product": "",
+            "atc_skip_cart": false
+          }
+        },
+        "rating_stars_hPWagy": {
+          "type": "rating_stars",
+          "settings": {
+            "rating": 4.8,
+            "star_color": "#ffcc00",
+            "bg_stars_style": "full",
+            "bg_star_color": "#ececec",
+            "label": "4,86/5 (10,000+ Reviews)",
+            "size": 14,
+            "scroll_id": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_WLVFch",
+        "text_Wx7LkM",
+        "buttons_kmVn8P",
+        "atc_button_niPYzB",
+        "rating_stars_hPWagy"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "image": "shopify://shop_images/irish-setter-dog-close-up.jpg",
+        "image_1_visibility": "always-display",
+        "image_2_visibility": "always-display",
+        "image_overlay_opacity": 20,
+        "image_height": "large",
+        "url": "",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-1",
+        "transparent_container_color": "white",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": false
+      }
+    },
+    "vetpets_popup": {
+      "type": "vetpets-popup",
+      "settings": {
+        "logo": "shopify://shop_images/Vetpets_Logo_11_3e42d63d-8554-4b1f-b85e-bf905293a7a2.png",
+        "scratch_image": "shopify://shop_images/hf_20260822_113024_e5868d33-6f0f-4c6f-b0c5-fbc36b342b49.png",
+        "photo_primary": "shopify://shop_images/vetpets-popup-ugc-frenchie-sofa.png",
+        "photo_secondary": "shopify://shop_images/vetpets-popup-ugc-tubs-kitchen.png",
+        "klaviyo_email_list_id": "TFfFDG"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "related-products",
+    "03c08e95-f0ce-4379-bc05-787da4136202",
+    "section_divider_mpJqcK",
+    "image_slider_VPRWTj",
+    "section_divider_pE3qdc",
+    "image_with_text_pbPPGT",
+    "section_divider_rfF4qA",
+    "image_with_text_LxqdyB",
+    "section_divider_FB6HTU",
+    "image_with_text_dWLdtL",
+    "section_divider_pbhGpk",
+    "6b7afe89-5595-4016-a10d-f260d82ca9cc",
+    "section_divider_GNqnAc",
+    "image_with_text_FPxBtf",
+    "854b8c46-40a3-4c74-9b36-360886558b1f",
+    "featured_collection_aRPgAb",
+    "section_divider_E3REbR",
+    "collapsible_content_p7mjJe",
+    "section_divider_LQG9Ja",
+    "image_banner_7kDER8",
+    "vetpets_popup"
+  ]
+}
