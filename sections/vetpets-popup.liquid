@@ -1,11 +1,12 @@
 {%- comment -%}
   VetPets Welcome Popup — self-contained section.
-  Ported from Claude Design project "VetPets Welcome Popup"
-  (artboards: Desktop/Mobile · before scratch, after scratch, interactive).
-  Render once, globally: {% section 'vetpets-popup' %} immediately before </body>.
+  Ported from Claude Design project "VetPets Welcome Popup", artboards
+  "Desktop · interactive" (1440 × 900) and "Mobile · interactive" (390 × 844).
+  Rendered once, globally, from layout/theme.liquid immediately before </body>.
   All classes are prefixed .vpp- ; no global selectors.
 {%- endcomment -%}
 
+{%- if section.settings.enable -%}
 {%- liquid
   assign vpp_blocked = false
   assign path = request.path
@@ -15,15 +16,11 @@
   if path contains '/cart' or path contains '/checkout' or path contains '/account'
     assign vpp_blocked = true
   endif
-  unless section.settings.enable
-    assign vpp_blocked = true
-  endunless
 -%}
 
 {%- unless vpp_blocked -%}
 {%- liquid
-  assign mark_hex = section.settings.color_mark | remove: '#' | downcase
-  assign mark_enc = '%23' | append: mark_hex
+  assign uid = section.id
   assign paw = "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35zM10.4 6.4h3.2v2.9h2.9v3.2h-2.9v2.9h-3.2v-2.9H7.5V9.3h2.9z"
 -%}
 
@@ -32,7 +29,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 
 <style>
-  #vpp-{{ section.id }}.vpp-root {
+  #vpp-{{ uid }}.vpp-root {
     --vpp-brand: {{ section.settings.color_brand }};
     --vpp-brand-hover: {{ section.settings.color_brand_hover }};
     --vpp-accent: {{ section.settings.color_accent }};
@@ -43,70 +40,93 @@
     --vpp-field-bg: {{ section.settings.color_field_bg }};
     --vpp-field-border: {{ section.settings.color_field_border }};
     --vpp-surface: {{ section.settings.color_surface }};
-    --vpp-grad-top: {{ section.settings.color_gradient_top }};
-    --vpp-grad-mid: {{ section.settings.color_gradient_mid }};
-    --vpp-grad-bottom: {{ section.settings.color_gradient_bottom }};
     --vpp-font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   }
 
-  #vpp-{{ section.id }}.vpp-root { position: fixed; inset: 0; z-index: 2147483000; display: none; }
-  #vpp-{{ section.id }}.vpp-root.vpp-open { display: block; }
-
-  #vpp-{{ section.id }} .vpp-surface {
-    position: absolute;
+  /* ---------- overlay: fixed, full-viewport, optically centred ---------- */
+  #vpp-{{ uid }}.vpp-root {
+    position: fixed;
     inset: 0;
-    overflow: hidden;
-    background: linear-gradient(180deg, var(--vpp-grad-top) 0%, var(--vpp-grad-mid) 46%, var(--vpp-grad-bottom) 100%);
+    z-index: 2147483000;
+    display: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: linear-gradient(180deg, {{ section.settings.color_gradient_top }} 0%, {{ section.settings.color_gradient_mid }} 46%, {{ section.settings.color_gradient_bottom }} 100%);
     font-family: var(--vpp-font);
     -webkit-font-smoothing: antialiased;
+  }
+  #vpp-{{ uid }}.vpp-root.vpp-open {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     animation: vpp-fade .28s ease both;
   }
 
   @keyframes vpp-fade { from { opacity: 0; } to { opacity: 1; } }
   @keyframes vpp-fade-up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
-  #vpp-{{ section.id }} .vpp-tile {
+  /* ---------- tiled VetPets mark: above the gradient, below all content ---------- */
+  #vpp-{{ uid }} .vpp-tile {
     position: absolute;
     inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
     pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='138' height='138' viewBox='0 0 138 138'%3E%3Cg fill='{{ mark_enc }}' fill-opacity='0.15' fill-rule='evenodd'%3E%3Cg transform='translate(7 13) rotate(-10) scale(1.93)'%3E%3Cpath d='{{ paw }}'/%3E%3C/g%3E%3Cg transform='translate(84 34) rotate(-10) scale(1.22)'%3E%3Cpath d='{{ paw }}'/%3E%3C/g%3E%3Cg transform='translate(39 84) rotate(-10) scale(1.56)'%3E%3Cpath d='{{ paw }}'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    background-size: 138px 138px;
+    display: block;
   }
+  #vpp-{{ uid }} .vpp-tile-desktop { display: none; }
 
-  #vpp-{{ section.id }} .vpp-close {
+  #vpp-{{ uid }} .vpp-close {
     position: absolute; top: 18px; right: 18px; z-index: 6;
     width: 44px; height: 44px; border-radius: 999px; border: none; padding: 0;
     background: rgba(0,0,0,.06); color: var(--vpp-body);
     display: flex; align-items: center; justify-content: center; cursor: pointer;
   }
-  #vpp-{{ section.id }} .vpp-close:hover { background: rgba(0,0,0,.11); }
+  #vpp-{{ uid }} .vpp-close:hover { background: rgba(0,0,0,.11); }
 
-  #vpp-{{ section.id }} .vpp-photo { position: absolute; display: none; border-radius: 16px; object-fit: cover; object-position: center; }
-  #vpp-{{ section.id }} .vpp-photo--a { left: 700px; top: 90px; width: 400px; height: 500px; box-shadow: 0 28px 54px -22px rgba(0,0,0,.30); }
-  #vpp-{{ section.id }} .vpp-photo--b { left: 968px; top: 372px; width: 400px; height: 424px; box-shadow: 0 32px 60px -22px rgba(0,0,0,.32); }
-
-  #vpp-{{ section.id }} .vpp-col {
-    position: absolute; inset: 0; z-index: 3;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    text-align: center; padding: 0 25px; box-sizing: border-box;
+  /* ---------- centred content wrapper; photo cards anchor to THIS ---------- */
+  #vpp-{{ uid }} .vpp-wrap {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: 1240px;
+    min-width: 0;
+    margin: auto;
+    padding: 24px 25px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  #vpp-{{ section.id }} .vpp-logo { height: 28px; width: auto; display: block; margin-bottom: 18px; }
-  #vpp-{{ section.id }} .vpp-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--vpp-brand); margin-bottom: 12px; }
-  #vpp-{{ section.id }} .vpp-title { margin: 0; font-size: 40px; font-weight: 800; line-height: 1; letter-spacing: -.035em; color: var(--vpp-ink); }
-  #vpp-{{ section.id }} .vpp-sub { margin: 14px 0 0; font-size: 16px; font-weight: 500; line-height: 1.45; color: var(--vpp-body); max-width: 310px; text-wrap: pretty; }
+  #vpp-{{ uid }} .vpp-photo { display: none; border-radius: 16px; object-fit: cover; object-position: center; }
 
-  #vpp-{{ section.id }} .vpp-stack { margin-top: 26px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
-
-  #vpp-{{ section.id }} .vpp-card {
-    position: relative; width: 340px; height: 250px; border-radius: 18px; overflow: hidden;
-    box-shadow: 0 22px 44px -16px rgba(0,40,70,.30); background: var(--vpp-surface);
+  #vpp-{{ uid }} .vpp-col {
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; width: 100%; min-width: 0; max-width: 100%;
   }
-  #vpp-{{ section.id }} .vpp-canvas {
+
+  #vpp-{{ uid }} .vpp-logo { height: 28px; width: auto; display: block; margin-bottom: 18px; }
+  #vpp-{{ uid }} .vpp-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--vpp-brand); margin-bottom: 12px; }
+  #vpp-{{ uid }} .vpp-title { margin: 0; font-size: 40px; font-weight: 800; line-height: 1; letter-spacing: -.035em; color: var(--vpp-ink); }
+  #vpp-{{ uid }} .vpp-sub { margin: 14px 0 0; font-size: 16px; font-weight: 500; line-height: 1.45; color: var(--vpp-body); max-width: 310px; text-wrap: pretty; }
+
+  #vpp-{{ uid }} .vpp-stack { margin-top: 26px; display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; min-width: 0; }
+
+  /* ---------- scratch card: the form lives INSIDE it, under the canvas ---------- */
+  #vpp-{{ uid }} .vpp-card {
+    position: relative; display: flex;
+    width: 340px; max-width: 100%; min-height: 250px;
+    border-radius: 18px; overflow: hidden;
+    box-shadow: 0 22px 44px -16px rgba(0,40,70,.30);
+    background: var(--vpp-surface);
+  }
+  #vpp-{{ uid }} .vpp-canvas {
     position: absolute; inset: 0; z-index: 2; display: block;
     width: 100%; height: 100%; touch-action: none; cursor: grab;
   }
-  #vpp-{{ section.id }} .vpp-pill {
+  #vpp-{{ uid }} .vpp-pill {
     position: absolute; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 3;
     pointer-events: none; display: flex; align-items: center; gap: 10px;
     height: 40px; padding: 0 18px; border-radius: 100px;
@@ -114,128 +134,179 @@
     white-space: nowrap; transition: opacity .2s ease;
   }
 
-  #vpp-{{ section.id }} .vpp-panel {
-    width: 330px; box-sizing: border-box; background: var(--vpp-surface);
-    border-radius: 18px; padding: 26px; box-shadow: 0 22px 44px -16px rgba(0,40,70,.24);
+  #vpp-{{ uid }} .vpp-step {
+    flex: 1; min-width: 0; box-sizing: border-box;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 10px 18px;
+    animation: vpp-fade-up .3s ease both;
   }
-  #vpp-{{ section.id }} .vpp-step { display: flex; flex-direction: column; align-items: center; animation: vpp-fade-up .3s ease both; }
+  #vpp-{{ uid }} .vpp-step[data-vpp-step="sms"] { padding: 20px; justify-content: center; }
+  #vpp-{{ uid }} .vpp-step[data-vpp-step="done"] { padding: 20px; justify-content: center; }
 
-  #vpp-{{ section.id }} .vpp-check { width: 44px; height: 44px; border-radius: 999px; background: var(--vpp-accent); display: flex; align-items: center; justify-content: center; flex: none; }
-  #vpp-{{ section.id }} .vpp-kicker { margin-top: 14px; font-size: 13px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--vpp-brand); }
-  #vpp-{{ section.id }} .vpp-offer { margin-top: 6px; font-size: 42px; font-weight: 800; line-height: 1; letter-spacing: -.03em; color: var(--vpp-ink); }
-  #vpp-{{ section.id }} .vpp-ask { margin-top: 10px; font-size: 15px; font-weight: 500; color: var(--vpp-body); }
+  #vpp-{{ uid }} .vpp-check { width: 36px; height: 36px; border-radius: 999px; background: var(--vpp-accent); display: flex; align-items: center; justify-content: center; flex: none; }
+  #vpp-{{ uid }} .vpp-step[data-vpp-step="done"] .vpp-check { width: 40px; height: 40px; }
+  #vpp-{{ uid }} .vpp-kicker { margin-top: 8px; font-size: 13px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--vpp-brand); }
+  #vpp-{{ uid }} .vpp-offer { margin-top: 2px; font-size: 32px; font-weight: 800; line-height: 1.05; letter-spacing: -.03em; color: var(--vpp-ink); }
+  #vpp-{{ uid }} .vpp-ask { margin-top: 4px; font-size: 15px; font-weight: 500; color: var(--vpp-body); }
 
-  #vpp-{{ section.id }} .vpp-input {
-    margin-top: 18px; width: 100%; height: 54px; box-sizing: border-box; border-radius: 12px;
+  #vpp-{{ uid }} .vpp-input {
+    margin-top: 8px; width: 100%; height: 48px; box-sizing: border-box; border-radius: 12px;
     background: var(--vpp-field-bg); border: 1.5px solid var(--vpp-field-border);
-    padding: 0 16px; font-size: 15px; font-weight: 500; color: var(--vpp-body);
+    padding: 0 14px; font-size: 15px; font-weight: 500; color: var(--vpp-body);
     outline: none; font-family: var(--vpp-font);
   }
-  #vpp-{{ section.id }} .vpp-input::placeholder { color: {{ section.settings.color_placeholder }}; }
-  #vpp-{{ section.id }} .vpp-input:focus { box-shadow: 0 0 0 3px rgba(71,181,233,.14); }
-  #vpp-{{ section.id }} .vpp-input.vpp-invalid { border-color: var(--vpp-error); }
+  #vpp-{{ uid }} .vpp-input::placeholder { color: {{ section.settings.color_placeholder }}; }
+  #vpp-{{ uid }} .vpp-input:focus { box-shadow: 0 0 0 3px rgba(71,181,233,.14); }
+  #vpp-{{ uid }} .vpp-input.vpp-invalid { border-color: var(--vpp-error); }
 
-  #vpp-{{ section.id }} .vpp-error { align-self: flex-start; margin-top: 8px; font-size: 13px; font-weight: 600; color: var(--vpp-error); text-align: left; }
-  #vpp-{{ section.id }} .vpp-error[hidden] { display: none; }
+  #vpp-{{ uid }} .vpp-error { align-self: flex-start; margin-top: 6px; font-size: 13px; font-weight: 600; color: var(--vpp-error); text-align: left; }
 
-  #vpp-{{ section.id }} .vpp-submit {
-    margin-top: 12px; width: 100%; height: 54px; border-radius: 12px; border: none;
+  #vpp-{{ uid }} .vpp-submit {
+    margin-top: 6px; width: 100%; height: 48px; border-radius: 12px; border: none;
     background: var(--vpp-brand); color: #FFFFFF; font-size: 15px; font-weight: 800;
     letter-spacing: .04em; text-transform: uppercase; cursor: pointer; font-family: var(--vpp-font);
   }
-  #vpp-{{ section.id }} .vpp-submit:hover { background: var(--vpp-brand-hover); }
-  #vpp-{{ section.id }} .vpp-submit[disabled] { opacity: .65; cursor: default; }
+  #vpp-{{ uid }} .vpp-submit:hover { background: var(--vpp-brand-hover); }
+  #vpp-{{ uid }} .vpp-submit[disabled] { opacity: .65; cursor: default; }
 
-  #vpp-{{ section.id }} .vpp-fine { margin-top: 14px; font-size: 13px; font-weight: 500; line-height: 1.45; color: var(--vpp-muted); text-align: center; }
-  #vpp-{{ section.id }} .vpp-consent { margin-top: 10px; font-size: 12px; font-weight: 400; line-height: 1.5; color: var(--vpp-muted); text-align: center; text-wrap: pretty; }
+  #vpp-{{ uid }} .vpp-fine { margin-top: 8px; font-size: 12px; font-weight: 500; line-height: 1.4; color: var(--vpp-muted); text-align: center; }
+  #vpp-{{ uid }} .vpp-consent { margin-top: 10px; font-size: 12px; font-weight: 400; line-height: 1.5; color: var(--vpp-muted); text-align: center; text-wrap: pretty; }
 
-  #vpp-{{ section.id }} .vpp-sms-title { margin-top: 10px; font-size: 22px; font-weight: 800; line-height: 1.15; letter-spacing: -.02em; color: var(--vpp-ink); text-align: center; }
-  #vpp-{{ section.id }} .vpp-tel {
-    margin-top: 18px; width: 100%; display: flex; align-items: center; height: 54px;
+  #vpp-{{ uid }} .vpp-sms-title { margin-top: 10px; font-size: 22px; font-weight: 800; line-height: 1.15; letter-spacing: -.02em; color: var(--vpp-ink); text-align: center; }
+  #vpp-{{ uid }} .vpp-tel {
+    margin-top: 14px; width: 100%; display: flex; align-items: center; height: 48px;
     border-radius: 12px; background: var(--vpp-field-bg); border: 1.5px solid var(--vpp-field-border);
     box-sizing: border-box; overflow: hidden;
   }
-  #vpp-{{ section.id }} .vpp-tel.vpp-invalid { border-color: var(--vpp-error); }
-  #vpp-{{ section.id }} .vpp-prefix {
+  #vpp-{{ uid }} .vpp-tel.vpp-invalid { border-color: var(--vpp-error); }
+  #vpp-{{ uid }} .vpp-prefix {
     display: flex; align-items: center; height: 100%; padding: 0 14px;
     font-size: 15px; font-weight: 700; color: var(--vpp-body);
     background: {{ section.settings.color_prefix_bg }}; border-right: 1.5px solid var(--vpp-field-border);
   }
-  #vpp-{{ section.id }} .vpp-tel input {
+  #vpp-{{ uid }} .vpp-tel input {
     flex: 1; min-width: 0; height: 100%; border: none; background: transparent; padding: 0 12px;
     font-size: 15px; font-weight: 500; color: var(--vpp-body); outline: none; font-family: var(--vpp-font);
   }
-  #vpp-{{ section.id }} .vpp-tel input::placeholder { color: {{ section.settings.color_placeholder }}; }
+  #vpp-{{ uid }} .vpp-tel input::placeholder { color: {{ section.settings.color_placeholder }}; }
 
-  #vpp-{{ section.id }} .vpp-skip {
-    margin-top: 12px; background: none; border: none; padding: 8px 12px;
+  #vpp-{{ uid }} .vpp-skip {
+    margin-top: 10px; background: none; border: none; padding: 6px 12px;
     font-size: 15px; font-weight: 600; color: var(--vpp-brand); text-decoration: underline;
     cursor: pointer; font-family: var(--vpp-font);
   }
 
-  #vpp-{{ section.id }} .vpp-done-title { margin-top: 14px; font-size: 22px; font-weight: 800; letter-spacing: -.02em; color: var(--vpp-ink); text-align: center; }
-  #vpp-{{ section.id }} .vpp-code {
-    margin-top: 16px; width: 100%; height: 54px; border-radius: 12px;
+  #vpp-{{ uid }} .vpp-done-title { margin-top: 12px; font-size: 20px; font-weight: 800; letter-spacing: -.02em; color: var(--vpp-ink); text-align: center; }
+  #vpp-{{ uid }} .vpp-code {
+    margin-top: 12px; width: 100%; height: 48px; border-radius: 12px;
     background: var(--vpp-field-bg); border: 1.5px dashed var(--vpp-brand);
     display: flex; align-items: center; justify-content: center;
-    font-size: 19px; font-weight: 800; letter-spacing: .14em; color: var(--vpp-ink);
+    font-size: 18px; font-weight: 800; letter-spacing: .14em; color: var(--vpp-ink);
   }
-  #vpp-{{ section.id }} .vpp-code-note { margin-top: 12px; font-size: 15px; font-weight: 500; color: var(--vpp-body); text-align: center; }
+  #vpp-{{ uid }} .vpp-code-note { margin-top: 10px; font-size: 14px; font-weight: 500; color: var(--vpp-body); text-align: center; }
 
-  #vpp-{{ section.id }} .vpp-decline {
+  #vpp-{{ uid }} .vpp-decline {
     background: none; border: none; padding: 8px 12px; font-size: 15px; font-weight: 500;
     color: var(--vpp-muted); text-decoration: underline; cursor: pointer; white-space: nowrap;
     font-family: var(--vpp-font);
   }
-  #vpp-{{ section.id }} .vpp-decline:hover { color: var(--vpp-body); }
+  #vpp-{{ uid }} .vpp-decline:hover { color: var(--vpp-body); }
 
-  #vpp-{{ section.id }} [hidden] { display: none !important; }
+  #vpp-{{ uid }} [hidden] { display: none !important; }
 
-  @media (min-width: 1100px) {
-    #vpp-{{ section.id }} .vpp-tile {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='164' height='164' viewBox='0 0 164 164'%3E%3Cg fill='{{ mark_enc }}' fill-opacity='0.15' fill-rule='evenodd'%3E%3Cg transform='translate(8 16) rotate(-10) scale(2.3)'%3E%3Cpath d='{{ paw }}'/%3E%3C/g%3E%3Cg transform='translate(100 40) rotate(-10) scale(1.45)'%3E%3Cpath d='{{ paw }}'/%3E%3C/g%3E%3Cg transform='translate(46 100) rotate(-10) scale(1.85)'%3E%3Cpath d='{{ paw }}'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-      background-size: 164px 164px;
+  /* ---------- desktop: 1240px wrapper, photos anchored to the wrapper ---------- */
+  @media (min-width: 1280px) {
+    #vpp-{{ uid }} .vpp-tile-mobile { display: none; }
+    #vpp-{{ uid }} .vpp-tile-desktop { display: block; }
+
+    #vpp-{{ uid }} .vpp-close { top: 26px; right: 26px; }
+
+    #vpp-{{ uid }} .vpp-wrap { display: block; padding: 24px 0; }
+    #vpp-{{ uid }} .vpp-col { width: 480px; }
+
+    #vpp-{{ uid }} .vpp-logo { height: 34px; margin-bottom: 22px; }
+    #vpp-{{ uid }} .vpp-eyebrow { font-size: 12px; margin-bottom: 14px; }
+    #vpp-{{ uid }} .vpp-title { font-size: 54px; }
+    #vpp-{{ uid }} .vpp-sub { margin-top: 16px; font-size: 17px; line-height: 1.5; max-width: 400px; }
+
+    #vpp-{{ uid }} .vpp-stack { margin-top: 34px; gap: 18px; }
+
+    #vpp-{{ uid }} .vpp-card { width: 460px; min-height: 320px; }
+    #vpp-{{ uid }} .vpp-pill { bottom: 22px; }
+
+    #vpp-{{ uid }} .vpp-step { padding: 14px 24px; }
+    #vpp-{{ uid }} .vpp-step[data-vpp-step="sms"],
+    #vpp-{{ uid }} .vpp-step[data-vpp-step="done"] { padding: 24px; }
+
+    #vpp-{{ uid }} .vpp-check,
+    #vpp-{{ uid }} .vpp-step[data-vpp-step="done"] .vpp-check { width: 44px; height: 44px; }
+    #vpp-{{ uid }} .vpp-kicker { margin-top: 12px; }
+    #vpp-{{ uid }} .vpp-offer { margin-top: 4px; font-size: 46px; line-height: 1; }
+    #vpp-{{ uid }} .vpp-ask { margin-top: 8px; }
+    #vpp-{{ uid }} .vpp-input { margin-top: 12px; height: 54px; padding: 0 16px; }
+    #vpp-{{ uid }} .vpp-submit { margin-top: 10px; height: 54px; }
+    #vpp-{{ uid }} .vpp-sms-title { font-size: 24px; }
+    #vpp-{{ uid }} .vpp-tel { margin-top: 18px; height: 54px; }
+    #vpp-{{ uid }} .vpp-tel input { padding: 0 14px; }
+    #vpp-{{ uid }} .vpp-skip { margin-top: 14px; }
+    #vpp-{{ uid }} .vpp-done-title { margin-top: 16px; font-size: 24px; }
+    #vpp-{{ uid }} .vpp-code { margin-top: 16px; height: 54px; font-size: 20px; }
+    #vpp-{{ uid }} .vpp-code-note { font-size: 15px; margin-top: 12px; }
+
+    /* Photo cards keep the artboard's arrangement, offset from the wrapper's
+       vertical centre rather than from a fixed 900px frame. */
+    #vpp-{{ uid }} .vpp-photo { display: block; position: absolute; }
+    #vpp-{{ uid }} .vpp-photo--a {
+      left: 582px; top: 50%; transform: translateY(calc(-50% - 110px));
+      width: 400px; height: 500px; box-shadow: 0 28px 54px -22px rgba(0,0,0,.30);
     }
-    #vpp-{{ section.id }} .vpp-close { top: 26px; right: 26px; }
-    #vpp-{{ section.id }} .vpp-photo { display: block; }
-    #vpp-{{ section.id }} .vpp-col { left: 118px; right: auto; width: 480px; padding: 0; }
-    #vpp-{{ section.id }} .vpp-logo { height: 34px; margin-bottom: 22px; }
-    #vpp-{{ section.id }} .vpp-eyebrow { font-size: 12px; margin-bottom: 14px; }
-    #vpp-{{ section.id }} .vpp-title { font-size: 54px; }
-    #vpp-{{ section.id }} .vpp-sub { margin-top: 16px; font-size: 17px; line-height: 1.5; max-width: 400px; }
-    #vpp-{{ section.id }} .vpp-stack { margin-top: 34px; gap: 26px; }
-    #vpp-{{ section.id }} .vpp-card { width: 460px; height: 320px; }
-    #vpp-{{ section.id }} .vpp-pill { bottom: 22px; }
-    #vpp-{{ section.id }} .vpp-panel { width: 396px; padding: 32px; }
-    #vpp-{{ section.id }} .vpp-kicker { margin-top: 16px; }
-    #vpp-{{ section.id }} .vpp-offer { font-size: 46px; }
-    #vpp-{{ section.id }} .vpp-ask { margin-top: 12px; }
-    #vpp-{{ section.id }} .vpp-input { margin-top: 20px; }
-    #vpp-{{ section.id }} .vpp-sms-title { font-size: 24px; }
-    #vpp-{{ section.id }} .vpp-tel { margin-top: 20px; }
-    #vpp-{{ section.id }} .vpp-tel input { padding: 0 14px; }
-    #vpp-{{ section.id }} .vpp-prefix { padding: 0 14px; }
-    #vpp-{{ section.id }} .vpp-skip { margin-top: 14px; }
-    #vpp-{{ section.id }} .vpp-consent { margin-top: 12px; }
-    #vpp-{{ section.id }} .vpp-done-title { margin-top: 16px; font-size: 24px; }
-    #vpp-{{ section.id }} .vpp-code { font-size: 20px; }
+    #vpp-{{ uid }} .vpp-photo--b {
+      left: 850px; top: 50%; transform: translateY(calc(-50% + 134px));
+      width: 400px; height: 424px; box-shadow: 0 32px 60px -22px rgba(0,0,0,.32);
+    }
+  }
+
+  /* Short viewports: drop the floating cards rather than clip them. */
+  @media (min-width: 1280px) and (max-height: 779px) {
+    #vpp-{{ uid }} .vpp-photo { display: none; }
+    #vpp-{{ uid }} .vpp-col { margin: 0 auto; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    #vpp-{{ section.id }} .vpp-surface,
-    #vpp-{{ section.id }} .vpp-step { animation: none; }
-    #vpp-{{ section.id }} .vpp-pill { transition: none; }
+    #vpp-{{ uid }}.vpp-root.vpp-open,
+    #vpp-{{ uid }} .vpp-step { animation: none; }
+    #vpp-{{ uid }} .vpp-pill { transition: none; }
   }
 </style>
 
-<div id="vpp-{{ section.id }}" class="vpp-root" data-vpp-root aria-hidden="true">
-  <div class="vpp-surface" data-vpp-surface role="dialog" aria-modal="true" aria-label="{{ section.settings.text_title | escape }}">
-    <div class="vpp-tile"></div>
+<div id="vpp-{{ uid }}" class="vpp-root" data-vpp-root role="dialog" aria-modal="true" aria-label="{{ section.settings.text_title | escape }}" aria-hidden="true">
 
-    <button type="button" class="vpp-close" data-vpp-close aria-label="{{ section.settings.text_close_label | escape }}">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
-    </button>
+  <svg class="vpp-tile" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="vpp-mark-m-{{ uid }}" width="138" height="138" patternUnits="userSpaceOnUse">
+        <g fill="{{ section.settings.color_mark }}" fill-opacity="0.15" fill-rule="evenodd">
+          <g transform="translate(7 13) rotate(-10) scale(1.93)"><path d="{{ paw }}"></path></g>
+          <g transform="translate(84 34) rotate(-10) scale(1.22)"><path d="{{ paw }}"></path></g>
+          <g transform="translate(39 84) rotate(-10) scale(1.56)"><path d="{{ paw }}"></path></g>
+        </g>
+      </pattern>
+      <pattern id="vpp-mark-d-{{ uid }}" width="164" height="164" patternUnits="userSpaceOnUse">
+        <g fill="{{ section.settings.color_mark }}" fill-opacity="0.15" fill-rule="evenodd">
+          <g transform="translate(8 16) rotate(-10) scale(2.3)"><path d="{{ paw }}"></path></g>
+          <g transform="translate(100 40) rotate(-10) scale(1.45)"><path d="{{ paw }}"></path></g>
+          <g transform="translate(46 100) rotate(-10) scale(1.85)"><path d="{{ paw }}"></path></g>
+        </g>
+      </pattern>
+    </defs>
+    <rect class="vpp-tile-mobile" width="100%" height="100%" fill="url(#vpp-mark-m-{{ uid }})"></rect>
+    <rect class="vpp-tile-desktop" width="100%" height="100%" fill="url(#vpp-mark-d-{{ uid }})"></rect>
+  </svg>
 
+  <button type="button" class="vpp-close" data-vpp-close aria-label="{{ section.settings.text_close_label | escape }}">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+  </button>
+
+  <div class="vpp-wrap" data-vpp-wrap>
     {%- if section.settings.photo_primary != blank -%}
       {{ section.settings.photo_primary | image_url: width: 800 | image_tag: class: 'vpp-photo vpp-photo--a', widths: '400, 600, 800', sizes: '400px', loading: 'lazy', alt: section.settings.photo_primary_alt }}
     {%- endif -%}
@@ -248,75 +319,64 @@
         {{ section.settings.logo | image_url: width: 400 | image_tag: class: 'vpp-logo', widths: '200, 300, 400', sizes: '170px', loading: 'lazy', alt: shop.name }}
       {%- endif -%}
 
-      {%- comment -%} STATE 1 — before scratch {%- endcomment -%}
-      <div data-vpp-before>
-        <div class="vpp-eyebrow">{{ section.settings.text_eyebrow }}</div>
-        <h1 class="vpp-title">{{ section.settings.text_title }}</h1>
-        <p class="vpp-sub">{{ section.settings.text_subtitle }}</p>
+      <div class="vpp-eyebrow">{{ section.settings.text_eyebrow }}</div>
+      <h1 class="vpp-title">{{ section.settings.text_title }}</h1>
+      <p class="vpp-sub">{{ section.settings.text_subtitle }}</p>
 
-        <div class="vpp-stack">
-          <div class="vpp-card">
-            <canvas class="vpp-canvas" data-vpp-canvas width="460" height="320" aria-label="{{ section.settings.text_scratch_pill | escape }}" role="img"></canvas>
-            <div class="vpp-pill" data-vpp-pill>
-              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><g fill="#FFFFFF" transform="translate(12 12) rotate(-11)"><rect x="-9.4" y="-12" width="3.4" height="11" rx="1.7"></rect><rect x="-4.7" y="-12" width="3.4" height="13.5" rx="1.7"></rect><rect x="0" y="-12" width="3.4" height="12.5" rx="1.7"></rect><rect x="4.7" y="-12" width="3.4" height="10.5" rx="1.7"></rect><rect x="-9.8" y="-2.5" width="19.5" height="13" rx="5.5"></rect></g></svg>
-              <span>{{ section.settings.text_scratch_pill }}</span>
+      <div class="vpp-stack">
+        <div class="vpp-card">
+
+          <div class="vpp-step" data-vpp-step="email">
+            <div class="vpp-check">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
             </div>
+            <div class="vpp-kicker">{{ section.settings.text_unlocked }}</div>
+            <div class="vpp-offer">{{ section.settings.text_offer }}</div>
+            <div class="vpp-ask">{{ section.settings.text_email_ask }}</div>
+            <input class="vpp-input" data-vpp-email type="email" inputmode="email" autocomplete="email" aria-label="{{ section.settings.text_email_ask | escape }}" placeholder="{{ section.settings.text_email_placeholder | escape }}">
+            <div class="vpp-error" data-vpp-email-error hidden role="alert"></div>
+            <button type="button" class="vpp-submit" data-vpp-email-submit>{{ section.settings.text_claim_button }}</button>
+            <div class="vpp-fine">{{ section.settings.text_email_fine_print }}</div>
           </div>
-          <button type="button" class="vpp-decline" data-vpp-close>{{ section.settings.text_decline }}</button>
-        </div>
-      </div>
 
-      {%- comment -%} STATE 2/3/4 — after scratch {%- endcomment -%}
-      <div data-vpp-after hidden>
-        <div class="vpp-stack">
-          <div class="vpp-panel">
-
-            <div class="vpp-step" data-vpp-step="email">
-              <div class="vpp-check">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
-              </div>
-              <div class="vpp-kicker">{{ section.settings.text_unlocked }}</div>
-              <div class="vpp-offer">{{ section.settings.text_offer }}</div>
-              <div class="vpp-ask">{{ section.settings.text_email_ask }}</div>
-              <input class="vpp-input" data-vpp-email type="email" inputmode="email" autocomplete="email" aria-label="{{ section.settings.text_email_ask | escape }}" placeholder="{{ section.settings.text_email_placeholder | escape }}">
-              <div class="vpp-error" data-vpp-email-error hidden role="alert"></div>
-              <button type="button" class="vpp-submit" data-vpp-email-submit>{{ section.settings.text_claim_button }}</button>
-              <div class="vpp-fine">{{ section.settings.text_email_fine_print }}</div>
+          {%- if section.settings.enable_sms_step -%}
+          <div class="vpp-step" data-vpp-step="sms" hidden>
+            <div class="vpp-kicker" style="margin-top:0">{{ section.settings.text_sms_kicker }}</div>
+            <div class="vpp-sms-title">{{ section.settings.text_sms_title }}</div>
+            <div class="vpp-tel" data-vpp-tel-wrap>
+              <span class="vpp-prefix">{{ section.settings.text_sms_prefix }}</span>
+              <input data-vpp-phone type="tel" inputmode="tel" autocomplete="tel-national" aria-label="{{ section.settings.text_sms_title | escape }}" placeholder="{{ section.settings.text_sms_placeholder | escape }}">
             </div>
-
-            {%- if section.settings.enable_sms_step -%}
-            <div class="vpp-step" data-vpp-step="sms" hidden>
-              <div class="vpp-kicker" style="margin-top:0">{{ section.settings.text_sms_kicker }}</div>
-              <div class="vpp-sms-title">{{ section.settings.text_sms_title }}</div>
-              <div class="vpp-tel" data-vpp-tel-wrap>
-                <span class="vpp-prefix">{{ section.settings.text_sms_prefix }}</span>
-                <input data-vpp-phone type="tel" inputmode="tel" autocomplete="tel-national" aria-label="{{ section.settings.text_sms_title | escape }}" placeholder="{{ section.settings.text_sms_placeholder | escape }}">
-              </div>
-              <div class="vpp-error" data-vpp-sms-error hidden role="alert"></div>
-              <button type="button" class="vpp-submit" data-vpp-sms-submit>{{ section.settings.text_sms_button }}</button>
-              <button type="button" class="vpp-skip" data-vpp-sms-skip>{{ section.settings.text_sms_skip }}</button>
-              <div class="vpp-consent">{{ section.settings.text_sms_consent }}</div>
-            </div>
-            {%- endif -%}
-
-            <div class="vpp-step" data-vpp-step="done" hidden>
-              <div class="vpp-check">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
-              </div>
-              <div class="vpp-done-title">{{ section.settings.text_done_title }}</div>
-              <div class="vpp-code">{{ section.settings.discount_code }}</div>
-              <div class="vpp-code-note">{{ section.settings.text_done_note }}</div>
-            </div>
-
+            <div class="vpp-error" data-vpp-sms-error hidden role="alert"></div>
+            <button type="button" class="vpp-submit" data-vpp-sms-submit>{{ section.settings.text_sms_button }}</button>
+            <button type="button" class="vpp-skip" data-vpp-sms-skip>{{ section.settings.text_sms_skip }}</button>
+            <div class="vpp-consent">{{ section.settings.text_sms_consent }}</div>
           </div>
-          <button type="button" class="vpp-decline" data-vpp-close>{{ section.settings.text_decline }}</button>
+          {%- endif -%}
+
+          <div class="vpp-step" data-vpp-step="done" hidden>
+            <div class="vpp-check">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+            </div>
+            <div class="vpp-done-title">{{ section.settings.text_done_title }}</div>
+            <div class="vpp-code">{{ section.settings.discount_code }}</div>
+            <div class="vpp-code-note">{{ section.settings.text_done_note }}</div>
+          </div>
+
+          <canvas class="vpp-canvas" data-vpp-canvas width="460" height="320" role="img" aria-label="{{ section.settings.text_scratch_pill | escape }}"></canvas>
+          <div class="vpp-pill" data-vpp-pill>
+            <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><g fill="#FFFFFF" transform="translate(12 12) rotate(-11)"><rect x="-9.4" y="-12" width="3.4" height="11" rx="1.7"></rect><rect x="-4.7" y="-12" width="3.4" height="13.5" rx="1.7"></rect><rect x="0" y="-12" width="3.4" height="12.5" rx="1.7"></rect><rect x="4.7" y="-12" width="3.4" height="10.5" rx="1.7"></rect><rect x="-9.8" y="-2.5" width="19.5" height="13" rx="5.5"></rect></g></svg>
+            <span>{{ section.settings.text_scratch_pill }}</span>
+          </div>
         </div>
+
+        <button type="button" class="vpp-decline" data-vpp-close>{{ section.settings.text_decline }}</button>
       </div>
     </div>
   </div>
 </div>
 
-<script type="application/json" data-vpp-config="{{ section.id }}">
+<script type="application/json" data-vpp-config="{{ uid }}">
 {
   "scratchImage": {{ section.settings.scratch_image | image_url: width: 920 | json }},
   "trigger": {{ section.settings.trigger | json }},
@@ -331,18 +391,17 @@
   "smsPrefix": {{ section.settings.text_sms_prefix | json }},
   "errEmail": {{ section.settings.text_error_email | json }},
   "errPhone": {{ section.settings.text_error_phone | json }},
-  "errGeneric": {{ section.settings.text_error_generic | json }},
-  "designMode": {{ request.design_mode | default: false | json }}
+  "errGeneric": {{ section.settings.text_error_generic | json }}
 }
 </script>
 
 <script>
 (function () {
-  var root = document.getElementById('vpp-{{ section.id }}');
+  var root = document.getElementById('vpp-{{ uid }}');
   if (!root || root.dataset.vppReady === '1') return;
   root.dataset.vppReady = '1';
 
-  var cfgEl = document.querySelector('script[data-vpp-config="{{ section.id }}"]');
+  var cfgEl = document.querySelector('script[data-vpp-config="{{ uid }}"]');
   var cfg;
   try { cfg = JSON.parse(cfgEl.textContent); } catch (e) { return; }
 
@@ -350,9 +409,7 @@
   var q = function (sel) { return root.querySelector(sel); };
   var qa = function (sel) { return Array.prototype.slice.call(root.querySelectorAll(sel)); };
 
-  var surface = q('[data-vpp-surface]');
-  var beforeEl = q('[data-vpp-before]');
-  var afterEl = q('[data-vpp-after]');
+  var wrap = q('[data-vpp-wrap]');
   var canvas = q('[data-vpp-canvas]');
   var pill = q('[data-vpp-pill]');
   var emailInput = q('[data-vpp-email]');
@@ -369,13 +426,11 @@
   var scrollY = 0;
   var scratchedOnce = false;
 
-  /* ---------- measurement ---------- */
   function track(event, props) {
     if (!window.klaviyo || typeof window.klaviyo.push !== 'function') return;
     try { window.klaviyo.push(['track', event, props || {}]); } catch (e) {}
   }
 
-  /* ---------- storage gate ---------- */
   function gateKey() { return cfg.storageKey || 'vetpets_welcome_popup'; }
   function suppressed() {
     if (designMode) return false;
@@ -397,7 +452,6 @@
     } catch (e) {}
   }
 
-  /* ---------- open / close ---------- */
   function open() {
     if (isOpen) return;
     isOpen = true;
@@ -434,18 +488,18 @@
     if (e.key === 'Escape' || e.key === 'Esc') { e.preventDefault(); close(); }
   });
 
-  /* Scrim click: a click landing on the popup background itself (not on content). */
-  surface.addEventListener('click', function (e) {
-    if (e.target === surface || (e.target.classList && e.target.classList.contains('vpp-tile'))) close();
+  /* Scrim click: a click on the overlay background, outside the content wrapper. */
+  root.addEventListener('click', function (e) {
+    if (e.target === root || (e.target.classList && e.target.classList.contains('vpp-tile'))) close();
   });
 
   /* ---------- scratch canvas ---------- */
   var COLS = 40, ROWS = 28, BRUSH = 56;
-  var cells = null, lastPt = null, dragging = false, finished = false;
+  var cells = {}, marked = 0, lastPt = null, dragging = false, finished = false;
   var bellyImg = null, bellyReady = false, painted = false;
 
   function loadBelly() {
-    if (bellyImg || !cfg.scratchImage) return;
+    if (bellyImg || !cfg.scratchImage) { if (!cfg.scratchImage) reveal(true); return; }
     bellyImg = new Image();
     bellyImg.crossOrigin = 'anonymous';
     bellyImg.src = cfg.scratchImage;
@@ -453,7 +507,6 @@
       bellyReady = true;
       if (isOpen) paintScratch();
     }).catch(function () {
-      /* Image unavailable — reveal the offer rather than trapping the visitor. */
       bellyReady = false;
       reveal(true);
     });
@@ -489,7 +542,6 @@
     };
   }
 
-  var marked = 0;
   function mark(px, py) {
     var cw = canvas.width / COLS, ch = canvas.height / ROWS, rad = BRUSH / 2;
     var c0 = Math.max(0, Math.floor((px - rad) / cw)), c1 = Math.min(COLS - 1, Math.floor((px + rad) / cw));
@@ -528,16 +580,17 @@
     if (finished) return;
     finished = true;
     dragging = false;
-    var swap = function () {
-      if (beforeEl) beforeEl.hidden = true;
-      if (afterEl) afterEl.hidden = false;
+    var settle = function () {
+      if (canvas) canvas.style.display = 'none';
+      if (pill) pill.style.display = 'none';
       if (emailInput) { try { emailInput.focus({ preventScroll: true }); } catch (e) {} }
     };
-    if (!canvas || immediate || reduced) { swap(); return; }
+    if (!canvas || immediate || reduced) { settle(); return; }
     canvas.style.pointerEvents = 'none';
     canvas.style.transition = 'opacity .4s ease';
     canvas.style.opacity = '0';
-    window.setTimeout(function () { canvas.style.display = 'none'; swap(); }, 430);
+    if (pill) pill.style.opacity = '0';
+    window.setTimeout(settle, 430);
   }
 
   if (canvas) {
@@ -554,6 +607,14 @@
     canvas.addEventListener('pointerup', function () { dragging = false; lastPt = null; });
     canvas.addEventListener('pointercancel', function () { dragging = false; lastPt = null; });
   }
+
+  /* Re-fit the canvas when the breakpoint changes the card size. */
+  var resizeTimer = null;
+  window.addEventListener('resize', function () {
+    if (finished || !isOpen) return;
+    window.clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(function () { painted = false; paintScratch(); }, 150);
+  });
 
   /* ---------- Klaviyo ---------- */
   function subscribe(payloadProfile) {
@@ -591,8 +652,6 @@
     qa('[data-vpp-step]').forEach(function (s) { s.hidden = s.getAttribute('data-vpp-step') !== name; });
   }
 
-  var emailSaved = false;
-
   if (emailSubmit) {
     emailSubmit.addEventListener('click', function () {
       var val = (emailInput.value || '').trim();
@@ -610,7 +669,6 @@
           subscriptions: { email: { marketing: { consent: 'SUBSCRIBED' } } }
         }
       }).then(function () {
-        emailSaved = true;
         track('Popup Submitted', { channel: 'email' });
         suppress();
         goStep(cfg.smsEnabled ? 'sms' : 'done');
@@ -684,7 +742,6 @@
         open();
       };
       document.addEventListener('mouseout', onLeave);
-      /* Touch devices never fire exit intent — fall back to the delay. */
       window.setTimeout(function () {
         if (!isOpen && window.matchMedia('(hover: none)').matches) {
           document.removeEventListener('mouseout', onLeave);
@@ -702,15 +759,10 @@
   } else {
     arm();
   }
-
-  if (designMode) {
-    document.addEventListener('shopify:section:select', function (e) {
-      if (e.detail && e.target === root.parentElement) open();
-    });
-  }
 })();
 </script>
 {%- endunless -%}
+{%- endif -%}
 
 {% schema %}
 {
