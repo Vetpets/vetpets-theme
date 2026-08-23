@@ -2303,7 +2303,7 @@
         "text_offer": "70% OFF",
         "text_email_ask": "Where should we send it?",
         "text_email_placeholder": "Your email address",
-        "text_claim_button": "Claim my 10% OFF",
+        "text_claim_button": "Claim",
         "text_email_fine_print": "100-day money-back guarantee · Unsubscribe any time",
         "enable_sms_step": true,
         "text_sms_kicker": "",
@@ -2338,9 +2338,7 @@
         "color_prefix_bg": "#edf3f8",
         "color_gradient_top": "#d5f7ff",
         "color_gradient_mid": "#eafbff",
-        "color_gradient_bottom": "#ffffff",
-        "text_sms_subtitle": "Get the code by text so it's there when you check out.",
-        "text_done_subtitle": "You've unlocked up to 70% off + an extra 5% at checkout."
+        "color_gradient_bottom": "#ffffff"
       }
     }
   },
