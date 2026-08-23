@@ -32,17 +32,17 @@
   .vetpets-popup-section { margin: 0 !important; padding: 0 !important; }
 
   #vpp-{{ uid }}.vpp-root {
-    --vpp-brand: #47B5E9;
-    --vpp-brand-hover: #41A6D6;
-    --vpp-accent: #13B6B5;
-    --vpp-ink: #000000;
-    --vpp-body: #333333;
-    --vpp-muted: #7A8791;
-    --vpp-error: #E5484D;
-    --vpp-field-bg: #F7FAFC;
-    --vpp-field-border: #DDE7EF;
-    --vpp-surface: #FFFFFF;
-    --vpp-panel: #C9EEF9;
+    --vpp-brand: {{ section.settings.color_brand }};
+    --vpp-brand-hover: {{ section.settings.color_brand_hover }};
+    --vpp-accent: {{ section.settings.color_accent }};
+    --vpp-ink: {{ section.settings.color_ink }};
+    --vpp-body: {{ section.settings.color_body }};
+    --vpp-muted: {{ section.settings.color_muted }};
+    --vpp-error: {{ section.settings.color_error }};
+    --vpp-field-bg: {{ section.settings.color_field_bg }};
+    --vpp-field-border: {{ section.settings.color_field_border }};
+    --vpp-surface: {{ section.settings.color_surface }};
+    --vpp-panel: {{ section.settings.color_panel }};
     --vpp-font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   }
 
@@ -54,7 +54,7 @@
     display: none;
     overflow-x: hidden;
     overflow-y: auto;
-    background: linear-gradient(180deg, #D5F7FF 0%, #EAFBFF 46%, #FFFFFF 100%);
+    background: linear-gradient(180deg, {{ section.settings.color_gradient_top }} 0%, {{ section.settings.color_gradient_mid }} 46%, {{ section.settings.color_gradient_bottom }} 100%);
     font-family: var(--vpp-font);
     -webkit-font-smoothing: antialiased;
   }
@@ -173,7 +173,7 @@
     padding: 0 14px; font-size: 15px; font-weight: 500; color: var(--vpp-body);
     outline: none; font-family: var(--vpp-font);
   }
-  #vpp-{{ uid }} .vpp-input::placeholder { color: #9AA9B7; }
+  #vpp-{{ uid }} .vpp-input::placeholder { color: {{ section.settings.color_placeholder }}; }
   #vpp-{{ uid }} .vpp-input:focus { box-shadow: 0 0 0 3px rgba(71,181,233,.14); }
   #vpp-{{ uid }} .vpp-input.vpp-invalid { border-color: var(--vpp-error); }
 
@@ -204,7 +204,7 @@
   #vpp-{{ uid }} .vpp-prefix {
     position: relative; display: flex; align-items: center; height: 100%; flex: none;
     font-size: 15px; font-weight: 700; color: var(--vpp-body);
-    background: #EDF3F8; border-right: 1.5px solid var(--vpp-field-border);
+    background: {{ section.settings.color_prefix_bg }}; border-right: 1.5px solid var(--vpp-field-border);
   }
   #vpp-{{ uid }} .vpp-prefix-select {
     appearance: none; -webkit-appearance: none; -moz-appearance: none;
@@ -222,7 +222,7 @@
     flex: 1; min-width: 0; height: 100%; border: none; background: transparent; padding: 0 12px;
     font-size: 15px; font-weight: 500; color: var(--vpp-body); outline: none; font-family: var(--vpp-font);
   }
-  #vpp-{{ uid }} .vpp-tel input::placeholder { color: #9AA9B7; }
+  #vpp-{{ uid }} .vpp-tel input::placeholder { color: {{ section.settings.color_placeholder }}; }
 
   #vpp-{{ uid }} .vpp-skip {
     margin-top: 10px; background: none; border: none; padding: 10px 12px;
@@ -327,14 +327,14 @@
   <svg class="vpp-tile" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <pattern id="vpp-mark-m-{{ uid }}" width="138" height="138" patternUnits="userSpaceOnUse">
-        <g fill="#13B6B5" fill-opacity="0.15" fill-rule="evenodd">
+        <g fill="{{ section.settings.color_mark }}" fill-opacity="0.15" fill-rule="evenodd">
           <g transform="translate(7 13) rotate(-10) scale(1.93)"><path d="{{ paw }}"></path></g>
           <g transform="translate(84 34) rotate(-10) scale(1.22)"><path d="{{ paw }}"></path></g>
           <g transform="translate(39 84) rotate(-10) scale(1.56)"><path d="{{ paw }}"></path></g>
         </g>
       </pattern>
       <pattern id="vpp-mark-d-{{ uid }}" width="164" height="164" patternUnits="userSpaceOnUse">
-        <g fill="#13B6B5" fill-opacity="0.15" fill-rule="evenodd">
+        <g fill="{{ section.settings.color_mark }}" fill-opacity="0.15" fill-rule="evenodd">
           <g transform="translate(8 16) rotate(-10) scale(2.3)"><path d="{{ paw }}"></path></g>
           <g transform="translate(100 40) rotate(-10) scale(1.45)"><path d="{{ paw }}"></path></g>
           <g transform="translate(46 100) rotate(-10) scale(1.85)"><path d="{{ paw }}"></path></g>
@@ -345,16 +345,16 @@
     <rect class="vpp-tile-desktop" width="100%" height="100%" fill="url(#vpp-mark-d-{{ uid }})"></rect>
   </svg>
 
-  <button type="button" class="vpp-close" data-vpp-close aria-label="Close">
+  <button type="button" class="vpp-close" data-vpp-close aria-label="{{ section.settings.text_close_label | escape }}">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
   </button>
 
   <div class="vpp-wrap" data-vpp-wrap>
     {%- if section.settings.photo_primary != blank -%}
-      {{ section.settings.photo_primary | image_url: width: 800 | image_tag: class: 'vpp-photo vpp-photo--a', widths: '400, 600, 800', sizes: '400px', loading: 'lazy', alt: "French bulldog on a sofa behind three VetPets tubs" }}
+      {{ section.settings.photo_primary | image_url: width: 800 | image_tag: class: 'vpp-photo vpp-photo--a', widths: '400, 600, 800', sizes: '400px', loading: 'lazy', alt: section.settings.photo_primary_alt }}
     {%- endif -%}
     {%- if section.settings.photo_secondary != blank -%}
-      {{ section.settings.photo_secondary | image_url: width: 800 | image_tag: class: 'vpp-photo vpp-photo--b', widths: '400, 600, 800', sizes: '400px', loading: 'lazy', alt: "VetPets FreshWipes, EarWipes and EyeWipes tubs on a kitchen counter" }}
+      {{ section.settings.photo_secondary | image_url: width: 800 | image_tag: class: 'vpp-photo vpp-photo--b', widths: '400, 600, 800', sizes: '400px', loading: 'lazy', alt: section.settings.photo_secondary_alt }}
     {%- endif -%}
 
     <div class="vpp-col">
@@ -395,7 +395,7 @@
             <div class="vpp-tel" data-vpp-tel-wrap>
               {%- assign vpp_countries = 'US|+1|🇺🇸,CA|+1|🇨🇦,GB|+44|🇬🇧,IE|+353|🇮🇪,AU|+61|🇦🇺,NZ|+64|🇳🇿,SE|+46|🇸🇪,NO|+47|🇳🇴,DK|+45|🇩🇰,FI|+358|🇫🇮,IS|+354|🇮🇸,DE|+49|🇩🇪,NL|+31|🇳🇱,BE|+32|🇧🇪,FR|+33|🇫🇷,ES|+34|🇪🇸,IT|+39|🇮🇹,AT|+43|🇦🇹,CH|+41|🇨🇭,PT|+351|🇵🇹,PL|+48|🇵🇱,CZ|+420|🇨🇿,JP|+81|🇯🇵,SG|+65|🇸🇬' | split: ',' -%}
               <span class="vpp-prefix">
-                <select class="vpp-prefix-select" data-vpp-country aria-label="Country code">
+                <select class="vpp-prefix-select" data-vpp-country aria-label="{{ section.settings.text_sms_country_label | escape }}">
                   {%- for c in vpp_countries -%}
                     {%- assign cp = c | split: '|' -%}
                     <option value="{{ cp[1] }}"{% if section.settings.sms_default_country == cp[0] %} selected{% endif %}>{{ cp[2] }} {{ cp[1] }}</option>
@@ -445,14 +445,14 @@
   "delaySeconds": {{ section.settings.delay_seconds | json }},
   "scrollPercent": {{ section.settings.scroll_percent | json }},
   "hideDays": {{ section.settings.hide_days | json }},
-  "storageKey": "vetpets_welcome_popup",
+  "storageKey": {{ section.settings.storage_key | json }},
   "companyId": {{ section.settings.klaviyo_company_id | json }},
   "emailListId": {{ section.settings.klaviyo_email_list_id | json }},
   "smsListId": {{ section.settings.klaviyo_sms_list_id | json }},
   "smsEnabled": {{ section.settings.enable_sms_step | json }},
-  "errEmail": "Please enter a valid email address.",
-  "errPhone": "Please enter a valid phone number.",
-  "errGeneric": "Something went wrong. Please try again."
+  "errEmail": {{ section.settings.text_error_email | json }},
+  "errPhone": {{ section.settings.text_error_phone | json }},
+  "errGeneric": {{ section.settings.text_error_generic | json }}
 }
 </script>
 
@@ -845,5 +845,132 @@
 {%- endif -%}
 
 {% schema %}
-{"name":"VetPets Welcome Popup","tag":"section","class":"vetpets-popup-section","presets":[{"name":"VetPets Welcome Popup"}],"settings":[{"type":"checkbox","id":"enable","label":"Enable popup","default":true},{"type":"select","id":"trigger","label":"Trigger type","options":[{"value":"delay","label":"Time delay"},{"value":"scroll","label":"Scroll depth"},{"value":"exit","label":"Exit intent"}],"default":"delay"},{"type":"range","id":"delay_seconds","label":"Delay (seconds)","min":0,"max":60,"step":1,"unit":"s","default":8},{"type":"range","id":"scroll_percent","label":"Scroll depth","min":5,"max":100,"step":5,"unit":"%","default":40},{"type":"range","id":"hide_days","label":"Hide after dismiss (days)","min":0,"max":90,"step":1,"unit":"d","default":7},{"type":"image_picker","id":"logo","label":"Logo lockup"},{"type":"image_picker","id":"scratch_image","label":"Scratch photo (belly)"},{"type":"image_picker","id":"photo_primary","label":"Floating photo — upper left"},{"type":"image_picker","id":"photo_secondary","label":"Floating photo — lower right"},{"type":"text","id":"text_eyebrow","label":"Eyebrow","default":"Exclusive offer"},{"type":"text","id":"text_title","label":"Headline","default":"TRY YOUR LUCK"},{"type":"text","id":"text_subtitle","label":"Subheadline","default":"Give the belly a scratch to reveal today's offer."},{"type":"text","id":"text_scratch_pill","label":"Scratch pill","default":"Scratch the belly"},{"type":"text","id":"text_decline","label":"Decline link","default":"No thanks"},{"type":"text","id":"text_unlocked","label":"Kicker","default":"You've got up to"},{"type":"text","id":"text_offer","label":"Offer label","default":"70% OFF"},{"type":"text","id":"text_email_ask","label":"Ask","default":"Where should we send it?"},{"type":"text","id":"text_email_placeholder","label":"Email placeholder","default":"Your email address"},{"type":"text","id":"text_claim_button","label":"Claim button","default":"Claim"},{"type":"text","id":"text_email_fine_print","label":"Fine print","default":"100-day money-back guarantee · Unsubscribe any time"},{"type":"checkbox","id":"enable_sms_step","label":"Ask for phone number after email","default":true},{"type":"text","id":"text_sms_kicker","label":"Kicker","default":""},{"type":"text","id":"text_sms_title","label":"Headline","default":"Finish signing up"},{"type":"text","id":"text_sms_subtitle","label":"Subheadline","default":"Get the code by text so it's there when you check out."},{"type":"select","id":"sms_default_country","label":"Default country","default":"US","options":[{"value":"US","label":"🇺🇸 United States (+1)"},{"value":"CA","label":"🇨🇦 Canada (+1)"},{"value":"GB","label":"🇬🇧 United Kingdom (+44)"},{"value":"IE","label":"🇮🇪 Ireland (+353)"},{"value":"AU","label":"🇦🇺 Australia (+61)"},{"value":"NZ","label":"🇳🇿 New Zealand (+64)"},{"value":"SE","label":"🇸🇪 Sweden (+46)"},{"value":"NO","label":"🇳🇴 Norway (+47)"},{"value":"DK","label":"🇩🇰 Denmark (+45)"},{"value":"FI","label":"🇫🇮 Finland (+358)"},{"value":"IS","label":"🇮🇸 Iceland (+354)"},{"value":"DE","label":"🇩🇪 Germany (+49)"},{"value":"NL","label":"🇳🇱 Netherlands (+31)"},{"value":"BE","label":"🇧🇪 Belgium (+32)"},{"value":"FR","label":"🇫🇷 France (+33)"},{"value":"ES","label":"🇪🇸 Spain (+34)"},{"value":"IT","label":"🇮🇹 Italy (+39)"},{"value":"AT","label":"🇦🇹 Austria (+43)"},{"value":"CH","label":"🇨🇭 Switzerland (+41)"},{"value":"PT","label":"🇵🇹 Portugal (+351)"},{"value":"PL","label":"🇵🇱 Poland (+48)"},{"value":"CZ","label":"🇨🇿 Czechia (+420)"},{"value":"JP","label":"🇯🇵 Japan (+81)"},{"value":"SG","label":"🇸🇬 Singapore (+65)"}]},{"type":"text","id":"text_sms_placeholder","label":"Phone placeholder","default":"Your phone number"},{"type":"text","id":"text_sms_button","label":"Submit button","default":"Send me the code"},{"type":"text","id":"text_sms_skip","label":"Skip link","default":"Skip this step"},{"type":"textarea","id":"text_sms_consent","label":"Consent fine print","default":"By submitting you agree to receive recurring automated marketing texts at the number provided. Consent is not a condition of purchase. Msg & data rates may apply. Reply STOP to cancel."},{"type":"text","id":"text_done_title","label":"Headline","default":"You're in!"},{"type":"text","id":"text_done_subtitle","label":"Subheadline","default":"You've unlocked up to 70% off + an extra 5% at checkout."},{"type":"text","id":"discount_code","label":"Discount code","default":"SCRATCH5"},{"type":"text","id":"text_done_note","label":"Note","default":"Stacks on top of every bundle."},{"type":"text","id":"klaviyo_company_id","label":"Public API key (company_id)","default":"V3XAJ6"},{"type":"text","id":"klaviyo_email_list_id","label":"Email list id","default":"TFfFDG"},{"type":"text","id":"klaviyo_sms_list_id","label":"SMS list id","default":"T2TNN5"}]}
+{
+  "name": "VetPets Welcome Popup",
+  "tag": "section",
+  "class": "vetpets-popup-section",
+  "presets": [{ "name": "VetPets Welcome Popup" }],
+  "settings": [
+    { "type": "checkbox", "id": "enable", "label": "Enable popup", "default": true },
+
+    { "type": "header", "content": "Trigger" },
+    {
+      "type": "select",
+      "id": "trigger",
+      "label": "Trigger type",
+      "options": [
+        { "value": "delay", "label": "Time delay" },
+        { "value": "scroll", "label": "Scroll depth" },
+        { "value": "exit", "label": "Exit intent" }
+      ],
+      "default": "delay"
+    },
+    { "type": "range", "id": "delay_seconds", "label": "Delay (seconds)", "min": 0, "max": 60, "step": 1, "unit": "s", "default": 8 },
+    { "type": "range", "id": "scroll_percent", "label": "Scroll depth", "min": 5, "max": 100, "step": 5, "unit": "%", "default": 40 },
+    { "type": "range", "id": "hide_days", "label": "Hide after dismiss (days)", "min": 0, "max": 90, "step": 1, "unit": "d", "default": 7 },
+    { "type": "text", "id": "storage_key", "label": "localStorage key", "default": "vetpets_welcome_popup" },
+
+    { "type": "header", "content": "Images" },
+    { "type": "image_picker", "id": "logo", "label": "Logo lockup" },
+    { "type": "image_picker", "id": "scratch_image", "label": "Scratch photo (belly)", "info": "Shopify Files: hf_20260822_113024_e5868d33-6f0f-4c6f-b0c5-fbc36b342b49.png" },
+    { "type": "image_picker", "id": "photo_primary", "label": "Floating photo — upper left" },
+    { "type": "text", "id": "photo_primary_alt", "label": "Upper-left photo alt text", "default": "French bulldog on a sofa behind three VetPets tubs" },
+    { "type": "image_picker", "id": "photo_secondary", "label": "Floating photo — lower right" },
+    { "type": "text", "id": "photo_secondary_alt", "label": "Lower-right photo alt text", "default": "VetPets FreshWipes, EarWipes and EyeWipes tubs on a kitchen counter" },
+
+    { "type": "header", "content": "Copy — before scratch" },
+    { "type": "text", "id": "text_eyebrow", "label": "Eyebrow", "default": "Exclusive offer" },
+    { "type": "text", "id": "text_title", "label": "Headline", "default": "TRY YOUR LUCK" },
+    { "type": "text", "id": "text_subtitle", "label": "Subheadline", "default": "Give the belly a scratch to reveal today's offer." },
+    { "type": "text", "id": "text_scratch_pill", "label": "Scratch pill", "default": "Scratch the belly" },
+    { "type": "text", "id": "text_decline", "label": "Decline link", "default": "No thanks" },
+    { "type": "text", "id": "text_close_label", "label": "Close button aria-label", "default": "Close" },
+
+    { "type": "header", "content": "Copy — email step" },
+    { "type": "text", "id": "text_unlocked", "label": "Kicker", "default": "You've got up to" },
+    { "type": "text", "id": "text_offer", "label": "Offer label", "default": "70% OFF" },
+    { "type": "text", "id": "text_email_ask", "label": "Ask", "default": "Where should we send it?" },
+    { "type": "text", "id": "text_email_placeholder", "label": "Email placeholder", "default": "Your email address" },
+    { "type": "text", "id": "text_claim_button", "label": "Claim button", "default": "Claim" },
+    { "type": "text", "id": "text_email_fine_print", "label": "Fine print", "default": "100-day money-back guarantee · Unsubscribe any time" },
+
+    { "type": "header", "content": "Copy — SMS step" },
+    { "type": "checkbox", "id": "enable_sms_step", "label": "Ask for phone number after email", "default": true },
+    { "type": "text", "id": "text_sms_kicker", "label": "Kicker", "default": "One more thing" },
+    { "type": "text", "id": "text_sms_title", "label": "Headline", "default": "Finish signing up" },
+    { "type": "text", "id": "text_sms_subtitle", "label": "Subheadline", "default": "Get the code by text so it's there when you check out." },
+    {
+      "type": "select",
+      "id": "sms_default_country",
+      "label": "Default country",
+      "default": "US",
+      "options": [
+        { "value": "US", "label": "🇺🇸 United States (+1)" },
+        { "value": "CA", "label": "🇨🇦 Canada (+1)" },
+        { "value": "GB", "label": "🇬🇧 United Kingdom (+44)" },
+        { "value": "IE", "label": "🇮🇪 Ireland (+353)" },
+        { "value": "AU", "label": "🇦🇺 Australia (+61)" },
+        { "value": "NZ", "label": "🇳🇿 New Zealand (+64)" },
+        { "value": "SE", "label": "🇸🇪 Sweden (+46)" },
+        { "value": "NO", "label": "🇳🇴 Norway (+47)" },
+        { "value": "DK", "label": "🇩🇰 Denmark (+45)" },
+        { "value": "FI", "label": "🇫🇮 Finland (+358)" },
+        { "value": "IS", "label": "🇮🇸 Iceland (+354)" },
+        { "value": "DE", "label": "🇩🇪 Germany (+49)" },
+        { "value": "NL", "label": "🇳🇱 Netherlands (+31)" },
+        { "value": "BE", "label": "🇧🇪 Belgium (+32)" },
+        { "value": "FR", "label": "🇫🇷 France (+33)" },
+        { "value": "ES", "label": "🇪🇸 Spain (+34)" },
+        { "value": "IT", "label": "🇮🇹 Italy (+39)" },
+        { "value": "AT", "label": "🇦🇹 Austria (+43)" },
+        { "value": "CH", "label": "🇨🇭 Switzerland (+41)" },
+        { "value": "PT", "label": "🇵🇹 Portugal (+351)" },
+        { "value": "PL", "label": "🇵🇱 Poland (+48)" },
+        { "value": "CZ", "label": "🇨🇿 Czechia (+420)" },
+        { "value": "JP", "label": "🇯🇵 Japan (+81)" },
+        { "value": "SG", "label": "🇸🇬 Singapore (+65)" }
+      ]
+    },
+    { "type": "text", "id": "text_sms_country_label", "label": "Country select aria-label", "default": "Country code" },
+    { "type": "text", "id": "text_sms_placeholder", "label": "Phone placeholder", "default": "Your phone number" },
+    { "type": "text", "id": "text_sms_button", "label": "Submit button", "default": "Send me the code" },
+    { "type": "text", "id": "text_sms_skip", "label": "Skip link", "default": "Skip this step" },
+    { "type": "textarea", "id": "text_sms_consent", "label": "Consent fine print", "default": "By submitting you agree to receive recurring automated marketing texts at the number provided. Consent is not a condition of purchase. Msg & data rates may apply. Reply STOP to cancel." },
+
+    { "type": "header", "content": "Copy — success" },
+    { "type": "text", "id": "text_done_title", "label": "Headline", "default": "You're in!" },
+    { "type": "text", "id": "text_done_subtitle", "label": "Subheadline", "default": "You've unlocked up to 70% off + an extra 5% at checkout." },
+    { "type": "text", "id": "discount_code", "label": "Discount code", "default": "SCRATCH5" },
+    { "type": "text", "id": "text_done_note", "label": "Note", "default": "Stacks on top of every bundle." },
+
+    { "type": "header", "content": "Copy — errors" },
+    { "type": "text", "id": "text_error_email", "label": "Invalid email", "default": "Please enter a valid email address." },
+    { "type": "text", "id": "text_error_phone", "label": "Invalid phone", "default": "Please enter a valid phone number." },
+    { "type": "text", "id": "text_error_generic", "label": "Submission failed", "default": "Something went wrong. Please try again." },
+
+    { "type": "header", "content": "Klaviyo" },
+    { "type": "text", "id": "klaviyo_company_id", "label": "Public API key (company_id)", "default": "V3XAJ6" },
+    { "type": "text", "id": "klaviyo_email_list_id", "label": "Email list id", "default": "TFfFDG" },
+    { "type": "text", "id": "klaviyo_sms_list_id", "label": "SMS list id", "default": "T2TNN5" },
+
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "color_brand", "label": "Brand blue", "default": "#47B5E9" },
+    { "type": "color", "id": "color_brand_hover", "label": "Brand blue — hover", "default": "#41A6D6" },
+    { "type": "color", "id": "color_accent", "label": "Accent teal", "default": "#13B6B5" },
+    { "type": "color", "id": "color_mark", "label": "Tiled mark", "default": "#13B6B5" },
+    { "type": "color", "id": "color_ink", "label": "Headline ink", "default": "#000000" },
+    { "type": "color", "id": "color_body", "label": "Body text", "default": "#333333" },
+    { "type": "color", "id": "color_muted", "label": "Muted text", "default": "#7A8791" },
+    { "type": "color", "id": "color_placeholder", "label": "Placeholder text", "default": "#9AA9B7" },
+    { "type": "color", "id": "color_error", "label": "Error", "default": "#E5484D" },
+    { "type": "color", "id": "color_surface", "label": "Card surface", "default": "#FFFFFF" },
+    { "type": "color", "id": "color_panel", "label": "Scratch card frame", "default": "#C9EEF9" },
+    { "type": "color", "id": "color_field_bg", "label": "Field background", "default": "#F7FAFC" },
+    { "type": "color", "id": "color_field_border", "label": "Field border", "default": "#DDE7EF" },
+    { "type": "color", "id": "color_prefix_bg", "label": "Phone prefix background", "default": "#EDF3F8" },
+    { "type": "color", "id": "color_gradient_top", "label": "Background gradient — top", "default": "#D5F7FF" },
+    { "type": "color", "id": "color_gradient_mid", "label": "Background gradient — middle", "default": "#EAFBFF" },
+    { "type": "color", "id": "color_gradient_bottom", "label": "Background gradient — bottom", "default": "#FFFFFF" }
+  ]
+}
 {% endschema %}
