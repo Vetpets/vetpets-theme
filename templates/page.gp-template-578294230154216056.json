@@ -122,16 +122,6 @@
         "checksum": "dc3cfd655f6da529b4017e2d1b5ee92b7ef9fe08d641cd71b5f5fc824889ce11_1_1_1_0__1",
         "ggozyOZyjo4_text": "<p><strong>THIS IS AN ADVERTISEMENT AND NOT AN ACTUAL NEWS ARTICLE, BLOG, OR CONSUMER INFORMATION</strong></p><p>© 2025. ALL RIGHTS RESERVED.</p><p>This is an advertisement for Vetpets and is intended for informational purposes only. Any information provided does not constitute medical advice and should not be used as a substitute for consultation with a veterinarian. Always consult your veterinarian before making changes to treatments or supplements.</p><p>The opinions and experiences expressed are solely those of or a testimonial from a verified customer, based on personal experiences. Individual results may vary. While many of our reviews are unsolicited, some customers may have received compensation for providing an honest review.</p><p>Please note that these products are not medicines and are not intended to diagnose, treat, prevent, or cure any disease. The use of logos is protected by copyright of their respective owners, and their use does not imply endorsement, sponsorship, or mention locally or regionally..</p>"
       }
-    },
-    "vetpets_popup": {
-      "type": "vetpets-popup",
-      "settings": {
-        "logo": "shopify://shop_images/Vetpets_Logo_11_3e42d63d-8554-4b1f-b85e-bf905293a7a2.png",
-        "scratch_image": "shopify://shop_images/hf_20260822_113024_e5868d33-6f0f-4c6f-b0c5-fbc36b342b49.png",
-        "photo_primary": "shopify://shop_images/vetpets-popup-ugc-frenchie-sofa.png",
-        "photo_secondary": "shopify://shop_images/vetpets-popup-ugc-tubs-kitchen.png",
-        "klaviyo_email_list_id": "TFfFDG"
-      }
     }
   },
   "order": [
@@ -146,8 +136,7 @@
     "gp_section_578294230221390456",
     "gp_section_578294230221455992",
     "gp_section_578294230221587064",
-    "gp_section_578294230221652600",
-    "vetpets_popup"
+    "gp_section_578294230221652600"
   ],
   "layout": "theme.gempages.blank"
 }

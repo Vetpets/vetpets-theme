@@ -129,16 +129,6 @@
         "ggoCX0cxirl_label": "<p>What’s the solution?</p>",
         "ggw3KFyMSCE_label": "<p>Skip</p>"
       }
-    },
-    "vetpets_popup": {
-      "type": "vetpets-popup",
-      "settings": {
-        "logo": "shopify://shop_images/Vetpets_Logo_11_3e42d63d-8554-4b1f-b85e-bf905293a7a2.png",
-        "scratch_image": "shopify://shop_images/hf_20260822_113024_e5868d33-6f0f-4c6f-b0c5-fbc36b342b49.png",
-        "photo_primary": "shopify://shop_images/vetpets-popup-ugc-frenchie-sofa.png",
-        "photo_secondary": "shopify://shop_images/vetpets-popup-ugc-tubs-kitchen.png",
-        "klaviyo_email_list_id": "TFfFDG"
-      }
     }
   },
   "order": [
@@ -153,8 +143,7 @@
     "gp_section_589431393868579346",
     "gp_section_589431393868775954",
     "gp_section_589431393868644882",
-    "gp_section_589431393868710418",
-    "vetpets_popup"
+    "gp_section_589431393868710418"
   ],
   "layout": "theme.gempages.blank"
 }

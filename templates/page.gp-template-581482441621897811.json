@@ -114,16 +114,6 @@
         "checksum": "7c236c591a8d6c8a6dca3b832df6bfc93709a73ac937a3f93c48eedeaaf8bf77_1_1_0_0__1",
         "ggQPmvl2RBc_text": "OVER 15,OOO <span style=\"color:#118FCB;\">HAPPY PET PARENTS!</span>"
       }
-    },
-    "vetpets_popup": {
-      "type": "vetpets-popup",
-      "settings": {
-        "logo": "shopify://shop_images/Vetpets_Logo_11_3e42d63d-8554-4b1f-b85e-bf905293a7a2.png",
-        "scratch_image": "shopify://shop_images/hf_20260822_113024_e5868d33-6f0f-4c6f-b0c5-fbc36b342b49.png",
-        "photo_primary": "shopify://shop_images/vetpets-popup-ugc-frenchie-sofa.png",
-        "photo_secondary": "shopify://shop_images/vetpets-popup-ugc-tubs-kitchen.png",
-        "klaviyo_email_list_id": "TFfFDG"
-      }
     }
   },
   "order": [
@@ -135,7 +125,6 @@
     "gp_section_581482441773285971",
     "gp_section_581482441773089363",
     "gp_section_581482441773351507",
-    "gp_section_581482441772958291",
-    "vetpets_popup"
+    "gp_section_581482441772958291"
   ]
 }

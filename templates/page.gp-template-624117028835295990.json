@@ -173,16 +173,6 @@
         "ggv3WPTtPvs_srcSet_desktop_src": "https://cdn.shopify.com/s/files/1/0735/4833/3323/files/Din_Hunds_Leende_spelar_ocksa_roll_-_2026-06-15T160800.859.jpg"
       },
       "type": "gp-section-624117029070766838"
-    },
-    "vetpets_popup": {
-      "type": "vetpets-popup",
-      "settings": {
-        "logo": "shopify://shop_images/Vetpets_Logo_11_3e42d63d-8554-4b1f-b85e-bf905293a7a2.png",
-        "scratch_image": "shopify://shop_images/hf_20260822_113024_e5868d33-6f0f-4c6f-b0c5-fbc36b342b49.png",
-        "photo_primary": "shopify://shop_images/vetpets-popup-ugc-frenchie-sofa.png",
-        "photo_secondary": "shopify://shop_images/vetpets-popup-ugc-tubs-kitchen.png",
-        "klaviyo_email_list_id": "TFfFDG"
-      }
     }
   },
   "order": [
@@ -195,8 +185,7 @@
     "gp_section_624117029070373622",
     "gp_section_624117029070177014",
     "gp_section_624117029070701302",
-    "gp_section_624117029070766838",
-    "vetpets_popup"
+    "gp_section_624117029070766838"
   ],
   "layout": "theme.gempages.blank"
 }

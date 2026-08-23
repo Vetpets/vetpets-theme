@@ -100,16 +100,6 @@
         "gg3pZkumq3q_text": "Real Dogs. Real Results. <span style=\"color:#118FCB;\"><strong>In Just 2 Weeks</strong></span>",
         "ggX0Whwz2MB_text": "<p>Join 15,000+ Dog Owners Who've Made the Switch to FreshWipes</p>"
       }
-    },
-    "vetpets_popup": {
-      "type": "vetpets-popup",
-      "settings": {
-        "logo": "shopify://shop_images/Vetpets_Logo_11_3e42d63d-8554-4b1f-b85e-bf905293a7a2.png",
-        "scratch_image": "shopify://shop_images/hf_20260822_113024_e5868d33-6f0f-4c6f-b0c5-fbc36b342b49.png",
-        "photo_primary": "shopify://shop_images/vetpets-popup-ugc-frenchie-sofa.png",
-        "photo_secondary": "shopify://shop_images/vetpets-popup-ugc-tubs-kitchen.png",
-        "klaviyo_email_list_id": "TFfFDG"
-      }
     }
   },
   "order": [
@@ -120,7 +110,6 @@
     "gp_section_586814741448884955",
     "gp_section_586814741449016027",
     "gp_section_586814741448950491",
-    "gp_section_586814741448557275",
-    "vetpets_popup"
+    "gp_section_586814741448557275"
   ]
 }

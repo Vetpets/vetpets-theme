@@ -144,16 +144,6 @@
         "gghc03vB35o_errorMessage": "Cannot add product to cart",
         "gguk8v2Xd6Q_text": "<p>100-Day Plaque Relief Guarantee</p>"
       }
-    },
-    "vetpets_popup": {
-      "type": "vetpets-popup",
-      "settings": {
-        "logo": "shopify://shop_images/Vetpets_Logo_11_3e42d63d-8554-4b1f-b85e-bf905293a7a2.png",
-        "scratch_image": "shopify://shop_images/hf_20260822_113024_e5868d33-6f0f-4c6f-b0c5-fbc36b342b49.png",
-        "photo_primary": "shopify://shop_images/vetpets-popup-ugc-frenchie-sofa.png",
-        "photo_secondary": "shopify://shop_images/vetpets-popup-ugc-tubs-kitchen.png",
-        "klaviyo_email_list_id": "TFfFDG"
-      }
     }
   },
   "order": [
@@ -166,8 +156,7 @@
     "gp_section_598591247719858743",
     "gp_section_598592627209667161",
     "gp_section_598590819363980220",
-    "gp_section_598590177635468220",
-    "vetpets_popup"
+    "gp_section_598590177635468220"
   ],
   "layout": "theme.gempages.blank"
 }

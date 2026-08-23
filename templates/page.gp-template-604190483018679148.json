@@ -101,16 +101,6 @@
         "ggju8zInVTd_text": "The <span style=\"color:#47B5E9;\">only ear wipe</span> that actually stops scratching (not just cleans the surface)",
         "ggEllCIZG91_text": "<p><strong>Textured surface removes bacteria on contact</strong><br>EarWipes don't rely on drops or dilution — they physically lift wax and bacteria the moment you wipe around the ear opening.</p><p>&nbsp;</p><p><strong>Designed for floppy ears and under-flap areas</strong><br>Soft, textured finger wipes reach where bacteria actually builds up — especially under ear flaps where moisture traps yeast and causes scratching.</p><p>&nbsp;</p><p><strong>Most &nbsp;dogs tolerate this from day one</strong><br>No panic response. No head shaking or pulling away. Just a gentle wipe on your finger that feels like familiar touch, not a foreign object.</p><p>&nbsp;</p><p><strong>Works without brushing or prep&nbsp;</strong><br>No diluting, no measuring, no routines you'll quit after a week.</p>"
       }
-    },
-    "vetpets_popup": {
-      "type": "vetpets-popup",
-      "settings": {
-        "logo": "shopify://shop_images/Vetpets_Logo_11_3e42d63d-8554-4b1f-b85e-bf905293a7a2.png",
-        "scratch_image": "shopify://shop_images/hf_20260822_113024_e5868d33-6f0f-4c6f-b0c5-fbc36b342b49.png",
-        "photo_primary": "shopify://shop_images/vetpets-popup-ugc-frenchie-sofa.png",
-        "photo_secondary": "shopify://shop_images/vetpets-popup-ugc-tubs-kitchen.png",
-        "klaviyo_email_list_id": "TFfFDG"
-      }
     }
   },
   "order": [
@@ -122,8 +112,7 @@
     "gp_section_604190483119866732",
     "gp_section_604190483119735660",
     "gp_section_604190483119539052",
-    "gp_section_604190483119670124",
-    "vetpets_popup"
+    "gp_section_604190483119670124"
   ],
   "layout": "theme.gempages.blank"
 }
