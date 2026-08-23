@@ -191,6 +191,10 @@
   #vpp-{{ uid }} .vpp-consent { margin-top: 10px; font-size: 12px; font-weight: 400; line-height: 1.5; color: var(--vpp-muted); text-align: center; text-wrap: pretty; }
 
   #vpp-{{ uid }} .vpp-sms-title { margin-top: 10px; font-size: 22px; font-weight: 800; line-height: 1.15; letter-spacing: -.02em; color: var(--vpp-ink); text-align: center; }
+  #vpp-{{ uid }} .vpp-sms-sub {
+    margin-top: 8px; max-width: 300px; font-size: 15px; font-weight: 500;
+    line-height: 1.4; color: var(--vpp-muted); text-align: center; text-wrap: pretty;
+  }
   #vpp-{{ uid }} .vpp-tel {
     margin-top: 14px; width: 100%; display: flex; align-items: center; height: 48px;
     border-radius: 12px; background: var(--vpp-field-bg); border: 1.5px solid var(--vpp-field-border);
@@ -198,9 +202,21 @@
   }
   #vpp-{{ uid }} .vpp-tel.vpp-invalid { border-color: var(--vpp-error); }
   #vpp-{{ uid }} .vpp-prefix {
-    display: flex; align-items: center; height: 100%; padding: 0 14px;
+    position: relative; display: flex; align-items: center; height: 100%; flex: none;
     font-size: 15px; font-weight: 700; color: var(--vpp-body);
     background: {{ section.settings.color_prefix_bg }}; border-right: 1.5px solid var(--vpp-field-border);
+  }
+  #vpp-{{ uid }} .vpp-prefix-select {
+    appearance: none; -webkit-appearance: none; -moz-appearance: none;
+    height: 100%; box-sizing: border-box; padding: 0 28px 0 14px; margin: 0;
+    border: none; border-radius: 0; background: transparent;
+    font-family: var(--vpp-font); font-size: 15px; font-weight: 700; line-height: normal;
+    color: var(--vpp-body); cursor: pointer; outline: none;
+  }
+  #vpp-{{ uid }} .vpp-prefix-select:focus-visible { box-shadow: inset 0 0 0 2px var(--vpp-brand); }
+  #vpp-{{ uid }} .vpp-prefix-chev {
+    position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+    pointer-events: none; color: var(--vpp-muted);
   }
   #vpp-{{ uid }} .vpp-tel input {
     flex: 1; min-width: 0; height: 100%; border: none; background: transparent; padding: 0 12px;
@@ -209,12 +225,16 @@
   #vpp-{{ uid }} .vpp-tel input::placeholder { color: {{ section.settings.color_placeholder }}; }
 
   #vpp-{{ uid }} .vpp-skip {
-    margin-top: 10px; background: none; border: none; padding: 6px 12px;
-    font-size: 15px; font-weight: 600; color: var(--vpp-brand); text-decoration: underline;
+    margin-top: 10px; background: none; border: none; padding: 10px 12px;
+    font-size: 16px; font-weight: 600; color: var(--vpp-brand); text-decoration: underline;
     cursor: pointer; font-family: var(--vpp-font);
   }
 
   #vpp-{{ uid }} .vpp-done-title { margin-top: 12px; font-size: 20px; font-weight: 800; letter-spacing: -.02em; color: var(--vpp-ink); text-align: center; }
+  #vpp-{{ uid }} .vpp-done-sub {
+    margin-top: 8px; font-size: 15px; font-weight: 500; line-height: 1.4;
+    color: var(--vpp-body); text-align: center; text-wrap: pretty;
+  }
   #vpp-{{ uid }} .vpp-code {
     margin-top: 12px; width: 100%; height: 48px; border-radius: 12px;
     background: var(--vpp-field-bg); border: 1.5px dashed var(--vpp-brand);
@@ -365,10 +385,24 @@
 
           {%- if section.settings.enable_sms_step -%}
           <div class="vpp-step" data-vpp-step="sms" hidden>
-            <div class="vpp-kicker" style="margin-top:0">{{ section.settings.text_sms_kicker }}</div>
-            <div class="vpp-sms-title">{{ section.settings.text_sms_title }}</div>
+            {%- if section.settings.text_sms_kicker != blank -%}
+              <div class="vpp-kicker" style="margin-top:0">{{ section.settings.text_sms_kicker }}</div>
+            {%- endif -%}
+            <div class="vpp-sms-title"{% if section.settings.text_sms_kicker == blank %} style="margin-top:0"{% endif %}>{{ section.settings.text_sms_title }}</div>
+            {%- if section.settings.text_sms_subtitle != blank -%}
+              <div class="vpp-sms-sub">{{ section.settings.text_sms_subtitle }}</div>
+            {%- endif -%}
             <div class="vpp-tel" data-vpp-tel-wrap>
-              <span class="vpp-prefix">{{ section.settings.text_sms_prefix }}</span>
+              {%- assign vpp_countries = 'US|+1|🇺🇸,CA|+1|🇨🇦,GB|+44|🇬🇧,IE|+353|🇮🇪,AU|+61|🇦🇺,NZ|+64|🇳🇿,SE|+46|🇸🇪,NO|+47|🇳🇴,DK|+45|🇩🇰,FI|+358|🇫🇮,IS|+354|🇮🇸,DE|+49|🇩🇪,NL|+31|🇳🇱,BE|+32|🇧🇪,FR|+33|🇫🇷,ES|+34|🇪🇸,IT|+39|🇮🇹,AT|+43|🇦🇹,CH|+41|🇨🇭,PT|+351|🇵🇹,PL|+48|🇵🇱,CZ|+420|🇨🇿,JP|+81|🇯🇵,SG|+65|🇸🇬' | split: ',' -%}
+              <span class="vpp-prefix">
+                <select class="vpp-prefix-select" data-vpp-country aria-label="{{ section.settings.text_sms_country_label | escape }}">
+                  {%- for c in vpp_countries -%}
+                    {%- assign cp = c | split: '|' -%}
+                    <option value="{{ cp[1] }}"{% if section.settings.sms_default_country == cp[0] %} selected{% endif %}>{{ cp[2] }} {{ cp[1] }}</option>
+                  {%- endfor -%}
+                </select>
+                <svg class="vpp-prefix-chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+              </span>
               <input data-vpp-phone type="tel" inputmode="tel" autocomplete="tel-national" aria-label="{{ section.settings.text_sms_title | escape }}" placeholder="{{ section.settings.text_sms_placeholder | escape }}">
             </div>
             <div class="vpp-error" data-vpp-sms-error hidden role="alert"></div>
@@ -383,6 +417,9 @@
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
             </div>
             <div class="vpp-done-title">{{ section.settings.text_done_title }}</div>
+            {%- if section.settings.text_done_subtitle != blank -%}
+              <div class="vpp-done-sub">{{ section.settings.text_done_subtitle }}</div>
+            {%- endif -%}
             <div class="vpp-code">{{ section.settings.discount_code }}</div>
             <div class="vpp-code-note">{{ section.settings.text_done_note }}</div>
           </div>
@@ -413,7 +450,6 @@
   "emailListId": {{ section.settings.klaviyo_email_list_id | json }},
   "smsListId": {{ section.settings.klaviyo_sms_list_id | json }},
   "smsEnabled": {{ section.settings.enable_sms_step | json }},
-  "smsPrefix": {{ section.settings.text_sms_prefix | json }},
   "errEmail": {{ section.settings.text_error_email | json }},
   "errPhone": {{ section.settings.text_error_phone | json }},
   "errGeneric": {{ section.settings.text_error_generic | json }}
@@ -443,6 +479,7 @@
   var emailSubmit = q('[data-vpp-email-submit]');
   var phoneInput = q('[data-vpp-phone]');
   var telWrap = q('[data-vpp-tel-wrap]');
+  var countrySelect = q('[data-vpp-country]');
   var smsError = q('[data-vpp-sms-error]');
   var smsSubmit = q('[data-vpp-sms-submit]');
   var smsSkip = q('[data-vpp-sms-skip]');
@@ -723,15 +760,19 @@
 
   if (smsSubmit) {
     smsSubmit.addEventListener('click', function () {
+      /* Digits only, 6-14, behind the selected dial code. A leading zero is
+         passed through as typed - some countries need it, some do not, and
+         guessing wrong is worse than sending what the visitor entered. */
       var digits = (phoneInput.value || '').replace(/\D/g, '');
-      if (digits.length !== 10) {
+      if (digits.length < 6 || digits.length > 14) {
         showError(smsError, telWrap, cfg.errPhone);
         phoneInput.focus();
         return;
       }
       clearError(smsError, telWrap);
       smsSubmit.disabled = true;
-      var e164 = (cfg.smsPrefix || '+1').replace(/[^\d+]/g, '') + digits;
+      var dial = ((countrySelect && countrySelect.value) || '+1').replace(/[^\d+]/g, '');
+      var e164 = dial + digits;
       subscribe({
         channel: 'sms',
         attributes: {
@@ -850,23 +891,57 @@
     { "type": "text", "id": "text_offer", "label": "Offer label", "default": "70% OFF" },
     { "type": "text", "id": "text_email_ask", "label": "Ask", "default": "Where should we send it?" },
     { "type": "text", "id": "text_email_placeholder", "label": "Email placeholder", "default": "Your email address" },
-    { "type": "text", "id": "text_claim_button", "label": "Claim button", "default": "Claim my 10% OFF" },
+    { "type": "text", "id": "text_claim_button", "label": "Claim button", "default": "Claim" },
     { "type": "text", "id": "text_email_fine_print", "label": "Fine print", "default": "100-day money-back guarantee · Unsubscribe any time" },
 
     { "type": "header", "content": "Copy — SMS step" },
     { "type": "checkbox", "id": "enable_sms_step", "label": "Ask for phone number after email", "default": true },
-    { "type": "text", "id": "text_sms_kicker", "label": "Kicker", "default": "One more thing" },
-    { "type": "text", "id": "text_sms_title", "label": "Headline", "default": "Want the code by text too?" },
-    { "type": "text", "id": "text_sms_prefix", "label": "Country prefix", "default": "+1" },
+    { "type": "text", "id": "text_sms_kicker", "label": "Kicker", "default": "" },
+    { "type": "text", "id": "text_sms_title", "label": "Headline", "default": "Finish signing up" },
+    { "type": "text", "id": "text_sms_subtitle", "label": "Subheadline", "default": "Get the code by text so it's there when you check out." },
+    {
+      "type": "select",
+      "id": "sms_default_country",
+      "label": "Default country",
+      "default": "US",
+      "options": [
+        { "value": "US", "label": "🇺🇸 United States (+1)" },
+        { "value": "CA", "label": "🇨🇦 Canada (+1)" },
+        { "value": "GB", "label": "🇬🇧 United Kingdom (+44)" },
+        { "value": "IE", "label": "🇮🇪 Ireland (+353)" },
+        { "value": "AU", "label": "🇦🇺 Australia (+61)" },
+        { "value": "NZ", "label": "🇳🇿 New Zealand (+64)" },
+        { "value": "SE", "label": "🇸🇪 Sweden (+46)" },
+        { "value": "NO", "label": "🇳🇴 Norway (+47)" },
+        { "value": "DK", "label": "🇩🇰 Denmark (+45)" },
+        { "value": "FI", "label": "🇫🇮 Finland (+358)" },
+        { "value": "IS", "label": "🇮🇸 Iceland (+354)" },
+        { "value": "DE", "label": "🇩🇪 Germany (+49)" },
+        { "value": "NL", "label": "🇳🇱 Netherlands (+31)" },
+        { "value": "BE", "label": "🇧🇪 Belgium (+32)" },
+        { "value": "FR", "label": "🇫🇷 France (+33)" },
+        { "value": "ES", "label": "🇪🇸 Spain (+34)" },
+        { "value": "IT", "label": "🇮🇹 Italy (+39)" },
+        { "value": "AT", "label": "🇦🇹 Austria (+43)" },
+        { "value": "CH", "label": "🇨🇭 Switzerland (+41)" },
+        { "value": "PT", "label": "🇵🇹 Portugal (+351)" },
+        { "value": "PL", "label": "🇵🇱 Poland (+48)" },
+        { "value": "CZ", "label": "🇨🇿 Czechia (+420)" },
+        { "value": "JP", "label": "🇯🇵 Japan (+81)" },
+        { "value": "SG", "label": "🇸🇬 Singapore (+65)" }
+      ]
+    },
+    { "type": "text", "id": "text_sms_country_label", "label": "Country select aria-label", "default": "Country code" },
     { "type": "text", "id": "text_sms_placeholder", "label": "Phone placeholder", "default": "(555) 000-0000" },
-    { "type": "text", "id": "text_sms_button", "label": "Submit button", "default": "Yes, text me the code" },
-    { "type": "text", "id": "text_sms_skip", "label": "Skip link", "default": "Skip this" },
+    { "type": "text", "id": "text_sms_button", "label": "Submit button", "default": "Send me the code" },
+    { "type": "text", "id": "text_sms_skip", "label": "Skip link", "default": "Skip this step" },
     { "type": "textarea", "id": "text_sms_consent", "label": "Consent fine print", "default": "By submitting you agree to receive recurring automated marketing texts at the number provided. Consent is not a condition of purchase. Msg & data rates may apply. Reply STOP to cancel." },
 
     { "type": "header", "content": "Copy — success" },
-    { "type": "text", "id": "text_done_title", "label": "Headline", "default": "Your code is on its way" },
+    { "type": "text", "id": "text_done_title", "label": "Headline", "default": "You're in!" },
+    { "type": "text", "id": "text_done_subtitle", "label": "Subheadline", "default": "You've unlocked up to 70% off + an extra 5% at checkout." },
     { "type": "text", "id": "discount_code", "label": "Discount code", "default": "SCRATCH5" },
-    { "type": "text", "id": "text_done_note", "label": "Note", "default": "Stacks on top of every bundle. Use it at checkout." },
+    { "type": "text", "id": "text_done_note", "label": "Note", "default": "Stacks on top of every bundle." },
 
     { "type": "header", "content": "Copy — errors" },
     { "type": "text", "id": "text_error_email", "label": "Invalid email", "default": "Please enter a valid email address." },
