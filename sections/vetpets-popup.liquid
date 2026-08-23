@@ -242,6 +242,7 @@
     font-size: 18px; font-weight: 800; letter-spacing: .14em; color: var(--vpp-ink);
   }
   #vpp-{{ uid }} .vpp-code-note { margin-top: 10px; font-size: 14px; font-weight: 500; color: var(--vpp-body); text-align: center; }
+  #vpp-{{ uid }} .vpp-step[data-vpp-step="done"] .vpp-submit { margin-top: 14px; }
 
   #vpp-{{ uid }} .vpp-decline {
     background: none; border: none; padding: 8px 12px; font-size: 15px; font-weight: 500;
@@ -291,6 +292,7 @@
     #vpp-{{ uid }} .vpp-done-title { margin-top: 16px; font-size: 24px; }
     #vpp-{{ uid }} .vpp-code { margin-top: 16px; height: 54px; font-size: 20px; }
     #vpp-{{ uid }} .vpp-code-note { font-size: 15px; margin-top: 12px; }
+    #vpp-{{ uid }} .vpp-step[data-vpp-step="done"] .vpp-submit { margin-top: 16px; }
 
     /* Photo cards keep the artboard's arrangement, offset from the wrapper's
        vertical centre rather than from a fixed 900px frame. */
@@ -422,6 +424,7 @@
             {%- endif -%}
             <div class="vpp-code">{{ section.settings.discount_code }}</div>
             <div class="vpp-code-note">{{ section.settings.text_done_note }}</div>
+            <button type="button" class="vpp-submit" data-vpp-done-shop>{{ section.settings.text_done_button }}</button>
           </div>
 
           <canvas class="vpp-canvas" data-vpp-canvas width="460" height="320" role="img" aria-label="{{ section.settings.text_scratch_pill | escape }}"></canvas>
@@ -730,6 +733,16 @@
 
   function goStep(name) {
     qa('[data-vpp-step]').forEach(function (s) { s.hidden = s.getAttribute('data-vpp-step') !== name; });
+    /* "No thanks" reads wrong once they have signed up. */
+    qa('.vpp-decline').forEach(function (b) { b.hidden = name === 'done'; });
+  }
+
+  var doneShop = q('[data-vpp-done-shop]');
+  if (doneShop) {
+    doneShop.addEventListener('click', function () {
+      track('Popup Shop Now Clicked');
+      close();
+    });
   }
 
   if (emailSubmit) {
@@ -942,6 +955,7 @@
     { "type": "text", "id": "text_done_subtitle", "label": "Subheadline", "default": "You've unlocked up to 70% off + an extra 5% at checkout." },
     { "type": "text", "id": "discount_code", "label": "Discount code", "default": "SCRATCH5" },
     { "type": "text", "id": "text_done_note", "label": "Note", "default": "Stacks on top of every bundle." },
+    { "type": "text", "id": "text_done_button", "label": "Success button", "default": "Shop now" },
 
     { "type": "header", "content": "Copy — errors" },
     { "type": "text", "id": "text_error_email", "label": "Invalid email", "default": "Please enter a valid email address." },
