@@ -440,7 +440,7 @@
 
 <script type="application/json" data-vpp-config="{{ uid }}">
 {
-  "scratchImage": {{ section.settings.scratch_image | image_url: width: 920 | json }},
+  "scratchImage": {% if section.settings.scratch_image != blank %}{{ section.settings.scratch_image | image_url: width: 920 | json }}{% else %}""{% endif %},
   "trigger": {{ section.settings.trigger | json }},
   "delaySeconds": {{ section.settings.delay_seconds | json }},
   "scrollPercent": {{ section.settings.scroll_percent | json }},

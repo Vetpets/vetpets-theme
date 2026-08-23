@@ -2340,7 +2340,8 @@
         "color_gradient_bottom": "#ffffff",
         "text_sms_subtitle": "Get the code by text so it's there when you check out.",
         "text_done_subtitle": "You've unlocked up to 70% off + an extra 5% at checkout.",
-        "sms_default_country": "US"
+        "sms_default_country": "US",
+        "text_sms_country_label": "Country code"
       }
     }
   },
