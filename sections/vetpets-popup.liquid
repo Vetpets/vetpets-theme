@@ -191,6 +191,10 @@
   #vpp-{{ uid }} .vpp-consent { margin-top: 10px; font-size: 12px; font-weight: 400; line-height: 1.5; color: var(--vpp-muted); text-align: center; text-wrap: pretty; }
 
   #vpp-{{ uid }} .vpp-sms-title { margin-top: 10px; font-size: 22px; font-weight: 800; line-height: 1.15; letter-spacing: -.02em; color: var(--vpp-ink); text-align: center; }
+  #vpp-{{ uid }} .vpp-sms-sub {
+    margin-top: 8px; max-width: 300px; font-size: 15px; font-weight: 500;
+    line-height: 1.4; color: var(--vpp-muted); text-align: center; text-wrap: pretty;
+  }
   #vpp-{{ uid }} .vpp-tel {
     margin-top: 14px; width: 100%; display: flex; align-items: center; height: 48px;
     border-radius: 12px; background: var(--vpp-field-bg); border: 1.5px solid var(--vpp-field-border);
@@ -215,6 +219,10 @@
   }
 
   #vpp-{{ uid }} .vpp-done-title { margin-top: 12px; font-size: 20px; font-weight: 800; letter-spacing: -.02em; color: var(--vpp-ink); text-align: center; }
+  #vpp-{{ uid }} .vpp-done-sub {
+    margin-top: 8px; font-size: 15px; font-weight: 500; line-height: 1.4;
+    color: var(--vpp-body); text-align: center; text-wrap: pretty;
+  }
   #vpp-{{ uid }} .vpp-code {
     margin-top: 12px; width: 100%; height: 48px; border-radius: 12px;
     background: var(--vpp-field-bg); border: 1.5px dashed var(--vpp-brand);
@@ -365,8 +373,13 @@
 
           {%- if section.settings.enable_sms_step -%}
           <div class="vpp-step" data-vpp-step="sms" hidden>
-            <div class="vpp-kicker" style="margin-top:0">{{ section.settings.text_sms_kicker }}</div>
-            <div class="vpp-sms-title">{{ section.settings.text_sms_title }}</div>
+            {%- if section.settings.text_sms_kicker != blank -%}
+              <div class="vpp-kicker" style="margin-top:0">{{ section.settings.text_sms_kicker }}</div>
+            {%- endif -%}
+            <div class="vpp-sms-title"{% if section.settings.text_sms_kicker == blank %} style="margin-top:0"{% endif %}>{{ section.settings.text_sms_title }}</div>
+            {%- if section.settings.text_sms_subtitle != blank -%}
+              <div class="vpp-sms-sub">{{ section.settings.text_sms_subtitle }}</div>
+            {%- endif -%}
             <div class="vpp-tel" data-vpp-tel-wrap>
               <span class="vpp-prefix">{{ section.settings.text_sms_prefix }}</span>
               <input data-vpp-phone type="tel" inputmode="tel" autocomplete="tel-national" aria-label="{{ section.settings.text_sms_title | escape }}" placeholder="{{ section.settings.text_sms_placeholder | escape }}">
@@ -383,6 +396,9 @@
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
             </div>
             <div class="vpp-done-title">{{ section.settings.text_done_title }}</div>
+            {%- if section.settings.text_done_subtitle != blank -%}
+              <div class="vpp-done-sub">{{ section.settings.text_done_subtitle }}</div>
+            {%- endif -%}
             <div class="vpp-code">{{ section.settings.discount_code }}</div>
             <div class="vpp-code-note">{{ section.settings.text_done_note }}</div>
           </div>
@@ -855,18 +871,20 @@
 
     { "type": "header", "content": "Copy — SMS step" },
     { "type": "checkbox", "id": "enable_sms_step", "label": "Ask for phone number after email", "default": true },
-    { "type": "text", "id": "text_sms_kicker", "label": "Kicker", "default": "One more thing" },
-    { "type": "text", "id": "text_sms_title", "label": "Headline", "default": "Want the code by text too?" },
+    { "type": "text", "id": "text_sms_kicker", "label": "Kicker", "default": "" },
+    { "type": "text", "id": "text_sms_title", "label": "Headline", "default": "Finish signing up" },
+    { "type": "text", "id": "text_sms_subtitle", "label": "Subheadline", "default": "Get the code by text so it's there when you check out." },
     { "type": "text", "id": "text_sms_prefix", "label": "Country prefix", "default": "+1" },
     { "type": "text", "id": "text_sms_placeholder", "label": "Phone placeholder", "default": "(555) 000-0000" },
-    { "type": "text", "id": "text_sms_button", "label": "Submit button", "default": "Yes, text me the code" },
-    { "type": "text", "id": "text_sms_skip", "label": "Skip link", "default": "Skip this" },
+    { "type": "text", "id": "text_sms_button", "label": "Submit button", "default": "Send me the code" },
+    { "type": "text", "id": "text_sms_skip", "label": "Skip link", "default": "Skip this step" },
     { "type": "textarea", "id": "text_sms_consent", "label": "Consent fine print", "default": "By submitting you agree to receive recurring automated marketing texts at the number provided. Consent is not a condition of purchase. Msg & data rates may apply. Reply STOP to cancel." },
 
     { "type": "header", "content": "Copy — success" },
-    { "type": "text", "id": "text_done_title", "label": "Headline", "default": "Your code is on its way" },
+    { "type": "text", "id": "text_done_title", "label": "Headline", "default": "You're in!" },
+    { "type": "text", "id": "text_done_subtitle", "label": "Subheadline", "default": "You've unlocked up to 70% off + an extra 5% at checkout." },
     { "type": "text", "id": "discount_code", "label": "Discount code", "default": "SCRATCH5" },
-    { "type": "text", "id": "text_done_note", "label": "Note", "default": "Stacks on top of every bundle. Use it at checkout." },
+    { "type": "text", "id": "text_done_note", "label": "Note", "default": "Stacks on top of every bundle." },
 
     { "type": "header", "content": "Copy — errors" },
     { "type": "text", "id": "text_error_email", "label": "Invalid email", "default": "Please enter a valid email address." },
