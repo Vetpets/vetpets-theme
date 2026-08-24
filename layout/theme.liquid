@@ -545,6 +545,33 @@ window.__PHX_CHECKOUT_URL = PHX_CHECKOUT_URL;
     }
 
 
+    // EAB params — from cart attributes, fallback to cookies
+    try {
+      const attrs = cart.attributes || {};
+      let eabParamsObj = {};
+
+      if (attrs._eabTestsList) eabParamsObj.eabTestsList = attrs._eabTestsList;
+      if (attrs._eabList)      eabParamsObj.eabList      = attrs._eabList;
+      if (attrs._eabUserId)    eabParamsObj.eabUserId    = attrs._eabUserId;
+
+      // Fallback to cookies
+      if (Object.keys(eabParamsObj).length === 0) {
+        const eabTestsList = getCookie('eabTestsList');
+        const eabList      = getCookie('eabList');
+        const eabUserId    = getCookie('eabUserId');
+        if (eabTestsList) eabParamsObj.eabTestsList = eabTestsList;
+        if (eabList)      eabParamsObj.eabList      = eabList;
+        if (eabUserId)    eabParamsObj.eabUserId    = eabUserId;
+      }
+
+      if (Object.keys(eabParamsObj).length > 0) {
+        dest.searchParams.append('eabParams', btoa(JSON.stringify(eabParamsObj)));
+      }
+    } catch (err) {
+      log.warn('EAB param error:', err);
+    }
+
+
 
 
     return dest.toString();
