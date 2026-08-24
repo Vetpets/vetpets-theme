@@ -333,7 +333,7 @@
         "product_MU9FKT": {
           "type": "product",
           "settings": {
-            "product": "freshwipes-plaque-relief-kit-3",
+            "product": "freshwipes-plaque-relief-kit-2",
             "title": "FreshWipes",
             "description": "Textured wipes that lift plaque off the gumline — no toothbrush, no fight.",
             "image": "shopify://shop_images/EYEwipes_-_2026-08-13T183754.510.jpg",
@@ -2477,13 +2477,18 @@
         "enable_sms_step": true,
         "text_sms_kicker": "",
         "text_sms_title": "Finish signing up",
+        "text_sms_subtitle": "Get the code by text so it's there when you check out.",
+        "sms_default_country": "US",
+        "text_sms_country_label": "Country code",
         "text_sms_placeholder": "Your phone number",
         "text_sms_button": "Send me the code",
         "text_sms_skip": "Skip this step",
         "text_sms_consent": "By submitting you agree to receive recurring automated marketing texts at the number provided. Consent is not a condition of purchase. Msg & data rates may apply. Reply STOP to cancel.",
         "text_done_title": "You're in!",
+        "text_done_subtitle": "You've unlocked up to 70% off + an extra 5% at checkout.",
         "discount_code": "SCRATCH5",
         "text_done_note": "Stacks on top of every bundle.",
+        "text_done_button": "Shop now",
         "text_error_email": "Please enter a valid email address.",
         "text_error_phone": "Please enter a valid phone number.",
         "text_error_generic": "Something went wrong. Please try again.",
@@ -2506,11 +2511,7 @@
         "color_prefix_bg": "#edf3f8",
         "color_gradient_top": "#d5f7ff",
         "color_gradient_mid": "#eafbff",
-        "color_gradient_bottom": "#ffffff",
-        "text_sms_subtitle": "Get the code by text so it's there when you check out.",
-        "text_done_subtitle": "You've unlocked up to 70% off + an extra 5% at checkout.",
-        "sms_default_country": "US",
-        "text_sms_country_label": "Country code"
+        "color_gradient_bottom": "#ffffff"
       }
     }
   },
