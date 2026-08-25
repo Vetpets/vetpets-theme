@@ -2084,6 +2084,7 @@
         "disclaimer_zBQK9n",
         "no_thanks_W9MTik"
       ],
+      "disabled": true,
       "name": "SS - Modal popup #6",
       "settings": {
         "display_options": "after_seconds",
