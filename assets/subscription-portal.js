@@ -119,6 +119,7 @@
     var params = new URLSearchParams(window.location.search);
 
     // Review tools are mock-mode only — never expose them in production.
+    // spp_dev=1 reveals the switcher; it can never switch the data mode.
     if ((params.get('spp_dev') === '1' || this.cfg.devDefault) && this.cfg.mode === 'mock') {
       this.root.classList.add('is-dev');
       var dev = this.root.querySelector('[data-spp-dev]');
@@ -1025,14 +1026,72 @@
    * Init
    * ================================================================= */
 
+  /**
+   * Last-resort reveal. If the portal cannot boot at all, the customer must
+   * still see something they can act on — never a blank page. This walks the
+   * DOM directly rather than going through Portal, because the reason we are
+   * here is that Portal could not be constructed.
+   */
+  function revealFallback(scope, detail) {
+    var host = scope || document.querySelector('.spp') || document.body;
+    if (!host || host.__sppFallbackShown) return;
+    host.__sppFallbackShown = true;
+
+    var error = host.querySelector ? host.querySelector('[data-spp-screen="error"]') : null;
+    if (error) {
+      // Hide every other screen, then reveal the real error screen so the
+      // approved design and its "Try again" affordance are what the customer sees.
+      var all = host.querySelectorAll('[data-spp-screen]');
+      for (var i = 0; i < all.length; i++) all[i].hidden = true;
+      error.hidden = false;
+      var ref = error.querySelector('[data-spp-field="error.reference"]');
+      if (ref && !ref.textContent) ref.textContent = 'SUB-BOOT';
+      return;
+    }
+
+    // The markup itself is missing or damaged — inject a minimal notice
+    // rather than leaving the page empty.
+    var note = document.createElement('div');
+    note.setAttribute('role', 'alert');
+    note.style.cssText = 'max-width:520px;margin:40px auto;padding:20px;border-radius:14px;' +
+      'background:#EEF2F6;border:1px solid rgba(13,35,64,.14);font:500 15px/1.5 system-ui,sans-serif;color:#33445C;';
+    note.innerHTML = '<strong style="display:block;color:#0F172A;margin-bottom:6px;">' +
+      'We couldn’t load your subscription</strong>' +
+      'Nothing has changed on your account. Please refresh, or contact support if it keeps happening.';
+    (host.appendChild ? host : document.body).appendChild(note);
+    if (window.console && console.error) console.error('[spp] bootstrap failed:', detail || '');
+  }
+
   function init() {
     var roots = document.querySelectorAll('[data-spp-portal]');
+
+    // No root at all. Historically this happened when a Liquid whitespace
+    // hyphen welded `data-spp-portal` onto the next attribute, which left the
+    // page silently blank. Fail visibly instead.
+    if (!roots.length) {
+      revealFallback(null, 'no [data-spp-portal] root found');
+      return;
+    }
+
     for (var i = 0; i < roots.length; i++) {
-      if (!roots[i].__sppBooted) {
-        roots[i].__sppBooted = true;
+      if (roots[i].__sppBooted) continue;
+      roots[i].__sppBooted = true;
+      try {
         new Portal(roots[i]);
+      } catch (e) {
+        // Portal itself could not be constructed or could not show a screen.
+        revealFallback(roots[i], e && e.message);
       }
     }
+
+    // Belt and braces: if nothing is visible shortly after boot, reveal the
+    // error screen rather than leaving the customer looking at nothing.
+    setTimeout(function () {
+      for (var j = 0; j < roots.length; j++) {
+        var visible = roots[j].querySelector('[data-spp-screen]:not([hidden])');
+        if (!visible) revealFallback(roots[j], 'no screen visible after init');
+      }
+    }, 0);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
