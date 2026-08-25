@@ -4,7 +4,12 @@
  * Owns navigation, rendering, sheets, pending/toast/error states and
  * focus management. It never fetches and never formats currency on its
  * own — everything comes from the adapter, so replacing the mock with
- * the real backend requires no change in this file.
+ * the live backend requires no change in this file.
+ *
+ * Scope is the Phoenix-supported surface: skip, delay/reschedule, cancel
+ * and reactivate. Quantity, swap, one-time item, address, card and
+ * frequency/pause/resume are not portal capabilities and have no code
+ * path here.
  */
 (function (window, document) {
   'use strict';
@@ -19,39 +24,38 @@
   function Portal(root) {
     this.root = root;
     this.cfg = this.readConfig(root);
-    this.adapter = NS.createMockAdapter({
-      today: this.cfg.today,
-      currencyCode: this.cfg.currency,
-      latency: this.cfg.latency,
-      pointsPerRenewal: this.cfg.pointsPerRenewal,
-      nextRewardAt: this.cfg.nextRewardAt,
-      nextRewardName: this.cfg.nextRewardName,
-      images: this.cfg.images
-    });
+
+    // createAdapter refuses to hand back mock data in live mode, so a
+    // fabricated VetPoints balance can never reach a real customer.
+    try {
+      this.adapter = NS.createAdapter({
+        mode: this.cfg.mode,
+        basePath: this.cfg.basePath,
+        today: this.cfg.today,
+        currencyCode: this.cfg.currency,
+        latency: this.cfg.latency,
+        pointsPerRenewal: this.cfg.pointsPerRenewal,
+        nextRewardAt: this.cfg.nextRewardAt,
+        nextRewardName: this.cfg.nextRewardName,
+        images: this.cfg.images
+      });
+    } catch (e) {
+      this.adapter = null;
+      this.bootError = e;
+    }
 
     this.state = {
       screen: 'loading',
       sheet: null,
       pending: null,
       lastFocus: null,
-      draft: {
-        delay: 7,
-        freq: null,
-        pauseMonths: 2,
-        reason: 'price',
-        restart: 0,
-        swapPick: 0,
-        addonPick: null,
-        quantities: {}
-      },
-      data: null,       // subscription projection
+      draft: { delay: 7, reason: 'price', restart: 0 },
+      data: null,
       loyalty: null,
       customer: null,
       inactive: [],
       deliveries: null,
       rewards: [],
-      swapOptions: [],
-      addonOptions: [],
       error: null,
       success: null,
       history: []
@@ -68,6 +72,8 @@
   Portal.prototype.readConfig = function (root) {
     var d = root.dataset;
     return {
+      mode: d.sppMode === 'live' ? 'live' : 'mock',
+      basePath: d.sppBasePath || '/apps/subscriptions',
       locale: d.sppLocale || 'en',
       today: d.sppToday || '2026-08-21',
       currency: d.sppCurrency || 'USD',
@@ -86,12 +92,10 @@
   };
 
   /* =================================================================
-   * Formatting helpers (locale aware — never hardcodes a symbol)
+   * Formatting (locale aware — never hardcodes a symbol)
    * ================================================================= */
 
-  Portal.prototype.fmtMoney = function (value) {
-    return NS.formatMoney(value, this.cfg.locale);
-  };
+  Portal.prototype.fmtMoney = function (value) { return NS.formatMoney(value, this.cfg.locale); };
 
   Portal.prototype.fmtDate = function (iso, style) {
     if (!iso) return '';
@@ -101,13 +105,9 @@
     else if (style === 'medium') opts = { weekday: 'short', month: 'short', day: 'numeric' };
     else if (style === 'short') opts = { month: 'short', day: 'numeric' };
     else if (style === 'full') opts = { day: 'numeric', month: 'long', year: 'numeric' };
-    else if (style === 'monthOnly') opts = { month: 'long', day: 'numeric' };
     else opts = { month: 'short', day: 'numeric' };
-    try {
-      return new Intl.DateTimeFormat(this.cfg.locale, opts).format(date);
-    } catch (e) {
-      return iso;
-    }
+    try { return new Intl.DateTimeFormat(this.cfg.locale, opts).format(date); }
+    catch (e) { return iso; }
   };
 
   /* =================================================================
@@ -118,17 +118,27 @@
     var self = this;
     var params = new URLSearchParams(window.location.search);
 
-    if (params.get('spp_dev') === '1' || this.cfg.devDefault) {
+    // Review tools are mock-mode only — never expose them in production.
+    // spp_dev=1 reveals the switcher; it can never switch the data mode.
+    if ((params.get('spp_dev') === '1' || this.cfg.devDefault) && this.cfg.mode === 'mock') {
       this.root.classList.add('is-dev');
       var dev = this.root.querySelector('[data-spp-dev]');
       if (dev) dev.hidden = false;
     }
 
-    // A magic-link token in the URL decides where we land.
-    var token = params.get('spp_token');
-    var start = params.get('spp_screen');
+    // In live mode, wipe every static design placeholder before anything
+    // renders. The markup ships with prototype values ("640" VetPoints,
+    // "$62.73", "Visa ···· 4242") purely so the design reviews without JS.
+    // A real customer must never see a fabricated number, not even briefly
+    // and not merely hidden behind another screen.
+    if (this.cfg.mode === 'live') this.clearPlaceholders();
 
     this.show('loading');
+
+    if (!this.adapter) { this.fail(this.bootError); return; }
+
+    var token = params.get('spp_token');
+    var start = this.cfg.mode === 'mock' ? params.get('spp_screen') : null;
 
     if (token) {
       this.adapter.verifyMagicLink(token)
@@ -146,7 +156,22 @@
       .catch(function (err) { self.fail(err); });
   };
 
-  /** Fetch everything the portal renders from. */
+  /**
+   * Blank every data slot in the document, including the ones inside list
+   * <template> elements, so no prototype value survives into production.
+   */
+  Portal.prototype.clearPlaceholders = function () {
+    var i;
+    var slots = this.root.querySelectorAll('[data-spp-field], [data-spp-field-html]');
+    for (i = 0; i < slots.length; i++) slots[i].textContent = '';
+
+    var tpls = this.root.querySelectorAll('template[data-spp-tpl]');
+    for (i = 0; i < tpls.length; i++) {
+      var inner = tpls[i].content.querySelectorAll('[data-spp-field], [data-spp-field-html]');
+      for (var j = 0; j < inner.length; j++) inner[j].textContent = '';
+    }
+  };
+
   Portal.prototype.load = function () {
     var self = this;
     return Promise.all([
@@ -155,9 +180,7 @@
       this.adapter.getLoyalty(),
       this.adapter.listSubscriptions(),
       this.adapter.listDeliveries(),
-      this.adapter.listRewards(),
-      this.adapter.listSwapOptions(),
-      this.adapter.listAddonOptions()
+      this.adapter.listRewards()
     ]).then(function (r) {
       self.state.customer = r[0];
       self.state.data = r[1];
@@ -165,19 +188,8 @@
       self.state.inactive = r[3].inactive;
       self.state.deliveries = r[4];
       self.state.rewards = r[5];
-      self.state.swapOptions = r[6];
-      self.state.addonOptions = r[7];
-
-      if (self.state.draft.freq === null) self.state.draft.freq = r[1].intervalDays;
-      self.syncQuantityDraft();
       self.render();
     });
-  };
-
-  Portal.prototype.syncQuantityDraft = function () {
-    var q = {};
-    (this.state.data ? this.state.data.lines : []).forEach(function (l) { q[l.id] = l.quantity; });
-    this.state.draft.quantities = q;
   };
 
   Portal.prototype.fail = function (err) {
@@ -192,7 +204,7 @@
   Portal.prototype.buildReference = function (err) {
     var code = (err && err.code) || 'server';
     var stamp = this.fmtDate(this.cfg.today, 'full');
-    var prefix = code === 'network' ? 'SUB-000' : 'SUB-503';
+    var prefix = code === 'network' ? 'SUB-000' : (code === 'mock_in_production' ? 'SUB-CFG' : 'SUB-503');
     return prefix + ' · ' + stamp;
   };
 
@@ -210,7 +222,6 @@
       sections[i].hidden = sections[i].getAttribute('data-spp-screen') !== screen;
     }
 
-    // Chrome (header nav + tab bar) is hidden on pre-auth and system screens.
     var showChrome = SCREENS_WITH_CHROME[screen] !== false;
     var chrome = this.root.querySelectorAll('[data-spp-chrome]');
     for (var j = 0; j < chrome.length; j++) chrome[j].hidden = !showChrome;
@@ -221,8 +232,6 @@
     var main = this.root.querySelector('#spp-main');
     if (main) {
       main.scrollTop = 0;
-      // Move focus to the screen so keyboard and screen-reader users land
-      // on the new content rather than staying on the old control.
       var heading = this.root.querySelector('[data-spp-screen="' + screen + '"]');
       if (heading) {
         heading.setAttribute('tabindex', '-1');
@@ -234,32 +243,28 @@
   Portal.prototype.markCurrentNav = function (screen) {
     var navs = this.root.querySelectorAll('[data-spp-nav]');
     for (var i = 0; i < navs.length; i++) {
-      var match = navs[i].getAttribute('data-spp-nav') === screen;
-      if (match) navs[i].setAttribute('aria-current', 'page');
+      if (navs[i].getAttribute('data-spp-nav') === screen) navs[i].setAttribute('aria-current', 'page');
       else navs[i].removeAttribute('aria-current');
     }
     var devBtns = this.root.querySelectorAll('[data-spp-dev] [data-spp-go]');
     for (var k = 0; k < devBtns.length; k++) {
-      var m = devBtns[k].getAttribute('data-spp-go') === screen;
-      if (m) devBtns[k].setAttribute('aria-current', 'true');
+      if (devBtns[k].getAttribute('data-spp-go') === screen) devBtns[k].setAttribute('aria-current', 'true');
       else devBtns[k].removeAttribute('aria-current');
     }
   };
 
   /* =================================================================
-   * Sheets
+   * Sheets — skip and delay only
    * ================================================================= */
 
   Portal.prototype.openSheet = function (name) {
     var overlay = this.root.querySelector('[data-spp-overlay]');
     var host = this.root.querySelector('[data-spp-sheet-host]');
     if (!overlay || !host) return;
+    if (name !== 'skip' && name !== 'delay') return;
 
     this.state.lastFocus = document.activeElement;
     this.state.sheet = name;
-
-    if (name === 'qty') this.syncQuantityDraft();
-    if (name === 'freq' && this.state.data) this.state.draft.freq = this.state.data.intervalDays;
 
     var panels = host.querySelectorAll('[data-spp-sheet-panel]');
     for (var i = 0; i < panels.length; i++) {
@@ -307,21 +312,14 @@
     var slot = el.querySelector('[data-spp-field="toast.message"]');
     if (slot) slot.textContent = message;
     el.hidden = false;
-    var self = this;
     clearTimeout(this._toastTimer);
-    this._toastTimer = setTimeout(function () { el.hidden = true; }, 3200);
+    this._toastTimer = setTimeout(function () { el.hidden = true; }, 3600);
   };
 
   /* =================================================================
-   * Mutation runner — pending state, error handling, refetch
+   * Mutation runner
    * ================================================================= */
 
-  /**
-   * run(key, work, opts)
-   *   key   identifies the button/sheet showing the pending state
-   *   work  () => Promise
-   *   opts  { toast, then, closeSheet, success }
-   */
   Portal.prototype.run = function (key, work, opts) {
     var self = this;
     opts = opts || {};
@@ -337,7 +335,6 @@
         self.applyPending(false);
 
         if (result && result.id) self.state.data = result;
-        if (result && typeof result.points === 'number') self.state.loyalty = result;
 
         return self.adapter.getLoyalty().then(function (loy) {
           self.state.loyalty = loy;
@@ -347,18 +344,17 @@
           return self.adapter.listDeliveries();
         }).then(function (dels) {
           self.state.deliveries = dels;
-          self.syncQuantityDraft();
 
           if (opts.closeSheet !== false) self.closeSheet();
           if (opts.success) {
-            self.state.success = opts.success(self.state);
+            self.state.success = opts.success(self.state, result);
             self.show('success');
           } else if (opts.then) {
-            opts.then(self.state);
+            opts.then(self.state, result);
           } else {
             self.render();
           }
-          if (opts.toast) self.toast(typeof opts.toast === 'function' ? opts.toast(self.state) : opts.toast);
+          if (opts.toast) self.toast(typeof opts.toast === 'function' ? opts.toast(self.state, result) : opts.toast);
         });
       })
       .catch(function (err) {
@@ -382,7 +378,6 @@
       b.classList.toggle('is-pending', !!isThis);
       if (on) b.setAttribute('aria-disabled', 'true');
       else b.removeAttribute('aria-disabled');
-      // Show a spinner inside the button that is actually working.
       var spinner = b.querySelector('.spp__spinner');
       if (isThis && !spinner) {
         var s = document.createElement('span');
@@ -399,14 +394,8 @@
    * ================================================================= */
 
   Portal.prototype.viewModel = function () {
-    var s = this.state;
-    var sub = s.data;
-    var loy = s.loyalty;
-    var cus = s.customer;
-    var d = this.state.draft;
-    var self = this;
-    var today = this.cfg.today;
-
+    var s = this.state, sub = s.data, loy = s.loyalty, cus = s.customer;
+    var d = s.draft, self = this;
     var vm = {};
 
     if (cus) {
@@ -417,9 +406,8 @@
     }
 
     if (sub) {
-      var statusLabel = sub.status === 'active' ? 'Active' : (sub.status === 'paused' ? 'Paused' : 'Cancelled');
       vm['subscription.reference'] = sub.reference;
-      vm['subscription.statusLabel'] = statusLabel;
+      vm['subscription.statusLabel'] = sub.status === 'active' ? 'Active' : 'Cancelled';
       vm['subscription.intervalDays'] = String(sub.intervalDays);
       vm['subscription.nextOrderMedium'] = this.fmtDate(sub.nextOrderDate, 'medium');
       vm['subscription.nextOrderShort'] = this.fmtDate(sub.nextOrderDate, 'short');
@@ -429,10 +417,6 @@
       vm['subscription.daysAway'] = sub.daysUntilNextOrder + ' days away';
       vm['subscription.progressLabel'] = 'Next delivery in ' + sub.daysUntilNextOrder + ' days';
       vm['subscription.shipProgress'] = Math.max(6, 100 - Math.min(100, sub.daysUntilNextOrder * 1.6));
-      vm['subscription.pausedUntilLong'] = sub.pausedUntil ? this.fmtDate(sub.pausedUntil, 'monthOnly') : '';
-      vm['subscription.quantitySummary'] = sub.lines.map(function (l) {
-        return l.title.replace(/ (jar|pack).*$/, '') + ' ×' + l.quantity;
-      }).join(', ');
       vm['subscription.addressShort'] = sub.address.city + ', ' + sub.address.province;
       vm['subscription.addressLines'] = [
         sub.address.name,
@@ -444,35 +428,15 @@
       vm['subscription.paymentBrand'] = sub.payment.brand.toUpperCase();
       vm['subscription.paymentLast4'] = sub.payment.last4;
       vm['subscription.paymentExpiry'] = sub.payment.expiry;
+      vm['subscription.quantitySummary'] = sub.lines.map(function (l) {
+        return l.title.replace(/ (jar|pack).*$/, '') + ' ×' + l.quantity;
+      }).join(', ');
 
       vm['pricing.total'] = this.fmtMoney(sub.pricing.total);
       vm['pricing.discount'] = this.fmtMoney(sub.pricing.discount);
 
-      vm['swap.replacing'] = sub.lines.length > 1 ? sub.lines[1].title : sub.lines[0].title;
-
-      // Sheet-derived dates
       vm['sheet.skipToLong'] = this.fmtDate(NS.dates.addDays(sub.nextOrderDate, sub.intervalDays), 'long');
       vm['sheet.delayToLong'] = this.fmtDate(NS.dates.addDays(sub.nextOrderDate, d.delay), 'long');
-      vm['sheet.pauseUntilLong'] = this.fmtDate(NS.dates.addMonths(today, d.pauseMonths), 'long');
-      vm['sheet.resumeSoonLong'] = this.fmtDate(NS.dates.addDays(today, 3), 'long');
-
-      // Quantity draft total
-      var qTotal = NS.money(0, sub.currencyCode);
-      sub.lines.forEach(function (l) {
-        var q = d.quantities[l.id];
-        if (typeof q !== 'number') q = l.quantity;
-        qTotal = NS.addMoney(qTotal, NS.multiplyMoney(l.unitPrice, q));
-      });
-      var qDisc = NS.money(qTotal.amount * sub.discountRate, sub.currencyCode);
-      vm['qty.total'] = this.fmtMoney(NS.money(qTotal.amount - qDisc.amount, sub.currencyCode));
-
-      // Add-on total preview
-      var addonTotal = sub.pricing.total;
-      if (d.addonPick) {
-        var preview = this.adapter.previewOneTimeItem(d.addonPick);
-        if (preview) addonTotal = preview;
-      }
-      vm['addon.total'] = this.fmtMoney(addonTotal);
     }
 
     if (loy) {
@@ -482,19 +446,35 @@
       vm['loyalty.nextRewardName'] = loy.nextRewardName;
       vm['loyalty.toNextReward'] = String(loy.toNextReward);
       vm['loyalty.progressPercent'] = loy.progressPercent;
+      vm['loyalty.disclosure'] = loy.disclosure || '';
     }
 
     vm['account.activeCount'] = sub && sub.status !== 'cancelled' ? '1 active' : '0 active';
     vm['account.inactiveCount'] = String(s.inactive.length);
 
-    // Cancellation alternatives, matched to the chosen reason.
+    // Retention offers — skip or delay only. Nothing else is supported.
     var shortNext = sub ? this.fmtDate(sub.nextOrderDate, 'short') : '';
     var alts = {
-      price: ['Would a longer gap help?', 'At every 90 days your cost per month drops without changing what arrives.', 'Stretch to every 90 days', 'Same jars, same subscriber price — just further apart. You can change it back at any time.', 'Change to every 90 days', 'freq90'],
-      stock: ['Then skip the next one', 'Nothing has to ship until you need it. Skipping keeps your price and your place in the routine.', 'Skip ' + shortNext, "You won't be charged for that delivery. The one after it stays on schedule.", 'Skip this delivery', 'skip'],
-      pet: ['Something for the other dog?', 'Max and Bella have different needs — swapping keeps the subscription useful instead of ending it.', 'Swap the products', 'Change what ships without losing your subscriber price.', 'See other products', 'swap'],
-      'switch': ['Try a different VetPets jar first', 'Swapping is instant, keeps your discount, and applies from the next delivery.', 'Swap the products', 'EarWipes, GloveWipes or a smaller FreshWipes jar.', 'See other products', 'swap'],
-      other: ['Before you cancel', 'Three quicker options that keep your subscriber price. Cancelling stays available below.', 'Skip ' + shortNext, 'Push the next delivery back without any charge.', 'Skip this delivery', 'skip']
+      price: ['Would a longer gap help?',
+        'Skipping the next delivery lowers what you spend this month without changing what arrives.',
+        'Skip ' + shortNext, 'You won\'t be charged for that delivery, and the one after it stays on schedule.',
+        'Skip this delivery', 'skip'],
+      stock: ['Then skip the next one',
+        'Nothing has to ship until you need it. Skipping keeps your price and your place in the routine.',
+        'Skip ' + shortNext, 'You won\'t be charged for that delivery. The one after it stays on schedule.',
+        'Skip this delivery', 'skip'],
+      pet: ['Give it a little longer?',
+        'If Bella and Max are stocked up, skipping costs nothing and keeps everything else in place.',
+        'Skip ' + shortNext, 'Your price and your place in the routine are kept.',
+        'Skip this delivery', 'skip'],
+      'switch': ['Take a break first?',
+        'Skipping the next delivery gives you time to decide, and nothing is charged in the meantime.',
+        'Skip ' + shortNext, 'Your price and your place in the routine are kept.',
+        'Skip this delivery', 'skip'],
+      other: ['Before you cancel',
+        'Two quicker options that keep your subscriber price. Cancelling stays available below.',
+        'Skip ' + shortNext, 'Push the next delivery back without any charge.',
+        'Skip this delivery', 'skip']
     };
     var alt = alts[d.reason] || alts.other;
     vm['alt.headline'] = alt[0];
@@ -504,7 +484,6 @@
     vm['alt.primaryCta'] = alt[4];
     this._altAction = alt[5];
 
-    // Error + success
     vm['error.reference'] = s.error ? s.error.reference : '';
     if (s.success) {
       vm['success.title'] = s.success.title;
@@ -512,20 +491,11 @@
       vm['success.undoLabel'] = s.success.undoLabel || '';
     }
 
-    // Button labels, including their pending variants.
     var p = s.pending;
     vm['label.sendLink'] = p === 'sendLink' ? 'Sending link…' : 'Email me a sign-in link';
     vm['label.resend'] = p === 'resend' ? 'Sending…' : 'Resend link';
     vm['label.skip'] = p === 'skip' ? 'Skipping delivery…' : 'Skip this delivery';
     vm['label.delay'] = p === 'delay' ? 'Rescheduling…' : ('Move to ' + (sub ? this.fmtDate(NS.dates.addDays(sub.nextOrderDate, d.delay), 'short') : ''));
-    vm['label.freq'] = p === 'freq' ? 'Updating cadence…' : 'Save frequency';
-    vm['label.pause'] = p === 'pause' ? 'Pausing…' : ('Pause for ' + d.pauseMonths + (d.pauseMonths === 1 ? ' month' : ' months'));
-    vm['label.resume'] = p === 'resume' ? 'Resuming…' : 'Resume subscription';
-    vm['label.qty'] = p === 'qty' ? 'Saving…' : 'Save quantities';
-    vm['label.saveAddress'] = p === 'saveAddress' ? 'Saving address…' : 'Save address';
-    vm['label.swap'] = p === 'swap' ? 'Swapping…' : ('Confirm swap for ' + shortNext);
-    vm['label.addon'] = p === 'addon' ? 'Saving…' : 'Save changes to next delivery';
-    vm['label.redirect'] = p === 'redirect' ? 'Opening…' : 'Continue to secure page';
     vm['label.cancel'] = p === 'cancel' ? 'Cancelling…' : 'Yes, cancel my subscription';
     vm['label.reactivate'] = p === 'reactivate' ? 'Reactivating…' : 'Reactivate subscription';
 
@@ -545,39 +515,33 @@
     var vm = this.viewModel();
     var i;
 
-    // Text slots
     var fields = this.root.querySelectorAll('[data-spp-field]');
     for (i = 0; i < fields.length; i++) {
       var key = fields[i].getAttribute('data-spp-field');
-      if (key === 'toast.message') continue;      // owned by toast()
-      if (fields[i].closest('template')) continue; // list templates render separately
+      if (key === 'toast.message') continue;
       if (Object.prototype.hasOwnProperty.call(vm, key)) fields[i].textContent = vm[key];
     }
 
-    // HTML slots (trusted, escaped at build time in viewModel)
     var htmlFields = this.root.querySelectorAll('[data-spp-field-html]');
     for (i = 0; i < htmlFields.length; i++) {
       var hk = htmlFields[i].getAttribute('data-spp-field-html');
-      if (htmlFields[i].closest('template')) continue;
       if (Object.prototype.hasOwnProperty.call(vm, hk)) htmlFields[i].innerHTML = vm[hk];
     }
 
-    // aria-label slots
     var ariaFields = this.root.querySelectorAll('[data-spp-field-aria]');
     for (i = 0; i < ariaFields.length; i++) {
       var ak = ariaFields[i].getAttribute('data-spp-field-aria');
       if (Object.prototype.hasOwnProperty.call(vm, ak)) ariaFields[i].setAttribute('aria-label', vm[ak]);
     }
 
-    // Progress widths
     var widths = this.root.querySelectorAll('[data-spp-style-width]');
     for (i = 0; i < widths.length; i++) {
       var wk = widths[i].getAttribute('data-spp-style-width');
       if (Object.prototype.hasOwnProperty.call(vm, wk)) widths[i].style.width = vm[wk] + '%';
     }
 
-    // Status-conditional blocks. `status` is a single canonical value, so at
-    // most one of these can ever be visible.
+    // Status is a single canonical value: active or cancelled. At most one
+    // conditional block can ever be visible.
     var status = this.state.data ? this.state.data.status : 'active';
     var conds = this.root.querySelectorAll('[data-spp-when]');
     for (i = 0; i < conds.length; i++) {
@@ -585,13 +549,10 @@
       if (expr[0] === 'status') conds[i].hidden = status !== expr[1];
     }
 
-    // Status badge tint
     var badge = this.root.querySelector('[data-spp-status-badge]');
-    if (badge) {
-      badge.style.background = status === 'active' ? 'var(--spp-light)' : 'var(--spp-surface-neutral)';
-    }
+    if (badge) badge.style.background = status === 'active' ? 'var(--spp-light)' : 'var(--spp-surface-neutral)';
 
-    this.renderLists(vm);
+    this.renderLists();
     this.renderUndo();
   };
 
@@ -612,10 +573,7 @@
     '</svg>';
 
   Portal.prototype.listData = function (name) {
-    var s = this.state;
-    var sub = s.data;
-    var d = s.draft;
-    var self = this;
+    var s = this.state, sub = s.data, d = s.draft, self = this;
 
     switch (name) {
       case 'pets':
@@ -637,13 +595,9 @@
       case 'lines':
         return (sub ? sub.lines : []).map(function (l) {
           return {
-            title: l.title,
-            subtitle: l.subtitle,
-            quantity: String(l.quantity),
+            title: l.title, subtitle: l.subtitle, quantity: String(l.quantity),
             unitPrice: self.fmtMoney(l.unitPrice),
-            _image: l.image,
-            _pending: l.imagePending,
-            _alt2: l.title
+            _image: l.image, _pending: l.imagePending, _alt2: l.title
           };
         });
 
@@ -652,31 +606,14 @@
           return { title: l.title, quantity: String(l.quantity), linePrice: self.fmtMoney(l.linePrice) };
         });
 
-      case 'qtyLines':
-        return (sub ? sub.lines : []).map(function (l) {
-          var q = d.quantities[l.id];
-          return {
-            title: l.title,
-            unitPrice: self.fmtMoney(l.unitPrice),
-            draftQuantity: String(typeof q === 'number' ? q : l.quantity),
-            _image: l.image,
-            _pending: l.imagePending,
-            _alt2: l.title,
-            _lineId: l.id
-          };
-        });
-
       case 'deliveriesPreview': {
         if (!s.deliveries) return [];
         var out = [];
         var up = s.deliveries.upcoming;
         out.push({
-          mon: self.fmtDate(up.date, 'short').replace(/[^A-Za-z]/g, '').slice(0, 3).toUpperCase() ||
-               NS.dates.parseISO(up.date).toLocaleDateString('en', { month: 'short' }).toUpperCase(),
+          mon: NS.dates.parseISO(up.date).toLocaleDateString('en', { month: 'short' }).toUpperCase(),
           day: String(NS.dates.parseISO(up.date).getDate()),
-          title: up.title,
-          meta: up.items,
-          status: up.status
+          title: up.title, meta: up.items, status: up.status
         });
         s.deliveries.past.slice(0, 2).forEach(function (o) {
           out.push({
@@ -693,13 +630,9 @@
       case 'pastOrders':
         return (s.deliveries ? s.deliveries.past : []).map(function (o) {
           return {
-            dateLong: self.fmtDate(o.date, 'full'),
-            items: o.items,
-            amount: self.fmtMoney(o.amount),
-            status: o.status,
-            _image: self.cfg.images.freshwipes,
-            _pending: false,
-            _alt2: ''
+            dateLong: self.fmtDate(o.date, 'full'), items: o.items,
+            amount: self.fmtMoney(o.amount), status: o.status,
+            _image: self.cfg.images.freshwipes, _pending: false, _alt2: ''
           };
         });
 
@@ -714,44 +647,13 @@
 
       case 'rewards':
         return s.rewards.map(function (r) {
+          var label = r.pendingRequest ? 'Requested'
+            : r.affordable ? 'Redeem' : (r.pointsToGo + ' points to go');
           return {
-            name: r.name,
-            cost: String(r.cost),
-            btnLabel: r.affordable ? 'Redeem' : (r.pointsToGo + ' points to go'),
-            _image: r.image,
-            _pending: r.imagePending,
-            _alt2: r.name,
+            name: r.name, cost: String(r.cost), btnLabel: label,
+            _image: r.image, _pending: r.imagePending, _alt2: r.name,
             _rewardId: r.id,
-            _affordable: r.affordable
-          };
-        });
-
-      case 'swapOptions':
-        return s.swapOptions.map(function (o, i) {
-          return {
-            name: o.name,
-            meta: o.meta,
-            price: self.fmtMoney(o.price),
-            _image: o.image,
-            _pending: o.imagePending,
-            _alt2: o.name,
-            _optionId: o.id,
-            _checked: d.swapPick === i,
-            _index: i
-          };
-        });
-
-      case 'addonOptions':
-        return s.addonOptions.map(function (o) {
-          return {
-            name: o.name,
-            meta: o.meta,
-            price: self.fmtMoney(o.price),
-            btnLabel: d.addonPick === o.id ? 'Added' : 'Add',
-            _image: o.image,
-            _pending: o.imagePending,
-            _alt2: o.name,
-            _optionId: o.id
+            _affordable: r.affordable && !r.pendingRequest
           };
         });
 
@@ -762,45 +664,24 @@
           ['pet', 'My dog no longer needs it'],
           ['switch', 'Switching to another product'],
           ['other', 'Something else']
-        ].map(function (r) {
-          return { label: r[1], _value: r[0], _checked: d.reason === r[0] };
-        });
+        ].map(function (r) { return { label: r[1], _value: r[0], _checked: d.reason === r[0] }; });
 
       case 'delayOptions':
         return [7, 15, 30].map(function (n) {
           return { label: n + ' days', _value: n, _checked: d.delay === n };
         });
 
-      case 'freqOptions':
-        return [30, 45, 60, 90].map(function (n) {
-          var hint = n === 60 ? 'Your current cadence'
-            : n === 30 ? 'More often'
-            : n === 45 ? 'Slightly more often' : 'Fewer deliveries';
-          return { label: 'Every ' + n + ' days', hint: hint, _value: n, _checked: d.freq === n };
-        });
-
-      case 'pauseOptions':
-        return [1, 2, 3].map(function (n) {
-          return { n: String(n), unit: n === 1 ? 'month' : 'months', _value: n, _checked: d.pauseMonths === n };
-        });
-
       case 'restartDates':
-        return [
-          ['As soon as possible', 0], ['In two weeks', 14], ['In a month', 30]
-        ].map(function (r, i) {
-          return { label: r[0], _value: r[1], _checked: d.restart === i, _index: i };
-        });
+        return [['As soon as possible', 0], ['In two weeks', 14], ['In a month', 30]]
+          .map(function (r, i) { return { label: r[0], _value: r[1], _checked: d.restart === i, _index: i }; });
 
       case 'inactiveSubs':
         return s.inactive.map(function (x) {
           return {
             reference: x.reference,
             statusLabel: x.status === 'cancelled' ? 'Cancelled' : 'Completed',
-            name: x.name,
-            meta: x.meta,
-            _image: x.image,
-            _pending: false,
-            _alt2: x.name
+            name: x.name, meta: x.meta,
+            _image: x.image, _pending: false, _alt2: x.name
           };
         });
 
@@ -830,11 +711,8 @@
       var items = this.listData(name);
       var withSeparators = host.hasAttribute('data-spp-separators');
 
-      // Clear previously rendered nodes but keep the <template>.
       var kids = Array.prototype.slice.call(host.children);
-      for (var k = 0; k < kids.length; k++) {
-        if (kids[k] !== tpl) host.removeChild(kids[k]);
-      }
+      for (var k = 0; k < kids.length; k++) if (kids[k] !== tpl) host.removeChild(kids[k]);
 
       for (var i = 0; i < items.length; i++) {
         if (withSeparators && i > 0) {
@@ -852,7 +730,6 @@
   Portal.prototype.fillNode = function (node, item, listName, index) {
     var i;
 
-    // text slots
     var fields = node.querySelectorAll('[data-spp-field]');
     for (i = 0; i < fields.length; i++) {
       var key = fields[i].getAttribute('data-spp-field');
@@ -863,7 +740,6 @@
       if (Object.prototype.hasOwnProperty.call(item, rk)) node.textContent = item[rk];
     }
 
-    // image / pending placeholder
     var thumb = node.matches && node.matches('[data-spp-thumb]') ? node : node.querySelector('[data-spp-thumb]');
     if (thumb) {
       var img = thumb.querySelector('[data-spp-img]');
@@ -874,17 +750,13 @@
         thumb.setAttribute('aria-label', (item._alt2 || 'Product') + ' — packshot photo pending');
       } else if (img) {
         if (item._image) {
-          img.src = item._image;
-          img.alt = '';
-          img.loading = 'lazy';
-          img.decoding = 'async';
+          img.src = item._image; img.alt = ''; img.loading = 'lazy'; img.decoding = 'async';
         } else {
           img.remove();
         }
       }
     }
 
-    // selection state
     if (typeof item._checked === 'boolean') {
       var pick = node.matches && node.matches('[data-spp-pick]') ? node : node.querySelector('[data-spp-pick]');
       if (pick) {
@@ -893,32 +765,25 @@
       }
     }
 
-    // stash identifiers the click handlers need
-    var carriers = node.querySelectorAll('[data-spp-pick], [data-spp-act], [data-spp-qty]');
+    var carriers = node.querySelectorAll('[data-spp-pick], [data-spp-act]');
     var all = Array.prototype.slice.call(carriers);
     if (node.matches && (node.matches('[data-spp-pick]') || node.matches('[data-spp-act]'))) all.push(node);
     for (i = 0; i < all.length; i++) {
       if (item._value !== undefined) all[i].dataset.sppValue = item._value;
-      if (item._optionId) all[i].dataset.sppOption = item._optionId;
       if (item._rewardId) all[i].dataset.sppReward = item._rewardId;
-      if (item._lineId) all[i].dataset.sppLine = item._lineId;
       if (item._index !== undefined) all[i].dataset.sppIndex = item._index;
       all[i].dataset.sppListIndex = index;
     }
 
-    // alt-styled chip dot for the second pet
     if (item._alt) {
       var dot = node.querySelector('.spp__chip-dot');
       if (dot) dot.classList.add('spp__chip-dot--alt');
     }
 
-    // reward affordability
     if (listName === 'rewards') {
-      var btn = node.querySelector('[data-spp-act="redeem"]');
+      var btn = node.querySelector('[data-spp-act="requestRedemption"]');
       if (btn) {
         if (item._affordable) {
-          // Redeemable rewards are solid blue primaries — same token set,
-          // white foreground, no exceptions.
           btn.classList.add('spp__btn--primary');
           btn.style.background = '';
           btn.style.color = '';
@@ -929,17 +794,6 @@
           btn.setAttribute('aria-disabled', 'true');
         }
       }
-    }
-
-    // quantity stepper bounds
-    if (listName === 'qtyLines') {
-      var out = node.querySelector('output');
-      var val = parseInt(item.draftQuantity, 10);
-      var minus = node.querySelector('[data-spp-qty="minus"]');
-      var plus = node.querySelector('[data-spp-qty="plus"]');
-      if (minus) minus.disabled = val <= 0;
-      if (plus) plus.disabled = val >= 50;
-      if (out) out.setAttribute('aria-label', item.title + ' quantity');
     }
   };
 
@@ -952,26 +806,14 @@
 
     this.root.addEventListener('click', function (e) {
       var el;
-
       if ((el = e.target.closest('[data-spp-go]'))) {
-        e.preventDefault();
-        self.show(el.getAttribute('data-spp-go'));
-        return;
+        e.preventDefault(); self.show(el.getAttribute('data-spp-go')); return;
       }
       if ((el = e.target.closest('[data-spp-sheet]'))) {
-        e.preventDefault();
-        self.openSheet(el.getAttribute('data-spp-sheet'));
-        return;
-      }
-      if ((el = e.target.closest('[data-spp-qty]'))) {
-        e.preventDefault();
-        self.stepQuantity(el);
-        return;
+        e.preventDefault(); self.openSheet(el.getAttribute('data-spp-sheet')); return;
       }
       if ((el = e.target.closest('[data-spp-pick]'))) {
-        e.preventDefault();
-        self.pick(el);
-        return;
+        e.preventDefault(); self.pick(el); return;
       }
       if ((el = e.target.closest('[data-spp-act]'))) {
         e.preventDefault();
@@ -981,14 +823,12 @@
       }
       if ((el = e.target.closest('[data-spp-dev-toggle]'))) {
         var panel = el.closest('[data-spp-dev]');
-        var collapsed = panel.getAttribute('data-collapsed') === 'true';
-        panel.setAttribute('data-collapsed', collapsed ? 'false' : 'true');
+        panel.setAttribute('data-collapsed', panel.getAttribute('data-collapsed') === 'true' ? 'false' : 'true');
         return;
       }
       if ((el = e.target.closest('[data-spp-dev-status]'))) {
         self.adapter.setStatus(el.getAttribute('data-spp-dev-status')).then(function (sub) {
-          self.state.data = sub;
-          self.show('dashboard');
+          self.state.data = sub; self.show('dashboard');
         });
         return;
       }
@@ -999,15 +839,12 @@
         self.render();
         return;
       }
-      // Click on the overlay backdrop closes the sheet.
-      if (e.target.hasAttribute && e.target.hasAttribute('data-spp-overlay')) {
-        self.closeSheet();
-      }
+      if (e.target.hasAttribute && e.target.hasAttribute('data-spp-overlay')) self.closeSheet();
     });
 
     this.root.addEventListener('change', function (e) {
       var sel = e.target.closest('[data-spp-dev-currency]');
-      if (!sel) return;
+      if (!sel || !self.adapter.setCurrency) return;
       self.adapter.setCurrency(sel.value).then(function () { return self.load(); });
     });
 
@@ -1019,10 +856,7 @@
     });
 
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && self.state.sheet && !self.state.pending) {
-        self.closeSheet();
-        return;
-      }
+      if (e.key === 'Escape' && self.state.sheet && !self.state.pending) { self.closeSheet(); return; }
       if (e.key === 'Tab' && self.state.sheet) self.trapFocus(e);
     });
   };
@@ -1033,23 +867,8 @@
     var f = this.focusablesIn(host);
     if (!f.length) return;
     var first = f[0], last = f[f.length - 1];
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault();
-      last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault();
-      first.focus();
-    }
-  };
-
-  Portal.prototype.stepQuantity = function (el) {
-    var lineId = el.dataset.sppLine;
-    if (!lineId) return;
-    var dir = el.getAttribute('data-spp-qty') === 'plus' ? 1 : -1;
-    var cur = this.state.draft.quantities[lineId];
-    if (typeof cur !== 'number') cur = 0;
-    this.state.draft.quantities[lineId] = Math.max(0, Math.min(50, cur + dir));
-    this.render();
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   };
 
   Portal.prototype.pick = function (el) {
@@ -1058,27 +877,17 @@
     var value = el.dataset.sppValue;
 
     if (kind === 'delay') d.delay = parseInt(value, 10);
-    else if (kind === 'freq') d.freq = parseInt(value, 10);
-    else if (kind === 'pause') d.pauseMonths = parseInt(value, 10);
     else if (kind === 'reason') d.reason = value;
     else if (kind === 'restart') d.restart = parseInt(el.dataset.sppIndex, 10);
-    else if (kind === 'swap') d.swapPick = parseInt(el.dataset.sppIndex, 10);
-    else if (kind === 'addon') {
-      var opt = el.dataset.sppOption;
-      d.addonPick = d.addonPick === opt ? null : opt;
-    }
     this.render();
   };
 
   /* -----------------------------------------------------------------
-   * Actions
+   * Actions — one per supported Phoenix operation, plus auth and loyalty
    * ----------------------------------------------------------------- */
 
   Portal.prototype.act = function (name, el) {
-    var self = this;
-    var s = this.state;
-    var d = s.draft;
-    var sub = s.data;
+    var self = this, s = this.state, d = s.draft, sub = s.data;
     var id = sub ? sub.id : null;
 
     switch (name) {
@@ -1100,10 +909,11 @@
         this.run('sendLink', function () { return self.adapter.requestMagicLink(value); }, {
           closeSheet: false,
           then: function () {
-            return self.adapter.getCustomer().then(function (c) {
-              self.state.customer = c;
-              self.show('sent');
-            });
+            // Neutral by design: the same screen shows whether or not an
+            // account exists, so the portal cannot be used to enumerate.
+            self.state.customer = self.state.customer || {};
+            self.state.customer.email = value;
+            self.show('sent');
           }
         });
         return;
@@ -1115,11 +925,9 @@
         return;
 
       case 'resend':
-        this.run('resend', function () { return self.adapter.requestMagicLink(s.customer ? s.customer.email : ''); }, {
-          closeSheet: false,
-          then: function () { self.show('sent'); },
-          toast: 'New sign-in link sent'
-        });
+        this.run('resend', function () {
+          return self.adapter.requestMagicLink(s.customer ? s.customer.email : '');
+        }, { closeSheet: false, then: function () { self.show('sent'); }, toast: 'New sign-in link sent' });
         return;
 
       case 'retry':
@@ -1128,6 +936,7 @@
         this.load().then(function () { self.show('dashboard'); }).catch(function (e) { self.fail(e); });
         return;
 
+      /* --- POST /update-next-billing-date --- */
       case 'skip': {
         var before = sub.nextOrderDate;
         this.run('skip', function () { return self.adapter.skipNextDelivery(id); }, {
@@ -1137,9 +946,7 @@
               body: 'Nothing ships on ' + self.fmtDate(before, 'full') +
                     ' and you won\'t be charged. Your next delivery is <strong style="color:var(--spp-ink);">' +
                     self.fmtDate(st.data.nextOrderDate, 'long') + '</strong>.',
-              undo: true,
-              undoLabel: 'Undo skip',
-              undoTo: before
+              undo: true, undoLabel: 'Undo skip', undoTo: before
             };
           }
         });
@@ -1158,124 +965,51 @@
 
       case 'delay':
         this.run('delay', function () { return self.adapter.delayNextDelivery(id, d.delay); }, {
-          then: function (st) { self.show('dashboard'); },
+          then: function () { self.show('dashboard'); },
           toast: function (st) { return 'Delivery moved to ' + self.fmtDate(st.data.nextOrderDate, 'short'); }
         });
         return;
 
-      case 'freq':
-        this.run('freq', function () { return self.adapter.setFrequency(id, d.freq); }, {
-          then: function () { self.render(); },
-          toast: function (st) { return 'Now delivering every ' + st.data.intervalDays + ' days'; }
-        });
-        return;
-
-      case 'pause':
-        this.run('pause', function () { return self.adapter.pause(id, d.pauseMonths); }, {
-          then: function () { self.show('dashboard'); },
-          toast: function (st) { return 'Paused until ' + self.fmtDate(st.data.pausedUntil, 'short'); }
-        });
-        return;
-
-      case 'resume':
-        this.run('resume', function () { return self.adapter.resume(id); }, {
-          then: function () { self.show('dashboard'); },
-          toast: 'Subscription resumed'
-        });
-        return;
-
-      case 'qty':
-        this.run('qty', function () { return self.adapter.setQuantities(id, d.quantities); }, {
-          then: function () { self.render(); },
-          toast: 'Quantities updated'
-        });
-        return;
-
-      case 'swap': {
-        var opt = this.state.swapOptions[d.swapPick];
-        if (!opt) return;
-        this.run('swap', function () { return self.adapter.swapProduct(id, opt.id); }, {
-          then: function () { self.show('subscription'); },
-          toast: function (st) { return 'Product swapped from ' + self.fmtDate(st.data.nextOrderDate, 'short'); }
-        });
-        return;
-      }
-
-      case 'addon': {
-        if (!d.addonPick) {
-          this.toast('Pick an item to add first');
-          return;
-        }
-        var pick = d.addonPick;
-        this.run('addon', function () { return self.adapter.addOneTimeItem(id, pick); }, {
-          then: function () { self.show('dashboard'); },
-          toast: function (st) { return 'One-time item added to ' + self.fmtDate(st.data.nextOrderDate, 'short'); }
-        });
-        return;
-      }
-
-      case 'saveAddress': {
-        var form = this.root.querySelector('form[data-spp-form="address"]');
-        var payload = {};
-        if (form) {
-          ['name', 'line1', 'line2', 'city', 'province', 'zip', 'phone'].forEach(function (k) {
-            var f = form.querySelector('[name="' + k + '"]');
-            if (f) payload[k] = f.value.trim();
-          });
-        }
-        this.run('saveAddress', function () { return self.adapter.updateAddress(id, payload); }, {
-          then: function () { self.show('account'); },
-          toast: 'Delivery address updated'
-        });
-        return;
-      }
-
-      case 'redirect':
-        this.run('redirect', function () { return self.adapter.createPaymentUpdateSession(id); }, {
-          then: function () { self.show('dashboard'); },
-          toast: 'Card updated on secure page'
-        });
-        return;
-
-      case 'redeem': {
-        var rewardId = el && el.dataset.sppReward;
-        if (!rewardId || el.getAttribute('aria-disabled') === 'true') return;
-        this.run('redeem', function () { return self.adapter.redeemReward(rewardId); }, {
-          closeSheet: false,
-          then: function () {
-            return self.adapter.listRewards().then(function (r) {
-              self.state.rewards = r;
-              self.render();
-            });
-          },
-          toast: 'Reward added to your next delivery'
-        });
-        return;
-      }
-
-      case 'altPrimary': {
-        var action = this._altAction;
-        if (action === 'freq90') { this.state.draft.freq = 90; this.openSheet('freq'); }
-        else if (action === 'skip') this.openSheet('skip');
-        else if (action === 'swap') this.show('swap');
-        return;
-      }
-
+      /* --- POST /cancel-subscription --- */
       case 'cancel':
         this.run('cancel', function () { return self.adapter.cancel(id, d.reason); }, {
           then: function () { self.show('cancel-done'); }
         });
         return;
 
+      /* --- POST /activate-subscription --- */
       case 'reactivate': {
         var offsets = [0, 14, 30];
-        var days = offsets[d.restart] || 0;
-        this.run('reactivate', function () { return self.adapter.reactivate(id, days); }, {
+        this.run('reactivate', function () { return self.adapter.reactivate(id, offsets[d.restart] || 0); }, {
           then: function () { self.show('dashboard'); },
           toast: 'Subscription reactivated'
         });
         return;
       }
+
+      /* --- loyalty: request only, never a fulfilment claim --- */
+      case 'requestRedemption': {
+        var rewardId = el && el.dataset.sppReward;
+        if (!rewardId || el.getAttribute('aria-disabled') === 'true') return;
+        this.run('requestRedemption', function () { return self.adapter.requestRedemption(rewardId); }, {
+          closeSheet: false,
+          then: function (st, result) {
+            return self.adapter.listRewards().then(function (r) {
+              self.state.rewards = r;
+              self.render();
+              self.toast((result && result.message) ||
+                'Your reward request has been received. It will be added to an upcoming delivery.');
+            });
+          }
+        });
+        return;
+      }
+
+      case 'altPrimary':
+        // Only skip or delay can ever be offered here.
+        if (this._altAction === 'delay') this.openSheet('delay');
+        else this.openSheet('skip');
+        return;
 
       case 'signOut':
         this.adapter.signOut().then(function () { self.show('login'); });
@@ -1292,22 +1026,76 @@
    * Init
    * ================================================================= */
 
+  /**
+   * Last-resort reveal. If the portal cannot boot at all, the customer must
+   * still see something they can act on — never a blank page. This walks the
+   * DOM directly rather than going through Portal, because the reason we are
+   * here is that Portal could not be constructed.
+   */
+  function revealFallback(scope, detail) {
+    var host = scope || document.querySelector('.spp') || document.body;
+    if (!host || host.__sppFallbackShown) return;
+    host.__sppFallbackShown = true;
+
+    var error = host.querySelector ? host.querySelector('[data-spp-screen="error"]') : null;
+    if (error) {
+      // Hide every other screen, then reveal the real error screen so the
+      // approved design and its "Try again" affordance are what the customer sees.
+      var all = host.querySelectorAll('[data-spp-screen]');
+      for (var i = 0; i < all.length; i++) all[i].hidden = true;
+      error.hidden = false;
+      var ref = error.querySelector('[data-spp-field="error.reference"]');
+      if (ref && !ref.textContent) ref.textContent = 'SUB-BOOT';
+      return;
+    }
+
+    // The markup itself is missing or damaged — inject a minimal notice
+    // rather than leaving the page empty.
+    var note = document.createElement('div');
+    note.setAttribute('role', 'alert');
+    note.style.cssText = 'max-width:520px;margin:40px auto;padding:20px;border-radius:14px;' +
+      'background:#EEF2F6;border:1px solid rgba(13,35,64,.14);font:500 15px/1.5 system-ui,sans-serif;color:#33445C;';
+    note.innerHTML = '<strong style="display:block;color:#0F172A;margin-bottom:6px;">' +
+      'We couldn’t load your subscription</strong>' +
+      'Nothing has changed on your account. Please refresh, or contact support if it keeps happening.';
+    (host.appendChild ? host : document.body).appendChild(note);
+    if (window.console && console.error) console.error('[spp] bootstrap failed:', detail || '');
+  }
+
   function init() {
     var roots = document.querySelectorAll('[data-spp-portal]');
+
+    // No root at all. Historically this happened when a Liquid whitespace
+    // hyphen welded `data-spp-portal` onto the next attribute, which left the
+    // page silently blank. Fail visibly instead.
+    if (!roots.length) {
+      revealFallback(null, 'no [data-spp-portal] root found');
+      return;
+    }
+
     for (var i = 0; i < roots.length; i++) {
-      if (!roots[i].__sppBooted) {
-        roots[i].__sppBooted = true;
+      if (roots[i].__sppBooted) continue;
+      roots[i].__sppBooted = true;
+      try {
         new Portal(roots[i]);
+      } catch (e) {
+        // Portal itself could not be constructed or could not show a screen.
+        revealFallback(roots[i], e && e.message);
       }
     }
+
+    // Belt and braces: if nothing is visible shortly after boot, reveal the
+    // error screen rather than leaving the customer looking at nothing.
+    setTimeout(function () {
+      for (var j = 0; j < roots.length; j++) {
+        var visible = roots[j].querySelector('[data-spp-screen]:not([hidden])');
+        if (!visible) revealFallback(roots[j], 'no screen visible after init');
+      }
+    }, 0);
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
 
-  // Re-init inside the theme editor when the section is reloaded.
   document.addEventListener('shopify:section:load', init);
 })(window, document);

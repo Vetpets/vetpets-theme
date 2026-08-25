@@ -2,12 +2,13 @@
   Review-only screen switcher.
 
   Hidden unless the URL carries ?spp_dev=1 (or the section setting is on).
-  It exists so the founder and QA can reach every screen, sheet, state and
-  currency without a live backend. It is never shown to a customer and it
-  performs no mutation beyond the mock adapter.
+  It exists so the founder and QA can reach every screen, state and currency
+  without a live backend. It is never shown to a customer and it performs no
+  mutation beyond the mock adapter.
 
-  This replaces the prototype's index/state panels, which were harness
-  chrome around the design rather than part of the portal itself.
+  Scoped to the Phoenix-supported surface: no swap, add-on, address, payment,
+  frequency, quantity, pause or resume entries, because those screens and
+  sheets no longer exist.
 {%- endcomment -%}
 
 <aside class="spp__dev" data-spp-dev hidden aria-label="Portal review switcher">
@@ -30,12 +31,6 @@
     <button type="button" data-spp-go="rewards">Rewards catalogue</button>
     <button type="button" data-spp-go="account">Help &amp; account</button>
 
-    <div class="spp__dev-group">Change flows</div>
-    <button type="button" data-spp-go="swap">Swap product</button>
-    <button type="button" data-spp-go="addon">Add one-time item</button>
-    <button type="button" data-spp-go="address">Delivery address</button>
-    <button type="button" data-spp-go="payment">Payment redirect</button>
-
     <div class="spp__dev-group">Cancel &amp; restart</div>
     <button type="button" data-spp-go="cancel-reason">1 · Reason</button>
     <button type="button" data-spp-go="cancel-alt">2 · Alternatives</button>
@@ -45,13 +40,9 @@
     <button type="button" data-spp-go="inactive">Inactive list</button>
     <button type="button" data-spp-go="empty">Empty account</button>
 
-    <div class="spp__dev-group">Sheets</div>
+    <div class="spp__dev-group">Schedule sheets</div>
     <button type="button" data-spp-sheet="skip">Skip delivery</button>
     <button type="button" data-spp-sheet="delay">Delay / reschedule</button>
-    <button type="button" data-spp-sheet="freq">Change frequency</button>
-    <button type="button" data-spp-sheet="pause">Pause 1–3 months</button>
-    <button type="button" data-spp-sheet="resume">Resume</button>
-    <button type="button" data-spp-sheet="qty">Change quantity</button>
 
     <div class="spp__dev-group">System states</div>
     <button type="button" data-spp-go="loading">Loading</button>
@@ -62,7 +53,6 @@
 
     <div class="spp__dev-group">Subscription status</div>
     <button type="button" data-spp-dev-status="active">Active</button>
-    <button type="button" data-spp-dev-status="paused">Paused</button>
     <button type="button" data-spp-dev-status="cancelled">Cancelled</button>
 
     <div class="spp__dev-group">Market currency</div>
@@ -74,7 +64,7 @@
     </select>
 
     <p class="spp__note" style="margin-top:12px;">
-      Mock data. USD is the prototype example only — currency stays locale-aware in implementation.
+      Mock data. Currency comes from Phoenix order details in production.
     </p>
   </div>
 </aside>

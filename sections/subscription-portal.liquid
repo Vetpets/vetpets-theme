@@ -38,10 +38,24 @@
   endif
 -%}
 
+{%- comment -%}
+  Data mode, set on the root element below. "mock" runs the in-browser
+  prototype adapter for visual QA. "live" forces the first-party adapter and
+  makes mock data impossible — createAdapter throws rather than showing a
+  fabricated VetPoints balance. No credential is emitted either way;
+  base_path is a same-origin path.
+
+  NEVER put a Liquid tag between two attributes. The whitespace-stripping
+  hyphens in {%- ... -%} consume the newlines on both sides and weld the
+  neighbouring attributes into one, which silently destroys the attribute
+  the controller boots from.
+{%- endcomment -%}
 <div
   class="spp"
   id="spp-root"
   data-spp-portal
+  data-spp-mode="{{ section.settings.data_mode | default: 'mock' }}"
+  data-spp-base-path="{{ section.settings.base_path | default: '/apps/subscriptions' }}"
   data-spp-locale="{{ request.locale.iso_code | default: 'en' }}"
   data-spp-today="{{ section.settings.prototype_today | default: '2026-08-21' }}"
   data-spp-currency="{{ section.settings.prototype_currency | default: 'USD' }}"
@@ -91,7 +105,6 @@
         {% render 'spp-screen-subscription' %}
         {% render 'spp-screen-deliveries' %}
         {% render 'spp-screen-loyalty' %}
-        {% render 'spp-screen-change' %}
         {% render 'spp-screen-cancel' %}
         {% render 'spp-screen-account' %}
         {% render 'spp-screen-system' %}
@@ -140,11 +153,33 @@
   "settings": [
     {
       "type": "header",
+      "content": "Data source"
+    },
+    {
+      "type": "select",
+      "id": "data_mode",
+      "label": "Data mode",
+      "info": "Mock runs the in-browser prototype for visual QA. Live requires the secure backend; it makes mock data impossible, including VetPoints.",
+      "options": [
+        { "value": "mock", "label": "Mock (prototype)" },
+        { "value": "live", "label": "Live (requires backend)" }
+      ],
+      "default": "mock"
+    },
+    {
+      "type": "text",
+      "id": "base_path",
+      "label": "Backend base path",
+      "info": "Same-origin first-party path only. Never a vendor hostname, never a credential.",
+      "default": "/apps/subscriptions"
+    },
+    {
+      "type": "header",
       "content": "Prototype data"
     },
     {
       "type": "paragraph",
-      "content": "The portal currently runs on mock data that matches the approved Claude Design prototype. No real subscription is read or changed. These settings only affect the prototype."
+      "content": "These settings only affect mock mode. No real subscription is read or changed while mock is selected."
     },
     {
       "type": "text",
