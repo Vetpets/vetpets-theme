@@ -41,32 +41,29 @@
     At every 90 days your cost per month drops without changing what arrives.
   </p>
 
+  {%- comment -%}
+    Retention offers are limited to the two schedule changes Phoenix supports.
+    Pause and swap were removed: offering a save that the billing system of
+    record cannot perform would be a promise we can't keep.
+  {%- endcomment -%}
   <div class="spp__grid spp__grid--alts">
-    {%- comment -%} Reason-matched primary offer {%- endcomment -%}
+    {%- comment -%} Reason-matched primary offer — always skip or delay {%- endcomment -%}
     <div class="spp__card" style="border:1.5px solid var(--spp-accent);border-radius:18px;box-shadow:none;">
-      <div style="font:700 16px/1.25 var(--spp-font);color:var(--spp-ink);margin-bottom:6px;" data-spp-field="alt.primaryTitle">Stretch to every 90 days</div>
+      <div style="font:700 16px/1.25 var(--spp-font);color:var(--spp-ink);margin-bottom:6px;" data-spp-field="alt.primaryTitle">Skip the next one</div>
       <p style="margin:0 0 14px;font:500 14px/1.5 var(--spp-font);color:var(--spp-body);" data-spp-field="alt.primaryBody">
-        Same jars, same subscriber price &mdash; just further apart. You can change it back at any time.
+        Nothing has to ship until you need it. Skipping keeps your price and your place in the routine.
       </p>
       <button type="button" class="spp__btn spp__btn--primary" style="min-height:48px;font-size:15px;" data-spp-act="altPrimary">
-        <span data-spp-field="alt.primaryCta">Change to every 90 days</span>
+        <span data-spp-field="alt.primaryCta">Skip this delivery</span>
       </button>
     </div>
 
     <div class="spp__card spp__card--soft" style="border-radius:18px;">
-      <div style="font:700 16px/1.25 var(--spp-font);color:var(--spp-ink);margin-bottom:6px;">Pause instead</div>
+      <div style="font:700 16px/1.25 var(--spp-font);color:var(--spp-ink);margin-bottom:6px;">Push it back instead</div>
       <p style="margin:0 0 14px;font:500 14px/1.5 var(--spp-font);color:var(--spp-body);">
-        Stop charges for 1, 2 or 3 months. Your price, products and VetPoints are held exactly as they are.
+        Move the next delivery 7, 15 or 30 days later. Nothing is charged until the new date, and your price stays the same.
       </p>
-      <button type="button" class="spp__btn spp__btn--secondary" style="min-height:48px;font-size:15px;" data-spp-sheet="pause">Choose a pause length</button>
-    </div>
-
-    <div class="spp__card spp__card--soft" style="border-radius:18px;">
-      <div style="font:700 16px/1.25 var(--spp-font);color:var(--spp-ink);margin-bottom:6px;">Swap the products</div>
-      <p style="margin:0 0 14px;font:500 14px/1.5 var(--spp-font);color:var(--spp-body);">
-        Change what ships for Bella and Max &mdash; EarWipes, GloveWipes or a smaller jar &mdash; without losing your subscriber price.
-      </p>
-      <button type="button" class="spp__btn spp__btn--quiet" style="min-height:48px;font-size:15px;" data-spp-go="swap">See other products</button>
+      <button type="button" class="spp__btn spp__btn--secondary" style="min-height:48px;font-size:15px;" data-spp-sheet="delay">Choose a new date</button>
     </div>
   </div>
 
