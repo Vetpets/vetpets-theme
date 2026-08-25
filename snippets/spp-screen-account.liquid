@@ -30,18 +30,19 @@
         </div>
       </div>
 
-      {%- comment -%} Account rows {%- endcomment -%}
+      {%- comment -%}
+        Address and payment are information rows, not links: Phoenix documents
+        no address or payment-method mutation in the portal's scope.
+      {%- endcomment -%}
       <div class="spp__card spp__card--rows">
-        <button type="button" class="spp__row" data-spp-go="address">
+        <div class="spp__row" style="cursor:default;">
           <span class="spp__row-label">Delivery address</span>
           <span class="spp__row-value" data-spp-field="subscription.addressShort">Portland, OR</span>
-          {% render 'spp-icon', icon: 'chevron-right' %}
-        </button>
-        <button type="button" class="spp__row" data-spp-go="payment">
+        </div>
+        <div class="spp__row" style="cursor:default;">
           <span class="spp__row-label">Payment method</span>
           <span class="spp__row-value" data-spp-field="subscription.paymentShort">Visa ···· 4242</span>
-          {% render 'spp-icon', icon: 'chevron-right' %}
-        </button>
+        </div>
         <button type="button" class="spp__row" data-spp-go="subscription">
           <span class="spp__row-label">Subscriptions</span>
           <span class="spp__row-value" data-spp-field="account.activeCount">1 active</span>
