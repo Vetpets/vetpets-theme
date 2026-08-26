@@ -2451,7 +2451,7 @@
     "vetpets_popup": {
       "type": "vetpets-popup",
       "settings": {
-        "enable": false,
+        "enable": true,
         "trigger": "delay",
         "delay_seconds": 8,
         "scroll_percent": 40,
