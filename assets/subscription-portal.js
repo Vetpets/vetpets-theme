@@ -137,8 +137,11 @@
 
     if (!this.adapter) { this.fail(this.bootError); return; }
 
-    var token = params.get('spp_token');
     var start = this.cfg.mode === 'mock' ? params.get('spp_screen') : null;
+
+    if (this.cfg.mode === 'live') { this.bootLive(start); return; }
+
+    var token = params.get('spp_token');
 
     if (token) {
       this.adapter.verifyMagicLink(token)
@@ -154,6 +157,57 @@
     this.load()
       .then(function () { self.show(start || 'dashboard'); })
       .catch(function (err) { self.fail(err); });
+  };
+
+  /**
+   * Live boot — the cookie-free handoff.
+   *
+   * Order is load-bearing. The handoff code is taken out of the address bar
+   * FIRST, before any await and before anything else on the page can read
+   * `location.search`, because a URL reaches history, `Referer` and analytics.
+   * Only then is it exchanged for the session.
+   *
+   * Three entry paths:
+   *   - arriving from the emailed link, carrying a handoff;
+   *   - reloading the tab with a session already in sessionStorage;
+   *   - arriving cold, which is the sign-in screen.
+   */
+  Portal.prototype.bootLive = function (start) {
+    var self = this;
+
+    // Synchronous and first. Nothing may await before this returns.
+    var handoff = NS.takeHandoffFromUrl();
+
+    function loadAndShow() {
+      return self.load().then(function () { self.show(start || 'dashboard'); });
+    }
+
+    // Any authentication failure returns to sign-in rather than an error
+    // screen: the customer's next action is the same either way.
+    function onFailure(err) {
+      var code = err && err.code;
+      if (code === 'unauthenticated' || code === 'expired_link' || code === 'no_subscription') {
+        self.show('login');
+        return;
+      }
+      self.fail(err);
+    }
+
+    if (handoff) {
+      this.adapter.exchangeHandoff(handoff)
+        .then(loadAndShow)
+        .catch(onFailure);
+      return;
+    }
+
+    // A reload in the same tab reuses the unexpired session; closing the tab
+    // ends it, because sessionStorage does.
+    if (this.adapter.hasSession && this.adapter.hasSession()) {
+      loadAndShow().catch(onFailure);
+      return;
+    }
+
+    this.show('login');
   };
 
   /**

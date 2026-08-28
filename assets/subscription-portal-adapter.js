@@ -477,38 +477,329 @@
   VetPetsPortal.createMockAdapter = createMockAdapter;
 
   /* ===============================================================
-   * Live adapter — interface designed, implementation gated
+   * Live adapter — cookie-free App Proxy session
    * ===============================================================
-   * Implement against the SAME method names and return shapes as the
-   * mock. Every call goes to a same-origin first-party path; the browser
-   * never learns the Phoenix host and never sends a CustomerId.
+   * Shopify strips Cookie from an App Proxy request and Set-Cookie from the
+   * response, so the session cannot be a cookie. It is an opaque token the
+   * server mints and this file holds in sessionStorage, sent in a JSON body.
    *
-   *   POST {base}/auth/request-link   { email }        -> 202, always neutral
-   *   POST {base}/auth/verify         { token }        -> sets session cookie
-   *   POST {base}/auth/sign-out
-   *   GET  {base}/me                                    -> customer profile
-   *   GET  {base}/subscription                          -> subscription projection
-   *   GET  {base}/deliveries                            -> upcoming + past
-   *   GET  {base}/loyalty                               -> syncs ledger, then balance
-   *   GET  {base}/loyalty/rewards                       -> catalogue + affordability
-   *   POST {base}/loyalty/redemptions { rewardId }      -> pending_manual
-   *   POST {base}/subscription/skip                     -> /update-next-billing-date
-   *   POST {base}/subscription/delay      { days }      -> /update-next-billing-date
-   *   POST {base}/subscription/reschedule { date }      -> /update-next-billing-date
-   *   POST {base}/subscription/cancel     { reason }    -> /cancel-subscription
-   *   POST {base}/subscription/reactivate { startDate } -> /activate-subscription
+   *   POST {base}/auth/request-link  { email }        -> 202, always neutral
+   *   POST {base}/auth/exchange      { vp_handoff }   -> { session }
+   *   POST {base}/portal/subscription { session }     -> portal view model
+   *   POST {base}/auth/logout        { session }      -> 200, idempotent
    *
-   * Every mutation sends `Idempotency-Key`. The server maps it to a stable
-   * Phoenix request-id so a retry cannot double-apply.
+   * Rules this file must keep:
+   *   - the session is the ONLY thing stored, and only in sessionStorage.
+   *     Never localStorage, never a cookie, never a URL, never the DOM;
+   *   - the email, the Phoenix CustomerId and the magic-link token are never
+   *     stored and never sent — the server resolves identity from the session;
+   *   - nothing is logged. A console line is readable by anyone with the tab
+   *     open, and these values are credentials.
    * --------------------------------------------------------------- */
+
+  /** Session lives for the tab, and dies with it. */
+  var SESSION_KEY = 'vp_portal_session';
+
+  function sessionStore() {
+    // A private window, disabled storage or a sandboxed frame all throw on
+    // access rather than returning null, so every use is guarded.
+    return {
+      get: function () {
+        try { return window.sessionStorage.getItem(SESSION_KEY); } catch (e) { return null; }
+      },
+      set: function (value) {
+        try { window.sessionStorage.setItem(SESSION_KEY, value); } catch (e) { /* ephemeral session */ }
+      },
+      clear: function () {
+        try { window.sessionStorage.removeItem(SESSION_KEY); } catch (e) { /* nothing to clear */ }
+      }
+    };
+  }
+
+  VetPetsPortal.sessionStore = sessionStore;
+
+  /**
+   * Remove the handoff code from the address bar before anything else runs.
+   *
+   * A URL reaches history, the Referer header and any analytics script on the
+   * page. The code is single-use and expires in a minute, but it should not be
+   * sitting in the location bar for either of those to read.
+   */
+  function takeHandoffFromUrl() {
+    var params;
+    try {
+      params = new URLSearchParams(window.location.search);
+    } catch (e) {
+      return null;
+    }
+
+    var code = params.get('vp_handoff');
+    if (!code) return null;
+
+    params.delete('vp_handoff');
+    var query = params.toString();
+    var clean = window.location.pathname + (query ? '?' + query : '') + window.location.hash;
+
+    try {
+      window.history.replaceState(window.history.state, '', clean);
+    } catch (e) {
+      // replaceState can be unavailable in a sandboxed context. The code is
+      // still consumed server-side on first use, so this is not fatal.
+    }
+
+    return code;
+  }
+
+  VetPetsPortal.takeHandoffFromUrl = takeHandoffFromUrl;
+
   VetPetsPortal.createHttpAdapter = function (options) {
-    var base = (options && options.basePath) || '/apps/subscriptions';
-    throw PortalError(
-      'not_implemented',
-      'The live adapter is not wired up yet. It must call ' + base +
-      ' (same-origin, first-party) and is blocked on the secure backend being ' +
-      'approved and deployed. No Phoenix credential may ever reach this file.'
-    );
+    var opts = options || {};
+    var base = opts.basePath || '/apps/subscriptions';
+    var store = opts.sessionStore || sessionStore();
+    var fetchImpl = opts.fetchImpl || function () {
+      return window.fetch.apply(window, arguments);
+    };
+    var today = opts.today || null;
+
+    /** One place that talks to the backend. Same-origin, first-party. */
+    function post(path, body) {
+      return fetchImpl(base + path, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        // Same-origin: the browser sends Origin automatically, which is both
+        // what Shopify needs to sign the request and what the server checks.
+        credentials: 'same-origin',
+        body: JSON.stringify(body || {})
+      }).then(function (res) {
+        return res.text().then(function (text) {
+          var data = null;
+          try { data = text ? JSON.parse(text) : null; } catch (e) { data = null; }
+          return { status: res.status, ok: res.ok, data: data };
+        });
+      }, function () {
+        throw PortalError('network', 'The portal could not be reached.');
+      });
+    }
+
+    function requireSession() {
+      var token = store.get();
+      if (!token) throw PortalError('unauthenticated', 'Sign in to view your subscription.');
+      return token;
+    }
+
+    /** Cache one portal read per load; six adapter calls, one request. */
+    var pending = null;
+
+    function readPortal(force) {
+      if (pending && !force) return pending;
+
+      pending = post('/portal/subscription', { session: requireSession() }).then(function (r) {
+        if (r.status === 401) {
+          store.clear();
+          pending = null;
+          throw PortalError('unauthenticated', 'Your session has expired.');
+        }
+        if (!r.ok || !r.data) {
+          pending = null;
+          throw PortalError(
+            (r.data && r.data.error) || 'server',
+            'The portal is temporarily unavailable.'
+          );
+        }
+        return r.data;
+      }, function (err) {
+        pending = null;
+        throw err;
+      });
+
+      return pending;
+    }
+
+    function daysUntil(iso) {
+      if (!iso || !today) return 0;
+      try {
+        return Math.max(0, VetPetsPortal.dates.daysBetween(today, iso));
+      } catch (e) {
+        return 0;
+      }
+    }
+
+    /**
+     * Map the server view model into the shape the controller renders.
+     *
+     * Only fields the server actually returns are populated. Anything Phoenix
+     * does not support on this path — line prices, totals, delivery counts —
+     * stays null so the UI renders nothing rather than a fabricated number.
+     */
+    function projectSubscription(view) {
+      if (!view || view.state !== 'subscription') return null;
+      var sub = view.subscription || {};
+      var charge = sub.upcomingCharge || {};
+      var cadence = sub.cadence || {};
+      var chargeMoney = charge.state === 'available'
+        ? money(charge.amount, charge.currencyCode)
+        : null;
+
+      return {
+        id: sub.subscriptionId || null,
+        reference: sub.subscriptionId || null,
+        status: sub.status || null,
+        name: null,
+        startedOn: null,
+        deliveriesSoFar: null,
+        intervalDays: cadence.state === 'available' ? cadence.intervalDays : null,
+        nextOrderDate: sub.nextBillingDate || null,
+        cancelledOn: null,
+        daysUntilNextOrder: daysUntil(sub.nextBillingDate),
+        currencyCode: chargeMoney ? chargeMoney.currencyCode : null,
+        lines: (sub.lines || []).map(function (l) {
+          return {
+            id: l.variantId || l.productId || null,
+            title: l.title || '',
+            subtitle: null,
+            quantity: l.quantity,
+            image: '',
+            imagePending: true,
+            unitPrice: null,
+            linePrice: null
+          };
+        }),
+        pricing: {
+          subtotal: null,
+          discount: null,
+          shipping: null,
+          // The only authoritative amount is the scheduled rebill.
+          total: chargeMoney
+        },
+        address: sub.deliveryAddress || null,
+        payment: sub.payment || null,
+        shippingFree: null,
+        discountRate: null
+      };
+    }
+
+    return {
+      kind: 'http',
+      isMock: false,
+      mode: 'live',
+
+      getCurrency: function () { return null; },
+      getSupportedCurrencies: function () { return VetPetsPortal.SUPPORTED_CURRENCIES.slice(); },
+      getToday: function () { return today; },
+
+      /* --- auth --- */
+
+      hasSession: function () { return !!store.get(); },
+
+      requestMagicLink: function (email) {
+        return post('/auth/request-link', { email: email }).then(function (r) {
+          // 202 is the only success, and it is deliberately neutral: it says
+          // nothing about whether the address is a customer.
+          if (r.status === 202) return { ok: true, expiresInMinutes: 15 };
+          if (r.status === 429) throw PortalError('rate_limited', 'Too many attempts. Try again shortly.');
+          if (r.status === 400) throw PortalError('invalid_email', 'Enter a valid email address.');
+          throw PortalError('server', 'We could not send the link just now.');
+        });
+      },
+
+      /**
+       * Trade the one-time handoff for a session.
+       *
+       * The code is already out of the address bar by the time this runs.
+       */
+      exchangeHandoff: function (code) {
+        return post('/auth/exchange', { vp_handoff: code }).then(function (r) {
+          if (r.status === 200 && r.data && r.data.session) {
+            store.set(r.data.session);
+            pending = null;
+            return { ok: true };
+          }
+          store.clear();
+          // Expired, replayed and unknown are one failure, as the server
+          // intends: the page returns to sign-in either way.
+          throw PortalError('expired_link', 'That sign-in link is no longer valid.');
+        });
+      },
+
+      signOut: function () {
+        var token = store.get();
+        store.clear();
+        pending = null;
+        if (!token) return Promise.resolve({ ok: true });
+        // Idempotent server-side, so a failure here changes nothing that
+        // matters: the token is already gone from this browser.
+        return post('/auth/logout', { session: token }).then(
+          function () { return { ok: true }; },
+          function () { return { ok: true }; }
+        );
+      },
+
+      /* --- reads: six controller calls, one backend request --- */
+
+      getCustomer: function () {
+        return readPortal().then(function (view) {
+          // The server never returns the address or the CustomerId, and this
+          // file never asks for them.
+          return { email: null, name: null, state: view.state };
+        });
+      },
+
+      getSubscription: function () {
+        return readPortal().then(function (view) {
+          var projected = projectSubscription(view);
+          if (!projected) throw PortalError('no_subscription', 'No active subscription found.');
+          return projected;
+        });
+      },
+
+      listSubscriptions: function () {
+        return readPortal().then(function (view) {
+          var projected = projectSubscription(view);
+          return { active: projected ? [projected] : [], inactive: [] };
+        });
+      },
+
+      listDeliveries: function () {
+        return readPortal().then(function (view) {
+          var projected = projectSubscription(view);
+          if (!projected) return { upcoming: null, past: [] };
+          return {
+            upcoming: {
+              date: projected.nextOrderDate,
+              title: 'Next delivery',
+              items: projected.lines.map(function (l) {
+                return l.title + ' ×' + l.quantity;
+              }).join(', '),
+              total: projected.pricing.total,
+              status: projected.status === 'active' ? 'Scheduled' : 'Cancelled'
+            },
+            past: (((view.subscription || {}).recentPayments) || []).map(function (p) {
+              return {
+                orderId: p.orderNumber || null,
+                date: p.date || null,
+                items: '',
+                amount: (p.amount != null && p.currencyCode)
+                  ? money(p.amount, p.currencyCode)
+                  : null,
+                status: p.status || ''
+              };
+            })
+          };
+        });
+      },
+
+      /* --- loyalty: not part of this phase, and not faked --- */
+
+      getLoyalty: function () {
+        // VetPoints has no backend yet. Returning a number here would put a
+        // fabricated balance in front of a real customer.
+        return Promise.resolve(null);
+      },
+
+      listRewards: function () {
+        return Promise.resolve([]);
+      }
+    };
   };
 
   /**
