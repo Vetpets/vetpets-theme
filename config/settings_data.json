@@ -666,6 +666,20 @@
           "custom_colors_solid_button_text": "#121212",
           "custom_colors_outline_button": "#ffffff"
         }
+      },
+      "subscription-portal": {
+        "type": "subscription-portal",
+        "settings": {
+          "data_mode": "live",
+          "base_path": "/apps/subscriptions",
+          "prototype_today": "2026-08-21",
+          "prototype_currency": "USD",
+          "mock_latency": 900,
+          "points_per_renewal": 100,
+          "next_reward_at": 800,
+          "next_reward_name": "a free plush toy",
+          "enable_dev_switcher": false
+        }
       }
     },
     "content_for_index": [],
