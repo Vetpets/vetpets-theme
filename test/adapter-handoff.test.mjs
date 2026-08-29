@@ -219,6 +219,46 @@ describe('live adapter — session handling', () => {
     assert.equal(sent.length, 2);
   });
 
+  test('returns every field the controller dereferences on a subscription', async () => {
+    // The controller reads sub.address.city, sub.payment.brand and
+    // sub.pricing.total directly. Live Phoenix data can lack an address or a
+    // card, so this pins the CONTRACT: the keys are always present, and their
+    // values are either an object or null — never undefined, which would make
+    // a guard in the controller look unnecessary until it threw.
+    const { adapter } = adapterWith([
+      { status: 200, body: JSON.stringify({ status: 'ok', session: 'S' }) },
+      {
+        status: 200,
+        body: JSON.stringify({
+          state: 'subscription',
+          subscription: {
+            status: 'active',
+            subscriptionId: 'SUB-1',
+            nextBillingDate: '2026-09-08',
+            upcomingCharge: { state: 'unavailable', reason: 'no-queued-order' },
+            cadence: { state: 'unavailable', reason: 'unknown' },
+            lines: [{ title: 'FreshWipes', productId: 'p1', variantId: 'v1', quantity: 2 }],
+            deliveryAddress: null,
+            payment: null,
+            recentPayments: [],
+          },
+        }),
+      },
+    ]);
+
+    await adapter.exchangeHandoff('CODE');
+    const sub = await adapter.getSubscription();
+
+    for (const key of ['address', 'payment', 'pricing', 'lines', 'status', 'nextOrderDate']) {
+      assert.ok(key in sub, `missing key: ${key}`);
+      assert.notEqual(sub[key], undefined, `undefined value: ${key}`);
+    }
+    assert.equal(sub.address, null);
+    assert.equal(sub.payment, null);
+    assert.equal(sub.pricing.total, null);
+    assert.equal(sub.lines.length, 1);
+  });
+
   test('invents no loyalty balance when there is no ledger behind it', async () => {
     const { adapter } = adapterWith([
       { status: 200, body: JSON.stringify({ status: 'ok', session: 'S' }) },

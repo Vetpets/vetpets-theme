@@ -453,35 +453,51 @@
     var vm = {};
 
     if (cus) {
-      vm['customer.initials'] = cus.initials;
-      vm['customer.firstName'] = cus.firstName;
-      vm['customer.fullName'] = cus.firstName + ' ' + cus.lastName;
-      vm['customer.email'] = cus.email;
+      // Live Phoenix data carries no display name, and the backend never
+      // returns the address to the browser. Missing parts render as empty
+      // rather than as the string "null".
+      vm['customer.initials'] = cus.initials || '';
+      vm['customer.firstName'] = cus.firstName || '';
+      vm['customer.fullName'] = [cus.firstName, cus.lastName].filter(Boolean).join(' ');
+      vm['customer.email'] = cus.email || '';
     }
 
     if (sub) {
       vm['subscription.reference'] = sub.reference;
       vm['subscription.statusLabel'] = sub.status === 'active' ? 'Active' : 'Cancelled';
-      vm['subscription.intervalDays'] = String(sub.intervalDays);
+      vm['subscription.intervalDays'] = sub.intervalDays == null ? '' : String(sub.intervalDays);
       vm['subscription.nextOrderMedium'] = this.fmtDate(sub.nextOrderDate, 'medium');
       vm['subscription.nextOrderShort'] = this.fmtDate(sub.nextOrderDate, 'short');
       vm['subscription.startedLong'] = this.fmtDate(sub.startedOn, 'full');
-      vm['subscription.deliveriesSoFar'] = String(sub.deliveriesSoFar);
-      vm['subscription.discountPercent'] = String(Math.round(sub.discountRate * 100));
+      vm['subscription.deliveriesSoFar'] = sub.deliveriesSoFar == null ? '' : String(sub.deliveriesSoFar);
+      vm['subscription.discountPercent'] = sub.discountRate == null ? '' : String(Math.round(sub.discountRate * 100));
       vm['subscription.daysAway'] = sub.daysUntilNextOrder + ' days away';
       vm['subscription.progressLabel'] = 'Next delivery in ' + sub.daysUntilNextOrder + ' days';
       vm['subscription.shipProgress'] = Math.max(6, 100 - Math.min(100, sub.daysUntilNextOrder * 1.6));
-      vm['subscription.addressShort'] = sub.address.city + ', ' + sub.address.province;
-      vm['subscription.addressLines'] = [
-        sub.address.name,
-        sub.address.line1 + (sub.address.line2 ? ', ' + sub.address.line2 : ''),
-        sub.address.city + ', ' + sub.address.province + ' ' + sub.address.zip,
-        sub.address.country
-      ].map(function (x) { return self.escape(x); }).join('<br>');
-      vm['subscription.paymentShort'] = sub.payment.brand + ' ···· ' + sub.payment.last4;
-      vm['subscription.paymentBrand'] = sub.payment.brand.toUpperCase();
-      vm['subscription.paymentLast4'] = sub.payment.last4;
-      vm['subscription.paymentExpiry'] = sub.payment.expiry;
+      // The backend returns city/province/country only, and withholds the
+      // street line and postal code deliberately. Both the address and the
+      // card can also be absent entirely, so every part is optional here.
+      var addr = sub.address;
+      if (addr) {
+        vm['subscription.addressShort'] = [addr.city, addr.province].filter(Boolean).join(', ');
+        vm['subscription.addressLines'] = [
+          addr.name,
+          addr.line1 ? addr.line1 + (addr.line2 ? ', ' + addr.line2 : '') : '',
+          [addr.city, addr.province].filter(Boolean).join(', ') + (addr.zip ? ' ' + addr.zip : ''),
+          addr.country
+        ].filter(Boolean).map(function (x) { return self.escape(x); }).join('<br>');
+      } else {
+        vm['subscription.addressShort'] = '';
+        vm['subscription.addressLines'] = '';
+      }
+
+      var pay = sub.payment;
+      vm['subscription.paymentShort'] = pay && pay.brand
+        ? pay.brand + (pay.last4 ? ' ···· ' + pay.last4 : '')
+        : '';
+      vm['subscription.paymentBrand'] = pay && pay.brand ? pay.brand.toUpperCase() : '';
+      vm['subscription.paymentLast4'] = (pay && pay.last4) || '';
+      vm['subscription.paymentExpiry'] = (pay && pay.expiry) || '';
       vm['subscription.quantitySummary'] = sub.lines.map(function (l) {
         return l.title.replace(/ (jar|pack).*$/, '') + ' ×' + l.quantity;
       }).join(', ');
@@ -630,13 +646,15 @@
     var s = this.state, sub = s.data, d = s.draft, self = this;
 
     switch (name) {
+      // Pets are a mock-only concept: Phoenix exposes no pet record, so the
+      // live adapter returns a customer without them.
       case 'pets':
-        return (s.customer ? s.customer.pets : []).map(function (p, i) {
+        return ((s.customer && s.customer.pets) || []).map(function (p, i) {
           return { name: p.name, initial: p.initial, _alt: i > 0 };
         });
 
       case 'petsFull':
-        return (s.customer ? s.customer.pets : []).map(function (p, i) {
+        return ((s.customer && s.customer.pets) || []).map(function (p, i) {
           return { initial: p.initial, nameBreed: p.name + ' · ' + p.breed, _alt: i > 0 };
         });
 
@@ -664,17 +682,21 @@
         if (!s.deliveries) return [];
         var out = [];
         var up = s.deliveries.upcoming;
-        out.push({
+        // There is no upcoming delivery for a cancelled subscription, and no
+        // date to format if Phoenix has not scheduled one.
+        if (up && up.date) out.push({
           mon: NS.dates.parseISO(up.date).toLocaleDateString('en', { month: 'short' }).toUpperCase(),
           day: String(NS.dates.parseISO(up.date).getDate()),
           title: up.title, meta: up.items, status: up.status
         });
-        s.deliveries.past.slice(0, 2).forEach(function (o) {
+        (s.deliveries.past || []).slice(0, 2).forEach(function (o) {
+          if (!o.date) return;
           out.push({
             mon: NS.dates.parseISO(o.date).toLocaleDateString('en', { month: 'short' }).toUpperCase(),
             day: String(NS.dates.parseISO(o.date).getDate()),
             title: 'Delivered',
-            meta: 'Order #' + o.orderId + ' · ' + self.fmtMoney(o.amount),
+            meta: [o.orderId ? 'Order #' + o.orderId : '', self.fmtMoney(o.amount)]
+              .filter(Boolean).join(' · '),
             status: 'Complete'
           });
         });
@@ -682,7 +704,7 @@
       }
 
       case 'pastOrders':
-        return (s.deliveries ? s.deliveries.past : []).map(function (o) {
+        return ((s.deliveries && s.deliveries.past) || []).map(function (o) {
           return {
             dateLong: self.fmtDate(o.date, 'full'), items: o.items,
             amount: self.fmtMoney(o.amount), status: o.status,
@@ -741,9 +763,13 @@
 
       case 'cancelFacts': {
         if (!sub) return [];
+        var card = sub.payment;
         return [
           'Your ' + self.fmtDate(sub.nextOrderDate, 'short') + ' delivery will not ship.',
-          'No further charges will be made to ' + sub.payment.brand + ' ···· ' + sub.payment.last4 + '.',
+          card && card.brand
+            ? 'No further charges will be made to ' + card.brand +
+              (card.last4 ? ' ···· ' + card.last4 : '') + '.'
+            : 'No further charges will be made.',
           'Your ' + (s.loyalty ? s.loyalty.points : 0) + ' VetPoints stay on the account for 12 months.',
           'You can reactivate with the same products and price at any time.'
         ].map(function (t) { return { text: t }; });
