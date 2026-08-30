@@ -209,7 +209,8 @@
 
     <h1 class="spp__h1" id="spp-em-h" style="line-height:1.25;margin-bottom:10px;">No subscriptions yet</h1>
     <p class="spp__lede" style="max-width:380px;margin:0 auto 22px;font-weight:400;font-size:16px;line-height:1.55;">
-      When you start a routine for Bella or Max, it shows up here &mdash; with delivery dates, VetPoints and one-tap skip.
+      {%- comment -%} Identity-free: not a slot, so live mode cannot blank it. {%- endcomment -%}
+      When you start a routine, it shows up here &mdash; with delivery dates, VetPoints and one-tap skip.
     </p>
 
     <button type="button" class="spp__btn spp__btn--primary" style="max-width:420px;margin:0 auto;" data-spp-go="dashboard">

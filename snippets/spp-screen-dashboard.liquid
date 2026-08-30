@@ -18,8 +18,14 @@
       <h1 class="spp__h1 spp__h1--lg" id="spp-dash-h" style="margin-bottom:6px;">
         Hi <span data-spp-field="customer.firstName">Margaret</span>
       </h1>
+      {%- comment -%}
+        Identity-free copy. This paragraph is NOT a [data-spp-field] slot, so
+        clearPlaceholders() cannot blank it in live mode — anything named here
+        reaches a real customer verbatim. It previously named the prototype's
+        two dogs.
+      {%- endcomment -%}
       <p style="margin:0;font:500 15px/1.4 var(--spp-font);color:var(--spp-body);">
-        Two dogs, one routine. Everything for Bella and Max is on track.
+        Your routine, at a glance.
       </p>
     </div>
     <div class="spp__chips" data-spp-list="pets">

@@ -17,6 +17,18 @@
 
     <form class="spp__card" style="text-align:left;border-radius:18px;" data-spp-form="login" novalidate>
       <label class="spp__field-label" for="spp-email">Email address</label>
+      {%- comment -%}
+        NO `value` ATTRIBUTE. The field starts genuinely empty in every mode.
+
+        It once shipped with a prototype address prefilled, which reached real
+        customers: they had to select and delete a stranger's email before
+        typing their own. A placeholder is the only thing that belongs here —
+        it is not a value, so it disappears the moment the customer types.
+
+        The attributes below are what make this pleasant on a phone: no
+        auto-capitalised first letter, no spellcheck underline, the email
+        keyboard, and the browser's own saved-address autofill.
+      {%- endcomment -%}
       <input
         class="spp__input spp__input--lg"
         id="spp-email"
@@ -24,8 +36,10 @@
         type="email"
         inputmode="email"
         autocomplete="email"
-        placeholder="you@email.com"
-        value="margaret.ellis@gmail.com"
+        autocapitalize="none"
+        autocorrect="off"
+        spellcheck="false"
+        placeholder="you@example.com"
         required
       >
       <p class="spp__note" data-spp-error="login" role="alert" hidden style="color:#D92D20;margin-top:8px;"></p>
@@ -70,8 +84,18 @@
       </div>
     </div>
 
-    <button type="button" class="spp__btn spp__btn--primary" data-spp-act="openLink">Open the link (demo)</button>
-    <button type="button" class="spp__btn spp__btn--secondary" style="margin-top:10px;" data-spp-act="resend">
+    {%- comment -%}
+      Both of these are prototype affordances and are removed in live mode.
+
+      "Open the link (demo)" short-circuits the magic link, which is the whole
+      security boundary. "Resend link" replays the address the mock adapter
+      remembers; live mode deliberately never holds the customer's email in the
+      browser, so it would post an empty one. The live path to both is the same
+      and it is already on this screen: open the emailed link, or use "Use a
+      different email" to start again.
+    {%- endcomment -%}
+    <button type="button" class="spp__btn spp__btn--primary" data-spp-mock-only data-spp-act="openLink">Open the link (demo)</button>
+    <button type="button" class="spp__btn spp__btn--secondary" style="margin-top:10px;" data-spp-mock-only data-spp-act="resend">
       <span data-spp-field="label.resend">Resend link</span>
     </button>
     <button type="button" class="spp__btn spp__btn--link" style="margin-top:6px;" data-spp-go="login">Use a different email</button>
