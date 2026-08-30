@@ -552,6 +552,26 @@
 
   VetPetsPortal.takeHandoffFromUrl = takeHandoffFromUrl;
 
+  /**
+   * The unpublished theme this page is being previewed on, if any.
+   *
+   * An unpublished theme is only reachable with `preview_theme_id`, and the
+   * published theme carries no portal template at all, so a test link has to
+   * come back to the same preview or it renders the ordinary page. The value
+   * is passed to the server, which honours it only if it matches its own
+   * one-value allowlist and otherwise ignores it entirely.
+   */
+  function previewThemeId() {
+    try {
+      var value = new URLSearchParams(window.location.search).get('preview_theme_id');
+      return value && /^[0-9]{1,20}$/.test(value) ? value : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  VetPetsPortal.previewThemeId = previewThemeId;
+
   VetPetsPortal.createHttpAdapter = function (options) {
     var opts = options || {};
     var base = opts.basePath || '/apps/subscriptions';
@@ -692,7 +712,13 @@
       hasSession: function () { return !!store.get(); },
 
       requestMagicLink: function (email) {
-        return post('/auth/request-link', { email: email }).then(function (r) {
+        var body = { email: email };
+        // Only ever sent while testing on an unpublished theme; the server
+        // drops anything that is not its configured id.
+        var preview = previewThemeId();
+        if (preview) body.preview_theme_id = preview;
+
+        return post('/auth/request-link', body).then(function (r) {
           // 202 is the only success, and it is deliberately neutral: it says
           // nothing about whether the address is a customer.
           if (r.status === 202) return { ok: true, expiresInMinutes: 15 };
