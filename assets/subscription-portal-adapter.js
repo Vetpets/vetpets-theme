@@ -750,6 +750,19 @@
 
       hasSession: function () { return !!store.get(); },
 
+      /**
+       * Drop the stored session without calling the server.
+       *
+       * Used when the server has already told us the token is worthless (401)
+       * or when there was never one to begin with. Posting a logout for a token
+       * the server has never heard of would be a pointless round trip on the
+       * path back to the sign-in screen.
+       */
+      clearSession: function () {
+        store.clear();
+        pending = null;
+      },
+
       requestMagicLink: function (email) {
         var body = { email: email };
         // Only ever sent while testing on an unpublished theme; the server
