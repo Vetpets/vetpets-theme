@@ -553,23 +553,60 @@
   VetPetsPortal.takeHandoffFromUrl = takeHandoffFromUrl;
 
   /**
-   * The unpublished theme this page is being previewed on, if any.
+   * The one unpublished theme a test link is allowed to return to.
    *
-   * An unpublished theme is only reachable with `preview_theme_id`, and the
-   * published theme carries no portal template at all, so a test link has to
-   * come back to the same preview or it renders the ordinary page. The value
-   * is passed to the server, which honours it only if it matches its own
-   * one-value allowlist and otherwise ignores it entirely.
+   * Duplicated deliberately: the server holds the authoritative allowlist and
+   * this is only a client-side gate that keeps a production storefront from
+   * ever asking for a preview return in the first place. When the portal
+   * ships on the published theme the rendered id will not match, and the
+   * behaviour disappears on its own with no code change.
    */
-  function previewThemeId() {
+  var DEV_PREVIEW_THEME_ID = '181692858635';
+
+  VetPetsPortal.DEV_PREVIEW_THEME_ID = DEV_PREVIEW_THEME_ID;
+
+  /**
+   * The theme identity Liquid rendered into the page.
+   *
+   * NOT read from the address bar. Shopify turns `preview_theme_id` into the
+   * HttpOnly `_shopify_essential` cookie and 302s to a clean URL, so the
+   * parameter is already gone by the time the portal boots — reading
+   * `location.search` here finds nothing and every test link comes back to the
+   * live theme. The section emits `data-spp-theme-id` from Liquid instead,
+   * server-side, where the preview cookie is honoured.
+   */
+  function renderedThemeId() {
     try {
-      var value = new URLSearchParams(window.location.search).get('preview_theme_id');
-      return value && /^[0-9]{1,20}$/.test(value) ? value : null;
+      var doc = window.document;
+      var root = doc && doc.querySelector ? doc.querySelector('[data-spp-portal]') : null;
+      return root ? root.getAttribute('data-spp-theme-id') : null;
     } catch (e) {
       return null;
     }
   }
 
+  /**
+   * The unpublished theme this page is being previewed on, if any.
+   *
+   * An unpublished theme is only reachable with `preview_theme_id`, and the
+   * published theme carries no portal template at all, so a test link has to
+   * come back to the same preview or it renders the ordinary page.
+   *
+   * Anything that is not exactly the dev theme returns null, so a request from
+   * the published storefront carries no preview field at all and the server
+   * builds its canonical destination. The server's own exact allowlist stays
+   * the authority; this never widens what it will accept.
+   *
+   * The argument exists for tests and for an explicit override; omit it and
+   * the value comes from the rendered page.
+   */
+  function previewThemeId(themeId) {
+    var raw = arguments.length > 0 ? themeId : renderedThemeId();
+    var value = raw === null || raw === undefined ? '' : String(raw).trim();
+    return value === DEV_PREVIEW_THEME_ID ? value : null;
+  }
+
+  VetPetsPortal.renderedThemeId = renderedThemeId;
   VetPetsPortal.previewThemeId = previewThemeId;
 
   VetPetsPortal.createHttpAdapter = function (options) {
@@ -580,6 +617,8 @@
       return window.fetch.apply(window, arguments);
     };
     var today = opts.today || null;
+    // Resolved once, from the rendered page, never from the URL.
+    var previewReturn = 'themeId' in opts ? previewThemeId(opts.themeId) : previewThemeId();
 
     /** One place that talks to the backend. Same-origin, first-party. */
     function post(path, body) {
@@ -715,8 +754,7 @@
         var body = { email: email };
         // Only ever sent while testing on an unpublished theme; the server
         // drops anything that is not its configured id.
-        var preview = previewThemeId();
-        if (preview) body.preview_theme_id = preview;
+        if (previewReturn) body.preview_theme_id = previewReturn;
 
         return post('/auth/request-link', body).then(function (r) {
           // 202 is the only success, and it is deliberately neutral: it says
