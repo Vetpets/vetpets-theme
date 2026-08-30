@@ -21,6 +21,21 @@
     login: false, sent: false, expired: false, loading: false, error: false
   };
 
+  /**
+   * Failures that mean "you are not signed in", not "your subscription could
+   * not be loaded".
+   *
+   * These must always land on the clean sign-in screen. Rendering them as the
+   * error screen produced a SUB-503 reference for what was simply an expired
+   * or absent session — a support code pointing at Phoenix for a problem one
+   * tap could fix, and a customer with no way to fix it.
+   */
+  var AUTH_FAILURE_CODES = {
+    unauthenticated: true,
+    expired_link: true,
+    no_subscription: true
+  };
+
   function Portal(root) {
     this.root = root;
     this.cfg = this.readConfig(root);
@@ -182,14 +197,10 @@
       return self.load().then(function () { self.show(start || 'dashboard'); });
     }
 
-    // Any authentication failure returns to sign-in rather than an error
-    // screen: the customer's next action is the same either way.
+    // One handler, shared with retry and every action: fail() itself decides
+    // sign-in versus error screen. Keeping that rule in a single place is what
+    // stops the two paths from disagreeing.
     function onFailure(err) {
-      var code = err && err.code;
-      if (code === 'unauthenticated' || code === 'expired_link' || code === 'no_subscription') {
-        self.show('login');
-        return;
-      }
       self.fail(err);
     }
 
@@ -244,8 +255,33 @@
     }
   };
 
+  /**
+   * Is there anything to read the portal WITH?
+   *
+   * In live mode every portal read needs a session. Asking without one is not
+   * a server error to be reported — it is the sign-in screen.
+   */
+  Portal.prototype.hasSession = function () {
+    if (this.cfg.mode !== 'live') return true;
+    return !!(this.adapter && this.adapter.hasSession && this.adapter.hasSession());
+  };
+
+  /** Drop whatever this browser is holding. Local only; no request. */
+  Portal.prototype.clearSessionLocally = function () {
+    if (this.adapter && this.adapter.clearSession) {
+      try { this.adapter.clearSession(); } catch (e) { /* nothing to clear */ }
+    }
+  };
+
   Portal.prototype.load = function () {
     var self = this;
+
+    // Guard the whole authenticated surface in one place, so no caller can
+    // reach it before a handoff has been exchanged.
+    if (!this.hasSession()) {
+      return Promise.reject(NS.PortalError('unauthenticated', 'Sign in to view your subscription.'));
+    }
+
     return Promise.all([
       this.adapter.getCustomer(),
       this.adapter.getSubscription(),
@@ -264,7 +300,25 @@
     });
   };
 
+  /**
+   * The ONE place a failure becomes a screen.
+   *
+   * Boot, retry and every action funnel through here, so the rule cannot be
+   * true on one path and false on another — which is exactly how a 401 came to
+   * be rendered as SUB-503 from the retry button but as the login screen from
+   * boot.
+   */
   Portal.prototype.fail = function (err) {
+    if (err && AUTH_FAILURE_CODES[err.code]) {
+      // Not signed in. Drop the dead token so the next attempt starts clean,
+      // and show sign-in rather than an error the customer cannot act on.
+      this.clearSessionLocally();
+      this.state.error = null;
+      this.state.pending = null;
+      this.show('login');
+      return;
+    }
+
     this.state.error = {
       code: (err && err.code) || 'server',
       reference: (err && err.reference) || this.buildReference(err)
@@ -289,7 +343,17 @@
     var stamp = this.cfg.mode === 'live'
       ? this.fmtDate(NS.dates.toISO(new Date()), 'full')
       : this.fmtDate(this.cfg.today, 'full');
-    var prefix = code === 'network' ? 'SUB-000' : (code === 'mock_in_production' ? 'SUB-CFG' : 'SUB-503');
+
+    // SUB-503 is reserved for a genuine failure of an AUTHENTICATED read.
+    // fail() already routes auth failures to sign-in, so this branch should be
+    // unreachable — it exists so that if a new path ever forgets, the customer
+    // and support see an authentication code rather than a Phoenix one.
+    var prefix;
+    if (AUTH_FAILURE_CODES[code]) prefix = 'SUB-AUTH';
+    else if (code === 'network') prefix = 'SUB-000';
+    else if (code === 'mock_in_production') prefix = 'SUB-CFG';
+    else prefix = 'SUB-503';
+
     return prefix + ' · ' + stamp;
   };
 
@@ -421,15 +485,23 @@
 
         if (result && result.id) self.state.data = result;
 
-        return self.adapter.getLoyalty().then(function (loy) {
-          self.state.loyalty = loy;
-          return self.adapter.listSubscriptions();
-        }).then(function (subs) {
-          self.state.inactive = subs.inactive;
-          return self.adapter.listDeliveries();
-        }).then(function (dels) {
-          self.state.deliveries = dels;
+        // THE BUG THIS GUARD EXISTS FOR:
+        //
+        // run() was written for subscription mutations, which must re-read the
+        // subscription afterwards. `sendLink` and `resend` also use run(), so a
+        // SUCCESSFUL request for a magic link immediately performed three
+        // authenticated portal reads — before any link had been opened, before
+        // any handoff existed and before any session existed. The reads failed
+        // as `unauthenticated`, the catch below called fail(), and the customer
+        // saw SUB-503 instead of "Check your inbox".
+        //
+        // Authentication actions pass refresh:false. There is nothing to
+        // refresh: by definition there is no session yet.
+        var refreshed = opts.refresh === false
+          ? Promise.resolve()
+          : self.refreshAuthenticatedData();
 
+        return refreshed.then(function () {
           if (opts.closeSheet !== false) self.closeSheet();
           if (opts.success) {
             self.state.success = opts.success(self.state, result);
@@ -448,6 +520,23 @@
         self.closeSheet(true);
         self.fail(err);
       });
+  };
+
+  /** Re-read what a mutation may have changed. Requires a session. */
+  Portal.prototype.refreshAuthenticatedData = function () {
+    var self = this;
+    if (!this.hasSession()) {
+      return Promise.reject(NS.PortalError('unauthenticated', 'Sign in to view your subscription.'));
+    }
+    return this.adapter.getLoyalty().then(function (loy) {
+      self.state.loyalty = loy;
+      return self.adapter.listSubscriptions();
+    }).then(function (subs) {
+      self.state.inactive = subs.inactive;
+      return self.adapter.listDeliveries();
+    }).then(function (dels) {
+      self.state.deliveries = dels;
+    });
   };
 
   Portal.prototype.applyPending = function (on) {
@@ -1020,8 +1109,10 @@
           return;
         }
         if (err) err.hidden = true;
+        // refresh:false — there is no session yet. See run().
         this.run('sendLink', function () { return self.adapter.requestMagicLink(value); }, {
           closeSheet: false,
+          refresh: false,
           then: function () {
             // Neutral by design: the same screen shows whether or not an
             // account exists, so the portal cannot be used to enumerate.
@@ -1039,13 +1130,22 @@
         return;
 
       case 'resend':
+        // Mock-only control, and refresh:false for the same reason as sendLink.
         this.run('resend', function () {
           return self.adapter.requestMagicLink(s.customer ? s.customer.email : '');
-        }, { closeSheet: false, then: function () { self.show('sent'); }, toast: 'New sign-in link sent' });
+        }, {
+          closeSheet: false,
+          refresh: false,
+          then: function () { self.show('sent'); },
+          toast: 'New sign-in link sent'
+        });
         return;
 
       case 'retry':
+        // Identical handling to boot: fail() decides sign-in vs error screen,
+        // so a dead session can never render as a subscription-read failure.
         this.state.error = null;
+        if (!this.hasSession()) { this.fail(NS.PortalError('unauthenticated', '')); return; }
         this.show('loading');
         this.load().then(function () { self.show('dashboard'); }).catch(function (e) { self.fail(e); });
         return;
