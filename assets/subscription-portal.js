@@ -224,6 +224,24 @@
       var inner = tpls[i].content.querySelectorAll('[data-spp-field], [data-spp-field-html]');
       for (var j = 0; j < inner.length; j++) inner[j].textContent = '';
     }
+
+    // Form fields, which are NOT [data-spp-field] slots and so survived the
+    // loop above. The sign-in input once shipped with a prototype address in
+    // its `value`, and a real customer had to delete a stranger's email before
+    // typing their own. The markup no longer carries one; this makes it
+    // impossible for any future markup to reintroduce it in live mode.
+    var inputs = this.root.querySelectorAll('input[type="email"], input[type="text"], textarea');
+    for (i = 0; i < inputs.length; i++) {
+      if (inputs[i].value) inputs[i].value = '';
+      inputs[i].removeAttribute('value');
+    }
+
+    // Prototype affordances. Removed outright rather than hidden: a control a
+    // real customer must never reach should not exist in the document.
+    var mockOnly = this.root.querySelectorAll('[data-spp-mock-only]');
+    for (i = 0; i < mockOnly.length; i++) {
+      if (mockOnly[i].parentNode) mockOnly[i].parentNode.removeChild(mockOnly[i]);
+    }
   };
 
   Portal.prototype.load = function () {
@@ -255,9 +273,22 @@
     this.show('error');
   };
 
+  /**
+   * A support reference for the error screen.
+   *
+   * In live mode the stamp is the REAL current date. `cfg.today` is the
+   * prototype's frozen date and belongs to mock mode only — stamping it on a
+   * real customer's error produced a reference dated August 21, 2026 no matter
+   * when the failure happened, which is worse than useless to support.
+   *
+   * The code is a coarse class, never the upstream message: the server
+   * deliberately withholds that, and repeating a guess here would undo it.
+   */
   Portal.prototype.buildReference = function (err) {
     var code = (err && err.code) || 'server';
-    var stamp = this.fmtDate(this.cfg.today, 'full');
+    var stamp = this.cfg.mode === 'live'
+      ? this.fmtDate(NS.dates.toISO(new Date()), 'full')
+      : this.fmtDate(this.cfg.today, 'full');
     var prefix = code === 'network' ? 'SUB-000' : (code === 'mock_in_production' ? 'SUB-CFG' : 'SUB-503');
     return prefix + ' · ' + stamp;
   };
@@ -533,8 +564,11 @@
         'Nothing has to ship until you need it. Skipping keeps your price and your place in the routine.',
         'Skip ' + shortNext, 'You won\'t be charged for that delivery. The one after it stays on schedule.',
         'Skip this delivery', 'skip'],
+      // Identity-free. These strings are written into [data-spp-field] slots
+      // by render(), so clearPlaceholders() never sees them — naming the
+      // prototype's pets here would put them in front of a real customer.
       pet: ['Give it a little longer?',
-        'If Bella and Max are stocked up, skipping costs nothing and keeps everything else in place.',
+        'If you are already stocked up, skipping costs nothing and keeps everything else in place.',
         'Skip ' + shortNext, 'Your price and your place in the routine are kept.',
         'Skip this delivery', 'skip'],
       'switch': ['Take a break first?',
