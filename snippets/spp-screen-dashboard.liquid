@@ -15,8 +15,15 @@
   {%- comment -%} Greeting + pets {%- endcomment -%}
   <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px;">
     <div>
-      <h1 class="spp__h1 spp__h1--lg" id="spp-dash-h" style="margin-bottom:6px;">
-        Hi <span data-spp-field="customer.firstName">Margaret</span>
+      {%- comment -%}
+        ONE slot for the whole greeting, not "Hi " plus a name slot. Live mode
+        blanks every slot before rendering, so a split greeting left a bare
+        "Hi" on screen whenever the name had not arrived — and would leave a
+        dangling comma if punctuation lived in the markup. The controller
+        sends either "Hi, {firstName}" or "Hi there".
+      {%- endcomment -%}
+      <h1 class="spp__h1 spp__h1--lg" id="spp-dash-h" style="margin-bottom:6px;" data-spp-field="customer.greeting">
+        Hi there
       </h1>
       {%- comment -%}
         Identity-free copy. This paragraph is NOT a [data-spp-field] slot, so
