@@ -697,7 +697,10 @@
           pending = null;
           throw PortalError('unauthenticated', 'Your session has expired.');
         }
-        if (r.status === 503 && r.data && r.data.error === 'not_enabled') {
+        // 403, not 5xx: Shopify's App Proxy replaces an upstream 5xx with the
+        // storefront's themed error page, so a gated capability has to answer
+        // with a status the proxy passes through.
+        if (r.status === 403 && r.data && r.data.error === 'not_enabled') {
           throw PortalError('not_enabled', 'That is not available yet.');
         }
         if (r.status === 409 && r.data && r.data.error === 'operation_in_progress') {
@@ -976,26 +979,26 @@
        * ----------------------------------------------------------------- */
 
       skipNextDelivery: function (id, opts) {
-        return mutate('/subscription/skip', {}, opts);
+        return mutate('/portal/skip', {}, opts);
       },
 
       delayNextDelivery: function (id, days, opts) {
-        return mutate('/subscription/delay', { days: days }, opts);
+        return mutate('/portal/delay', { days: days }, opts);
       },
 
       rescheduleNextDelivery: function (id, isoDate, opts) {
-        return mutate('/subscription/reschedule', { date: isoDate }, opts);
+        return mutate('/portal/reschedule', { date: isoDate }, opts);
       },
 
       cancel: function (id, reasonCode, note, opts) {
         // `note` is deliberately NOT forwarded. Free text a customer typed
         // would be written into a third-party billing system we do not
         // control; only the fixed reason code travels.
-        return mutate('/subscription/cancel', { reason: reasonCode }, opts);
+        return mutate('/portal/cancel', { reason: reasonCode }, opts);
       },
 
       reactivate: function (id, startOffsetDays, opts) {
-        return mutate('/subscription/reactivate', {}, opts);
+        return mutate('/portal/reactivate', {}, opts);
       },
 
       /* --- loyalty: not part of this phase, and not faked --- */

@@ -83,16 +83,16 @@ function errorAt(status, error) {
 describe('what the browser sends', () => {
   test('each action posts to its own route', async () => {
     const cases = [
-      ['skipNextDelivery', (a) => a.skipNextDelivery('sub_1'), '/subscription/skip', {}],
-      ['delayNextDelivery', (a) => a.delayNextDelivery('sub_1', 15), '/subscription/delay', { days: 15 }],
+      ['skipNextDelivery', (a) => a.skipNextDelivery('sub_1'), '/portal/skip', {}],
+      ['delayNextDelivery', (a) => a.delayNextDelivery('sub_1', 15), '/portal/delay', { days: 15 }],
       [
         'rescheduleNextDelivery',
         (a) => a.rescheduleNextDelivery('sub_1', '2026-12-01'),
-        '/subscription/reschedule',
+        '/portal/reschedule',
         { date: '2026-12-01' },
       ],
-      ['cancel', (a) => a.cancel('sub_1', 'price', 'free text'), '/subscription/cancel', { reason: 'price' }],
-      ['reactivate', (a) => a.reactivate('sub_1', 14), '/subscription/reactivate', {}],
+      ['cancel', (a) => a.cancel('sub_1', 'price', 'free text'), '/portal/cancel', { reason: 'price' }],
+      ['reactivate', (a) => a.reactivate('sub_1', 14), '/portal/reactivate', {}],
     ];
 
     for (const [name, run, path, extra] of cases) {
@@ -170,7 +170,7 @@ describe('what the browser does with the answer', () => {
   });
 
   test('a closed capability gate is reported as such, not as a server fault', async () => {
-    const { adapter } = adapterWith(() => errorAt(503, 'not_enabled'));
+    const { adapter } = adapterWith(() => errorAt(403, 'not_enabled'));
     const err = await adapter.skipNextDelivery('sub_1').catch((e) => e);
     assert.equal(err.code, 'not_enabled');
   });
