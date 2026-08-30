@@ -36,6 +36,8 @@
   if section.settings.enable_dev_switcher
     assign dev_default = true
   endif
+
+  assign theme_id = theme.id
 -%}
 
 {%- comment -%}
@@ -48,13 +50,23 @@
   NEVER put a Liquid tag between two attributes. The whitespace-stripping
   hyphens in {%- ... -%} consume the newlines on both sides and weld the
   neighbouring attributes into one, which silently destroys the attribute
-  the controller boots from.
+  the controller boots from. That is why theme_id is assigned above rather
+  than explained inline.
+
+  data-spp-theme-id is the theme this page is ACTUALLY rendered by, taken
+  from Liquid's own theme identity. It exists because Shopify consumes
+  `preview_theme_id` into an HttpOnly cookie and 302s to a clean URL: by the
+  time the portal boots, the parameter is gone from the address bar and no
+  script can recover it. This attribute is therefore the only trustworthy
+  statement of theme identity the browser has. It is a public numeric id,
+  not a credential, and the server treats it as a hint it is free to ignore.
 {%- endcomment -%}
 <div
   class="spp"
   id="spp-root"
   data-spp-portal
   data-spp-mode="{{ section.settings.data_mode | default: 'mock' }}"
+  data-spp-theme-id="{{ theme_id }}"
   data-spp-base-path="{{ section.settings.base_path | default: '/apps/subscriptions' }}"
   data-spp-locale="{{ request.locale.iso_code | default: 'en' }}"
   data-spp-today="{{ section.settings.prototype_today | default: '2026-08-21' }}"

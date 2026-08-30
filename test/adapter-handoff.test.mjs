@@ -23,13 +23,44 @@ import vm from 'node:vm';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const source = readFileSync(resolve(here, '..', 'assets', 'subscription-portal-adapter.js'), 'utf8');
+const sectionSource = readFileSync(
+  resolve(here, '..', 'sections', 'subscription-portal.liquid'),
+  'utf8'
+);
+
+/** Real captures from the storefront. See test/fixtures/README.md. */
+const renderedRoot = readFileSync(resolve(here, 'fixtures', 'preview-root.html'), 'utf8');
+const redirect = JSON.parse(readFileSync(resolve(here, 'fixtures', 'preview-redirect.json'), 'utf8'));
+
+/** Pull one attribute out of the captured root element. */
+function renderedAttr(name) {
+  const match = renderedRoot.match(new RegExp(`${name}="([^"]*)"`));
+  return match ? match[1] : null;
+}
+
+/**
+ * A stand-in for the rendered portal root.
+ *
+ * `attributes` is whatever the storefront put on the element. Passing `null`
+ * models a page with no portal on it at all.
+ */
+function makeDocument(attributes) {
+  const element = attributes === null
+    ? null
+    : { getAttribute: (name) => (name in attributes ? attributes[name] : null) };
+
+  return {
+    querySelector: (selector) => (selector === '[data-spp-portal]' ? element : null),
+  };
+}
 
 /** Minimal browser surface the adapter touches. */
-function makeWindow(search = '') {
+function makeWindow(search = '', doc = makeDocument(null)) {
   const store = new Map();
   const replaced = [];
 
   return {
+    document: doc,
     location: { search, pathname: '/pages/subscription-policy', hash: '' },
     history: {
       state: null,
@@ -102,9 +133,32 @@ describe('takeHandoffFromUrl', () => {
   });
 });
 
+/**
+ * Preview-aware link requests.
+ *
+ * The defect these tests exist for: the adapter used to read `preview_theme_id`
+ * from `location.search`. Shopify consumes that parameter into an HttpOnly
+ * cookie and redirects to a clean URL, so by the time anyone submits the
+ * sign-in form it is gone — every "preview" link came back to the live theme,
+ * which carries no portal template at all.
+ *
+ * The identity now comes from Liquid, rendered into the page server-side where
+ * the preview cookie IS honoured. Fixtures 1 and 2 are live captures, so these
+ * assertions are statements about production, not about a mock.
+ */
 describe('preview theme id', () => {
-  test('is read from the URL and sent with a link request', async () => {
-    const win = makeWindow('?preview_theme_id=181692858635');
+  const DEV_THEME = '181692858635';
+
+  /**
+   * A portal booted on the post-redirect URL — no preview_theme_id anywhere in
+   * the address bar — with `themeId` as the value the storefront rendered into
+   * `data-spp-theme-id`. The adapter has to find it in the DOM or not at all.
+   */
+  function adapterOn(themeId) {
+    const doc = makeDocument(
+      themeId === undefined ? null : { 'data-spp-theme-id': themeId }
+    );
+    const win = makeWindow(redirect.finalUrl.slice(redirect.finalUrl.indexOf('?')), doc);
     const NS = loadAdapter(win);
     const sent = [];
     const adapter = NS.createHttpAdapter({
@@ -113,33 +167,105 @@ describe('preview theme id', () => {
         return Promise.resolve({ status: 202, ok: true, text: () => Promise.resolve('{}') });
       },
     });
+    return { NS, adapter, sent, win };
+  }
+
+  // 1 — the query parameter is already gone.
+  test('the preview parameter does not survive Shopify’s redirect', () => {
+    assert.equal(redirect.status, 302);
+    assert.ok(redirect.requestedUrl.includes('preview_theme_id=181692858635'));
+    assert.ok(!redirect.location.includes('preview_theme_id'));
+    assert.ok(!redirect.finalUrl.includes('preview_theme_id'));
+
+    // And the cookie it was traded for is unreadable from script, so there is
+    // no recovering it client-side.
+    assert.equal(redirect.setCookieHttpOnly, true);
+  });
+
+  // 2 — the rendered dev portal still knows which theme it is.
+  test('the rendered dev portal exposes the theme id after the redirect', () => {
+    assert.equal(renderedAttr('data-spp-theme-id'), DEV_THEME);
+    assert.equal(renderedAttr('data-spp-mode'), 'live');
+
+    // The attribute is emitted from Liquid's own theme identity, not echoed
+    // back from anything the browser sent.
+    assert.ok(sectionSource.includes('assign theme_id = theme.id'));
+    assert.ok(sectionSource.includes('data-spp-theme-id="{{ theme_id }}"'));
+
+    // ...and the adapter reads that exact attribute off that exact element.
+    const doc = makeDocument({ 'data-spp-theme-id': renderedAttr('data-spp-theme-id') });
+    const NS = loadAdapter(makeWindow('', doc));
+    assert.equal(NS.renderedThemeId(), DEV_THEME);
+  });
+
+  // 3 — the request carries it.
+  test('the link request sends preview_theme_id taken from the rendered page', async () => {
+    const { adapter, sent, win } = adapterOn(renderedAttr('data-spp-theme-id'));
 
     await adapter.requestMagicLink('person@example.com');
 
-    assert.equal(JSON.parse(sent[0].init.body).preview_theme_id, '181692858635');
+    // Precondition: nothing usable in the address bar at this moment.
+    assert.ok(!win.location.search.includes('preview_theme_id'));
+
+    const body = JSON.parse(sent[0].init.body);
+    assert.equal(body.preview_theme_id, DEV_THEME);
+    // Nothing else about the browser's context is volunteered.
+    assert.deepEqual(Object.keys(body).sort(), ['email', 'preview_theme_id']);
   });
 
-  test('is omitted entirely on the canonical storefront', async () => {
-    const win = makeWindow('');
-    const NS = loadAdapter(win);
-    const sent = [];
-    const adapter = NS.createHttpAdapter({
-      fetchImpl: (url, init) => {
-        sent.push({ url, init });
-        return Promise.resolve({ status: 202, ok: true, text: () => Promise.resolve('{}') });
-      },
-    });
+  // 4 — anything else is omitted.
+  test('another or missing theme id is omitted, so production stays canonical', async () => {
+    for (const themeId of [
+      undefined, // no portal root at all
+      null, // root present, attribute absent
+      '',
+      '181640724747', // the live theme
+      '1816928586350', // a near miss
+      '18169285863', // a prefix
+      'https://evil.example',
+      '181692858635 ; DROP',
+    ]) {
+      const { adapter, sent } = adapterOn(themeId);
+      await adapter.requestMagicLink('person@example.com');
+
+      const body = JSON.parse(sent[0].init.body);
+      assert.equal(
+        'preview_theme_id' in body,
+        false,
+        `theme id ${JSON.stringify(themeId)} must not produce a preview return`
+      );
+    }
+  });
+
+  test('previewThemeId gates on exact equality, not a pattern', () => {
+    const { NS } = adapterOn(undefined);
+
+    assert.equal(NS.previewThemeId(DEV_THEME), DEV_THEME);
+    assert.equal(NS.previewThemeId(181692858635), DEV_THEME); // numeric attribute
+    assert.equal(NS.previewThemeId(' 181692858635 '), DEV_THEME); // stray whitespace
+    assert.equal(NS.previewThemeId('999999999999'), null);
+    assert.equal(NS.previewThemeId('../181692858635'), null);
+    assert.equal(NS.previewThemeId(null), null);
+  });
+
+  // 5 — the browser never decides where the link points.
+  test('the adapter sends an id, never a destination', async () => {
+    const { adapter, sent } = adapterOn(DEV_THEME);
 
     await adapter.requestMagicLink('person@example.com');
 
     const body = JSON.parse(sent[0].init.body);
-    assert.equal('preview_theme_id' in body, false);
-  });
-
-  test('refuses a non-numeric value rather than forwarding it', () => {
-    const win = makeWindow('?preview_theme_id=https://evil.example');
-    const NS = loadAdapter(win);
-    assert.equal(NS.previewThemeId(), null);
+    // No URL, path, origin or redirect field exists to smuggle a destination
+    // through. The server builds the return URL from its own fixed constants.
+    for (const key of Object.keys(body)) {
+      assert.ok(
+        !/url|redirect|return|next|origin|host|path/i.test(key),
+        `unexpected destination-shaped field: ${key}`
+      );
+    }
+    assert.ok(!/https?:/i.test(sent[0].init.body));
+    // Same-origin, first-party path.
+    assert.ok(sent[0].url.startsWith('/apps/subscriptions'));
   });
 });
 
