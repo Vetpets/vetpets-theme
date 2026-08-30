@@ -650,6 +650,82 @@
       return token;
     }
 
+    /**
+     * A key that identifies one ATTEMPT, not one intention.
+     *
+     * Reused verbatim by a retry of the same attempt, so the server can tell a
+     * duplicate from a fresh request. The caller passes `opts.idempotencyKey`
+     * when retrying; otherwise a new one is minted.
+     */
+    function idempotencyKey(opts) {
+      if (opts && typeof opts.idempotencyKey === 'string' && opts.idempotencyKey.length >= 8) {
+        return opts.idempotencyKey;
+      }
+      var random = 'xxxxxxxxxxxx'.replace(/x/g, function () {
+        return Math.floor(Math.random() * 16).toString(16);
+      });
+      return 'vp-' + Date.now().toString(36) + '-' + random;
+    }
+
+    /**
+     * Perform one mutation.
+     *
+     * The response body IS the refreshed portal view, so the cached read is
+     * dropped and the new state adopted in one step — no second round trip,
+     * and no window in which the UI shows the pre-write state.
+     */
+    function mutate(path, fields, opts) {
+      var body;
+      try {
+        body = {
+          session: requireSession(),
+          confirm: true,
+          idempotencyKey: idempotencyKey(opts)
+        };
+      } catch (e) {
+        // Rejected, never thrown synchronously. Every caller handles these
+        // with .catch(), and a synchronous throw would sail straight past it.
+        return Promise.reject(e);
+      }
+      for (var k in fields) {
+        if (Object.prototype.hasOwnProperty.call(fields, k)) body[k] = fields[k];
+      }
+
+      return post(path, body).then(function (r) {
+        if (r.status === 401) {
+          store.clear();
+          pending = null;
+          throw PortalError('unauthenticated', 'Your session has expired.');
+        }
+        if (r.status === 503 && r.data && r.data.error === 'not_enabled') {
+          throw PortalError('not_enabled', 'That is not available yet.');
+        }
+        if (r.status === 409 && r.data && r.data.error === 'operation_in_progress') {
+          // A double-click. The first request is still running; saying
+          // "failed" would be wrong and a second write would be worse.
+          throw PortalError('in_progress', 'That is already being processed.');
+        }
+        if (r.status === 504) {
+          // A timed-out write may or may not have applied, so the copy must
+          // not claim either. The customer is told to check, not told a
+          // result we do not have.
+          throw PortalError('timeout', 'That is taking longer than expected. Refresh to check.');
+        }
+        if (!r.ok || !r.data || !r.data.view) {
+          throw PortalError(
+            (r.data && r.data.error) || 'server',
+            'We could not complete that just now.'
+          );
+        }
+
+        // Adopt the server's re-read as the new truth.
+        pending = Promise.resolve(r.data.view);
+        var projected = projectSubscription(r.data.view);
+        if (!projected) throw PortalError('no_subscription', 'No active subscription found.');
+        return projected;
+      });
+    }
+
     /** Cache one portal read per load; six adapter calls, one request. */
     var pending = null;
 
@@ -880,6 +956,46 @@
             })
           };
         });
+      },
+
+      /* --- mutations ---------------------------------------------------
+       *
+       * Five operations, each posting to its own first-party route. The
+       * browser sends WHAT to do and never WHOSE subscription: there is no
+       * CustomerId parameter here, and the server ignores one if a caller
+       * invents it.
+       *
+       * Every call carries:
+       *   confirm: true     the customer said so; a mutation is never a side
+       *                     effect of a render
+       *   idempotencyKey    a per-attempt key, so a double-click, a flaky
+       *                     connection or a retry cannot apply twice
+       *
+       * The server answers with the RE-READ subscription, not an echo, so the
+       * UI renders what Phoenix now holds rather than what we asked for.
+       * ----------------------------------------------------------------- */
+
+      skipNextDelivery: function (id, opts) {
+        return mutate('/subscription/skip', {}, opts);
+      },
+
+      delayNextDelivery: function (id, days, opts) {
+        return mutate('/subscription/delay', { days: days }, opts);
+      },
+
+      rescheduleNextDelivery: function (id, isoDate, opts) {
+        return mutate('/subscription/reschedule', { date: isoDate }, opts);
+      },
+
+      cancel: function (id, reasonCode, note, opts) {
+        // `note` is deliberately NOT forwarded. Free text a customer typed
+        // would be written into a third-party billing system we do not
+        // control; only the fixed reason code travels.
+        return mutate('/subscription/cancel', { reason: reasonCode }, opts);
+      },
+
+      reactivate: function (id, startOffsetDays, opts) {
+        return mutate('/subscription/reactivate', {}, opts);
       },
 
       /* --- loyalty: not part of this phase, and not faked --- */
