@@ -46,7 +46,11 @@
       this.adapter = NS.createAdapter({
         mode: this.cfg.mode,
         basePath: this.cfg.basePath,
-        today: this.cfg.today,
+        // Live counts from the real calendar day. `cfg.today` is the
+        // prototype's frozen date (2026-08-21) and may only reach the mock
+        // adapter — it is what rendered "34 days away" for a delivery 25 days
+        // out. Local date, not UTC: a customer counts sleeps, not hours.
+        today: this.cfg.mode === 'live' ? NS.dates.toISO(new Date()) : this.cfg.today,
         currencyCode: this.cfg.currency,
         latency: this.cfg.latency,
         pointsPerRenewal: this.cfg.pointsPerRenewal,
@@ -582,6 +586,11 @@
       vm['customer.email'] = cus.email || '';
     }
 
+    // One slot for the whole greeting. Splitting it into "Hi " plus a name slot
+    // rendered a bare "Hi" whenever Phoenix had no first name, and a dangling
+    // comma if punctuation had been added to the markup instead.
+    vm['customer.greeting'] = cus && cus.firstName ? 'Hi, ' + cus.firstName : 'Hi there';
+
     if (sub) {
       vm['subscription.reference'] = sub.reference;
       vm['subscription.statusLabel'] = sub.status === 'active' ? 'Active' : 'Cancelled';
@@ -765,6 +774,62 @@
     '<path d="M3.6 16.4l4.6-4 3.4 3 3.2-2.6 5.4 4.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>' +
     '</svg>';
 
+  /**
+   * The store's product images, keyed by Shopify product and variant id.
+   *
+   * Emitted by the section from Liquid, because Liquid is the only part of
+   * this system that has the catalogue. Parsed once; a malformed or absent
+   * block simply means every line falls back to the branded pending tile.
+   */
+  Portal.prototype.imageMap = function () {
+    if (this._imageMap) return this._imageMap;
+    this._imageMap = {};
+    try {
+      var el = this.root.querySelector('[data-spp-image-map]');
+      if (el && el.textContent) {
+        var parsed = JSON.parse(el.textContent);
+        for (var key in parsed) {
+          if (!Object.prototype.hasOwnProperty.call(parsed, key)) continue;
+          var entry = parsed[key];
+          if (entry && entry.src) this._imageMap[String(key)] = entry;
+        }
+      }
+    } catch (e) {
+      // A bad map is not a reason to fail a render.
+    }
+    return this._imageMap;
+  };
+
+  /**
+   * Resolve a line's product image, or nothing.
+   *
+   * Never guesses: an id that is not in the map returns null and the caller
+   * renders the branded packshot-pending tile. Showing the wrong product's
+   * photo would be worse than showing none.
+   */
+  Portal.prototype.imageForLine = function (line) {
+    if (!line) return null;
+    var map = this.imageMap();
+    var keys = [line.variantId, line.productId, line.id];
+    for (var i = 0; i < keys.length; i++) {
+      if (keys[i] == null) continue;
+      var hit = map[String(keys[i])];
+      if (hit && hit.src) return hit;
+    }
+    return null;
+  };
+
+  /** Fill _image/_pending/_alt2 for one line, mock or live. */
+  Portal.prototype.lineImage = function (line) {
+    // Mock mode carries its own images on the line itself.
+    if (line.image) return { _image: line.image, _pending: false, _alt2: line.title || '' };
+    var resolved = this.imageForLine(line);
+    if (resolved) {
+      return { _image: resolved.src, _pending: false, _alt2: resolved.alt || line.title || '' };
+    }
+    return { _image: '', _pending: true, _alt2: line.title || '' };
+  };
+
   Portal.prototype.listData = function (name) {
     var s = this.state, sub = s.data, d = s.draft, self = this;
 
@@ -784,15 +849,16 @@
       case 'lineThumbs':
       case 'lineThumbs2':
         return (sub ? sub.lines : []).map(function (l) {
-          return { _image: l.image, _pending: l.imagePending, _alt2: l.title };
+          return self.lineImage(l);
         });
 
       case 'lines':
         return (sub ? sub.lines : []).map(function (l) {
+          var img = self.lineImage(l);
           return {
             title: l.title, subtitle: l.subtitle, quantity: String(l.quantity),
             unitPrice: self.fmtMoney(l.unitPrice),
-            _image: l.image, _pending: l.imagePending, _alt2: l.title
+            _image: img._image, _pending: img._pending, _alt2: img._alt2
           };
         });
 
@@ -953,7 +1019,17 @@
         thumb.setAttribute('aria-label', (item._alt2 || 'Product') + ' — packshot photo pending');
       } else if (img) {
         if (item._image) {
-          img.src = item._image; img.alt = ''; img.loading = 'lazy'; img.decoding = 'async';
+          img.src = item._image;
+          // Named, not decorative: in the thumb strip the photo is the only
+          // thing identifying the product.
+          img.alt = item._alt2 || '';
+          img.loading = 'lazy';
+          img.decoding = 'async';
+          // Reserve the box so the row does not jump when the photo arrives.
+          // The CSS sizes the tile; these stop the intrinsic ratio from
+          // being unknown until load.
+          img.setAttribute('width', '64');
+          img.setAttribute('height', '64');
         } else {
           img.remove();
         }

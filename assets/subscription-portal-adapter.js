@@ -616,7 +616,11 @@
     var fetchImpl = opts.fetchImpl || function () {
       return window.fetch.apply(window, arguments);
     };
-    var today = opts.today || null;
+    // The live portal counts days from the REAL current date. `opts.today` is
+    // the prototype's frozen date and belongs to mock mode; letting it reach
+    // here made "34 days away" appear on a date 25 days from the delivery.
+    // Local calendar date, not UTC: the customer counts sleeps, not hours.
+    var today = opts.today || VetPetsPortal.dates.toISO(new Date());
     // Resolved once, from the rendered page, never from the URL.
     var previewReturn = 'themeId' in opts ? previewThemeId(opts.themeId) : previewThemeId();
 
@@ -714,6 +718,11 @@
         lines: (sub.lines || []).map(function (l) {
           return {
             id: l.variantId || l.productId || null,
+            // Kept separately so the theme can resolve a product image from
+            // the Shopify ids Phoenix carries. The adapter itself resolves
+            // nothing: it has no catalogue and must not invent one.
+            productId: l.productId || null,
+            variantId: l.variantId || null,
             title: l.title || '',
             subtitle: null,
             quantity: l.quantity,
@@ -815,9 +824,17 @@
 
       getCustomer: function () {
         return readPortal().then(function (view) {
-          // The server never returns the address or the CustomerId, and this
-          // file never asks for them.
-          return { email: null, name: null, state: view.state };
+          // firstName is the ONLY identifying value the server returns, and it
+          // is null whenever Phoenix has nothing usable. The address, the full
+          // name, the email and the CustomerId are never sent, and this file
+          // never asks for them.
+          var first = view.customer ? view.customer.firstName : null;
+          return {
+            firstName: typeof first === 'string' && first.length > 0 ? first : null,
+            email: null,
+            name: null,
+            state: view.state
+          };
         });
       },
 

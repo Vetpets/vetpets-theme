@@ -80,6 +80,23 @@
   data-spp-img-eyewipes="{{ img_eye }}"
   data-spp-img-glovewipes="{{ img_glove }}"
 >
+  {%- comment -%}
+    Product images, keyed by the Shopify ids Phoenix carries on each line item.
+
+    The backend returns productId and variantId and nothing else — it has no
+    catalogue and must not invent an image URL. Liquid does have the catalogue,
+    so the lookup happens here, from the store's own product records. An id
+    that is not in this map falls back to the branded packshot-pending tile
+    rather than a broken image.
+  {%- endcomment -%}
+  <script type="application/json" data-spp-image-map>
+    {
+      "{{ p_fresh.id }}": {"src": {{ img_fresh | json }}, "alt": {{ p_fresh.title | default: '' | json }}},
+      "{{ p_eye.id }}": {"src": {{ img_eye | json }}, "alt": {{ p_eye.title | default: '' | json }}},
+      "{{ p_glove.id }}": {"src": {{ img_glove | json }}, "alt": {{ p_glove.title | default: '' | json }}}
+    }
+  </script>
+
   <a class="spp__skip" href="#spp-main">Skip to portal content</a>
 
   {%- comment -%} ---------- Header ---------- {%- endcomment -%}
