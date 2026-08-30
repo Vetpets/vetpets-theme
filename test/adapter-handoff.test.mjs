@@ -102,6 +102,47 @@ describe('takeHandoffFromUrl', () => {
   });
 });
 
+describe('preview theme id', () => {
+  test('is read from the URL and sent with a link request', async () => {
+    const win = makeWindow('?preview_theme_id=181692858635');
+    const NS = loadAdapter(win);
+    const sent = [];
+    const adapter = NS.createHttpAdapter({
+      fetchImpl: (url, init) => {
+        sent.push({ url, init });
+        return Promise.resolve({ status: 202, ok: true, text: () => Promise.resolve('{}') });
+      },
+    });
+
+    await adapter.requestMagicLink('person@example.com');
+
+    assert.equal(JSON.parse(sent[0].init.body).preview_theme_id, '181692858635');
+  });
+
+  test('is omitted entirely on the canonical storefront', async () => {
+    const win = makeWindow('');
+    const NS = loadAdapter(win);
+    const sent = [];
+    const adapter = NS.createHttpAdapter({
+      fetchImpl: (url, init) => {
+        sent.push({ url, init });
+        return Promise.resolve({ status: 202, ok: true, text: () => Promise.resolve('{}') });
+      },
+    });
+
+    await adapter.requestMagicLink('person@example.com');
+
+    const body = JSON.parse(sent[0].init.body);
+    assert.equal('preview_theme_id' in body, false);
+  });
+
+  test('refuses a non-numeric value rather than forwarding it', () => {
+    const win = makeWindow('?preview_theme_id=https://evil.example');
+    const NS = loadAdapter(win);
+    assert.equal(NS.previewThemeId(), null);
+  });
+});
+
 describe('live adapter — session handling', () => {
   function adapterWith(responses) {
     const win = makeWindow('');
