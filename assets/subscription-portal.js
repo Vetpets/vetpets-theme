@@ -1423,7 +1423,13 @@
       case 'undo': {
         var target = s.success && s.success.undoTo;
         if (!target) return;
-        this.run('undo', function () { return self.adapter.rescheduleNextDelivery(id, target); }, {
+        this.run('undo', function (attemptKey) {
+          return self.adapter.rescheduleNextDelivery(id, target, {
+            idempotencyKey: attemptKey,
+            expectedNextBillingDate: sub.nextOrderDate
+          });
+        }, {
+          attempt: 'undo',
           then: function () { self.state.success = null; self.show('dashboard'); },
           toast: 'Skip undone'
         });
@@ -1431,7 +1437,15 @@
       }
 
       case 'delay':
-        this.run('delay', function () { return self.adapter.delayNextDelivery(id, d.delay); }, {
+        this.run('delay', function (attemptKey) {
+          return self.adapter.delayNextDelivery(id, d.delay, {
+            idempotencyKey: attemptKey,
+            // The date on screen when the customer confirmed. Without it the
+            // server cannot tell a duplicate from a second, genuine delay.
+            expectedNextBillingDate: sub.nextOrderDate
+          });
+        }, {
+          attempt: 'delay',
           then: function () { self.show('dashboard'); },
           toast: function (st) { return 'Delivery moved to ' + self.fmtDate(st.data.nextOrderDate, 'short'); }
         });
@@ -1439,7 +1453,10 @@
 
       /* --- POST /cancel-subscription --- */
       case 'cancel':
-        this.run('cancel', function () { return self.adapter.cancel(id, d.reason); }, {
+        this.run('cancel', function (attemptKey) {
+          return self.adapter.cancel(id, d.reason, null, { idempotencyKey: attemptKey });
+        }, {
+          attempt: 'cancel',
           then: function () { self.show('cancel-done'); }
         });
         return;
@@ -1447,7 +1464,10 @@
       /* --- POST /activate-subscription --- */
       case 'reactivate': {
         var offsets = [0, 14, 30];
-        this.run('reactivate', function () { return self.adapter.reactivate(id, offsets[d.restart] || 0); }, {
+        this.run('reactivate', function (attemptKey) {
+          return self.adapter.reactivate(id, offsets[d.restart] || 0, { idempotencyKey: attemptKey });
+        }, {
+          attempt: 'reactivate',
           then: function () { self.show('dashboard'); },
           toast: 'Subscription reactivated'
         });
