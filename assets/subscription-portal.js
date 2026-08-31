@@ -569,13 +569,13 @@
       message = 'That is already being processed.';
     } else if (code === 'timeout') {
       // The one case where the outcome is genuinely unknown. Say exactly that.
-      message = 'That is taking longer than expected \u2014 refresh to check whether it went through.';
+      message = 'That is taking longer than expected — refresh to check whether it went through.';
     } else if (code === 'not_enabled') {
       message = 'That is not available yet.';
     } else if (code === 'network') {
       message = 'No connection. Check your signal and try again.';
     } else {
-      message = 'That did not go through. Nothing has changed \u2014 please try again.';
+      message = 'That did not go through. Nothing has changed — please try again.';
     }
 
     this.toast(message);
@@ -590,7 +590,7 @@
    * being tempted to do it a second time.
    */
   Portal.prototype.refreshRequired = function () {
-    this.toast('Done \u2014 refresh to see the updated dates.');
+    this.toast('Done — refresh to see the updated dates.');
     this.render();
   };
 
@@ -1307,7 +1307,7 @@
           toast: function (st) {
             var next = st.data && st.data.nextOrderDate;
             return next
-              ? 'Delivery skipped \u2014 next one ' + self.fmtDate(next, 'long')
+              ? 'Delivery skipped — next one ' + self.fmtDate(next, 'long')
               : 'Delivery skipped';
           }
         });
