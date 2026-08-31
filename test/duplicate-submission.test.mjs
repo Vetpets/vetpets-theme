@@ -352,3 +352,61 @@ describe('the shipped markup cannot submit a form', () => {
     assert.match(src, /__sppBooted/, 'init() must guard against re-booting a root');
   });
 });
+
+describe('every mutating action is wired for safety, not just skip', () => {
+  /**
+   * THE OMISSION THIS EXISTS FOR
+   * ----------------------------
+   * The stable attempt key and the pre-state precondition were wired into
+   * skip and nowhere else. delay, reschedule, cancel and reactivate still
+   * minted a fresh key per call, and the two date-moving ones sent no
+   * pre-state at all — so the server would have refused them outright with
+   * `expected_state_required`, and any that got through had exactly the
+   * duplicate exposure skip had just been fixed for.
+   *
+   * Read off the shipped source, so a new action cannot quietly ship without
+   * the same protection.
+   */
+  const ACTIONS = ['skip', 'delay', 'undo', 'cancel', 'reactivate'];
+  /** Those whose effect a duplicate could compound by moving a date again. */
+  const MOVES_A_DATE = ['skip', 'delay', 'undo'];
+
+  /** The body of one `case '<name>':` block in act(). */
+  function actionBlock(name) {
+    const start = src.indexOf(`case '${name}':`);
+    assert.ok(start > -1, `act() must handle '${name}'`);
+    const next = src.indexOf('      case ', start + 10);
+    return src.slice(start, next === -1 ? start + 1400 : next);
+  }
+
+  for (const name of ACTIONS) {
+    test(`${name} carries one stable key for the whole attempt`, () => {
+      const block = actionBlock(name);
+      assert.match(
+        block,
+        /attempt:\s*'[a-z]+'/,
+        `${name} must declare an attempt, or run() mints nothing and the adapter invents a fresh key per call`,
+      );
+      assert.match(block, /idempotencyKey:\s*attemptKey/, `${name} must forward the attempt key`);
+    });
+  }
+
+  for (const name of MOVES_A_DATE) {
+    test(`${name} states the date it was composed against`, () => {
+      assert.match(
+        actionBlock(name),
+        /expectedNextBillingDate:/,
+        `${name} moves a delivery date, so the server needs the observed pre-state to refuse a stale duplicate`,
+      );
+    });
+  }
+
+  test('cancel and reactivate send no pre-state, because they have no date to move', () => {
+    for (const name of ['cancel', 'reactivate']) {
+      assert.ok(
+        !/expectedNextBillingDate:/.test(actionBlock(name)),
+        `${name} is idempotent in effect and must not demand a precondition`,
+      );
+    }
+  });
+});
