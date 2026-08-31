@@ -108,7 +108,7 @@ function portal(opts = {}) {
     state: {
       pending: null,
       sheet: 'skip',
-      sheetSpent: false,
+      confirmSpent: false,
       attempts: {},
       draft: {},
       error: null,
@@ -229,7 +229,7 @@ describe('one confirmation, one mutation', () => {
     await new Promise((r) => setTimeout(r, 0));
 
     // openSheet() is the only thing that re-arms.
-    p.state.sheetSpent = true;
+    p.state.confirmSpent = true;
     const panel = {
       hidden: true,
       getAttribute: () => 'skip',
@@ -250,7 +250,7 @@ describe('one confirmation, one mutation', () => {
     }, 'skip');
 
     delete globalThis.document;
-    assert.equal(p.state.sheetSpent, false, 'opening the sheet must re-arm it');
+    assert.equal(p.state.confirmSpent, false, 'opening the sheet must re-arm it');
   });
 });
 
@@ -297,7 +297,7 @@ describe('one attempt carries one key', () => {
     p.act('skip', p.confirmBtn);
     await new Promise((r) => setTimeout(r, 0));
 
-    p.state.sheetSpent = false; // as reopening the sheet would
+    p.state.confirmSpent = false; // as reopening the sheet would
     const after = p.attemptKey('skip');
     assert.notEqual(after, before, 'a new intention deserves a new key');
   });
@@ -311,7 +311,7 @@ describe('one attempt carries one key', () => {
     p.act('skip', p.confirmBtn);
     await new Promise((r) => setTimeout(r, 0));
 
-    p.state.sheetSpent = false;
+    p.state.confirmSpent = false;
     assert.equal(
       p.attemptKey('skip'),
       before,
@@ -328,7 +328,7 @@ describe('one attempt carries one key', () => {
     p.act('skip', p.confirmBtn);
     await new Promise((r) => setTimeout(r, 0));
 
-    p.state.sheetSpent = false;
+    p.state.confirmSpent = false;
     assert.notEqual(p.attemptKey('skip'), before);
   });
 });

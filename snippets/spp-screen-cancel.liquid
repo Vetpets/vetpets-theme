@@ -26,8 +26,14 @@
     </template>
   </div>
 
-  <button type="button" class="spp__btn spp__btn--primary" style="margin-top:18px;" data-spp-go="cancel-alt">Continue</button>
-  <button type="button" class="spp__btn spp__btn--link" style="margin-top:6px;" data-spp-go="subscription">Keep my subscription</button>
+  {%- comment -%}
+    Staying is the primary action, continuing is not. Both remain fully
+    reachable: same order in the DOM as on screen, both real buttons, both in
+    the tab sequence. Only the visual weight changes — nothing is hidden,
+    disabled, or moved out of the keyboard path.
+  {%- endcomment -%}
+  <button type="button" class="spp__btn spp__btn--primary" style="margin-top:18px;" data-spp-go="subscription">Keep my subscription</button>
+  <button type="button" class="spp__btn spp__btn--link" style="margin-top:10px;" data-spp-go="cancel-alt">Continue</button>
 </section>
 
 {%- comment -%} ---------- 2 · Alternatives ---------- {%- endcomment -%}
@@ -67,8 +73,13 @@
     </div>
   </div>
 
-  <div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--spp-hair-2);">
-    <button type="button" class="spp__btn spp__btn--quiet" style="min-height:52px;font-size:15.5px;border-color:rgba(13,35,64,.2);" data-spp-go="cancel-confirm">
+  {%- comment -%}
+    The retention cards above are the offer; this is the way past it. Still a
+    real button, still keyboard reachable, still unmissable — just no longer
+    competing with the offers for attention.
+  {%- endcomment -%}
+  <div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--spp-hair-2);text-align:center;">
+    <button type="button" class="spp__btn spp__btn--link" style="min-height:44px;font-size:14.5px;" data-spp-go="cancel-confirm">
       No thanks &mdash; continue to cancel
     </button>
   </div>
@@ -81,8 +92,15 @@
   </button>
 
   <div class="spp__narrow">
+    {%- comment -%}
+      No identifier here. The heading carried the subscription reference,
+      which in live data is Phoenix's own subscription number — an internal
+      identifier of a third-party billing system, shown to a customer who has
+      exactly one subscription and therefore never needed it to tell which one
+      they were cancelling.
+    {%- endcomment -%}
     <h1 class="spp__h1" id="spp-cc-h" style="margin-bottom:10px;">
-      Cancel subscription <span data-spp-field="subscription.reference">#VP-48210</span>?
+      Cancel your subscription?
     </h1>
     <p class="spp__lede" style="line-height:1.5;">Here is exactly what happens if you confirm.</p>
 

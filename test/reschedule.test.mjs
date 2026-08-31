@@ -99,7 +99,7 @@ function portal(draft = {}, opts = {}) {
     state: {
       pending: null,
       sheet: 'delay',
-      sheetSpent: false,
+      confirmSpent: false,
       attempts: {},
       error: null,
       success: null,
@@ -249,7 +249,7 @@ describe('the picker refuses what the server would refuse', () => {
     await tick();
 
     assert.equal(p.calls.reschedule.length, 0, 'nothing may be sent');
-    assert.equal(p.state.sheetSpent, false, 'the customer must be able to correct it');
+    assert.equal(p.state.confirmSpent, false, 'the customer must be able to correct it');
     assert.ok(!p.calls.shown.includes('error'), 'a bad date is not a page failure');
   });
 
@@ -294,7 +294,7 @@ describe('duplicate protection matches Skip', () => {
     p.act('delay', p.btn);
     await tick();
 
-    p.state.sheetSpent = false;
+    p.state.confirmSpent = false;
     assert.equal(p.attemptKey('reschedule'), before);
   });
 
