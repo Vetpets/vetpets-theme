@@ -487,3 +487,87 @@ describe('step 3 — final confirmation', () => {
     }
   });
 });
+
+describe('the cancelled screen says nothing internal, and nothing untrue', () => {
+  /**
+   * Two defects the founder hit on the real cancelled screen:
+   *
+   *   "Subscription 5619168 ended today."   — Phoenix's own subscription id,
+   *                                            shown to a customer.
+   *   "A confirmation is on its way to ."   — a promise about an email
+   *                                            address, rendered from a field
+   *                                            live data never populates, so
+   *                                            the sentence simply stopped.
+   */
+  const done = screen('cancel-done');
+
+  test('no internal subscription identifier appears', () => {
+    assert.ok(
+      !/subscription\.reference/.test(done),
+      "the cancelled screen must not bind Phoenix's subscription id",
+    );
+    const digits = done.match(/\b\d{6,}\b/g) || [];
+    assert.deepEqual(digits, [], `no raw identifier may appear: ${digits}`);
+  });
+
+  test('the confirmation is stated as a fact, with no email', () => {
+    assert.match(done, /Your cancellation is confirmed\./);
+    assert.ok(
+      !/customer\.email/.test(done),
+      'no address may be rendered here — the field is empty in live data',
+    );
+    assert.ok(
+      !/on its way to/.test(done),
+      'the dangling sentence must be gone, not merely re-bound',
+    );
+  });
+
+  test('a truthful sentence can never end in a dangling preposition', () => {
+    // The defect in one line: text that only reads correctly when a field is
+    // populated. Nothing on this screen may depend on one.
+    const paragraph = /<p class="spp__lede"[\s\S]*?<\/p>/.exec(done);
+    assert.ok(paragraph, 'the lede must exist');
+    assert.ok(
+      !/data-spp-field/.test(paragraph[0]),
+      'the sentence must read correctly with no data bound into it at all',
+    );
+  });
+
+  test('the useful consequences survive', () => {
+    assert.match(done, /No further charges will be made/);
+    assert.match(done, /nothing more will ship/);
+    assert.match(done, /Reactivate subscription/);
+  });
+
+  test('the cancelled list identifies subscriptions by product, not by id', () => {
+    const inactive = screen('inactive');
+    assert.ok(
+      !/data-spp-field="reference"/.test(inactive),
+      'the reference chip was an internal id and told the customer nothing',
+    );
+    assert.match(inactive, /data-spp-field="name"/, 'the product still names it');
+    assert.match(inactive, /data-spp-field="meta"/, 'as do the cadence and end date');
+    assert.match(inactive, /data-spp-field="statusLabel"/);
+  });
+
+  test('the view-model no longer supplies a reference to that list', () => {
+    const m = /case 'inactiveSubs':[\s\S]*?\}\);/.exec(src);
+    assert.ok(m, 'inactiveSubs must exist');
+    assert.ok(
+      !/reference:/.test(m[0]),
+      'handing an internal id to a template is how it returns to the screen',
+    );
+  });
+
+  test('NO screen in the cancellation flow exposes an internal identifier', () => {
+    for (const name of ['cancel-reason', 'cancel-alt', 'cancel-confirm', 'cancel-done', 'inactive']) {
+      const markup = screen(name);
+      assert.ok(
+        !/subscription\.reference/.test(markup),
+        `${name} must not bind subscription.reference`,
+      );
+      const digits = markup.match(/\b\d{6,}\b/g) || [];
+      assert.deepEqual(digits, [], `${name} must show no raw identifier: ${digits}`);
+    }
+  });
+});

@@ -1211,8 +1211,9 @@
 
       case 'inactiveSubs':
         return s.inactive.map(function (x) {
+          // No `reference`: nothing renders it any more, and supplying an
+          // internal id to a template is how it finds its way back on screen.
           return {
-            reference: x.reference,
             statusLabel: x.status === 'cancelled' ? 'Cancelled' : 'Completed',
             name: x.name, meta: x.meta,
             _image: x.image, _pending: false, _alt2: x.name
