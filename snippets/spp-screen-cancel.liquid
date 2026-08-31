@@ -132,10 +132,20 @@
     </div>
 
     <h1 class="spp__h1 spp__h1--lg" id="spp-cd-h" style="margin-bottom:10px;">Your subscription is cancelled</h1>
+    {%- comment -%}
+      No identifier, and no promise about email.
+
+      This paragraph named Phoenix's own subscription number — an internal id
+      from a third-party billing system — and then promised a confirmation to
+      an address it rendered from `customer.email`, which is not populated on
+      this screen. Live customers read "A confirmation is on its way to ."
+
+      Both are gone. The cancellation is stated as the fact it is, which needs
+      neither an identifier nor an address to be true.
+    {%- endcomment -%}
     <p class="spp__lede" style="max-width:400px;margin:0 auto 22px;font-weight:400;font-size:16px;line-height:1.55;">
-      Subscription <span data-spp-field="subscription.reference">#VP-48210</span> ended today.
+      Your cancellation is confirmed.
       <strong style="color:var(--spp-ink);">No further charges will be made</strong> and nothing more will ship.
-      A confirmation is on its way to <span data-spp-field="customer.email">margaret.ellis@gmail.com</span>.
     </p>
 
     <div class="spp__card" style="max-width:460px;margin:0 auto 20px;text-align:left;border-radius:18px;box-shadow:none;">
@@ -201,8 +211,13 @@
   <div class="spp__grid spp__grid--wide" data-spp-list="inactiveSubs">
     <template data-spp-tpl="inactiveSubs">
       <div class="spp__card" style="border:1px solid rgba(13,35,64,.12);box-shadow:none;">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-          <span style="font:600 13.5px/1 var(--spp-font);color:var(--spp-muted);" data-spp-field="reference">#VP-39104</span>
+        {%- comment -%}
+          The reference chip here was the same internal Phoenix id. The card
+          already identifies the subscription the way a customer would — by
+          product, cadence and the date it ended — so the id told them nothing
+          they could use.
+        {%- endcomment -%}
+        <div style="display:flex;align-items:center;justify-content:flex-end;margin-bottom:14px;">
           <span class="spp__badge spp__badge--plain spp__badge--neutral" data-spp-field="statusLabel">Cancelled</span>
         </div>
         <div style="display:flex;gap:13px;align-items:center;margin-bottom:14px;">
