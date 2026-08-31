@@ -206,6 +206,23 @@ describe('live mode shows no prototype data', () => {
     );
   });
 
+  test('no fabricated email address ships in any portal markup', () => {
+    /*
+     * The demo persona's address was the static placeholder for
+     * customer.email on two screens, so it was served in the HTML of every
+     * page load. Both screens are hidden and the value is normally overwritten
+     * — but the view-model only sets customer.email when a customer object
+     * exists, so a missing one left a fictional person's real-looking address
+     * on screen. Same defect as the cancelled screen's dangling sentence, with
+     * a worse failure mode.
+     */
+    for (const { name, markup } of PORTAL_SNIPPETS) {
+      const emails = markup.match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g) || [];
+      const real = emails.filter((e) => !/@example\.(com|org)$/.test(e));
+      assert.deepEqual(real, [], `${name} ships a literal email address: ${real}`);
+    }
+  });
+
   test('live mode counts from the real calendar, not the frozen prototype date', () => {
     assert.match(src, /mode === 'live' \? NS\.dates\.toISO\(new Date\(\)\)/);
   });
