@@ -1,0 +1,108 @@
+{%- comment -%}
+  Sheets / modals: skip and delay/reschedule.
+
+  These are the only two schedule changes Phoenix supports for the portal.
+  Both map to a single documented mutation:
+
+    POST /update-next-billing-date  { CustomerIds: [id], NextBillingDate }
+
+  Frequency, pause, resume and quantity sheets were removed: Phoenix exposes
+  no operation for them, so offering them would promise something the billing
+  system of record cannot honour.
+
+  One overlay hosts both. On mobile it is a bottom sheet; from 1024px it
+  becomes a centred modal, matching the approved desktop behaviour. The
+  controller traps focus while open and restores it on close.
+{%- endcomment -%}
+
+<div class="spp__overlay" data-spp-overlay hidden>
+  <div class="spp__sheet" data-spp-sheet-host role="dialog" aria-modal="true" aria-labelledby="spp-sheet-h" tabindex="-1">
+    <div class="spp__grip" aria-hidden="true"></div>
+
+    {%- comment -%} ---------- Skip ---------- {%- endcomment -%}
+    <div data-spp-sheet-panel="skip" hidden>
+      <h2 id="spp-sheet-h-skip">Skip the <span data-spp-field="subscription.nextOrderShort">Sep 8</span> delivery?</h2>
+      <p>
+        You won&rsquo;t be charged for it. Your next delivery moves to
+        <strong style="color:var(--spp-ink);" data-spp-field="sheet.skipToLong">Saturday, November 7</strong>
+        and the <span data-spp-field="subscription.intervalDays">60</span>-day cadence continues from there.
+      </p>
+
+      {%- comment -%}
+        The VetPoints half of this sentence stated an earning rule no system
+        of record can back today, so it is hidden with the rest of loyalty.
+        What remains is true regardless.
+      {%- endcomment -%}
+      <div class="spp__info spp__info--icon" style="margin-bottom:18px;">
+        <span style="flex:0 0 auto;color:var(--spp-accent);">{% render 'spp-icon', icon: 'sparkle', size: 22 %}</span>
+        <p>
+          <span data-spp-loyalty hidden>A skipped delivery doesn&rsquo;t earn VetPoints. </span>You can change your mind until <span data-spp-field="subscription.nextOrderShort">Sep 8</span>.
+        </p>
+      </div>
+
+      <button type="button" class="spp__btn spp__btn--primary" data-spp-act="skip">
+        <span data-spp-field="label.skip">Skip this delivery</span>
+      </button>
+      <button type="button" class="spp__btn spp__btn--quiet" data-spp-act="close">Keep this delivery</button>
+    </div>
+
+    {%- comment -%} ---------- Delay / reschedule ---------- {%- endcomment -%}
+    <div data-spp-sheet-panel="delay" hidden>
+      <h2 id="spp-sheet-h-delay">Delay your delivery</h2>
+      <p>
+        Currently arriving <span data-spp-field="subscription.nextOrderShort">Sep 8</span>.
+        Pick how far to push it back, or choose a specific date. Later
+        deliveries follow from the new date, so your cadence stays
+        <span data-spp-field="subscription.intervalDays">60</span> days.
+      </p>
+
+      <div class="spp__choices spp__choices--row" style="margin-bottom:14px;" role="radiogroup" aria-label="Delay by" data-spp-list="delayOptions">
+        <template data-spp-tpl="delayOptions">
+          <button type="button" class="spp__tile" role="radio" aria-checked="false" data-spp-pick="delay">
+            <span data-spp-field="label">7 days</span>
+          </button>
+        </template>
+      </div>
+
+      {%- comment -%}
+        Shown only when "Choose another date" is selected. A native date input:
+        it brings the platform's own picker, its own keyboard handling and its
+        own screen-reader behaviour, which no hand-built calendar matches.
+        min/max are set from the controller to exactly the window the server
+        accepts, so a date that would be refused cannot be offered.
+      {%- endcomment -%}
+      <div data-spp-custom-date hidden style="margin-bottom:14px;">
+        <label class="spp__label" for="spp-date" style="display:block;font:600 13px/1.4 var(--spp-font);color:var(--spp-muted);margin-bottom:6px;">
+          New delivery date
+        </label>
+        <input
+          type="date"
+          id="spp-date"
+          data-spp-date
+          class="spp__input"
+          aria-describedby="spp-date-error"
+          style="width:100%;min-height:48px;padding:12px 14px;border-radius:12px;border:1px solid rgba(13,35,64,.18);background:var(--spp-surface);font:500 15px/1.2 var(--spp-font);color:var(--spp-ink);"
+        >
+        <p id="spp-date-error" data-spp-date-error role="alert" hidden
+           style="margin-top:6px;font:500 13px/1.4 var(--spp-font);color:var(--spp-danger,#B42318);"></p>
+      </div>
+
+      {%- comment -%}
+        The explicit confirmation: where the delivery is now, and where it goes.
+        Read before committing, for every option in this sheet.
+      {%- endcomment -%}
+      <div class="spp__info" style="margin-bottom:18px;">
+        <span data-spp-field="sheet.rescheduleFrom">Sep 8</span>
+        <span aria-hidden="true">&rarr;</span>
+        <b data-spp-field="sheet.rescheduleTo">Sep 15</b>
+      </div>
+
+      <button type="button" class="spp__btn spp__btn--primary" data-spp-act="delay">
+        <span data-spp-field="label.delay">Move to Sep 15</span>
+      </button>
+      <button type="button" class="spp__btn spp__btn--quiet" data-spp-act="close">Cancel</button>
+    </div>
+
+    <p class="spp__pending-note" data-spp-pending-note hidden>Don&rsquo;t close this window &mdash; we&rsquo;re updating your schedule.</p>
+  </div>
+</div>

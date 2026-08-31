@@ -1,0 +1,77 @@
+{%- comment -%} Screen: help & account. {%- endcomment -%}
+
+<section class="spp__screen" data-spp-screen="account" hidden aria-labelledby="spp-acc-h">
+  <button type="button" class="spp__back" data-spp-go="dashboard">
+    {% render 'spp-icon', icon: 'chevron-left' %}Overview
+  </button>
+
+  <h1 class="spp__h1" id="spp-acc-h" style="margin-bottom:18px;">Help &amp; account</h1>
+
+  <div class="spp__split">
+    <div class="spp__split-main" style="flex:1 1 320px;">
+
+      {%- comment -%} Identity + pets {%- endcomment -%}
+      <div class="spp__card">
+        <div style="display:flex;gap:14px;align-items:center;margin-bottom:16px;">
+          <span class="spp__avatar" style="width:52px;height:52px;font:700 17px/52px var(--spp-font);" data-spp-field="customer.initials">ME</span>
+          <div>
+            <div style="font:700 17px/1.2 var(--spp-font);color:var(--spp-ink);" data-spp-field="customer.fullName">Margaret Ellis</div>
+            <div style="font:500 14px/1.4 var(--spp-font);color:var(--spp-muted);margin-top:3px;" data-spp-field="customer.email">margaret.ellis@gmail.com</div>
+          </div>
+        </div>
+
+        <div class="spp__chips" style="gap:9px;" data-spp-list="petsFull">
+          <template data-spp-tpl="petsFull">
+            <span class="spp__chip" style="padding:8px 14px 8px 8px;background:var(--spp-surface-soft);font-size:13.5px;">
+              <span class="spp__chip-dot" data-spp-field="initial">B</span>
+              <span data-spp-field="nameBreed">Bella · French Bulldog</span>
+            </span>
+          </template>
+        </div>
+      </div>
+
+      {%- comment -%}
+        Address and payment are information rows, not links: Phoenix documents
+        no address or payment-method mutation in the portal's scope.
+      {%- endcomment -%}
+      <div class="spp__card spp__card--rows">
+        <div class="spp__row" style="cursor:default;">
+          <span class="spp__row-label">Delivery address</span>
+          <span class="spp__row-value" data-spp-field="subscription.addressShort">Portland, OR</span>
+        </div>
+        <div class="spp__row" style="cursor:default;">
+          <span class="spp__row-label">Payment method</span>
+          <span class="spp__row-value" data-spp-field="subscription.paymentShort">Visa ···· 4242</span>
+        </div>
+        <button type="button" class="spp__row" data-spp-go="subscription">
+          <span class="spp__row-label">Subscriptions</span>
+          <span class="spp__row-value" data-spp-field="account.activeCount">1 active</span>
+          {% render 'spp-icon', icon: 'chevron-right' %}
+        </button>
+        <button type="button" class="spp__row" data-spp-go="inactive">
+          <span class="spp__row-label">Cancelled subscriptions</span>
+          <span class="spp__row-value" data-spp-field="account.inactiveCount">1</span>
+          {% render 'spp-icon', icon: 'chevron-right' %}
+        </button>
+        <button type="button" class="spp__row" data-spp-go="loyalty" data-spp-loyalty hidden>
+          <span class="spp__row-label">VetPoints</span>
+          <span class="spp__row-value"><span data-spp-field="loyalty.points">640</span> pts</span>
+          {% render 'spp-icon', icon: 'chevron-right' %}
+        </button>
+      </div>
+    </div>
+
+    <div class="spp__split-side" style="flex:1 1 280px;">
+      <div class="spp__card spp__card--tint" style="padding:20px;">
+        <h2 class="spp__h2" style="margin-bottom:8px;">Need a hand?</h2>
+        <p style="margin:0 0 16px;font:500 14.5px/1.5 var(--spp-font);color:var(--spp-body);">
+          Our team answers within one working day, and can change any delivery for you.
+        </p>
+        <button type="button" class="spp__btn spp__btn--primary" style="min-height:50px;font-size:15px;" data-spp-act="support">Message support</button>
+        <button type="button" class="spp__btn spp__btn--secondary" style="margin-top:8px;min-height:48px;font-size:15px;" data-spp-act="faq">Delivery &amp; returns FAQ</button>
+      </div>
+
+      <button type="button" class="spp__btn spp__btn--quiet" data-spp-act="signOut">Sign out</button>
+    </div>
+  </div>
+</section>

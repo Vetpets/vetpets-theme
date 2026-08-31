@@ -1,0 +1,128 @@
+{%- comment -%}
+  Screens: VetPoints, rewards catalogue.
+  Points economics are explicit placeholders, per the approved design.
+{%- endcomment -%}
+
+{%- comment -%} ---------- VetPoints ---------- {%- endcomment -%}
+<section class="spp__screen" data-spp-screen="loyalty" hidden aria-labelledby="spp-loy-h">
+  <button type="button" class="spp__back" data-spp-go="dashboard">
+    {% render 'spp-icon', icon: 'chevron-left' %}Overview
+  </button>
+
+  <h1 class="spp__sr" id="spp-loy-h">VetPoints</h1>
+
+  <div class="spp__split">
+    <div class="spp__split-main">
+
+      <div class="spp__points spp__points--tall">
+        <div class="spp__eyebrow" style="color:#fff;opacity:.85;letter-spacing:.16em;font-size:11px;margin-bottom:12px;">VetPoints balance</div>
+        <div class="spp__points-value">
+          <b data-spp-field="loyalty.points">640</b>
+          <span>points</span>
+        </div>
+        <div class="spp__progress spp__progress--on-blue">
+          <span data-spp-style-width="loyalty.progressPercent"></span>
+        </div>
+        <p>
+          <span data-spp-field="loyalty.toNextReward">160</span> points to
+          <span data-spp-field="loyalty.nextRewardName">a free plush toy</span>
+        </p>
+      </div>
+
+      <div class="spp__card">
+        <h2 class="spp__h2" style="margin-bottom:14px;">How VetPoints work</h2>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;gap:13px;align-items:flex-start;">
+            <span class="spp__disc" style="width:38px;height:38px;margin:0;flex:0 0 auto;color:var(--spp-accent);">
+              {% render 'spp-icon', icon: 'paw', size: 20 %}
+            </span>
+            <p style="margin:0;font:500 14.5px/1.5 var(--spp-font);color:var(--spp-body);">
+              <strong style="color:var(--spp-ink);"><span data-spp-field="loyalty.perRenewal">100</span> points</strong>
+              for every delivery that renews successfully.
+            </p>
+          </div>
+          <div style="display:flex;gap:13px;align-items:flex-start;">
+            <span class="spp__disc" style="width:38px;height:38px;margin:0;flex:0 0 auto;color:var(--spp-accent);">
+              {% render 'spp-icon', icon: 'sparkle', size: 20 %}
+            </span>
+            <p style="margin:0;font:500 14.5px/1.5 var(--spp-font);color:var(--spp-body);">
+              Rewards unlock at
+              <strong style="color:var(--spp-ink);">300, 600 and <span data-spp-field="loyalty.nextRewardAt">800</span> points</strong>
+              &mdash; redeem whenever you like.
+            </p>
+          </div>
+          <div style="display:flex;gap:13px;align-items:flex-start;">
+            <span class="spp__disc" style="width:38px;height:38px;margin:0;flex:0 0 auto;color:var(--spp-accent);">
+              {% render 'spp-icon', icon: 'eye', size: 20 %}
+            </span>
+            <p style="margin:0;font:500 14.5px/1.5 var(--spp-font);color:var(--spp-body);">
+              Points are kept for 12 months, including while a subscription is paused.
+            </p>
+          </div>
+        </div>
+        <p class="spp__info spp__info--dashed" style="margin-top:16px;padding:11px 13px;border-radius:12px;" data-spp-field="loyalty.disclosure">
+          Placeholder economics: earn rate, thresholds and reward items are all configurable per market.
+        </p>
+        <p class="spp__note" style="margin-top:10px;">
+          Points are awarded by VetPets from settled recurring orders and are reconciled against refunds.
+          Requesting a reward reserves your points; the reward is added to an upcoming delivery by our team.
+        </p>
+      </div>
+
+      <button type="button" class="spp__btn spp__btn--primary" data-spp-go="rewards">Browse rewards catalogue</button>
+    </div>
+
+    <div class="spp__split-side">
+      <div class="spp__card">
+        <h2 class="spp__h2" style="margin-bottom:8px;">Reward history</h2>
+        <div data-spp-list="pointsHistory">
+          <template data-spp-tpl="pointsHistory">
+            <div class="spp__delivery" style="padding:12px 0;">
+              <div style="flex:1;min-width:0;">
+                <div class="spp__delivery-title" data-spp-field="label">Delivery renewed</div>
+                <div class="spp__delivery-meta" data-spp-field="dateLong">10 July 2026</div>
+              </div>
+              <span style="font:700 14.5px/1 var(--spp-font);color:var(--spp-ink);" data-spp-field="delta">+100</span>
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ---------- Rewards catalogue ---------- {%- endcomment -%}
+<section class="spp__screen" data-spp-screen="rewards" hidden aria-labelledby="spp-rew-h">
+  <button type="button" class="spp__back" data-spp-go="loyalty">
+    {% render 'spp-icon', icon: 'chevron-left' %}VetPoints
+  </button>
+
+  <h1 class="spp__h1" id="spp-rew-h">Rewards catalogue</h1>
+  <p class="spp__lede">
+    <span data-spp-field="loyalty.points">640</span> points available.
+    Redeemed rewards are added to your next delivery.
+  </p>
+
+  <div class="spp__grid" data-spp-list="rewards">
+    <template data-spp-tpl="rewards">
+      <div class="spp__card spp__card--sm" style="border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;gap:13px;align-items:center;">
+          <span class="spp__thumb spp__thumb--sm" data-spp-thumb><img data-spp-img alt=""></span>
+          <div style="flex:1;min-width:0;">
+            <div class="spp__media-title" data-spp-field="name">GloveWipes pack</div>
+            <div style="font:600 13.5px/1.4 var(--spp-font);color:var(--spp-ink);margin-top:3px;">
+              <span data-spp-field="cost">300</span> points
+            </div>
+          </div>
+        </div>
+        {%- comment -%}
+          Requesting a reward reserves points and creates a pending_manual
+          redemption. It never claims the reward has shipped.
+        {%- endcomment -%}
+        <button type="button" class="spp__btn" style="min-height:46px;font-size:14.5px;" data-spp-act="requestRedemption" data-spp-reward>
+          <span data-spp-field="btnLabel">Redeem</span>
+        </button>
+      </div>
+    </template>
+  </div>
+</section>

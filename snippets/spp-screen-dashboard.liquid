@@ -1,0 +1,232 @@
+{%- comment -%}
+  Screen: dashboard / overview.
+
+  Priority order is the approved one: status → next delivery → primary
+  actions → products → deliveries → VetPoints → account rows → guarantee.
+
+  Scoped to what Phoenix supports. Skip and Delay are the only schedule
+  mutations; products, quantities, address and payment are read-only
+  information. There is no paused state — Phoenix has no pause operation,
+  so the only statuses are active and cancelled.
+{%- endcomment -%}
+
+<section class="spp__screen" data-spp-screen="dashboard" hidden aria-labelledby="spp-dash-h">
+
+  {%- comment -%} Greeting + pets {%- endcomment -%}
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px;">
+    <div>
+      {%- comment -%}
+        ONE slot for the whole greeting, not "Hi " plus a name slot. Live mode
+        blanks every slot before rendering, so a split greeting left a bare
+        "Hi" on screen whenever the name had not arrived — and would leave a
+        dangling comma if punctuation lived in the markup. The controller
+        sends either "Hi, {firstName}" or "Hi there".
+      {%- endcomment -%}
+      <h1 class="spp__h1 spp__h1--lg" id="spp-dash-h" style="margin-bottom:6px;" data-spp-field="customer.greeting">
+        Hi there
+      </h1>
+      {%- comment -%}
+        Identity-free copy. This paragraph is NOT a [data-spp-field] slot, so
+        clearPlaceholders() cannot blank it in live mode — anything named here
+        reaches a real customer verbatim. It previously named the prototype's
+        two dogs.
+      {%- endcomment -%}
+      <p style="margin:0;font:500 15px/1.4 var(--spp-font);color:var(--spp-body);">
+        Your routine, at a glance.
+      </p>
+    </div>
+    <div class="spp__chips" data-spp-list="pets">
+      <template data-spp-tpl="pets">
+        <span class="spp__chip">
+          <span class="spp__chip-dot" data-spp-field="initial">B</span>
+          <span data-spp-field="name">Bella</span>
+        </span>
+      </template>
+    </div>
+  </div>
+
+  {%- comment -%} Cancelled banner (the only non-active state) {%- endcomment -%}
+  <div class="spp__banner spp__banner--cancelled" data-spp-when="status:cancelled" hidden>
+    <span class="spp__banner-icon">&mdash;</span>
+    <div style="flex:1;">
+      <div class="spp__banner-title">Subscription cancelled</div>
+      <p>
+        No further charges will be made. Your details are kept, so you can pick the routine
+        back up whenever you want.
+      </p>
+      <button type="button" class="spp__btn spp__btn--primary spp__btn--inline" style="min-height:44px;font-size:14.5px;" data-spp-go="reactivate">Reactivate subscription</button>
+    </div>
+  </div>
+
+  <div class="spp__split">
+
+    {%- comment -%} ===== Main column ===== {%- endcomment -%}
+    <div class="spp__split-main">
+
+      {%- comment -%} Next delivery {%- endcomment -%}
+      <div class="spp__card spp__card--flush">
+        {%- comment -%}
+          No reference chip. It rendered Phoenix's own subscription number —
+          an internal id from a third-party billing system — to a customer who
+          has one subscription and cannot do anything with it.
+        {%- endcomment -%}
+        <div class="spp__next-head">
+          <span class="spp__badge">Next delivery</span>
+        </div>
+
+        <div class="spp__next-body">
+          <div style="flex:1;min-width:0;">
+            <div class="spp__next-date" data-spp-field="subscription.nextOrderMedium">Tue, Sep 8</div>
+            <div class="spp__next-meta">
+              <span data-spp-field="pricing.total">$62.73</span> ·
+              every <span data-spp-field="subscription.intervalDays">60</span> days · free shipping
+            </div>
+          </div>
+          <div class="spp__next-thumbs" data-spp-list="lineThumbs">
+            <template data-spp-tpl="lineThumbs">
+              <span class="spp__thumb" data-spp-thumb>
+                <img data-spp-img alt="">
+              </span>
+            </template>
+          </div>
+        </div>
+
+        <div style="padding:0 18px 16px;">
+          <div class="spp__progress" role="img" data-spp-field-aria="subscription.progressLabel">
+            <span data-spp-style-width="subscription.shipProgress"></span>
+          </div>
+          <div class="spp__progress-legend">
+            <span>Order builds now</span>
+            <span data-spp-field="subscription.daysAway">18 days away</span>
+          </div>
+        </div>
+
+        {%- comment -%} Skip and Delay both map to /update-next-billing-date {%- endcomment -%}
+        <div class="spp__actions-3" style="grid-template-columns:repeat(3,1fr);">
+          <button type="button" class="spp__action" data-spp-sheet="skip">
+            {% render 'spp-icon', icon: 'skip' %}
+            Skip
+          </button>
+          <button type="button" class="spp__action" data-spp-sheet="delay">
+            {% render 'spp-icon', icon: 'clock-action' %}
+            Delay
+          </button>
+          <button type="button" class="spp__action" data-spp-go="subscription">
+            {% render 'spp-icon', icon: 'list' %}
+            Manage
+          </button>
+        </div>
+      </div>
+
+      {%- comment -%} In this subscription — read-only {%- endcomment -%}
+      <div class="spp__card">
+        <div class="spp__card-head">
+          <h2 class="spp__h2" style="margin:0;">In this subscription</h2>
+          <button type="button" style="border:none;background:transparent;font:600 14px/1 var(--spp-font);color:var(--spp-ink);padding:8px 0;" data-spp-go="subscription">Details</button>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px;" data-spp-list="lines" data-spp-separators>
+          <template data-spp-tpl="lines">
+            <div class="spp__media">
+              <span class="spp__thumb" data-spp-thumb><img data-spp-img alt=""></span>
+              <div class="spp__media-body">
+                <div class="spp__media-title" data-spp-field="title">FreshWipes jar</div>
+                <div class="spp__media-meta">
+                  <span data-spp-field="unitPrice">$24.90</span> each ·
+                  <span data-spp-field="subtitle">for Bella &amp; Max</span>
+                </div>
+              </div>
+              {%- comment -%} Quantity is displayed, not editable. {%- endcomment -%}
+              <span class="spp__media-price" style="font-weight:600;">×<span data-spp-field="quantity">2</span></span>
+            </div>
+          </template>
+        </div>
+
+        <p class="spp__note" style="margin-top:16px;">
+          To change what&rsquo;s in your routine, message support and we&rsquo;ll sort it for you.
+        </p>
+      </div>
+
+      {%- comment -%} Deliveries preview {%- endcomment -%}
+      <div class="spp__card">
+        <div class="spp__card-head">
+          <h2 class="spp__h2" style="margin:0;">Deliveries</h2>
+          <button type="button" style="border:none;background:transparent;font:600 14px/1 var(--spp-font);color:var(--spp-ink);padding:8px 0;" data-spp-go="deliveries">View all</button>
+        </div>
+        <div data-spp-list="deliveriesPreview">
+          <template data-spp-tpl="deliveriesPreview">
+            <div class="spp__delivery">
+              <span class="spp__date-tile">
+                <span data-spp-field="mon">SEP</span>
+                <b data-spp-field="day">8</b>
+              </span>
+              <div style="flex:1;min-width:0;">
+                <div class="spp__delivery-title" data-spp-field="title">Next delivery</div>
+                <div class="spp__delivery-meta" data-spp-field="meta">FreshWipes ×2, EyeWipes ×1</div>
+              </div>
+              <span class="spp__delivery-status" data-spp-field="status">Scheduled</span>
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} ===== Side column ===== {%- endcomment -%}
+    <div class="spp__split-side">
+
+      {%- comment -%}
+        VetPoints. Hidden for launch by data-spp-loyalty — see LOYALTY_ENABLED
+        in the controller for why, and for the one line that brings it back.
+      {%- endcomment -%}
+      <div class="spp__points" data-spp-loyalty hidden>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <span class="spp__badge">VetPoints</span>
+          <span style="opacity:.9;">{% render 'spp-icon', icon: 'sparkle', size: 22, stroke: '#FFFFFF' %}</span>
+        </div>
+        <div class="spp__points-value">
+          <b data-spp-field="loyalty.points">640</b>
+          <span>points</span>
+        </div>
+        <div class="spp__progress spp__progress--on-blue">
+          <span data-spp-style-width="loyalty.progressPercent"></span>
+        </div>
+        <p>
+          <span data-spp-field="loyalty.toNextReward">160</span> more points unlock
+          <span data-spp-field="loyalty.nextRewardName">a free plush toy</span>.
+          Each renewal adds <span data-spp-field="loyalty.perRenewal">100</span> points.
+        </p>
+        <p class="spp__points-fine" data-spp-field="loyalty.disclosure">Placeholder points logic &mdash; thresholds and rewards are configurable.</p>
+        <button type="button" class="spp__btn" data-spp-go="loyalty">View rewards</button>
+      </div>
+
+      {%- comment -%}
+        Account summary. Address and payment are read-only: Phoenix documents
+        no address or payment-method mutation for the portal, so these are
+        presented as information with support as the route to change them.
+      {%- endcomment -%}
+      <div class="spp__card spp__card--rows">
+        <div class="spp__row" style="cursor:default;">
+          <span class="spp__row-label">Delivery address</span>
+          <span class="spp__row-value" data-spp-field="subscription.addressShort">Portland, OR</span>
+        </div>
+        <div class="spp__row" style="cursor:default;">
+          <span class="spp__row-label">Payment method</span>
+          <span class="spp__row-value" data-spp-field="subscription.paymentShort">Visa ···· 4242</span>
+        </div>
+        <button type="button" class="spp__row" data-spp-go="account">
+          <span class="spp__row-label">Help &amp; account settings</span>
+          {% render 'spp-icon', icon: 'chevron-right' %}
+        </button>
+      </div>
+
+      {%- comment -%} 100-day money-back guarantee — final approved native card {%- endcomment -%}
+      <div class="spp__guarantee">
+        <span class="spp__guarantee-icon">{% render 'spp-icon', icon: 'shield-check' %}</span>
+        <div style="flex:1;min-width:0;">
+          <h2><b>100-day</b> money-back guarantee</h2>
+          <p>Your routine is protected for 100 days. If you&rsquo;re not satisfied, contact us for a full refund.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,292 @@
+{%- comment -%}
+  VetPets Subscription Portal — section shell.
+
+  Renders the portal chrome (header, scroll region, tab bar, sheet host,
+  toast host) and composes every screen snippet. All behaviour lives in
+  assets/subscription-portal.js; all data comes from the adapter in
+  assets/subscription-portal-adapter.js.
+
+  Nothing in this section touches global theme markup. It is only ever
+  rendered by templates/page.subscription-portal.liquid, which uses the
+  dedicated layout/subscription-portal.liquid.
+
+  SECURITY: no key, token, secret or vendor hostname may be emitted here.
+  The portal is mock-backed until the Phoenix/Solvpath proof gate passes.
+{%- endcomment -%}
+
+{%- liquid
+  assign p_fresh = all_products['freshwipes-kit-protects-against-dental-diseases']
+  assign p_eye   = all_products['eyewipes-prevention-that-keeps-eyes-clear']
+  assign p_glove = all_products['glovewipes-quick-clean-kit']
+
+  assign img_fresh = ''
+  assign img_eye = ''
+  assign img_glove = ''
+  if p_fresh.featured_image
+    assign img_fresh = p_fresh.featured_image | image_url: width: 240
+  endif
+  if p_eye.featured_image
+    assign img_eye = p_eye.featured_image | image_url: width: 240
+  endif
+  if p_glove.featured_image
+    assign img_glove = p_glove.featured_image | image_url: width: 240
+  endif
+
+  assign dev_default = false
+  if section.settings.enable_dev_switcher
+    assign dev_default = true
+  endif
+
+  assign theme_id = theme.id
+-%}
+
+{%- comment -%}
+  Data mode, set on the root element below. "mock" runs the in-browser
+  prototype adapter for visual QA. "live" forces the first-party adapter and
+  makes mock data impossible — createAdapter throws rather than showing a
+  fabricated VetPoints balance. No credential is emitted either way;
+  base_path is a same-origin path.
+
+  NEVER put a Liquid tag between two attributes. The whitespace-stripping
+  hyphens in {%- ... -%} consume the newlines on both sides and weld the
+  neighbouring attributes into one, which silently destroys the attribute
+  the controller boots from. That is why theme_id is assigned above rather
+  than explained inline.
+
+  data-spp-theme-id is the theme this page is ACTUALLY rendered by, taken
+  from Liquid's own theme identity. It exists because Shopify consumes
+  `preview_theme_id` into an HttpOnly cookie and 302s to a clean URL: by the
+  time the portal boots, the parameter is gone from the address bar and no
+  script can recover it. This attribute is therefore the only trustworthy
+  statement of theme identity the browser has. It is a public numeric id,
+  not a credential, and the server treats it as a hint it is free to ignore.
+{%- endcomment -%}
+<div
+  class="spp"
+  id="spp-root"
+  data-spp-portal
+  data-spp-mode="{{ section.settings.data_mode | default: 'mock' }}"
+  data-spp-theme-id="{{ theme_id }}"
+  data-spp-base-path="{{ section.settings.base_path | default: '/apps/subscriptions' }}"
+  data-spp-locale="{{ request.locale.iso_code | default: 'en' }}"
+  data-spp-today="{{ section.settings.prototype_today | default: '2026-08-21' }}"
+  data-spp-currency="{{ section.settings.prototype_currency | default: 'USD' }}"
+  data-spp-latency="{{ section.settings.mock_latency | default: 900 }}"
+  data-spp-points-per-renewal="{{ section.settings.points_per_renewal | default: 100 }}"
+  data-spp-next-reward-at="{{ section.settings.next_reward_at | default: 800 }}"
+  data-spp-next-reward-name="{{ section.settings.next_reward_name | default: 'a free plush toy' | escape }}"
+  data-spp-dev-default="{{ dev_default }}"
+  data-spp-img-freshwipes="{{ img_fresh }}"
+  data-spp-img-eyewipes="{{ img_eye }}"
+  data-spp-img-glovewipes="{{ img_glove }}"
+>
+  {%- comment -%}
+    Product images, keyed by the Shopify ids Phoenix carries on each line item.
+
+    The backend returns productId and variantId and nothing else — it has no
+    catalogue and must not invent an image URL. Liquid does have the catalogue,
+    so the lookup happens here, from the store's own product records. An id
+    that is not in this map falls back to the branded packshot-pending tile
+    rather than a broken image.
+  {%- endcomment -%}
+  <script type="application/json" data-spp-image-map>
+    {
+      "{{ p_fresh.id }}": {"src": {{ img_fresh | json }}, "alt": {{ p_fresh.title | default: '' | json }}},
+      "{{ p_eye.id }}": {"src": {{ img_eye | json }}, "alt": {{ p_eye.title | default: '' | json }}},
+      "{{ p_glove.id }}": {"src": {{ img_glove | json }}, "alt": {{ p_glove.title | default: '' | json }}}
+    }
+  </script>
+
+  <a class="spp__skip" href="#spp-main">Skip to portal content</a>
+
+  {%- comment -%} ---------- Header ---------- {%- endcomment -%}
+  <header class="spp__header" data-spp-chrome>
+    <img
+      class="spp__logo"
+      src="{{ 'spp-vetpets-logo.webp' | asset_url }}"
+      alt="VetPets"
+      width="120"
+      height="26"
+    >
+
+    {%- comment -%} Mobile: avatar shortcut to account {%- endcomment -%}
+    <button type="button" class="spp__avatar-btn" data-spp-go="account">
+      <span class="spp__avatar" data-spp-field="customer.initials" aria-hidden="true">ME</span>
+      <span class="spp__sr">Help &amp; account</span>
+    </button>
+
+    {%- comment -%} Desktop: primary navigation {%- endcomment -%}
+    <nav class="spp__nav" aria-label="Portal sections">
+      <button type="button" class="spp__nav-link" data-spp-go="dashboard" data-spp-nav="dashboard">Overview</button>
+      <button type="button" class="spp__nav-link" data-spp-go="deliveries" data-spp-nav="deliveries">Deliveries</button>
+      <button type="button" class="spp__nav-link" data-spp-go="loyalty" data-spp-nav="loyalty">VetPoints</button>
+      <button type="button" class="spp__nav-link" data-spp-go="account" data-spp-nav="account">Account</button>
+      <span class="spp__avatar" data-spp-field="customer.initials" aria-hidden="true">ME</span>
+    </nav>
+  </header>
+
+  {%- comment -%} ---------- Scroll region ---------- {%- endcomment -%}
+  <main class="spp__main" id="spp-main" tabindex="-1">
+    <div class="spp__pad">
+      <div class="spp__col">
+        {% render 'spp-screen-auth' %}
+        {% render 'spp-screen-dashboard' %}
+        {% render 'spp-screen-subscription' %}
+        {% render 'spp-screen-deliveries' %}
+        {% render 'spp-screen-loyalty' %}
+        {% render 'spp-screen-cancel' %}
+        {% render 'spp-screen-account' %}
+        {% render 'spp-screen-system' %}
+      </div>
+    </div>
+  </main>
+
+  {%- comment -%} ---------- Bottom tab bar (mobile) ---------- {%- endcomment -%}
+  <nav class="spp__tabs" aria-label="Portal" data-spp-chrome>
+    <button type="button" class="spp__tab" data-spp-go="dashboard" data-spp-nav="dashboard">
+      {% render 'spp-icon', icon: 'tab-home' %}
+      Home
+    </button>
+    <button type="button" class="spp__tab" data-spp-go="deliveries" data-spp-nav="deliveries">
+      {% render 'spp-icon', icon: 'tab-deliveries' %}
+      Deliveries
+    </button>
+    <button type="button" class="spp__tab" data-spp-go="loyalty" data-spp-nav="loyalty">
+      {% render 'spp-icon', icon: 'tab-points' %}
+      VetPoints
+    </button>
+    <button type="button" class="spp__tab" data-spp-go="account" data-spp-nav="account">
+      {% render 'spp-icon', icon: 'tab-account' %}
+      Account
+    </button>
+  </nav>
+
+  {%- comment -%} ---------- Sheets / modals ---------- {%- endcomment -%}
+  {% render 'spp-sheets' %}
+
+  {%- comment -%} ---------- Toast ---------- {%- endcomment -%}
+  <div class="spp__toast" data-spp-toast hidden role="status" aria-live="polite">
+    {% render 'spp-icon', icon: 'toast-check' %}
+    <span data-spp-field="toast.message"></span>
+  </div>
+
+  {%- comment -%} ---------- Dev preview switcher (never customer-facing) ---------- {%- endcomment -%}
+  {% render 'spp-dev-switcher' %}
+</div>
+
+{% schema %}
+{
+  "name": "Subscription portal",
+  "tag": "div",
+  "class": "spp-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Data source"
+    },
+    {
+      "type": "select",
+      "id": "data_mode",
+      "label": "Data mode",
+      "info": "Mock runs the in-browser prototype for visual QA. Live requires the secure backend; it makes mock data impossible, including VetPoints.",
+      "options": [
+        { "value": "mock", "label": "Mock (prototype)" },
+        { "value": "live", "label": "Live (requires backend)" }
+      ],
+      "default": "mock"
+    },
+    {
+      "type": "text",
+      "id": "base_path",
+      "label": "Backend base path",
+      "info": "Same-origin first-party path only. Never a vendor hostname, never a credential.",
+      "default": "/apps/subscriptions"
+    },
+    {
+      "type": "header",
+      "content": "Prototype data"
+    },
+    {
+      "type": "paragraph",
+      "content": "These settings only affect mock mode. No real subscription is read or changed while mock is selected."
+    },
+    {
+      "type": "text",
+      "id": "prototype_today",
+      "label": "Treat this date as today (YYYY-MM-DD)",
+      "default": "2026-08-21"
+    },
+    {
+      "type": "select",
+      "id": "prototype_currency",
+      "label": "Prototype market currency",
+      "info": "USD is the prototype example only. The data model is locale-aware and supports USD, GBP, EUR and SEK.",
+      "options": [
+        { "value": "USD", "label": "USD" },
+        { "value": "GBP", "label": "GBP" },
+        { "value": "EUR", "label": "EUR" },
+        { "value": "SEK", "label": "SEK" }
+      ],
+      "default": "USD"
+    },
+    {
+      "type": "range",
+      "id": "mock_latency",
+      "label": "Simulated request latency",
+      "min": 0,
+      "max": 2000,
+      "step": 100,
+      "unit": "ms",
+      "default": 900
+    },
+    {
+      "type": "header",
+      "content": "VetPoints (placeholder economics)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Earn rate, thresholds and reward items are placeholders pending founder-approved economics."
+    },
+    {
+      "type": "range",
+      "id": "points_per_renewal",
+      "label": "Points per successful renewal",
+      "min": 10,
+      "max": 500,
+      "step": 10,
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "next_reward_at",
+      "label": "Next reward threshold",
+      "min": 100,
+      "max": 2000,
+      "step": 50,
+      "default": 800
+    },
+    {
+      "type": "text",
+      "id": "next_reward_name",
+      "label": "Next reward name",
+      "default": "a free plush toy"
+    },
+    {
+      "type": "header",
+      "content": "Review tools"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_dev_switcher",
+      "label": "Always show the screen switcher",
+      "info": "Leave off. The switcher is available on demand by adding ?spp_dev=1 to the preview URL.",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Subscription portal"
+    }
+  ]
+}
+{% endschema %}
