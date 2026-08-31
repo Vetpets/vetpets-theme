@@ -419,6 +419,13 @@
     this.state.lastFocus = document.activeElement;
     this.state.sheet = name;
 
+    // ONE OPENED CONFIRMATION, AT MOST ONE MUTATION.
+    //
+    // Opening the sheet is the only thing that re-arms it. Everything after
+    // this point — a rerender, a second listener, a stray submit, a delayed
+    // tap on a stale layout — meets a spent flag and does nothing.
+    this.state.sheetSpent = false;
+
     var panels = host.querySelectorAll('[data-spp-sheet-panel]');
     for (var i = 0; i < panels.length; i++) {
       panels[i].hidden = panels[i].getAttribute('data-spp-sheet-panel') !== name;
@@ -473,19 +480,71 @@
    * Mutation runner
    * ================================================================= */
 
+  /**
+   * Outcomes that leave the result genuinely UNKNOWN.
+   *
+   * After one of these the attempt key is KEPT, so that if the customer tries
+   * again the server recognises the retry and replays it instead of issuing a
+   * second write. Every other outcome is definitive and releases the key.
+   */
+  var INDETERMINATE = { timeout: 1, network: 1 };
+
+  /**
+   * One key for one logical attempt.
+   *
+   * The key identifies the customer's INTENTION, not the HTTP request that
+   * carries it. Minting a fresh key per call is what allowed one confirmation
+   * to become two independently keyed skips: the server saw two unrelated
+   * operations because, as far as the keys were concerned, they were.
+   *
+   * The same key therefore survives a rerender, a repeated handler, a retry
+   * and a delayed interaction. It is released only when the server has given a
+   * definitive answer, or when fresh portal state has been loaded.
+   */
+  Portal.prototype.attemptKey = function (op) {
+    if (!this.state.attempts) this.state.attempts = {};
+    if (!this.state.attempts[op]) {
+      var random = 'xxxxxxxxxxxx'.replace(/x/g, function () {
+        return Math.floor(Math.random() * 16).toString(16);
+      });
+      this.state.attempts[op] = 'vp-' + Date.now().toString(36) + '-' + random;
+    }
+    return this.state.attempts[op];
+  };
+
+  /** Definitive answer received: the next attempt is a new intention. */
+  Portal.prototype.releaseAttempt = function (op) {
+    if (this.state.attempts) delete this.state.attempts[op];
+  };
+
+  /** Fresh state loaded: nothing in flight can still be meaningful. */
+  Portal.prototype.releaseAllAttempts = function () {
+    this.state.attempts = {};
+  };
+
   Portal.prototype.run = function (key, work, opts) {
     var self = this;
     opts = opts || {};
     if (this.state.pending) return Promise.resolve();
 
+    // Synchronous, before a single await: by the time any other handler can
+    // run, the controls are disabled and the guard is set.
     this.state.pending = key;
     this.applyPending(true);
     this.render();
 
-    return work()
+    // `attempt` names the logical operation for keyed actions. work() receives
+    // the key so every call for one intention carries the same one.
+    var op = opts.attempt || null;
+    var attemptKey = op ? this.attemptKey(op) : null;
+
+    return work(attemptKey)
       .then(function (result) {
         self.state.pending = null;
         self.applyPending(false);
+        // The server answered. Whatever the customer does next is a new
+        // intention and deserves a new key.
+        if (op) self.releaseAttempt(op);
 
         if (result && result.id) self.state.data = result;
 
@@ -535,6 +594,12 @@
         self.applyPending(false);
         self.closeSheet(true);
 
+        // A definitive refusal frees the key. A timeout or a dropped
+        // connection does NOT: the operation may well have applied, so a
+        // retry has to arrive under the same key for the server to recognise
+        // it rather than perform the change a second time.
+        if (op && !INDETERMINATE[err && err.code]) self.releaseAttempt(op);
+
         // A FAILED ACTION IS NOT A FAILED PAGE.
         //
         // This used to call fail(), which replaced the whole dashboard with
@@ -567,6 +632,13 @@
 
     if (code === 'in_progress') {
       message = 'That is already being processed.';
+    } else if (code === 'already_applied') {
+      // The server refused a duplicate. The change IS in place, so this is
+      // never phrased as a failure — phrasing it as one is what would send a
+      // customer round again and skip a second delivery.
+      message = 'That is already done — refresh to see the latest.';
+    } else if (code === 'stale_view') {
+      message = 'This page is out of date — refresh, then try again.';
     } else if (code === 'timeout') {
       // The one case where the outcome is genuinely unknown. Say exactly that.
       message = 'That is taking longer than expected — refresh to check whether it went through.';
@@ -622,8 +694,17 @@
       var b = buttons[i];
       var isThis = on && b.getAttribute('data-spp-act') === this.state.pending;
       b.classList.toggle('is-pending', !!isThis);
-      if (on) b.setAttribute('aria-disabled', 'true');
-      else b.removeAttribute('aria-disabled');
+      // aria-disabled is what the delegated handler checks; `disabled` is what
+      // stops the browser dispatching a click at all — including to a listener
+      // this code did not attach, and including keyboard activation. Both, so
+      // the guarantee does not depend on our own handler running first.
+      if (on) {
+        b.setAttribute('aria-disabled', 'true');
+        if ('disabled' in b) b.disabled = true;
+      } else {
+        b.removeAttribute('aria-disabled');
+        if ('disabled' in b) b.disabled = false;
+      }
       var spinner = b.querySelector('.spp__spinner');
       if (isThis && !spinner) {
         var s = document.createElement('span');
@@ -1233,9 +1314,25 @@
    * Actions — one per supported Phoenix operation, plus auth and loyalty
    * ----------------------------------------------------------------- */
 
+  /**
+   * Actions that change billing, and may therefore run at most once per
+   * opened confirmation. Navigation and sheet-opening are not among them.
+   */
+  var CONFIRMED_ACTIONS = { skip: 1, delay: 1, reschedule: 1, cancel: 1, reactivate: 1 };
+
   Portal.prototype.act = function (name, el) {
     var self = this, s = this.state, d = s.draft, sub = s.data;
     var id = sub ? sub.id : null;
+
+    // ONE OPENED CONFIRMATION, AT MOST ONE MUTATION.
+    //
+    // Checked here rather than in the click handler so it holds however act()
+    // was reached — a click, a keyboard activation, a form submit, or a second
+    // listener nobody meant to attach. Re-armed only by opening the sheet.
+    if (CONFIRMED_ACTIONS[name]) {
+      if (s.sheetSpent) return;
+      s.sheetSpent = true;
+    }
 
     switch (name) {
 
@@ -1297,7 +1394,16 @@
       /* --- POST /update-next-billing-date --- */
       case 'skip': {
         var before = sub.nextOrderDate;
-        this.run('skip', function () { return self.adapter.skipNextDelivery(id); }, {
+        this.run('skip', function (attemptKey) {
+          return self.adapter.skipNextDelivery(id, {
+            idempotencyKey: attemptKey,
+            // The date on screen when the customer confirmed. The server
+            // refuses the request if Phoenix no longer holds it, so a stale
+            // duplicate cannot skip a second cycle.
+            expectedNextBillingDate: before
+          });
+        }, {
+          attempt: 'skip',
           // Stay on the dashboard and confirm there. The refreshed next
           // delivery date is already on screen behind the toast, which is a
           // better confirmation than a separate screen describing it.
