@@ -44,7 +44,8 @@
       <h2 id="spp-sheet-h-delay">Delay your delivery</h2>
       <p>
         Currently arriving <span data-spp-field="subscription.nextOrderShort">Sep 8</span>.
-        Later deliveries shift by the same amount, so your cadence stays
+        Pick how far to push it back, or choose a specific date. Later
+        deliveries follow from the new date, so your cadence stays
         <span data-spp-field="subscription.intervalDays">60</span> days.
       </p>
 
@@ -56,8 +57,37 @@
         </template>
       </div>
 
+      {%- comment -%}
+        Shown only when "Choose another date" is selected. A native date input:
+        it brings the platform's own picker, its own keyboard handling and its
+        own screen-reader behaviour, which no hand-built calendar matches.
+        min/max are set from the controller to exactly the window the server
+        accepts, so a date that would be refused cannot be offered.
+      {%- endcomment -%}
+      <div data-spp-custom-date hidden style="margin-bottom:14px;">
+        <label class="spp__label" for="spp-date" style="display:block;font:600 13px/1.4 var(--spp-font);color:var(--spp-muted);margin-bottom:6px;">
+          New delivery date
+        </label>
+        <input
+          type="date"
+          id="spp-date"
+          data-spp-date
+          class="spp__input"
+          aria-describedby="spp-date-error"
+          style="width:100%;min-height:48px;padding:12px 14px;border-radius:12px;border:1px solid rgba(13,35,64,.18);background:var(--spp-surface);font:500 15px/1.2 var(--spp-font);color:var(--spp-ink);"
+        >
+        <p id="spp-date-error" data-spp-date-error role="alert" hidden
+           style="margin-top:6px;font:500 13px/1.4 var(--spp-font);color:var(--spp-danger,#B42318);"></p>
+      </div>
+
+      {%- comment -%}
+        The explicit confirmation: where the delivery is now, and where it goes.
+        Read before committing, for every option in this sheet.
+      {%- endcomment -%}
       <div class="spp__info" style="margin-bottom:18px;">
-        New delivery date: <b data-spp-field="sheet.delayToLong">Tuesday, September 15</b>
+        <span data-spp-field="sheet.rescheduleFrom">Sep 8</span>
+        <span aria-hidden="true">&rarr;</span>
+        <b data-spp-field="sheet.rescheduleTo">Sep 15</b>
       </div>
 
       <button type="button" class="spp__btn spp__btn--primary" data-spp-act="delay">
