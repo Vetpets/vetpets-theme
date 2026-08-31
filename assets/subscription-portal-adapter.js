@@ -714,11 +714,24 @@
           // result we do not have.
           throw PortalError('timeout', 'That is taking longer than expected. Refresh to check.');
         }
-        if (!r.ok || !r.data || !r.data.view) {
+        if (!r.ok || !r.data) {
           throw PortalError(
             (r.data && r.data.error) || 'server',
             'We could not complete that just now.'
           );
+        }
+
+        // The write APPLIED but the server could not re-read Phoenix. This is
+        // a success with a stale view, never a failure: the customer's change
+        // is real. Drop the cached read so the next one goes to the server,
+        // and let the caller show a refresh prompt.
+        if (r.data.refreshRequired) {
+          pending = null;
+          return { refreshRequired: true };
+        }
+
+        if (!r.data.view) {
+          throw PortalError('server', 'We could not complete that just now.');
         }
 
         // Adopt the server's re-read as the new truth.
