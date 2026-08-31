@@ -13,13 +13,36 @@
     assets/eyewipes-prelander.js    countdown, comparison tabs, review rail,
                                     attribution forwarding
 
-  CTA routing: every purchase / availability CTA goes to the canonical EyeWipes
-  PDP. The two in-page buttons are exceptions: "See Why It Works" scrolls to
-  #eyewipes-proof and "Skip to offer" scrolls to #eyewipes-offer.
+  CTA routing: every purchase / availability CTA goes to the EyeWipes offer page
+  (the product handle rendered through templates/product.eyewipes-offer-page.json
+  via ?view=eyewipes-offer-page). The two in-page buttons are exceptions:
+  "See Why It Works" scrolls to #eyewipes-proof and "Skip to offer" scrolls to
+  #eyewipes-offer.
 {%- endcomment -%}
 
 {%- liquid
-  assign pdp_url = section.settings.cta_url | default: 'https://shopvetpets.com/products/eyewipes-prevention-that-keeps-eyes-clear'
+  assign cta_base = section.settings.cta_url | default: '/products/eyewipes-prevention-that-keeps-eyes-clear'
+
+  # Every purchase CTA routes to the offer-page template, not the control PDP.
+  # cta_url is merchant-editable, so build the URL rather than hardcoding it:
+  # keep any existing params, append with & when a query string is already
+  # present, and leave view= ahead of any #fragment.
+  assign cta_frag = ''
+  if cta_base contains '#'
+    assign cta_frag_parts = cta_base | split: '#'
+    assign cta_base = cta_frag_parts[0]
+    assign cta_frag = '#' | append: cta_frag_parts[1]
+  endif
+  if cta_base contains 'view='
+    assign pdp_url = cta_base | append: cta_frag
+  else
+    if cta_base contains '?'
+      assign cta_sep = '&'
+    else
+      assign cta_sep = '?'
+    endif
+    assign pdp_url = cta_base | append: cta_sep | append: 'view=eyewipes-offer-page' | append: cta_frag
+  endif
   assign offer_anchor = '#eyewipes-offer'
   assign proof_anchor = '#eyewipes-proof'
 
@@ -472,13 +495,13 @@
     },
     {
       "type": "paragraph",
-      "content": "Every purchase CTA on this page opens the EyeWipes PDP. The two in-page buttons are exceptions: \"See Why It Works\" scrolls to the proof section (#eyewipes-proof) and \"Skip to offer\" scrolls to the offer block (#eyewipes-offer)."
+      "content": "Every purchase CTA on this page opens the EyeWipes offer page (?view=eyewipes-offer-page is appended automatically). The two in-page buttons are exceptions: \"See Why It Works\" scrolls to the proof section (#eyewipes-proof) and \"Skip to offer\" scrolls to the offer block (#eyewipes-offer)."
     },
     {
       "type": "text",
       "id": "cta_url",
       "label": "PDP link",
-      "info": "Leave empty to use the canonical EyeWipes product page: https://shopvetpets.com/products/eyewipes-prevention-that-keeps-eyes-clear"
+      "info": "Leave empty to use /products/eyewipes-prevention-that-keeps-eyes-clear. view=eyewipes-offer-page is appended automatically, so paste a plain product URL here \u2014 existing query params and #anchors are preserved."
     },
     {
       "type": "header",
