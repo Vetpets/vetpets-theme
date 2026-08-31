@@ -15,9 +15,13 @@
     <h1 class="spp__h1" id="spp-sub-h" style="margin:0;">Daily routine subscription</h1>
     <span class="spp__badge spp__badge--plain" data-spp-field="subscription.statusLabel" data-spp-status-badge>Active</span>
   </div>
+  {%- comment -%}
+    The subscription is described by when it started and how much has arrived,
+    which is what a customer recognises. The Phoenix id said nothing they
+    could use and belonged to a system they never see.
+  {%- endcomment -%}
   <p class="spp__lede" style="font-size:14.5px;color:var(--spp-muted);">
-    <span data-spp-field="subscription.reference">#VP-48210</span> ·
-    started <span data-spp-field="subscription.startedLong">12 March 2025</span> ·
+    Started <span data-spp-field="subscription.startedLong">12 March 2025</span> ·
     <span data-spp-field="subscription.deliveriesSoFar">9</span> deliveries so far
   </p>
 
