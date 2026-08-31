@@ -213,6 +213,29 @@ describe('live mode shows no prototype data', () => {
   test('no invented balance can be rendered: loyalty is off', () => {
     assert.equal(constant('LOYALTY_ENABLED'), false);
   });
+
+  test('a theme with NO stored setting defaults to live, not mock', () => {
+    /*
+     * THE DEFECT THIS EXISTS FOR
+     * --------------------------
+     * The rendered fallback and the schema default were both "mock". The dev
+     * theme had the setting saved so it behaved correctly, and the fault
+     * stayed invisible until the section reached the live theme, which had
+     * never been opened in the editor. The published page then served a real
+     * visitor a fabricated subscription belonging to a fictional customer.
+     *
+     * Mock must be asked for. A theme that inherits the default gets truth.
+     */
+    assert.match(
+      SECTION,
+      /data-spp-mode="\{\{ section\.settings\.data_mode \| default: 'live' \}\}"/,
+      'the rendered fallback must be live',
+    );
+
+    const schema = /"id":\s*"data_mode"[\s\S]*?"default":\s*"(\w+)"/.exec(SECTION);
+    assert.ok(schema, 'the data_mode setting must exist');
+    assert.equal(schema[1], 'live', 'the schema default must be live');
+  });
 });
 
 describe('the mutation surface is complete and guarded', () => {
