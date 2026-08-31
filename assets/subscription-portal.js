@@ -68,7 +68,7 @@
       sheet: null,
       pending: null,
       lastFocus: null,
-      draft: { delay: 7, reason: 'price', restart: 0 },
+      draft: { delay: 7, reason: 'price', restart: 0, date: null },
       data: null,
       loyalty: null,
       customer: null,
@@ -115,6 +115,60 @@
    * ================================================================= */
 
   Portal.prototype.fmtMoney = function (value) { return NS.formatMoney(value, this.cfg.locale); };
+
+  /**
+   * The window the BACKEND will accept for a rescheduled delivery.
+   *
+   * Mirrored from the route rather than invented here: it refuses a date
+   * before today or more than a year out. Both bounds are computed in UTC,
+   * exactly as the server does, so the picker can never offer a date the
+   * server would then reject — a customer choosing a date and being told no
+   * is a worse experience than not being offered it.
+   */
+  var MAX_RESCHEDULE_DAYS = 365;
+
+  Portal.prototype.rescheduleBounds = function () {
+    var today = new Date().toISOString().slice(0, 10);
+    return { min: today, max: NS.dates.addDays(today, MAX_RESCHEDULE_DAYS) };
+  };
+
+  /** Is the custom-date option the one currently chosen? */
+  Portal.prototype.isCustomDate = function () {
+    return this.state.draft.delay === 'custom';
+  };
+
+  /**
+   * The date this sheet would move the delivery to, or null when the customer
+   * has chosen "another date" and not yet picked one.
+   */
+  Portal.prototype.delayTargetIso = function () {
+    var sub = this.state.data;
+    if (!sub || !sub.nextOrderDate) return null;
+    if (this.isCustomDate()) return this.state.draft.date || null;
+    return NS.dates.addDays(sub.nextOrderDate, this.state.draft.delay);
+  };
+
+  /**
+   * Why the chosen date cannot be submitted, or null when it can.
+   *
+   * Checked here as well as on the server. The server is the authority — this
+   * exists so the customer is told immediately and in their own terms, not
+   * after a round trip that reads like a failure.
+   */
+  Portal.prototype.rescheduleError = function () {
+    if (!this.isCustomDate()) return null;
+
+    var sub = this.state.data;
+    var chosen = this.state.draft.date;
+    if (!chosen) return 'Choose a date for your next delivery.';
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(chosen)) return 'That date could not be read.';
+
+    var b = this.rescheduleBounds();
+    if (chosen < b.min) return 'Choose a date from today onwards.';
+    if (chosen > b.max) return 'Choose a date within the next year.';
+    if (sub && chosen === sub.nextOrderDate) return 'That is already your delivery date.';
+    return null;
+  };
 
   Portal.prototype.fmtDate = function (iso, style) {
     if (!iso) return '';
@@ -784,7 +838,13 @@
       vm['pricing.discount'] = this.fmtMoney(sub.pricing.discount);
 
       vm['sheet.skipToLong'] = this.fmtDate(NS.dates.addDays(sub.nextOrderDate, sub.intervalDays), 'long');
-      vm['sheet.delayToLong'] = this.fmtDate(NS.dates.addDays(sub.nextOrderDate, d.delay), 'long');
+      var target = this.delayTargetIso();
+      vm['sheet.delayToLong'] = target ? this.fmtDate(target, 'long') : 'Not chosen yet';
+      // The confirmation the customer reads before committing: where the
+      // delivery is now, and where it would go.
+      vm['sheet.rescheduleFrom'] = this.fmtDate(sub.nextOrderDate, 'medium');
+      vm['sheet.rescheduleTo'] = target ? this.fmtDate(target, 'medium') : '—';
+      vm['sheet.rescheduleError'] = this.rescheduleError() || '';
     }
 
     if (loy) {
@@ -839,14 +899,16 @@
     if (s.success) {
       vm['success.title'] = s.success.title;
       vm['success.body'] = s.success.body;
-      vm['success.undoLabel'] = s.success.undoLabel || '';
     }
 
     var p = s.pending;
     vm['label.sendLink'] = p === 'sendLink' ? 'Sending link…' : 'Email me a sign-in link';
     vm['label.resend'] = p === 'resend' ? 'Sending…' : 'Resend link';
     vm['label.skip'] = p === 'skip' ? 'Skipping delivery…' : 'Skip this delivery';
-    vm['label.delay'] = p === 'delay' ? 'Rescheduling…' : ('Move to ' + (sub ? this.fmtDate(NS.dates.addDays(sub.nextOrderDate, d.delay), 'short') : ''));
+    var delayTarget = sub ? this.delayTargetIso() : null;
+    vm['label.delay'] = p === 'delay'
+      ? 'Rescheduling…'
+      : (delayTarget ? 'Move to ' + this.fmtDate(delayTarget, 'short') : 'Choose a date');
     vm['label.cancel'] = p === 'cancel' ? 'Cancelling…' : 'Yes, cancel my subscription';
     vm['label.reactivate'] = p === 'reactivate' ? 'Reactivating…' : 'Reactivate subscription';
 
@@ -904,13 +966,44 @@
     if (badge) badge.style.background = status === 'active' ? 'var(--spp-light)' : 'var(--spp-surface-neutral)';
 
     this.renderLists();
-    this.renderUndo();
+    this.renderDatePicker();
   };
 
-  Portal.prototype.renderUndo = function () {
-    var btn = this.root.querySelector('[data-spp-undo]');
-    if (!btn) return;
-    btn.hidden = !(this.state.success && this.state.success.undo);
+  /**
+   * The custom-date field: shown only when the customer asked for one, and
+   * bounded to exactly the window the server accepts.
+   *
+   * The input is never re-set while it holds focus. Writing `value` on every
+   * render would fight the customer mid-edit and, in some browsers, reset the
+   * caret on each keystroke.
+   */
+  Portal.prototype.renderDatePicker = function () {
+    var wrap = this.root.querySelector('[data-spp-custom-date]');
+    if (!wrap) return;
+
+    var on = this.isCustomDate();
+    wrap.hidden = !on;
+    if (!on) return;
+
+    var input = wrap.querySelector('[data-spp-date]');
+    if (!input) return;
+
+    var b = this.rescheduleBounds();
+    input.min = b.min;
+    input.max = b.max;
+    if (document.activeElement !== input) input.value = this.state.draft.date || '';
+
+    var err = this.rescheduleError();
+    // Only complain once the customer has actually chosen something. An empty
+    // field on opening is not a mistake they have made yet.
+    var showErr = !!err && !!this.state.draft.date;
+    input.setAttribute('aria-invalid', showErr ? 'true' : 'false');
+
+    var msg = wrap.querySelector('[data-spp-date-error]');
+    if (msg) {
+      msg.textContent = showErr ? err : '';
+      msg.hidden = !showErr;
+    }
   };
 
   /* -----------------------------------------------------------------
@@ -1080,10 +1173,15 @@
           ['other', 'Something else']
         ].map(function (r) { return { label: r[1], _value: r[0], _checked: d.reason === r[0] }; });
 
-      case 'delayOptions':
-        return [7, 15, 30].map(function (n) {
+      case 'delayOptions': {
+        var tiles = [7, 15, 30].map(function (n) {
           return { label: n + ' days', _value: n, _checked: d.delay === n };
         });
+        // A fourth tile, styled exactly like the presets, so choosing a
+        // specific date is as ordinary as choosing "7 days".
+        tiles.push({ label: 'Choose another date', _value: 'custom', _checked: d.delay === 'custom' });
+        return tiles;
+      }
 
       case 'restartDates':
         return [['As soon as possible', 0], ['In two weeks', 14], ['In a month', 30]]
@@ -1271,9 +1369,24 @@
     });
 
     this.root.addEventListener('change', function (e) {
+      var date = e.target.closest('[data-spp-date]');
+      if (date) {
+        self.state.draft.date = date.value || null;
+        self.render();
+        return;
+      }
       var sel = e.target.closest('[data-spp-dev-currency]');
       if (!sel || !self.adapter.setCurrency) return;
       self.adapter.setCurrency(sel.value).then(function () { return self.load(); });
+    });
+
+    // `change` alone fires late on some mobile pickers, leaving the summary
+    // and the button label stale after a date has visibly been chosen.
+    this.root.addEventListener('input', function (e) {
+      var date = e.target.closest('[data-spp-date]');
+      if (!date) return;
+      self.state.draft.date = date.value || null;
+      self.render();
     });
 
     this.root.addEventListener('submit', function (e) {
@@ -1304,7 +1417,7 @@
     var d = this.state.draft;
     var value = el.dataset.sppValue;
 
-    if (kind === 'delay') d.delay = parseInt(value, 10);
+    if (kind === 'delay') d.delay = value === 'custom' ? 'custom' : parseInt(value, 10);
     else if (kind === 'reason') d.reason = value;
     else if (kind === 'restart') d.restart = parseInt(el.dataset.sppIndex, 10);
     this.render();
@@ -1420,36 +1533,36 @@
         return;
       }
 
-      case 'undo': {
-        var target = s.success && s.success.undoTo;
-        if (!target) return;
-        this.run('undo', function (attemptKey) {
-          return self.adapter.rescheduleNextDelivery(id, target, {
-            idempotencyKey: attemptKey,
-            expectedNextBillingDate: sub.nextOrderDate
-          });
-        }, {
-          attempt: 'undo',
-          then: function () { self.state.success = null; self.show('dashboard'); },
-          toast: 'Skip undone'
-        });
-        return;
-      }
+      case 'delay': {
+        var custom = this.isCustomDate();
 
-      case 'delay':
+        // A date the server would refuse never leaves the browser. The sheet
+        // stays open with the reason shown, so the customer can correct it
+        // rather than being told the operation failed.
+        if (custom && this.rescheduleError()) {
+          s.sheetSpent = false;
+          this.render();
+          return;
+        }
+
+        var chosen = custom ? d.date : null;
         this.run('delay', function (attemptKey) {
-          return self.adapter.delayNextDelivery(id, d.delay, {
+          var opts = {
             idempotencyKey: attemptKey,
             // The date on screen when the customer confirmed. Without it the
-            // server cannot tell a duplicate from a second, genuine delay.
+            // server cannot tell a duplicate from a second, genuine change.
             expectedNextBillingDate: sub.nextOrderDate
-          });
+          };
+          return custom
+            ? self.adapter.rescheduleNextDelivery(id, chosen, opts)
+            : self.adapter.delayNextDelivery(id, d.delay, opts);
         }, {
-          attempt: 'delay',
+          attempt: custom ? 'reschedule' : 'delay',
           then: function () { self.show('dashboard'); },
           toast: function (st) { return 'Delivery moved to ' + self.fmtDate(st.data.nextOrderDate, 'short'); }
         });
         return;
+      }
 
       /* --- POST /cancel-subscription --- */
       case 'cancel':

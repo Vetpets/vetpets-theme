@@ -367,9 +367,11 @@ describe('every mutating action is wired for safety, not just skip', () => {
    * Read off the shipped source, so a new action cannot quietly ship without
    * the same protection.
    */
-  const ACTIONS = ['skip', 'delay', 'undo', 'cancel', 'reactivate'];
+  // 'delay' covers reschedule too: one sheet, one confirm button, and the
+  // action dispatches on whether a specific date was chosen.
+  const ACTIONS = ['skip', 'delay', 'cancel', 'reactivate'];
   /** Those whose effect a duplicate could compound by moving a date again. */
-  const MOVES_A_DATE = ['skip', 'delay', 'undo'];
+  const MOVES_A_DATE = ['skip', 'delay'];
 
   /** The body of one `case '<name>':` block in act(). */
   function actionBlock(name) {
@@ -382,9 +384,11 @@ describe('every mutating action is wired for safety, not just skip', () => {
   for (const name of ACTIONS) {
     test(`${name} carries one stable key for the whole attempt`, () => {
       const block = actionBlock(name);
+      // Either a literal, or a ternary choosing between two literals — delay
+      // and reschedule are one control with two destinations.
       assert.match(
         block,
-        /attempt:\s*'[a-z]+'/,
+        /attempt:\s*(?:'[a-z]+'|[A-Za-z]+\s*\?\s*'[a-z]+'\s*:\s*'[a-z]+')/,
         `${name} must declare an attempt, or run() mints nothing and the adapter invents a fresh key per call`,
       );
       assert.match(block, /idempotencyKey:\s*attemptKey/, `${name} must forward the attempt key`);
@@ -408,5 +412,16 @@ describe('every mutating action is wired for safety, not just skip', () => {
         `${name} is idempotent in effect and must not demand a precondition`,
       );
     }
+  });
+  test('the dead undo path is gone, not merely hidden', () => {
+    // It read state.success.undoTo, which nothing ever assigned, behind a
+    // button that could never be shown. Unreachable UI is a promise the
+    // portal cannot keep.
+    assert.ok(!/undoTo/.test(src), 'no code may reference state.success.undoTo');
+    assert.ok(!/case 'undo'/.test(src), "act() must no longer handle 'undo'");
+    assert.ok(!/renderUndo/.test(src), 'renderUndo must be gone');
+
+    const system = readFileSync(resolve(here, '..', 'snippets', 'spp-screen-system.liquid'), 'utf8');
+    assert.ok(!/data-spp-undo/.test(system), 'the undo button must be gone from the markup');
   });
 });
