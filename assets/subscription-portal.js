@@ -424,6 +424,22 @@
     this.state.screen = screen;
     this.closeSheet(true);
 
+    /* ONE CONFIRMATION, AT MOST ONE MUTATION — re-armed here.
+     *
+     * THE DEFECT THIS LINE EXISTS FOR
+     * -------------------------------
+     * The guard was originally re-armed only by openSheet(), because skip and
+     * delay are sheets. Cancel and reactivate are not: they are SCREENS,
+     * reached with data-spp-go. So after any sheet mutation the flag stayed
+     * spent, and every later press of "Yes, cancel my subscription" hit the
+     * guard and returned — no request, no spinner, no error, nothing. The
+     * button was dead, and looked it.
+     *
+     * Arriving at a new screen is a fresh confirmation exactly as opening a
+     * sheet is. Navigation is the customer asking again.
+     */
+    this.state.confirmSpent = false;
+
     var sections = this.root.querySelectorAll('[data-spp-screen]');
     for (var i = 0; i < sections.length; i++) {
       sections[i].hidden = sections[i].getAttribute('data-spp-screen') !== screen;
@@ -473,12 +489,9 @@
     this.state.lastFocus = document.activeElement;
     this.state.sheet = name;
 
-    // ONE OPENED CONFIRMATION, AT MOST ONE MUTATION.
-    //
-    // Opening the sheet is the only thing that re-arms it. Everything after
-    // this point — a rerender, a second listener, a stray submit, a delayed
-    // tap on a stale layout — meets a spent flag and does nothing.
-    this.state.sheetSpent = false;
+    // Opening the sheet is a fresh confirmation. See show() for the other
+    // way a customer arrives at one.
+    this.state.confirmSpent = false;
 
     var panels = host.querySelectorAll('[data-spp-sheet-panel]');
     for (var i = 0; i < panels.length; i++) {
@@ -652,7 +665,16 @@
         // connection does NOT: the operation may well have applied, so a
         // retry has to arrive under the same key for the server to recognise
         // it rather than perform the change a second time.
-        if (op && !INDETERMINATE[err && err.code]) self.releaseAttempt(op);
+        //
+        // The same rule re-arms the confirmation. Nothing was applied, so the
+        // customer is entitled to try again on the screen they are already
+        // looking at — without it, a single network blip would leave them
+        // pressing a button that silently refuses, which is the failure this
+        // whole guard was rewritten to prevent.
+        if (op && !INDETERMINATE[err && err.code]) {
+          self.releaseAttempt(op);
+          self.state.confirmSpent = false;
+        }
 
         // A FAILED ACTION IS NOT A FAILED PAGE.
         //
@@ -1207,7 +1229,10 @@
               (card.last4 ? ' ···· ' + card.last4 : '') + '.'
             : 'No further charges will be made.',
           'Your ' + (s.loyalty ? s.loyalty.points : 0) + ' VetPoints stay on the account for 12 months.',
-          'You can reactivate with the same products and price at any time.'
+          'You can reactivate with the same products and price at any time.',
+          // Last, and phrased as care rather than pressure: by this screen the
+          // decision is made, and a sales pitch here would read as one.
+          'RoutineCare keeps daily care consistent, helping prevent buildup before it becomes a recurring problem.'
         ].map(function (t) { return { text: t }; });
       }
 
@@ -1437,14 +1462,27 @@
     var self = this, s = this.state, d = s.draft, sub = s.data;
     var id = sub ? sub.id : null;
 
-    // ONE OPENED CONFIRMATION, AT MOST ONE MUTATION.
+    // ONE CONFIRMATION, AT MOST ONE MUTATION.
     //
     // Checked here rather than in the click handler so it holds however act()
     // was reached — a click, a keyboard activation, a form submit, or a second
-    // listener nobody meant to attach. Re-armed only by opening the sheet.
+    // listener nobody meant to attach.
     if (CONFIRMED_ACTIONS[name]) {
-      if (s.sheetSpent) return;
-      s.sheetSpent = true;
+      // Already in flight. The spinner on the button is the answer; saying
+      // anything else here would talk over it.
+      if (s.pending) return;
+
+      if (s.confirmSpent) {
+        // NEVER SILENT.
+        //
+        // A refusal the customer cannot see is indistinguishable from a broken
+        // button, and a customer who thinks a button is broken presses it
+        // again. That is precisely what happened: the guard refused every
+        // press of "Yes, cancel my subscription" without a word.
+        this.toast('That has already been submitted — refresh to see the latest.');
+        return;
+      }
+      s.confirmSpent = true;
     }
 
     switch (name) {
@@ -1540,7 +1578,7 @@
         // stays open with the reason shown, so the customer can correct it
         // rather than being told the operation failed.
         if (custom && this.rescheduleError()) {
-          s.sheetSpent = false;
+          s.confirmSpent = false;
           this.render();
           return;
         }
