@@ -506,7 +506,19 @@
           : self.refreshAuthenticatedData();
 
         return refreshed.then(function () {
+          // The sheet always closes on success, before anything renders.
           if (opts.closeSheet !== false) self.closeSheet();
+
+          // The write applied but the server could not re-read Phoenix. The
+          // change is REAL, so it is never reported as a failure — the
+          // customer is told it worked and asked to refresh, rather than told
+          // nothing happened and tempted to do it twice.
+          if (result && result.refreshRequired) {
+            self.render();
+            self.refreshRequired();
+            return;
+          }
+
           if (opts.success) {
             self.state.success = opts.success(self.state, result);
             self.show('success');
@@ -522,8 +534,64 @@
         self.state.pending = null;
         self.applyPending(false);
         self.closeSheet(true);
-        self.fail(err);
+
+        // A FAILED ACTION IS NOT A FAILED PAGE.
+        //
+        // This used to call fail(), which replaced the whole dashboard with
+        // the full-page error screen. The first real skip did exactly that:
+        // the customer confirmed, the operation failed, and their entire
+        // subscription vanished behind "We couldn't load your subscription /
+        // SUB-503" — even though the subscription had loaded perfectly a
+        // moment earlier and nothing about it had changed.
+        //
+        // The dashboard stays. Only an authentication failure may take over
+        // the page, because then there is genuinely nothing to show.
+        if (err && AUTH_FAILURE_CODES[err.code]) {
+          self.fail(err);
+          return;
+        }
+        self.actionFailed(err);
       });
+  };
+
+  /**
+   * Report a failed action without destroying the page around it.
+   *
+   * The customer keeps their dashboard, keeps their real data, and gets one
+   * line telling them what happened and what to do. Nothing is claimed about
+   * whether the change applied unless we actually know.
+   */
+  Portal.prototype.actionFailed = function (err) {
+    var code = (err && err.code) || 'server';
+    var message;
+
+    if (code === 'in_progress') {
+      message = 'That is already being processed.';
+    } else if (code === 'timeout') {
+      // The one case where the outcome is genuinely unknown. Say exactly that.
+      message = 'That is taking longer than expected — refresh to check whether it went through.';
+    } else if (code === 'not_enabled') {
+      message = 'That is not available yet.';
+    } else if (code === 'network') {
+      message = 'No connection. Check your signal and try again.';
+    } else {
+      message = 'That did not go through. Nothing has changed — please try again.';
+    }
+
+    this.toast(message);
+    this.render();
+  };
+
+  /**
+   * The write applied but the refresh did not.
+   *
+   * Never reported as a failure: the change is real. The customer is told it
+   * worked and asked to refresh, rather than being told nothing happened and
+   * being tempted to do it a second time.
+   */
+  Portal.prototype.refreshRequired = function () {
+    this.toast('Done — refresh to see the updated dates.');
+    this.render();
   };
 
   /** Re-read what a mutation may have changed. Requires a session. */
@@ -1230,14 +1298,17 @@
       case 'skip': {
         var before = sub.nextOrderDate;
         this.run('skip', function () { return self.adapter.skipNextDelivery(id); }, {
-          success: function (st) {
-            return {
-              title: 'Delivery skipped',
-              body: 'Nothing ships on ' + self.fmtDate(before, 'full') +
-                    ' and you won\'t be charged. Your next delivery is <strong style="color:var(--spp-ink);">' +
-                    self.fmtDate(st.data.nextOrderDate, 'long') + '</strong>.',
-              undo: true, undoLabel: 'Undo skip', undoTo: before
-            };
+          // Stay on the dashboard and confirm there. The refreshed next
+          // delivery date is already on screen behind the toast, which is a
+          // better confirmation than a separate screen describing it.
+          then: function (st) {
+            self.show('dashboard');
+          },
+          toast: function (st) {
+            var next = st.data && st.data.nextOrderDate;
+            return next
+              ? 'Delivery skipped — next one ' + self.fmtDate(next, 'long')
+              : 'Delivery skipped';
           }
         });
         return;
