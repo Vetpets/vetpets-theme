@@ -661,6 +661,12 @@
       if (opts && typeof opts.idempotencyKey === 'string' && opts.idempotencyKey.length >= 8) {
         return opts.idempotencyKey;
       }
+      // Falling through here means the caller did not supply one. That is how
+      // a single confirmation became two independently keyed skips: two calls,
+      // two fresh keys, and a server with no way to see they meant the same
+      // thing. The controller now owns the key for the whole attempt; this
+      // remains only for callers with nothing to retry.
+
       var random = 'xxxxxxxxxxxx'.replace(/x/g, function () {
         return Math.floor(Math.random() * 16).toString(16);
       });
@@ -682,6 +688,13 @@
           confirm: true,
           idempotencyKey: idempotencyKey(opts)
         };
+        // The next-delivery date the caller was SHOWING when the customer
+        // confirmed. The server compares it with what Phoenix actually holds
+        // and refuses the request if they disagree, so a request composed
+        // against a subscription that has since moved cannot move it again.
+        if (opts && typeof opts.expectedNextBillingDate === 'string') {
+          body.expectedNextBillingDate = opts.expectedNextBillingDate;
+        }
       } catch (e) {
         // Rejected, never thrown synchronously. Every caller handles these
         // with .catch(), and a synchronous throw would sail straight past it.
@@ -702,6 +715,16 @@
         // with a status the proxy passes through.
         if (r.status === 403 && r.data && r.data.error === 'not_enabled') {
           throw PortalError('not_enabled', 'That is not available yet.');
+        }
+        if (r.status === 409 && r.data && r.data.error === 'already_applied') {
+          // A duplicate the server refused: this change is already in place.
+          // Never a failure — for the customer it worked, and calling it a
+          // failure is what would prompt them to do it a third time.
+          throw PortalError('already_applied', 'That has already been done.');
+        }
+        if (r.status === 400 && r.data && r.data.error === 'expected_state_required') {
+          // This build is talking to a newer server, or the view is stale.
+          throw PortalError('stale_view', 'Refresh to see the latest, then try again.');
         }
         if (r.status === 409 && r.data && r.data.error === 'operation_in_progress') {
           // A double-click. The first request is still running; saying
