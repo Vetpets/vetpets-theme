@@ -51,7 +51,7 @@
     <div style="flex:1;">
       <div class="spp__banner-title">Subscription cancelled</div>
       <p>
-        No further charges will be made. Your details and VetPoints are kept, so you can pick the routine
+        No further charges will be made. Your details are kept, so you can pick the routine
         back up whenever you want.
       </p>
       <button type="button" class="spp__btn spp__btn--primary spp__btn--inline" style="min-height:44px;font-size:14.5px;" data-spp-go="reactivate">Reactivate subscription</button>
@@ -65,9 +65,13 @@
 
       {%- comment -%} Next delivery {%- endcomment -%}
       <div class="spp__card spp__card--flush">
+        {%- comment -%}
+          No reference chip. It rendered Phoenix's own subscription number —
+          an internal id from a third-party billing system — to a customer who
+          has one subscription and cannot do anything with it.
+        {%- endcomment -%}
         <div class="spp__next-head">
           <span class="spp__badge">Next delivery</span>
-          <span class="spp__next-ref" data-spp-field="subscription.reference">#VP-48210</span>
         </div>
 
         <div class="spp__next-body">
@@ -170,8 +174,11 @@
     {%- comment -%} ===== Side column ===== {%- endcomment -%}
     <div class="spp__split-side">
 
-      {%- comment -%} VetPoints — solid blue, white text/icons {%- endcomment -%}
-      <div class="spp__points">
+      {%- comment -%}
+        VetPoints. Hidden for launch by data-spp-loyalty — see LOYALTY_ENABLED
+        in the controller for why, and for the one line that brings it back.
+      {%- endcomment -%}
+      <div class="spp__points" data-spp-loyalty hidden>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
           <span class="spp__badge">VetPoints</span>
           <span style="opacity:.9;">{% render 'spp-icon', icon: 'sparkle', size: 22, stroke: '#FFFFFF' %}</span>

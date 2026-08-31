@@ -435,8 +435,10 @@ describe('step 3 — final confirmation', () => {
     const text = facts.map((f) => f.text).join(' | ');
     assert.match(text, /will not ship/);
     assert.match(text, /No further charges/);
-    assert.match(text, /VetPoints/);
     assert.match(text, /reactivate/);
+    // No points claim: there is no ledger, so a balance here would be an
+    // assertion about something the customer owns that nothing records.
+    assert.ok(!/VetPoints/.test(text), 'no points balance may be claimed');
   });
 
   test('the RoutineCare consistency reminder is one of the bullets', () => {

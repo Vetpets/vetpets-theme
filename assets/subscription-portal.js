@@ -419,7 +419,45 @@
    * Navigation
    * ================================================================= */
 
+  /**
+   * VETPOINTS IS OFF.
+   *
+   * Not a design decision — a truthfulness one. There is no VetPoints backend
+   * at all: no ledger table, no balance, no reward catalogue, no redemption
+   * route, no fulfilment record. `/health` reports `loyalty: false` and says
+   * so in a comment next to the constant.
+   *
+   * Every number the card can show today therefore comes from theme settings:
+   * a points balance, a progress bar, a threshold, "each renewal adds 100
+   * points". Shown to a real customer those are not placeholders, they are
+   * claims about a balance they own — and the moment a real ledger exists,
+   * whatever it says will contradict them.
+   *
+   * The worst version of this is a customer who believes they have banked
+   * points that no system has ever recorded. So the whole surface is hidden
+   * rather than shipped unfinished: card, account row, navigation, the
+   * cancelled-screen line, and the sentence in the skip sheet that asserted an
+   * earning rule.
+   *
+   * Flipping this to true reveals every [data-spp-loyalty] element again. Do
+   * that only when the ledger, the balance, the catalogue, the redemption
+   * request and its fulfilment status are real and tested.
+   */
+  var LOYALTY_ENABLED = false;
+
+  /** Screens a customer must not reach while their feature is off. */
+  var DISABLED_SCREENS = LOYALTY_ENABLED ? {} : { loyalty: 1 };
+
+  Portal.prototype.applyLoyaltyVisibility = function () {
+    var nodes = this.root.querySelectorAll('[data-spp-loyalty]');
+    for (var i = 0; i < nodes.length; i++) nodes[i].hidden = !LOYALTY_ENABLED;
+  };
+
   Portal.prototype.show = function (screen) {
+    // A hidden feature must be unreachable, not merely unlinked. Deep links,
+    // history and stray data-spp-go values all arrive here.
+    if (DISABLED_SCREENS[screen]) screen = 'dashboard';
+
     if (this.state.screen !== screen) this.state.history.push(this.state.screen);
     this.state.screen = screen;
     this.closeSheet(true);
@@ -989,6 +1027,7 @@
 
     this.renderLists();
     this.renderDatePicker();
+    this.applyLoyaltyVisibility();
   };
 
   /**
@@ -1229,7 +1268,6 @@
             ? 'No further charges will be made to ' + card.brand +
               (card.last4 ? ' ···· ' + card.last4 : '') + '.'
             : 'No further charges will be made.',
-          'Your ' + (s.loyalty ? s.loyalty.points : 0) + ' VetPoints stay on the account for 12 months.',
           'You can reactivate with the same products and price at any time.',
           // Last, and phrased as care rather than pressure: by this screen the
           // decision is made, and a sales pitch here would read as one.

@@ -151,7 +151,7 @@
     <div class="spp__card" style="max-width:460px;margin:0 auto 20px;text-align:left;border-radius:18px;box-shadow:none;">
       <div class="spp__line" style="padding:9px 0;font-size:14.5px;"><span>Last delivery</span><b>10 July 2026</b></div>
       <div class="spp__line" style="padding:9px 0;font-size:14.5px;"><span>Cancelled delivery</span><b><span data-spp-field="subscription.nextOrderShort">Sep 8</span> — not shipping</b></div>
-      <div class="spp__line" style="padding:9px 0;font-size:14.5px;"><span>VetPoints kept</span><b><span data-spp-field="loyalty.points">640</span> for 12 months</b></div>
+      <div class="spp__line" style="padding:9px 0;font-size:14.5px;" data-spp-loyalty hidden><span>VetPoints kept</span><b><span data-spp-field="loyalty.points">640</span> for 12 months</b></div>
     </div>
 
     <button type="button" class="spp__btn spp__btn--primary" style="max-width:460px;margin:0 auto;" data-spp-go="reactivate">Reactivate subscription</button>
@@ -243,7 +243,7 @@
     <h1 class="spp__h1" id="spp-em-h" style="line-height:1.25;margin-bottom:10px;">No subscriptions yet</h1>
     <p class="spp__lede" style="max-width:380px;margin:0 auto 22px;font-weight:400;font-size:16px;line-height:1.55;">
       {%- comment -%} Identity-free: not a slot, so live mode cannot blank it. {%- endcomment -%}
-      When you start a routine, it shows up here &mdash; with delivery dates, VetPoints and one-tap skip.
+      When you start a routine, it shows up here &mdash; with delivery dates and one-tap skip.
     </p>
 
     <button type="button" class="spp__btn spp__btn--primary" style="max-width:420px;margin:0 auto;" data-spp-go="dashboard">
