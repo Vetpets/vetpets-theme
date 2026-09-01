@@ -14,7 +14,7 @@
   "parent": "index.json",
   "sections": {
     "image_banner_gUTUbM": {
-      "disabled": false,
+      "disabled": true,
       "settings": {
         "image": "shopify://shop_images/National_Dog_Month_home_Banner_146b57e0-bb18-49dc-87d3-10a1719f3ce7.jpg",
         "image_2": "shopify://shop_images/Namnlos_design_-_2026-08-01T100115.007_f2cd9766-fac2-4b9a-ab10-36d0646d4381.jpg",
