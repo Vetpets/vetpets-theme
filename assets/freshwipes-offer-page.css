@@ -386,6 +386,23 @@ body:has(#freshwipes-offer-page){overflow-x:hidden}
 #freshwipes-offer-page .fwof-rc-note{display:inline!important;position:static!important;float:none!important;margin:0!important;padding:0!important;max-width:none!important;width:auto!important;color:#0E8F8E!important;font-weight:700!important;font-size:inherit!important;line-height:inherit!important;text-align:left!important;white-space:normal!important}
 #freshwipes-offer-page:not([data-rc="on"]) .fwof-rc-note{display:none}
 
+/* Mobile-only: the RoutineCare card carries the same two rows as desktop but the
+   subtitle wraps, so the box grew tall. Tighten padding, row gaps and leading
+   only below the desktop breakpoint — type size and the inline teal note are
+   untouched, and nothing here can reach the >=900px layout. */
+@media (max-width:899px){
+  #freshwipes-offer-page .kaching-bundles__subscriptions__card{padding:7px 14px!important;gap:10px!important}
+  #freshwipes-offer-page .kaching-bundles__subscriptions .kaching-bundles__bar-content-left{gap:0!important}
+  #freshwipes-offer-page .kaching-bundles__subscriptions__title{line-height:1.15!important}
+  #freshwipes-offer-page .kaching-bundles__subscriptions__subtitle{margin-top:0!important}
+  /* The generic bar-content-left descendant rule is (1,2,0) and pins the
+     subtitle to line-height 1.25; scoping to the subscriptions card makes this
+     (1,3,0) so the tighter leading wins here without touching the tier bars.
+     Font size is deliberately left at 12.5px for legibility. */
+  #freshwipes-offer-page .kaching-bundles__subscriptions .kaching-bundles__bar-content-left > :not(:first-child),
+  #freshwipes-offer-page .kaching-bundles__subscriptions .kaching-bundles__bar-content-left > :not(:first-child) *{line-height:1.2!important}
+}
+
 /* Kaching's own sticky ATC must never coexist with the approved sticky bar */
 #freshwipes-offer-page .kaching-bundles__sticky,
 body:has(#freshwipes-offer-page) .kaching-bundles__sticky-atc,
