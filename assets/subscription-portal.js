@@ -68,7 +68,7 @@
       sheet: null,
       pending: null,
       lastFocus: null,
-      draft: { delay: 7, reason: 'price', restart: 0, date: null },
+      draft: { delay: 7, reason: null, restart: 0, date: null, note: '', gap: null },
       data: null,
       loyalty: null,
       customer: null,
@@ -751,6 +751,11 @@
       // never phrased as a failure — phrasing it as one is what would send a
       // customer round again and skip a second delivery.
       message = 'That is already done — refresh to see the latest.';
+    } else if (code === 'offer_unavailable') {
+      // Not a failure and not the customer's fault: the offer simply cannot be
+      // performed yet. Saying so plainly is the whole reason the CTA is live
+      // rather than disabled — a dead button teaches nobody anything.
+      message = 'That offer is not available yet. Nothing has changed.';
     } else if (code === 'stale_view') {
       message = 'This page is out of date — refresh, then try again.';
     } else if (code === 'timeout') {
@@ -961,6 +966,15 @@
       vm['success.body'] = s.success.body;
     }
 
+    // Cancellation Retention V2.
+    var chosenReason = null;
+    for (var ri = 0; ri < REASONS.length; ri++) {
+      if (REASONS[ri][0] === d.reason) chosenReason = REASONS[ri];
+    }
+    vm['reason.label'] = chosenReason ? chosenReason[1] : 'Not given';
+    vm['offer.percent'] = String(OFFER_PERCENT);
+    vm['offer.standard'] = String(STANDARD_PERCENT);
+
     var p = s.pending;
     vm['label.sendLink'] = p === 'sendLink' ? 'Sending link…' : 'Email me a sign-in link';
     vm['label.resend'] = p === 'resend' ? 'Sending…' : 'Resend link';
@@ -970,6 +984,10 @@
       ? 'Rescheduling…'
       : (delayTarget ? 'Move to ' + this.fmtDate(delayTarget, 'short') : 'Choose a date');
     vm['label.cancel'] = p === 'cancel' ? 'Cancelling…' : 'Yes, cancel my subscription';
+    vm['label.applyGap'] = p === 'applyGap' ? 'Updating…' : 'Confirm this change';
+    vm['label.acceptOffer'] = p === 'acceptOffer'
+      ? 'Applying…'
+      : 'Apply ' + OFFER_PERCENT + '% to my next delivery';
     vm['label.reactivate'] = p === 'reactivate' ? 'Reactivating…' : 'Reactivate subscription';
 
     return vm;
@@ -1028,6 +1046,27 @@
     this.renderLists();
     this.renderDatePicker();
     this.applyLoyaltyVisibility();
+    this.renderCancelJourney();
+  };
+
+  /**
+   * The two conditional pieces of the cancellation journey.
+   *
+   * The free-text box appears only for "Something else", and the reason row
+   * on the confirmation screen only once a reason exists — an empty "Reason on
+   * record" line would be worse than none.
+   */
+  Portal.prototype.renderCancelJourney = function () {
+    var d = this.state.draft;
+
+    var note = this.root.querySelector('[data-spp-reason-note]');
+    if (note) note.hidden = d.reason !== 'other';
+
+    var gapDate = this.root.querySelector('[data-spp-gap-date]');
+    if (gapDate) gapDate.hidden = d.gap !== 'date';
+
+    var row = this.root.querySelector('[data-spp-reason-row]');
+    if (row) row.hidden = !d.reason;
   };
 
   /**
@@ -1226,13 +1265,25 @@
         });
 
       case 'reasons':
+        return REASONS.map(function (r) {
+          return { label: r[1], _value: r[0], _checked: d.reason === r[0] };
+        });
+
+
+      case 'benefits':
         return [
-          ['price', 'Too expensive'],
-          ['stock', 'I still have plenty left'],
-          ['pet', 'My dog no longer needs it'],
-          ['switch', 'Switching to another product'],
-          ['other', 'Something else']
-        ].map(function (r) { return { label: r[1], _value: r[0], _checked: d.reason === r[0] }; });
+          ['20% off Routine Care pricing', 'Your subscriber price on every refill.'],
+          ['Free shipping on every refill', 'No delivery charge, whatever the order size.'],
+          ['Automatic refills', 'The next jar arrives before you run out.'],
+          ['Flexible deliveries', 'Skip a delivery or move it to a date that suits you.'],
+          ['Subscriber-only perks', 'Extras that only go out to Routine Care members.'],
+          ['100-day guarantee', 'Covers your deliveries for as long as the subscription runs.']
+        ].map(function (b) { return { title: b[0], body: b[1] }; });
+
+      case 'gapOptions':
+        return GAP_OPTIONS.map(function (g) {
+          return { label: g[1], meta: g[2], _value: g[0], _checked: d.gap === g[0] };
+        });
 
       case 'delayOptions': {
         var tiles = [7, 15, 30].map(function (n) {
@@ -1447,6 +1498,13 @@
     // `change` alone fires late on some mobile pickers, leaving the summary
     // and the button label stale after a date has visibly been chosen.
     this.root.addEventListener('input', function (e) {
+      var note = e.target.closest('[data-spp-note]');
+      if (note) {
+        // Held in state, not re-rendered: writing the value back on every
+        // keystroke would fight the customer's caret.
+        self.state.draft.note = note.value || '';
+        return;
+      }
       var date = e.target.closest('[data-spp-date]');
       if (!date) return;
       self.state.draft.date = date.value || null;
@@ -1482,6 +1540,7 @@
     var value = el.dataset.sppValue;
 
     if (kind === 'delay') d.delay = value === 'custom' ? 'custom' : parseInt(value, 10);
+    else if (kind === 'gap') d.gap = value;
     else if (kind === 'reason') d.reason = value;
     else if (kind === 'restart') d.restart = parseInt(el.dataset.sppIndex, 10);
     this.render();
@@ -1495,6 +1554,38 @@
    * Actions that change billing, and may therefore run at most once per
    * opened confirmation. Navigation and sheet-opening are not among them.
    */
+  /**
+   * Cancellation Retention V2.
+   *
+   * The eight reasons, and the five schedule changes that can actually be
+   * performed. Codes are stable and shared with the server: the label is what
+   * the customer reads, the code is what analysis groups on, and changing a
+   * label must never silently re-bucket a year of answers.
+   */
+  var REASONS = [
+    ['price', 'Too expensive'],
+    ['too_much', 'I have too much product'],
+    ['not_using', 'I\u2019m not using it enough'],
+    ['no_results', 'I didn\u2019t see the results I expected'],
+    ['not_needed', 'My pet no longer needs it'],
+    ['order_issue', 'I had an issue with my order'],
+    ['break', 'Just taking a break'],
+    ['other', 'Something else']
+  ];
+
+  /** Every option maps to an operation proven end to end against Phoenix. */
+  var GAP_OPTIONS = [
+    ['skip', 'Skip the next delivery', 'Nothing ships. The one after is unchanged.'],
+    ['d7', 'Push it back 7 days', 'Moves the next delivery a week later'],
+    ['d15', 'Push it back 15 days', 'Moves it just over two weeks'],
+    ['d30', 'Push it back 30 days', 'Moves it a full month'],
+    ['date', 'Choose a new delivery date', 'Pick any date that suits you']
+  ];
+
+  /** The approved figures, stated once. */
+  var OFFER_PERCENT = 40;
+  var STANDARD_PERCENT = 20;
+
   var CONFIRMED_ACTIONS = { skip: 1, delay: 1, reschedule: 1, cancel: 1, reactivate: 1 };
 
   Portal.prototype.act = function (name, el) {
@@ -1641,13 +1732,90 @@
         return;
       }
 
+      /* --- Cancellation Retention V2 ------------------------------- */
+
+      /**
+       * Leaving the reason screen. The answer is recorded on the way past,
+       * because the customers this journey saves never reach a cancellation
+       * and are exactly the ones worth learning from.
+       *
+       * Recording is best effort: it must never block a customer from
+       * continuing, and it is not a mutation.
+       */
+      case 'reasonContinue': {
+        if (!d.reason) return;
+        var noteText = d.reason === 'other' ? (d.note || '') : '';
+        if (self.adapter.recordCancelReason) {
+          self.adapter.recordCancelReason(d.reason, noteText).catch(function () {});
+        }
+        this.show('cancel-alt');
+        return;
+      }
+
+      /** One of the five proven schedule changes, chosen on the gap screen. */
+      case 'applyGap': {
+        if (!d.gap) return;
+        var before = sub.nextOrderDate;
+        var target = d.gap;
+
+        this.run('applyGap', function (attemptKey) {
+          var opts = { idempotencyKey: attemptKey, expectedNextBillingDate: before };
+          if (target === 'skip') return self.adapter.skipNextDelivery(id, opts);
+          if (target === 'date') return self.adapter.rescheduleNextDelivery(id, d.date, opts);
+          return self.adapter.delayNextDelivery(id, parseInt(target.slice(1), 10), opts);
+        }, {
+          attempt: 'applyGap',
+          then: function () {
+            if (self.adapter.recordCancelOutcome) {
+              self.adapter.recordCancelOutcome('saved_gap').catch(function () {});
+            }
+            self.show('dashboard');
+          },
+          toast: function (st) {
+            var next = st.data && st.data.nextOrderDate;
+            return next ? 'Delivery moved to ' + self.fmtDate(next, 'short') : 'Delivery moved';
+          }
+        });
+        return;
+      }
+
+      /**
+       * The 40% offer. GATED, and honestly so.
+       *
+       * The request goes out and the server refuses it, rather than the button
+       * being disabled or the screen faking a success. The customer learns the
+       * truth — it is not available yet — instead of being told a discount
+       * applied that the next invoice would contradict.
+       */
+      case 'acceptOffer': {
+        this.run('acceptOffer', function (attemptKey) {
+          return self.adapter.acceptRetentionOffer({ idempotencyKey: attemptKey });
+        }, {
+          attempt: 'acceptOffer',
+          then: function () {
+            if (self.adapter.recordCancelOutcome) {
+              self.adapter.recordCancelOutcome('saved_offer').catch(function () {});
+            }
+            self.show('dashboard');
+          },
+          toast: 'Discount applied to your next delivery'
+        });
+        return;
+      }
+
       /* --- POST /cancel-subscription --- */
       case 'cancel':
+        if (!d.reason) { this.show('cancel-reason'); return; }
         this.run('cancel', function (attemptKey) {
           return self.adapter.cancel(id, d.reason, null, { idempotencyKey: attemptKey });
         }, {
           attempt: 'cancel',
-          then: function () { self.show('cancel-done'); }
+          then: function () {
+            if (self.adapter.recordCancelOutcome) {
+              self.adapter.recordCancelOutcome('cancelled').catch(function () {});
+            }
+            self.show('cancel-done');
+          }
         });
         return;
 
