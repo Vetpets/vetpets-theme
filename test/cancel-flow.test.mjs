@@ -42,8 +42,11 @@ function method(name, extraNames = [], extraValues = []) {
   return new Function(...extraNames, `return function (${m[1]}) {${m[2]}\n};`)(...extraValues);
 }
 
+/** Read a module-scope constant out of the shipped file: object, array or number. */
 function constant(name) {
-  const m = new RegExp(`var ${name} = (\\{[\\s\\S]*?\\}|\\d+);`).exec(src);
+  const m = new RegExp(
+    `var ${name} = (\\{[\\s\\S]*?\\}|\\[[\\s\\S]*?\\]|\\d+);`,
+  ).exec(src);
   assert.ok(m, `${name} must exist`);
   return new Function(`return ${m[1]}`)();
 }
@@ -56,7 +59,12 @@ const act = method('act', ['CONFIRMED_ACTIONS'], [CONFIRMED_ACTIONS]);
 const run = method('run', ['INDETERMINATE', 'AUTH_FAILURE_CODES'], [INDETERMINATE, AUTH_FAILURE_CODES]);
 const attemptKey = method('attemptKey');
 const releaseAttempt = method('releaseAttempt');
-const listData = method('listData');
+// listData closes over the journey's module-scope tables.
+const listData = method(
+  'listData',
+  ['REASONS', 'GAP_OPTIONS'],
+  [constant('REASONS'), constant('GAP_OPTIONS')],
+);
 
 /**
  * The section of markup for one screen, with Liquid comments stripped.
@@ -325,7 +333,45 @@ describe('cancel success and failure', () => {
  * THE THREE STEPS
  * ================================================================== */
 
-describe('step 1 — why are you cancelling', () => {
+describe('step 1 — benefits', () => {
+  const step = screen('cancel-benefits');
+
+  test('leads with what is at stake for the dog, not the discount', () => {
+    assert.match(step, /They can&rsquo;t tell you when it comes back/);
+    // Eyes and teeth first; ears are not the lead concern for these routines.
+    assert.match(step, /tear stain/i);
+    assert.match(step, /teeth/i);
+  });
+
+  test('uses the approved 16:9 image, not a generated substitute', () => {
+    assert.match(step, /spp-cancel-benefits\.png/);
+    assert.match(step, /spp__media-16x9/);
+    assert.match(step, /alt="[^"]+"/, 'the image must be described');
+  });
+
+  test('keeping is the primary action, continuing is the quiet one', () => {
+    const keep = buttonWith(step, 'Never mind, keep my Routine Care');
+    assert.match(keep, /spp__btn--primary/);
+
+    const cont = buttonWith(step, 'Continue cancelling');
+    assert.match(cont, /spp__btn--link/);
+    assert.ok(!/spp__btn--primary/.test(cont));
+    assert.match(cont, /data-spp-go="cancel-reason"/);
+  });
+
+  test('the real Routine Care benefits are listed', () => {
+    const benefits = listData.call(
+      { state: { data: {}, loyalty: null, inactive: [], draft: {} }, fmtDate: (x) => String(x) },
+      'benefits',
+    );
+    const text = benefits.map((b) => b.title + ' ' + b.body).join(' | ');
+    for (const claim of ['20% off', 'Free shipping', 'Automatic refills', 'Flexible deliveries', 'Subscriber-only', '100-day']) {
+      assert.ok(text.includes(claim), `missing benefit: ${claim}`);
+    }
+  });
+});
+
+describe('step 2 — why are you cancelling', () => {
   const step = screen('cancel-reason');
 
   test('"Keep my subscription" is the primary action', () => {
@@ -334,17 +380,39 @@ describe('step 1 — why are you cancelling', () => {
     assert.match(keep, /data-spp-go="subscription"/);
   });
 
+  test('all eight approved reasons are offered', () => {
+    const reasons = listData.call(
+      { state: { data: {}, loyalty: null, inactive: [], draft: {} }, fmtDate: (x) => String(x) },
+      'reasons',
+    );
+    assert.equal(reasons.length, 8);
+    const labels = reasons.map((r) => r.label).join(' | ');
+    for (const claim of ['Too expensive', 'too much product', 'not using it enough', 'results I expected', 'no longer needs it', 'issue with my order', 'taking a break', 'Something else']) {
+      assert.ok(labels.includes(claim), `missing reason: ${claim}`);
+    }
+  });
+
+  test('free text appears only for "Something else"', () => {
+    assert.match(step, /data-spp-reason-note/);
+    const block = /<div data-spp-reason-note[^>]*>/.exec(step);
+    assert.ok(block, 'the note block must exist');
+    assert.match(block[0], /hidden/, 'and must ship hidden');
+    assert.match(step, /<textarea[^>]*data-spp-note/);
+    assert.match(step, /<label[^>]*for="spp-reason-note"/);
+  });
+
   test('the primary action is the blue #47B5E9 with white text', () => {
     assert.match(css, /--spp-primary:\s*#47B5E9/i);
     assert.match(css, /--spp-primary-fg:\s*#FFFFFF/i);
     assert.match(css, /\.spp\s+\.spp__btn--primary\s*\{[^}]*color:\s*var\(--spp-primary-fg\)/);
   });
 
-  test('"Continue" is the smaller underlined action', () => {
-    const cont = buttonWith(step, 'Continue');
+  test('"Continue cancelling" is the smaller underlined action', () => {
+    const cont = buttonWith(step, 'Continue cancelling');
     assert.match(cont, /spp__btn--link/, 'must be the quiet text style');
     assert.ok(!/spp__btn--primary/.test(cont), 'must not be the dominant action');
-    assert.match(cont, /data-spp-go="cancel-alt"/, 'and must still go forward');
+    // An act(), not a link: it records the reason on the way past.
+    assert.match(cont, /data-spp-act="reasonContinue"/);
   });
 
   test('the link style is genuinely underlined and smaller', () => {
@@ -354,7 +422,7 @@ describe('step 1 — why are you cancelling', () => {
   });
 
   test('Continue stays a real, keyboard-reachable button', () => {
-    const cont = buttonWith(step, 'Continue');
+    const cont = buttonWith(step, 'Continue cancelling');
     assert.match(cont, /<button/, 'not a div, so it keeps button semantics');
     assert.match(cont, /type="button"/);
     assert.ok(!/disabled/.test(cont), 'never disabled');
@@ -369,37 +437,104 @@ describe('step 1 — why are you cancelling', () => {
   });
 });
 
-describe('step 2 — before you cancel', () => {
+describe('step 3 — longer gap', () => {
   const step = screen('cancel-alt');
 
-  test('both retention cards survive untouched', () => {
-    assert.match(step, /data-spp-act="altPrimary"/, 'the skip/delay offer');
-    assert.match(step, /data-spp-sheet="delay"/, 'choose a new date');
-    assert.match(step, /Push it back instead/);
+  test('offers the five proven schedule changes, and only those', () => {
+    const gaps = listData.call(
+      { state: { data: {}, loyalty: null, inactive: [], draft: {} }, fmtDate: (x) => String(x) },
+      'gapOptions',
+    );
+    assert.equal(gaps.length, 5);
+    const labels = gaps.map((g) => g.label).join(' | ');
+    for (const claim of ['Skip the next delivery', 'back 7 days', 'back 15 days', 'back 30 days', 'Choose a new delivery date']) {
+      assert.ok(labels.includes(claim), `missing option: ${claim}`);
+    }
   });
 
-  test('the retention actions still reach their handlers', () => {
-    assert.match(src, /case 'altPrimary'/, 'altPrimary must still be handled');
-    assert.match(src, /openSheet\(el\.getAttribute\('data-spp-sheet'\)\)/);
+  test('no cadence or frequency option was reintroduced', () => {
+    assert.ok(!/frequency/i.test(step));
+    assert.ok(!/every \d+ (days|weeks|months)/i.test(step));
+  });
+
+  test('the date field appears only for "Choose a new delivery date"', () => {
+    const block = /<div data-spp-gap-date[^>]*>/.exec(step);
+    assert.ok(block, 'the date block must exist');
+    assert.match(block[0], /hidden/);
+    assert.match(step, /type="date"/);
   });
 
   test('"No thanks" is the smaller underlined action', () => {
-    const no = buttonWith(step, 'continue to cancel');
+    const no = buttonWith(step, 'continue cancelling');
     assert.match(no, /spp__btn--link/);
     assert.ok(!/spp__btn--quiet/.test(no), 'no longer the large outlined button');
-    assert.match(no, /data-spp-go="cancel-confirm"/);
+    assert.match(no, /data-spp-go="cancel-offer"/);
   });
 
   test('"No thanks" stays clickable and accessible', () => {
-    const no = buttonWith(step, 'continue to cancel');
+    const no = buttonWith(step, 'continue cancelling');
     assert.match(no, /<button/);
     assert.match(no, /type="button"/);
     assert.ok(!/aria-hidden/.test(no));
     assert.ok(!/tabindex="-1"/.test(no));
   });
+
+  test('the primary action confirms the change', () => {
+    const apply = buttonWith(step, 'Confirm this change');
+    assert.match(apply, /spp__btn--primary/);
+    assert.match(apply, /data-spp-act="applyGap"/);
+  });
 });
 
-describe('step 3 — final confirmation', () => {
+describe('step 4 — the retention offer', () => {
+  const step = screen('cancel-offer');
+
+  test('renders the approved offer exactly', () => {
+    assert.match(step, /One-time offer/i);
+    assert.match(step, /off your next Routine Care delivery/);
+    assert.match(step, /One delivery only/);
+    assert.match(step, /returns to your usual\s+Routine Care pricing/);
+  });
+
+  test('uses the approved image, not generated packaging', () => {
+    assert.match(step, /spp-cancel-offer\.png/);
+    assert.match(step, /spp__media-16x9/);
+  });
+
+  test('the primary CTA is the approved brand blue', () => {
+    const cta = buttonWith(step, 'Apply 40% to my next delivery');
+    assert.match(cta, /spp__btn--primary/);
+    assert.match(css, /--spp-primary:\s*#47B5E9/i);
+    // The legacy blue must not appear in the new journey.
+    assert.ok(!/#128FCB/i.test(cancelScreens), 'legacy #128FCB must not be used here');
+  });
+
+  test('declining is the quiet action', () => {
+    const no = buttonWith(step, 'No thanks, continue cancelling');
+    assert.match(no, /spp__btn--link/);
+    assert.match(no, /data-spp-go="cancel-confirm"/);
+  });
+
+  test('the acceptance action is live, not disabled — and gated server-side', () => {
+    const cta = buttonWith(step, 'Apply 40% to my next delivery');
+    // A disabled button teaches the customer nothing. The request goes out and
+    // the server refuses it honestly.
+    assert.ok(!/disabled/.test(cta));
+    assert.match(cta, /data-spp-act="acceptOffer"/);
+    assert.match(src, /case 'acceptOffer'/);
+    assert.match(src, /acceptRetentionOffer/);
+  });
+
+  test('a refused offer is reported as unavailable, never as applied', () => {
+    assert.match(src, /offer_unavailable/);
+    const m = /code === 'offer_unavailable'\)[\s\S]{0,400}?message = '([^']+)'/.exec(src);
+    assert.ok(m, 'the refusal must have its own copy');
+    assert.match(m[1], /not available yet/i);
+    assert.ok(!/applied/i.test(m[1]), 'must never claim the discount landed');
+  });
+});
+
+describe('step 5 — final confirmation', () => {
   const step = screen('cancel-confirm');
 
   test('the title names no identifier at all', () => {

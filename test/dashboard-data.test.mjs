@@ -61,7 +61,19 @@ function method(name) {
   );
   const m = re.exec(controllerSource);
   assert.ok(m, `Portal.prototype.${name} must exist`);
-  return new Function('NS', `return function (${m[1]}) {${m[2]}\n};`)(NS);
+  // The view-model closes over module-scope constants from the cancellation
+  // journey; supply them so the extracted function runs as it does in the file.
+  const constant = (cname) => {
+    const cm = new RegExp(`var ${cname} = ([\\s\\S]*?);\\n`).exec(controllerSource);
+    return cm ? new Function(`return ${cm[1]}`)() : undefined;
+  };
+  return new Function(
+    'NS',
+    'REASONS',
+    'OFFER_PERCENT',
+    'STANDARD_PERCENT',
+    `return function (${m[1]}) {${m[2]}\n};`,
+  )(NS, constant('REASONS'), constant('OFFER_PERCENT'), constant('STANDARD_PERCENT'));
 }
 
 const viewModel = method('viewModel');

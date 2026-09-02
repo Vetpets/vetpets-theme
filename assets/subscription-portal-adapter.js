@@ -133,6 +133,7 @@
   VetPetsPortal.CONTRACT = {
     reads: ['getCustomer', 'getSubscription', 'listSubscriptions', 'listDeliveries',
             'getLoyalty', 'listRewards'],
+    retention: ['recordCancelReason', 'acceptRetentionOffer'],
     mutations: ['skipNextDelivery', 'delayNextDelivery', 'rescheduleNextDelivery',
                 'cancel', 'reactivate', 'requestRedemption'],
     auth: ['requestMagicLink', 'verifyMagicLink', 'signOut']
@@ -425,6 +426,27 @@
        * ------------------------------------------------------------- */
 
       // POST /update-next-billing-date — push out by one full cycle
+      recordCancelReason: function (reasonCode, note) {
+        return respond(function () {
+          state.lastReason = { reason: reasonCode, note: note || null };
+          return { status: 'ok', recorded: true, id: 'mock-reason' };
+        });
+      },
+
+      recordCancelOutcome: function (outcome) {
+        return respond(function () {
+          state.lastOutcome = outcome;
+          return { status: 'ok', recorded: true };
+        });
+      },
+
+      /** Mirrors the server: the offer cannot succeed. */
+      acceptRetentionOffer: function () {
+        return respond(function () {
+          throw PortalError('offer_unavailable', 'That offer is not available yet.');
+        });
+      },
+
       skipNextDelivery: function (id, opts) {
         return respond(function () {
           var s = state.subscription;
@@ -1013,6 +1035,88 @@
        * The server answers with the RE-READ subscription, not an echo, so the
        * UI renders what Phoenix now holds rather than what we asked for.
        * ----------------------------------------------------------------- */
+
+      /* --- Cancellation Retention V2 -------------------------------- *
+       * Neither of these is a Phoenix mutation. The first writes to our own
+       * store; the second currently writes nothing anywhere.
+       * --------------------------------------------------------------- */
+
+      /**
+       * Record why the customer is leaving, at the moment they say so.
+       *
+       * Called on the way THROUGH the journey, not at the end, because the
+       * customers it saves never reach an end. `note` travels only for
+       * "other" — the server ignores it otherwise.
+       */
+      recordCancelReason: function (reasonCode, note) {
+        var body;
+        try {
+          body = { session: requireSession(), reason: reasonCode };
+        } catch (e) {
+          return Promise.reject(e);
+        }
+        if (typeof note === 'string' && note.length) body.note = note;
+        return post('/portal/cancel-reason', body).then(function (r) {
+          if (r.status === 401) {
+            store.clear();
+            pending = null;
+            throw PortalError('unauthenticated', 'Your session has expired.');
+          }
+          if (!r.ok) throw PortalError('server', 'We could not save that just now.');
+          return r.data;
+        });
+      },
+
+      /** Settle what became of the reason: saved_gap, saved_offer, cancelled. */
+      recordCancelOutcome: function (outcome) {
+        var body;
+        try {
+          body = { session: requireSession(), outcome: outcome };
+        } catch (e) {
+          return Promise.reject(e);
+        }
+        // Best effort by design: an analytics write must never block or fail
+        // a customer's actual subscription change.
+        return post('/portal/cancel-reason', body).then(
+          function (r) { return r.data; },
+          function () { return null; }
+        );
+      },
+
+      /**
+       * Accept the 40%-off-next-delivery offer.
+       *
+       * GATED. There is no proven Phoenix operation that discounts one
+       * delivery and then restores the standing price, so the server answers
+       * `offer_unavailable` and nothing is applied. This method exists in its
+       * final shape so that connecting it later changes the server only.
+       */
+      acceptRetentionOffer: function (opts) {
+        var body;
+        try {
+          body = { session: requireSession(), confirm: true };
+        } catch (e) {
+          return Promise.reject(e);
+        }
+        if (opts && typeof opts.idempotencyKey === 'string') {
+          body.idempotencyKey = opts.idempotencyKey;
+        }
+        return post('/portal/retention-offer', body).then(function (r) {
+          if (r.status === 401) {
+            store.clear();
+            pending = null;
+            throw PortalError('unauthenticated', 'Your session has expired.');
+          }
+          if (r.status === 409 && r.data && r.data.error === 'offer_unavailable') {
+            // Never dressed up as a success. The customer is told plainly that
+            // it cannot be applied yet, rather than being told a discount
+            // landed that the next invoice will contradict.
+            throw PortalError('offer_unavailable', 'That offer is not available yet.');
+          }
+          if (!r.ok) throw PortalError('server', 'We could not apply that just now.');
+          return r.data;
+        });
+      },
 
       skipNextDelivery: function (id, opts) {
         return mutate('/portal/skip', {}, opts);
