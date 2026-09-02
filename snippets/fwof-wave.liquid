@@ -1,0 +1,11 @@
+{%- comment -%}
+  FreshWipes offer page — wave divider between white and pale sections.
+  Accepts: down (boolean) — true when the pale section follows, false when it precedes.
+{%- endcomment -%}
+<div class="wave" aria-hidden="true">
+  {%- if down -%}
+    <svg viewBox="0 0 1440 64" preserveAspectRatio="none" focusable="false"><path d="M0 40 C240 8 480 64 720 40 C960 16 1200 56 1440 28 L1440 64 L0 64 Z" fill="#D5F7FF"></path></svg>
+  {%- else -%}
+    <svg viewBox="0 0 1440 64" preserveAspectRatio="none" focusable="false"><path d="M0 28 C240 56 480 8 720 32 C960 56 1200 12 1440 36 L1440 0 L0 0 Z" fill="#D5F7FF"></path></svg>
+  {%- endif -%}
+</div>
