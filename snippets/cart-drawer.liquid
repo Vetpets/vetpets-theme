@@ -147,7 +147,30 @@
                                 </div>
                               </div>
                               <div class="cart-item__media" role="cell">
-                                {% if item.image %}
+                                {%- comment -%}
+                                  VetPets offer-page bundle image.
+                                  The FreshWipes offer page (?view=freshwipes-offer-page) tags only its MAIN
+                                  product line with private _vp_* properties so this drawer can show the
+                                  2/4/6-pack the customer actually selected instead of the single-jar
+                                  product image. Free-gift lines and every other product carry no
+                                  _vp_offer_source, so they fall through to the unchanged item.image path.
+                                {%- endcomment -%}
+                                {%- assign vp_bundle_image = '' -%}
+                                {%- if item.properties._vp_offer_source == 'freshwipes-offer-page' and item.properties._vp_bundle_image != blank -%}
+                                  {%- assign vp_bundle_image = item.properties._vp_bundle_image -%}
+                                {%- endif -%}
+                                {% if vp_bundle_image != '' %}
+                                  {% comment %} Leave empty space due to a:empty CSS display: none rule {% endcomment %}
+                                  {% if block.settings.image_link %}<a href="{{ item.url }}" class="cart-item__link" tabindex="-1" aria-hidden="true"> </a>{% endif %}
+                                  <img
+                                    class="cart-item__image"
+                                    src="{{ vp_bundle_image }}"
+                                    alt="{{ item.product.title | escape }}"
+                                    loading="lazy"
+                                    width="150"
+                                    height="150"
+                                  >
+                                {% elsif item.image %}
                                   {% comment %} Leave empty space due to a:empty CSS display: none rule {% endcomment %}
                                   {% if block.settings.image_link %}<a href="{{ item.url }}" class="cart-item__link" tabindex="-1" aria-hidden="true"> </a>{% endif %}
                                   <img
