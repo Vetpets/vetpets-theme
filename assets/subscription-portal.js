@@ -69,6 +69,7 @@
       pending: null,
       lastFocus: null,
       draft: { delay: 7, reason: null, restart: 0, date: null, note: '', gap: null },
+      reasonError: null,
       data: null,
       loyalty: null,
       customer: null,
@@ -1080,6 +1081,15 @@
 
     var row = this.root.querySelector('[data-spp-reason-row]');
     if (row) row.hidden = !d.reason;
+
+    // The message disappears as soon as the problem does, rather than sitting
+    // there contradicting what the customer has just put right.
+    var err = this.root.querySelector('[data-spp-reason-error]');
+    if (err) {
+      var msg = this.state.reasonError && this.reasonProblem() ? this.state.reasonError : '';
+      err.textContent = msg;
+      err.hidden = !msg;
+    }
   };
 
   /**
@@ -1513,9 +1523,16 @@
     this.root.addEventListener('input', function (e) {
       var note = e.target.closest('[data-spp-note]');
       if (note) {
-        // Held in state, not re-rendered: writing the value back on every
-        // keystroke would fight the customer's caret.
+        // The value is held in state and never written back to the field —
+        // re-setting it on every keystroke would fight the caret. Only the
+        // validation message is re-rendered.
         self.state.draft.note = note.value || '';
+        var errEl = self.root.querySelector('[data-spp-reason-error]');
+        if (errEl && !errEl.hidden && !self.reasonProblem()) {
+          errEl.hidden = true;
+          errEl.textContent = '';
+          self.state.reasonError = null;
+        }
         return;
       }
       var date = e.target.closest('[data-spp-date]');
@@ -1554,6 +1571,7 @@
 
     if (kind === 'delay') d.delay = value === 'custom' ? 'custom' : parseInt(value, 10);
     else if (kind === 'gap') d.gap = value;
+    if (kind === 'reason') this.state.reasonError = null;
     else if (kind === 'reason') d.reason = value;
     else if (kind === 'restart') d.restart = parseInt(el.dataset.sppIndex, 10);
     this.render();
@@ -1598,6 +1616,26 @@
   /** The approved figures, stated once. */
   var OFFER_PERCENT = 40;
   var STANDARD_PERCENT = 20;
+
+  /** How much the customer must actually write for "Something else". */
+  var MIN_REASON_NOTE = 3;
+
+  /**
+   * Why the reason screen cannot continue yet, or null when it can.
+   *
+   * "Something else" without words is the same as no reason at all — it tells
+   * retention analysis nothing, and it is the one option that exists purely to
+   * capture what the fixed list could not.
+   */
+  Portal.prototype.reasonProblem = function () {
+    var d = this.state.draft;
+    if (!d.reason) return 'Choose a reason so we can continue.';
+    if (d.reason === 'other') {
+      var note = (d.note || '').trim();
+      if (note.length < MIN_REASON_NOTE) return 'Tell us briefly what happened.';
+    }
+    return null;
+  };
 
   var CONFIRMED_ACTIONS = { skip: 1, delay: 1, reschedule: 1, cancel: 1, reactivate: 1 };
 
@@ -1756,9 +1794,27 @@
        * continuing, and it is not a mutation.
        */
       case 'reasonContinue': {
-        if (!d.reason) return;
-        var noteText = d.reason === 'other' ? (d.note || '') : '';
+        /* Validation first, and OUT LOUD.
+         *
+         * This used to `return` silently when nothing was selected, which is
+         * indistinguishable from a broken button: the customer taps it again
+         * and still nothing happens. A refusal the customer cannot see is the
+         * same defect that made the cancel button look dead. */
+        var problem = this.reasonProblem();
+        if (problem) {
+          this.state.reasonError = problem;
+          this.render();
+          var box = this.root.querySelector(
+            d.reason === 'other' ? '[data-spp-note]' : '[data-spp-pick="reason"]'
+          );
+          if (box && box.focus) { try { box.focus(); } catch (e) {} }
+          return;
+        }
+
+        this.state.reasonError = null;
+        var noteText = d.reason === 'other' ? (d.note || '').trim() : '';
         if (self.adapter.recordCancelReason) {
+          // Best effort: analysis must never block a customer continuing.
           self.adapter.recordCancelReason(d.reason, noteText).catch(function () {});
         }
         this.show('cancel-alt');
