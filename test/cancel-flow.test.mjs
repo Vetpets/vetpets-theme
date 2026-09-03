@@ -923,3 +923,270 @@ describe('the gap cards centre, and the base row rule does not fight them', () =
     assert.equal(gaps.length, 5);
   });
 });
+
+/* ------------------------------------------------ the real click path ---- */
+
+/**
+ * THE DEFECT THIS EXISTS FOR
+ * --------------------------
+ * In DEV, no reason row could be selected. Clicking a row or its radio did
+ * nothing, so "Continue cancelling" could never proceed.
+ *
+ * A bare `if` had been inserted into the middle of pick()'s else-if chain:
+ *
+ *     else if (kind === 'gap') d.gap = value;
+ *     if (kind === 'reason') this.state.reasonError = null;   // inserted
+ *     else if (kind === 'reason') d.reason = value;           // now dead
+ *
+ * The inserted statement adopted the assignment below it as its own else-
+ * branch, so `d.reason = value` became unreachable: the condition and its
+ * else were the same test. Every downstream symptom — no fill, no selected
+ * row, aria-checked stuck false, the textarea never opening, Continue
+ * refusing — was that one line.
+ *
+ * The tests in this file did not catch it because they called reasonProblem()
+ * against a hand-built state and regex-scanned the source. Neither touches
+ * the click path. This block drives the SHIPPED delegated handler over a
+ * rendered row instead, so a dead binding fails here.
+ */
+
+/** The smallest DOM that the shipped click delegation actually uses. */
+function el(tag, attrs = {}) {
+  const node = {
+    tag,
+    attrs: { ...attrs },
+    dataset: {},
+    parent: null,
+    children: [],
+    classList: {
+      _s: new Set(),
+      add(c) { this._s.add(c); },
+      remove(c) { this._s.delete(c); },
+      toggle(c, on) { on ? this._s.add(c) : this._s.delete(c); },
+      contains(c) { return this._s.has(c); },
+    },
+    getAttribute(n) { return n in this.attrs ? this.attrs[n] : null; },
+    setAttribute(n, v) { this.attrs[n] = String(v); },
+    append(child) { child.parent = this; this.children.push(child); return child; },
+    matches(sel) {
+      const m = /^\[([a-z-]+)(?:="([^"]*)")?\]$/.exec(sel);
+      assert.ok(m, `unsupported selector in test shim: ${sel}`);
+      const [, name, want] = m;
+      if (!(name in this.attrs)) return false;
+      return want === undefined || this.attrs[name] === want;
+    },
+    closest(sel) {
+      let n = this;
+      while (n) { if (n.matches(sel)) return n; n = n.parent; }
+      return null;
+    },
+    querySelector(sel) {
+      for (const c of this.children) {
+        if (c.matches(sel)) return c;
+        const deeper = c.querySelector(sel);
+        if (deeper) return deeper;
+      }
+      return null;
+    },
+    // Records that the refusal path moved focus somewhere the customer can see.
+    focused: 0,
+    focus() { this.focused++; },
+  };
+  return node;
+}
+
+/**
+ * The shipped click delegation, lifted verbatim from the bundle.
+ *
+ * Brace-matched out of the file rather than retyped: a copy of the handler
+ * would keep passing after the real one broke, which is the exact failure
+ * this block exists to prevent.
+ */
+function delegatedClickHandler() {
+  const open = "this.root.addEventListener('click', function (e) {";
+  const at = src.indexOf(open);
+  assert.ok(at > -1, 'the delegated click handler must exist');
+  let i = at + open.length - 1, depth = 0, end = -1;
+  for (; i < src.length; i++) {
+    if (src[i] === '{') depth++;
+    else if (src[i] === '}') { depth--; if (depth === 0) { end = i; break; } }
+  }
+  assert.ok(end > -1, 'the click handler must be brace-balanced');
+  const body = src.slice(at + open.length, end);
+  return new Function('self', 'e', body);
+}
+
+const onClick = delegatedClickHandler();
+const pick = method('pick');
+const reasonProblem = method('reasonProblem', ['MIN_REASON_NOTE'], [constant('MIN_REASON_NOTE')]);
+
+/** A portal whose reason rows are rendered from the real view-model. */
+function mountReasonScreen() {
+  const root = el('div', { 'data-spp-root': '' });
+  const note = root.append(el('div', { 'data-spp-reason-note': '', hidden: '' }));
+  const errBox = root.append(el('p', { 'data-spp-reason-error': '', hidden: '' }));
+
+  const portal = {
+    root,
+    state: {
+      draft: { delay: 7, reason: null, restart: 0, date: null, note: '', gap: null },
+      reasonError: null,
+      data: {}, loyalty: null, inactive: [],
+    },
+    shown: [],
+    adapter: {},
+    fmtDate: (x) => String(x),
+    rows: [],
+    show(name) { this.shown.push(name); },
+    pick,
+    reasonProblem,
+    renders: 0,
+    /* Stands in for the shipped render: re-derives every row from listData
+     * and applies renderList's documented _checked -> aria-checked mapping. */
+    render() {
+      this.renders++;
+      const model = listData.call(this, 'reasons');
+      model.forEach((item, i) => {
+        const row = this.rows[i];
+        row.setAttribute('aria-checked', item._checked ? 'true' : 'false');
+        row.classList.toggle('is-selected', item._checked);
+      });
+      note.attrs.hidden = this.state.draft.reason !== 'other' ? '' : undefined;
+      const msg = this.state.reasonError && this.reasonProblem() ? this.state.reasonError : '';
+      errBox.attrs.hidden = msg ? undefined : '';
+    },
+  };
+
+  // Rows as the template renders them: a button carrying the binding, with a
+  // radio span and a label span inside it — both are clickable surfaces.
+  listData.call(portal, 'reasons').forEach((item) => {
+    const row = root.append(el('button', {
+      'data-spp-pick': 'reason', role: 'radio', 'aria-checked': 'false',
+    }));
+    row.dataset.sppValue = item._value;
+    row.append(el('span', { class: 'spp__radio' }));
+    row.append(el('span')).attrs.text = item.label;
+    portal.rows.push(row);
+  });
+
+  return { portal, root, note, errBox, click: (target) => onClick(portal, { target, preventDefault() {} }) };
+}
+
+const REASON_MODEL = constant('REASONS');
+const idxOf = (code) => REASON_MODEL.findIndex((r) => r[0] === code);
+
+describe('a reason row can actually be selected', () => {
+  test('clicking the row sets the reason', () => {
+    const { portal, click } = mountReasonScreen();
+    const row = portal.rows[idxOf('break')];
+    click(row);
+    assert.equal(portal.state.draft.reason, 'break');
+  });
+
+  test('clicking the radio inside the row selects it too', () => {
+    // The radio is a child span, so this only works via closest().
+    const { portal, click } = mountReasonScreen();
+    const row = portal.rows[idxOf('price')];
+    click(row.children[0]);
+    assert.equal(portal.state.draft.reason, 'price');
+  });
+
+  test('clicking the label text selects it too', () => {
+    const { portal, click } = mountReasonScreen();
+    const row = portal.rows[idxOf('no_results')];
+    click(row.children[1]);
+    assert.equal(portal.state.draft.reason, 'no_results');
+  });
+
+  test('the selection becomes visible: aria-checked and the selected class', () => {
+    const { portal, click } = mountReasonScreen();
+    const i = idxOf('too_much');
+    click(portal.rows[i]);
+    assert.equal(portal.rows[i].getAttribute('aria-checked'), 'true');
+    assert.ok(portal.rows[i].classList.contains('is-selected'));
+  });
+
+  test('exactly one reason is selected at a time', () => {
+    const { portal, click } = mountReasonScreen();
+    click(portal.rows[idxOf('price')]);
+    click(portal.rows[idxOf('not_using')]);
+    assert.equal(portal.state.draft.reason, 'not_using');
+    const checked = portal.rows.filter((r) => r.getAttribute('aria-checked') === 'true');
+    assert.equal(checked.length, 1);
+    assert.equal(portal.rows[idxOf('price')].getAttribute('aria-checked'), 'false');
+  });
+
+  test('the shipped renderList is what maps _checked onto the row', () => {
+    // The mount above applies that mapping; this proves it is the real one.
+    assert.match(src, /_checked \? 'true' : 'false'/);
+    assert.match(src, /classList\.toggle\('is-selected', item\._checked\)/);
+  });
+
+  test('"Something else" opens the textarea, another reason closes it', () => {
+    const { portal, note, click } = mountReasonScreen();
+    click(portal.rows[idxOf('other')]);
+    assert.equal(note.attrs.hidden, undefined, 'textarea must be visible');
+    click(portal.rows[idxOf('break')]);
+    assert.equal(note.attrs.hidden, '', 'textarea must close again');
+  });
+
+  test('picking a reason clears a standing validation message', () => {
+    const { portal, errBox, click } = mountReasonScreen();
+    portal.state.reasonError = 'Choose a reason so we can continue.';
+    portal.render();
+    assert.equal(errBox.attrs.hidden, undefined, 'message is showing first');
+    click(portal.rows[idxOf('break')]);
+    assert.equal(portal.state.reasonError, null);
+    assert.equal(errBox.attrs.hidden, '');
+  });
+
+  test('reason click -> state set -> Continue advances to the longer-gap screen', () => {
+    const { portal, click } = mountReasonScreen();
+    click(portal.rows[idxOf('break')]);
+    assert.equal(portal.reasonProblem(), null, 'validation must now pass');
+    act.call(portal, 'reasonContinue');
+    assert.deepEqual(portal.shown, ['cancel-alt']);
+  });
+
+  test('with nothing picked, Continue refuses, says so, and moves focus', () => {
+    const { portal, errBox } = mountReasonScreen();
+    act.call(portal, 'reasonContinue');
+    assert.deepEqual(portal.shown, [], 'must not advance');
+    assert.match(portal.state.reasonError, /choose a reason/i);
+    assert.equal(errBox.attrs.hidden, undefined, 'the message must be visible');
+    // Focus lands on the reason list, so the refusal is findable without sight.
+    assert.equal(portal.rows[0].focused, 1);
+  });
+
+  test('every branch of pick still assigns — no severed chain', () => {
+    // The bug was structural: a bare `if` splitting the else-if chain. Each
+    // kind must land on its own draft field.
+    const p = { state: { draft: {}, reasonError: 'x' }, render() {} };
+    const fake = (kind, value, index) => ({
+      getAttribute: () => kind,
+      dataset: { sppValue: value, sppIndex: index },
+    });
+    pick.call(p, fake('reason', 'price'));
+    assert.equal(p.state.draft.reason, 'price');
+    pick.call(p, fake('gap', 'skip'));
+    assert.equal(p.state.draft.gap, 'skip');
+    pick.call(p, fake('delay', '7'));
+    assert.equal(p.state.draft.delay, 7);
+    pick.call(p, fake('restart', undefined, '2'));
+    assert.equal(p.state.draft.restart, 2);
+  });
+
+  test('the rows are real buttons, so the keyboard still works', () => {
+    // Enter and Space come free on a <button>; a div would need handlers.
+    const tpl = screen('cancel-reason');
+    assert.match(tpl, /<button[^>]*data-spp-pick="reason"/);
+    assert.match(tpl, /role="radio"/);
+    assert.doesNotMatch(tpl, /data-spp-pick="reason"[^>]*disabled/);
+  });
+
+  test('nothing in the CSS swallows the click', () => {
+    const choice = /\.spp__choice\s*\{[^}]*\}/.exec(css);
+    assert.doesNotMatch(choice[0], /pointer-events:\s*none/);
+    assert.doesNotMatch(css, /\.spp__radio\s*\{[^}]*pointer-events:\s*none/);
+  });
+});
