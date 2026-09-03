@@ -459,6 +459,16 @@
     // history and stray data-spp-go values all arrive here.
     if (DISABLED_SCREENS[screen]) screen = 'dashboard';
 
+    /* The 40% offer is one-time per customer, permanently, and the SERVER
+     * decides that — this only keeps the customer from ever being shown an
+     * offer the server has already refused. Checked here, not just on the
+     * one button that used to link to it, so a deep link, browser back/
+     * forward, or a future caller cannot resurface it either. Per the
+     * approved journey: Longer Gap goes straight to Final Confirmation. */
+    if (screen === 'cancel-offer' && this.state.data && this.state.data.retentionOfferRedeemed) {
+      screen = 'cancel-confirm';
+    }
+
     if (this.state.screen !== screen) this.state.history.push(this.state.screen);
     this.state.screen = screen;
     this.closeSheet(true);

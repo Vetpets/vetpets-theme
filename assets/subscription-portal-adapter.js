@@ -208,6 +208,9 @@
         cancelledOn: null,
         discountRate: 0.10,
         shippingFree: true,
+        // Mirrors the server flag for the DEV persona only, so the
+        // already-redeemed journey can be previewed without a backend.
+        retentionOfferRedeemed: false,
         lines: [
           { id: 'line_fresh', productKey: 'freshwipes', title: 'FreshWipes jar',
             subtitle: "for Bella & Max", quantity: 2, image: IMAGES.freshwipes || '', imagePending: false },
@@ -288,7 +291,8 @@
         pricing: p,
         address: clone(s.address),
         payment: clone(s.payment),
-        shippingFree: s.shippingFree, discountRate: s.discountRate
+        shippingFree: s.shippingFree, discountRate: s.discountRate,
+        retentionOfferRedeemed: s.retentionOfferRedeemed === true
       };
     }
 
@@ -445,6 +449,7 @@
           var sub = state.subscription;
           var before = sub && sub.pricing && sub.pricing.total ? sub.pricing.total.amount : 0;
           var offer = Math.max(1, Math.round(before * 0.6 * 100)) / 100;
+          state.subscription.retentionOfferRedeemed = true;
           return {
             status: 'ok', operation: 'offer', percentOff: 40,
             previousPrice: before, offerPrice: offer,
@@ -885,7 +890,12 @@
         address: sub.deliveryAddress || null,
         payment: sub.payment || null,
         shippingFree: null,
-        discountRate: null
+        discountRate: null,
+        // Server-decided, permanent once true. The controller uses this to
+        // route around the offer screen; it is never the thing that decides
+        // whether a write can happen — that gate lives on the server, in
+        // handleRetentionOffer, and does not trust anything the browser sends.
+        retentionOfferRedeemed: sub.retentionOfferRedeemed === true
       };
     }
 
@@ -1126,6 +1136,21 @@
             throw PortalError('timeout', 'That is taking longer than expected. Refresh to check.');
           }
           if (!r.ok) throw PortalError('server', 'We could not apply that just now.');
+
+          /* THE BUG THIS EXISTS FOR:
+           *
+           * readPortal() memoizes one /portal/subscription read per load() and
+           * shares it across getCustomer/getSubscription/listSubscriptions/
+           * listDeliveries. mutate() (used by skip/delay/cancel/reschedule)
+           * replaces that cache with its own fresh view on every success, which
+           * is why those dashboards update correctly. This method never did —
+           * the ONLY invalidation it had was on a 401 above — so even after the
+           * write succeeded and the controller called load(), every one of
+           * load()'s four cache-sharing calls kept returning the PRE-OFFER
+           * view, and the dashboard kept showing the old price. Nulling the
+           * cache here is what makes load()'s subsequent read actually hit the
+           * network instead of replaying what was on screen before the click. */
+          pending = null;
           return r.data;
         });
       },

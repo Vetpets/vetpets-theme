@@ -976,6 +976,72 @@ describe('the dashboard reflects the offer without a manual reload', () => {
   });
 });
 
+
+/**
+ * THE RULE THIS EXISTS FOR
+ * ------------------------
+ * The 40% offer is one-time per customer, permanently, and the SERVER
+ * decides that (see the backend's retentionOfferEligibility tests). This
+ * only proves the frontend never SHOWS the offer to a customer the server
+ * has already told it is redeemed — checked in show() itself, not just on
+ * the one button that used to link there, so a deep link or the browser's
+ * own back/forward button cannot resurface it either.
+ */
+describe('an already-redeemed customer never sees the offer screen', () => {
+  const show = method('show', ['DISABLED_SCREENS', 'SCREENS_WITH_CHROME'], [{}, constant('SCREENS_WITH_CHROME')]);
+
+  function shownPortal(retentionOfferRedeemed) {
+    const screens = {};
+    for (const name of ['cancel-alt', 'cancel-offer', 'cancel-confirm', 'dashboard']) {
+      screens[name] = { hidden: true, getAttribute: () => name, setAttribute() {}, focus() {} };
+    }
+    const root = {
+      querySelectorAll(sel) {
+        if (sel === '[data-spp-screen]') return Object.values(screens);
+        return [];
+      },
+      querySelector() { return null; },
+    };
+    return {
+      state: {
+        screen: 'cancel-alt', history: [],
+        data: { retentionOfferRedeemed },
+      },
+      root,
+      closeSheet() {},
+      render() {},
+      markCurrentNav() {},
+      show(v) { return show.call(this, v); },
+    };
+  }
+
+  test('redirects straight to Final Confirmation once redeemed', () => {
+    const p = shownPortal(true);
+    p.show('cancel-offer');
+    assert.equal(p.state.screen, 'cancel-confirm');
+  });
+
+  test('an unredeemed customer still reaches the offer screen normally', () => {
+    const p = shownPortal(false);
+    p.show('cancel-offer');
+    assert.equal(p.state.screen, 'cancel-offer');
+  });
+
+  test('every other screen is unaffected by the flag', () => {
+    const p = shownPortal(true);
+    p.show('dashboard');
+    assert.equal(p.state.screen, 'dashboard');
+  });
+
+  test('the guard survives even with no data loaded yet', () => {
+    // this.state.data can be null between sign-in and the first load().
+    const p = shownPortal(false);
+    p.state.data = null;
+    assert.doesNotThrow(() => p.show('cancel-offer'));
+    assert.equal(p.state.screen, 'cancel-offer');
+  });
+});
+
 describe('quantity is not exposed anywhere', () => {
   test('no quantity control exists in the portal', () => {
     // Phoenix has confirmed there is no quantity-change endpoint.
