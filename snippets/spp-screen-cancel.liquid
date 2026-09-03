@@ -228,7 +228,15 @@
 
 {%- comment -%} ---------- 5 · Confirm ---------- {%- endcomment -%}
 <section class="spp__screen" data-spp-screen="cancel-confirm" hidden aria-labelledby="spp-cc-h">
-  <button type="button" class="spp__back" data-spp-go="cancel-offer">
+  {%- comment -%}
+    data-spp-go is a fallback for a customer who somehow never eligible for
+    JS at all; the real target is decided every render in
+    renderCancelJourney(), because it depends on retentionOfferRedeemed,
+    which can only be known once the subscription has loaded. A redeemed
+    customer must land on the longer-gap screen, never back on the offer
+    screen show() already refuses to display.
+  {%- endcomment -%}
+  <button type="button" class="spp__back" data-spp-confirm-back data-spp-go="cancel-offer">
     {% render 'spp-icon', icon: 'chevron-left' %}Back
   </button>
 

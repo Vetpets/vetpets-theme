@@ -1042,6 +1042,99 @@ describe('an already-redeemed customer never sees the offer screen', () => {
   });
 });
 
+
+/**
+ * THE BUG THIS EXISTS FOR
+ * ------------------------
+ * The confirmation screen's Back button was wired to a fixed
+ * data-spp-go="cancel-offer" in the markup. For a customer who has already
+ * redeemed the 40% offer, show('cancel-offer') immediately redirects back to
+ * 'cancel-confirm' — the screen the customer is already ON — so the button
+ * looked completely dead. It was never unresponsive; it was navigating
+ * somewhere that refuses to render and bounced straight back.
+ *
+ * The fix decides the target fresh on every render (renderCancelJourney),
+ * because eligibility is server truth that can change mid-session — the
+ * moment a successful offer's post-write load() lands.
+ */
+describe('Back on Final Confirmation goes to the right previous step', () => {
+  const show = method('show', ['DISABLED_SCREENS', 'SCREENS_WITH_CHROME'], [{}, constant('SCREENS_WITH_CHROME')]);
+  const renderCancelJourney = method('renderCancelJourney');
+
+  function confirmScreenPortal(retentionOfferRedeemed) {
+    const backBtn = el('button', { class: 'spp__back', 'data-spp-confirm-back': '', 'data-spp-go': 'cancel-offer' });
+    const screens = {};
+    for (const name of ['cancel-alt', 'cancel-offer', 'cancel-confirm']) {
+      screens[name] = el('section', { 'data-spp-screen': name });
+    }
+    const root = el('div');
+    root.append(backBtn);
+    Object.values(screens).forEach((n) => root.append(n));
+
+    const portal = {
+      state: {
+        screen: 'cancel-confirm', history: [],
+        draft: { delay: 7, reason: null, restart: 0, date: null, note: '', gap: null },
+        reasonError: null,
+        data: { retentionOfferRedeemed },
+      },
+      root,
+      closeSheet() {},
+      render() {},
+      markCurrentNav() {},
+      reasonProblem: () => null,
+      show(v) { return show.call(this, v); },
+      renderCancelJourney() { return renderCancelJourney.call(this); },
+    };
+    portal.renderCancelJourney(); // as the real render() loop would, every time
+    return { portal, backBtn, click: (target) => onClick(portal, { target, preventDefault() {} }) };
+  }
+
+  test('an ELIGIBLE customer: Back goes to the retention offer', () => {
+    const { portal, backBtn, click } = confirmScreenPortal(false);
+    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-offer');
+    click(backBtn);
+    assert.equal(portal.state.screen, 'cancel-offer');
+  });
+
+  test('a REDEEMED customer: Back goes to the longer gap, never the offer', () => {
+    const { portal, backBtn, click } = confirmScreenPortal(true);
+    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-alt');
+    click(backBtn);
+    assert.equal(portal.state.screen, 'cancel-alt');
+  });
+
+  test('the target updates if redemption status changes mid-session', () => {
+    // The exact case that would otherwise slip through: a customer redeems
+    // the offer, load() lands, and Final Confirmation must stop offering a
+    // way back into a screen that would now refuse to render.
+    const { portal, backBtn } = confirmScreenPortal(false);
+    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-offer');
+    portal.state.data.retentionOfferRedeemed = true;
+    portal.renderCancelJourney();
+    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-alt');
+  });
+
+  test('Back stays wired correctly regardless of reason-screen state', () => {
+    // Proves the fix does not accidentally depend on which screen the
+    // customer passed through, or what they picked there.
+    const { portal, backBtn } = confirmScreenPortal(true);
+    portal.state.draft.reason = 'other';
+    portal.state.draft.note = 'something';
+    portal.renderCancelJourney();
+    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-alt');
+    assert.equal(backBtn.disabled, undefined, 'the button must never become disabled');
+  });
+
+  test('deep-linking or the browser back/forward button still cannot expose the offer', () => {
+    // Independent of the Back BUTTON fix above: show() itself refuses to
+    // render the offer screen for a redeemed customer, from ANY caller.
+    const { portal } = confirmScreenPortal(true);
+    portal.show('cancel-offer');
+    assert.equal(portal.state.screen, 'cancel-confirm');
+  });
+});
+
 describe('quantity is not exposed anywhere', () => {
   test('no quantity control exists in the portal', () => {
     // Phoenix has confirmed there is no quantity-change endpoint.
@@ -1201,6 +1294,8 @@ function el(tag, attrs = {}) {
     setAttribute(n, v) { this.attrs[n] = String(v); },
     append(child) { child.parent = this; this.children.push(child); return child; },
     matches(sel) {
+      const idMatch = /^#([a-zA-Z0-9_-]+)$/.exec(sel);
+      if (idMatch) return this.attrs.id === idMatch[1];
       const m = /^\[([a-z-]+)(?:="([^"]*)")?\]$/.exec(sel);
       assert.ok(m, `unsupported selector in test shim: ${sel}`);
       const [, name, want] = m;
@@ -1219,6 +1314,14 @@ function el(tag, attrs = {}) {
         if (deeper) return deeper;
       }
       return null;
+    },
+    querySelectorAll(sel) {
+      const out = [];
+      for (const c of this.children) {
+        if (c.matches(sel)) out.push(c);
+        out.push(...c.querySelectorAll(sel));
+      }
+      return out;
     },
     // Records that the refusal path moved focus somewhere the customer can see.
     focused: 0,
