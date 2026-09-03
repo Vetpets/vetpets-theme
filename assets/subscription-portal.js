@@ -1100,6 +1100,26 @@
       err.textContent = msg;
       err.hidden = !msg;
     }
+
+    /* THE BUG THIS EXISTS FOR:
+     *
+     * The confirmation screen's Back button was wired to a fixed
+     * data-spp-go="cancel-offer" in the markup. For a customer who has
+     * already redeemed the 40% offer, show('cancel-offer') immediately
+     * redirects back to 'cancel-confirm' — the SAME screen the customer is
+     * already on — so the button appeared to do nothing at all. It was
+     * never dead; it was navigating to a screen that refuses to be shown,
+     * which bounced the customer right back where they started.
+     *
+     * The target is decided fresh on every render because eligibility is
+     * server truth that can change mid-session — most obviously the moment
+     * a successful offer's post-write load() lands and flips
+     * retentionOfferRedeemed from false to true. */
+    var confirmBack = this.root.querySelector('[data-spp-confirm-back]');
+    if (confirmBack) {
+      var redeemed = this.state.data && this.state.data.retentionOfferRedeemed;
+      confirmBack.setAttribute('data-spp-go', redeemed ? 'cancel-alt' : 'cancel-offer');
+    }
   };
 
   /**
