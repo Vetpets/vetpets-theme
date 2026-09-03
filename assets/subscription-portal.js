@@ -1569,10 +1569,17 @@
     var d = this.state.draft;
     var value = el.dataset.sppValue;
 
+    /* One chain, and every branch assigns. A bare `if` inserted mid-chain once
+     * severed this: `else if (kind === 'reason')` became the else-branch of an
+     * `if (kind === 'reason')`, so the assignment below it could never run and
+     * no reason could ever be selected. Keep the clearing INSIDE its branch. */
     if (kind === 'delay') d.delay = value === 'custom' ? 'custom' : parseInt(value, 10);
     else if (kind === 'gap') d.gap = value;
-    if (kind === 'reason') this.state.reasonError = null;
-    else if (kind === 'reason') d.reason = value;
+    else if (kind === 'reason') {
+      d.reason = value;
+      // A standing complaint must not outlive the problem it describes.
+      this.state.reasonError = null;
+    }
     else if (kind === 'restart') d.restart = parseInt(el.dataset.sppIndex, 10);
     this.render();
   };
