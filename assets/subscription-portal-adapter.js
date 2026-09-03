@@ -133,6 +133,7 @@
   VetPetsPortal.CONTRACT = {
     reads: ['getCustomer', 'getSubscription', 'listSubscriptions', 'listDeliveries',
             'getLoyalty', 'listRewards'],
+    retention: ['recordCancelReason', 'acceptRetentionOffer'],
     mutations: ['skipNextDelivery', 'delayNextDelivery', 'rescheduleNextDelivery',
                 'cancel', 'reactivate', 'requestRedemption'],
     auth: ['requestMagicLink', 'verifyMagicLink', 'signOut']
@@ -207,6 +208,9 @@
         cancelledOn: null,
         discountRate: 0.10,
         shippingFree: true,
+        // Mirrors the server flag for the DEV persona only, so the
+        // already-redeemed journey can be previewed without a backend.
+        retentionOfferRedeemed: false,
         lines: [
           { id: 'line_fresh', productKey: 'freshwipes', title: 'FreshWipes jar',
             subtitle: "for Bella & Max", quantity: 2, image: IMAGES.freshwipes || '', imagePending: false },
@@ -287,7 +291,8 @@
         pricing: p,
         address: clone(s.address),
         payment: clone(s.payment),
-        shippingFree: s.shippingFree, discountRate: s.discountRate
+        shippingFree: s.shippingFree, discountRate: s.discountRate,
+        retentionOfferRedeemed: s.retentionOfferRedeemed === true
       };
     }
 
@@ -425,6 +430,34 @@
        * ------------------------------------------------------------- */
 
       // POST /update-next-billing-date — push out by one full cycle
+      recordCancelReason: function (reasonCode, note) {
+        return respond(function () {
+          state.lastReason = { reason: reasonCode, note: note || null };
+          return { status: 'ok', recorded: true, id: 'mock-reason' };
+        });
+      },
+
+      recordCancelOutcome: function (outcome) {
+        return respond(function () {
+          state.lastOutcome = outcome;
+          return { status: 'ok', recorded: true };
+        });
+      },
+
+      acceptRetentionOffer: function () {
+        return respond(function () {
+          var sub = state.subscription;
+          var before = sub && sub.pricing && sub.pricing.total ? sub.pricing.total.amount : 0;
+          var offer = Math.max(1, Math.round(before * 0.6 * 100)) / 100;
+          state.subscription.retentionOfferRedeemed = true;
+          return {
+            status: 'ok', operation: 'offer', percentOff: 40,
+            previousPrice: before, offerPrice: offer,
+            verified: true, refreshRequired: false
+          };
+        });
+      },
+
       skipNextDelivery: function (id, opts) {
         return respond(function () {
           var s = state.subscription;
@@ -857,7 +890,12 @@
         address: sub.deliveryAddress || null,
         payment: sub.payment || null,
         shippingFree: null,
-        discountRate: null
+        discountRate: null,
+        // Server-decided, permanent once true. The controller uses this to
+        // route around the offer screen; it is never the thing that decides
+        // whether a write can happen — that gate lives on the server, in
+        // handleRetentionOffer, and does not trust anything the browser sends.
+        retentionOfferRedeemed: sub.retentionOfferRedeemed === true
       };
     }
 
@@ -1013,6 +1051,109 @@
        * The server answers with the RE-READ subscription, not an echo, so the
        * UI renders what Phoenix now holds rather than what we asked for.
        * ----------------------------------------------------------------- */
+
+      /* --- Cancellation Retention V2 -------------------------------- *
+       * Neither of these is a Phoenix mutation. The first writes to our own
+       * store; the second currently writes nothing anywhere.
+       * --------------------------------------------------------------- */
+
+      /**
+       * Record why the customer is leaving, at the moment they say so.
+       *
+       * Called on the way THROUGH the journey, not at the end, because the
+       * customers it saves never reach an end. `note` travels only for
+       * "other" — the server ignores it otherwise.
+       */
+      recordCancelReason: function (reasonCode, note) {
+        var body;
+        try {
+          body = { session: requireSession(), reason: reasonCode };
+        } catch (e) {
+          return Promise.reject(e);
+        }
+        if (typeof note === 'string' && note.length) body.note = note;
+        return post('/portal/cancel-reason', body).then(function (r) {
+          if (r.status === 401) {
+            store.clear();
+            pending = null;
+            throw PortalError('unauthenticated', 'Your session has expired.');
+          }
+          if (!r.ok) throw PortalError('server', 'We could not save that just now.');
+          return r.data;
+        });
+      },
+
+      /** Settle what became of the reason: saved_gap, saved_offer, cancelled. */
+      recordCancelOutcome: function (outcome) {
+        var body;
+        try {
+          body = { session: requireSession(), outcome: outcome };
+        } catch (e) {
+          return Promise.reject(e);
+        }
+        // Best effort by design: an analytics write must never block or fail
+        // a customer's actual subscription change.
+        return post('/portal/cancel-reason', body).then(
+          function (r) { return r.data; },
+          function () { return null; }
+        );
+      },
+
+      /**
+       * Accept the 40%-off-next-delivery offer.
+       *
+       * GATED. There is no proven Phoenix operation that discounts one
+       * delivery and then restores the standing price, so the server answers
+       * `offer_unavailable` and nothing is applied. This method exists in its
+       * final shape so that connecting it later changes the server only.
+       */
+      acceptRetentionOffer: function (opts) {
+        var body;
+        try {
+          body = { session: requireSession(), confirm: true };
+        } catch (e) {
+          return Promise.reject(e);
+        }
+        if (opts && typeof opts.idempotencyKey === 'string') {
+          body.idempotencyKey = opts.idempotencyKey;
+        }
+        return post('/portal/retention-offer', body).then(function (r) {
+          if (r.status === 401) {
+            store.clear();
+            pending = null;
+            throw PortalError('unauthenticated', 'Your session has expired.');
+          }
+          if (r.status === 409 && r.data && r.data.error === 'offer_unavailable') {
+            throw PortalError('offer_unavailable', 'That offer is not available right now.');
+          }
+          if (r.status === 409 && r.data && r.data.error === 'already_applied') {
+            throw PortalError('already_applied', 'That discount is already on your next delivery.');
+          }
+          if (r.status === 409 && r.data && r.data.error === 'operation_in_progress') {
+            throw PortalError('in_progress', 'That is already being processed.');
+          }
+          if (r.status === 504) {
+            throw PortalError('timeout', 'That is taking longer than expected. Refresh to check.');
+          }
+          if (!r.ok) throw PortalError('server', 'We could not apply that just now.');
+
+          /* THE BUG THIS EXISTS FOR:
+           *
+           * readPortal() memoizes one /portal/subscription read per load() and
+           * shares it across getCustomer/getSubscription/listSubscriptions/
+           * listDeliveries. mutate() (used by skip/delay/cancel/reschedule)
+           * replaces that cache with its own fresh view on every success, which
+           * is why those dashboards update correctly. This method never did —
+           * the ONLY invalidation it had was on a 401 above — so even after the
+           * write succeeded and the controller called load(), every one of
+           * load()'s four cache-sharing calls kept returning the PRE-OFFER
+           * view, and the dashboard kept showing the old price. Nulling the
+           * cache here is what makes load()'s subsequent read actually hit the
+           * network instead of replaying what was on screen before the click. */
+          pending = null;
+          return r.data;
+        });
+      },
 
       skipNextDelivery: function (id, opts) {
         return mutate('/portal/skip', {}, opts);

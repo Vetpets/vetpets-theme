@@ -1,12 +1,67 @@
 {%- comment -%}
-  Screens: cancellation flow (1 reason → 2 alternatives → 3 confirm →
-  4 cancelled), reactivation, inactive list, empty account.
+  Screens: cancellation flow (1 benefits → 2 reason → 3 alternatives →
+  4 offer → 5 confirm → 6 cancelled), reactivation, inactive list, empty
+  account.
 
   Cancellation stays completable throughout: the save-offers are shown
   once, and "continue to cancel" is always present.
 {%- endcomment -%}
 
-{%- comment -%} ---------- 1 · Reason ---------- {%- endcomment -%}
+{%- comment -%} ---------- 1 · Benefits ---------- {%- endcomment -%}
+{%- comment -%}
+  Step one of the approved journey. Optimised for EyeWipes and FreshWipes
+  subscribers: the concerns named first are the ones those routines address.
+
+  The headline is deliberately about the dog rather than the subscription. A
+  customer on this screen has already decided to leave; a pitch about value
+  reads as a sales counter, whereas the thing actually at stake is a routine
+  that was quietly working.
+{%- endcomment -%}
+<section class="spp__screen" data-spp-screen="cancel-benefits" hidden aria-labelledby="spp-cb-h">
+  <button type="button" class="spp__back" data-spp-go="subscription">
+    {% render 'spp-icon', icon: 'chevron-left' %}Subscription
+  </button>
+
+  <div class="spp__narrow">
+    <div class="spp__media-16x9">
+      <img
+        src="{{ 'spp-cancel-benefits.png' | asset_url }}"
+        alt="A dog resting, waiting for its daily care routine"
+        width="1280" height="720" loading="lazy" decoding="async">
+    </div>
+
+    <h1 class="spp__h1" id="spp-cb-h" style="margin-top:18px;">They can&rsquo;t tell you when it comes back</h1>
+    <p class="spp__lede">
+      Watery eyes and tear staining creep back first. Then the build-up on the teeth.
+      Prevention is easy to overlook while it&rsquo;s working &mdash; you notice it when it stops.
+    </p>
+
+    <div class="spp__eyebrow">What Routine Care includes</div>
+
+    <div class="spp__card spp__card--rows" style="padding:6px 18px;margin-bottom:20px;">
+      <div data-spp-list="benefits">
+        <template data-spp-tpl="benefits">
+          <div class="spp__benefit">
+            <span class="spp__benefit-tick" aria-hidden="true">
+              {% render 'spp-icon', icon: 'check-circle', size: 19 %}
+            </span>
+            <span class="spp__benefit-text">
+              <b data-spp-field="title">20% off Routine Care pricing</b>
+              <span data-spp-field="body">Your subscriber price on every refill.</span>
+            </span>
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <button type="button" class="spp__btn spp__btn--primary" data-spp-go="subscription">Never mind, keep my Routine Care</button>
+    <div class="spp__quiet-row">
+      <button type="button" class="spp__btn spp__btn--link" data-spp-go="cancel-reason">Continue cancelling</button>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ---------- 2 · Reason ---------- {%- endcomment -%}
 <section class="spp__screen" data-spp-screen="cancel-reason" hidden aria-labelledby="spp-cr-h">
   <button type="button" class="spp__back" data-spp-go="subscription">
     {% render 'spp-icon', icon: 'chevron-left' %}Subscription
@@ -27,67 +82,161 @@
   </div>
 
   {%- comment -%}
+    Shown only when "Something else" is chosen. The words are the point: a
+    preset code tells us a category, this tells us what actually happened.
+  {%- endcomment -%}
+  <div data-spp-reason-note hidden style="margin-top:16px;">
+    <label class="spp__label" for="spp-reason-note">Tell us what happened</label>
+    <textarea id="spp-reason-note" data-spp-note rows="3" maxlength="1000"
+      aria-describedby="spp-reason-error"
+      placeholder="In your own words."
+      style="width:100%;box-sizing:border-box;padding:12px 13px;border:1.5px solid rgba(13,35,64,.14);border-radius:12px;font:400 14.5px/1.5 var(--spp-font);color:var(--spp-ink);resize:vertical;"></textarea>
+  </div>
+
+  {%- comment -%}
+    Inline validation. Pressing Continue with nothing chosen used to do
+    nothing at all, which reads as a broken button — the customer taps it
+    again, harder, and still nothing happens.
+  {%- endcomment -%}
+  <p id="spp-reason-error" data-spp-reason-error role="alert" hidden
+     style="margin-top:12px;font:500 13.5px/1.45 var(--spp-font);color:var(--spp-danger,#B42318);"></p>
+
+  {%- comment -%}
     Staying is the primary action, continuing is not. Both remain fully
     reachable: same order in the DOM as on screen, both real buttons, both in
     the tab sequence. Only the visual weight changes — nothing is hidden,
     disabled, or moved out of the keyboard path.
   {%- endcomment -%}
   <button type="button" class="spp__btn spp__btn--primary" style="margin-top:18px;" data-spp-go="subscription">Keep my subscription</button>
-  <button type="button" class="spp__btn spp__btn--link" style="margin-top:10px;" data-spp-go="cancel-alt">Continue</button>
+  <div class="spp__quiet-row">
+    <button type="button" class="spp__btn spp__btn--link" data-spp-act="reasonContinue">Continue cancelling</button>
+  </div>
 </section>
 
-{%- comment -%} ---------- 2 · Alternatives ---------- {%- endcomment -%}
+{%- comment -%} ---------- 3 · Alternatives ---------- {%- endcomment -%}
 <section class="spp__screen" data-spp-screen="cancel-alt" hidden aria-labelledby="spp-ca-h">
   <button type="button" class="spp__back" data-spp-go="cancel-reason">
     {% render 'spp-icon', icon: 'chevron-left' %}Back
   </button>
 
-  <h1 class="spp__h1" id="spp-ca-h" data-spp-field="alt.headline">Would a longer gap help?</h1>
-  <p class="spp__lede" data-spp-field="alt.body">
-    At every 90 days your cost per month drops without changing what arrives.
-  </p>
+  <div class="spp__narrow">
+    <div class="spp__pill">More time, not the end</div>
+    <h1 class="spp__h1" id="spp-ca-h">Push the next delivery back instead</h1>
+    <p class="spp__lede">
+      If the timing is the problem rather than the product, move it. Everything else
+      about your subscription stays as it is.
+    </p>
 
-  {%- comment -%}
-    Retention offers are limited to the two schedule changes Phoenix supports.
-    Pause and swap were removed: offering a save that the billing system of
-    record cannot perform would be a promise we can't keep.
-  {%- endcomment -%}
-  <div class="spp__grid spp__grid--alts">
-    {%- comment -%} Reason-matched primary offer — always skip or delay {%- endcomment -%}
-    <div class="spp__card" style="border:1.5px solid var(--spp-accent);border-radius:18px;box-shadow:none;">
-      <div style="font:700 16px/1.25 var(--spp-font);color:var(--spp-ink);margin-bottom:6px;" data-spp-field="alt.primaryTitle">Skip the next one</div>
-      <p style="margin:0 0 14px;font:500 14px/1.5 var(--spp-font);color:var(--spp-body);" data-spp-field="alt.primaryBody">
-        Nothing has to ship until you need it. Skipping keeps your price and your place in the routine.
-      </p>
-      <button type="button" class="spp__btn spp__btn--primary" style="min-height:48px;font-size:15px;" data-spp-act="altPrimary">
-        <span data-spp-field="alt.primaryCta">Skip this delivery</span>
-      </button>
+    {%- comment -%}
+      The five proven schedule changes and nothing else. Every one maps to an
+      operation verified end to end against Phoenix. No cadence or frequency
+      option appears, because Phoenix cannot perform one.
+    {%- endcomment -%}
+    <div class="spp__choices" role="radiogroup" aria-label="How to move the next delivery" data-spp-list="gapOptions">
+      <template data-spp-tpl="gapOptions">
+        <button type="button" class="spp__choice spp__choice--stacked" role="radio" aria-checked="false" data-spp-pick="gap">
+          <span class="spp__radio"></span>
+          <span class="spp__choice-text">
+            <b data-spp-field="label">Skip the next delivery</b>
+            <span data-spp-field="meta">Nothing ships. The one after is unchanged.</span>
+          </span>
+        </button>
+      </template>
     </div>
 
-    <div class="spp__card spp__card--soft" style="border-radius:18px;">
-      <div style="font:700 16px/1.25 var(--spp-font);color:var(--spp-ink);margin-bottom:6px;">Push it back instead</div>
-      <p style="margin:0 0 14px;font:500 14px/1.5 var(--spp-font);color:var(--spp-body);">
-        Move the next delivery 7, 15 or 30 days later. Nothing is charged until the new date, and your price stays the same.
-      </p>
-      <button type="button" class="spp__btn spp__btn--secondary" style="min-height:48px;font-size:15px;" data-spp-sheet="delay">Choose a new date</button>
+    <div data-spp-gap-date hidden style="margin-top:14px;">
+      <label class="spp__label" for="spp-gap-date">Pick a new delivery date</label>
+      <input type="date" id="spp-gap-date" data-spp-date class="spp__input"
+        aria-describedby="spp-gap-date-error"
+        style="width:100%;box-sizing:border-box;min-height:48px;padding:12px 14px;border-radius:12px;border:1px solid rgba(13,35,64,.18);background:var(--spp-surface);font:500 15px/1.2 var(--spp-font);color:var(--spp-ink);">
+      <p id="spp-gap-date-error" data-spp-date-error role="alert" hidden
+         style="margin-top:6px;font:500 13px/1.4 var(--spp-font);color:var(--spp-danger,#B42318);"></p>
     </div>
-  </div>
 
-  {%- comment -%}
-    The retention cards above are the offer; this is the way past it. Still a
-    real button, still keyboard reachable, still unmissable — just no longer
-    competing with the offers for attention.
-  {%- endcomment -%}
-  <div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--spp-hair-2);text-align:center;">
-    <button type="button" class="spp__btn spp__btn--link" style="min-height:44px;font-size:14.5px;" data-spp-go="cancel-confirm">
-      No thanks &mdash; continue to cancel
+    <p class="spp__fine">Same jar, same Routine Care price. You can move it again at any time.</p>
+
+    <button type="button" class="spp__btn spp__btn--primary" data-spp-act="applyGap">
+      <span data-spp-field="label.applyGap">Confirm this change</span>
     </button>
+    <div class="spp__quiet-row">
+      <button type="button" class="spp__btn spp__btn--link" data-spp-go="cancel-offer">No thanks &mdash; continue cancelling</button>
+    </div>
   </div>
 </section>
 
-{%- comment -%} ---------- 3 · Confirm ---------- {%- endcomment -%}
-<section class="spp__screen" data-spp-screen="cancel-confirm" hidden aria-labelledby="spp-cc-h">
+{%- comment -%} ---------- 4 · Retention offer ---------- {%- endcomment -%}
+{%- comment -%}
+  THE ACCEPTANCE ACTION IS GATED.
+
+  The screen renders exactly as approved, because the offer itself is
+  approved. What is not established is whether the billing system can make it
+  TRUE: no proven Phoenix operation discounts one delivery and then restores
+  the standing price, and the Solvpath contract that comes closest carries no
+  reversion semantics at all.
+
+  So the button is real, the copy is real, and pressing it produces an honest
+  "not available yet" rather than a success the next invoice would contradict.
+  Connecting it is a server change; nothing on this screen moves.
+{%- endcomment -%}
+<section class="spp__screen" data-spp-screen="cancel-offer" hidden aria-labelledby="spp-co-h">
   <button type="button" class="spp__back" data-spp-go="cancel-alt">
+    {% render 'spp-icon', icon: 'chevron-left' %}Back
+  </button>
+
+  <div class="spp__narrow">
+    <div class="spp__media-16x9">
+      <img
+        src="{{ 'spp-cancel-offer.png' | asset_url }}"
+        alt="A dog running, with the FreshWipes and EyeWipes jars"
+        width="1280" height="720" loading="lazy" decoding="async">
+    </div>
+
+    <div class="spp__pill" style="margin-top:18px;">One-time offer</div>
+    <h1 class="spp__h1" id="spp-co-h">
+      <span data-spp-field="offer.percent">40</span>% off your next Routine Care delivery
+    </h1>
+
+    <div class="spp__card" style="margin:16px 0 14px;padding:16px;">
+      <div class="spp__line" style="padding:0 0 12px;border-bottom:1px solid var(--spp-hair);">
+        <span><b>Next delivery</b> &middot; <span data-spp-field="subscription.nextOrderShort">Sep 8</span></span>
+        <b style="color:var(--spp-primary);font-size:19px;"><span data-spp-field="offer.percent">40</span>% off</b>
+      </div>
+      <div class="spp__line" style="padding:12px 0 0;">
+        <span>Every delivery after that</span>
+        <b><span data-spp-field="offer.standard">20</span>% off, as now</b>
+      </div>
+    </div>
+
+    <p class="spp__lede" style="font-size:14.5px;">
+      One delivery only. After it ships, your subscription returns to your usual
+      Routine Care pricing &mdash; currently <span data-spp-field="offer.standard">20</span>% off.
+    </p>
+
+    <p class="spp__fine">
+      Your Routine Care benefits &mdash; free shipping, flexible deliveries, the
+      100-day guarantee &mdash; carry on unchanged.
+    </p>
+
+    <button type="button" class="spp__btn spp__btn--primary" data-spp-act="acceptOffer">
+      <span data-spp-field="label.acceptOffer">Apply 40% to my next delivery</span>
+    </button>
+    <div class="spp__quiet-row">
+      <button type="button" class="spp__btn spp__btn--link" data-spp-go="cancel-confirm">No thanks, continue cancelling</button>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ---------- 5 · Confirm ---------- {%- endcomment -%}
+<section class="spp__screen" data-spp-screen="cancel-confirm" hidden aria-labelledby="spp-cc-h">
+  {%- comment -%}
+    data-spp-go is a fallback for a customer who somehow never eligible for
+    JS at all; the real target is decided every render in
+    renderCancelJourney(), because it depends on retentionOfferRedeemed,
+    which can only be known once the subscription has loaded. A redeemed
+    customer must land on the longer-gap screen, never back on the offer
+    screen show() already refuses to display.
+  {%- endcomment -%}
+  <button type="button" class="spp__back" data-spp-confirm-back data-spp-go="cancel-offer">
     {% render 'spp-icon', icon: 'chevron-left' %}Back
   </button>
 
@@ -117,6 +266,20 @@
       </div>
     </div>
 
+    {%- comment -%}
+      What they told us, shown back before they commit. A customer who picked
+      the wrong reason four screens ago can correct it here, and the record we
+      keep is the one they actually meant.
+    {%- endcomment -%}
+    <div class="spp__line" data-spp-reason-row hidden
+         style="background:var(--spp-surface-neutral,#F2FAFE);border-radius:14px;padding:14px 15px;margin-bottom:18px;">
+      <span>
+        <b style="display:block;">Reason on record</b>
+        <span data-spp-field="reason.label" style="color:var(--spp-body);">Not given</span>
+      </span>
+      <button type="button" class="spp__btn spp__btn--link" style="min-height:40px;" data-spp-go="cancel-reason">Change</button>
+    </div>
+
     <button type="button" class="spp__btn spp__btn--danger" data-spp-act="cancel">
       <span data-spp-field="label.cancel">Yes, cancel my subscription</span>
     </button>
@@ -124,7 +287,7 @@
   </div>
 </section>
 
-{%- comment -%} ---------- 4 · Cancelled ---------- {%- endcomment -%}
+{%- comment -%} ---------- 6 · Cancelled ---------- {%- endcomment -%}
 <section class="spp__screen spp__centred" data-spp-screen="cancel-done" hidden aria-labelledby="spp-cd-h">
   <div style="padding:26px 0;">
     <div class="spp__disc spp__disc--neutral">

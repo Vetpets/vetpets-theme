@@ -1079,3 +1079,155 @@
 @media (min-width: 1440px) {
   .spp__col { max-width: 1120px; }
 }
+
+/* ==================================================================
+   Cancellation Retention V2
+   ------------------------------------------------------------------
+   Additive only. Nothing here restyles an existing screen; every rule
+   is scoped to a class that appears solely in the cancellation
+   journey, so the dashboard and subscription screens are untouched.
+   ================================================================== */
+
+/* A 16:9 slot that holds its shape before the image loads, so the page
+   does not jump when a 1280x720 photo arrives. `contain` because these
+   are composed images: cropping them would cut the packaging out. */
+.spp__media-16x9 {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--spp-surface-neutral, #F2FAFE);
+}
+.spp__media-16x9 > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* The small capsule above a heading — "More time, not the end". */
+.spp__pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  margin-bottom: 14px;
+  border-radius: 999px;
+  background: var(--spp-light, #D5F7FF);
+  font: 600 11px/1 var(--spp-font);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--spp-primary);
+}
+
+/* Every "continue cancelling" sits here: centred, quiet, and always
+   reachable. Cancellation is never blocked or disabled — only made
+   visually secondary to staying. */
+.spp__quiet-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 14px;
+}
+
+.spp__fine {
+  margin: 0 0 20px;
+  font: 500 13px/1.5 var(--spp-font);
+  color: var(--spp-muted);
+}
+
+/* Benefit rows on the benefits screen. */
+.spp__benefit {
+  display: flex;
+  gap: 13px;
+  align-items: flex-start;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--spp-hair);
+}
+.spp__benefit:last-child { border-bottom: none; }
+.spp__benefit-tick {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--spp-light, #D5F7FF);
+  color: var(--spp-primary);
+}
+.spp__benefit-text { flex: 1; min-width: 0; }
+.spp__benefit-text > b {
+  display: block;
+  font: 600 15px/1.3 var(--spp-font);
+  color: var(--spp-ink);
+}
+.spp__benefit-text > span {
+  display: block;
+  margin-top: 4px;
+  font: 400 13.5px/1.5 var(--spp-font);
+  color: var(--spp-body);
+}
+
+/* A choice tile carrying a label and a line of explanation.
+ *
+ * Centred, not top-aligned. The radio was pinned to the top of the tile while
+ * the two lines of text ran past it, so the control floated level with the
+ * first line instead of with the block it belongs to — the misalignment the
+ * founder flagged against the approved design.
+ *
+ * `align-items: center` centres the radio against the whole text block; the
+ * text block centres its own two lines. Padding is even top and bottom so a
+ * one-line option and a two-line option sit identically. */
+.spp__choice--stacked {
+  /* Centred against the whole text block, not its first line.
+   *
+   * The base .spp__choice is a space-between row built for a label and a
+   * trailing radio. A stacked tile has two lines of text, so space-between
+   * pushed them apart and the radio floated level with the first line
+   * instead of with the block it belongs to. flex-start + an explicit
+   * centre puts the control where the eye expects it, and even padding
+   * makes a one-line option and a two-line option sit identically. */
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 64px;
+  padding: 13px 15px;
+  gap: 12px;
+}
+.spp__choice--stacked > .spp__radio { flex: 0 0 auto; align-self: center; }
+.spp__choice-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* No stray margins from the base type rules: the column's own gap is the
+     only vertical space between the label and its explanation. */
+  gap: 3px;
+}
+.spp__choice--stacked > .spp__choice-text > b,
+.spp__choice--stacked > .spp__choice-text > span { margin: 0; }
+.spp__choice-text > b {
+  display: block;
+  font: 600 15px/1.3 var(--spp-font);
+  color: var(--spp-ink);
+}
+.spp__choice-text > span {
+  display: block;
+  margin-top: 3px;
+  font: 500 13px/1.45 var(--spp-font);
+  color: var(--spp-muted);
+}
+
+.spp__label {
+  display: block;
+  margin-bottom: 9px;
+  font: 600 13px/1 var(--spp-font);
+  color: var(--spp-ink);
+}
+
+@media (max-width: 480px) {
+  /* The composed 16:9 images carry small product labels; letting them
+     run the full width keeps those legible on a phone. */
+  .spp__media-16x9 { border-radius: 12px; }
+}
