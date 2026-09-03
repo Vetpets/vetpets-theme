@@ -708,3 +708,117 @@ describe('the cancelled screen says nothing internal, and nothing untrue', () =>
     }
   });
 });
+
+describe('the corrected V2 journey', () => {
+  const subscriptionScreen = readFileSync(
+    resolve(here, '..', 'snippets', 'spp-screen-subscription.liquid'),
+    'utf8',
+  ).replace(/\{%-?\s*comment\s*-?%\}[\s\S]*?\{%-?\s*endcomment\s*-?%\}/g, '');
+
+  test('Cancel enters BENEFITS, not the reason list', () => {
+    // It used to jump straight to Reasons, skipping the one screen whose whole
+    // job is to give the customer a reason to stay.
+    const cancel = buttonWith(subscriptionScreen, 'Cancel subscription');
+    assert.match(cancel, /data-spp-go="cancel-benefits"/);
+    assert.ok(!/data-spp-go="cancel-reason"/.test(cancel));
+  });
+
+  test('the seven screens run in the approved order', () => {
+    const order = [
+      'cancel-benefits',
+      'cancel-reason',
+      'cancel-alt',
+      'cancel-offer',
+      'cancel-confirm',
+      'cancel-done',
+    ];
+    let last = -1;
+    for (const name of order) {
+      const at = cancelScreens.indexOf(`data-spp-screen="${name}"`);
+      assert.ok(at > -1, `${name} must exist`);
+      assert.ok(at > last, `${name} is out of order in the source`);
+      last = at;
+    }
+  });
+
+  test('each step moves forward to the next one', () => {
+    const hop = (from, to) => {
+      const step = screen(from);
+      assert.ok(
+        step.includes(`data-spp-go="${to}"`) || step.includes('data-spp-act="reasonContinue"'),
+        `${from} must lead to ${to}`,
+      );
+    };
+    hop('cancel-benefits', 'cancel-reason');
+    hop('cancel-reason', 'cancel-alt');
+    hop('cancel-alt', 'cancel-offer');
+    hop('cancel-offer', 'cancel-confirm');
+  });
+});
+
+describe('the gap cards align as approved', () => {
+  test('the radio and the text are vertically centred, not top-pinned', () => {
+    const rule = /\.spp__choice--stacked\s*\{[^}]*\}/.exec(css);
+    assert.ok(rule, '.spp__choice--stacked must exist');
+    assert.match(rule[0], /align-items:\s*center/);
+    assert.ok(
+      !/align-items:\s*flex-start/.test(rule[0]),
+      'top-pinning is the misalignment the founder flagged',
+    );
+  });
+
+  test('padding is even, so one-line and two-line options match', () => {
+    const rule = /\.spp__choice--stacked\s*\{[^}]*\}/.exec(css)[0];
+    const pad = /padding:\s*([\d.]+)px\s+([\d.]+)px/.exec(rule);
+    assert.ok(pad, 'padding must be declared');
+  });
+
+  test('the text block centres its own lines', () => {
+    const rule = /\.spp__choice-text\s*\{[^}]*\}/.exec(css);
+    assert.ok(rule);
+    assert.match(rule[0], /justify-content:\s*center/);
+  });
+});
+
+describe('the retention offer is real now', () => {
+  test('the acceptance action calls the server', () => {
+    assert.match(src, /case 'acceptOffer'/);
+    assert.match(src, /acceptRetentionOffer/);
+  });
+
+  test('the offer screen quotes a price it can actually honour', () => {
+    // Derived from the upcoming charge the dashboard already shows, so the
+    // screen cannot quote a figure the server would not send.
+    assert.match(src, /vm\['offer\.price'\]/);
+    assert.match(src, /vm\['offer\.currentPrice'\]/);
+    assert.match(src, /1 - OFFER_PERCENT \/ 100/);
+  });
+
+  test('an unverified apply asks for a refresh instead of claiming a total', () => {
+    const m = /refreshRequired[\s\S]{0,160}?return '([^']+)'/.exec(src);
+    assert.ok(m, 'the unverified branch must have its own copy');
+    assert.match(m[1], /refresh/i);
+  });
+
+  test('the client does not also write saved_offer — the server owns it', () => {
+    const start = src.indexOf("case 'acceptOffer'");
+    const block = src.slice(start, src.indexOf("case 'cancel'", start));
+    assert.ok(
+      !/recordCancelOutcome\('saved_offer'\)/.test(block),
+      'two writers for one fact is how they disagree',
+    );
+  });
+});
+
+describe('quantity is not exposed anywhere', () => {
+  test('no quantity control exists in the portal', () => {
+    // Phoenix has confirmed there is no quantity-change endpoint.
+    for (const { name, markup } of [
+      { name: 'cancel screens', markup: cancelScreens },
+      { name: 'controller', markup: src },
+    ]) {
+      assert.ok(!/data-spp-act="quantity"/.test(markup), `${name} must not offer quantity`);
+      assert.ok(!/case 'quantity'/.test(markup), `${name} must not handle quantity`);
+    }
+  });
+});

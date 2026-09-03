@@ -1168,9 +1168,31 @@
   color: var(--spp-body);
 }
 
-/* A choice tile carrying a label and a line of explanation. */
-.spp__choice--stacked { align-items: flex-start; min-height: 64px; }
-.spp__choice-text { flex: 1; min-width: 0; text-align: left; }
+/* A choice tile carrying a label and a line of explanation.
+ *
+ * Centred, not top-aligned. The radio was pinned to the top of the tile while
+ * the two lines of text ran past it, so the control floated level with the
+ * first line instead of with the block it belongs to — the misalignment the
+ * founder flagged against the approved design.
+ *
+ * `align-items: center` centres the radio against the whole text block; the
+ * text block centres its own two lines. Padding is even top and bottom so a
+ * one-line option and a two-line option sit identically. */
+.spp__choice--stacked {
+  align-items: center;
+  min-height: 64px;
+  padding: 13px 15px;
+  gap: 12px;
+}
+.spp__choice--stacked > .spp__radio { flex: 0 0 auto; align-self: center; }
+.spp__choice-text {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .spp__choice-text > b {
   display: block;
   font: 600 15px/1.3 var(--spp-font);

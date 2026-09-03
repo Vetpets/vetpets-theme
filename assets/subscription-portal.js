@@ -750,7 +750,7 @@
       // The server refused a duplicate. The change IS in place, so this is
       // never phrased as a failure — phrasing it as one is what would send a
       // customer round again and skip a second delivery.
-      message = 'That is already done — refresh to see the latest.';
+      message = 'That is already done \u2014 refresh to see the latest.';
     } else if (code === 'offer_unavailable') {
       // Not a failure and not the customer's fault: the offer simply cannot be
       // performed yet. Saying so plainly is the whole reason the CTA is live
@@ -974,6 +974,19 @@
     vm['reason.label'] = chosenReason ? chosenReason[1] : 'Not given';
     vm['offer.percent'] = String(OFFER_PERCENT);
     vm['offer.standard'] = String(STANDARD_PERCENT);
+
+    // What the next delivery costs now, and what it would cost with the offer.
+    // Computed from the upcoming charge the dashboard already displays, so the
+    // screen can never quote a figure the server would not send.
+    var upcoming = sub && sub.pricing && sub.pricing.total ? sub.pricing.total : null;
+    if (upcoming && typeof upcoming.amount === 'number' && upcoming.amount > 0) {
+      var offerAmount = Math.max(1, Math.round(upcoming.amount * (1 - OFFER_PERCENT / 100) * 100)) / 100;
+      vm['offer.currentPrice'] = this.fmtMoney(upcoming);
+      vm['offer.price'] = this.fmtMoney({ amount: offerAmount, currencyCode: upcoming.currencyCode });
+    } else {
+      vm['offer.currentPrice'] = '';
+      vm['offer.price'] = '';
+    }
 
     var p = s.pending;
     vm['label.sendLink'] = p === 'sendLink' ? 'Sending link…' : 'Email me a sign-in link';
@@ -1792,13 +1805,21 @@
           return self.adapter.acceptRetentionOffer({ idempotencyKey: attemptKey });
         }, {
           attempt: 'acceptOffer',
-          then: function () {
-            if (self.adapter.recordCancelOutcome) {
-              self.adapter.recordCancelOutcome('saved_offer').catch(function () {});
-            }
+          // The server settles the reason outcome itself, so the client does
+          // not also write saved_offer — one fact, one writer.
+          then: function (st, result) {
+            self.state.offer = result || null;
             self.show('dashboard');
           },
-          toast: 'Discount applied to your next delivery'
+          toast: function (st, result) {
+            if (result && result.refreshRequired) {
+              return 'Discount applied \u2014 refresh to see your new total.';
+            }
+            var p = result && result.offerPrice;
+            return p
+              ? 'Done \u2014 your next delivery is ' + self.fmtMoney({ amount: p, currencyCode: 'USD' })
+              : 'Discount applied to your next delivery';
+          }
         });
         return;
       }

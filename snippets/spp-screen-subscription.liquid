@@ -99,7 +99,12 @@
         <p class="spp__note" style="margin-top:12px;">Shown for reference only. This portal never displays or collects full card details.</p>
       </div>
 
-      <button type="button" class="spp__btn spp__btn--quiet" data-spp-go="cancel-reason">Cancel subscription</button>
+      {%- comment -%}
+        Enters the journey at Benefits, its first step. It used to jump
+        straight to the reason list, which skipped the one screen that exists
+        to give the customer a reason to stay.
+      {%- endcomment -%}
+      <button type="button" class="spp__btn spp__btn--quiet" data-spp-go="cancel-benefits">Cancel subscription</button>
     </div>
   </div>
 </section>
