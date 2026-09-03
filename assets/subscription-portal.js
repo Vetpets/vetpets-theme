@@ -1868,11 +1868,40 @@
           return self.adapter.acceptRetentionOffer({ idempotencyKey: attemptKey });
         }, {
           attempt: 'acceptOffer',
+          /* THE BUG THIS EXISTS FOR:
+           *
+           * Every other mutation (skip/delay/reschedule/cancel/reactivate)
+           * goes through the adapter's mutate(), which returns the server's
+           * fresh re-read subscription — an object carrying `.id` — so
+           * run()'s own `if (result && result.id) self.state.data = result`
+           * updates the dashboard automatically. acceptRetentionOffer
+           * returns {percentOff, offerPrice, verified, ...}, which has no
+           * `.id`, so that update never fired: the toast reported the new
+           * price correctly while the dashboard kept showing the old one
+           * until a full page reload.
+           *
+           * refreshAuthenticatedData() (run()'s normal post-action refresh)
+           * does not fix this either — it re-reads loyalty, the inactive
+           * list and deliveries, but never the primary subscription. Only
+           * load() re-fetches that, via the SAME getSubscription() call the
+           * page makes on open. refresh:false skips the smaller refresh
+           * below in favour of load(), which is already a superset of it. */
+          refresh: false,
           // The server settles the reason outcome itself, so the client does
           // not also write saved_offer — one fact, one writer.
           then: function (st, result) {
             self.state.offer = result || null;
-            self.show('dashboard');
+            self.load().then(function () {
+              self.show('dashboard');
+            }).catch(function () {
+              // The write succeeded — only the re-read failed. The discount
+              // is real regardless, so this stays a successful action: show
+              // the dashboard on whatever state is already held rather than
+              // stranding the customer on the offer screen or, worse,
+              // turning a successful write into what looks like a failed
+              // page.
+              self.show('dashboard');
+            });
           },
           toast: function (st, result) {
             if (result && result.refreshRequired) {
