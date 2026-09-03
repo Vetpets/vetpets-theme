@@ -1,6 +1,7 @@
 {%- comment -%}
-  Screens: cancellation flow (1 reason → 2 alternatives → 3 confirm →
-  4 cancelled), reactivation, inactive list, empty account.
+  Screens: cancellation flow (1 benefits → 2 reason → 3 alternatives →
+  4 offer → 5 confirm → 6 cancelled), reactivation, inactive list, empty
+  account.
 
   Cancellation stays completable throughout: the save-offers are shown
   once, and "continue to cancel" is always present.
@@ -60,7 +61,7 @@
   </div>
 </section>
 
-{%- comment -%} ---------- 1 · Reason ---------- {%- endcomment -%}
+{%- comment -%} ---------- 2 · Reason ---------- {%- endcomment -%}
 <section class="spp__screen" data-spp-screen="cancel-reason" hidden aria-labelledby="spp-cr-h">
   <button type="button" class="spp__back" data-spp-go="subscription">
     {% render 'spp-icon', icon: 'chevron-left' %}Subscription
@@ -81,12 +82,6 @@
   </div>
 
   {%- comment -%}
-    Staying is the primary action, continuing is not. Both remain fully
-    reachable: same order in the DOM as on screen, both real buttons, both in
-    the tab sequence. Only the visual weight changes — nothing is hidden,
-    disabled, or moved out of the keyboard path.
-  {%- endcomment -%}
-  {%- comment -%}
     Shown only when "Something else" is chosen. The words are the point: a
     preset code tells us a category, this tells us what actually happened.
   {%- endcomment -%}
@@ -106,13 +101,19 @@
   <p id="spp-reason-error" data-spp-reason-error role="alert" hidden
      style="margin-top:12px;font:500 13.5px/1.45 var(--spp-font);color:var(--spp-danger,#B42318);"></p>
 
+  {%- comment -%}
+    Staying is the primary action, continuing is not. Both remain fully
+    reachable: same order in the DOM as on screen, both real buttons, both in
+    the tab sequence. Only the visual weight changes — nothing is hidden,
+    disabled, or moved out of the keyboard path.
+  {%- endcomment -%}
   <button type="button" class="spp__btn spp__btn--primary" style="margin-top:18px;" data-spp-go="subscription">Keep my subscription</button>
   <div class="spp__quiet-row">
     <button type="button" class="spp__btn spp__btn--link" data-spp-act="reasonContinue">Continue cancelling</button>
   </div>
 </section>
 
-{%- comment -%} ---------- 2 · Alternatives ---------- {%- endcomment -%}
+{%- comment -%} ---------- 3 · Alternatives ---------- {%- endcomment -%}
 <section class="spp__screen" data-spp-screen="cancel-alt" hidden aria-labelledby="spp-ca-h">
   <button type="button" class="spp__back" data-spp-go="cancel-reason">
     {% render 'spp-icon', icon: 'chevron-left' %}Back
@@ -225,7 +226,7 @@
   </div>
 </section>
 
-{%- comment -%} ---------- 3 · Confirm ---------- {%- endcomment -%}
+{%- comment -%} ---------- 5 · Confirm ---------- {%- endcomment -%}
 <section class="spp__screen" data-spp-screen="cancel-confirm" hidden aria-labelledby="spp-cc-h">
   <button type="button" class="spp__back" data-spp-go="cancel-offer">
     {% render 'spp-icon', icon: 'chevron-left' %}Back
@@ -278,7 +279,7 @@
   </div>
 </section>
 
-{%- comment -%} ---------- 4 · Cancelled ---------- {%- endcomment -%}
+{%- comment -%} ---------- 6 · Cancelled ---------- {%- endcomment -%}
 <section class="spp__screen spp__centred" data-spp-screen="cancel-done" hidden aria-labelledby="spp-cd-h">
   <div style="padding:26px 0;">
     <div class="spp__disc spp__disc--neutral">
