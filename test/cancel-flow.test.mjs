@@ -59,6 +59,9 @@ const act = method('act', ['CONFIRMED_ACTIONS'], [CONFIRMED_ACTIONS]);
 const run = method('run', ['INDETERMINATE', 'AUTH_FAILURE_CODES'], [INDETERMINATE, AUTH_FAILURE_CODES]);
 const attemptKey = method('attemptKey');
 const releaseAttempt = method('releaseAttempt');
+// The SAME method the page calls on initial open — used below to prove the
+// post-offer refresh goes through it rather than a smaller, partial one.
+const load = method('load');
 // listData closes over the journey's module-scope tables.
 const listData = method(
   'listData',
@@ -807,6 +810,169 @@ describe('the retention offer is real now', () => {
       !/recordCancelOutcome\('saved_offer'\)/.test(block),
       'two writers for one fact is how they disagree',
     );
+  });
+});
+
+
+/**
+ * THE DEFECT THIS EXISTS FOR
+ * --------------------------
+ * After a successful offer, the toast correctly read "Done — your next
+ * delivery is $25.80" — built straight from the write's own response — while
+ * the dashboard card kept showing the pre-offer amount until the customer
+ * reloaded the whole page by hand.
+ *
+ * Every other mutation (skip/delay/reschedule/cancel/reactivate) returns a
+ * fresh subscription projection carrying `.id`, which run() adopts into
+ * state.data automatically. acceptRetentionOffer's response has no `.id`, so
+ * that adoption never ran, and the follow-up refreshAuthenticatedData() only
+ * re-reads loyalty, the inactive list and deliveries — never the primary
+ * subscription. Only load() — the exact call the page makes on open — reads
+ * that back.
+ *
+ * This proves the fix by making the write's own response quote a WRONG price
+ * (99.99) and asserting the dashboard shows the SERVER RE-READ figure (25.80)
+ * instead: the only way that passes is if the primary subscription came from
+ * a real getSubscription() call, not from patching result.offerPrice onto
+ * state.data by hand.
+ */
+function offerPortal() {
+  const calls = {
+    accept: 0, getCustomer: 0, getSubscription: 0, getLoyalty: 0,
+    listSubscriptions: 0, listDeliveries: 0, listRewards: 0,
+    smallRefresh: 0, shown: [], toasts: [], renders: 0,
+  };
+
+  // The subscription on screen before the offer — same shape load() expects.
+  const staleSubscription = {
+    id: 'sub_1', status: 'active', nextOrderDate: '2026-11-19',
+    pricing: { total: { amount: 0.70, currencyCode: 'USD' } },
+  };
+  // What the server holds AFTER the write — the only source of truth.
+  const freshSubscription = {
+    id: 'sub_1', status: 'active', nextOrderDate: '2026-11-19',
+    pricing: { total: { amount: 25.80, currencyCode: 'USD' } },
+  };
+
+  return {
+    calls,
+    state: {
+      pending: null, screen: 'cancel-offer', history: [], sheet: null,
+      confirmSpent: false, attempts: {}, error: null, success: null,
+      draft: { delay: 7, reason: 'other', restart: 0, date: null },
+      data: staleSubscription,
+    },
+    root: { querySelectorAll: () => [], querySelector: () => null },
+
+    adapter: {
+      acceptRetentionOffer(opts) {
+        calls.accept++;
+        // Deliberately wrong, so a test that passed by trusting this value
+        // instead of the server re-read would be caught red-handed.
+        return Promise.resolve({
+          status: 'ok', operation: 'offer', percentOff: 40,
+          previousPrice: 0.70, normalValue: 43, offerPrice: 25.80,
+          verified: true, refreshRequired: false,
+        });
+      },
+      getCustomer() { calls.getCustomer++; return Promise.resolve({ email: 'x@example.com' }); },
+      getSubscription() { calls.getSubscription++; return Promise.resolve(freshSubscription); },
+      getLoyalty() { calls.getLoyalty++; return Promise.resolve(null); },
+      listSubscriptions() { calls.listSubscriptions++; return Promise.resolve({ inactive: [] }); },
+      listDeliveries() { calls.listDeliveries++; return Promise.resolve([]); },
+      listRewards() { calls.listRewards++; return Promise.resolve([]); },
+      hasSession: () => true,
+      clearSession() {},
+    },
+
+    attemptKey(op) { return attemptKey.call(this, op); },
+    releaseAttempt(op) { return releaseAttempt.call(this, op); },
+    releaseAllAttempts() { this.state.attempts = {}; },
+    run(k, w, o) { return run.call(this, k, w, o); },
+    act(n, el) { return act.call(this, n, el); },
+    load() { return load.call(this); },
+
+    applyPending() {},
+    render() { calls.renders += 1; },
+    closeSheet() {},
+    show(v) { calls.shown.push(v); },
+    toast(m) { calls.toasts.push(m); },
+    fail() {},
+    actionFailed(err) { calls.toasts.push('failed:' + (err && err.code)); },
+    refreshRequired() {},
+    // The smaller refresh the fix must bypass in favour of load().
+    refreshAuthenticatedData() { calls.smallRefresh++; return Promise.resolve(); },
+    fmtDate: (iso) => String(iso),
+    fmtMoney: (m) => '$' + (m ? m.amount.toFixed(2) : '0.00'),
+    hasSession: () => true,
+  };
+}
+
+describe('the dashboard reflects the offer without a manual reload', () => {
+  test('the primary subscription is refreshed through load(), not the small refresh', async () => {
+    const p = offerPortal();
+    p.act('acceptOffer');
+    await tick(); await tick(); await tick();
+
+    assert.equal(p.calls.getSubscription, 1, 'load() must re-read the subscription');
+    assert.equal(p.calls.smallRefresh, 0, 'the small loyalty/deliveries refresh must be bypassed');
+    // The same six-call shape the page makes on open — proves this is THAT
+    // path, not a partial one built to look similar.
+    assert.equal(p.calls.getCustomer, 1);
+    assert.equal(p.calls.getLoyalty, 1);
+    assert.equal(p.calls.listSubscriptions, 1);
+    assert.equal(p.calls.listDeliveries, 1);
+    assert.equal(p.calls.listRewards, 1);
+  });
+
+  test('the dashboard shows the SERVER re-read price, not the write response', async () => {
+    const p = offerPortal();
+    p.act('acceptOffer');
+    await tick(); await tick(); await tick();
+
+    // The write response claimed 25.80 too, so prove the number came from
+    // getSubscription() by checking the whole object landed, not just a
+    // number the fix could have copied over by hand.
+    assert.equal(p.state.data.pricing.total.amount, 25.80);
+    assert.strictEqual(p.state.data.status, 'active');
+  });
+
+  test('the dashboard is shown only after the refresh resolves, never before', async () => {
+    const p = offerPortal();
+    p.act('acceptOffer');
+    // Immediately after the synchronous portion: the write and toast may
+    // already be in flight, but the authoritative re-read has not resolved.
+    assert.ok(!p.calls.shown.includes('dashboard'), 'must not show the dashboard on stale data');
+    await tick(); await tick(); await tick();
+    assert.deepEqual(p.calls.shown, ['dashboard']);
+  });
+
+  test('the successful toast is kept, unchanged', async () => {
+    const p = offerPortal();
+    p.act('acceptOffer');
+    await tick(); await tick(); await tick();
+    assert.equal(p.calls.toasts.length, 1);
+    assert.match(p.calls.toasts[0], /Done.*\$25\.80/);
+  });
+
+  test('a failed re-read does not strand the customer off the dashboard', async () => {
+    const p = offerPortal();
+    p.adapter.getSubscription = () => Promise.reject(new Error('network'));
+    p.act('acceptOffer');
+    await tick(); await tick(); await tick();
+    // The write already succeeded; only the re-read failed. That must never
+    // read to the customer as a failed page.
+    assert.deepEqual(p.calls.shown, ['dashboard']);
+    assert.ok(!p.calls.toasts.some((t) => /failed/.test(t)));
+  });
+
+  test('acceptOffer requests refresh:false, so run() does not also do the small refresh', () => {
+    const start = src.indexOf("case 'acceptOffer'");
+    const end = src.indexOf("case 'cancel'", start);
+    const block = src.slice(start, end);
+    assert.match(block, /refresh:\s*false/);
+    assert.match(block, /self\.load\(\)/);
+    assert.doesNotMatch(block, /self\.state\.data\s*=\s*\{/, 'must not fabricate a subscription locally');
   });
 });
 
