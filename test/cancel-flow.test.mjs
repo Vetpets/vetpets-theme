@@ -822,3 +822,104 @@ describe('quantity is not exposed anywhere', () => {
     }
   });
 });
+
+describe('the reason screen never fails silently', () => {
+  /**
+   * THE DEFECT THIS EXISTS FOR
+   * --------------------------
+   * "Continue cancelling" began with `if (!d.reason) return;`. With nothing
+   * selected it did nothing at all — no message, no movement — which reads as
+   * a broken button. The customer taps it again and still nothing happens.
+   * The same silent-refusal shape that made the cancel button look dead.
+   */
+  const reasonProblem = method('reasonProblem', ['MIN_REASON_NOTE'], [constant('MIN_REASON_NOTE')]);
+
+  const draft = (d) => ({ state: { draft: { reason: null, note: '', ...d } } });
+
+  test('no reason selected is refused OUT LOUD', () => {
+    const msg = reasonProblem.call(draft({}));
+    assert.ok(msg, 'there must be a message, not a silent return');
+    assert.match(msg, /choose a reason/i);
+  });
+
+  test('a normal reason passes', () => {
+    assert.equal(reasonProblem.call(draft({ reason: 'price' })), null);
+    assert.equal(reasonProblem.call(draft({ reason: 'break' })), null);
+  });
+
+  test('"Something else" requires actual words', () => {
+    // The one option that exists to capture what the fixed list could not.
+    assert.match(reasonProblem.call(draft({ reason: 'other' })), /tell us/i);
+    assert.match(reasonProblem.call(draft({ reason: 'other', note: '  ' })), /tell us/i);
+    assert.match(reasonProblem.call(draft({ reason: 'other', note: 'x' })), /tell us/i);
+  });
+
+  test('"Something else" with words passes', () => {
+    assert.equal(reasonProblem.call(draft({ reason: 'other', note: 'lid was cracked' })), null);
+  });
+
+  test('a note is not demanded for a preset reason', () => {
+    assert.equal(reasonProblem.call(draft({ reason: 'price', note: '' })), null);
+  });
+
+  test('the shipped action validates before it advances', () => {
+    const start = src.indexOf("case 'reasonContinue'");
+    const block = src.slice(start, src.indexOf("case 'applyGap'", start));
+    assert.match(block, /reasonProblem\(\)/, 'must consult the rule');
+    assert.ok(
+      !/if \(!d\.reason\) return;/.test(block),
+      'the silent early return must be gone',
+    );
+    assert.match(block, /reasonError/, 'and must record something to display');
+  });
+
+  test('the screen has somewhere to show it', () => {
+    const step = screen('cancel-reason');
+    assert.match(step, /data-spp-reason-error/);
+    assert.match(step, /role="alert"/);
+    assert.match(step, /aria-describedby="spp-reason-error"/);
+  });
+
+  test('the message clears once the problem is fixed', () => {
+    // It must not sit there contradicting what the customer just put right.
+    const render = /Portal\.prototype\.renderCancelJourney[\s\S]*?\n  \};/.exec(src);
+    assert.ok(render);
+    assert.match(render[0], /reasonProblem\(\)/);
+  });
+});
+
+describe('the gap cards centre, and the base row rule does not fight them', () => {
+  const stacked = /\.spp__choice--stacked\s*\{[^}]*\}/.exec(css);
+
+  test('the radio centres against the whole text block', () => {
+    assert.ok(stacked, '.spp__choice--stacked must exist');
+    assert.match(stacked[0], /align-items:\s*center/);
+    assert.ok(!/align-items:\s*flex-start/.test(stacked[0]));
+  });
+
+  test('space-between is overridden', () => {
+    // The base .spp__choice is a space-between row built for a trailing
+    // radio; left as-is it pushed the two-line text away from the control.
+    const base = /\.spp__choice\s*\{[^}]*\}/.exec(css);
+    assert.match(base[0], /justify-content:\s*space-between/, 'base is space-between');
+    assert.match(stacked[0], /justify-content:\s*flex-start/, 'stacked must override it');
+  });
+
+  test('padding is even, so one-line and two-line tiles match', () => {
+    assert.match(stacked[0], /padding:\s*13px\s+15px/);
+  });
+
+  test('the text column centres its own lines and carries no stray margins', () => {
+    const text = /\.spp__choice-text\s*\{[^}]*\}/.exec(css);
+    assert.match(text[0], /justify-content:\s*center/);
+    assert.match(css, /\.spp__choice--stacked > \.spp__choice-text > b[\s\S]{0,120}margin:\s*0/);
+  });
+
+  test('all five gap options survive', () => {
+    const gaps = listData.call(
+      { state: { data: {}, loyalty: null, inactive: [], draft: {} }, fmtDate: (x) => String(x) },
+      'gapOptions',
+    );
+    assert.equal(gaps.length, 5);
+  });
+});
