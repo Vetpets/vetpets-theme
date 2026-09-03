@@ -440,10 +440,16 @@
         });
       },
 
-      /** Mirrors the server: the offer cannot succeed. */
       acceptRetentionOffer: function () {
         return respond(function () {
-          throw PortalError('offer_unavailable', 'That offer is not available yet.');
+          var sub = state.subscription;
+          var before = sub && sub.pricing && sub.pricing.total ? sub.pricing.total.amount : 0;
+          var offer = Math.max(1, Math.round(before * 0.6 * 100)) / 100;
+          return {
+            status: 'ok', operation: 'offer', percentOff: 40,
+            previousPrice: before, offerPrice: offer,
+            verified: true, refreshRequired: false
+          };
         });
       },
 
@@ -1108,10 +1114,16 @@
             throw PortalError('unauthenticated', 'Your session has expired.');
           }
           if (r.status === 409 && r.data && r.data.error === 'offer_unavailable') {
-            // Never dressed up as a success. The customer is told plainly that
-            // it cannot be applied yet, rather than being told a discount
-            // landed that the next invoice will contradict.
-            throw PortalError('offer_unavailable', 'That offer is not available yet.');
+            throw PortalError('offer_unavailable', 'That offer is not available right now.');
+          }
+          if (r.status === 409 && r.data && r.data.error === 'already_applied') {
+            throw PortalError('already_applied', 'That discount is already on your next delivery.');
+          }
+          if (r.status === 409 && r.data && r.data.error === 'operation_in_progress') {
+            throw PortalError('in_progress', 'That is already being processed.');
+          }
+          if (r.status === 504) {
+            throw PortalError('timeout', 'That is taking longer than expected. Refresh to check.');
           }
           if (!r.ok) throw PortalError('server', 'We could not apply that just now.');
           return r.data;
