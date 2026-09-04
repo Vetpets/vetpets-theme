@@ -1251,7 +1251,7 @@
     
   }</style>
         
-        <button
+        {% comment %} <button
           data-id="g-rW6oYYSt" dataId="g-rW6oYYSt" data-state="idle" aria-label="Start with Eyewipes"
           name="add" gp-data-hidden="{% unless variant.available %}true{% endunless %}"
           type="submit"
@@ -1303,7 +1303,7 @@
     
     
   
-        </button>
+        </button> {% endcomment %}
       </div>
       <script {% if section.settings.section_preload == "false" %}class="gps-link" delay {% else %}src{% endif %}="https://assets.gemcommerce.com/assets-v2/gp-button-v7-5.js?v={{ shop.metafields.GEMPAGES.ASSETS_VERSION }}" defer="defer"></script>
     </gp-button>
@@ -1335,7 +1335,7 @@
     
   }</style>
         
-        {% comment %} <button
+        <button
           data-id="g-rW6oYYSt-sold-out" dataId="g-rW6oYYSt-sold-out" data-state="idle" aria-label="{{ section.settings.gg-rW6oYYSt_outOfStockLabel }}"
           gp-data-hidden="{% if variant.available %}true{% endif %}"
           type="button"
@@ -1362,7 +1362,7 @@
       {{ section.settings.gg-rW6oYYSt_outOfStockLabel }}
     </span>
         </div>
-         {% endcomment %}
+        
     
     
   
