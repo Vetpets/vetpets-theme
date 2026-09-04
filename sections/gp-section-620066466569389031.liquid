@@ -1218,6 +1218,10 @@
     
   
         </button> {% endcomment %}
+
+
+
+
       </div>
       <script {% if section.settings.section_preload == "false" %}class="gps-link" delay {% else %}src{% endif %}="https://assets.gemcommerce.com/assets-v2/gp-button-v7-5.js?v={{ shop.metafields.GEMPAGES.ASSETS_VERSION }}" defer="defer"></script>
     </gp-button>
@@ -1332,6 +1336,109 @@
   
         </section>
       
+        <style>
+        .custom_add_to_cart {
+    background: #47B5E9;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    border-radius: 33px;
+    padding: 10px;
+    cursor:pointer;
+}
+
+        </style>
+      
+  
+        <script>
+
+(function () {
+  const CHECKOUT_URL = 'https://secureorder.shopvetpets.com';
+  const STORE_ID = 'c80c08-d3';
+  const PARAMS_TO_FORWARD = ['clickid', 'utm_source', 'utm_medium'];
+
+  async function redirectToCheckout() {
+    try {
+      const cart = await fetch('/cart.js').then(r => r.json());
+
+      if (!cart.token) {
+        console.error('Cart token not found');
+        return;
+      }
+
+      const url = new URL(CHECKOUT_URL);
+
+      url.searchParams.set('store', STORE_ID);
+      url.searchParams.set('cart', cart.token);
+
+      if (window.token) {
+        url.searchParams.set('event-token', window.token);
+      }
+
+      // Forward only the whitelisted tracking params from the current page
+      const currentParams = new URLSearchParams(window.location.search);
+      PARAMS_TO_FORWARD.forEach((key) => {
+        const value = currentParams.get(key);
+        if (value) {
+          url.searchParams.set(key, value);
+        }
+      });
+
+      // Final force of store ID
+      url.searchParams.set('store', STORE_ID);
+
+      window.location.href = url.toString();
+
+    } catch (error) {
+      console.error('Checkout redirect error:', error);
+    }
+  }
+
+  // Make function available globally
+  window.redirectToCheckout = redirectToCheckout;
+
+})();
+
+
+    document.addEventListener('click', function (e) {
+    const button = e.target.closest('.custom_add_to_cart');
+
+    if (!button) return;
+
+    e.preventDefault();
+
+    const form = button.closest('form[data-type="add-to-cart-form"]');
+
+    if (!form) return;
+
+    const formData = new FormData(form);
+
+    fetch('/cart/add.js', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to add product');
+        }
+
+        return response.json();
+    })
+    .then(() => {
+        redirectToCheckout();
+    })
+    .catch(error => {
+        console.error('Add to cart error:', error);
+    });
+});
+
+    </script>
   
     
 {% schema %}
