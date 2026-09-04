@@ -1165,7 +1165,7 @@
     
   }</style>
         
-        <button
+        {% comment %} <button
           data-id="ghc03vB35o" dataId="ghc03vB35o" data-state="idle" aria-label="Start with Freshwipes"
           name="add" gp-data-hidden="{% unless variant.available %}true{% endunless %}"
           type="submit"
@@ -1217,7 +1217,7 @@
     
     
   
-        </button>
+        </button> {% endcomment %}
       </div>
       <script {% if section.settings.section_preload == "false" %}class="gps-link" delay {% else %}src{% endif %}="https://assets.gemcommerce.com/assets-v2/gp-button-v7-5.js?v={{ shop.metafields.GEMPAGES.ASSETS_VERSION }}" defer="defer"></script>
     </gp-button>
