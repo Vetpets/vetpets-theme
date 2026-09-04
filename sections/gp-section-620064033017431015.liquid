@@ -1456,6 +1456,44 @@
       
   
     
+
+        <script>
+    document.addEventListener('click', function (e) {
+    const button = e.target.closest('.custom_add_to_cart');
+
+    if (!button) return;
+
+    e.preventDefault();
+
+    const form = button.closest('form[data-type="add-to-cart-form"]');
+
+    if (!form) return;
+
+    const formData = new FormData(form);
+
+    fetch('/cart/add.js', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to add product');
+        }
+
+        return response.json();
+    })
+    .then(() => {
+        redirectToPhoenix();
+    })
+    .catch(error => {
+        console.error('Add to cart error:', error);
+    });
+});
+
+    </script>
 {% schema %}
   {
     
