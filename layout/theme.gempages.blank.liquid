@@ -76,6 +76,1040 @@ src="https://www.facebook.com/tr?id=24310585105221070&ev=PageView&noscript=1"
 
     {% render 'meta-tags' %}
     
+        <script>
+/* ===========================================================
+              PHOENIX CHECKOUT REDIRECT SCRIPT — FINAL BUILD V2
+              Version: 2026-07-20
+              =========================================================== */
+            /* ------------------- PHOENIX SDK LOADER ------------------- */
+(function () {
+  'use strict';
+
+
+
+
+  // ── CONFIG ─────────────────────────────────────────────────
+  const PHX_CHECKOUT_URL = "https://secureorder.shopvetpets.com";
+  const PHX_ROUTING_MODE = "all";
+        const PHX_PRODUCT_ALLOWLIST = new Set([
+               
+              ]);
+
+
+
+
+  // Buy Now behavior:
+  //   'variant_only' — checkout with only the current variant at its cart qty (default)
+  //   'full_cart'    — checkout with the entire cart as-is
+  //   'single'       — clear cart, add 1 of this variant, checkout
+
+
+
+
+  const PHX_BUY_NOW_MODE = 'variant_only';
+
+
+
+
+  // ── CONSTANTS ───────────────────────────────────────────────
+  const LOG_PREFIX = '[PHX]';
+  const CART_FETCH_TIMEOUT = 5000;
+  const SDK_URL = 'https://io.ecommcheckout.com/phoenix.min.js';
+
+
+
+
+  // ── STATE ───────────────────────────────────────────────────
+  let redirectInProgress = false;
+
+
+
+
+  // ── LOGGING ─────────────────────────────────────────────────
+  const log = {
+    info:  (...args) => console.log(LOG_PREFIX, ...args),
+    warn:  (...args) => console.warn(LOG_PREFIX, ...args),
+    error: (...args) => console.error(LOG_PREFIX, ...args),
+    debug: (...args) => {
+      if (sessionStorage.getItem('phx_debug') === '1') {
+        console.debug(LOG_PREFIX, ...args);
+      }
+    },
+  };
+
+
+window.__PHX_CHECKOUT_URL = PHX_CHECKOUT_URL;
+
+
+
+
+
+
+  // ── PHOENIX SDK LOADER ──────────────────────────────────────
+  function loadPhoenixSDK() {
+    const s = document.createElement('script');
+    s.src = SDK_URL;
+    document.head.appendChild(s);
+
+
+
+
+    window.addEventListener('load', function () {
+      if ('phx' in window) {
+        window.phx.initialize(window);
+        log.info('SDK initialized');
+      } else {
+        let tries = 0;
+        const interval = setInterval(function () {
+          if ('phx' in window || tries > 20) {
+            clearInterval(interval);
+            if ('phx' in window) {
+              window.phx.initialize(window);
+              log.info('SDK initialized (deferred)');
+            } else {
+              log.warn('SDK failed to load after 10s');
+            }
+          }
+          tries++;
+        }, 500);
+      }
+    });
+  }
+
+
+
+
+
+
+
+
+  // ── HELPERS ─────────────────────────────────────────────────
+  function shopID() {
+    return window.Shopify?.shop?.split('.')?.[0] || '';
+  }
+
+
+
+
+  // Single getCookie — no duplicate
+  function getCookie(name) {
+    const match = document.cookie.match(
+      new RegExp('(^| )' + name + '=([^;]+)')
+    );
+    return match ? decodeURIComponent(match[2]) : null;
+  }
+
+
+
+
+  async function fetchWithTimeout(url, opts = {}, timeout = CART_FETCH_TIMEOUT) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeout);
+    try {
+      const res = await fetch(url, { ...opts, signal: controller.signal });
+      clearTimeout(timer);
+      return res;
+    } catch (err) {
+      clearTimeout(timer);
+      throw err;
+    }
+  }
+
+
+
+
+  async function getCart() {
+    try {
+      const res = await fetchWithTimeout('/cart.js');
+      if (!res.ok) throw new Error(`cart.js ${res.status}`);
+      return await res.json();
+    } catch (err) {
+      log.error('Failed to fetch cart:', err);
+      return { items: [], token: '' };
+    }
+  }
+
+
+
+
+  async function getCartToken() {
+    try {
+      const res = await fetch('/cart.js', { credentials: 'same-origin' });
+      if (!res.ok) throw new Error('Cart fetch failed');
+      const cart = await res.json();
+      if (cart?.token) return cart.token.replace('%3Fkey%3D', '?key=');
+      throw new Error('Token missing');
+    } catch {
+      return (getCookie('cart') || '').replace('%3Fkey%3D', '?key=');
+    }
+  }
+
+
+
+
+  // ── QUANTITY BREAK HELPER (moved out of addToCartAndRedirect) ──
+  function getQtyBreakItems() {
+    const checkedRadio = document.querySelector(
+      '.lumin-product-block-qty-break input[type="radio"]:checked'
+    );
+    if (!checkedRadio?.value) return null;
+    const ids = checkedRadio.value.split(',').filter(Boolean);
+    if (ids.length <= 1) return null;
+    const map = {};
+    ids.forEach(id => { map[id] = (map[id] || 0) + 1; });
+    return Object.entries(map).map(([id, quantity]) => ({ id, quantity }));
+  }
+
+
+
+
+  // ── PRODUCT ROUTING ─────────────────────────────────────────
+  async function shouldRedirectCart() {
+    if (PHX_ROUTING_MODE === 'all') return true;
+    const cart = await getCart();
+    if (!cart.items?.length) return false;
+    return cart.items.some((item) =>
+      PHX_PRODUCT_ALLOWLIST.has(String(item.product_id))
+    );
+  }
+
+
+
+
+  // ── QUERY PARAM PERSISTENCE ─────────────────────────────────
+  function persistQueryParams() {
+    if (sessionStorage.getItem('phx_query_params')) return;
+    const params = new URLSearchParams(window.location.search);
+    if (!params.toString()) return;
+    const all = {};
+    for (const [key, value] of params.entries()) all[key] = value;
+    sessionStorage.setItem('phx_query_params', JSON.stringify(all));
+    log.debug('Persisted query params:', all);
+  }
+
+
+
+
+  // ── TRAFFIC SOURCE ──────────────────────────────────────────
+  function captureTrafficSource() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('trafficSource')) return;
+
+
+
+
+    const referrer = document.referrer;
+    if (!referrer) return;
+
+
+
+
+    try {
+      const referrerHost = new URL(referrer).hostname;
+      const currentHost = window.location.hostname;
+
+
+
+
+      if (referrerHost !== currentHost) {
+        params.set('trafficSource', referrerHost);
+      } else {
+        const ts = new URL(referrer).searchParams.get('trafficSource');
+        if (ts) params.set('trafficSource', ts);
+      }
+
+
+
+
+      window.history.replaceState(
+        {},
+        '',
+        window.location.pathname + '?' + params.toString()
+      );
+    } catch {
+      // invalid referrer URL, ignore
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // ── BUILD CHECKOUT URL ──────────────────────────────────────
+  async function buildCheckoutURL(cartToken) {
+    const dest = new URL(PHX_CHECKOUT_URL);
+
+
+
+
+    // Fetch cart once — reuse for token + igParams
+    const cart = await getCart();
+    const token = cartToken || cart.token?.replace('%3Fkey%3D', '?key=') || await getCartToken();
+
+
+
+
+    dest.searchParams.set('store', shopID());
+    dest.searchParams.set('cart', token);
+
+
+
+
+    // Event token (from Phoenix SDK)
+    if (window.token) {
+      dest.searchParams.set('event-token', window.token);
+    }
+
+
+
+
+    // Currency conversion (BucksCc integration)
+    const customerCurrency = sessionStorage.getItem('buckscc_customer_currency');
+    const ratesString = sessionStorage.getItem('bucksccConversionRates');
+    if (customerCurrency && ratesString) {
+      const currency = customerCurrency.replace(/"/g, '');
+      dest.searchParams.set('target_currency', currency);
+      try {
+        const rates = JSON.parse(ratesString);
+        if (rates.currencyRateToday) {
+          const match = rates.currencyRateToday.match(/rates:\s*(\{[^}]+\})/);
+          if (match) {
+            const rateObj = JSON.parse(match[1]);
+            if (rateObj[currency]) {
+              dest.searchParams.set(
+                'cc_rate',
+                (1 / parseFloat(rateObj[currency])).toFixed(6)
+              );
+            }
+          }
+        }
+      } catch (err) {
+        log.warn('Currency rate parse error:', err);
+      }
+    }
+
+
+
+
+    // Traffic source
+    try {
+      const ts = new URLSearchParams(window.location.search).get('trafficSource') || '';
+      if (ts) dest.searchParams.set('trafficSource', ts);
+    } catch {}
+
+
+
+
+    // Persisted query params (UTM, etc.)
+    try {
+      const stored = JSON.parse(sessionStorage.getItem('phx_query_params') || '{}');
+      for (const [key, value] of Object.entries(stored)) {
+        if (!dest.searchParams.has(key)) dest.searchParams.set(key, value);
+      }
+    } catch (err) {
+      log.warn('Query param restore error:', err);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    // Intelligems params — from cart attributes, fallback to cookies
+    try {
+      const attrs = cart.attributes || {};
+      let igParamsObj = {};
+
+
+
+
+      if (attrs.igId)         igParamsObj.igId         = attrs.igId;
+      if (attrs.igPreview)    igParamsObj.igPreview    = attrs.igPreview;
+      if (attrs.igTestGroups) igParamsObj.igTestGroups = attrs.igTestGroups;
+
+
+
+
+      // Fallback to cookies
+      if (Object.keys(igParamsObj).length === 0) {
+        const igId  = getCookie('ig-id');
+        const igPre = getCookie('igPreview');
+        const igTg  = getCookie('igTestGroups');
+        if (igId)  igParamsObj.igId         = igId;
+        if (igPre) igParamsObj.igPreview    = igPre;
+        if (igTg)  igParamsObj.igTestGroups = igTg;
+      }
+
+
+
+
+      if (Object.keys(igParamsObj).length > 0) {
+        dest.searchParams.append('igParams', btoa(JSON.stringify(igParamsObj)));
+      }
+    } catch (err) {
+      log.warn('Intelligems param error:', err);
+    }
+
+
+
+
+    // Intelligems SDK assignments
+    if (window.intelligems && typeof window.intelligems.getAllAssignments === 'function') {
+      const assignments = window.intelligems.getAllAssignments();
+      for (const [key, value] of Object.entries(assignments)) {
+        dest.searchParams.append(encodeURIComponent(key), encodeURIComponent(value));
+      }
+    }
+
+
+    // EAB params — from cart attributes, fallback to cookies
+    try {
+      const attrs = cart.attributes || {};
+      let eabParamsObj = {};
+
+      if (attrs._eabTestsList) eabParamsObj.eabTestsList = attrs._eabTestsList;
+      if (attrs._eabList)      eabParamsObj.eabList      = attrs._eabList;
+      if (attrs._eabUserId)    eabParamsObj.eabUserId    = attrs._eabUserId;
+
+      // Fallback to cookies
+      if (Object.keys(eabParamsObj).length === 0) {
+        const eabTestsList = getCookie('eabTestsList');
+        const eabList      = getCookie('eabList');
+        const eabUserId    = getCookie('eabUserId');
+        if (eabTestsList) eabParamsObj.eabTestsList = eabTestsList;
+        if (eabList)      eabParamsObj.eabList      = eabList;
+        if (eabUserId)    eabParamsObj.eabUserId    = eabUserId;
+      }
+
+      if (Object.keys(eabParamsObj).length > 0) {
+        dest.searchParams.append('eabParams', btoa(JSON.stringify(eabParamsObj)));
+      }
+    } catch (err) {
+      log.warn('EAB param error:', err);
+    }
+
+
+
+
+    return dest.toString();
+  }
+
+
+
+
+  // ── SDK EVENT TRACKING ──────────────────────────────────────
+  function trackCheckoutLoad() {
+    try {
+      if (window.phx?.track) {
+        window.phx.track({ eventType: 'checkout_load', eventFrom: 'shopify' });
+        log.debug('Tracked checkout_load event');
+      }
+    } catch (err) {
+      log.warn('Failed to track checkout_load:', err);
+    }
+  }
+
+
+
+
+  function trackFailedRedirect() {
+    try {
+      if (window.phx?.track) {
+        window.phx.track({ eventType: 'failed_to_redirect', eventFrom: 'shopify' });
+      }
+    } catch {}
+  }
+
+
+
+
+
+
+
+
+  // ── REDIRECT EXECUTION ──────────────────────────────────────
+  async function redirectToPhoenix(cartToken) {
+
+
+
+
+if (redirectInProgress) {
+    log.warn('Redirect already in progress — force resetting flag and retrying');
+    redirectInProgress = false;
+  }
+
+
+
+
+
+
+    redirectInProgress = true;
+    log.info('Redirecting to Phoenix checkout...');
+
+
+
+
+    trackCheckoutLoad();
+
+
+
+
+    // Fire failed_to_redirect if page hasn't unloaded after 3s
+    let redirectSucceeded = false;
+    window.addEventListener('beforeunload', () => { redirectSucceeded = true; });
+    setTimeout(() => {
+      if (!redirectSucceeded) trackFailedRedirect();
+    }, 3000);
+
+
+
+
+    try {
+      const url = await buildCheckoutURL(cartToken);
+      log.info('Destination:', url);
+      window.location.href = url;
+    } catch (err) {
+      log.error('Redirect failed, falling back to native checkout:', err);
+      redirectInProgress = false;
+      window.location.href = '/checkout';
+    }
+  }
+
+
+
+
+  // Fixed: now accepts and forwards cartToken
+  async function handleCartRedirect(cartToken) {
+    const allowed = await shouldRedirectCart();
+    if (allowed) {
+      await redirectToPhoenix(cartToken);
+    } else {
+      log.info('Cart products not in allowlist, using native checkout');
+      window.location.href = '/checkout';
+    }
+  }
+
+
+
+
+  // ===========================================================
+  //  PRIMARY: Navigation API Intercept
+  // ===========================================================
+  function setupNavigationIntercept() {
+    if (typeof navigation === 'undefined') return false;
+
+
+
+
+    navigation.addEventListener('navigate', (event) => {
+      let url;
+      try {
+        url = new URL(event.destination.url);
+      } catch {
+        return;
+      }
+
+
+
+
+      if (url.origin !== window.location.origin) return;
+
+
+
+
+      const pathname = url.pathname;
+
+
+
+
+      log.debug(
+        'navigate:', pathname,
+        '| type:', event.navigationType,
+        '| formData:', !!event.formData
+      );
+
+
+
+
+      if (
+        pathname.includes('/checkout') ||
+        pathname.includes('/checkouts') ||
+        pathname.includes('/cn/') ||
+        pathname.startsWith('/cart/c/') ||
+        ((pathname === '/cart' || pathname === '/cart/') && event.formData)
+      ) {
+        log.info('Intercepted checkout navigation:', pathname);
+        event.preventDefault();
+        event.stopImmediatePropagation();
+     
+        redirectInProgress = false; // reset so back-navigation works
+
+
+
+
+        const tokenMatch = pathname.match(/^\/cart\/c\/([^/]+)/);
+        if (tokenMatch) {
+          log.info('Buy Now token detected:', tokenMatch[1]);
+          handleCartRedirect(tokenMatch[1]);
+        } else {
+          handleCartRedirect();
+        }
+      }
+    });
+
+
+
+
+    log.info('Navigation API intercept active');
+    return true;
+  }
+
+
+
+
+  // ===========================================================
+  //  SELECTORS
+  // ===========================================================
+  const BUY_NOW_SELECTORS = [
+    '.product__buy-now',
+    '[data-action="buy-now"]',
+    '[data-action="checkout"]',
+    '[data-replo-checkout-button]',
+    '[data-pf-type="ProductCheckout"]',
+    '[data-gem-action="buy-now"]',
+    '[data-bold-checkout]',
+    '[data-rebuy-buy-now]',
+    '[data-rebuy-checkout]',
+    'shopify-buy-it-now-button',
+    '.shopify-payment-button__button',
+    'shopify-buy-it-now-button',
+    '.ocu-buy-now-button',
+    '.custom-buy-now',
+    '.zipify-checkout-button',
+    'button[data-checkout="checkout"]',
+    'button[data-replo-add-product-variant-to-cart]',
+    'button.gp-button-atc[aria-label="Add to cart"]'
+  ];
+
+
+
+
+  const CART_CHECKOUT_SELECTORS = [
+    'button[name="checkout"]',
+    'button#checkout',
+    '.cart__checkout-button',
+    '#rebuy-cart .rebuy-button.rebuy-cart__checkout-button',
+    '.ocu-checkout-button',
+    '.cuatom_btn',
+    '.custom-checkout',
+    '[form="ocu-cart-form"][name="checkout"]',
+    '#kaching-cart__checkout-button',
+    '.kaching-cart__checkout-button',
+    '.AOV-CartDrawer-Checkout',
+    '.hs-checkout-purchase',
+    '[data-instant-layout="CART"] a[rel="noopener noreferrer"]',
+    '#slidecart-checkout-form'
+  ];
+
+
+
+
+  // ── HELPERS ─────────────────────────────────────────────────
+  function findClosest(el, selector) {
+    while (el && el !== document) {
+      if (el.matches?.(selector)) return el;
+      el = el.parentNode || el.host;
+    }
+    return null;
+  }
+
+
+
+
+   function getVariantFromContext(el) {
+    const form = findClosest(
+      el,
+      'form[action*="/cart"], form[action="/cart/add"], form'
+    );
+    const variantId =
+      form?.querySelector('input[name="id"], select[name="id"]')?.value ||
+      window.ShopifyAnalytics?.meta?.selectedVariantId ||
+      null;
+    const qtyRaw =
+      form?.querySelector('input[name="quantity"]')?.value ||
+      findClosest(el, '.product, .product-single, [data-section-type="product"], main')
+        ?.querySelector('input[name="quantity"]')?.value ||
+      document.querySelector('input[name="quantity"]')?.value ||
+      '1';
+    return { variantId, qty: parseInt(qtyRaw, 10) };
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+  // ── BUY NOW HANDLER ──────────────────────────────────────────
+  async function addToCartAndRedirect(el, event) {
+    if (el.dataset.phxBusy === '1') return;
+    el.dataset.phxBusy = '1';
+    event?.preventDefault?.();
+    event?.stopImmediatePropagation?.();
+    el.classList.add('button-loading');
+    el.disabled = true;
+
+
+
+
+
+
+
+
+    try {
+      if (PHX_BUY_NOW_MODE === 'full_cart') {
+        await handleCartRedirect();
+        return;
+      }
+
+
+
+
+      const { variantId } = getVariantFromContext(el);
+      const qtyBreakItems = getQtyBreakItems();
+
+
+
+
+      if (PHX_BUY_NOW_MODE === 'single') {
+ 
+        await fetchWithTimeout('/cart/clear.js', { method: 'POST' });
+        if (qtyBreakItems) {
+          await fetchWithTimeout('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ items: qtyBreakItems }),
+          });
+        } else if (variantId) {
+         
+          await fetchWithTimeout('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ items: [{ id: variantId, quantity: 1 }] }),
+          });
+        }
+        await handleCartRedirect();
+        return;
+      }
+
+
+
+
+      // 'variant_only' mode
+      if (!variantId && !qtyBreakItems) {
+        log.warn('Buy Now: no variant ID found, redirecting with full cart');
+        await handleCartRedirect();
+        return;
+      }
+
+
+
+
+      await fetchWithTimeout('/cart/clear.js', { method: 'POST' });
+
+
+
+
+      if (qtyBreakItems) {
+        await fetchWithTimeout('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items: qtyBreakItems }),
+        });
+        log.info('Buy Now: qty break items', qtyBreakItems);
+      } else {
+     
+        const qty = parseInt(
+           document.querySelector('input[name="quantity"]')?.value ||
+           document.querySelector('.quantity__input')?.value ||
+           document.querySelector('[data-quantity-input]')?.value ||
+           document.querySelector('.qty__input')?.value ||
+           document.querySelector('[data-quantity]')?.value ||'1',10) || 1;
+
+
+
+
+        await fetchWithTimeout('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items: [{ id: variantId, quantity: qty }] }),
+        });
+     
+        log.info('Buy Now: variant', variantId, 'qty', qty);
+      }
+
+
+
+
+     await handleCartRedirect();  
+     
+    } catch (err) {
+      log.error('Buy Now fallback failed:', err);
+    } finally {
+      el.dataset.phxBusy = '0';
+     el.classList.remove('button-loading');
+     el.disabled = false;
+    }
+  }
+
+
+
+
+  // ── BUTTON HOOKING ───────────────────────────────────────────
+  function hookButtons(selectors, handler) {
+    const ATTRS_TO_REMOVE = ['onclick', 'id', 'form', 'action', 'name', 'type', 'method', 'data-ocu-checkout'];
+
+
+
+
+    function stripAttrs(btn) {
+      ATTRS_TO_REMOVE.forEach(attr => btn.removeAttribute(attr));
+      btn.type = 'button';
+    }
+
+
+
+
+    function watchAttrs(btn) {
+      const observer = new MutationObserver(() => {
+        const needsStrip = ATTRS_TO_REMOVE.some(attr => btn.hasAttribute(attr));
+        if (needsStrip) {
+          observer.disconnect();
+          stripAttrs(btn);
+          observer.observe(btn, { attributes: true });
+        }
+      });
+      observer.observe(btn, { attributes: true });
+    }
+
+
+
+
+    selectors.forEach((sel) => {
+      document.querySelectorAll(sel).forEach((btn) => {
+        if (btn._phxBound) return;
+        btn._phxBound = true;
+        stripAttrs(btn);
+        watchAttrs(btn);
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          handler(btn, e);
+        }, true);
+      });
+    });
+  }
+
+
+
+
+  // ── UPCART DRAWER ────────────────────────────────────────────
+  function hookUpcartDrawer() {
+    const shadowHost = document.querySelector('#upCart');
+    const root = shadowHost?.shadowRoot ?? document.documentElement;
+
+
+
+
+    const observer = new MutationObserver(() => {
+      const link = root.querySelector('.upcart-checkout-button-container a');
+      if (!link || link._phxBound) return;
+
+
+
+
+      link._phxBound = true;
+      link.removeAttribute('href');
+      link.style.cursor = 'pointer';
+      link.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        await handleCartRedirect();
+      }, true);
+    });
+
+
+
+
+    observer.observe(root, { childList: true, subtree: true });
+  }
+
+
+
+
+  // ── OCU CART CHECKOUT ────────────────────────────────────────
+  function hookOCUCartCheckout() {
+    const SELECTOR = 'button.ocu-checkout-button, [form="ocu-cart-form"][name="checkout"]';
+    const EVENTS = ['pointerdown', 'mousedown', 'click', 'touchstart'];
+
+
+
+
+    const handler = async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      log.info('OCU checkout intercepted');
+      await handleCartRedirect();
+    };
+
+
+
+
+    document.querySelectorAll(SELECTOR).forEach((btn) => {
+      if (btn.__phxHardBound) return;
+      btn.__phxHardBound = true;
+      EVENTS.forEach(evt => btn.addEventListener(evt, handler, true));
+      ['onclick', 'form', 'type'].forEach(attr => btn.removeAttribute(attr));
+      btn.type = 'button';
+    });
+  }
+
+
+
+
+  // ── MONSTER CART DRAWER ──────────────────────────────────────
+  function hookMonsterCartDrawer() {
+    const btn = document.getElementById('mu-checkout-button');
+    if (!btn || btn._phxBound) return;
+    btn._phxBound = true;
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      await handleCartRedirect();
+    }, true);
+  }
+
+
+
+
+  // ── ALL HOOKS (single unified runner) ───────────────────────
+  function runAllHooks() {
+    hookButtons(BUY_NOW_SELECTORS, addToCartAndRedirect);
+    hookButtons(CART_CHECKOUT_SELECTORS, () => handleCartRedirect());
+    hookUpcartDrawer();
+    hookOCUCartCheckout();
+    hookMonsterCartDrawer();
+  }
+
+
+
+
+  function setupHooks() {
+    const observer = new MutationObserver(runAllHooks);
+    observer.observe(document.body, { childList: true, subtree: true });
+    runAllHooks();
+  }
+
+
+
+
+  // ===========================================================
+  //  INIT
+  // ===========================================================
+
+
+
+
+  // Navigation API intercept runs IMMEDIATELY — no DOM needed.
+  const hasNavAPI = setupNavigationIntercept();
+
+
+
+
+  function init() {
+    log.info('v2.1 | mode:', PHX_ROUTING_MODE, '| store:', shopID());
+
+
+
+
+    loadPhoenixSDK();
+    persistQueryParams();
+    captureTrafficSource();
+
+
+
+
+
+
+// ADD THIS:
+window.addEventListener('pageshow', function (e) {
+  if (e.persisted) {
+    redirectInProgress = false; // bfcache restore — allow re-redirect
+    runAllHooks();              // re-hook buttons that may have been disabled
+  }
+});
+
+
+
+
+    if (document.body) {
+      setupHooks();
+    } else {
+      document.addEventListener('DOMContentLoaded', setupHooks);
+    }
+  }
+
+
+
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+
+
+
+})();
+</script>
+
+    
     {{ content_for_header }}
 
     {%- liquid
