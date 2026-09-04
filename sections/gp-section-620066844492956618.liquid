@@ -1212,7 +1212,26 @@
   
         </button> {% endcomment %}
 
-
+<div class="custom_add_to_cart">
+           <span
+      data-gp-text
+      style="--size:24px;--size-tablet:16px;--size-mobile:18px;--weight:bold;word-break:break-word"
+      class="gp-content-product-button group-active/button:!gp-text-inherit gp-relative gp-flex gp-h-full gp-items-center gp-overflow-hidden gp-break-words group-data-[state=loading]:gp-invisible [&_p]:gp-whitespace-pre-line gp-text button-text"
+    >
+     <div class="gp-inline-flex gp-flex-row-reverse">
+          
+    <span style="--size:24px;--size-tablet:16px;--size-mobile:18px;--weight:bold;word-break:break-word;--ml:8px;--height-desktop:1em;--height-tablet:1em;--height-mobile:1em" class="gp-button-icon gp-z-1 gp-inline-flex gp-shrink-0 gp-items-center gp-justify-center group-data-[state=loading]:gp-invisible [&amp;&gt;svg]:!gp-h-[var(--height-desktop)] [&amp;&gt;svg]:!gp-w-auto tablet:[&amp;&gt;svg]:!gp-h-[var(--height-tablet)] mobile:[&amp;&gt;svg]:!gp-h-[var(--height-mobile)]">
+      <svg height="20" width="20" data-name="arrow-fat-right-filled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" data-id="508817717132067176">
+              <path fill="currentColor" strokelinecap="round" strokelinejoin="round" d="M237.66,133.66l-96,96A8,8,0,0,1,128,224V184H48a16,16,0,0,1-16-16V88A16,16,0,0,1,48,72h80V32a8,8,0,0,1,13.66-5.66l96,96A8,8,0,0,1,237.66,133.66Z"></path></svg>
+    </span>
+  
+          
+    <span data-gp-text="" style="--size:24px;--size-tablet:16px;--size-mobile:18px;--weight:bold;word-break:break-word" class="gp-content-product-button group-active/button:!gp-text-inherit gp-relative gp-flex gp-h-full gp-items-center gp-overflow-hidden gp-break-words group-data-[state=loading]:gp-invisible [&amp;_p]:gp-whitespace-pre-line gp-text button-text">
+      Start with Eyewipes
+    </span>
+        </div>
+    </span>
+          </div>
 
 
         
@@ -1331,6 +1350,109 @@
         </section>
       
   
+        <style>
+        .custom_add_to_cart {
+    background: #47B5E9;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    border-radius: 33px;
+    padding: 10px;
+    cursor:pointer;
+}
+
+        </style>
+      
+  
+        <script>
+
+(function () {
+  const CHECKOUT_URL = 'https://secureorder.shopvetpets.com';
+  const STORE_ID = 'c80c08-d3';
+  const PARAMS_TO_FORWARD = ['clickid', 'utm_source', 'utm_medium'];
+
+  async function redirectToCheckout() {
+    try {
+      const cart = await fetch('/cart.js').then(r => r.json());
+
+      if (!cart.token) {
+        console.error('Cart token not found');
+        return;
+      }
+
+      const url = new URL(CHECKOUT_URL);
+
+      url.searchParams.set('store', STORE_ID);
+      url.searchParams.set('cart', cart.token);
+
+      if (window.token) {
+        url.searchParams.set('event-token', window.token);
+      }
+
+      // Forward only the whitelisted tracking params from the current page
+      const currentParams = new URLSearchParams(window.location.search);
+      PARAMS_TO_FORWARD.forEach((key) => {
+        const value = currentParams.get(key);
+        if (value) {
+          url.searchParams.set(key, value);
+        }
+      });
+
+      // Final force of store ID
+      url.searchParams.set('store', STORE_ID);
+
+      window.location.href = url.toString();
+
+    } catch (error) {
+      console.error('Checkout redirect error:', error);
+    }
+  }
+
+  // Make function available globally
+  window.redirectToCheckout = redirectToCheckout;
+
+})();
+
+
+    document.addEventListener('click', function (e) {
+    const button = e.target.closest('.custom_add_to_cart');
+
+    if (!button) return;
+
+    e.preventDefault();
+
+    const form = button.closest('form[data-type="add-to-cart-form"]');
+
+    if (!form) return;
+
+    const formData = new FormData(form);
+
+    fetch('/cart/add.js', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to add product');
+        }
+
+        return response.json();
+    })
+    .then(() => {
+        redirectToCheckout();
+    })
+    .catch(error => {
+        console.error('Add to cart error:', error);
+    });
+});
+
+    </script>
     
 {% schema %}
   {
