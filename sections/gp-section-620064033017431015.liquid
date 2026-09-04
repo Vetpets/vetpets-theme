@@ -1458,6 +1458,55 @@
     
 
         <script>
+
+(function () {
+  const CHECKOUT_URL = 'https://secureorder.lumadove.com';
+  const STORE_ID = 'i1cc0k-6a';
+  const PARAMS_TO_FORWARD = ['clickid', 'utm_source', 'utm_medium'];
+
+  async function redirectToCheckout() {
+    try {
+      const cart = await fetch('/cart.js').then(r => r.json());
+
+      if (!cart.token) {
+        console.error('Cart token not found');
+        return;
+      }
+
+      const url = new URL(CHECKOUT_URL);
+
+      url.searchParams.set('store', STORE_ID);
+      url.searchParams.set('cart', cart.token);
+
+      if (window.token) {
+        url.searchParams.set('event-token', window.token);
+      }
+
+      // Forward only the whitelisted tracking params from the current page
+      const currentParams = new URLSearchParams(window.location.search);
+      PARAMS_TO_FORWARD.forEach((key) => {
+        const value = currentParams.get(key);
+        if (value) {
+          url.searchParams.set(key, value);
+        }
+      });
+
+      // Final force of store ID
+      url.searchParams.set('store', STORE_ID);
+
+      window.location.href = url.toString();
+
+    } catch (error) {
+      console.error('Checkout redirect error:', error);
+    }
+  }
+
+  // Make function available globally
+  window.redirectToCheckout = redirectToCheckout;
+
+})();
+
+
     document.addEventListener('click', function (e) {
     const button = e.target.closest('.custom_add_to_cart');
 
@@ -1486,7 +1535,7 @@
         return response.json();
     })
     .then(() => {
-        redirectToPhoenix();
+        redirectToCheckout();
     })
     .catch(error => {
         console.error('Add to cart error:', error);
