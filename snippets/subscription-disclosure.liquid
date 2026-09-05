@@ -14,11 +14,13 @@
   sticky bar already uses. See "PAYFAC DISCLOSURE" in the page's .js file.
 
   Params:
-    frequency  — required. Real billing-interval text for the RoutineCare
-                 selling plan (a section setting, not hardcoded here).
+    frequency  — accepted for backward compatibility with existing render
+                 calls, but no longer used in the copy below (fixed wording:
+                 "with delivery every month", matching the selling plan's own
+                 display name "Deliver every month").
     manage_url — required. "Manage subscription" link target.
 {%- endcomment -%}
 
 <p class="pfd-disclosure" data-pfd-disclosure>
-  RoutineCare subscription. <span data-pfd-today>&nbsp;</span> charged today, then <span data-pfd-recurring>&nbsp;</span> every {{ frequency }} until cancelled. No trial. Cancel anytime: <a href="{{ manage_url }}" class="pfd-link" target="_blank" rel="noopener noreferrer">Manage subscription</a>.
+  RoutineCare automatic refills. <span data-pfd-today>&nbsp;</span> charged today, then <span data-pfd-recurring>&nbsp;</span> with delivery every month until cancelled. No trial. Cancel anytime: <a href="{{ manage_url }}" class="pfd-link" target="_blank" rel="noopener noreferrer">Manage subscription</a>.
 </p>
