@@ -1,0 +1,24 @@
+{%- comment -%}
+  Compact PayFac recurring-subscription disclosure.
+  ==================================================
+  Shared by sections/eyewipes-offer-page.liquid and
+  sections/freshwipes-offer-page.liquid. Rendered once beside every purchase
+  button that can submit the RoutineCare cart directly (the hero Add to Cart
+  button and the bottom-of-page "final offer" button; NOT the anchors that only
+  scroll back to the hero, and NOT the sticky bar, which is a shortcut for the
+  hero button rather than an independent purchase path).
+
+  This snippet never computes a price, a selling plan or a currency. The two
+  amount placeholders are filled in — and the whole block shown or hidden — by
+  the page's own JS, from the exact same Kaching-rendered price string the
+  sticky bar already uses. See "PAYFAC DISCLOSURE" in the page's .js file.
+
+  Params:
+    frequency  — required. Real billing-interval text for the RoutineCare
+                 selling plan (a section setting, not hardcoded here).
+    manage_url — required. "Manage subscription" link target.
+{%- endcomment -%}
+
+<p class="pfd-disclosure" data-pfd-disclosure>
+  RoutineCare subscription. <span data-pfd-today>&nbsp;</span> charged today, then <span data-pfd-recurring>&nbsp;</span> every {{ frequency }} until cancelled. No trial. Cancel anytime: <a href="{{ manage_url }}" class="pfd-link" target="_blank" rel="noopener noreferrer">Manage subscription</a>.
+</p>
