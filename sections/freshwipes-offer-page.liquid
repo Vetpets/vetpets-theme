@@ -207,6 +207,8 @@
           <img class="pay-strip" src="{{ 'fwof-payment-badges.webp' | asset_url }}" width="700" height="64" loading="lazy" decoding="async" alt="Accepted payment methods: Mastercard, Visa, PayPal, American Express, Discover and Apple Pay">
         </div>
 
+        {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url -%}
+
         <div class="secure">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="2.2" fill="#6B7A85"></rect><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="#6B7A85" stroke-width="2.2" stroke-linecap="round"></path></svg>
           <span>All transactions are secure and encrypted</span>
@@ -463,6 +465,7 @@
           <button type="button" class="cta btn-buy" data-fwof-submit>
             <span><span data-fwof-cta-label>Add To Cart — Buy 2, Get 2 Free</span> <span aria-hidden="true">→</span></span>
           </button>
+          {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url -%}
           <div class="trustline" style="text-align:left">100-Day Money-Back Guarantee · Free &amp; Fast Shipping</div>
         </div>
       </div>
@@ -591,6 +594,13 @@
     { "type": "text", "id": "subheading", "label": "Subheading", "default": "Textured finger wipes that lift plaque and food debris from accessible tooth surfaces and along the gumline." },
     { "type": "text", "id": "picker_heading", "label": "Plan picker heading", "default": "Choose Your Plan" },
     { "type": "text", "id": "rc_note", "label": "RoutineCare note", "default": "Free shipping on every order" },
+    { "type": "header", "content": "PayFac subscription disclosure" },
+    {
+      "type": "paragraph",
+      "content": "Resolved from the shared \"Save 20% with RoutineCare\" selling plan (gid://shopify/SellingPlan/10423959819): billing/delivery interval is 28 days, one flat percentage price policy with no after-cycle step (no trial). Update this text only if that selling plan's cadence changes."
+    },
+    { "type": "text", "id": "rc_frequency_label", "label": "RoutineCare billing frequency", "default": "28 days" },
+    { "type": "text", "id": "manage_subscription_url", "label": "Manage Subscription link", "default": "https://shopvetpets.com/pages/manage-subscription" },
     { "type": "header", "content": "Kaching deal IDs" },
     {
       "type": "paragraph",
@@ -610,7 +620,7 @@
       "type": "textarea",
       "id": "faq_answers",
       "label": "Answers (one per line, same order)",
-      "default": "You can see what the textured surface lifted away on the wipe from the very first use. How quickly the teeth look cleaner depends on how much buildup is present, how long it has been there and how consistently you keep the routine. Hardened tartar that is already bonded to the tooth needs a veterinary cleaning \u2014 FreshWipes works on the softer daily buildup before it gets to that stage.\nFreshWipes are designed for gentle use in the mouth of dogs and cats and are pH-balanced and fragrance-free. Use one fresh wipe per session and stop if your pet shows signs of pain. If you notice persistent bad breath, bleeding gums, swelling or a broken tooth, contact your veterinarian.\nNo. FreshWipes physically lifts the soft daily plaque and food debris from accessible tooth surfaces before it hardens. Tartar that has already mineralised onto the tooth can only be removed by a veterinary cleaning. Keeping the daily routine is what slows new buildup down.\nSlip one wipe over your index finger, clean the accessible outer tooth surfaces and gumline with small circular motions, then discard the wipe. No rinsing, brushing, mixing or toothpaste is needed. Consistency matters more than pressure.\nStart slowly and let your dog sniff the wipe first. Choose a calm moment, clean just a few teeth on the first attempts and reward relaxed behaviour afterward. Because the wipe sits on your finger rather than a brush handle, many owners find their dog accepts it more readily than brushing.\nEach jar holds 50 textured finger wipes \u2014 about a month of use for one dog. Start The Routine Kit is the smallest option, The Clean Smile Kit is long enough to see real results, and The Full Family Plan covers up to three pets. Actual duration depends on the number of pets and wipes used.\nChews, powders and water additives work passively around the mouth. FreshWipes is the one you physically guide across the tooth surface and along the gumline \u2014 so you can see on the wipe exactly what came off.\nRoutineCare saves 20% and includes free shipping on every recurring order. Deliveries can be skipped, changed or cancelled when needed. Your purchase is also protected by our 100-day money-back guarantee \u2014 if FreshWipes are not right for your pet, contact VetPets within 100 days of purchase for help with your refund."
+      "default": "You can see what the textured surface lifted away on the wipe from the very first use. How quickly the teeth look cleaner depends on how much buildup is present, how long it has been there and how consistently you keep the routine. Hardened tartar that is already bonded to the tooth needs a veterinary cleaning — FreshWipes works on the softer daily buildup before it gets to that stage.\nFreshWipes are designed for gentle use in the mouth of dogs and cats and are pH-balanced and fragrance-free. Use one fresh wipe per session and stop if your pet shows signs of pain. If you notice persistent bad breath, bleeding gums, swelling or a broken tooth, contact your veterinarian.\nNo. FreshWipes physically lifts the soft daily plaque and food debris from accessible tooth surfaces before it hardens. Tartar that has already mineralised onto the tooth can only be removed by a veterinary cleaning. Keeping the daily routine is what slows new buildup down.\nSlip one wipe over your index finger, clean the accessible outer tooth surfaces and gumline with small circular motions, then discard the wipe. No rinsing, brushing, mixing or toothpaste is needed. Consistency matters more than pressure.\nStart slowly and let your dog sniff the wipe first. Choose a calm moment, clean just a few teeth on the first attempts and reward relaxed behaviour afterward. Because the wipe sits on your finger rather than a brush handle, many owners find their dog accepts it more readily than brushing.\nEach jar holds 50 textured finger wipes — about a month of use for one dog. Start The Routine Kit is the smallest option, The Clean Smile Kit is long enough to see real results, and The Full Family Plan covers up to three pets. Actual duration depends on the number of pets and wipes used.\nChews, powders and water additives work passively around the mouth. FreshWipes is the one you physically guide across the tooth surface and along the gumline — so you can see on the wipe exactly what came off.\nRoutineCare saves 20% and includes free shipping on every recurring order. Deliveries can be skipped, changed or cancelled when needed. Your purchase is also protected by our 100-day money-back guarantee — if FreshWipes are not right for your pet, contact VetPets within 100 days of purchase for help with your refund."
     }
   ],
   "presets": [{ "name": "FreshWipes offer page" }]
