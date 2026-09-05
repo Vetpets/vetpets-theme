@@ -334,6 +334,12 @@
             "margin_bottom": 0
           }
         },
+        "custom_liquid_6AGBRz": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<style>\n  .vp-rc-disclosure {\n    margin: 6px 0 0;\n    padding: 0;\n    background: transparent;\n    border: 0;\n    color: #8B9AA6;\n    font-family: inherit;\n    font-size: 11px;\n    font-weight: 400;\n    line-height: 1.4;\n    text-align: center;\n  }\n\n  .vp-rc-disclosure a {\n    color: inherit;\n    font-weight: 600;\n    text-decoration: underline;\n    text-underline-offset: 2px;\n  }\n\n  @media (min-width: 750px) {\n    .vp-rc-disclosure {\n      font-size: 12.5px;\n    }\n  }\n</style>\n\n<p class=\"vp-rc-disclosure\">\n  RoutineCare automatic refills are delivered every month at the price shown above until cancelled.\n  <a href=\"/pages/manage-subscription\">Manage anytime.</a>\n</p>"
+          }
+        },
         "payment_badges_XtWzKz": {
           "type": "payment_badges",
           "settings": {
@@ -570,6 +576,7 @@
         "custom_liquid_cfTETd",
         "custom_liquid_8TN4AP",
         "buy_buttons",
+        "custom_liquid_6AGBRz",
         "payment_badges_XtWzKz",
         "custom_liquid_Migg8c",
         "e7a28cbe-03cb-4c9d-a2c4-0e3e76ffb3e5",
