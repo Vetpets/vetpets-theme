@@ -133,8 +133,9 @@ body:has(#freshwipes-offer-page){overflow-x:hidden}
 /* ---------- PayFac subscription disclosure ----------
    Shown only while RoutineCare is selected (JS toggles [hidden]); price spans
    are filled from the same Kaching-rendered string the sticky bar already
-   uses. See snippets/subscription-disclosure.liquid. */
-#freshwipes-offer-page .pfd-disclosure{margin:8px 0 0;padding:8px 10px;background:var(--mist);border:1px solid #CBD5E1;border-radius:8px;font-size:11px;line-height:1.35;color:#334155;text-align:left}
+   uses. See snippets/subscription-disclosure.liquid. Plain text, matched to
+   the "All transactions are secure and encrypted" line right above it. */
+#freshwipes-offer-page .pfd-disclosure{margin:7px 0 0;font-size:11px;line-height:1.35;color:#8B9AA6;text-align:center}
 #freshwipes-offer-page .pfd-disclosure[hidden]{display:none}
 #freshwipes-offer-page .pfd-disclosure a{color:inherit;text-decoration:underline;font-weight:600}
 #freshwipes-offer-page .offer-body .pfd-disclosure{width:100%;margin-top:0}
