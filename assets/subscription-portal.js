@@ -1395,6 +1395,26 @@
       var items = this.listData(name);
       var withSeparators = host.hasAttribute('data-spp-separators');
 
+      /* The reason list's 8 rows never change in count or shape once
+       * mounted. The destroy-and-rebuild path below removes every row
+       * before appending fresh ones, which briefly collapses the page's
+       * height below the viewport — long enough for the browser to clamp
+       * scroll back to 0, a jump the customer never asked for that
+       * strands whichever row they meant to click next out from under a
+       * pointer that hasn't moved. Updating the existing rows in place
+       * keeps all 8 mounted (and focus where the customer left it) and
+       * leaves scroll position alone. */
+      if (name === 'reasons' && !withSeparators) {
+        var kept = [];
+        for (var c = 0; c < host.children.length; c++) {
+          if (host.children[c] !== tpl) kept.push(host.children[c]);
+        }
+        if (kept.length === items.length) {
+          for (var e = 0; e < items.length; e++) this.fillNode(kept[e], items[e], name, e);
+          continue;
+        }
+      }
+
       var kids = Array.prototype.slice.call(host.children);
       for (var k = 0; k < kids.length; k++) if (kids[k] !== tpl) host.removeChild(kids[k]);
 
