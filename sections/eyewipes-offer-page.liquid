@@ -198,12 +198,12 @@
           <img class="pay-strip" src="{{ 'ewof-payment-badges.webp' | asset_url }}" width="700" height="64" loading="lazy" decoding="async" alt="Accepted payment methods: Mastercard, Visa, PayPal, American Express, Discover and Apple Pay">
         </div>
 
-        {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url -%}
-
         <div class="secure">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="2.2" fill="#6B7A85"></rect><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="#6B7A85" stroke-width="2.2" stroke-linecap="round"></path></svg>
           <span>All transactions are secure and encrypted</span>
         </div>
+
+        {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url -%}
 
         <div class="urg">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 22 20H2L12 3Z" fill="#D64545"></path><path d="M12 9.5v4.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path><circle cx="12" cy="17" r="1.2" fill="#FFFFFF"></circle></svg>
@@ -456,8 +456,8 @@
           <button type="button" class="cta btn-buy" data-ewof-submit>
             <span><span data-ewof-cta-label>Add To Cart — Buy 2, Get 2 Free</span> <span aria-hidden="true">→</span></span>
           </button>
-          {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url -%}
           <div class="trustline" style="text-align:left">100-Day Money-Back Guarantee · Free &amp; Fast Shipping</div>
+          {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url -%}
         </div>
       </div>
     </div>
