@@ -1507,7 +1507,49 @@
         e.preventDefault(); self.openSheet(el.getAttribute('data-spp-sheet')); return;
       }
       if ((el = e.target.closest('[data-spp-pick]'))) {
-        e.preventDefault(); self.pick(el); return;
+        e.preventDefault();
+        /* TEMPORARY DIAGNOSTIC — DEV ONLY, NOT SHIPPED TO LIVE.
+         * Added to capture a live-reported "some reasons don't select"
+         * defect that a synthetic DOM harness could not reproduce. Logs only
+         * the attempted reason code, the raw click target's tag/class, the
+         * resolved [data-spp-pick] element's tag/class, and draft.reason
+         * before/after pick() runs. No PII, no email, no Phoenix id.
+         * Remove once the live defect is captured and understood. */
+        if (el.getAttribute('data-spp-pick') === 'reason') {
+          var __diagValue = el.dataset.sppValue;
+          var __diagTargetTag = e.target.tagName;
+          var __diagTargetClass = e.target.className;
+          var __diagBefore = self.state.draft.reason;
+          var __diagRect = null;
+          try { __diagRect = el.getBoundingClientRect(); } catch (rectErr) {}
+          self.pick(el);
+          try {
+            // el is now STALE: render() -> renderLists() destroys and
+            // rebuilds the whole list on every pick, so el's own
+            // aria-checked would just show what it was cloned with BEFORE
+            // this click. Re-query the CURRENT node for the row that was
+            // supposed to end up selected, by the value actually attempted.
+            var freshRow = self.root.querySelector(
+              '[data-spp-pick="reason"][data-spp-value="' + __diagValue + '"]'
+            );
+            console.log('[spp-diag reason-click]', {
+              attemptedValue: __diagValue,
+              targetTag: __diagTargetTag,
+              targetClass: __diagTargetClass,
+              rowWidth: __diagRect ? Math.round(__diagRect.width) : null,
+              rowHeight: __diagRect ? Math.round(__diagRect.height) : null,
+              draftReasonBefore: __diagBefore,
+              draftReasonAfter: self.state.draft.reason,
+              matchedIntendedValue: self.state.draft.reason === __diagValue,
+              freshRowFound: !!freshRow,
+              freshRowAriaChecked: freshRow ? freshRow.getAttribute('aria-checked') : null
+            });
+          } catch (diagErr) {
+            console.log('[spp-diag reason-click] logging failed', String(diagErr));
+          }
+          return;
+        }
+        self.pick(el); return;
       }
       if ((el = e.target.closest('[data-spp-act]'))) {
         e.preventDefault();
