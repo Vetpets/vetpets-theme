@@ -344,6 +344,18 @@
     var rcChip = $('.sticky-rc');
     if (rcChip) rcChip.hidden = !rcOn;
 
+    // PayFac subscription disclosure — reuses this same Kaching-derived price
+    // string for both the "charged today" and "then, every N days" amounts,
+    // because this deal bar's RoutineCare selling plan repeats the identical
+    // bundle total each cycle (verified against live cart pricing; there is
+    // no separate renewal price to compute or duplicate here).
+    $$('[data-pfd-disclosure]').forEach(function (el) {
+      el.hidden = !(rcOn && price);
+      var t = el.querySelector('[data-pfd-today]');
+      var r = el.querySelector('[data-pfd-recurring]');
+      if (t) t.textContent = price;
+      if (r) r.textContent = price;
+    });
   }
 
   /* Kaching re-renders its block and rewrites the form inputs asynchronously

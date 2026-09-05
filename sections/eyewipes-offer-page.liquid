@@ -203,6 +203,8 @@
           <span>All transactions are secure and encrypted</span>
         </div>
 
+        {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url -%}
+
         <div class="urg">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 22 20H2L12 3Z" fill="#D64545"></path><path d="M12 9.5v4.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path><circle cx="12" cy="17" r="1.2" fill="#FFFFFF"></circle></svg>
           <div class="urg-t">We are selling out more than expected. <strong>Order now before we run out again.</strong></div>
@@ -455,6 +457,7 @@
             <span><span data-ewof-cta-label>Add To Cart — Buy 2, Get 2 Free</span> <span aria-hidden="true">→</span></span>
           </button>
           <div class="trustline" style="text-align:left">100-Day Money-Back Guarantee · Free &amp; Fast Shipping</div>
+          {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url -%}
         </div>
       </div>
     </div>
@@ -579,6 +582,13 @@
     { "type": "text", "id": "subheading", "label": "Subheading", "default": "Textured antibacterial wipes for dogs with gunk, discharge & crusty eyes" },
     { "type": "text", "id": "picker_heading", "label": "Plan picker heading", "default": "Choose Your Plan" },
     { "type": "text", "id": "rc_note", "label": "RoutineCare note", "default": "Free shipping on every order" },
+    { "type": "header", "content": "PayFac subscription disclosure" },
+    {
+      "type": "paragraph",
+      "content": "Resolved from the shared \"Save 20% with RoutineCare\" selling plan (gid://shopify/SellingPlan/10423959819): billing/delivery interval is 28 days, one flat percentage price policy with no after-cycle step (no trial). Update this text only if that selling plan's cadence changes."
+    },
+    { "type": "text", "id": "rc_frequency_label", "label": "RoutineCare billing frequency", "default": "28 days" },
+    { "type": "text", "id": "manage_subscription_url", "label": "Manage Subscription link", "default": "https://shopvetpets.com/pages/manage-subscription" },
     { "type": "header", "content": "Kaching deal IDs" },
     {
       "type": "paragraph",
