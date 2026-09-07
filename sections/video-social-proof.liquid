@@ -45,6 +45,7 @@
 {%- liquid
   assign st = section.settings
   assign stats = section.blocks | where: 'type', 'stat'
+  assign stats_cap = st.stats_visible | default: 3 | times: 1
   assign cards = section.blocks | where: 'type', 'video_card'
 
   assign width_mode = st.section_width | default: 'page'
@@ -78,6 +79,20 @@
   assign card_gap = st.card_gap | default: 16
   assign peek_m = st.peek_mobile | default: 18
   assign per_view_d = st.per_view_desktop | default: 2.2
+  assign stat_gap = st.stat_gap | default: 18
+  assign num_col = st.stat_number_col | default: 104
+  assign copy_align = st.copy_align | default: 'center'
+
+  assign cta_flex = 'flex-start'
+  if st.cta_align == 'center'
+    assign cta_flex = 'center'
+  elsif st.cta_align == 'right'
+    assign cta_flex = 'flex-end'
+  endif
+
+  if st.hide_copy_column
+    assign root_class = root_class | append: ' vp-vsp--nocopy'
+  endif
 -%}
 
 <div
@@ -94,6 +109,9 @@
     --vp-vsp-stat-color: {{ st.stat_color }};
     --vp-vsp-stat-fs: {{ stat_fs }}px;
     --vp-vsp-stat-fs-m: {{ stat_fs_m }}px;
+    --vp-vsp-stat-gap: {{ stat_gap }}px;
+    --vp-vsp-num-col: {{ num_col }}px;
+    --vp-vsp-copy-align: {{ copy_align }};
     --vp-vsp-card-radius: {{ card_radius }}px;
     --vp-vsp-gap: {{ card_gap }}px;
     --vp-vsp-peek-m: {{ peek_m }}%;
@@ -108,6 +126,7 @@
   <div class="{{ inner_class }}">
     <div class="vp-vsp__grid">
 
+      {%- unless st.hide_copy_column -%}
       <div class="vp-vsp__copy">
         {%- if st.heading != blank -%}
           <h2 class="vp-vsp__heading">{{ st.heading | escape }}</h2>
@@ -119,14 +138,54 @@
 
         {%- if stats.size > 0 -%}
           <ul class="vp-vsp__stats" role="list">
-            {%- for block in stats -%}
-              {%- if block.settings.value != blank or block.settings.text != blank -%}
-                <li class="vp-vsp__stat" {{ block.shopify_attributes }}>
-                  {%- if block.settings.value != blank -%}
-                    <span class="vp-vsp__stat-value">{{ block.settings.value | escape }}</span>
+            {%- for block in stats limit: stats_cap -%}
+              {%- liquid
+                assign bs = block.settings
+                assign shape = bs.num_shape | default: 'circle'
+
+                comment
+                  Shape "none" and the background toggle both have to be on for
+                  a badge to draw, so either control alone can turn it off.
+                endcomment
+                assign has_bg = false
+                if bs.num_bg_show and shape != 'none'
+                  assign has_bg = true
+                endif
+
+                assign row_classes = 'vp-vsp__stat vp-vsp__stat--shape-' | append: shape
+                if has_bg
+                  assign row_classes = row_classes | append: ' vp-vsp__stat--hasbg'
+                endif
+                if bs.row_border != blank
+                  assign row_classes = row_classes | append: ' vp-vsp__stat--bordered'
+                endif
+
+                assign render_row = false
+                if bs.show_stat
+                  if bs.value != blank or bs.text != blank
+                    assign render_row = true
+                  endif
+                endif
+              -%}
+              {%- if render_row -%}
+                <li
+                  class="{{ row_classes }}"
+                  style="
+                    --vsp-s-num-color: {{ bs.num_color }};
+                    --vsp-s-num-fs: {{ bs.num_size | default: 38 }}px;
+                    --vsp-s-num-bg: {{ bs.num_bg_color }};
+                    {% if bs.row_bg != blank %}--vsp-s-row-bg: {{ bs.row_bg }};{% endif %}
+                    {% if bs.row_border != blank %}--vsp-s-row-border: {{ bs.row_border }};{% endif %}
+                    --vsp-s-row-radius: {{ bs.row_radius | default: 0 }}px;
+                    --vsp-s-row-pad: {{ bs.row_padding | default: 0 }}px;
+                  "
+                  {{ block.shopify_attributes }}
+                >
+                  {%- if bs.value != blank -%}
+                    <span class="vp-vsp__stat-value">{{ bs.value | escape }}</span>
                   {%- endif -%}
-                  {%- if block.settings.text != blank -%}
-                    <span class="vp-vsp__stat-text">{{ block.settings.text }}</span>
+                  {%- if bs.text != blank -%}
+                    <span class="vp-vsp__stat-text">{{ bs.text }}</span>
                   {%- endif -%}
                 </li>
               {%- endif -%}
@@ -134,22 +193,83 @@
           </ul>
         {%- endif -%}
 
-        {%- if st.highlight_value != blank or st.highlight_title != blank or st.highlight_text != blank -%}
-          <div class="vp-vsp__highlight">
-            {%- if st.highlight_value != blank -%}
-              <span class="vp-vsp__highlight-value">{{ st.highlight_value | escape }}</span>
+        {%- if st.guarantee_show -%}
+          {%- liquid
+            assign g_classes = 'vp-vsp__guarantee'
+            if st.guarantee_shadow
+              assign g_classes = g_classes | append: ' vp-vsp__guarantee--shadow'
+            endif
+            if st.guarantee_border != blank
+              assign g_classes = g_classes | append: ' vp-vsp__guarantee--bordered'
+            endif
+          -%}
+          <div
+            class="{{ g_classes }}"
+            style="
+              --vsp-g-bg: {{ st.guarantee_bg }};
+              --vsp-g-num: {{ st.guarantee_num_color }};
+              --vsp-g-title: {{ st.guarantee_title_color }};
+              --vsp-g-text: {{ st.guarantee_text_color }};
+              {% if st.guarantee_border != blank %}--vsp-g-border: {{ st.guarantee_border }};{% endif %}
+              --vsp-g-radius: {{ st.guarantee_radius | default: 16 }}px;
+              --vsp-g-space: {{ st.guarantee_space | default: 24 }}px;
+              --vsp-g-space-m: {{ st.guarantee_space_mobile | default: 18 }}px;
+            "
+          >
+            {%- if st.guarantee_icon != blank -%}
+              {{
+                st.guarantee_icon
+                | image_url: width: 120
+                | image_tag: loading: 'lazy', class: 'vp-vsp__guarantee-icon', alt: ''
+              }}
             {%- endif -%}
-            <span class="vp-vsp__highlight-body">
-              {%- if st.highlight_title != blank -%}
-                <span class="vp-vsp__highlight-title">{{ st.highlight_title | escape }}</span>
+            {%- if st.guarantee_number != blank -%}
+              <span class="vp-vsp__guarantee-value">{{ st.guarantee_number | escape }}</span>
+            {%- endif -%}
+            <span class="vp-vsp__guarantee-body">
+              {%- if st.guarantee_title != blank -%}
+                <span class="vp-vsp__guarantee-title">{{ st.guarantee_title | escape }}</span>
               {%- endif -%}
-              {%- if st.highlight_text != blank -%}
-                <span class="vp-vsp__highlight-text">{{ st.highlight_text | escape }}</span>
+              {%- if st.guarantee_text != blank -%}
+                <span class="vp-vsp__guarantee-text">{{ st.guarantee_text | escape }}</span>
               {%- endif -%}
             </span>
           </div>
         {%- endif -%}
+
+        {%- if st.cta_show and st.cta_label != blank -%}
+          {%- liquid
+            assign cta_classes = 'vp-vsp__cta'
+            if st.cta_width == 'full'
+              assign cta_classes = cta_classes | append: ' vp-vsp__cta--full'
+            endif
+            if st.cta_full_mobile
+              assign cta_classes = cta_classes | append: ' vp-vsp__cta--full-m'
+            endif
+            if st.cta_border != blank
+              assign cta_classes = cta_classes | append: ' vp-vsp__cta--bordered'
+            endif
+          -%}
+          <div
+            class="vp-vsp__cta-wrap"
+            style="--vsp-cta-align: {{ cta_flex }}; --vsp-cta-space: {{ st.cta_space | default: 20 }}px;"
+          >
+            <a
+              class="{{ cta_classes }}"
+              {% if st.cta_link != blank %}href="{{ st.cta_link }}"{% else %}href="#" aria-disabled="true"{% endif %}
+              {% if st.cta_new_tab %}target="_blank" rel="noopener"{% endif %}
+              style="
+                --vsp-cta-bg: {{ st.cta_bg }};
+                --vsp-cta-color: {{ st.cta_color }};
+                --vsp-cta-hover: {{ st.cta_hover_bg }};
+                {% if st.cta_border != blank %}--vsp-cta-border: {{ st.cta_border }};{% endif %}
+                --vsp-cta-radius: {{ st.cta_radius | default: 999 }}px;
+              "
+            >{{ st.cta_label | escape }}</a>
+          </div>
+        {%- endif -%}
       </div>
+      {%- endunless -%}
 
       {%- if cards.size > 0 -%}
         <div
@@ -258,8 +378,11 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 28px;
-    align-items: center;
+    align-items: var(--vp-vsp-copy-align, center);
   }
+
+  /* With the copy column hidden the carousel takes the whole row. */
+  .vp-vsp--nocopy .vp-vsp__grid { grid-template-columns: 1fr; }
 
   /* Copy column ---------------------------------------------------------- */
   .vp-vsp__heading {
@@ -283,26 +406,62 @@
 
   .vp-vsp__stats {
     list-style: none;
-    margin: 0 0 24px;
+    margin: 0;
     padding: 0;
     display: grid;
-    gap: 18px;
+    gap: var(--vp-vsp-stat-gap, 18px);
   }
 
+  /* The number sits in a fixed-width column so every row lines up, whatever
+     background shape each block chooses. The badge is centred inside it and
+     may grow past it on extreme font sizes without shifting the text. */
   .vp-vsp__stat {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: var(--vp-vsp-num-col, 104px) 1fr;
     align-items: center;
     gap: 16px;
+    background: var(--vsp-s-row-bg, transparent);
+    border-radius: var(--vsp-s-row-radius, 0px);
+    padding: var(--vsp-s-row-pad, 0px);
   }
 
+  .vp-vsp__stat--bordered { border: 1px solid var(--vsp-s-row-border, transparent); }
+
   .vp-vsp__stat-value {
-    font-size: var(--vp-vsp-stat-fs-m, 30px);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: center;
+    box-sizing: border-box;
+    min-width: 100%;
+    /* 89% must never break onto a second line inside a circle. */
+    white-space: nowrap;
+    font-size: var(--vsp-s-num-fs, 38px);
     font-weight: 800;
     line-height: 1;
     letter-spacing: -0.02em;
-    color: var(--vp-vsp-stat-color, #1A1A1A);
+    color: var(--vsp-s-num-color, #1A1A1A);
     font-variant-numeric: tabular-nums;
+  }
+
+  .vp-vsp__stat--hasbg .vp-vsp__stat-value {
+    background: var(--vsp-s-num-bg, #FFFFFF);
+    padding: 0.2em 0.32em;
+  }
+
+  .vp-vsp__stat--hasbg.vp-vsp__stat--shape-circle .vp-vsp__stat-value {
+    border-radius: 50%;
+    aspect-ratio: 1;
+  }
+
+  .vp-vsp__stat--hasbg.vp-vsp__stat--shape-round .vp-vsp__stat-value {
+    border-radius: 16px;
+    aspect-ratio: 1;
+  }
+
+  .vp-vsp__stat--hasbg.vp-vsp__stat--shape-pill .vp-vsp__stat-value {
+    border-radius: 999px;
+    padding: 0.24em 0.6em;
   }
 
   .vp-vsp__stat-text {
@@ -311,45 +470,88 @@
     color: var(--vp-vsp-body, #6B7A85);
   }
 
+  .vp-vsp__stat-text > :first-child { margin-top: 0; }
+  .vp-vsp__stat-text > :last-child { margin-bottom: 0; }
   .vp-vsp__stat-text strong { color: var(--vp-vsp-heading, #1A1A1A); font-weight: 700; }
 
-  .vp-vsp__highlight {
-    display: grid;
-    grid-template-columns: auto 1fr;
+  /* Guarantee card ------------------------------------------------------- */
+  .vp-vsp__guarantee {
+    display: flex;
     align-items: center;
     gap: 16px;
-    background: #FFFFFF;
-    border-radius: 16px;
+    margin-top: var(--vsp-g-space-m, 18px);
+    background: var(--vsp-g-bg, #FFFFFF);
+    border-radius: var(--vsp-g-radius, 16px);
     padding: 18px 20px;
-    box-shadow: 0 8px 24px rgba(31, 127, 184, 0.10);
   }
 
-  .vp-vsp__highlight-value {
+  .vp-vsp__guarantee--shadow { box-shadow: 0 8px 24px rgba(31, 127, 184, 0.10); }
+  .vp-vsp__guarantee--bordered { border: 1px solid var(--vsp-g-border, transparent); }
+
+  .vp-vsp__guarantee-icon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .vp-vsp__guarantee-value {
     font-size: var(--vp-vsp-stat-fs-m, 30px);
     font-weight: 800;
     line-height: 1;
     letter-spacing: -0.02em;
-    color: var(--vp-vsp-stat-color, #1A1A1A);
+    color: var(--vsp-g-num, #1A1A1A);
     font-variant-numeric: tabular-nums;
+    white-space: nowrap;
   }
 
-  .vp-vsp__highlight-body { display: block; }
+  .vp-vsp__guarantee-body { display: block; flex: 1 1 auto; min-width: 0; }
 
-  .vp-vsp__highlight-title {
+  .vp-vsp__guarantee-title {
     display: block;
     font-size: var(--vp-vsp-body-fs, 16px);
     font-weight: 700;
     line-height: 1.3;
-    color: var(--vp-vsp-heading, #1A1A1A);
+    color: var(--vsp-g-title, #1A1A1A);
   }
 
-  .vp-vsp__highlight-text {
+  .vp-vsp__guarantee-text {
     display: block;
     margin-top: 2px;
     font-size: var(--vp-vsp-body-fs, 16px);
     line-height: 1.4;
-    color: var(--vp-vsp-body, #6B7A85);
+    color: var(--vsp-g-text, #6B7A85);
   }
+
+  /* CTA ------------------------------------------------------------------ */
+  .vp-vsp__cta-wrap {
+    display: flex;
+    justify-content: var(--vsp-cta-align, flex-start);
+    margin-top: var(--vsp-cta-space, 20px);
+  }
+
+  .vp-vsp__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 16px 28px;
+    font-size: 14.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    background: var(--vsp-cta-bg, #47B5E9);
+    color: var(--vsp-cta-color, #FFFFFF);
+    border-radius: var(--vsp-cta-radius, 999px);
+    transition: background 0.2s ease;
+  }
+
+  .vp-vsp__cta--bordered { border: 1px solid var(--vsp-cta-border, transparent); }
+  .vp-vsp__cta:hover { background: var(--vsp-cta-hover, #2E9FD8); }
+  .vp-vsp__cta:focus-visible { outline: 3px solid var(--vp-vsp-accent, #47B5E9); outline-offset: 3px; }
+  .vp-vsp__cta--full { width: 100%; }
+
 
   /* Carousel ------------------------------------------------------------- */
   .vp-vsp__carousel { position: relative; min-width: 0; }
@@ -533,10 +735,9 @@
 
     .vp-vsp__heading { font-size: var(--vp-vsp-head-fs, 40px); }
 
-    .vp-vsp__stat-value,
-    .vp-vsp__highlight-value { font-size: var(--vp-vsp-stat-fs, 38px); }
+    .vp-vsp__stats { gap: var(--vp-vsp-stat-gap, 22px); }
 
-    .vp-vsp__stats { gap: 22px; }
+    .vp-vsp__guarantee { margin-top: var(--vsp-g-space, 24px); }
 
     .vp-vsp__slide {
       flex-basis: calc(
@@ -578,6 +779,12 @@
       padding-top: var(--vp-vsp-pad-top-m, 40px);
       padding-bottom: var(--vp-vsp-pad-bottom-m, 40px);
     }
+    /* The per-block number size is capped on small screens so a large
+       desktop value cannot blow the row open on a phone. */
+    .vp-vsp__stat-value { font-size: min(var(--vsp-s-num-fs, 38px), var(--vp-vsp-stat-fs-m, 30px)); }
+    .vp-vsp__stat { grid-template-columns: min(var(--vp-vsp-num-col, 104px), 88px) 1fr; gap: 12px; }
+    .vp-vsp__cta--full-m { width: 100%; }
+
     /* Keeps a tall 9:16 card from eating the whole phone viewport. */
     .vp-vsp__card { max-height: 68vh; }
     .vp-vsp__card { aspect-ratio: 9 / 16; }
@@ -850,9 +1057,21 @@
       "default": "page",
       "info": "Page width matches the theme's page width setting, so the section lines up with the header and its neighbours."
     },
-    { "type": "number", "id": "custom_max_width", "label": "Custom max width (px)", "default": 1200, "info": "Only used when Section width is set to Custom." },
+    { "type": "number", "id": "custom_max_width", "label": "Maximum content width (px)", "default": 1200, "info": "Only used when Section width is set to Custom." },
     { "type": "color", "id": "bg_color", "label": "Section background", "default": "#EDFAFF" },
     { "type": "color", "id": "accent_color", "label": "Accent", "default": "#47B5E9" },
+    {
+      "type": "select",
+      "id": "copy_align",
+      "label": "Left column vertical alignment",
+      "options": [
+        { "value": "start", "label": "Top" },
+        { "value": "center", "label": "Middle" },
+        { "value": "end", "label": "Bottom" }
+      ],
+      "default": "center"
+    },
+    { "type": "checkbox", "id": "hide_copy_column", "label": "Hide the text and statistics column", "default": false, "info": "Leaves only the video carousel, full width." },
     { "type": "range", "id": "padding_top", "label": "Top padding desktop", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 64 },
     { "type": "range", "id": "padding_bottom", "label": "Bottom padding desktop", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 64 },
     { "type": "range", "id": "padding_top_mobile", "label": "Top padding mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
@@ -863,21 +1082,79 @@
     { "type": "color", "id": "heading_color", "label": "Heading colour", "default": "#1A1A1A" },
     { "type": "number", "id": "heading_size", "label": "Heading size desktop (px)", "default": 40 },
     { "type": "number", "id": "heading_size_mobile", "label": "Heading size mobile (px)", "default": 26 },
-    { "type": "richtext", "id": "subheading", "label": "Supporting copy", "default": "<p>Watch pet parents share how they use VetPets in their day-to-day routine.</p>" },
-    { "type": "color", "id": "body_color", "label": "Body text colour", "default": "#6B7A85" },
-    { "type": "number", "id": "body_size", "label": "Body text size (px)", "default": 16 },
+    { "type": "richtext", "id": "subheading", "label": "Supporting text", "default": "<p>Watch pet parents share how they use VetPets in their day-to-day routine.</p>" },
+    { "type": "color", "id": "body_color", "label": "Supporting text colour", "default": "#6B7A85" },
+    { "type": "number", "id": "body_size", "label": "Supporting text size (px)", "default": 16 },
 
     { "type": "header", "content": "Statistics" },
-    { "type": "paragraph", "content": "Statistic rows are added as blocks below. They ship blank on purpose — only enter figures you can independently verify, and leave a row empty to hide it." },
-    { "type": "color", "id": "stat_color", "label": "Statistic number colour", "default": "#1A1A1A" },
-    { "type": "number", "id": "stat_size", "label": "Statistic size desktop (px)", "default": 38 },
-    { "type": "number", "id": "stat_size_mobile", "label": "Statistic size mobile (px)", "default": 30 },
+    { "type": "paragraph", "content": "UNVERIFIED PLACEHOLDERS. The percentages shipped with this section are drafts awaiting customer-survey evidence. Do not present them as verified results and do not publish them until the underlying data is confirmed." },
+    {
+      "type": "select",
+      "id": "stats_visible",
+      "label": "Number of statistics to show",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" },
+        { "value": "5", "label": "5" },
+        { "value": "6", "label": "6" }
+      ],
+      "default": "3",
+      "info": "Shows the first N statistic blocks. Add up to 6 blocks below; any beyond this number stay hidden without being deleted."
+    },
+    { "type": "range", "id": "stat_gap", "label": "Spacing between statistics", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 18 },
+    { "type": "range", "id": "stat_number_col", "label": "Number column width", "min": 56, "max": 180, "step": 4, "unit": "px", "default": 104, "info": "Fixed width that keeps every number aligned even when blocks use different background shapes." },
+    { "type": "number", "id": "stat_size_mobile", "label": "Maximum number size on mobile (px)", "default": 30, "info": "Caps each block's number size on small screens." },
 
-    { "type": "header", "content": "Highlight card" },
-    { "type": "paragraph", "content": "The white card under the statistics. Clear all three fields to hide it." },
-    { "type": "text", "id": "highlight_value", "label": "Highlight number" },
-    { "type": "text", "id": "highlight_title", "label": "Highlight title" },
-    { "type": "text", "id": "highlight_text", "label": "Highlight text" },
+    { "type": "header", "content": "Guarantee card" },
+    { "type": "checkbox", "id": "guarantee_show", "label": "Show guarantee card", "default": true },
+    { "type": "text", "id": "guarantee_number", "label": "Large number", "default": "100" },
+    { "type": "text", "id": "guarantee_title", "label": "Title", "default": "Day guarantee" },
+    { "type": "textarea", "id": "guarantee_text", "label": "Supporting text", "default": "Try VetPets with confidence. If it's not right for you, you're covered." },
+    { "type": "image_picker", "id": "guarantee_icon", "label": "Icon or image", "info": "Optional. Shown before the number." },
+    { "type": "color", "id": "guarantee_bg", "label": "Card background", "default": "#FFFFFF" },
+    { "type": "color", "id": "guarantee_num_color", "label": "Number colour", "default": "#1A1A1A" },
+    { "type": "color", "id": "guarantee_title_color", "label": "Title colour", "default": "#1A1A1A" },
+    { "type": "color", "id": "guarantee_text_color", "label": "Text colour", "default": "#6B7A85" },
+    { "type": "color", "id": "guarantee_border", "label": "Border colour", "info": "Leave empty for no border." },
+    { "type": "range", "id": "guarantee_radius", "label": "Border radius", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 16 },
+    { "type": "checkbox", "id": "guarantee_shadow", "label": "Shadow", "default": true },
+    { "type": "range", "id": "guarantee_space", "label": "Space above card desktop", "min": 0, "max": 80, "step": 2, "unit": "px", "default": 24 },
+    { "type": "range", "id": "guarantee_space_mobile", "label": "Space above card mobile", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 18 },
+
+    { "type": "header", "content": "Call to action" },
+    { "type": "checkbox", "id": "cta_show", "label": "Show button", "default": false },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Shop VetPets" },
+    { "type": "url", "id": "cta_link", "label": "Button link" },
+    { "type": "checkbox", "id": "cta_new_tab", "label": "Open in new tab", "default": false },
+    { "type": "color", "id": "cta_bg", "label": "Background", "default": "#47B5E9" },
+    { "type": "color", "id": "cta_color", "label": "Text colour", "default": "#FFFFFF" },
+    { "type": "color", "id": "cta_hover_bg", "label": "Hover background", "default": "#2E9FD8" },
+    { "type": "color", "id": "cta_border", "label": "Border colour", "info": "Leave empty for no border." },
+    { "type": "range", "id": "cta_radius", "label": "Border radius", "min": 0, "max": 50, "step": 2, "unit": "px", "default": 50, "info": "50 gives a fully rounded pill; 0 gives square corners." },
+    {
+      "type": "select",
+      "id": "cta_width",
+      "label": "Button width",
+      "options": [
+        { "value": "content", "label": "Content width" },
+        { "value": "full", "label": "Full width" }
+      ],
+      "default": "content"
+    },
+    {
+      "type": "select",
+      "id": "cta_align",
+      "label": "Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Centre" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    { "type": "checkbox", "id": "cta_full_mobile", "label": "Full width on mobile", "default": true },
+    { "type": "range", "id": "cta_space", "label": "Space above button", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 20 },
 
     { "type": "header", "content": "Videos" },
     { "type": "range", "id": "per_view_desktop", "label": "Cards visible on desktop", "min": 1.2, "max": 4, "step": 0.1, "default": 2.2, "info": "A fractional value leaves the next card partly visible, which signals that the row can be swiped." },
@@ -892,9 +1169,32 @@
       "type": "stat",
       "name": "Statistic",
       "settings": [
-        { "type": "paragraph", "content": "Placeholder values only. Replace with a figure you can verify, or leave both fields empty to hide this row." },
-        { "type": "text", "id": "value", "label": "Number", "default": "00%", "info": "For example a percentage or a count." },
-        { "type": "richtext", "id": "text", "label": "Description", "default": "<p>Add a verified fact about your product here.</p>" }
+        { "type": "paragraph", "content": "UNVERIFIED PLACEHOLDER. Replace with a figure backed by confirmed customer-survey data before this is shown to customers." },
+        { "type": "checkbox", "id": "show_stat", "label": "Show this statistic", "default": true, "info": "Untick to hide the row without deleting it." },
+        { "type": "text", "id": "value", "label": "Percentage or number", "default": "89%" },
+        { "type": "richtext", "id": "text", "label": "Supporting text", "default": "<p>say VetPets has become part of their pet's daily care routine</p>", "info": "Use the editor's bold control to emphasise part of the sentence." },
+        { "type": "header", "content": "Number" },
+        { "type": "color", "id": "num_color", "label": "Number colour", "default": "#1A1A1A" },
+        { "type": "number", "id": "num_size", "label": "Number font size (px)", "default": 38 },
+        { "type": "checkbox", "id": "num_bg_show", "label": "Show number background", "default": false },
+        { "type": "color", "id": "num_bg_color", "label": "Number background colour", "default": "#FFFFFF" },
+        {
+          "type": "select",
+          "id": "num_shape",
+          "label": "Number background shape",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "circle", "label": "Circle" },
+            { "value": "round", "label": "Rounded square" },
+            { "value": "pill", "label": "Pill" }
+          ],
+          "default": "circle"
+        },
+        { "type": "header", "content": "Row" },
+        { "type": "color", "id": "row_bg", "label": "Row background colour", "info": "Leave empty for no background." },
+        { "type": "color", "id": "row_border", "label": "Row border colour", "info": "Leave empty for no border." },
+        { "type": "range", "id": "row_radius", "label": "Row border radius", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 0 },
+        { "type": "range", "id": "row_padding", "label": "Row padding", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 0 }
       ]
     },
     {
@@ -914,9 +1214,9 @@
     {
       "name": "Video social proof",
       "blocks": [
-        { "type": "stat" },
-        { "type": "stat" },
-        { "type": "stat" },
+        { "type": "stat", "settings": { "value": "89%", "text": "<p>say VetPets has become part of their pet's daily care routine</p>" } },
+        { "type": "stat", "settings": { "value": "93%", "text": "<p>notice a visible difference within 30 days</p>" } },
+        { "type": "stat", "settings": { "value": "97%", "text": "<p>would recommend VetPets to another pet parent</p>" } },
         { "type": "video_card", "settings": { "label": "Samantha" } },
         { "type": "video_card", "settings": { "label": "Oakley" } },
         { "type": "video_card", "settings": { "label": "Sofia" } },
