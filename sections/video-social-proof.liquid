@@ -1,0 +1,929 @@
+{%- comment -%}
+  Video social proof
+  ------------------
+  Two-column social-proof unit: an editable copy column on the left (heading,
+  supporting copy, stat rows and a highlight card) and a horizontal carousel of
+  tall 9:16 UGC video cards on the right. On mobile the columns stack and the
+  carousel keeps a partially visible next card so the swipe affordance reads
+  without an instruction label.
+
+  CLAIMS
+  ------
+  This section ships with neutral placeholders only ("00%", "Add a verified
+  fact"). It states no rating, result or quote of its own - every number and
+  line of copy is merchant-entered in the theme editor. Nothing here should
+  ever be filled with a figure that is not independently verified.
+
+  CAROUSEL
+  --------
+  CSS scroll-snap, not a transform track. The offer pages already use snap
+  rails (assets/*-offer-page.css .rail/.slide), it gives native iOS momentum
+  and, unlike the review-slider/product-cards-carousel engine, it needs no
+  cloned slides - cloning would duplicate every <video> element, breaking the
+  single-playback rule and multiplying network cost. Arrows call scrollTo and
+  the dots derive from scrollLeft, so there is one source of truth.
+
+  VIDEO LOADING
+  -------------
+  Nothing downloads on page load. Each <video> is preload="none" with a poster
+  and its real URL parked in data-src on the <source>; the source is only
+  promoted to src on the first play, then load() is called once. So the initial
+  page cost is five poster images, not five videos.
+
+  PLAYBACK RULES
+  --------------
+  One at a time - a capturing 'play' listener pauses every other video in the
+  section (play does not bubble, hence capture). An IntersectionObserver pauses
+  any card that leaves the viewport. Under prefers-reduced-motion the carousel
+  scrolls without smooth behaviour; playback is always user-initiated, so there
+  is no autoplay to suppress.
+
+  All classes are prefixed vp-vsp- and the root is found by
+  data-vp-vsp="{{ section.id }}" so multiple instances never collide.
+{%- endcomment -%}
+
+{%- liquid
+  assign st = section.settings
+  assign stats = section.blocks | where: 'type', 'stat'
+  assign cards = section.blocks | where: 'type', 'video_card'
+
+  assign width_mode = st.section_width | default: 'page'
+  assign inner_class = 'vp-vsp__inner page-width'
+  if width_mode == 'full'
+    assign inner_class = 'vp-vsp__inner page-width page-width--full'
+  endif
+  assign custom_max_width = st.custom_max_width | default: 1200
+
+  comment
+    Full width leaves no gutter for the arrows to sit in, so they move inside
+    the rail there. Without this they hang 20px past the viewport and raise a
+    horizontal scrollbar on the whole page.
+  endcomment
+  assign root_class = 'vp-vsp'
+  if width_mode == 'full'
+    assign root_class = 'vp-vsp vp-vsp--full'
+  endif
+
+  comment
+    Number settings come back nil when the field is cleared, so each one falls
+    back to its documented default. 0 is truthy in Liquid, so a deliberate 0
+    still survives the default filter.
+  endcomment
+  assign heading_fs = st.heading_size | default: 40
+  assign heading_fs_m = st.heading_size_mobile | default: 26
+  assign body_fs = st.body_size | default: 16
+  assign stat_fs = st.stat_size | default: 38
+  assign stat_fs_m = st.stat_size_mobile | default: 30
+  assign card_radius = st.card_radius | default: 20
+  assign card_gap = st.card_gap | default: 16
+  assign peek_m = st.peek_mobile | default: 18
+  assign per_view_d = st.per_view_desktop | default: 2.2
+-%}
+
+<div
+  class="{{ root_class }}"
+  data-vp-vsp="{{ section.id }}"
+  style="
+    --vp-vsp-bg: {{ st.bg_color }};
+    --vp-vsp-accent: {{ st.accent_color }};
+    --vp-vsp-heading: {{ st.heading_color }};
+    --vp-vsp-head-fs: {{ heading_fs }}px;
+    --vp-vsp-head-fs-m: {{ heading_fs_m }}px;
+    --vp-vsp-body: {{ st.body_color }};
+    --vp-vsp-body-fs: {{ body_fs }}px;
+    --vp-vsp-stat-color: {{ st.stat_color }};
+    --vp-vsp-stat-fs: {{ stat_fs }}px;
+    --vp-vsp-stat-fs-m: {{ stat_fs_m }}px;
+    --vp-vsp-card-radius: {{ card_radius }}px;
+    --vp-vsp-gap: {{ card_gap }}px;
+    --vp-vsp-peek-m: {{ peek_m }}%;
+    --vp-vsp-pv-d: {{ per_view_d }};
+    --vp-vsp-pad-top: {{ st.padding_top | default: 64 }}px;
+    --vp-vsp-pad-bottom: {{ st.padding_bottom | default: 64 }}px;
+    --vp-vsp-pad-top-m: {{ st.padding_top_mobile | default: 40 }}px;
+    --vp-vsp-pad-bottom-m: {{ st.padding_bottom_mobile | default: 40 }}px;
+    {% if width_mode == 'custom' %}--page-width: {{ custom_max_width }}px;{% endif %}
+  "
+>
+  <div class="{{ inner_class }}">
+    <div class="vp-vsp__grid">
+
+      <div class="vp-vsp__copy">
+        {%- if st.heading != blank -%}
+          <h2 class="vp-vsp__heading">{{ st.heading | escape }}</h2>
+        {%- endif -%}
+
+        {%- if st.subheading != blank -%}
+          <div class="vp-vsp__sub">{{ st.subheading }}</div>
+        {%- endif -%}
+
+        {%- if stats.size > 0 -%}
+          <ul class="vp-vsp__stats" role="list">
+            {%- for block in stats -%}
+              {%- if block.settings.value != blank or block.settings.text != blank -%}
+                <li class="vp-vsp__stat" {{ block.shopify_attributes }}>
+                  {%- if block.settings.value != blank -%}
+                    <span class="vp-vsp__stat-value">{{ block.settings.value | escape }}</span>
+                  {%- endif -%}
+                  {%- if block.settings.text != blank -%}
+                    <span class="vp-vsp__stat-text">{{ block.settings.text }}</span>
+                  {%- endif -%}
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if st.highlight_value != blank or st.highlight_title != blank or st.highlight_text != blank -%}
+          <div class="vp-vsp__highlight">
+            {%- if st.highlight_value != blank -%}
+              <span class="vp-vsp__highlight-value">{{ st.highlight_value | escape }}</span>
+            {%- endif -%}
+            <span class="vp-vsp__highlight-body">
+              {%- if st.highlight_title != blank -%}
+                <span class="vp-vsp__highlight-title">{{ st.highlight_title | escape }}</span>
+              {%- endif -%}
+              {%- if st.highlight_text != blank -%}
+                <span class="vp-vsp__highlight-text">{{ st.highlight_text | escape }}</span>
+              {%- endif -%}
+            </span>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if cards.size > 0 -%}
+        <div
+          class="vp-vsp__carousel"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="{{ st.heading | default: 'Customer videos' | strip_html | escape }}"
+        >
+          <button
+            class="vp-vsp__arrow vp-vsp__arrow--prev"
+            type="button"
+            data-vp-vsp-prev
+            aria-label="Previous video"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+
+          <div class="vp-vsp__rail" data-vp-vsp-rail>
+            {%- for block in cards -%}
+              {%- liquid
+                assign bs = block.settings
+                assign poster_url = ''
+                if bs.poster != blank
+                  assign poster_url = bs.poster | image_url: width: 720
+                elsif bs.video != blank and bs.video.preview_image != blank
+                  assign poster_url = bs.video.preview_image | image_url: width: 720
+                elsif bs.poster_url != blank
+                  assign poster_url = bs.poster_url
+                endif
+
+                assign label_text = bs.label | default: ''
+                assign alt_text = bs.alt | default: label_text
+                if alt_text == blank
+                  assign alt_text = 'Customer video'
+                endif
+              -%}
+              <div class="vp-vsp__slide" {{ block.shopify_attributes }}>
+                <div class="vp-vsp__card" data-vp-vsp-card>
+                  <video
+                    class="vp-vsp__video"
+                    data-vp-vsp-video
+                    preload="none"
+                    playsinline
+                    disablepictureinpicture
+                    {% if st.loop_videos %}loop{% endif %}
+                    {% if st.start_muted %}muted{% endif %}
+                    {% if poster_url != blank %}poster="{{ poster_url }}"{% endif %}
+                    aria-label="{{ alt_text | escape }}"
+                  >
+                    {%- if bs.video != blank -%}
+                      {%- for source in bs.video.sources -%}
+                        {%- if source.format == 'mp4' -%}
+                          <source data-src="{{ source.url }}" type="{{ source.mime_type }}">
+                        {%- endif -%}
+                      {%- endfor -%}
+                    {%- elsif bs.video_url != blank -%}
+                      <source data-src="{{ bs.video_url }}" type="video/mp4">
+                    {%- endif -%}
+                  </video>
+
+                  <button class="vp-vsp__play" type="button" data-vp-vsp-play aria-label="Play video">
+                    <span class="vp-vsp__play-icon" aria-hidden="true">
+                      <svg class="vp-vsp__icon-play" viewBox="0 0 24 24" focusable="false"><path d="M8 5.5v13l11-6.5-11-6.5z" fill="currentColor"/></svg>
+                      <svg class="vp-vsp__icon-pause" viewBox="0 0 24 24" focusable="false"><path d="M7 5h3.2v14H7zM13.8 5H17v14h-3.2z" fill="currentColor"/></svg>
+                    </span>
+                  </button>
+
+                  <button class="vp-vsp__mute" type="button" data-vp-vsp-mute aria-label="Unmute video">
+                    <svg class="vp-vsp__icon-muted" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M17 9l4 6M21 9l-4 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+                    <svg class="vp-vsp__icon-sound" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+                  </button>
+
+                  {%- if label_text != blank -%}
+                    <span class="vp-vsp__label">{{ label_text | escape }}</span>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+
+          <button
+            class="vp-vsp__arrow vp-vsp__arrow--next"
+            type="button"
+            data-vp-vsp-next
+            aria-label="Next video"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+
+          <div class="vp-vsp__dots" data-vp-vsp-dots role="tablist" aria-label="Choose video"></div>
+        </div>
+      {%- endif -%}
+
+    </div>
+  </div>
+</div>
+
+{% style %}
+  .vp-vsp {
+    background: var(--vp-vsp-bg, #EDFAFF);
+    padding-top: var(--vp-vsp-pad-top, 64px);
+    padding-bottom: var(--vp-vsp-pad-bottom, 64px);
+  }
+
+  .vp-vsp__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    align-items: center;
+  }
+
+  /* Copy column ---------------------------------------------------------- */
+  .vp-vsp__heading {
+    margin: 0 0 12px;
+    font-size: var(--vp-vsp-head-fs-m, 26px);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    color: var(--vp-vsp-heading, #1A1A1A);
+  }
+
+  .vp-vsp__sub {
+    margin: 0 0 24px;
+    font-size: var(--vp-vsp-body-fs, 16px);
+    line-height: 1.5;
+    color: var(--vp-vsp-body, #6B7A85);
+  }
+
+  .vp-vsp__sub > :first-child { margin-top: 0; }
+  .vp-vsp__sub > :last-child { margin-bottom: 0; }
+
+  .vp-vsp__stats {
+    list-style: none;
+    margin: 0 0 24px;
+    padding: 0;
+    display: grid;
+    gap: 18px;
+  }
+
+  .vp-vsp__stat {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .vp-vsp__stat-value {
+    font-size: var(--vp-vsp-stat-fs-m, 30px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--vp-vsp-stat-color, #1A1A1A);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .vp-vsp__stat-text {
+    font-size: var(--vp-vsp-body-fs, 16px);
+    line-height: 1.4;
+    color: var(--vp-vsp-body, #6B7A85);
+  }
+
+  .vp-vsp__stat-text strong { color: var(--vp-vsp-heading, #1A1A1A); font-weight: 700; }
+
+  .vp-vsp__highlight {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 16px;
+    background: #FFFFFF;
+    border-radius: 16px;
+    padding: 18px 20px;
+    box-shadow: 0 8px 24px rgba(31, 127, 184, 0.10);
+  }
+
+  .vp-vsp__highlight-value {
+    font-size: var(--vp-vsp-stat-fs-m, 30px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--vp-vsp-stat-color, #1A1A1A);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .vp-vsp__highlight-body { display: block; }
+
+  .vp-vsp__highlight-title {
+    display: block;
+    font-size: var(--vp-vsp-body-fs, 16px);
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--vp-vsp-heading, #1A1A1A);
+  }
+
+  .vp-vsp__highlight-text {
+    display: block;
+    margin-top: 2px;
+    font-size: var(--vp-vsp-body-fs, 16px);
+    line-height: 1.4;
+    color: var(--vp-vsp-body, #6B7A85);
+  }
+
+  /* Carousel ------------------------------------------------------------- */
+  .vp-vsp__carousel { position: relative; min-width: 0; }
+
+  .vp-vsp__rail {
+    display: flex;
+    gap: var(--vp-vsp-gap, 16px);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    /* Horizontal swipe is the rail's, vertical scrolling stays with the page. */
+    touch-action: pan-y pinch-zoom;
+    padding-bottom: 4px;
+  }
+
+  .vp-vsp__rail::-webkit-scrollbar { display: none; }
+
+  /* The peek is the slice of the next card left visible, gap included. */
+  .vp-vsp__slide {
+    flex: 0 0 calc(100% - var(--vp-vsp-peek-m, 18%));
+    scroll-snap-align: start;
+    min-width: 0;
+  }
+
+  .vp-vsp__card {
+    position: relative;
+    aspect-ratio: 9 / 16;
+    border-radius: var(--vp-vsp-card-radius, 20px);
+    overflow: hidden;
+    background: #0E1B22;
+    box-shadow: 0 10px 30px rgba(31, 127, 184, 0.16);
+  }
+
+  .vp-vsp__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Controls ------------------------------------------------------------- */
+  .vp-vsp__play {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .vp-vsp__play-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--vp-vsp-accent, #47B5E9);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
+    transition: transform 0.18s ease, opacity 0.18s ease;
+  }
+
+  .vp-vsp__play-icon svg { width: 26px; height: 26px; }
+
+  .vp-vsp__play:hover .vp-vsp__play-icon { transform: scale(1.06); }
+
+  .vp-vsp__play:focus-visible {
+    outline: 3px solid var(--vp-vsp-accent, #47B5E9);
+    outline-offset: -3px;
+  }
+
+  .vp-vsp__icon-pause { display: none; }
+
+  /* While playing the overlay stays clickable but its button fades out, so a
+     tap anywhere on the card pauses without an icon covering the face. */
+  .vp-vsp__card.is-playing .vp-vsp__icon-play { display: none; }
+  .vp-vsp__card.is-playing .vp-vsp__icon-pause { display: block; }
+  .vp-vsp__card.is-playing .vp-vsp__play-icon { opacity: 0; }
+  .vp-vsp__card.is-playing .vp-vsp__play:hover .vp-vsp__play-icon,
+  .vp-vsp__card.is-playing .vp-vsp__play:focus-visible .vp-vsp__play-icon { opacity: 1; }
+
+  .vp-vsp__mute {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    padding: 0;
+    border-radius: 999px;
+    background: rgba(14, 27, 34, 0.55);
+    color: #FFFFFF;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .vp-vsp__mute svg { width: 20px; height: 20px; }
+  .vp-vsp__mute:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 2px; }
+  .vp-vsp__icon-sound { display: none; }
+  .vp-vsp__card.is-unmuted .vp-vsp__icon-muted { display: none; }
+  .vp-vsp__card.is-unmuted .vp-vsp__icon-sound { display: block; }
+
+  .vp-vsp__label {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    max-width: calc(100% - 64px);
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(14, 27, 34, 0.55);
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Arrows are pointer-only; touch users swipe. */
+  .vp-vsp__arrow { display: none; }
+
+  .vp-vsp__dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .vp-vsp__dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(31, 127, 184, 0.25);
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .vp-vsp__dot[aria-selected='true'] {
+    background: var(--vp-vsp-accent, #47B5E9);
+    transform: scale(1.25);
+  }
+
+  .vp-vsp__dot:focus-visible {
+    outline: 3px solid var(--vp-vsp-accent, #47B5E9);
+    outline-offset: 3px;
+  }
+
+  /* Tablet --------------------------------------------------------------- */
+  @media screen and (min-width: 750px) {
+    .vp-vsp__slide { flex-basis: calc((100% - var(--vp-vsp-gap, 16px)) / 2); }
+  }
+
+  /* Desktop -------------------------------------------------------------- */
+  @media screen and (min-width: 990px) {
+    .vp-vsp {
+      padding-top: var(--vp-vsp-pad-top, 64px);
+      padding-bottom: var(--vp-vsp-pad-bottom, 64px);
+    }
+
+    .vp-vsp__grid {
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+      gap: 48px;
+    }
+
+    .vp-vsp__heading { font-size: var(--vp-vsp-head-fs, 40px); }
+
+    .vp-vsp__stat-value,
+    .vp-vsp__highlight-value { font-size: var(--vp-vsp-stat-fs, 38px); }
+
+    .vp-vsp__stats { gap: 22px; }
+
+    .vp-vsp__slide {
+      flex-basis: calc(
+        (100% - (var(--vp-vsp-pv-d, 2.2) - 1) * var(--vp-vsp-gap, 16px)) / var(--vp-vsp-pv-d, 2.2)
+      );
+    }
+
+    .vp-vsp__arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: #FFFFFF;
+      color: var(--vp-vsp-heading, #1A1A1A);
+      box-shadow: 0 4px 14px rgba(31, 127, 184, 0.20);
+      cursor: pointer;
+    }
+
+    .vp-vsp__arrow svg { width: 22px; height: 22px; }
+    .vp-vsp__arrow--prev { left: -20px; }
+    .vp-vsp__arrow--next { right: -20px; }
+    .vp-vsp--full .vp-vsp__arrow--prev { left: 6px; }
+    .vp-vsp--full .vp-vsp__arrow--next { right: 6px; }
+    .vp-vsp__arrow[disabled] { opacity: 0.35; cursor: default; }
+    .vp-vsp__arrow:focus-visible { outline: 3px solid var(--vp-vsp-accent, #47B5E9); outline-offset: 2px; }
+  }
+
+  /* Mobile padding ------------------------------------------------------- */
+  @media screen and (max-width: 749px) {
+    .vp-vsp {
+      padding-top: var(--vp-vsp-pad-top-m, 40px);
+      padding-bottom: var(--vp-vsp-pad-bottom-m, 40px);
+    }
+    /* Keeps a tall 9:16 card from eating the whole phone viewport. */
+    .vp-vsp__card { max-height: 68vh; }
+    .vp-vsp__card { aspect-ratio: 9 / 16; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vp-vsp__rail { scroll-behavior: auto; }
+    .vp-vsp__play-icon,
+    .vp-vsp__dot { transition: none; }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    var root = document.querySelector('[data-vp-vsp="{{ section.id }}"]');
+    if (!root) return;
+
+    var rail = root.querySelector('[data-vp-vsp-rail]');
+    if (!rail) return;
+
+    var slides = Array.prototype.slice.call(rail.querySelectorAll('.vp-vsp__slide'));
+    var cards = Array.prototype.slice.call(root.querySelectorAll('[data-vp-vsp-card]'));
+    var prevBtn = root.querySelector('[data-vp-vsp-prev]');
+    var nextBtn = root.querySelector('[data-vp-vsp-next]');
+    var dotsWrap = root.querySelector('[data-vp-vsp-dots]');
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    /* The card currently being scrolled into view, exempt from the
+       leave-the-viewport pause while it is on its way in. */
+    var enteringCard = null;
+    var enteringAt = 0;
+
+    /* ---- lazy source promotion ------------------------------------------
+       data-src only becomes src on the first play, so the initial page load
+       costs five posters instead of five videos. */
+    function ensureLoaded(video) {
+      if (video.dataset.vpLoaded === 'true') return;
+      var sources = video.querySelectorAll('source[data-src]');
+      if (!sources.length) return;
+      Array.prototype.forEach.call(sources, function (s) {
+        s.setAttribute('src', s.getAttribute('data-src'));
+        s.removeAttribute('data-src');
+      });
+      video.dataset.vpLoaded = 'true';
+      video.load();
+    }
+
+    function cardOf(video) { return video.closest('[data-vp-vsp-card]'); }
+
+    function pauseVideo(video) {
+      if (!video.paused) video.pause();
+    }
+
+    function pauseAllExcept(video) {
+      cards.forEach(function (card) {
+        var v = card.querySelector('[data-vp-vsp-video]');
+        if (v && v !== video) pauseVideo(v);
+      });
+    }
+
+    /* play does not bubble, so the listener has to capture. */
+    root.addEventListener(
+      'play',
+      function (e) {
+        var v = e.target;
+        if (!v || v.tagName !== 'VIDEO') return;
+        pauseAllExcept(v);
+        var card = cardOf(v);
+        if (card) card.classList.add('is-playing');
+      },
+      true
+    );
+
+    ['pause', 'ended'].forEach(function (evt) {
+      root.addEventListener(
+        evt,
+        function (e) {
+          var v = e.target;
+          if (!v || v.tagName !== 'VIDEO') return;
+          var card = cardOf(v);
+          if (card) card.classList.remove('is-playing');
+        },
+        true
+      );
+    });
+
+    cards.forEach(function (card) {
+      var video = card.querySelector('[data-vp-vsp-video]');
+      var playBtn = card.querySelector('[data-vp-vsp-play]');
+      var muteBtn = card.querySelector('[data-vp-vsp-mute]');
+      if (!video) return;
+
+      if (video.muted) card.classList.remove('is-unmuted');
+      else card.classList.add('is-unmuted');
+
+      if (playBtn) {
+        playBtn.addEventListener('click', function () {
+          if (video.paused) {
+            /* The card being played becomes the active one, so a part-visible
+               card is brought into view before it starts - otherwise it would
+               play from behind the edge of the rail and the observer above
+               would immediately pause it again. */
+            var idx = cards.indexOf(card);
+            if (idx > -1) {
+              enteringCard = card;
+              enteringAt = Date.now();
+              scrollToIndex(idx);
+            }
+            ensureLoaded(video);
+            var p = video.play();
+            /* A rejected play (autoplay policy, decode error) must not leave
+               the card stuck in the playing state. */
+            if (p && typeof p.catch === 'function') {
+              p.catch(function () { card.classList.remove('is-playing'); });
+            }
+            playBtn.setAttribute('aria-label', 'Pause video');
+          } else {
+            video.pause();
+            playBtn.setAttribute('aria-label', 'Play video');
+          }
+        });
+      }
+
+      if (muteBtn) {
+        muteBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          video.muted = !video.muted;
+          card.classList.toggle('is-unmuted', !video.muted);
+          muteBtn.setAttribute('aria-label', video.muted ? 'Unmute video' : 'Mute video');
+          /* Unmuting is a clear intent to watch this one. */
+          if (!video.muted && video.paused) {
+            ensureLoaded(video);
+            var p = video.play();
+            if (p && typeof p.catch === 'function') { p.catch(function () {}); }
+          }
+        });
+      }
+    });
+
+    /* ---- pause anything that leaves the viewport ------------------------- */
+    if ('IntersectionObserver' in window) {
+      /* Several thresholds, not one. A card that already sits below the
+         visibility bar - a part-visible card peeking at the end of the rail -
+         crosses no threshold when the page scrolls it fully out, so a single
+         0.5 threshold would never fire again and it would keep playing
+         off-screen. Crossing 0 is the case that actually matters here. */
+      var io = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.intersectionRatio >= 0.25) {
+              if (entry.target === enteringCard) enteringCard = null;
+              return;
+            }
+            /* A card being scrolled into view crosses 0 on the way in, at a
+               ratio still under the bar. Pausing there would kill the video
+               the viewer just asked for, so the incoming card is exempt until
+               it lands or the scroll gives up. */
+            if (entry.target === enteringCard && Date.now() - enteringAt < 1200) return;
+            var v = entry.target.querySelector('[data-vp-vsp-video]');
+            if (v) pauseVideo(v);
+          });
+        },
+        { threshold: [0, 0.25, 0.6] }
+      );
+      cards.forEach(function (card) { io.observe(card); });
+    }
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) cards.forEach(function (card) {
+        var v = card.querySelector('[data-vp-vsp-video]');
+        if (v) pauseVideo(v);
+      });
+    });
+
+    /* ---- dots + arrows derived from scrollLeft --------------------------- */
+    var dots = [];
+    if (dotsWrap && slides.length > 1) {
+      slides.forEach(function (slide, i) {
+        var dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'vp-vsp__dot';
+        dot.setAttribute('role', 'tab');
+        dot.setAttribute('aria-label', 'Go to video ' + (i + 1));
+        dot.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+        dot.addEventListener('click', function () { scrollToIndex(i); });
+        dotsWrap.appendChild(dot);
+        dots.push(dot);
+      });
+    } else if (dotsWrap) {
+      dotsWrap.style.display = 'none';
+    }
+
+    function step() {
+      if (slides.length < 2) return rail.clientWidth;
+      var a = slides[0].getBoundingClientRect().left;
+      var b = slides[1].getBoundingClientRect().left;
+      return Math.abs(b - a) || rail.clientWidth;
+    }
+
+    function currentIndex() {
+      var s = step();
+      return s ? Math.round(rail.scrollLeft / s) : 0;
+    }
+
+    function scrollToIndex(i) {
+      var max = slides.length - 1;
+      var idx = Math.max(0, Math.min(max, i));
+      rail.scrollTo({
+        left: idx * step(),
+        behavior: reduceMotion.matches ? 'auto' : 'smooth'
+      });
+    }
+
+    function sync() {
+      var idx = currentIndex();
+      dots.forEach(function (d, i) {
+        d.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+      });
+      if (prevBtn) prevBtn.disabled = rail.scrollLeft <= 1;
+      if (nextBtn) {
+        nextBtn.disabled = rail.scrollLeft >= rail.scrollWidth - rail.clientWidth - 1;
+      }
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', function () { scrollToIndex(currentIndex() - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { scrollToIndex(currentIndex() + 1); });
+
+    var raf = null;
+    rail.addEventListener(
+      'scroll',
+      function () {
+        if (raf) return;
+        raf = window.requestAnimationFrame(function () {
+          raf = null;
+          sync();
+        });
+      },
+      { passive: true }
+    );
+
+    window.addEventListener('resize', sync);
+    sync();
+
+    document.addEventListener('shopify:section:unload', function (e) {
+      if (e.detail && e.detail.sectionId === '{{ section.id }}') {
+        if (raf) window.cancelAnimationFrame(raf);
+        window.removeEventListener('resize', sync);
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Video social proof",
+  "tag": "section",
+  "class": "section-video-social-proof",
+  "max_blocks": 20,
+  "settings": [
+    { "type": "header", "content": "Layout" },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        { "value": "page", "label": "Page width" },
+        { "value": "full", "label": "Full width" },
+        { "value": "custom", "label": "Custom" }
+      ],
+      "default": "page",
+      "info": "Page width matches the theme's page width setting, so the section lines up with the header and its neighbours."
+    },
+    { "type": "number", "id": "custom_max_width", "label": "Custom max width (px)", "default": 1200, "info": "Only used when Section width is set to Custom." },
+    { "type": "color", "id": "bg_color", "label": "Section background", "default": "#EDFAFF" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#47B5E9" },
+    { "type": "range", "id": "padding_top", "label": "Top padding desktop", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding desktop", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Top padding mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Bottom padding mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
+
+    { "type": "header", "content": "Heading and copy" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Real pet parents, real routines" },
+    { "type": "color", "id": "heading_color", "label": "Heading colour", "default": "#1A1A1A" },
+    { "type": "number", "id": "heading_size", "label": "Heading size desktop (px)", "default": 40 },
+    { "type": "number", "id": "heading_size_mobile", "label": "Heading size mobile (px)", "default": 26 },
+    { "type": "richtext", "id": "subheading", "label": "Supporting copy", "default": "<p>Watch pet parents share how they use VetPets in their day-to-day routine.</p>" },
+    { "type": "color", "id": "body_color", "label": "Body text colour", "default": "#6B7A85" },
+    { "type": "number", "id": "body_size", "label": "Body text size (px)", "default": 16 },
+
+    { "type": "header", "content": "Statistics" },
+    { "type": "paragraph", "content": "Statistic rows are added as blocks below. They ship blank on purpose — only enter figures you can independently verify, and leave a row empty to hide it." },
+    { "type": "color", "id": "stat_color", "label": "Statistic number colour", "default": "#1A1A1A" },
+    { "type": "number", "id": "stat_size", "label": "Statistic size desktop (px)", "default": 38 },
+    { "type": "number", "id": "stat_size_mobile", "label": "Statistic size mobile (px)", "default": 30 },
+
+    { "type": "header", "content": "Highlight card" },
+    { "type": "paragraph", "content": "The white card under the statistics. Clear all three fields to hide it." },
+    { "type": "text", "id": "highlight_value", "label": "Highlight number" },
+    { "type": "text", "id": "highlight_title", "label": "Highlight title" },
+    { "type": "text", "id": "highlight_text", "label": "Highlight text" },
+
+    { "type": "header", "content": "Videos" },
+    { "type": "range", "id": "per_view_desktop", "label": "Cards visible on desktop", "min": 1.2, "max": 4, "step": 0.1, "default": 2.2, "info": "A fractional value leaves the next card partly visible, which signals that the row can be swiped." },
+    { "type": "range", "id": "peek_mobile", "label": "Next card peek on mobile", "min": 0, "max": 40, "step": 2, "unit": "%", "default": 18 },
+    { "type": "range", "id": "card_gap", "label": "Gap between cards", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 16 },
+    { "type": "range", "id": "card_radius", "label": "Card corner radius", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 20 },
+    { "type": "checkbox", "id": "start_muted", "label": "Start muted", "default": true, "info": "Recommended. Viewers unmute with the control on each card." },
+    { "type": "checkbox", "id": "loop_videos", "label": "Loop videos", "default": false }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Statistic",
+      "settings": [
+        { "type": "paragraph", "content": "Placeholder values only. Replace with a figure you can verify, or leave both fields empty to hide this row." },
+        { "type": "text", "id": "value", "label": "Number", "default": "00%", "info": "For example a percentage or a count." },
+        { "type": "richtext", "id": "text", "label": "Description", "default": "<p>Add a verified fact about your product here.</p>" }
+      ]
+    },
+    {
+      "type": "video_card",
+      "name": "Video card",
+      "settings": [
+        { "type": "video", "id": "video", "label": "Video", "info": "Pick a video uploaded to Content > Files. Shopify serves it from its CDN and generates the poster frame automatically." },
+        { "type": "text", "id": "video_url", "label": "Video URL fallback (MP4)", "info": "Used only when no video is picked above. Must be a direct MP4 URL." },
+        { "type": "image_picker", "id": "poster", "label": "Poster image", "info": "If empty, the first frame of the video will be displayed." },
+        { "type": "text", "id": "poster_url", "label": "Poster URL fallback", "info": "Used only with the video URL fallback." },
+        { "type": "text", "id": "label", "label": "Card label", "info": "Shown as a pill on the card. For example the pet parent's first name." },
+        { "type": "text", "id": "alt", "label": "Accessible description", "info": "Describes the video for screen readers. Falls back to the card label." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video social proof",
+      "blocks": [
+        { "type": "stat" },
+        { "type": "stat" },
+        { "type": "stat" },
+        { "type": "video_card", "settings": { "label": "Samantha" } },
+        { "type": "video_card", "settings": { "label": "Oakley" } },
+        { "type": "video_card", "settings": { "label": "Sofia" } },
+        { "type": "video_card", "settings": { "label": "Evie" } },
+        { "type": "video_card", "settings": { "label": "Matthew" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
