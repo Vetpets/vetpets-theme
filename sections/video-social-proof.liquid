@@ -535,6 +535,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+    box-sizing: border-box;
     padding: 16px 28px;
     font-size: 14.5px;
     font-weight: 800;
@@ -550,7 +551,14 @@
   .vp-vsp__cta--bordered { border: 1px solid var(--vsp-cta-border, transparent); }
   .vp-vsp__cta:hover { background: var(--vsp-cta-hover, #2E9FD8); }
   .vp-vsp__cta:focus-visible { outline: 3px solid var(--vp-vsp-accent, #47B5E9); outline-offset: 3px; }
-  .vp-vsp__cta--full { width: 100%; }
+  /* Full width fills the copy column exactly, so the button lines up with the
+     stat rows and the guarantee card above it. flex-basis stops the flex
+     wrapper from shrinking it under 100%; padding stays symmetrical so the
+     label remains centred, and align-items keeps it centred vertically. */
+  .vp-vsp__cta--full {
+    width: 100%;
+    flex: 0 0 100%;
+  }
 
 
   /* Carousel ------------------------------------------------------------- */
@@ -783,7 +791,7 @@
        desktop value cannot blow the row open on a phone. */
     .vp-vsp__stat-value { font-size: min(var(--vsp-s-num-fs, 38px), var(--vp-vsp-stat-fs-m, 30px)); }
     .vp-vsp__stat { grid-template-columns: min(var(--vp-vsp-num-col, 104px), 88px) 1fr; gap: 12px; }
-    .vp-vsp__cta--full-m { width: 100%; }
+    .vp-vsp__cta--full-m { width: 100%; flex: 0 0 100%; }
 
     /* Keeps a tall 9:16 card from eating the whole phone viewport. */
     .vp-vsp__card { max-height: 68vh; }
@@ -1140,7 +1148,7 @@
         { "value": "content", "label": "Content width" },
         { "value": "full", "label": "Full width" }
       ],
-      "default": "content"
+      "default": "full"
     },
     {
       "type": "select",

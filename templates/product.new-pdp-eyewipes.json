@@ -1218,7 +1218,10 @@
         "video_4",
         "video_5"
       ],
-      "settings": {}
+      "settings": {
+        "cta_show": true,
+        "cta_width": "full"
+      }
     },
     "testimonials_6ncqrm": {
       "type": "testimonials",
