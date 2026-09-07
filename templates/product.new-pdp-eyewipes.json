@@ -1153,76 +1153,6 @@
         "padding_bottom": 0
       }
     },
-    "video_social_proof_ugc": {
-      "type": "video-social-proof",
-      "blocks": {
-        "stat_1": {
-          "type": "stat",
-          "settings": {
-            "value": "89%",
-            "text": "<p>say VetPets has become part of their pet's daily care routine</p>"
-          }
-        },
-        "stat_2": {
-          "type": "stat",
-          "settings": {
-            "value": "93%",
-            "text": "<p>notice a visible difference within 30 days</p>"
-          }
-        },
-        "stat_3": {
-          "type": "stat",
-          "settings": {
-            "value": "97%",
-            "text": "<p>would recommend VetPets to another pet parent</p>"
-          }
-        },
-        "video_1": {
-          "type": "video_card",
-          "settings": {
-            "label": "Samantha"
-          }
-        },
-        "video_2": {
-          "type": "video_card",
-          "settings": {
-            "label": "Oakley"
-          }
-        },
-        "video_3": {
-          "type": "video_card",
-          "settings": {
-            "label": "Sofia"
-          }
-        },
-        "video_4": {
-          "type": "video_card",
-          "settings": {
-            "label": "Evie"
-          }
-        },
-        "video_5": {
-          "type": "video_card",
-          "settings": {
-            "label": "Matthew"
-          }
-        }
-      },
-      "block_order": [
-        "stat_1",
-        "stat_2",
-        "stat_3",
-        "video_1",
-        "video_2",
-        "video_3",
-        "video_4",
-        "video_5"
-      ],
-      "settings": {
-        "cta_show": true,
-        "cta_width": "full"
-      }
-    },
     "testimonials_6ncqrm": {
       "type": "testimonials",
       "blocks": {
@@ -1749,7 +1679,6 @@
     "image_with_text_KqKJ4G",
     "section_divider_gaLYVH",
     "testimonials_6ncqrm",
-    "video_social_proof_ugc",
     "section_divider_WTNfTG",
     "image_with_text_JdMRPV",
     "section_divider_MckDnr",
