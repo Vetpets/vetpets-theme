@@ -133,7 +133,7 @@
   VetPetsPortal.CONTRACT = {
     reads: ['getCustomer', 'getSubscription', 'listSubscriptions', 'listDeliveries',
             'getLoyalty', 'listRewards'],
-    retention: ['recordCancelReason', 'acceptRetentionOffer'],
+    retention: ['recordCancelReason', 'recordRetentionEvent', 'acceptRetentionOffer'],
     mutations: ['skipNextDelivery', 'delayNextDelivery', 'rescheduleNextDelivery',
                 'cancel', 'reactivate', 'requestRedemption'],
     auth: ['requestMagicLink', 'verifyMagicLink', 'signOut']
@@ -430,10 +430,17 @@
        * ------------------------------------------------------------- */
 
       // POST /update-next-billing-date — push out by one full cycle
-      recordCancelReason: function (reasonCode, note) {
+      recordCancelReason: function (reasonCode, note, opts) {
         return respond(function () {
           state.lastReason = { reason: reasonCode, note: note || null };
-          return { status: 'ok', recorded: true, id: 'mock-reason' };
+          var journeyId = (opts && opts.journeyId) || 'mock-journey';
+          return { status: 'ok', recorded: true, id: 'mock-reason', journeyId: journeyId };
+        });
+      },
+
+      recordRetentionEvent: function (eventType, journeyId) {
+        return respond(function () {
+          return { status: 'ok', recorded: true, journeyId: journeyId || 'mock-journey' };
         });
       },
 
@@ -727,6 +734,14 @@
         // against a subscription that has since moved cannot move it again.
         if (opts && typeof opts.expectedNextBillingDate === 'string') {
           body.expectedNextBillingDate = opts.expectedNextBillingDate;
+        }
+        // The SAME journey id the cancellation flow's reason screen opened —
+        // present only when this skip/delay/reschedule is the "longer gap"
+        // step of that flow, never for an ordinary self-service schedule
+        // change. The server independently verifies ownership before
+        // trusting it; see settleRetentionOutcome's explicitJourneyId.
+        if (opts && typeof opts.retentionJourneyId === 'string' && opts.retentionJourneyId) {
+          body.retentionJourneyId = opts.retentionJourneyId;
         }
       } catch (e) {
         // Rejected, never thrown synchronously. Every caller handles these
@@ -1063,8 +1078,17 @@
        * Called on the way THROUGH the journey, not at the end, because the
        * customers it saves never reach an end. `note` travels only for
        * "other" — the server ignores it otherwise.
+       *
+       * `opts.idempotencyKey`, when given, makes a retry of THIS SAME attempt
+       * safe: the server replays the original result instead of writing a
+       * second row. `opts.journeyId`, when given, reuses the journey an
+       * earlier cancellation_started beacon already opened, rather than
+       * minting a new one — the server verifies it belongs to this customer
+       * before trusting it (409 `invalid_journey` otherwise; see the retry
+       * loop in subscription-portal.js, which drops a rejected id rather
+       * than resending it).
        */
-      recordCancelReason: function (reasonCode, note) {
+      recordCancelReason: function (reasonCode, note, opts) {
         var body;
         try {
           body = { session: requireSession(), reason: reasonCode };
@@ -1072,15 +1096,51 @@
           return Promise.reject(e);
         }
         if (typeof note === 'string' && note.length) body.note = note;
+        if (opts && typeof opts.idempotencyKey === 'string') body.idempotencyKey = opts.idempotencyKey;
+        if (opts && typeof opts.journeyId === 'string' && opts.journeyId) body.journeyId = opts.journeyId;
         return post('/portal/cancel-reason', body).then(function (r) {
           if (r.status === 401) {
             store.clear();
             pending = null;
             throw PortalError('unauthenticated', 'Your session has expired.');
           }
+          if (r.status === 409 && r.data && r.data.error === 'invalid_journey') {
+            throw PortalError('invalid_journey', 'We could not save that just now.');
+          }
+          if (r.status === 409 && r.data && r.data.error === 'operation_in_progress') {
+            throw PortalError('in_progress', 'That is already being processed.');
+          }
+          if (r.status === 409) {
+            // The key was already spent by an earlier, definitively-settled
+            // attempt (e.g. one that failed validation). Nothing further to
+            // retry with THIS key — the caller mints a fresh one.
+            throw PortalError('already_applied', 'We could not save that just now.');
+          }
           if (!r.ok) throw PortalError('server', 'We could not save that just now.');
           return r.data;
         });
+      },
+
+      /**
+       * A screen-view beacon: "the customer looked at this screen." Best
+       * effort, always — resolves `null` rather than rejecting, because
+       * telemetry must never block or fail navigation through the flow.
+       * Resolves the server's response (including `journeyId`) on success,
+       * so a caller with no journey id yet can adopt the one just minted.
+       */
+      recordRetentionEvent: function (eventType, journeyId, offerType) {
+        var body;
+        try {
+          body = { session: requireSession(), event: eventType };
+        } catch (e) {
+          return Promise.resolve(null);
+        }
+        if (typeof journeyId === 'string' && journeyId) body.journeyId = journeyId;
+        if (typeof offerType === 'string' && offerType) body.offerType = offerType;
+        return post('/portal/retention-event', body).then(
+          function (r) { return (r.ok && r.data) ? r.data : null; },
+          function () { return null; }
+        );
       },
 
       /** Settle what became of the reason: saved_gap, saved_offer, cancelled. */

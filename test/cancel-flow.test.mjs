@@ -1011,6 +1011,7 @@ describe('an already-redeemed customer never sees the offer screen', () => {
       closeSheet() {},
       render() {},
       markCurrentNav() {},
+      beaconScreenView() {},
       show(v) { return show.call(this, v); },
     };
   }
@@ -1083,6 +1084,7 @@ describe('Back on Final Confirmation goes to the right previous step', () => {
       render() {},
       markCurrentNav() {},
       reasonProblem: () => null,
+      beaconScreenView() {},
       show(v) { return show.call(this, v); },
       renderCancelJourney() { return renderCancelJourney.call(this); },
     };

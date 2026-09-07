@@ -70,6 +70,18 @@
       lastFocus: null,
       draft: { delay: 7, reason: null, restart: 0, date: null, note: '', gap: null },
       reasonError: null,
+      // The one journey id for this cancellation attempt, adopted from
+      // whichever call — the cancellation_started beacon or the reason
+      // write itself — resolves first. Reused by every later screen-view
+      // beacon and by a gap-save mutation, so they all land on the SAME
+      // journey rather than each minting their own.
+      retentionJourneyId: null,
+      // Set only when saving the reason exhausted its retries. Distinct
+      // from reasonError (a VALIDATION message, cleared as soon as the
+      // problem is fixed): this is a delivery failure with a valid
+      // selection already in hand, and stays visible until the customer
+      // retries or picks again.
+      reasonSaveError: null,
       data: null,
       loyalty: null,
       customer: null,
@@ -472,6 +484,7 @@
     if (this.state.screen !== screen) this.state.history.push(this.state.screen);
     this.state.screen = screen;
     this.closeSheet(true);
+    this.beaconScreenView(screen);
 
     /* ONE CONFIRMATION, AT MOST ONE MUTATION — re-armed here.
      *
@@ -510,6 +523,45 @@
         try { heading.focus({ preventScroll: true }); } catch (e) { heading.focus(); }
       }
     }
+  };
+
+  /**
+   * Retention Command Center: "the customer looked at this screen."
+   *
+   * Fire-and-forget, exactly like recordCancelReason/recordCancelOutcome
+   * already are — telemetry must never block or slow navigation. Called
+   * with the FINAL resolved screen (after the already-redeemed redirect
+   * above has run), so a redeemed customer who never actually sees
+   * cancel-offer never triggers offer_shown for it — they land straight on
+   * cancel-confirm, which fires final_confirmation_reached instead.
+   *
+   * Server-side dedup ((journey_id, event_type) is unique) means firing
+   * this on every re-render of the same screen — a refresh, a browser
+   * back/forward, revisiting — can never double-count a step; nothing
+   * client-side needs to guard against that.
+   */
+  var RETENTION_SCREEN_EVENTS = {
+    'cancel-reason': 'cancellation_started',
+    'cancel-alt': 'longer_gap_reached',
+    'cancel-offer': 'offer_shown',
+    'cancel-confirm': 'final_confirmation_reached'
+  };
+
+  Portal.prototype.beaconScreenView = function (screen) {
+    var self = this;
+    var eventType = RETENTION_SCREEN_EVENTS[screen];
+    if (!eventType || !self.adapter.recordRetentionEvent) return;
+
+    self.adapter.recordRetentionEvent(eventType, self.state.retentionJourneyId, 'next_delivery_40')
+      .then(function (result) {
+        // Adopt the journey id only if we did not already have one — the
+        // reason write (or an earlier beacon) always wins if it got there
+        // first, so every event for this attempt lands on one journey.
+        if (result && result.journeyId && !self.state.retentionJourneyId) {
+          self.state.retentionJourneyId = result.journeyId;
+        }
+      })
+      .catch(function () {});
   };
 
   Portal.prototype.markCurrentNav = function (screen) {
@@ -1093,10 +1145,15 @@
     if (row) row.hidden = !d.reason;
 
     // The message disappears as soon as the problem does, rather than sitting
-    // there contradicting what the customer has just put right.
+    // there contradicting what the customer has just put right. A save
+    // failure is a DIFFERENT kind of message — the selection is already
+    // valid, delivering it is what failed — so it is shown regardless of
+    // reasonProblem() and takes priority in the same slot.
     var err = this.root.querySelector('[data-spp-reason-error]');
     if (err) {
-      var msg = this.state.reasonError && this.reasonProblem() ? this.state.reasonError : '';
+      var msg = this.state.reasonSaveError
+        ? this.state.reasonSaveError
+        : (this.state.reasonError && this.reasonProblem() ? this.state.reasonError : '');
       err.textContent = msg;
       err.hidden = !msg;
     }
@@ -1521,7 +1578,19 @@
     this.root.addEventListener('click', function (e) {
       var el;
       if ((el = e.target.closest('[data-spp-go]'))) {
-        e.preventDefault(); self.show(el.getAttribute('data-spp-go')); return;
+        e.preventDefault();
+        var goTarget = el.getAttribute('data-spp-go');
+        /* Declining the offer has no dedicated action — it is just
+         * navigating away from cancel-offer without having accepted it.
+         * Checked BEFORE show() changes the screen, so "leaving cancel-offer
+         * toward cancel-confirm" is exactly what distinguishes a decline
+         * from every other way of reaching cancel-confirm (the Longer Gap
+         * path, or the already-redeemed redirect show() itself performs). */
+        if (self.state.screen === 'cancel-offer' && goTarget === 'cancel-confirm' && self.adapter.recordRetentionEvent) {
+          self.adapter.recordRetentionEvent('offer_declined', self.state.retentionJourneyId, 'next_delivery_40').catch(function () {});
+        }
+        self.show(goTarget);
+        return;
       }
       if ((el = e.target.closest('[data-spp-sheet]'))) {
         e.preventDefault(); self.openSheet(el.getAttribute('data-spp-sheet')); return;
@@ -1583,6 +1652,10 @@
           errEl.textContent = '';
           self.state.reasonError = null;
         }
+        if (self.state.reasonSaveError) {
+          self.state.reasonSaveError = null;
+          if (errEl) { errEl.hidden = true; errEl.textContent = ''; }
+        }
         return;
       }
       var date = e.target.closest('[data-spp-date]');
@@ -1629,6 +1702,7 @@
       d.reason = value;
       // A standing complaint must not outlive the problem it describes.
       this.state.reasonError = null;
+      this.state.reasonSaveError = null;
     }
     else if (kind === 'restart') d.restart = parseInt(el.dataset.sppIndex, 10);
     this.render();
@@ -1692,6 +1766,93 @@
       if (note.length < MIN_REASON_NOTE) return 'Tell us briefly what happened.';
     }
     return null;
+  };
+
+  /** setTimeout as a promise — short, bounded backoff between retries only. */
+  function sppWait(ms) { return new Promise(function (resolve) { setTimeout(resolve, ms); }); }
+
+  /**
+   * Deliver the reason reliably before leaving the reason screen.
+   *
+   * THE BUG THIS EXISTS FOR
+   * ------------------------
+   * Production data showed a real fraction of customers' cancellation
+   * reasons never reaching cancellation_reason at all — this used to be a
+   * pure fire-and-forget call the customer's navigation never waited on.
+   * Now: awaited, with a short bounded retry, before the customer moves on.
+   *
+   * RETRY KEYS, PRECISELY
+   * ----------------------
+   * attemptKey('reasonContinue') survives exactly as long as it needs to: a
+   * NETWORK failure (the request never reached the server, or its response
+   * never came back) keeps the SAME key, so a retry either lands as the
+   * first real attempt or safely replays a success that already happened.
+   * Any DEFINITIVE server response — even a failure — means the server's
+   * own idempotency claim has already settled under that key permanently
+   * (the same key can never succeed twice), so that response mints a FRESH
+   * key before the next attempt. `invalid_journey` additionally drops the
+   * held journey id, so a stale/foreign one is never resent.
+   *
+   * Two short backoffs (300ms, 700ms) — a healthy network never notices;
+   * the worst case is under a second before the customer sees a retry
+   * affordance, never a silent, unrecoverable loss.
+   */
+  Portal.prototype.submitReason = function (reasonCode, noteText) {
+    var self = this;
+    if (this.state.pending) return; // one attempt at a time, same guard as run()
+
+    this.state.reasonSaveError = null;
+    this.state.pending = 'reasonContinue';
+    this.applyPending(true);
+    this.render();
+
+    var RETRY_DELAYS = [300, 700];
+
+    function isNetworkFailure(err) { return !!err && err.code === 'network'; }
+
+    function attempt(n, journeyId) {
+      // attemptKey() persists in state.attempts until releaseAttempt() runs,
+      // so a network failure below (which does NOT release it) hands the
+      // exact same key to the next call — a safe replay if the server's
+      // claim actually landed, a fresh first attempt if it never arrived.
+      var key = self.attemptKey('reasonContinue');
+      return self.adapter.recordCancelReason(reasonCode, noteText, {
+        idempotencyKey: key,
+        journeyId: journeyId
+      }).then(function (result) {
+        self.releaseAttempt('reasonContinue');
+        // The reason write wins ties over a beacon that got there first —
+        // both name the same journey once either succeeds, but only one
+        // of them needs to be adopted.
+        if (result && result.journeyId) self.state.retentionJourneyId = result.journeyId;
+        self.state.pending = null;
+        self.applyPending(false);
+        self.show('cancel-alt');
+      }, function (err) {
+        // Any DEFINITIVE server response — even a failure — means that key
+        // is now permanently spent server-side (the same key can never
+        // succeed twice); release it so the NEXT attemptKey() call mints a
+        // fresh one. A pure network failure keeps it, on purpose.
+        if (!isNetworkFailure(err)) self.releaseAttempt('reasonContinue');
+        var nextJourneyId = (err && err.code === 'invalid_journey') ? null : journeyId;
+        if (n < RETRY_DELAYS.length) {
+          return sppWait(RETRY_DELAYS[n]).then(function () { return attempt(n + 1, nextJourneyId); });
+        }
+        // Retries exhausted. Never pretend this saved: the selection stays
+        // exactly as the customer left it (state.draft is untouched), and
+        // the journey id survives so a manual retry continues this SAME
+        // attempt rather than starting an unrelated one.
+        self._reasonRetryJourneyId = nextJourneyId;
+        self.state.pending = null;
+        self.applyPending(false);
+        self.state.reasonSaveError = 'We could not save that — check your connection and tap Continue to try again.';
+        self.render();
+      });
+    }
+
+    var startJourneyId = ('_reasonRetryJourneyId' in this) ? this._reasonRetryJourneyId : this.state.retentionJourneyId;
+    delete this._reasonRetryJourneyId;
+    attempt(0, startJourneyId);
   };
 
   var CONFIRMED_ACTIONS = { skip: 1, delay: 1, reschedule: 1, cancel: 1, reactivate: 1 };
@@ -1869,12 +2030,11 @@
         }
 
         this.state.reasonError = null;
+        this.state.reasonSaveError = null;
         var noteText = d.reason === 'other' ? (d.note || '').trim() : '';
-        if (self.adapter.recordCancelReason) {
-          // Best effort: analysis must never block a customer continuing.
-          self.adapter.recordCancelReason(d.reason, noteText).catch(function () {});
-        }
-        this.show('cancel-alt');
+
+        if (!self.adapter.recordCancelReason) { this.show('cancel-alt'); return; }
+        this.submitReason(d.reason, noteText);
         return;
       }
 
@@ -1885,13 +2045,28 @@
         var target = d.gap;
 
         this.run('applyGap', function (attemptKey) {
-          var opts = { idempotencyKey: attemptKey, expectedNextBillingDate: before };
+          // The SAME journey the reason screen opened — this is what lets
+          // the server mark saved_gap safely, scoped to exactly this
+          // cancellation attempt rather than guessing. Present only because
+          // this skip/delay/reschedule IS the Longer Gap step; every other
+          // caller of these same adapter methods (the ordinary dashboard
+          // buttons) never sets this, and never becomes a "save".
+          var opts = {
+            idempotencyKey: attemptKey,
+            expectedNextBillingDate: before,
+            retentionJourneyId: self.state.retentionJourneyId
+          };
           if (target === 'skip') return self.adapter.skipNextDelivery(id, opts);
           if (target === 'date') return self.adapter.rescheduleNextDelivery(id, d.date, opts);
           return self.adapter.delayNextDelivery(id, parseInt(target.slice(1), 10), opts);
         }, {
           attempt: 'applyGap',
           then: function () {
+            // Kept as a fallback alongside the server's own attribution
+            // above (settleRetentionOutcome dedupes whichever arrives
+            // first): a customer whose retentionJourneyId is somehow still
+            // null still gets the outcome recorded, just without the
+            // longer_gap_reached/saved_gap EVENT pair this scoped path adds.
             if (self.adapter.recordCancelOutcome) {
               self.adapter.recordCancelOutcome('saved_gap').catch(function () {});
             }
