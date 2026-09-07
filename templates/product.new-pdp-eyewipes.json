@@ -1158,15 +1158,24 @@
       "blocks": {
         "stat_1": {
           "type": "stat",
-          "settings": {}
+          "settings": {
+            "value": "89%",
+            "text": "<p>say VetPets has become part of their pet's daily care routine</p>"
+          }
         },
         "stat_2": {
           "type": "stat",
-          "settings": {}
+          "settings": {
+            "value": "93%",
+            "text": "<p>notice a visible difference within 30 days</p>"
+          }
         },
         "stat_3": {
           "type": "stat",
-          "settings": {}
+          "settings": {
+            "value": "97%",
+            "text": "<p>would recommend VetPets to another pet parent</p>"
+          }
         },
         "video_1": {
           "type": "video_card",
