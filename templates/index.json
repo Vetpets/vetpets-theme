@@ -327,6 +327,154 @@
         "cta_radius": 100
       }
     },
+    "section_divider_CRWGji": {
+      "type": "section-divider",
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "background-2",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "video_social_proof_pm3rwx": {
+      "type": "video-social-proof",
+      "blocks": {
+        "stat_rY4Bpa": {
+          "type": "stat",
+          "settings": {
+            "value": "89%",
+            "text": "<p>say VetPets has become part of their pet’s daily care routine</p>"
+          }
+        },
+        "stat_3fipih": {
+          "type": "stat",
+          "settings": {
+            "value": "93%",
+            "text": "<p>Of pet owners notice visible results<strong> within 30 days</strong></p>"
+          }
+        },
+        "stat_4DfrfP": {
+          "type": "stat",
+          "settings": {
+            "value": "97%",
+            "text": "<p>Of pet owners would <strong>recommend us to a friend</strong></p>"
+          }
+        },
+        "video_card_aWeyrd": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/OAKLEY.mp4",
+            "video_url": "",
+            "poster_url": "",
+            "label": "Oakley",
+            "alt": ""
+          }
+        },
+        "video_card_CgyUrh": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/SOFIA.mp4",
+            "video_url": "",
+            "poster_url": "",
+            "label": "Sofia",
+            "alt": ""
+          }
+        },
+        "video_card_3FhzN6": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/EVIE.mp4",
+            "video_url": "",
+            "poster_url": "",
+            "label": "Evie",
+            "alt": ""
+          }
+        },
+        "video_card_FRLJrT": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/SAMANTHA.mp4",
+            "video_url": "",
+            "poster_url": "",
+            "label": "Samantha",
+            "alt": ""
+          }
+        },
+        "video_card_BwEqrk": {
+          "type": "video_card",
+          "settings": {
+            "video": "shopify://files/videos/MATTHEW.mp4",
+            "video_url": "",
+            "poster_url": "",
+            "label": "Matthew",
+            "alt": ""
+          }
+        }
+      },
+      "block_order": [
+        "stat_rY4Bpa",
+        "stat_3fipih",
+        "stat_4DfrfP",
+        "video_card_aWeyrd",
+        "video_card_CgyUrh",
+        "video_card_3FhzN6",
+        "video_card_FRLJrT",
+        "video_card_BwEqrk"
+      ],
+      "name": "Video social proof",
+      "settings": {
+        "section_width": "page",
+        "custom_max_width": 1200,
+        "bg_color": "#D5F7FF",
+        "accent_color": "#47B5E9",
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "heading": "Real pet parents, real routines",
+        "heading_color": "#1A1A1A",
+        "heading_size": 40,
+        "heading_size_mobile": 26,
+        "subheading": "<p>Watch pet parents share how they use VetPets in their day-to-day routine.</p>",
+        "body_color": "#6B7A85",
+        "body_size": 16,
+        "stat_color": "#1A1A1A",
+        "stat_size": 38,
+        "stat_size_mobile": 30,
+        "highlight_value": "",
+        "highlight_title": "",
+        "highlight_text": "",
+        "per_view_desktop": 2.2,
+        "peek_mobile": 18,
+        "card_gap": 16,
+        "card_radius": 20,
+        "start_muted": true,
+        "loop_videos": false
+      }
+    },
+    "section_divider_za6aQa": {
+      "type": "section-divider",
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": true,
+        "shape_color": "background-2",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-1",
+        "custom_background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
     "product_cards_carousel_4FwFRw": {
       "type": "product-cards-carousel",
       "blocks": {
@@ -1392,108 +1540,6 @@
         "padding_bottom": 0
       }
     },
-    "image_with_text_77grg8": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading_7Cnegf": {
-          "type": "heading",
-          "settings": {
-            "title": "<strong>Complete </strong>Tear Stain <strong>System</strong>",
-            "title_highlight_color": "#47b5e9",
-            "heading_size": "h2"
-          }
-        },
-        "caption_PF3zmz": {
-          "type": "caption",
-          "settings": {
-            "caption": "<strong>Most wipes only clean the surface — this fixes the cause.</strong>",
-            "text_style": "caption-with-letter-spacing",
-            "text_size": "large"
-          }
-        },
-        "text_j7jXft": {
-          "type": "text",
-          "settings": {
-            "text": "<p><strong>Still seeing tear stains even after using wipes?</strong><br/><strong>That’s because you’re missing the full routine.</strong><br/><br/>✔ Know <em>exactly</em> what causes tear stains<br/>✔ Learn the <strong>right way</strong> to use your wipes (most owners do it wrong)<br/>✔ Build a <strong>simple daily routine</strong> that prevents buildup<br/>✔ See visible improvement in as little as <strong>30 days</strong></p>",
-            "text_style": "body"
-          }
-        },
-        "text_AWAjgE": {
-          "type": "text",
-          "settings": {
-            "text": "",
-            "text_style": "body"
-          }
-        },
-        "heading_Mf9z4H": {
-          "type": "heading",
-          "settings": {
-            "title": "Use this complete system with your <strong>eyewipes </strong>for best results",
-            "title_highlight_color": "#47b5e9",
-            "heading_size": "h2"
-          }
-        },
-        "button_B3dn7y": {
-          "type": "button",
-          "settings": {
-            "button_label": "Get the Full System — $24.00",
-            "button_link": "shopify://products/eyewipes-prevention-that-keeps-eyes-clear",
-            "button_style_secondary": false
-          }
-        },
-        "caption_YUqL68": {
-          "type": "caption",
-          "settings": {
-            "caption": "<strong> Instant access • One-time payment • No subscription</strong>",
-            "text_style": "caption-with-letter-spacing",
-            "text_size": "large"
-          }
-        }
-      },
-      "block_order": [
-        "heading_7Cnegf",
-        "caption_PF3zmz",
-        "text_j7jXft",
-        "text_AWAjgE",
-        "heading_Mf9z4H",
-        "button_B3dn7y",
-        "caption_YUqL68"
-      ],
-      "disabled": true,
-      "name": "t:sections.image-with-text.presets.name",
-      "settings": {
-        "display_id": false,
-        "visibility": "always-display",
-        "image": "shopify://shop_images/ProductDesignPetGloveWipes_2.png",
-        "video_autoplay": false,
-        "video_loop": false,
-        "height": "adapt",
-        "color_scheme": "background-1",
-        "section_color_scheme": "background-1",
-        "full_desktop_width": false,
-        "content_layout": "no-overlap",
-        "desktop_media_width": 50,
-        "layout": "image_first",
-        "desktop_content_position": "middle",
-        "desktop_content_alignment": "left",
-        "mobile_full_media_width": false,
-        "mobile_direction": "normal",
-        "mobile_image_quanlity": "2",
-        "mobile_content_alignment": "left",
-        "mobile_padding_top": 0,
-        "mobile_padding_bottom": 16,
-        "desktop_padding_top": 36,
-        "desktop_padding_bottom": 36,
-        "custom_colors_background": "#2e2a39",
-        "custom_gradient_background": "",
-        "custom_colors_text": "#ffffff",
-        "custom_colors_solid_button_background": "#dd1d1d",
-        "custom_colors_solid_button_text": "#47b5e9",
-        "custom_colors_outline_button": "#dd1d1d",
-        "custom_section_colors_background": "#ffffff",
-        "custom_section_gradient_background": ""
-      }
-    },
     "collapsible_content_j44jLX": {
       "type": "collapsible-content",
       "blocks": {
@@ -2520,6 +2566,9 @@
     "hero_review_carousel_7VMA4V",
     "section_divider_tRqM9Q",
     "symptom_nav_cards_CL6HQf",
+    "section_divider_CRWGji",
+    "video_social_proof_pm3rwx",
+    "section_divider_za6aQa",
     "product_cards_carousel_4FwFRw",
     "image_banner_gUTUbM",
     "image_banner_NBXkrF",
@@ -2529,7 +2578,6 @@
     "section_divider_hYBJ6V",
     "review_slider_jL8hbB",
     "section_divider_hnJwee",
-    "image_with_text_77grg8",
     "collapsible_content_j44jLX",
     "image_banner_dHw7hG",
     "featured_collection_Jri9Vj",
