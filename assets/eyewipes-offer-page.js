@@ -31,24 +31,40 @@
   /* ---------------------------------------------------------------
      1. rotating announcement bar — no countdown, no scarcity copy.
      One message shown at a time, centered, cross-faded + slid every 4s,
-     looping. prefers-reduced-motion drops the transition but keeps the
-     rotation itself, per WCAG guidance on non-essential motion.
+     looping. Icon + text swap together, one per message in the fixed
+     price-tag / truck / gift order. prefers-reduced-motion drops the
+     transition but keeps the rotation itself, per WCAG guidance on
+     non-essential motion.
      --------------------------------------------------------------- */
   (function announce() {
     var el = $('[data-announce-msg]');
-    if (!el) return;
+    var iconEl = $('[data-announce-icon]');
+    var textEl = $('[data-announce-text]');
+    if (!el || !iconEl || !textEl) return;
     var messages = (CFG.announce || []).filter(function (m) { return m; });
     if (messages.length < 2) return;
+    var ICONS = [
+      /* price tag — "Buy 2, Get 2 Free" */
+      '<path d="M11.5 3H5a2 2 0 0 0-2 2v6.5a2 2 0 0 0 .586 1.414l8.5 8.5a2 2 0 0 0 2.828 0l6.5-6.5a2 2 0 0 0 0-2.828l-8.5-8.5A2 2 0 0 0 11.5 3Z"></path><circle cx="7.25" cy="7.25" r="1.1" fill="currentColor" stroke="none"></circle>',
+      /* delivery truck — "Free Shipping with RoutineCare" */
+      '<rect x="1.5" y="6" width="12" height="8" rx="1"></rect><path d="M13.5 9h4l3 3.2V14h-7Z"></path><circle cx="6" cy="16.5" r="1.8" fill="currentColor" stroke="none"></circle><circle cx="17" cy="16.5" r="1.8" fill="currentColor" stroke="none"></circle>',
+      /* gift box — "Free Gifts Included" */
+      '<rect x="3" y="9" width="18" height="11" rx="1.2"></rect><path d="M3 13h18"></path><path d="M12 9v11"></path><path d="M8.2 9c-1.9 0-3-1-3-2.4C5.2 5.2 6.3 4 7.8 4 9.6 4 11 6 12 9"></path><path d="M15.8 9c1.9 0 3-1 3-2.4C18.8 5.2 17.7 4 16.2 4 14.4 4 13 6 12 9"></path>'
+    ];
     var i = 0;
+    var paint = function () {
+      textEl.textContent = messages[i];
+      iconEl.innerHTML = ICONS[i % ICONS.length];
+    };
     var swap = function () {
       i = (i + 1) % messages.length;
       if (reduceMotion) {
-        el.textContent = messages[i];
+        paint();
         return;
       }
       el.classList.add('is-out');
       window.setTimeout(function () {
-        el.textContent = messages[i];
+        paint();
         el.classList.remove('is-out');
         el.classList.add('is-in');
         void el.offsetWidth; /* force reflow so the entrance transition runs */

@@ -38,7 +38,13 @@
   <div class="topbar">
     <div class="topbar-in">
       <div class="announce" role="status" aria-label="Offer highlights">
-        <span class="announce-msg" data-announce-msg>{{ section.settings.announce_msg1 }}</span>
+        <span class="announce-msg" data-announce-msg>
+          <svg class="announce-icon" data-announce-icon viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M11.5 3H5a2 2 0 0 0-2 2v6.5a2 2 0 0 0 .586 1.414l8.5 8.5a2 2 0 0 0 2.828 0l6.5-6.5a2 2 0 0 0 0-2.828l-8.5-8.5A2 2 0 0 0 11.5 3Z"></path>
+            <circle cx="7.25" cy="7.25" r="1.1" fill="currentColor" stroke="none"></circle>
+          </svg>
+          <span class="announce-text" data-announce-text>{{ section.settings.announce_msg1 }}</span>
+        </span>
       </div>
     </div>
   </div>
