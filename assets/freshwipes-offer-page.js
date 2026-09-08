@@ -32,22 +32,33 @@
   var $$ = function (sel, ctx) { return Array.prototype.slice.call((ctx || root).querySelectorAll(sel)); };
 
   /* ---------------------------------------------------------------
-     1. countdown
+     1. rotating announcement bar — no countdown, no scarcity copy.
+     One message shown at a time, centered, cross-faded + slid every 4s,
+     looping. prefers-reduced-motion drops the transition but keeps the
+     rotation itself, per WCAG guidance on non-essential motion.
      --------------------------------------------------------------- */
-  (function countdown() {
-    var h = $('#fwof-cd-h'), m = $('#fwof-cd-m'), s = $('#fwof-cd-s');
-    if (!h || !m || !s) return;
-    var left = parseInt(root.getAttribute('data-cd-seconds'), 10);
-    if (!(left > 0)) left = 11 * 3600 + 32 * 60 + 45;
-    var pad = function (n) { return (n < 10 ? '0' : '') + n; };
-    var tick = function () {
-      h.textContent = pad(Math.floor(left / 3600));
-      m.textContent = pad(Math.floor((left % 3600) / 60));
-      s.textContent = pad(left % 60);
-      left = left > 0 ? left - 1 : 86399;
+  (function announce() {
+    var el = $('[data-announce-msg]');
+    if (!el) return;
+    var messages = (CFG.announce || []).filter(function (m) { return m; });
+    if (messages.length < 2) return;
+    var i = 0;
+    var swap = function () {
+      i = (i + 1) % messages.length;
+      if (reduceMotion) {
+        el.textContent = messages[i];
+        return;
+      }
+      el.classList.add('is-out');
+      window.setTimeout(function () {
+        el.textContent = messages[i];
+        el.classList.remove('is-out');
+        el.classList.add('is-in');
+        void el.offsetWidth; /* force reflow so the entrance transition runs */
+        el.classList.remove('is-in');
+      }, 240);
     };
-    tick();
-    setInterval(tick, 1000);
+    setInterval(swap, 4000);
   })();
 
   /* ---------------------------------------------------------------
