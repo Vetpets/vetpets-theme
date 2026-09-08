@@ -24,15 +24,6 @@
 {%- liquid
   assign v = product.selected_or_first_available_variant
   assign product_form_id = 'ewof-product-form-' | append: section.id
-
-  # countdown seed from shop time — the JS re-seeds against the visitor clock
-  assign now_h = 'now' | date: '%H' | times: 1
-  assign now_m = 'now' | date: '%M' | times: 1
-  assign now_s = 'now' | date: '%S' | times: 1
-  assign hh = now_h | times: 3600
-  assign mm = now_m | times: 60
-  assign elapsed = hh | plus: mm | plus: now_s
-  assign cd_left = 86400 | minus: elapsed
 -%}
 
 {{ 'eyewipes-offer-page.css' | asset_url | stylesheet_tag }}
@@ -41,21 +32,13 @@
 <link rel="preload" as="image" href="{{ 'ewof-eyewipes-offer-approved.webp' | asset_url }}">
 <link rel="preload" as="image" href="{{ 'ewof-tier-6jars.webp' | asset_url }}">
 
-<div id="eyewipes-offer-page" data-cd-seconds="{{ cd_left }}" data-rc="on" data-tier="build">
+<div id="eyewipes-offer-page" data-rc="on" data-tier="build">
 
-  {%- comment -%} ---------- top offer bar ---------- {%- endcomment -%}
+  {%- comment -%} ---------- rotating announcement bar (no countdown, no scarcity copy) ---------- {%- endcomment -%}
   <div class="topbar">
     <div class="topbar-in">
-      <div>
-        <div class="topbar-l1">{{ section.settings.topbar_line1 }}</div>
-        <div class="topbar-l2">{{ section.settings.topbar_line2 }}</div>
-      </div>
-      <div class="cd" role="timer" aria-label="Offer ends in">
-        <div class="cd-u"><div class="cd-n" id="ewof-cd-h">11</div><div class="cd-l">HRS</div></div>
-        <div class="cd-s" aria-hidden="true">:</div>
-        <div class="cd-u"><div class="cd-n" id="ewof-cd-m">32</div><div class="cd-l">MIN</div></div>
-        <div class="cd-s" aria-hidden="true">:</div>
-        <div class="cd-u"><div class="cd-n" id="ewof-cd-s">45</div><div class="cd-l">SEC</div></div>
+      <div class="announce" role="status" aria-label="Offer highlights">
+        <span class="announce-msg" data-announce-msg>{{ section.settings.announce_msg1 }}</span>
       </div>
     </div>
   </div>
@@ -68,7 +51,7 @@
       <div class="gal">
         <div class="g-badges" aria-live="polite">
           <span class="g-pill">Buy 2, Get 2 Free</span>
-          <span class="g-pill2">Limited-Time Offer</span>
+          <span class="g-pill2" hidden></span>
         </div>
         <div class="railwrap">
           <div class="rail" id="ewof-rail" tabindex="0" role="group" aria-label="EyeWipes gallery — use left and right arrow keys">
@@ -204,11 +187,6 @@
         </div>
 
         {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url -%}
-
-        <div class="urg">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 22 20H2L12 3Z" fill="#D64545"></path><path d="M12 9.5v4.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path><circle cx="12" cy="17" r="1.2" fill="#FFFFFF"></circle></svg>
-          <div class="urg-t">We are selling out more than expected. <strong>Order now before we run out again.</strong></div>
-        </div>
 
         {%- comment -%} information panel {%- endcomment -%}
         <div class="info">
@@ -434,7 +412,7 @@
     </div>
 
     <div class="offer-wrap">
-      <div class="offer-badge">Buy 2, Get 2 Free + Free Gifts (Limited Time!)</div>
+      <div class="offer-badge">Buy 2, Get 2 Free + Free Gifts</div>
       <div class="offer-card">
         <div class="offer-media"><img src="{{ 'ewpl-offer-jar.webp' | asset_url }}" width="800" height="800" loading="lazy" decoding="async" alt="An EyeWipes jar — gentle care for sensitive eyes, for dogs and cats"></div>
         <div class="offer-body">
@@ -448,10 +426,6 @@
             {%- for b in obullets -%}
               <div class="bullet">{% render 'ewof-check', size: 20 %}<span>{{ b }}</span></div>
             {%- endfor -%}
-          </div>
-          <div class="scarcity">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 22 20H2L12 3Z" fill="#D64545"></path><path d="M12 9.5v4.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path><circle cx="12" cy="17" r="1.2" fill="#FFFFFF"></circle></svg>
-            <span>High demand — EyeWipes tend to sell out. If this page is live, they're still in stock.</span>
           </div>
           <button type="button" class="cta btn-buy" data-ewof-submit>
             <span><span data-ewof-cta-label>Add To Cart — Buy 2, Get 2 Free</span> <span aria-hidden="true">→</span></span>
@@ -521,6 +495,11 @@
   <script type="application/json" id="ewof-config">
     {
       "rc_note": {{ section.settings.rc_note | json }},
+      "announce": [
+        {{ section.settings.announce_msg1 | json }},
+        {{ section.settings.announce_msg2 | json }},
+        {{ section.settings.announce_msg3 | json }}
+      ],
       "error_text": "Something went wrong adding this to your cart. Please try again.",
       "tiers": [
         {
@@ -540,7 +519,7 @@
           "name": "Build The Habit Kit",
           "cta": "Add To Cart — Buy 2, Get 2 Free",
           "badge": "Buy 2, Get 2 Free",
-          "pill": "Limited-Time Offer",
+          "pill": "",
           "applied_label": "Your Buy 2, Get 2 Free discount is applied",
           "image": {{ 'ewof-eyewipes-offer-approved.webp' | asset_url | json }},
           "image_alt": "Four jars of VetPets EyeWipes with the Tear Stain Comb, the Bright Eyes Routine Tracker and the Bright Eyes in 30 Days e-book"
@@ -574,9 +553,10 @@
       "type": "paragraph",
       "content": "Add the Kaching Bundles app block to this section. Kaching stays the source of truth for tier, quantity, selling plan and free gifts — this section only restyles it."
     },
-    { "type": "header", "content": "Top bar" },
-    { "type": "text", "id": "topbar_line1", "label": "Line 1", "default": "Buy 2, Get 2 Free + Free Gifts" },
-    { "type": "text", "id": "topbar_line2", "label": "Line 2", "default": "100-Day Risk-Free Home Trial" },
+    { "type": "header", "content": "Top bar — rotating announcement messages" },
+    { "type": "text", "id": "announce_msg1", "label": "Message 1", "default": "Buy 2, Get 2 Free" },
+    { "type": "text", "id": "announce_msg2", "label": "Message 2", "default": "Free Shipping with RoutineCare" },
+    { "type": "text", "id": "announce_msg3", "label": "Message 3", "default": "Free Gifts Included" },
     { "type": "header", "content": "Hero" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "End The Crusty Eyes In 30 Seconds A Day" },
     { "type": "text", "id": "subheading", "label": "Subheading", "default": "Textured antibacterial wipes for dogs with gunk, discharge & crusty eyes" },
