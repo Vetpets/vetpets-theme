@@ -1002,16 +1002,6 @@
             "desc_color_scheme": "background-2"
           }
         },
-        "image_slide_fDQd63": {
-          "type": "image_slide",
-          "settings": {
-            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_35.jpg",
-            "link": "",
-            "description": "",
-            "desc_alignment": "center",
-            "desc_color_scheme": "background-2"
-          }
-        },
         "image_slide_FPaVtX": {
           "type": "image_slide",
           "settings": {
@@ -1112,36 +1102,6 @@
             "desc_color_scheme": "background-2"
           }
         },
-        "image_slide_LfXJit": {
-          "type": "image_slide",
-          "settings": {
-            "image": "shopify://shop_images/Skarmavbild_2025-06-20_kl._12.41.33_7db4482a-3a46-4fe6-9a4d-2bb59749859d.webp",
-            "link": "",
-            "description": "",
-            "desc_alignment": "center",
-            "desc_color_scheme": "background-2"
-          }
-        },
-        "image_slide_hrJR8i": {
-          "type": "image_slide",
-          "settings": {
-            "image": "shopify://shop_images/Skarmavbild_2025-06-20_kl._12.36.03_58fcab1c-8e81-4125-90db-87d075584004.webp",
-            "link": "",
-            "description": "",
-            "desc_alignment": "center",
-            "desc_color_scheme": "background-2"
-          }
-        },
-        "image_slide_HzrYwH": {
-          "type": "image_slide",
-          "settings": {
-            "image": "shopify://shop_images/Din_Hunds_Leende_spelar_ocksa_roll_34.jpg",
-            "link": "",
-            "description": "",
-            "desc_alignment": "center",
-            "desc_color_scheme": "background-2"
-          }
-        },
         "image_slide_pRnbPQ": {
           "type": "image_slide",
           "settings": {
@@ -1214,7 +1174,6 @@
         "image_slide_tbf9cM",
         "image_slide_idEG8R",
         "image_slide_9UETUe",
-        "image_slide_fDQd63",
         "image_slide_FPaVtX",
         "image_slide_EwT476",
         "image_slide_YPPbRJ",
@@ -1225,9 +1184,6 @@
         "image_slide_KqCyQa",
         "image_slide_AW8tMc",
         "image_slide_x8JVWg",
-        "image_slide_LfXJit",
-        "image_slide_hrJR8i",
-        "image_slide_HzrYwH",
         "image_slide_pRnbPQ",
         "image_slide_GN7c44",
         "image_slide_wNMmnp",
