@@ -738,7 +738,7 @@
         "title_highlight_color": "#47b5e9",
         "heading_size": "h2",
         "color_scheme": "background-2",
-        "type": "slide",
+        "type": "loop",
         "drag": "enabled",
         "autoplay": false,
         "autoplay_speed": 2.5,
