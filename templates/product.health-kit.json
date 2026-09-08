@@ -529,10 +529,10 @@
     "image_slider_xthg8L": {
       "type": "image-slider",
       "blocks": {
-        "image_slide_c8f694": {
+        "image_slide_LPtfKz": {
           "type": "image_slide",
           "settings": {
-            "image": "shopify://shop_images/Untitled_design_8.png",
+            "image": "shopify://shop_images/Cats_with_main_kits.jpg",
             "link": "",
             "description": "",
             "desc_alignment": "center",
@@ -543,6 +543,36 @@
           "type": "image_slide",
           "settings": {
             "image": "shopify://shop_images/Untitled_design_9.png",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_AiDPQb": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Untitled_design_3_5f08cb10-010a-4c44-befa-3b773afea873.png",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_JcA7nx": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Cat_sniffing_jars.jpg",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_yGdyGW": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Untitled_design_2_17b9f36e-9d94-4b05-ad23-89b3f3e7b651.png",
             "link": "",
             "description": "",
             "desc_alignment": "center",
@@ -589,30 +619,10 @@
             "desc_color_scheme": "background-2"
           }
         },
-        "image_slide_XCHWrL": {
-          "type": "image_slide",
-          "settings": {
-            "image": "shopify://shop_images/Untitled_design_14.png",
-            "link": "",
-            "description": "",
-            "desc_alignment": "center",
-            "desc_color_scheme": "background-2"
-          }
-        },
         "image_slide_CiUmJE": {
           "type": "image_slide",
           "settings": {
             "image": "shopify://shop_images/Untitled_design_15.png",
-            "link": "",
-            "description": "",
-            "desc_alignment": "center",
-            "desc_color_scheme": "background-2"
-          }
-        },
-        "image_slide_UyNjtK": {
-          "type": "image_slide",
-          "settings": {
-            "image": "shopify://shop_images/Untitled_design_16.png",
             "link": "",
             "description": "",
             "desc_alignment": "center",
@@ -648,21 +658,77 @@
             "desc_alignment": "center",
             "desc_color_scheme": "background-2"
           }
+        },
+        "image_slide_XdKJMh": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/20.png",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_c8f694": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Untitled_design_8.png",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_waEzVK": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Untitled_design_4_ccf4aefb-44ab-4ab5-a75e-9e46ccdd32ff.png",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_MicA4a": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/27.png",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_MX4nFr": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/25.png",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
         }
       },
       "block_order": [
-        "image_slide_c8f694",
+        "image_slide_LPtfKz",
         "image_slide_JUpYfN",
+        "image_slide_AiDPQb",
+        "image_slide_JcA7nx",
+        "image_slide_yGdyGW",
         "image_slide_rbcKzf",
         "image_slide_pkCVeY",
         "image_slide_et3jiQ",
         "image_slide_c69ce3",
-        "image_slide_XCHWrL",
         "image_slide_CiUmJE",
-        "image_slide_UyNjtK",
         "image_slide_x6WH6h",
         "image_slide_c9KVjB",
-        "image_slide_WDkYpi"
+        "image_slide_WDkYpi",
+        "image_slide_XdKJMh",
+        "image_slide_c8f694",
+        "image_slide_waEzVK",
+        "image_slide_MicA4a",
+        "image_slide_MX4nFr"
       ],
       "name": "Image/Video Slider",
       "settings": {
