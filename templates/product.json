@@ -714,7 +714,7 @@
         "desktop_padding_calc": true,
         "desktop_adaptive_height": false,
         "desktop_dots_position": "under",
-        "desktop_arrows_position": "hidden",
+        "desktop_arrows_position": "sides",
         "mobile_full_page": false,
         "mobile_border_radius": 12,
         "slides_mobile": 2,
