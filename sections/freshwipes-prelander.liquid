@@ -10,8 +10,9 @@
 
   Everything is scoped under #freshwipes-prelander:
     assets/freshwipes-prelander.css   presentation
-    assets/freshwipes-prelander.js    countdown, comparison tabs, review rail,
-                                      sticky clearance, attribution forwarding
+    assets/freshwipes-prelander.js    rotating announcement bar, comparison tabs,
+                                      review rail, sticky clearance, attribution
+                                      forwarding
 
   CTA routing: every purchase / availability CTA goes to the FreshWipes PDP.
   The two in-page buttons stay internal anchors: "See Why It Works" scrolls to
@@ -56,20 +57,16 @@
 
 <div id="freshwipes-prelander">
 
-  {%- comment -%} ---------- top offer bar ---------- {%- endcomment -%}
+  {%- comment -%} ---------- rotating announcement bar (no countdown, no scarcity copy) ---------- {%- endcomment -%}
   <div class="fwpl-announce">
     <div class="fwpl-announce__inner">
-      <div class="fwpl-announce__text">
-        <span class="fwpl-announce__main">BUY 2, GET 2 FREE + FREE GIFTS</span>
-        <span class="fwpl-announce__sub"><span class="fwpl-announce__dot">· </span>100-Day Risk-Free Home Trial</span>
-      </div>
-      <div class="fwpl-announce__timer" aria-label="Offer countdown">
-        <div class="fwpl-timer__box"><div class="fwpl-timer__num" data-fwpl-cd="h">04</div><div class="fwpl-timer__label">HRS</div></div>
-        <span class="fwpl-timer__sep" aria-hidden="true">:</span>
-        <div class="fwpl-timer__box"><div class="fwpl-timer__num" data-fwpl-cd="m">05</div><div class="fwpl-timer__label">MIN</div></div>
-        <span class="fwpl-timer__sep" aria-hidden="true">:</span>
-        <div class="fwpl-timer__box"><div class="fwpl-timer__num" data-fwpl-cd="s">15</div><div class="fwpl-timer__label">SEC</div></div>
-      </div>
+      <span class="fwpl-announce__msg" data-fwpl-announce-msg>
+        <svg class="fwpl-announce__icon" data-fwpl-announce-icon viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M11.5 3H5a2 2 0 0 0-2 2v6.5a2 2 0 0 0 .586 1.414l8.5 8.5a2 2 0 0 0 2.828 0l6.5-6.5a2 2 0 0 0 0-2.828l-8.5-8.5A2 2 0 0 0 11.5 3Z"></path>
+          <circle cx="7.25" cy="7.25" r="1.1" fill="currentColor" stroke="none"></circle>
+        </svg>
+        <span class="fwpl-announce__text" data-fwpl-announce-text>Buy 2, Get 2 Free</span>
+      </span>
     </div>
   </div>
 
@@ -422,10 +419,6 @@
                 </li>
               {%- endfor -%}
             </ul>
-            <div class="fwpl-offer__scarcity">
-              <span class="fwpl-offer__warn" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4"/><path d="M12 17h.01"/></svg></span>
-              <span class="fwpl-offer__warntext">High demand — FreshWipes tend to sell out. If this page is live, they're still in stock.</span>
-            </div>
             <a class="fwpl-offer__cta" href="{{ pdp_url }}" data-fwpl-pdp>APPLY DISCOUNT AND CHECK AVAILABILITY →</a>
             {%- if section.settings.show_routinecare -%}
               <span class="fwpl-offer__perk">🎁 Save 20% with RoutineCare</span>
