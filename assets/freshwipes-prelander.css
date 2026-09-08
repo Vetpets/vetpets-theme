@@ -131,41 +131,33 @@
   #freshwipes-prelander .fwpl-sticky__btn:hover { transform: none; }
 }
 
-/* ---------- top offer bar ---------- */
+/* ---------- top offer bar — rotating announcement ----------
+   Single centered message, cross-faded + slid on a 4s interval by the
+   "announcement bar" behaviour in freshwipes-prelander.js. No countdown,
+   no scarcity copy — matches the approved offer-page bar exactly. */
 
 #freshwipes-prelander .fwpl-announce {
   background: var(--fw-blue); color: #ffffff;
-  padding: 10px clamp(14px, 3vw, 32px); min-height: 64px;
-  display: flex; align-items: center;
+  padding: 10px 0; min-height: 20px;
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
 }
 #freshwipes-prelander .fwpl-announce__inner {
   max-width: 1280px; margin: 0 auto; width: 100%;
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
-  row-gap: 8px; column-gap: 18px;
+  display: flex; align-items: center; justify-content: center; padding: 0 clamp(14px, 3vw, 32px);
 }
-#freshwipes-prelander .fwpl-announce__text {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
-  row-gap: 2px; column-gap: 7px;
+#freshwipes-prelander .fwpl-announce__msg {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; max-width: 100%;
+  color: #ffffff; font-size: 15px; font-weight: 600; letter-spacing: .01em; line-height: 1.3;
+  text-wrap: balance; text-shadow: 0 1px 2px rgba(0, 0, 0, .12);
+  opacity: 1; transform: translateX(0); transition: opacity 240ms ease, transform 240ms ease;
 }
-#freshwipes-prelander .fwpl-announce__main {
-  font-weight: 800; font-size: clamp(14.5px, 1.9vw, 20.5px);
-  letter-spacing: .01em; white-space: nowrap; line-height: 1.15;
+#freshwipes-prelander .fwpl-announce__msg.is-out { opacity: 0; transform: translateX(-8px); }
+#freshwipes-prelander .fwpl-announce__msg.is-in { opacity: 0; transform: translateX(8px); transition: none; }
+#freshwipes-prelander .fwpl-announce__icon { width: 18px; height: 18px; flex-shrink: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  #freshwipes-prelander .fwpl-announce__msg { transition: none; }
 }
-#freshwipes-prelander .fwpl-announce__sub { font-size: clamp(12.5px, 1.5vw, 16px); font-weight: 400; white-space: nowrap; }
-#freshwipes-prelander .fwpl-announce__timer { display: flex; align-items: center; gap: 5px; }
-#freshwipes-prelander .fwpl-timer__box {
-  background: #ffffff; border-radius: 9px;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  width: clamp(42px, 4.6vw, 54px); height: clamp(40px, 4.2vw, 48px);
-}
-#freshwipes-prelander .fwpl-timer__num {
-  font-size: clamp(16.5px, 1.9vw, 20px); font-weight: 800; line-height: 1.05;
-  color: var(--fw-blue); font-variant-numeric: tabular-nums;
-}
-#freshwipes-prelander .fwpl-timer__label {
-  font-size: clamp(9px, .95vw, 10px); font-weight: 700; letter-spacing: .04em; color: rgba(18, 18, 18, .55);
-}
-#freshwipes-prelander .fwpl-timer__sep { font-weight: 800; font-size: clamp(14px, 1.6vw, 18px); }
 
 /* ---------- hero ---------- */
 
@@ -574,12 +566,6 @@
 #freshwipes-prelander .fwpl-offer__bullets .fwpl-check { width: 20px; height: 20px; margin-top: 1px; }
 #freshwipes-prelander .fwpl-offer__bullets .fwpl-check svg { width: 11px; height: 11px; }
 #freshwipes-prelander .fwpl-offer__lead { font-weight: 800; }
-#freshwipes-prelander .fwpl-offer__scarcity {
-  display: flex; gap: 11px; align-items: flex-start;
-  background: #FDECEC; border: 2px solid #E5484D; border-radius: 12px; padding: 14px 16px;
-}
-#freshwipes-prelander .fwpl-offer__warn { color: #B3252A; flex-shrink: 0; margin-top: 1px; display: flex; }
-#freshwipes-prelander .fwpl-offer__warntext { font-size: 14.5px; line-height: 1.45; font-weight: 700; color: #B3252A; }
 #freshwipes-prelander .fwpl-offer__cta {
   display: flex; align-items: center; justify-content: center;
   background: var(--fw-blue); color: #ffffff; font-weight: 800; font-size: clamp(15px, 1.6vw, 17px);
@@ -640,20 +626,10 @@
    Breakpoints — ported from the design's media queries
    ========================================================================= */
 
-/* --- announce bar, tablet and up --- */
-@media (min-width: 768px) {
-  #freshwipes-prelander .fwpl-announce {
-    width: 100%; height: 60px; min-height: 60px; max-height: 60px;
-    padding: 0; display: flex; align-items: center; overflow: hidden;
-  }
-  #freshwipes-prelander .fwpl-announce__inner {
-    width: min(1280px, calc(100% - 48px)); height: 60px; margin-inline: auto;
-    display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 14px;
-  }
-  #freshwipes-prelander .fwpl-announce__text { display: flex; flex-direction: row; align-items: center; column-gap: 8px; }
-  #freshwipes-prelander .fwpl-announce__main { font-size: 21px; font-weight: 700; line-height: 1.15; }
-  #freshwipes-prelander .fwpl-announce__sub { font-size: 16px; font-weight: 400; }
-  #freshwipes-prelander .fwpl-timer__box { width: 48px; height: 42px; }
+/* --- announce bar, desktop --- */
+@media (min-width: 900px) {
+  #freshwipes-prelander .fwpl-announce__msg { font-size: 17px; }
+  #freshwipes-prelander .fwpl-announce__icon { width: 20px; height: 20px; }
 }
 
 /* --- offer card, from 900px --- */
@@ -728,23 +704,6 @@
   */
   #freshwipes-prelander .fwpl-hero__mediacol { width: 100%; min-width: 0; padding: 2px 0 0; }
   #freshwipes-prelander .fwpl-hero__media { width: 100%; height: auto; min-height: 0; max-height: none; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 14px; }
-
-  #freshwipes-prelander .fwpl-announce { height: 70px; min-height: 70px; max-height: 70px; padding: 0; overflow: hidden; }
-  #freshwipes-prelander .fwpl-announce__inner {
-    display: grid; grid-template-columns: auto auto; justify-content: center; align-items: center;
-    column-gap: 12px; width: calc(100% - 20px); height: 70px; max-width: 560px; margin-inline: auto;
-  }
-  #freshwipes-prelander .fwpl-announce__text {
-    display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
-    min-width: 0; text-align: left; row-gap: 0; column-gap: 0;
-  }
-  #freshwipes-prelander .fwpl-announce__main { font-size: 14px; font-weight: 800; line-height: 1.1; white-space: nowrap; }
-  #freshwipes-prelander .fwpl-announce__dot { display: none; }
-  #freshwipes-prelander .fwpl-announce__sub { font-size: 12px; font-weight: 400; line-height: 1.15; margin-top: 3px; white-space: nowrap; }
-  #freshwipes-prelander .fwpl-announce__timer { display: flex; align-items: center; justify-content: flex-end; gap: 3px; flex-shrink: 0; }
-  #freshwipes-prelander .fwpl-timer__box { width: 38px; height: 40px; border-radius: 9px; }
-  #freshwipes-prelander .fwpl-timer__num { font-size: 16px; font-weight: 800; line-height: 1; }
-  #freshwipes-prelander .fwpl-timer__label { font-size: 7px; line-height: 1; }
 
   #freshwipes-prelander .fwpl-hero__copy { text-align: center; align-items: center; }
   #freshwipes-prelander .fwpl-hero__title { margin-left: auto; margin-right: auto; text-align: center; }
