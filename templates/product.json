@@ -653,6 +653,26 @@
             "desc_alignment": "center",
             "desc_color_scheme": "background-2"
           }
+        },
+        "image_slide_6Drp7j": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Untitled_design_08544ae5-a870-4bbe-a9c7-25da070ecdfd.png",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
+        },
+        "image_slide_yfDyhE": {
+          "type": "image_slide",
+          "settings": {
+            "image": "shopify://shop_images/Untitled_design_1_23e3fbe3-5b35-49c0-97c3-d6c4c8bb2fa7.png",
+            "link": "",
+            "description": "",
+            "desc_alignment": "center",
+            "desc_color_scheme": "background-2"
+          }
         }
       },
       "block_order": [
@@ -665,7 +685,9 @@
         "image_slide_ghVdNK",
         "image_slide_MBjpTD",
         "image_slide_AKJ7Rk",
-        "image_slide_HzGxzW"
+        "image_slide_HzGxzW",
+        "image_slide_6Drp7j",
+        "image_slide_yfDyhE"
       ],
       "name": "Image/Video Slider",
       "settings": {
