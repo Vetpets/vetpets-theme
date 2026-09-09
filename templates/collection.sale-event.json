@@ -63,49 +63,12 @@
     "trust_strip": {
       "type": "icon-bar",
       "blocks": {
-        "trust_1": {
-          "type": "column",
-          "settings": {
-            "icon": "local_shipping",
-            "filled_icon": false,
-            "title": "Free shipping with RoutineCare",
-            "text": ""
-          }
-        },
-        "trust_2": {
-          "type": "column",
-          "settings": {
-            "icon": "card_giftcard",
-            "filled_icon": false,
-            "title": "Free gifts included",
-            "text": ""
-          }
-        },
-        "trust_3": {
-          "type": "column",
-          "settings": {
-            "icon": "verified",
-            "filled_icon": false,
-            "title": "100-day guarantee",
-            "text": ""
-          }
-        },
-        "trust_4": {
-          "type": "column",
-          "settings": {
-            "icon": "autorenew",
-            "filled_icon": false,
-            "title": "Manage RoutineCare anytime",
-            "text": ""
-          }
-        }
+        "trust_1": { "type": "column", "settings": { "icon": "local_shipping", "filled_icon": false, "title": "Free shipping with RoutineCare", "text": "" } },
+        "trust_2": { "type": "column", "settings": { "icon": "card_giftcard", "filled_icon": false, "title": "Free gifts included", "text": "" } },
+        "trust_3": { "type": "column", "settings": { "icon": "verified", "filled_icon": false, "title": "100-day guarantee", "text": "" } },
+        "trust_4": { "type": "column", "settings": { "icon": "autorenew", "filled_icon": false, "title": "Manage RoutineCare anytime", "text": "" } }
       },
-      "block_order": [
-        "trust_1",
-        "trust_2",
-        "trust_3",
-        "trust_4"
-      ],
+      "block_order": ["trust_1", "trust_2", "trust_3", "trust_4"],
       "settings": {
         "title": "",
         "text": "",
@@ -202,7 +165,7 @@
         "enable_filtering": false,
         "enable_sorting": true,
         "filter_type": "horizontal",
-        "enable_quick_add": false
+        "enable_quick_add": true
       }
     },
     "campaign_image_with_text": {
@@ -227,15 +190,7 @@
       "type": "testimonials",
       "disabled": true,
       "blocks": {
-        "testimonial_1": {
-          "type": "column",
-          "settings": {
-            "star_rating": 5,
-            "title": "Real customer feedback",
-            "text": "<p>Add real, verified customer feedback here. This block ships disabled and empty - do not publish fabricated reviews.</p>",
-            "author": "<em><strong>Verified customer</strong></em>"
-          }
-        }
+        "testimonial_1": { "type": "column", "settings": { "star_rating": 5, "title": "Real customer feedback", "text": "<p>Add real, verified customer feedback here. This block ships disabled and empty - do not publish fabricated reviews.</p>", "author": "<em><strong>Verified customer</strong></em>" } }
       },
       "block_order": ["testimonial_1"],
       "settings": {
@@ -248,27 +203,9 @@
     "sale_event_seo_faq": {
       "type": "sale-event-seo-faq",
       "blocks": {
-        "faq_1": {
-          "type": "faq_item",
-          "settings": {
-            "question": "How long does the event run?",
-            "answer": "<p>Check the countdown or offer banner above for the exact dates - this section stays up to date with the current campaign.</p>"
-          }
-        },
-        "faq_2": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Do offers apply automatically?",
-            "answer": "<p>Eligible offers are applied at checkout. If a code is required, it will be shown in the offer details above.</p>"
-          }
-        },
-        "faq_3": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Can I manage my RoutineCare subscription during the event?",
-            "answer": "<p>Yes - RoutineCare subscriptions can be managed, paused or adjusted at any time from your account, including during sale events.</p>"
-          }
-        }
+        "faq_1": { "type": "faq_item", "settings": { "question": "How long does the event run?", "answer": "<p>Check the countdown or offer banner above for the exact dates - this section stays up to date with the current campaign.</p>" } },
+        "faq_2": { "type": "faq_item", "settings": { "question": "Do offers apply automatically?", "answer": "<p>Eligible offers are applied at checkout. If a code is required, it will be shown in the offer details above.</p>" } },
+        "faq_3": { "type": "faq_item", "settings": { "question": "Can I manage my RoutineCare subscription during the event?", "answer": "<p>Yes - RoutineCare subscriptions can be managed, paused or adjusted at any time from your account, including during sale events.</p>" } }
       },
       "block_order": ["faq_1", "faq_2", "faq_3"],
       "settings": {
