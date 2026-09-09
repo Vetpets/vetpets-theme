@@ -225,7 +225,7 @@
         "enable_filtering": false,
         "enable_sorting": true,
         "filter_type": "horizontal",
-        "enable_quick_add": false
+        "enable_quick_add": true
       }
     },
     "campaign_image_with_text": {
