@@ -1,0 +1,167 @@
+{%- comment -%}
+  Sale-event editorial insert
+  ------------------------------
+  Renders a single editorial_insert block from sections/sale-event-product-feed.liquid
+  as a standalone full-bleed (or grid-width) row between product cards. Never
+  nests inside a product card. Reuses the theme's global <internal-video> custom
+  element for Shopify-hosted video - no new JS.
+
+  Accepts:
+  - block: {Block} an editorial_insert block
+  - section_id: {String}
+{%- endcomment -%}
+
+{%- liquid
+  assign bs = block.settings
+  assign has_video = false
+  if bs.video != blank
+    assign has_video = true
+  endif
+  assign has_media = false
+  if has_video or bs.desktop_image != blank or bs.mobile_image != blank
+    assign has_media = true
+  endif
+-%}
+
+<div
+  class="vp-se-insert vp-se-insert--{{ bs.width_mode }} vp-se-insert--align-{{ bs.text_alignment }} vp-se-insert--ratio-{{ bs.aspect_ratio }}{% unless has_media %} vp-se-insert--no-media{% endunless %}"
+  style="--vp-se-insert-bg: {{ bs.color_background }}; --vp-se-insert-text: {{ bs.color_text }};"
+  {{ block.shopify_attributes }}
+>
+  <div class="vp-se-insert__inner">
+    {%- if has_media -%}
+      <div class="vp-se-insert__media">
+        {%- if has_video -%}
+          <internal-video class="vp-se-insert__video-wrap"{% if bs.video_autoplay %} data-autoplay="true" data-no-play-btn="true"{% endif %}>
+            <video
+              class="vp-se-insert__video"
+              poster="{% if bs.video_poster != blank %}{{ bs.video_poster | image_url: width: 1200 }}{% else %}{{ bs.video.preview_image | image_url: width: 1200 }}{% endif %}"
+              {% if bs.video_loop %}loop{% endif %}
+              {% if bs.video_autoplay %}muted{% endif %}
+              playsinline
+              {% if bs.video_controls %}controls{% endif %}
+            >
+              {%- for source in bs.video.sources -%}
+                <source {% if bs.video_autoplay %}data-{% endif %}src="{{ source.url }}" type="{{ source.mime_type }}">
+              {%- endfor -%}
+            </video>
+          </internal-video>
+        {%- else -%}
+          {%- if bs.desktop_image != blank -%}
+            {{ bs.desktop_image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600,900,1200,1600', sizes: '(min-width: 750px) 60vw, 100vw', class: 'vp-se-insert__image vp-se-insert__image--desktop', alt: bs.heading | default: '' }}
+          {%- endif -%}
+          {%- if bs.mobile_image != blank -%}
+            {{ bs.mobile_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '480,640,900', sizes: '100vw', class: 'vp-se-insert__image vp-se-insert__image--mobile', alt: bs.heading | default: '' }}
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="vp-se-insert__content">
+      {%- if bs.eyebrow != blank -%}
+        <p class="vp-se-insert__eyebrow">{{ bs.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if bs.heading != blank -%}
+        <h3 class="vp-se-insert__heading">{{ bs.heading | escape }}</h3>
+      {%- endif -%}
+      {%- if bs.body != blank -%}
+        <p class="vp-se-insert__body">{{ bs.body | escape }}</p>
+      {%- endif -%}
+      {%- if bs.cta_label != blank -%}
+        <a href="{{ bs.cta_link | default: '#' }}" class="vp-se-insert__cta">{{ bs.cta_label | escape }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{%- style -%}
+  .vp-se-insert {
+    grid-column: 1 / -1;
+    background: var(--vp-se-insert-bg, #D5F7FF);
+    color: var(--vp-se-insert-text, #0F172A);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .vp-se-insert--grid { grid-column: span 1; }
+
+  .vp-se-insert__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .vp-se-insert--full:not(.vp-se-insert--no-media) .vp-se-insert__inner {
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 750px) {
+    .vp-se-insert--full:not(.vp-se-insert--no-media) .vp-se-insert__inner {
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+    }
+  }
+
+  .vp-se-insert__media { position: relative; background: #E2E8F0; }
+  .vp-se-insert--ratio-square .vp-se-insert__media { aspect-ratio: 1 / 1; }
+  .vp-se-insert--ratio-landscape .vp-se-insert__media { aspect-ratio: 16 / 9; }
+  .vp-se-insert--ratio-portrait .vp-se-insert__media { aspect-ratio: 4 / 5; }
+
+  .vp-se-insert__image,
+  .vp-se-insert__video-wrap,
+  .vp-se-insert__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .vp-se-insert__image--mobile { display: none; }
+
+  .vp-se-insert__content {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .vp-se-insert--align-center .vp-se-insert__content { text-align: center; align-items: center; }
+  .vp-se-insert--align-right .vp-se-insert__content { text-align: right; align-items: flex-end; }
+
+  .vp-se-insert__eyebrow {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.75;
+  }
+
+  .vp-se-insert__heading {
+    margin: 0;
+    font-family: var(--font-heading-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+    font-size: clamp(20px, 2.4vw, 26px);
+  }
+
+  .vp-se-insert__body { margin: 0; opacity: 0.9; }
+
+  .vp-se-insert__cta {
+    align-self: flex-start;
+    margin-top: 4px;
+    display: inline-flex;
+    padding: 10px 20px;
+    border-radius: 999px;
+    background: #47B5E9;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .vp-se-insert--align-center .vp-se-insert__cta { align-self: center; }
+  .vp-se-insert--align-right .vp-se-insert__cta { align-self: flex-end; }
+  .vp-se-insert__cta:focus-visible { outline: 2px solid #0F172A; outline-offset: 2px; }
+
+  @media (max-width: 749px) {
+    .vp-se-insert__image--desktop { display: none; }
+    .vp-se-insert__image--mobile { display: block; }
+  }
+{%- endstyle -%}

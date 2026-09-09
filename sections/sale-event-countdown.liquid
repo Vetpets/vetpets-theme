@@ -1,0 +1,243 @@
+{%- comment -%}
+  Sale-event countdown
+  ----------------------
+  Truthful, deadline-based countdown. There is no session/localStorage state of
+  any kind - the remaining time is always (configured deadline - now), computed
+  fresh on every render and every tick, so it is structurally impossible for it
+  to "reset" on refresh, session, device or visitor: everyone who loads the page
+  before the deadline sees the same real deadline.
+
+  Timezone: end_date / end_time are interpreted in the shop's own timezone
+  ({{ shop.timezone_offset }} / the "now" reference below), matching how the
+  merchant reads dates in Shopify admin. This is documented in the schema info
+  text for end_date and end_time.
+
+  No JS: a server-rendered fallback (days/hours/minutes only, computed via
+  Liquid's 'now') is shown so the content is understandable and present before
+  JS runs, avoiding layout shift; the inline script then takes over the tick.
+{%- endcomment -%}
+
+{%- liquid
+  assign st = section.settings
+  assign show_section = false
+  if st.enabled and st.end_date != blank and st.end_time != blank
+    assign show_section = true
+  endif
+-%}
+
+{%- if show_section -%}
+  {%- liquid
+    assign deadline_string = st.end_date | append: 'T' | append: st.end_time | append: ':00'
+    assign deadline_ts = deadline_string | date: '%s'
+    assign now_ts = 'now' | date: '%s'
+    assign seconds_left = deadline_ts | minus: now_ts
+
+    assign is_expired = false
+    if seconds_left <= 0
+      assign is_expired = true
+    endif
+
+    assign days_left = seconds_left | divided_by: 86400
+    assign hours_left = seconds_left | modulo: 86400 | divided_by: 3600
+    assign minutes_left = seconds_left | modulo: 3600 | divided_by: 60
+  -%}
+
+  {%- if is_expired and st.expired_behavior == 'hide' -%}
+    {%- comment -%} Nothing rendered: deadline has passed and merchant chose to hide. {%- endcomment -%}
+  {%- else -%}
+    <section
+      class="vp-se-countdown{% if is_expired %} vp-se-countdown--expired{% endif %}"
+      style="--vp-se-cd-bg: {{ st.color_background }}; --vp-se-cd-text: {{ st.color_text }}; --vp-se-cd-accent: {{ st.color_accent }};"
+      data-vp-se-countdown
+      data-deadline="{{ deadline_ts }}"
+      data-expired-behavior="{{ st.expired_behavior }}"
+    >
+      <div class="vp-se-countdown__inner page-width">
+        {%- if is_expired -%}
+          <div class="vp-se-countdown__expired" data-vp-se-countdown-expired>
+            {%- if st.expired_headline != blank -%}
+              <p class="vp-se-countdown__expired-headline">{{ st.expired_headline | escape }}</p>
+            {%- endif -%}
+            {%- if st.expired_body != blank -%}
+              <p class="vp-se-countdown__expired-body">{{ st.expired_body | escape }}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        <div class="vp-se-countdown__live" data-vp-se-countdown-live{% if is_expired %} hidden{% endif %}>
+          <div class="vp-se-countdown__units" data-vp-se-countdown-units>
+            <div class="vp-se-countdown__unit">
+              <span class="vp-se-countdown__value" data-vp-se-unit="days">{{ days_left }}</span>
+              <span class="vp-se-countdown__label">{{ st.label_days | escape }}</span>
+            </div>
+            <div class="vp-se-countdown__unit">
+              <span class="vp-se-countdown__value" data-vp-se-unit="hours">{{ hours_left }}</span>
+              <span class="vp-se-countdown__label">{{ st.label_hours | escape }}</span>
+            </div>
+            <div class="vp-se-countdown__unit">
+              <span class="vp-se-countdown__value" data-vp-se-unit="minutes">{{ minutes_left }}</span>
+              <span class="vp-se-countdown__label">{{ st.label_minutes | escape }}</span>
+            </div>
+            <div class="vp-se-countdown__unit">
+              <span class="vp-se-countdown__value" data-vp-se-unit="seconds">00</span>
+              <span class="vp-se-countdown__label">{{ st.label_seconds | escape }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      (function () {
+        var root = document.querySelector('[data-vp-se-countdown][data-deadline="{{ deadline_ts }}"]');
+        if (!root) return;
+
+        var deadlineTs = parseInt(root.getAttribute('data-deadline'), 10) * 1000;
+        var expiredBehavior = root.getAttribute('data-expired-behavior');
+        var liveEl = root.querySelector('[data-vp-se-countdown-live]');
+        var expiredEl = root.querySelector('[data-vp-se-countdown-expired]');
+        var daysEl = root.querySelector('[data-vp-se-unit="days"]');
+        var hoursEl = root.querySelector('[data-vp-se-unit="hours"]');
+        var minutesEl = root.querySelector('[data-vp-se-unit="minutes"]');
+        var secondsEl = root.querySelector('[data-vp-se-unit="seconds"]');
+
+        function pad(n) {
+          return String(n).length < 2 ? '0' + n : String(n);
+        }
+
+        function render() {
+          var remainingMs = deadlineTs - Date.now();
+
+          if (remainingMs <= 0) {
+            if (expiredBehavior === 'hide') {
+              root.hidden = true;
+            } else {
+              if (liveEl) liveEl.hidden = true;
+              if (expiredEl) expiredEl.hidden = false;
+              root.classList.add('vp-se-countdown--expired');
+            }
+            return false;
+          }
+
+          var totalSeconds = Math.floor(remainingMs / 1000);
+          var days = Math.floor(totalSeconds / 86400);
+          var hours = Math.floor((totalSeconds % 86400) / 3600);
+          var minutes = Math.floor((totalSeconds % 3600) / 60);
+          var seconds = totalSeconds % 60;
+
+          if (daysEl) daysEl.textContent = days;
+          if (hoursEl) hoursEl.textContent = pad(hours);
+          if (minutesEl) minutesEl.textContent = pad(minutes);
+          if (secondsEl) secondsEl.textContent = pad(seconds);
+          return true;
+        }
+
+        var keepTicking = render();
+        if (!keepTicking) return;
+
+        var intervalId = window.setInterval(function () {
+          if (!render()) window.clearInterval(intervalId);
+        }, 1000);
+      })();
+    </script>
+  {%- endif -%}
+{%- endif -%}
+
+{%- style -%}
+  .vp-se-countdown {
+    background: var(--vp-se-cd-bg, #0F172A);
+    color: var(--vp-se-cd-text, #ffffff);
+    font-family: var(--font-body-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+  }
+
+  .vp-se-countdown__inner {
+    padding: 16px 24px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .vp-se-countdown__units {
+    display: flex;
+    gap: 20px;
+    min-height: 52px;
+  }
+
+  .vp-se-countdown__unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 44px;
+  }
+
+  .vp-se-countdown__value {
+    font-variant-numeric: tabular-nums;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--vp-se-cd-accent, #47B5E9);
+    line-height: 1.1;
+  }
+
+  .vp-se-countdown__label {
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+
+  .vp-se-countdown__expired {
+    text-align: center;
+    padding: 4px 0;
+  }
+
+  .vp-se-countdown__expired-headline {
+    margin: 0 0 4px;
+    font-weight: 700;
+  }
+
+  .vp-se-countdown__expired-body {
+    margin: 0;
+    opacity: 0.85;
+    font-size: 14px;
+  }
+
+  @media (max-width: 480px) {
+    .vp-se-countdown__units { gap: 12px; }
+    .vp-se-countdown__value { font-size: 20px; }
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Sale-event countdown",
+  "settings": [
+    { "type": "checkbox", "id": "enabled", "label": "Enable countdown", "default": false, "info": "Ships off by default - turn on only once a real end date is confirmed." },
+    { "type": "paragraph", "content": "End date/time are read in the shop's own timezone (the same timezone Shopify admin shows you)." },
+    { "type": "text", "id": "end_date", "label": "Campaign end date", "info": "Format YYYY-MM-DD, e.g. 2026-09-30" },
+    { "type": "text", "id": "end_time", "label": "Campaign end time", "info": "Format HH:MM, 24-hour, e.g. 23:59" },
+
+    { "type": "header", "content": "Labels" },
+    { "type": "text", "id": "label_days", "label": "Days label", "default": "Days" },
+    { "type": "text", "id": "label_hours", "label": "Hours label", "default": "Hours" },
+    { "type": "text", "id": "label_minutes", "label": "Minutes label", "default": "Minutes" },
+    { "type": "text", "id": "label_seconds", "label": "Seconds label", "default": "Seconds" },
+
+    { "type": "header", "content": "When the countdown ends" },
+    { "type": "select", "id": "expired_behavior", "label": "Expired behavior", "default": "show_ended_state", "options": [
+      { "value": "hide", "label": "Hide the countdown entirely" },
+      { "value": "show_ended_state", "label": "Show an ended-state message" }
+    ] },
+    { "type": "text", "id": "expired_headline", "label": "Ended headline", "default": "This event has ended" },
+    { "type": "text", "id": "expired_body", "label": "Ended body text", "default": "Check back soon for the next event." },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "color_background", "label": "Background color", "default": "#0F172A" },
+    { "type": "color", "id": "color_text", "label": "Text color", "default": "#FFFFFF" },
+    { "type": "color", "id": "color_accent", "label": "Accent color (numbers)", "default": "#47B5E9" }
+  ],
+  "presets": [
+    {
+      "name": "Sale-event countdown"
+    }
+  ]
+}
+{% endschema %}
