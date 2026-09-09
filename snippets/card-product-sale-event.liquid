@@ -1,0 +1,192 @@
+{%- comment -%}
+  Sale-event product card
+  ------------------------
+  Isolated card partial for the sale-event product feed. Visually mirrors the
+  "Product cards carousel" card (sections/product-cards-carousel.liquid) - same
+  image/status-label, benefit pills, title, star rating, offer badge and CTA
+  language - but is driven by a real collection product instead of a hand-picked
+  block, and adds real price / compare-at price via the theme's own `price`
+  snippet (the carousel has no price; this card is a shoppable grid, not a
+  curated rail).
+
+  This file does not modify or read from sections/product-cards-carousel.liquid;
+  it is a net-new, independently-styled partial (prefix vp-se-card__) so nothing
+  here can affect the existing carousel.
+
+  Accepts:
+  - card_product: {Object} Product Liquid object (required)
+  - show_status_label: {Boolean} show the "New" / "Best seller" style label
+  - status_label_text: {String} label text (only shown if show_status_label)
+  - benefits_text: {String} comma-separated benefit pills (optional, never fabricated)
+  - show_badge: {Boolean} show the offer badge above the CTA
+  - badge_text: {String}
+  - cta_text: {String} defaults to "Shop now"
+  - enable_quick_add: {Boolean} single-variant add-to-cart button instead of a link
+  - section_id: {String} id of the parent section, used to scope quick-add form ids
+  - lazy_load: {Boolean}
+  - color_accent: {String} hex, CTA background
+  - color_accent_text: {String} hex, CTA text
+  - color_pill_bg: {String} hex, benefit pill background
+  - color_pill_text: {String} hex, benefit pill text
+
+  Usage:
+  {% render 'card-product-sale-event', card_product: product, section_id: section.id %}
+{%- endcomment -%}
+
+{%- if card_product and card_product != empty -%}
+  {%- liquid
+    assign benefits = benefits_text | split: ','
+    assign card_cta_text = cta_text | default: 'Shop now'
+    assign rating_meta = card_product.metafields.reviews.rating.value
+    assign rating_count = card_product.metafields.reviews.rating_count
+
+    assign quick_add_eligible = false
+    if enable_quick_add and card_product.variants.size == 1 and card_product.selected_or_first_available_variant.available
+      assign quick_add_eligible = true
+    endif
+  -%}
+
+  {%- capture star_full -%}
+    <svg class="vp-se-card__star" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false"><path d="M10 1.5l2.47 5.2 5.53.79-4 4.02.95 5.72L10 14.53 5.05 17.23l.95-5.72-4-4.02 5.53-.79L10 1.5z"/></svg>
+  {%- endcapture -%}
+  {%- capture star_empty -%}
+    <svg class="vp-se-card__star vp-se-card__star--empty" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false"><path d="M10 1.5l2.47 5.2 5.53.79-4 4.02.95 5.72L10 14.53 5.05 17.23l.95-5.72-4-4.02 5.53-.79L10 1.5z"/></svg>
+  {%- endcapture -%}
+  {%- capture star_half -%}
+    <span class="vp-se-card__star-wrap">
+      {{- star_empty -}}
+      <span class="vp-se-card__star-clip">{{- star_full -}}</span>
+    </span>
+  {%- endcapture -%}
+
+  <div class="vp-se-card__cell" data-vp-se-card>
+    <article class="vp-se-card">
+      <a href="{{ card_product.url }}" class="vp-se-card__media-link" aria-hidden="true" tabindex="-1">
+        <div class="vp-se-card__media">
+          {%- if card_product.featured_image != blank -%}
+            {{
+              card_product.featured_image
+              | image_url: width: 800
+              | image_tag:
+                loading: lazy_load,
+                widths: '200,300,400,600,800',
+                sizes: '(min-width: 990px) 25vw, 80vw',
+                class: 'vp-se-card__image',
+                alt: card_product.featured_image.alt | default: card_product.title
+            }}
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'vp-se-card__image vp-se-card__image--placeholder' }}
+          {%- endif -%}
+
+          {%- if show_status_label and status_label_text != blank -%}
+            <span class="vp-se-card__label">
+              <svg class="vp-se-card__label-icon" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true" focusable="false"><circle cx="6" cy="6" r="4"/></svg>
+              {{ status_label_text | escape }}
+            </span>
+          {%- endif -%}
+
+          {%- if card_product.compare_at_price > card_product.price -%}
+            <span class="vp-se-card__label vp-se-card__label--sale">
+              {{- 'products.product.on_sale' | t | default: 'Sale' -}}
+            </span>
+          {%- endif -%}
+        </div>
+      </a>
+
+      <div class="vp-se-card__body">
+        {%- if benefits.size > 0 -%}
+          <ul class="vp-se-card__benefits" role="list">
+            {%- for benefit in benefits limit: 4 -%}
+              {%- assign benefit_text = benefit | strip -%}
+              {%- if benefit_text != blank -%}
+                <li class="vp-se-card__benefit">{{- benefit_text | escape -}}</li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        <h3 class="vp-se-card__title">
+          <a href="{{ card_product.url }}" class="vp-se-card__title-link">{{ card_product.title | escape }}</a>
+        </h3>
+
+        {%- if rating_meta != blank -%}
+          {%- liquid
+            assign rating_full = rating_meta.rating | floor
+            assign rating_decimal = rating_meta.rating | modulo: 1
+            assign rating_half_at = rating_full | plus: 1
+          -%}
+          <div
+            class="vp-se-card__stars"
+            role="img"
+            aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: rating_meta, rating_max: rating_meta.scale_max }}"
+          >
+            {%- for i in (1..5) -%}
+              {%- if i <= rating_full -%}
+                {{- star_full -}}
+              {%- elsif rating_decimal >= 0.5 and i == rating_half_at -%}
+                {{- star_half -}}
+              {%- else -%}
+                {{- star_empty -}}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if rating_count -%}
+              <span class="vp-se-card__stars-count">({{ rating_count }})</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        <div class="vp-se-card__price">
+          {% render 'price', product: card_product, hide_currency_code: true %}
+        </div>
+
+        <div class="vp-se-card__foot">
+          {%- if show_badge and badge_text != blank -%}
+            <span class="vp-se-card__badge">
+              <svg class="vp-se-card__badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0l-7.2-7.2a2 2 0 0 1-.6-1.4V4.4a2 2 0 0 1 2-2h7.6a2 2 0 0 1 1.4.6l6.8 6.8a2 2 0 0 1 0 2.8z"/><circle cx="8" cy="8" r="1.2" fill="currentColor"/></svg>
+              {{ badge_text | escape }}
+            </span>
+          {%- endif -%}
+
+          {%- if quick_add_eligible -%}
+            {%- liquid
+              assign variant_id = card_product.selected_or_first_available_variant.id
+              assign form_id = 'vp-se-quick-add-' | append: section_id | append: '-' | append: card_product.id
+            -%}
+            <product-form id="product-form-{{ form_id }}" class="vp-se-card__quick-add">
+              {%- form 'product',
+                card_product,
+                id: form_id,
+                class: 'form',
+                novalidate: 'novalidate',
+                data-type: 'add-to-cart-form'
+              -%}
+                <input type="hidden" name="id" value="{{ variant_id }}">
+                <button
+                  id="{{ form_id }}-submit"
+                  type="submit"
+                  name="add"
+                  class="vp-se-card__cta vp-se-card__cta--button"
+                  aria-haspopup="dialog"
+                  aria-live="polite"
+                  data-sold-out-message="true"
+                >
+                  <span class="vp-se-card__cta-label">{{ card_cta_text | escape }}</span>
+                  <span class="sold-out-message hidden">{{ 'products.product.sold_out' | t }}</span>
+                  <div class="loading-overlay__spinner hidden">
+                    <svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                      <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                    </svg>
+                  </div>
+                </button>
+              {%- endform -%}
+            </product-form>
+          {%- else -%}
+            <a href="{{ card_product.url }}" class="vp-se-card__cta">
+              {{- card_cta_text | escape -}}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    </article>
+  </div>
+{%- endif -%}

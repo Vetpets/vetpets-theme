@@ -1,0 +1,133 @@
+{%- comment -%}
+  Sale-event campaign navigation chips
+  --------------------------------------
+  Optional anchor navigation. Sticky offset uses var(--header-height), which the
+  theme's own sticky-header custom element already sets on <html> at runtime
+  (sections/header.liquid), so this never overlaps the existing sticky header.
+{%- endcomment -%}
+
+{%- liquid
+  assign st = section.settings
+  assign chips = section.blocks | where: 'type', 'chip'
+-%}
+
+{%- if chips.size > 0 -%}
+  <nav
+    class="vp-se-nav{% if st.sticky %} vp-se-nav--sticky{% endif %}"
+    style="--vp-se-nav-bg: {{ st.color_background }}; --vp-se-nav-text: {{ st.color_text }}; --vp-se-nav-accent: {{ st.color_accent }};"
+    aria-label="{{ st.aria_label | default: 'Campaign sections' | escape }}"
+  >
+    <div class="vp-se-nav__inner page-width">
+      <ul class="vp-se-nav__list" role="list">
+        {%- for block in chips -%}
+          {%- assign bs = block.settings -%}
+          {%- if bs.label != blank and bs.anchor != blank -%}
+            <li class="vp-se-nav__item" {{ block.shopify_attributes }}>
+              <a class="vp-se-nav__chip" href="#{{ bs.anchor | strip | remove: '#' }}">
+                {%- if bs.icon != blank -%}
+                  <span class="vp-se-nav__chip-icon">
+                    {{ bs.icon | image_url: width: 40 | image_tag: loading: 'lazy', alt: '', width: 20, height: 20 }}
+                  </span>
+                {%- endif -%}
+                <span class="vp-se-nav__chip-label">{{ bs.label | escape }}</span>
+              </a>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+  </nav>
+{%- endif -%}
+
+{%- style -%}
+  .vp-se-nav {
+    background: var(--vp-se-nav-bg, #ffffff);
+    color: var(--vp-se-nav-text, #0F172A);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+    font-family: var(--font-body-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+  }
+
+  .vp-se-nav--sticky {
+    position: sticky;
+    top: var(--header-height, 0px);
+    z-index: 3;
+  }
+
+  .vp-se-nav__inner {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .vp-se-nav__inner::-webkit-scrollbar { display: none; }
+
+  .vp-se-nav__list {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 10px 0;
+  }
+
+  .vp-se-nav__item { flex: 0 0 auto; }
+
+  .vp-se-nav__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: #D5F7FF;
+    color: var(--vp-se-nav-text, #0F172A);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.15s ease;
+  }
+
+  .vp-se-nav__chip:hover { background: var(--vp-se-nav-accent, #47B5E9); color: #ffffff; }
+  .vp-se-nav__chip:focus-visible { outline: 2px solid var(--vp-se-nav-accent, #47B5E9); outline-offset: 2px; }
+
+  .vp-se-nav__chip-icon img { display: block; width: 18px; height: 18px; object-fit: contain; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vp-se-nav__chip { transition: none; }
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Sale-event nav chips",
+  "settings": [
+    { "type": "checkbox", "id": "sticky", "label": "Stick to top while scrolling", "default": false, "info": "Sits below the existing sticky header automatically." },
+    { "type": "text", "id": "aria_label", "label": "Accessible label", "default": "Campaign sections" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "color_background", "label": "Background color", "default": "#FFFFFF" },
+    { "type": "color", "id": "color_text", "label": "Text color", "default": "#0F172A" },
+    { "type": "color", "id": "color_accent", "label": "Accent (hover) color", "default": "#47B5E9" }
+  ],
+  "blocks": [
+    {
+      "type": "chip",
+      "name": "Chip",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Best sellers" },
+        { "type": "text", "id": "anchor", "label": "Anchor target", "info": "The id of the section/element to scroll to, without the #. Example: best-sellers", "default": "best-sellers" },
+        { "type": "image_picker", "id": "icon", "label": "Icon (optional)" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Sale-event nav chips",
+      "blocks": [
+        { "type": "chip", "settings": { "label": "Best sellers", "anchor": "best-sellers" } },
+        { "type": "chip", "settings": { "label": "Eye care", "anchor": "eye-care" } },
+        { "type": "chip", "settings": { "label": "Dental care", "anchor": "dental-care" } },
+        { "type": "chip", "settings": { "label": "Ear care", "anchor": "ear-care" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

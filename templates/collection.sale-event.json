@@ -1,1 +1,339 @@
-{"sections":{"main-collection-banner":{"type":"main-collection-banner","settings":{"show_collection_description":true,"show_collection_image":false,"color_scheme":"background-1"}},"main-collection-product-grid":{"type":"main-collection-product-grid","custom_css":[],"settings":{"products_per_page":20,"columns_desktop":4,"stretch_cards":false,"image_ratio":"adapt","show_secondary_image":true,"badges":"regular","show_vendor":false,"show_rating":false,"enable_quick_add":true,"swatches_option_name":"","swatches_position":"top","swatches_desktop_size":36,"swatches_mobile_size":24,"enable_filtering":true,"filter_type":"horizontal","enable_sorting":true,"columns_mobile":"2","padding_top":0,"padding_bottom":36}},"collage":{"type":"collage","blocks":{"product":{"type":"product","settings":{"product":"","second_image":false}},"collection":{"type":"collection","settings":{"collection":"all"}}},"block_order":["product","collection"],"disabled":true,"settings":{"display_id":false,"visibility":"always-display","title":"Multimedia collage","title_highlight_color":"#6d388b","heading_size":"h2","desktop_layout":"right","mobile_layout":"collage","card_styles":"product-card-wrapper","color_scheme":"background-1","padding_top":16,"padding_bottom":64,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#2e2a39"}},"newsletter":{"type":"newsletter","blocks":{"heading":{"type":"heading","settings":{"title":"Subscribe to our emails","title_highlight_color":"#6d388b","heading_size":"h1"}},"paragraph":{"type":"paragraph","settings":{"text":"<p>Join our email list for exclusive offers and the latest news. <\/p>"}},"email-form":{"type":"email_form","settings":{}}},"block_order":["heading","paragraph","email-form"],"settings":{"display_id":false,"visibility":"always-display","button_type":"solid","button_label":"Sign up","button_style_secondary":false,"color_scheme":"background-2","full_width":true,"padding_top":68,"padding_bottom":52,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#2e2a39","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff"}}},"order":["main-collection-banner","main-collection-product-grid","collage","newsletter"]}
+{
+  "sections": {
+    "sale_event_hero": {
+      "type": "sale-event-hero",
+      "settings": {
+        "eyebrow": "World Animal Week",
+        "heading": "Daily care for healthier routines",
+        "supporting_text": "Discover everyday care for eyes, teeth and ears.",
+        "offer_text": "",
+        "badge_text": "",
+        "primary_cta_label": "Shop the event",
+        "primary_cta_link": "",
+        "secondary_cta_label": "",
+        "secondary_cta_link": "",
+        "focal_point": "center center",
+        "video_autoplay": true,
+        "video_loop": true,
+        "overlay_strength": 15,
+        "max_height_desktop": 420,
+        "text_alignment": "left",
+        "text_position": "middle",
+        "countdown_placement": "below_hero",
+        "color_background": "#D5F7FF",
+        "color_text": "#0F172A"
+      }
+    },
+    "sale_event_countdown": {
+      "type": "sale-event-countdown",
+      "settings": {
+        "enabled": false,
+        "end_date": "",
+        "end_time": "",
+        "label_days": "Days",
+        "label_hours": "Hours",
+        "label_minutes": "Minutes",
+        "label_seconds": "Seconds",
+        "expired_behavior": "show_ended_state",
+        "expired_headline": "This event has ended",
+        "expired_body": "Check back soon for the next event.",
+        "color_background": "#0F172A",
+        "color_text": "#FFFFFF",
+        "color_accent": "#47B5E9"
+      }
+    },
+    "main_collection_banner": {
+      "type": "main-collection-banner",
+      "disabled": true,
+      "settings": {
+        "show_collection_description": false,
+        "show_collection_image": false,
+        "color_scheme": "background-1"
+      }
+    },
+    "trust_strip": {
+      "type": "icon-bar",
+      "blocks": {
+        "trust_1": {
+          "type": "column",
+          "settings": {
+            "icon": "local_shipping",
+            "filled_icon": false,
+            "title": "Free shipping with RoutineCare",
+            "text": ""
+          }
+        },
+        "trust_2": {
+          "type": "column",
+          "settings": {
+            "icon": "card_giftcard",
+            "filled_icon": false,
+            "title": "Free gifts included",
+            "text": ""
+          }
+        },
+        "trust_3": {
+          "type": "column",
+          "settings": {
+            "icon": "verified",
+            "filled_icon": false,
+            "title": "100-day guarantee",
+            "text": ""
+          }
+        },
+        "trust_4": {
+          "type": "column",
+          "settings": {
+            "icon": "autorenew",
+            "filled_icon": false,
+            "title": "Manage RoutineCare anytime",
+            "text": ""
+          }
+        }
+      },
+      "block_order": [
+        "trust_1",
+        "trust_2",
+        "trust_3",
+        "trust_4"
+      ],
+      "settings": {
+        "title": "",
+        "text": "",
+        "color_scheme": "background-1",
+        "icon_layout": "horizontal",
+        "icon_size": "medium",
+        "icon_color": "accent-1",
+        "cards_color_scheme": "background-1",
+        "type": "grid",
+        "columns_desktop": 4,
+        "slider_desktop": false,
+        "columns_mobile": "2",
+        "slider_mobile": false,
+        "padding_top": 28,
+        "padding_bottom": 28,
+        "custom_colors_background": "#FFFFFF",
+        "custom_colors_text": "#0F172A"
+      }
+    },
+    "sale_event_nav_chips": {
+      "type": "sale-event-nav-chips",
+      "blocks": {
+        "chip_1": {
+          "type": "chip",
+          "settings": {
+            "label": "Best sellers",
+            "anchor": "product-feed"
+          }
+        },
+        "chip_2": {
+          "type": "chip",
+          "settings": {
+            "label": "Eye care",
+            "anchor": "product-feed"
+          }
+        },
+        "chip_3": {
+          "type": "chip",
+          "settings": {
+            "label": "Dental care",
+            "anchor": "product-feed"
+          }
+        },
+        "chip_4": {
+          "type": "chip",
+          "settings": {
+            "label": "Ear care",
+            "anchor": "product-feed"
+          }
+        }
+      },
+      "block_order": [
+        "chip_1",
+        "chip_2",
+        "chip_3",
+        "chip_4"
+      ],
+      "settings": {
+        "sticky": false,
+        "aria_label": "Campaign sections",
+        "color_background": "#FFFFFF",
+        "color_text": "#0F172A",
+        "color_accent": "#47B5E9"
+      }
+    },
+    "sale_event_product_feed": {
+      "type": "sale-event-product-feed",
+      "blocks": {
+        "insert_image": {
+          "type": "editorial_insert",
+          "settings": {
+            "position_mode": "after_product",
+            "position_value": 4,
+            "eyebrow": "Why it matters",
+            "heading": "Vet-approved care, made simple",
+            "body": "Wipe-based routines fit into daily life without a fight - no baths, no brushing battles.",
+            "cta_label": "",
+            "cta_link": "",
+            "desktop_image": "shopify://shop_images/EYEwipes_-_2026-08-13T183754.510.jpg",
+            "mobile_image": "",
+            "video_autoplay": false,
+            "video_loop": true,
+            "video_controls": true,
+            "aspect_ratio": "landscape",
+            "width_mode": "full",
+            "text_alignment": "left",
+            "color_background": "#D5F7FF",
+            "color_text": "#0F172A"
+          }
+        },
+        "insert_video": {
+          "type": "editorial_insert",
+          "settings": {
+            "position_mode": "after_product",
+            "position_value": 8,
+            "eyebrow": "",
+            "heading": "See a routine in action",
+            "body": "",
+            "cta_label": "",
+            "cta_link": "",
+            "desktop_image": "",
+            "mobile_image": "",
+            "video": "shopify://files/videos/video 2.mp4",
+            "video_autoplay": false,
+            "video_loop": true,
+            "video_controls": true,
+            "aspect_ratio": "landscape",
+            "width_mode": "full",
+            "text_alignment": "left",
+            "color_background": "#D5F7FF",
+            "color_text": "#0F172A"
+          }
+        }
+      },
+      "block_order": [
+        "insert_image",
+        "insert_video"
+      ],
+      "settings": {
+        "anchor_id": "product-feed",
+        "heading": "",
+        "subheading": "",
+        "collection": "",
+        "columns_desktop": "3",
+        "products_per_page": 24,
+        "enable_filtering": false,
+        "enable_sorting": true,
+        "filter_type": "horizontal",
+        "enable_quick_add": false
+      }
+    },
+    "campaign_image_with_text": {
+      "type": "image-with-text",
+      "disabled": true,
+      "blocks": {
+        "heading_1": {
+          "type": "heading",
+          "settings": {
+            "title": "Campaign story",
+            "title_highlight_color": "#6D388B",
+            "heading_size": "h2"
+          }
+        },
+        "text_1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Add supporting campaign content here - optional and removable.</p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_1",
+        "text_1"
+      ],
+      "settings": {
+        "height": "adapt",
+        "color_scheme": "background-1",
+        "section_color_scheme": "background-1",
+        "layout": "image_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "desktop_media_width": 50
+      }
+    },
+    "campaign_testimonials": {
+      "type": "testimonials",
+      "disabled": true,
+      "blocks": {
+        "testimonial_1": {
+          "type": "column",
+          "settings": {
+            "star_rating": 5,
+            "title": "Real customer feedback",
+            "text": "<p>Add real, verified customer feedback here. This block ships disabled and empty - do not publish fabricated reviews.</p>",
+            "author": "<em><strong>Verified customer</strong></em>"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_1"
+      ],
+      "settings": {
+        "title": "What customers say",
+        "color_scheme": "background-1",
+        "show_stars": true,
+        "columns_desktop": 3
+      }
+    },
+    "sale_event_seo_faq": {
+      "type": "sale-event-seo-faq",
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does the event run?",
+            "answer": "<p>Check the countdown or offer banner above for the exact dates - this section stays up to date with the current campaign.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do offers apply automatically?",
+            "answer": "<p>Eligible offers are applied at checkout. If a code is required, it will be shown in the offer details above.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I manage my RoutineCare subscription during the event?",
+            "answer": "<p>Yes - RoutineCare subscriptions can be managed, paused or adjusted at any time from your account, including during sale events.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3"
+      ],
+      "settings": {
+        "heading": "Everything you need to know",
+        "intro": "<p>Real, everyday care for eyes, teeth and ears - browse the event below and find the right routine for your pet.</p>",
+        "faq_heading": "Frequently asked questions",
+        "faq_expanded_by_default": false,
+        "color_background": "#FFFFFF"
+      }
+    }
+  },
+  "order": [
+    "sale_event_hero",
+    "sale_event_countdown",
+    "main_collection_banner",
+    "trust_strip",
+    "sale_event_nav_chips",
+    "sale_event_product_feed",
+    "campaign_image_with_text",
+    "campaign_testimonials",
+    "sale_event_seo_faq"
+  ]
+}
