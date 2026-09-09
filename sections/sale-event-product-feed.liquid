@@ -29,7 +29,7 @@
   endif
 
   assign columns_desktop = st.columns_desktop | default: 3
-{%- endliquid -%}
+-%}
 
 <section class="vp-se-feed" id="{{ st.anchor_id | default: 'product-feed' }}" style="--vp-se-feed-columns: {{ columns_desktop }};">
   <div class="vp-se-feed__inner page-width">
