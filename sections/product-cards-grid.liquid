@@ -603,9 +603,13 @@
 
   /* ---------- editorial media block (snippets/product-cards-grid-editorial-media.liquid) ---------- */
   /* Lives here, not in the snippet, so it renders exactly once regardless
-     of how many editorial_media blocks the merchant adds. */
+     of how many editorial_media blocks the merchant adds. Column span is
+     mobile-first: always full width (1 column) on mobile, then overridden
+     at tablet/desktop - standard sparse grid auto-flow lets following
+     blocks fill any remaining columns in the same row. */
 
   .vp-prodgrid-media {
+    position: relative;
     grid-column: 1 / -1;
     background: var(--vp-pgm-bg, transparent);
     color: var(--vp-pgm-text, #10232B);
@@ -622,10 +626,17 @@
     border-radius: 0;
   }
 
+  .vp-prodgrid-media__full-link {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
+
   .vp-prodgrid-media__media {
     position: relative;
     background: rgba(16, 35, 43, 0.03);
     aspect-ratio: var(--vp-pgm-ratio-m, 4/5);
+    min-height: var(--vp-pgm-min-h-m, 0);
   }
 
   .vp-prodgrid-media__image,
@@ -634,18 +645,54 @@
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: var(--vp-pgm-fit, cover);
+    object-position: var(--vp-pgm-focal, center center);
   }
 
   .vp-prodgrid-media__image--mobile-only { display: block; }
   .vp-prodgrid-media__image--desktop-only { display: none; }
 
+  .vp-prodgrid-media__overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--vp-pgm-bg, #0F172A);
+    opacity: var(--vp-pgm-overlay-opacity, 0.35);
+  }
+
+  .vp-prodgrid-media--no-media .vp-prodgrid-media__overlay { display: none; }
+
   .vp-prodgrid-media__content {
-    padding: 20px;
+    position: relative;
+    z-index: 1;
+    padding: var(--vp-pgm-pad-m, 20px);
     display: flex;
     flex-direction: column;
     gap: 8px;
   }
+
+  /* When there's no media, the content isn't overlaid - it's the whole block. */
+  .vp-prodgrid-media--no-media .vp-prodgrid-media__content {
+    position: static;
+  }
+
+  /* With media, content is absolutely positioned over it at the configured corner/edge. */
+  .vp-prodgrid-media:not(.vp-prodgrid-media--no-media) .vp-prodgrid-media__content {
+    position: absolute;
+    inset: 0;
+    justify-content: center;
+  }
+  .vp-prodgrid-media--pos-top_left .vp-prodgrid-media__content { justify-content: flex-start; align-items: flex-start; }
+  .vp-prodgrid-media--pos-top_center .vp-prodgrid-media__content { justify-content: flex-start; align-items: center; }
+  .vp-prodgrid-media--pos-top_right .vp-prodgrid-media__content { justify-content: flex-start; align-items: flex-end; }
+  .vp-prodgrid-media--pos-center_left .vp-prodgrid-media__content { justify-content: center; align-items: flex-start; }
+  .vp-prodgrid-media--pos-center .vp-prodgrid-media__content { justify-content: center; align-items: center; }
+  .vp-prodgrid-media--pos-center_right .vp-prodgrid-media__content { justify-content: center; align-items: flex-end; }
+  .vp-prodgrid-media--pos-bottom_left .vp-prodgrid-media__content { justify-content: flex-end; align-items: flex-start; }
+  .vp-prodgrid-media--pos-bottom_center .vp-prodgrid-media__content { justify-content: flex-end; align-items: center; }
+  .vp-prodgrid-media--pos-bottom_right .vp-prodgrid-media__content { justify-content: flex-end; align-items: flex-end; }
+
+  .vp-prodgrid-media--align-center .vp-prodgrid-media__content { text-align: center; }
+  .vp-prodgrid-media--align-right .vp-prodgrid-media__content { text-align: right; }
 
   .vp-prodgrid-media__heading {
     margin: 0;
@@ -665,6 +712,8 @@
   }
 
   .vp-prodgrid-media__cta {
+    position: relative;
+    z-index: 3;
     align-self: flex-start;
     margin-top: 4px;
     display: inline-flex;
@@ -678,15 +727,22 @@
     font-weight: 700;
     text-decoration: none;
   }
+  .vp-prodgrid-media--align-center .vp-prodgrid-media__cta { align-self: center; }
+  .vp-prodgrid-media--align-right .vp-prodgrid-media__cta { align-self: flex-end; }
   .vp-prodgrid-media__cta:focus-visible { outline: 2px solid #10232B; outline-offset: 2px; }
 
   @media screen and (min-width: 750px) {
-    .vp-prodgrid-media__media { aspect-ratio: var(--vp-pgm-ratio-d, 21/9); }
+    .vp-prodgrid__grid > .vp-prodgrid-media { grid-column: span var(--vp-pg-media-span-t, 2); }
+    .vp-prodgrid-media__media { aspect-ratio: var(--vp-pgm-ratio-d, 21/9); min-height: var(--vp-pgm-min-h-d, 0); }
     .vp-prodgrid-media__image--desktop-only { display: block; }
     .vp-prodgrid-media__image--mobile-only { display: none; }
-    .vp-prodgrid-media__content { padding: 28px; }
+    .vp-prodgrid-media__content { padding: var(--vp-pgm-pad-d, 28px); }
     .vp-prodgrid-media__heading { font-size: 26px; }
     .vp-prodgrid-media__text { font-size: 16px; }
+  }
+
+  @media screen and (min-width: 990px) {
+    .vp-prodgrid__grid > .vp-prodgrid-media { grid-column: span var(--vp-pg-media-span-d, 4); }
   }
 {% endstyle %}
 
@@ -1201,7 +1257,34 @@
       "settings": [
         {
           "type": "paragraph",
-          "content": "Drag this block to any position in the list above to place it between product cards. It always spans the full width of the grid and does not count toward the 4/2/1 product column layout. No default media is set - a block with no image, video or text renders nothing."
+          "content": "Drag this block to any position in the list above to place it between product cards. It occupies the selected number of grid columns and never counts toward the 4/2/1 product column layout. No default media is set - a block with no image, video or text renders nothing."
+        },
+        {
+          "type": "header",
+          "content": "Column span"
+        },
+        {
+          "type": "select",
+          "id": "desktop_width",
+          "label": "Desktop width",
+          "options": [
+            { "value": "1", "label": "1 product-card column" },
+            { "value": "2", "label": "2 product-card columns" },
+            { "value": "3", "label": "3 product-card columns" },
+            { "value": "4", "label": "4 columns / full row" }
+          ],
+          "default": "4"
+        },
+        {
+          "type": "select",
+          "id": "tablet_width",
+          "label": "Tablet width",
+          "options": [
+            { "value": "1", "label": "1 column" },
+            { "value": "2", "label": "2 columns / full row" }
+          ],
+          "default": "2",
+          "info": "Mobile is always 1 column / full width."
         },
         {
           "type": "header",
@@ -1249,6 +1332,33 @@
         },
         {
           "type": "select",
+          "id": "image_fit",
+          "label": "Image/video fit",
+          "options": [
+            { "value": "cover", "label": "Cover (fill and crop)" },
+            { "value": "contain", "label": "Contain (show entire media)" }
+          ],
+          "default": "cover"
+        },
+        {
+          "type": "select",
+          "id": "focal_point",
+          "label": "Focal point",
+          "options": [
+            { "value": "top left", "label": "Top left" },
+            { "value": "top center", "label": "Top center" },
+            { "value": "top right", "label": "Top right" },
+            { "value": "center left", "label": "Center left" },
+            { "value": "center center", "label": "Center" },
+            { "value": "center right", "label": "Center right" },
+            { "value": "bottom left", "label": "Bottom left" },
+            { "value": "bottom center", "label": "Bottom center" },
+            { "value": "bottom right", "label": "Bottom right" }
+          ],
+          "default": "center center"
+        },
+        {
+          "type": "select",
           "id": "desktop_aspect_ratio",
           "label": "Desktop media aspect ratio",
           "options": [
@@ -1272,8 +1382,29 @@
           "default": "4:5"
         },
         {
+          "type": "range",
+          "id": "min_height_desktop",
+          "label": "Minimum height - desktop",
+          "min": 0,
+          "max": 600,
+          "step": 10,
+          "unit": "px",
+          "default": 0,
+          "info": "0 lets the aspect ratio alone decide the height."
+        },
+        {
+          "type": "range",
+          "id": "min_height_mobile",
+          "label": "Minimum height - mobile",
+          "min": 0,
+          "max": 600,
+          "step": 10,
+          "unit": "px",
+          "default": 0
+        },
+        {
           "type": "header",
-          "content": "Text (optional)"
+          "content": "Text overlay (optional)"
         },
         {
           "type": "text",
@@ -1296,6 +1427,51 @@
           "label": "CTA link"
         },
         {
+          "type": "url",
+          "id": "block_link",
+          "label": "Link across the whole block (optional)",
+          "info": "Used only when there is no separate CTA button above, so the block never contains a link inside a link."
+        },
+        {
+          "type": "select",
+          "id": "content_position",
+          "label": "Content position",
+          "options": [
+            { "value": "top_left", "label": "Top left" },
+            { "value": "top_center", "label": "Top center" },
+            { "value": "top_right", "label": "Top right" },
+            { "value": "center_left", "label": "Center left" },
+            { "value": "center", "label": "Center" },
+            { "value": "center_right", "label": "Center right" },
+            { "value": "bottom_left", "label": "Bottom left" },
+            { "value": "bottom_center", "label": "Bottom center" },
+            { "value": "bottom_right", "label": "Bottom right" }
+          ],
+          "default": "bottom_left"
+        },
+        {
+          "type": "select",
+          "id": "text_alignment",
+          "label": "Text alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "label": "Overlay opacity",
+          "min": 0,
+          "max": 90,
+          "step": 5,
+          "unit": "%",
+          "default": 35,
+          "info": "Tints the media with the background colour below, for text legibility. Only applied when there is media and text together."
+        },
+        {
           "type": "header",
           "content": "Style"
         },
@@ -1313,7 +1489,8 @@
           "type": "color",
           "id": "color_background",
           "label": "Background colour",
-          "default": "#F4F7FA"
+          "default": "#F4F7FA",
+          "info": "Used as the solid background when there's no media, and as the overlay tint when there is."
         },
         {
           "type": "color",
@@ -1330,6 +1507,26 @@
           "step": 2,
           "unit": "px",
           "default": 16
+        },
+        {
+          "type": "range",
+          "id": "content_padding_desktop",
+          "label": "Content padding - desktop",
+          "min": 0,
+          "max": 64,
+          "step": 2,
+          "unit": "px",
+          "default": 28
+        },
+        {
+          "type": "range",
+          "id": "content_padding_mobile",
+          "label": "Content padding - mobile",
+          "min": 0,
+          "max": 64,
+          "step": 2,
+          "unit": "px",
+          "default": 20
         },
         {
           "type": "range",
