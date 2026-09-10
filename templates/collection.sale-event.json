@@ -63,7 +63,7 @@
         "separators_enabled": true,
         "separator_character": "·",
         "border_enabled": true,
-        "show_days": true,
+        "show_days": false,
         "show_hours": true,
         "show_minutes": true,
         "show_seconds": true,
