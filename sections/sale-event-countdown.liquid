@@ -2,19 +2,26 @@
   Sale-event countdown
   ----------------------
   Truthful, deadline-based countdown. There is no session/localStorage state of
-  any kind - the remaining time is always (configured deadline - now), computed
-  fresh on every render and every tick, so it is structurally impossible for it
-  to "reset" on refresh, session, device or visitor: everyone who loads the page
-  before the deadline sees the same real deadline.
+  any kind - remaining time is always (configured deadline - now), computed
+  fresh on every render and every tick, so it cannot "reset" on refresh,
+  session, device or visitor.
 
-  Timezone: end_date / end_time are interpreted in the shop's own timezone
-  ({{ shop.timezone_offset }} / the "now" reference below), matching how the
-  merchant reads dates in Shopify admin. This is documented in the schema info
-  text for end_date and end_time.
+  Visual reference: Claude Design project "VetPets sale-event collection page"
+  (bc120b61-4aa0-4ef8-8918-267c0fb182df) - "Slim inline" style is the default:
+  a single row "SALE ENDS IN 31 DAYS · 21 HRS · 26 MIN · 12 SEC".
 
-  No JS: a server-rendered fallback (days/hours/minutes only, computed via
-  Liquid's 'now') is shown so the content is understandable and present before
-  JS runs, avoiding layout shift; the inline script then takes over the tick.
+  Unit roll-up: each enabled unit (days/hours/minutes/seconds) receives the
+  remaining duration at its own granularity - if a larger unit is disabled,
+  the next enabled unit shows the TOTAL remaining amount at its granularity
+  (e.g. Hours shows 55 when Days is off and 2.3 days remain), not a value
+  capped to that unit's usual range. The same roll-up algorithm runs in Liquid
+  (initial/no-JS render) and in the tick script, so there is no layout shift
+  and the page is understandable with JavaScript disabled.
+
+  Accessibility: the ticking numbers are intentionally NOT an aria-live
+  region - a live region here would cause screen readers to announce a change
+  every second, which is exactly the noisy behavior to avoid. The static
+  server-rendered value is what assistive tech reads once, uninterrupted.
 {%- endcomment -%}
 
 {%- liquid
@@ -28,8 +35,8 @@
 {%- if show_section -%}
   {%- liquid
     assign deadline_string = st.end_date | append: 'T' | append: st.end_time | append: ':00'
-    assign deadline_ts = deadline_string | date: '%s'
-    assign now_ts = 'now' | date: '%s'
+    assign deadline_ts = deadline_string | date: '%s' | times: 1
+    assign now_ts = 'now' | date: '%s' | times: 1
     assign seconds_left = deadline_ts | minus: now_ts
 
     assign is_expired = false
@@ -37,63 +44,164 @@
       assign is_expired = true
     endif
 
-    assign days_left = seconds_left | divided_by: 86400
-    assign hours_left = seconds_left | modulo: 86400 | divided_by: 3600
-    assign minutes_left = seconds_left | modulo: 3600 | divided_by: 60
+    assign remaining = seconds_left
+    assign days_val = -1
+    assign hours_val = -1
+    assign minutes_val = -1
+    assign seconds_val = -1
+
+    comment
+      Roll-up: each enabled unit consumes whatever is left in `remaining` at
+      its own granularity, so the first enabled unit always shows the TOTAL
+      remaining duration at that granularity (e.g. Hours shows 55 when Days
+      is disabled and 2.3 days remain), and disabled units are simply skipped
+      rather than capped/discarded.
+    endcomment
+
+    if st.show_days
+      assign days_val = remaining | divided_by: 86400
+      assign days_seconds = days_val | times: 86400
+      assign remaining = remaining | minus: days_seconds
+    endif
+
+    if st.show_hours
+      assign hours_val = remaining | divided_by: 3600
+      assign hours_seconds = hours_val | times: 3600
+      assign remaining = remaining | minus: hours_seconds
+    endif
+
+    if st.show_minutes
+      assign minutes_val = remaining | divided_by: 60
+      assign minutes_seconds = minutes_val | times: 60
+      assign remaining = remaining | minus: minutes_seconds
+    endif
+
+    if st.show_seconds
+      assign seconds_val = remaining
+    endif
+
+    comment
+      Zero-pad the same way the tick script does, so the first JS tick never
+      visibly changes the text (no layout shift / flash): a unit is padded
+      only when it is a "remainder" unit following a larger visible unit -
+      the first visible unit is always shown as a plain total, never padded.
+    endcomment
+    assign hours_display = hours_val
+    if st.show_hours and st.show_days and hours_val >= 0 and hours_val < 10
+      assign hours_display = '0' | append: hours_val
+    endif
+
+    assign minutes_display = minutes_val
+    assign minutes_has_larger = false
+    if st.show_days or st.show_hours
+      assign minutes_has_larger = true
+    endif
+    if st.show_minutes and minutes_has_larger and minutes_val >= 0 and minutes_val < 10
+      assign minutes_display = '0' | append: minutes_val
+    endif
+
+    assign seconds_display = seconds_val
+    assign seconds_has_larger = false
+    if st.show_days or st.show_hours or st.show_minutes
+      assign seconds_has_larger = true
+    endif
+    if st.show_seconds and seconds_has_larger and seconds_val >= 0 and seconds_val < 10
+      assign seconds_display = '0' | append: seconds_val
+    endif
   -%}
 
   {%- if is_expired and st.expired_behavior == 'hide' -%}
-    {%- comment -%} Nothing rendered: deadline has passed and merchant chose to hide. {%- endcomment -%}
+    {%- comment -%} Deadline passed, merchant chose to hide. {%- endcomment -%}
   {%- else -%}
     <section
-      class="vp-se-countdown{% if is_expired %} vp-se-countdown--expired{% endif %}"
-      style="--vp-se-cd-bg: {{ st.color_background }}; --vp-se-cd-text: {{ st.color_text }}; --vp-se-cd-accent: {{ st.color_accent }};"
+      class="vp-se-cd vp-se-cd--{{ st.style }} vp-se-cd--width-{{ st.width_mode }} vp-se-cd--align-{{ st.alignment }}{% if is_expired %} vp-se-cd--expired{% endif %}{% if st.separators_enabled %} vp-se-cd--separators{% endif %}{% if st.border_enabled %} vp-se-cd--border{% endif %}"
+      style="
+        --vp-se-cd-bg: {{ st.color_background }};
+        --vp-se-cd-prefix: {{ st.color_prefix }};
+        --vp-se-cd-number: {{ st.color_number }};
+        --vp-se-cd-label: {{ st.color_label }};
+        --vp-se-cd-separator: {{ st.color_separator }};
+        --vp-se-cd-accent: {{ st.color_accent }};
+        --vp-se-cd-border: {{ st.color_border }};
+        --vp-se-cd-expired-text: {{ st.color_expired_text }};
+        {% if st.width_mode == 'custom' %}max-width: {{ st.custom_max_width }}px;{% endif %}
+      "
       data-vp-se-countdown
+      data-section-id="{{ section.id }}"
       data-deadline="{{ deadline_ts }}"
       data-expired-behavior="{{ st.expired_behavior }}"
+      data-show-days="{{ st.show_days }}"
+      data-show-hours="{{ st.show_hours }}"
+      data-show-minutes="{{ st.show_minutes }}"
+      data-show-seconds="{{ st.show_seconds }}"
+      data-separator="{{ st.separator_character | default: '·' | escape }}"
     >
-      <div class="vp-se-countdown__inner page-width">
+      <div class="vp-se-cd__inner">
         {%- if is_expired -%}
-          <div class="vp-se-countdown__expired" data-vp-se-countdown-expired>
+          <div class="vp-se-cd__expired" data-vp-se-countdown-expired>
             {%- if st.expired_headline != blank -%}
-              <p class="vp-se-countdown__expired-headline">{{ st.expired_headline | escape }}</p>
+              <p class="vp-se-cd__expired-headline">{{ st.expired_headline | escape }}</p>
             {%- endif -%}
             {%- if st.expired_body != blank -%}
-              <p class="vp-se-countdown__expired-body">{{ st.expired_body | escape }}</p>
+              <p class="vp-se-cd__expired-body">{{ st.expired_body | escape }}</p>
             {%- endif -%}
           </div>
         {%- endif -%}
 
-        <div class="vp-se-countdown__live" data-vp-se-countdown-live{% if is_expired %} hidden{% endif %}>
-          <div class="vp-se-countdown__units" data-vp-se-countdown-units>
-            <div class="vp-se-countdown__unit">
-              <span class="vp-se-countdown__value" data-vp-se-unit="days">{{ days_left }}</span>
-              <span class="vp-se-countdown__label">{{ st.label_days | escape }}</span>
-            </div>
-            <div class="vp-se-countdown__unit">
-              <span class="vp-se-countdown__value" data-vp-se-unit="hours">{{ hours_left }}</span>
-              <span class="vp-se-countdown__label">{{ st.label_hours | escape }}</span>
-            </div>
-            <div class="vp-se-countdown__unit">
-              <span class="vp-se-countdown__value" data-vp-se-unit="minutes">{{ minutes_left }}</span>
-              <span class="vp-se-countdown__label">{{ st.label_minutes | escape }}</span>
-            </div>
-            <div class="vp-se-countdown__unit">
-              <span class="vp-se-countdown__value" data-vp-se-unit="seconds">00</span>
-              <span class="vp-se-countdown__label">{{ st.label_seconds | escape }}</span>
-            </div>
-          </div>
+        <div class="vp-se-cd__live" data-vp-se-countdown-live{% if is_expired %} hidden{% endif %}>
+          {%- if st.prefix_text != blank -%}
+            <span class="vp-se-cd__prefix">{{ st.prefix_text | escape }}</span>
+          {%- endif -%}
+          {%- if st.deadline_text != blank -%}
+            <span class="vp-se-cd__deadline-text">{{ st.deadline_text | escape }}</span>
+          {%- endif -%}
+
+          <span class="vp-se-cd__units" data-vp-se-countdown-units>
+            {%- if st.show_days -%}
+              <span class="vp-se-cd__unit" data-vp-se-unit-wrap="days">
+                <span class="vp-se-cd__number" data-vp-se-unit="days">{{ days_val }}</span>
+                <span class="vp-se-cd__label">{{ st.label_days | escape }}</span>
+              </span>
+            {%- endif -%}
+            {%- if st.show_hours -%}
+              {%- if st.show_days -%}<span class="vp-se-cd__sep" aria-hidden="true">{{ st.separator_character | default: '·' }}</span>{%- endif -%}
+              <span class="vp-se-cd__unit" data-vp-se-unit-wrap="hours">
+                <span class="vp-se-cd__number" data-vp-se-unit="hours">{{ hours_display }}</span>
+                <span class="vp-se-cd__label">{{ st.label_hours | escape }}</span>
+              </span>
+            {%- endif -%}
+            {%- if st.show_minutes -%}
+              {%- if st.show_days or st.show_hours -%}<span class="vp-se-cd__sep" aria-hidden="true">{{ st.separator_character | default: '·' }}</span>{%- endif -%}
+              <span class="vp-se-cd__unit" data-vp-se-unit-wrap="minutes">
+                <span class="vp-se-cd__number" data-vp-se-unit="minutes">{{ minutes_display }}</span>
+                <span class="vp-se-cd__label">{{ st.label_minutes | escape }}</span>
+              </span>
+            {%- endif -%}
+            {%- if st.show_seconds -%}
+              {%- if st.show_days or st.show_hours or st.show_minutes -%}<span class="vp-se-cd__sep" aria-hidden="true">{{ st.separator_character | default: '·' }}</span>{%- endif -%}
+              <span class="vp-se-cd__unit vp-se-cd__unit--accent" data-vp-se-unit-wrap="seconds">
+                <span class="vp-se-cd__number vp-se-cd__number--accent" data-vp-se-unit="seconds">{{ seconds_display }}</span>
+                <span class="vp-se-cd__label">{{ st.label_seconds | escape }}</span>
+              </span>
+            {%- endif -%}
+          </span>
         </div>
       </div>
     </section>
 
     <script>
       (function () {
-        var root = document.querySelector('[data-vp-se-countdown][data-deadline="{{ deadline_ts }}"]');
+        var sectionId = {{ section.id | json }};
+        var root = document.querySelector('[data-vp-se-countdown][data-section-id="' + sectionId + '"]');
         if (!root) return;
 
         var deadlineTs = parseInt(root.getAttribute('data-deadline'), 10) * 1000;
         var expiredBehavior = root.getAttribute('data-expired-behavior');
+        var showDays = root.getAttribute('data-show-days') === 'true';
+        var showHours = root.getAttribute('data-show-hours') === 'true';
+        var showMinutes = root.getAttribute('data-show-minutes') === 'true';
+        var showSeconds = root.getAttribute('data-show-seconds') === 'true';
+
         var liveEl = root.querySelector('[data-vp-se-countdown-live]');
         var expiredEl = root.querySelector('[data-vp-se-countdown-expired]');
         var daysEl = root.querySelector('[data-vp-se-unit="days"]');
@@ -114,95 +222,151 @@
             } else {
               if (liveEl) liveEl.hidden = true;
               if (expiredEl) expiredEl.hidden = false;
-              root.classList.add('vp-se-countdown--expired');
+              root.classList.add('vp-se-cd--expired');
             }
             return false;
           }
 
-          var totalSeconds = Math.floor(remainingMs / 1000);
-          var days = Math.floor(totalSeconds / 86400);
-          var hours = Math.floor((totalSeconds % 86400) / 3600);
-          var minutes = Math.floor((totalSeconds % 3600) / 60);
-          var seconds = totalSeconds % 60;
+          var remaining = Math.floor(remainingMs / 1000);
 
-          if (daysEl) daysEl.textContent = days;
-          if (hoursEl) hoursEl.textContent = pad(hours);
-          if (minutesEl) minutesEl.textContent = pad(minutes);
-          if (secondsEl) secondsEl.textContent = pad(seconds);
+          if (showDays) {
+            var days = Math.floor(remaining / 86400);
+            remaining -= days * 86400;
+            if (daysEl) daysEl.textContent = days;
+          }
+          if (showHours) {
+            var hours = Math.floor(remaining / 3600);
+            remaining -= hours * 3600;
+            if (hoursEl) hoursEl.textContent = showDays ? pad(hours) : hours;
+          }
+          if (showMinutes) {
+            var minutes = Math.floor(remaining / 60);
+            remaining -= minutes * 60;
+            if (minutesEl) minutesEl.textContent = (showDays || showHours) ? pad(minutes) : minutes;
+          }
+          if (showSeconds) {
+            var seconds = remaining;
+            if (secondsEl) secondsEl.textContent = (showDays || showHours || showMinutes) ? pad(seconds) : seconds;
+          }
           return true;
         }
 
         var keepTicking = render();
-        if (!keepTicking) return;
+        var intervalId = null;
+        if (keepTicking) {
+          intervalId = window.setInterval(function () {
+            if (!render()) window.clearInterval(intervalId);
+          }, 1000);
+        }
 
-        var intervalId = window.setInterval(function () {
-          if (!render()) window.clearInterval(intervalId);
-        }, 1000);
+        document.addEventListener('shopify:section:unload', function (event) {
+          if (event.target && event.target.getAttribute && event.target.getAttribute('data-section-id') === sectionId) {
+            if (intervalId) window.clearInterval(intervalId);
+          }
+        });
       })();
     </script>
   {%- endif -%}
 {%- endif -%}
 
 {%- style -%}
-  .vp-se-countdown {
-    background: var(--vp-se-cd-bg, #0F172A);
-    color: var(--vp-se-cd-text, #ffffff);
+  .vp-se-cd {
+    background: var(--vp-se-cd-bg, #EAF6FD);
     font-family: var(--font-body-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
   }
+  .vp-se-cd--border { border-top: 1px solid var(--vp-se-cd-border, rgba(20,144,204,.16)); border-bottom: 1px solid var(--vp-se-cd-border, rgba(20,144,204,.16)); }
 
-  .vp-se-countdown__inner {
-    padding: 16px 24px;
+  .vp-se-cd__inner {
+    margin-inline: auto;
+    padding: 15px 24px;
+  }
+  .vp-se-cd--width-full .vp-se-cd__inner { max-width: none; }
+  .vp-se-cd--width-page .vp-se-cd__inner { max-width: var(--page-width, 1200px); }
+  .vp-se-cd--width-contained .vp-se-cd__inner { max-width: 1320px; }
+  .vp-se-cd--width-custom .vp-se-cd__inner { max-width: 100%; }
+
+  .vp-se-cd__live {
     display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
     justify-content: center;
+    gap: 10px 18px;
+    min-height: 24px;
   }
+  .vp-se-cd--align-left .vp-se-cd__live { justify-content: flex-start; }
+  .vp-se-cd--align-right .vp-se-cd__live { justify-content: flex-end; }
 
-  .vp-se-countdown__units {
-    display: flex;
-    gap: 20px;
-    min-height: 52px;
-  }
-
-  .vp-se-countdown__unit {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 44px;
-  }
-
-  .vp-se-countdown__value {
-    font-variant-numeric: tabular-nums;
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--vp-se-cd-accent, #47B5E9);
-    line-height: 1.1;
-  }
-
-  .vp-se-countdown__label {
+  .vp-se-cd__prefix {
     font-size: 11px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    opacity: 0.8;
-  }
-
-  .vp-se-countdown__expired {
-    text-align: center;
-    padding: 4px 0;
-  }
-
-  .vp-se-countdown__expired-headline {
-    margin: 0 0 4px;
     font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--vp-se-cd-prefix, #1490CC);
   }
 
-  .vp-se-countdown__expired-body {
-    margin: 0;
-    opacity: 0.85;
+  .vp-se-cd__deadline-text {
     font-size: 14px;
+    font-weight: 600;
+    color: var(--vp-se-cd-number, #0F172A);
   }
+
+  .vp-se-cd__units {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .vp-se-cd__unit {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 5px;
+  }
+
+  .vp-se-cd__number {
+    font-variant-numeric: tabular-nums;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--vp-se-cd-number, #0F172A);
+  }
+  .vp-se-cd__number--accent { color: var(--vp-se-cd-accent, #1490CC); }
+
+  .vp-se-cd__label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--vp-se-cd-label, #5A6B80);
+  }
+
+  .vp-se-cd__sep {
+    color: var(--vp-se-cd-separator, #A9C4D6);
+    font-size: 15px;
+  }
+  .vp-se-cd:not(.vp-se-cd--separators) .vp-se-cd__sep { display: none; }
+
+  .vp-se-cd__expired { text-align: center; padding: 4px 0; width: 100%; }
+  .vp-se-cd__expired-headline { margin: 0 0 4px; font-weight: 700; color: var(--vp-se-cd-expired-text, #0F172A); }
+  .vp-se-cd__expired-body { margin: 0; font-size: 14px; color: var(--vp-se-cd-expired-text, #0F172A); opacity: 0.85; }
+
+  /* compact_grouped style: stacked, larger numbers, no separators */
+  .vp-se-cd--compact_grouped .vp-se-cd__inner { padding: 28px 24px; }
+  .vp-se-cd--compact_grouped .vp-se-cd__live { flex-direction: column; align-items: center; gap: 10px; }
+  .vp-se-cd--compact_grouped.vp-se-cd--align-left .vp-se-cd__live { align-items: flex-start; }
+  .vp-se-cd--compact_grouped.vp-se-cd--align-right .vp-se-cd__live { align-items: flex-end; }
+  .vp-se-cd--compact_grouped .vp-se-cd__units { gap: 30px; }
+  .vp-se-cd--compact_grouped .vp-se-cd__unit { flex-direction: column; align-items: center; gap: 2px; min-width: 52px; }
+  .vp-se-cd--compact_grouped .vp-se-cd__number { font-size: 30px; line-height: 1; }
+  .vp-se-cd--compact_grouped .vp-se-cd__sep { display: none; }
+
+  /* hero_integrated style: same slim layout, deeper tint by default via color settings, tighter padding */
+  .vp-se-cd--hero_integrated .vp-se-cd__inner { padding: 13px 24px; }
+  .vp-se-cd--hero_integrated .vp-se-cd__number { font-size: 18px; }
+  .vp-se-cd--hero_integrated .vp-se-cd__label { font-size: 10px; }
 
   @media (max-width: 480px) {
-    .vp-se-countdown__units { gap: 12px; }
-    .vp-se-countdown__value { font-size: 20px; }
+    .vp-se-cd__units { row-gap: 6px; }
   }
 {%- endstyle -%}
 
@@ -210,16 +374,46 @@
 {
   "name": "Sale-event countdown",
   "settings": [
-    { "type": "checkbox", "id": "enabled", "label": "Enable countdown", "default": false, "info": "Ships off by default - turn on only once a real end date is confirmed." },
+    { "type": "checkbox", "id": "enabled", "label": "Enable countdown", "default": false, "info": "Ships off by default - enable only once a real end date is confirmed." },
     { "type": "paragraph", "content": "End date/time are read in the shop's own timezone (the same timezone Shopify admin shows you)." },
     { "type": "text", "id": "end_date", "label": "Campaign end date", "info": "Format YYYY-MM-DD, e.g. 2026-09-30" },
     { "type": "text", "id": "end_time", "label": "Campaign end time", "info": "Format HH:MM, 24-hour, e.g. 23:59" },
 
+    { "type": "header", "content": "Style" },
+    { "type": "select", "id": "style", "label": "Visual style", "default": "slim_inline", "options": [
+      { "value": "slim_inline", "label": "Slim inline" },
+      { "value": "compact_grouped", "label": "Compact grouped" },
+      { "value": "hero_integrated", "label": "Hero-integrated (place directly under the banner)" }
+    ] },
+    { "type": "select", "id": "alignment", "label": "Alignment", "default": "center", "options": [
+      { "value": "left", "label": "Left" },
+      { "value": "center", "label": "Center" },
+      { "value": "right", "label": "Right" }
+    ] },
+    { "type": "select", "id": "width_mode", "label": "Width", "default": "contained", "options": [
+      { "value": "full", "label": "Full browser width" },
+      { "value": "contained", "label": "Full width, contained content" },
+      { "value": "page", "label": "Theme page width" },
+      { "value": "custom", "label": "Custom" }
+    ] },
+    { "type": "range", "id": "custom_max_width", "min": 480, "max": 1600, "step": 20, "unit": "px", "label": "Custom max width", "default": 1320 },
+    { "type": "checkbox", "id": "separators_enabled", "label": "Show separators between units", "default": true },
+    { "type": "text", "id": "separator_character", "label": "Separator character", "default": "·" },
+    { "type": "checkbox", "id": "border_enabled", "label": "Top/bottom border", "default": true },
+
+    { "type": "header", "content": "Time units" },
+    { "type": "checkbox", "id": "show_days", "label": "Show days", "default": true },
+    { "type": "checkbox", "id": "show_hours", "label": "Show hours", "default": true, "info": "If Days is off, Hours shows the total remaining hours (can exceed 24)." },
+    { "type": "checkbox", "id": "show_minutes", "label": "Show minutes", "default": true, "info": "If Days and Hours are both off, Minutes shows the total remaining minutes." },
+    { "type": "checkbox", "id": "show_seconds", "label": "Show seconds", "default": true },
+
     { "type": "header", "content": "Labels" },
+    { "type": "text", "id": "prefix_text", "label": "Prefix text", "default": "Sale ends in" },
+    { "type": "text", "id": "deadline_text", "label": "Optional supporting line", "info": "e.g. \"Sale ends Sunday 11 October\" - shown alongside the prefix." },
     { "type": "text", "id": "label_days", "label": "Days label", "default": "Days" },
-    { "type": "text", "id": "label_hours", "label": "Hours label", "default": "Hours" },
-    { "type": "text", "id": "label_minutes", "label": "Minutes label", "default": "Minutes" },
-    { "type": "text", "id": "label_seconds", "label": "Seconds label", "default": "Seconds" },
+    { "type": "text", "id": "label_hours", "label": "Hours label", "default": "Hrs" },
+    { "type": "text", "id": "label_minutes", "label": "Minutes label", "default": "Min" },
+    { "type": "text", "id": "label_seconds", "label": "Seconds label", "default": "Sec" },
 
     { "type": "header", "content": "When the countdown ends" },
     { "type": "select", "id": "expired_behavior", "label": "Expired behavior", "default": "show_ended_state", "options": [
@@ -230,14 +424,17 @@
     { "type": "text", "id": "expired_body", "label": "Ended body text", "default": "Check back soon for the next event." },
 
     { "type": "header", "content": "Colors" },
-    { "type": "color", "id": "color_background", "label": "Background color", "default": "#0F172A" },
-    { "type": "color", "id": "color_text", "label": "Text color", "default": "#FFFFFF" },
-    { "type": "color", "id": "color_accent", "label": "Accent color (numbers)", "default": "#47B5E9" }
+    { "type": "color", "id": "color_background", "label": "Background", "default": "#EAF6FD" },
+    { "type": "color", "id": "color_prefix", "label": "Prefix text", "default": "#1490CC" },
+    { "type": "color", "id": "color_number", "label": "Numbers", "default": "#0F172A" },
+    { "type": "color", "id": "color_label", "label": "Unit labels", "default": "#5A6B80" },
+    { "type": "color", "id": "color_separator", "label": "Separators", "default": "#A9C4D6" },
+    { "type": "color", "id": "color_accent", "label": "Accent (seconds)", "default": "#1490CC" },
+    { "type": "color", "id": "color_border", "label": "Border", "default": "#E0EEF5" },
+    { "type": "color", "id": "color_expired_text", "label": "Expired-state text", "default": "#0F172A" }
   ],
   "presets": [
-    {
-      "name": "Sale-event countdown"
-    }
+    { "name": "Sale-event countdown" }
   ]
 }
 {% endschema %}
