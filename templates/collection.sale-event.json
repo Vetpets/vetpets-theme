@@ -12,8 +12,8 @@
     "sale_event_banner": {
       "type": "sale-event-banner",
       "settings": {
-        "mode": "text_only",
-        "eyebrow": "",
+        "mode": "split",
+        "eyebrow": "Limited-time event",
         "heading": "Save on everyday care essentials",
         "body": "<p>Browse this event's featured products below.</p>",
         "button_label": "Shop the event",
@@ -21,6 +21,7 @@
         "text_alignment": "left",
         "content_position": "middle",
         "text_max_width": 52,
+        "desktop_image": "shopify://shop_images/EYEwipes_-_2026-08-13T183754.510.jpg",
         "object_fit": "cover",
         "split_image_position": "right",
         "overlay_enabled": true,
