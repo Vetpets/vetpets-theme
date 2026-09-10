@@ -12,7 +12,7 @@
     "sale_event_banner": {
       "type": "sale-event-banner",
       "settings": {
-        "mode": "text_only",
+        "mode": "image_only",
         "eyebrow": "",
         "heading": "Save on everyday care essentials",
         "body": "<p>Browse this event's featured products below.</p>",
