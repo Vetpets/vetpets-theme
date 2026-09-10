@@ -30,6 +30,7 @@
         "body_font_size_mobile": 16,
         "button_font_size_desktop": 15,
         "button_font_size_mobile": 15,
+        "desktop_image": "shopify://shop_images/World_Animal_Week_2026.jpg",
         "focal_point": "center center",
         "object_fit": "cover",
         "split_image_position": "right",
@@ -38,8 +39,8 @@
         "overlay_opacity": 35,
         "width_mode": "page",
         "custom_max_width": 1320,
-        "desktop_height": "compact",
-        "desktop_height_custom": 280,
+        "desktop_height": "custom",
+        "desktop_height_custom": 630,
         "desktop_min_height": 0,
         "mobile_height": "compact",
         "mobile_height_custom": 260,
@@ -53,7 +54,7 @@
         "shadow_enabled": false,
         "border_enabled": false,
         "border_color": "#e2e8f0",
-        "color_background": "#d5f7ff",
+        "color_background": "#FFFFFF",
         "color_eyebrow_bg": "#ffffff",
         "color_eyebrow_text": "#1490cc",
         "color_heading": "#0f172a",
@@ -62,22 +63,6 @@
         "color_button_text": "#ffffff",
         "color_button_hover_bg": "#339fd1",
         "color_button_hover_text": "#ffffff"
-      }
-    },
-    "section_divider_3njM4i": {
-      "type": "section-divider",
-      "name": "Section divider",
-      "settings": {
-        "visibility": "always-display",
-        "shape": "waves_2",
-        "flip_horizontal": false,
-        "flip_vertical": true,
-        "shape_color": "background-2",
-        "custom_shape_color": "#dd1d1d",
-        "background_color": "background-1",
-        "custom_background_color": "#FFFFFF",
-        "padding_top": 0,
-        "padding_bottom": 0
       }
     },
     "sale_event_countdown": {
@@ -125,13 +110,13 @@
         "separator_font_size_mobile": 15,
         "expired_font_size_desktop": 14,
         "expired_font_size_mobile": 14,
-        "color_background": "#47B5E9",
+        "color_background": "#47b5e9",
         "color_timer_box_background": "",
-        "color_prefix": "#FFFFFF",
-        "color_number": "#FFFFFF",
-        "color_label": "#FFFFFF",
+        "color_prefix": "#ffffff",
+        "color_number": "#ffffff",
+        "color_label": "#ffffff",
         "color_separator": "#a9c4d6",
-        "color_accent": "#D5F7FF",
+        "color_accent": "#d5f7ff",
         "color_border": "#e0eef5",
         "color_expired_text": "#0f172a"
       }
@@ -272,7 +257,7 @@
           "settings": {
             "desktop_width": "3",
             "tablet_width": "2",
-            "desktop_image": "shopify://shop_images/EYEwipes_-_2026-08-13T183754.510.jpg",
+            "desktop_image": "shopify://shop_images/World_Animal_Week_2026.jpg",
             "video_autoplay": false,
             "video_loop": true,
             "video_controls": true,
@@ -282,8 +267,8 @@
             "mobile_aspect_ratio": "4:5",
             "min_height_desktop": 0,
             "min_height_mobile": 0,
-            "heading": "Why it matters",
-            "text": "Wipe-based routines fit into daily life without a fight - no baths, no brushing battles.",
+            "heading": "",
+            "text": "",
             "cta_label": "",
             "cta_link": "",
             "block_link": "",
@@ -433,7 +418,6 @@
   },
   "order": [
     "sale_event_banner",
-    "section_divider_3njM4i",
     "sale_event_countdown",
     "product_cards_grid",
     "sale_event_seo_faq"
