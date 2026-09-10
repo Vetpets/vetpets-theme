@@ -53,9 +53,9 @@
     "sale_event_countdown": {
       "type": "sale-event-countdown",
       "settings": {
-        "enabled": true,
-        "end_date": "2026-09-12",
-        "end_time": "06:18",
+        "enabled": false,
+        "end_date": "",
+        "end_time": "",
         "style": "slim_inline",
         "alignment": "center",
         "width_mode": "contained",
@@ -63,7 +63,7 @@
         "separators_enabled": true,
         "separator_character": "·",
         "border_enabled": true,
-        "show_days": false,
+        "show_days": true,
         "show_hours": true,
         "show_minutes": true,
         "show_seconds": true,
