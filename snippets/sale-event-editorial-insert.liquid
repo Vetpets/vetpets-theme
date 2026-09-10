@@ -2,9 +2,12 @@
   Sale-event editorial insert
   ------------------------------
   Renders a single editorial_insert block from sections/sale-event-product-feed.liquid
-  as a standalone full-bleed (or grid-width) row between product cards. Never
+  as a standalone full-bleed (or width-limited) row between product rows. Never
   nests inside a product card. Reuses the theme's global <internal-video> custom
   element for Shopify-hosted video - no new JS.
+
+  Renders nothing at all when the block has no media and no text/CTA content -
+  an empty insert must never occupy blank space in the grid.
 
   Accepts:
   - block: {Block} an editorial_insert block
@@ -21,81 +24,101 @@
   if has_video or bs.desktop_image != blank or bs.mobile_image != blank
     assign has_media = true
   endif
+  assign has_text = false
+  if bs.eyebrow != blank or bs.heading != blank or bs.body != blank or bs.cta_label != blank
+    assign has_text = true
+  endif
 -%}
 
-<div
-  class="vp-se-insert vp-se-insert--{{ bs.width_mode }} vp-se-insert--align-{{ bs.text_alignment }} vp-se-insert--ratio-{{ bs.aspect_ratio }}{% unless has_media %} vp-se-insert--no-media{% endunless %}"
-  style="--vp-se-insert-bg: {{ bs.color_background }}; --vp-se-insert-text: {{ bs.color_text }};"
-  {{ block.shopify_attributes }}
->
-  <div class="vp-se-insert__inner">
-    {%- if has_media -%}
-      <div class="vp-se-insert__media">
-        {%- if has_video -%}
-          <internal-video class="vp-se-insert__video-wrap"{% if bs.video_autoplay %} data-autoplay="true" data-no-play-btn="true"{% endif %}>
-            <video
-              class="vp-se-insert__video"
-              poster="{% if bs.video_poster != blank %}{{ bs.video_poster | image_url: width: 1200 }}{% else %}{{ bs.video.preview_image | image_url: width: 1200 }}{% endif %}"
-              {% if bs.video_loop %}loop{% endif %}
-              {% if bs.video_autoplay %}muted{% endif %}
-              playsinline
-              {% if bs.video_controls %}controls{% endif %}
-            >
-              {%- for source in bs.video.sources -%}
-                <source {% if bs.video_autoplay %}data-{% endif %}src="{{ source.url }}" type="{{ source.mime_type }}">
-              {%- endfor -%}
-            </video>
-          </internal-video>
-        {%- else -%}
-          {%- if bs.desktop_image != blank -%}
-            {{ bs.desktop_image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600,900,1200,1600', sizes: '(min-width: 750px) 60vw, 100vw', class: 'vp-se-insert__image vp-se-insert__image--desktop', alt: bs.heading | default: '' }}
+{%- if has_media or has_text -%}
+  <div
+    class="vp-se-insert vp-se-insert--width-{{ bs.width_mode }} vp-se-insert--text-{{ bs.text_position }} vp-se-insert--align-{{ bs.text_alignment }} vp-se-insert--ratio-{{ bs.aspect_ratio }}{% unless has_media %} vp-se-insert--no-media{% endunless %}"
+    style="
+      --vp-se-insert-bg: {{ bs.color_background }};
+      --vp-se-insert-text: {{ bs.color_text }};
+      --vp-se-insert-btn-bg: {{ bs.color_button_bg }};
+      --vp-se-insert-btn-text: {{ bs.color_button_text }};
+      --vp-se-insert-overlay-color: {{ bs.overlay_color }};
+      --vp-se-insert-overlay-opacity: {{ bs.overlay_opacity | divided_by: 100.0 }};
+      --vp-se-insert-radius: {{ bs.border_radius }}px;
+      --vp-se-insert-spacing-top: {{ bs.spacing_top }}px;
+      --vp-se-insert-spacing-bottom: {{ bs.spacing_bottom }}px;
+      {% if bs.width_mode == 'custom' %}max-width: {{ bs.custom_max_width }}px; margin-inline: auto;{% endif %}
+    "
+    {{ block.shopify_attributes }}
+  >
+    <div class="vp-se-insert__inner">
+      {%- if has_media -%}
+        <div class="vp-se-insert__media">
+          {%- if has_video -%}
+            <internal-video class="vp-se-insert__video-wrap"{% if bs.video_autoplay %} data-autoplay="true" data-no-play-btn="true"{% endif %}>
+              <video
+                class="vp-se-insert__video"
+                poster="{% if bs.video_poster != blank %}{{ bs.video_poster | image_url: width: 1200 }}{% else %}{{ bs.video.preview_image | image_url: width: 1200 }}{% endif %}"
+                {% if bs.video_loop %}loop{% endif %}
+                {% if bs.video_autoplay %}muted{% endif %}
+                playsinline
+                {% if bs.video_controls %}controls{% endif %}
+              >
+                {%- for source in bs.video.sources -%}
+                  <source {% if bs.video_autoplay %}data-{% endif %}src="{{ source.url }}" type="{{ source.mime_type }}">
+                {%- endfor -%}
+              </video>
+            </internal-video>
+          {%- else -%}
+            {%- if bs.desktop_image != blank -%}
+              {{ bs.desktop_image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600,900,1200,1600', sizes: '(min-width: 750px) 60vw, 100vw', class: 'vp-se-insert__image vp-se-insert__image--desktop', alt: bs.heading | default: '' }}
+            {%- endif -%}
+            {%- if bs.mobile_image != blank -%}
+              {{ bs.mobile_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '480,640,900', sizes: '100vw', class: 'vp-se-insert__image vp-se-insert__image--mobile', alt: bs.heading | default: '' }}
+            {%- endif -%}
           {%- endif -%}
-          {%- if bs.mobile_image != blank -%}
-            {{ bs.mobile_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '480,640,900', sizes: '100vw', class: 'vp-se-insert__image vp-se-insert__image--mobile', alt: bs.heading | default: '' }}
+          {%- if bs.text_position == 'overlay' and has_text -%}
+            <div class="vp-se-insert__overlay"></div>
           {%- endif -%}
-        {%- endif -%}
-      </div>
-    {%- endif -%}
+        </div>
+      {%- endif -%}
 
-    <div class="vp-se-insert__content">
-      {%- if bs.eyebrow != blank -%}
-        <p class="vp-se-insert__eyebrow">{{ bs.eyebrow | escape }}</p>
-      {%- endif -%}
-      {%- if bs.heading != blank -%}
-        <h3 class="vp-se-insert__heading">{{ bs.heading | escape }}</h3>
-      {%- endif -%}
-      {%- if bs.body != blank -%}
-        <p class="vp-se-insert__body">{{ bs.body | escape }}</p>
-      {%- endif -%}
-      {%- if bs.cta_label != blank -%}
-        <a href="{{ bs.cta_link | default: '#' }}" class="vp-se-insert__cta">{{ bs.cta_label | escape }}</a>
+      {%- if has_text -%}
+        <div class="vp-se-insert__content">
+          {%- if bs.eyebrow != blank -%}
+            <p class="vp-se-insert__eyebrow">{{ bs.eyebrow | escape }}</p>
+          {%- endif -%}
+          {%- if bs.heading != blank -%}
+            <h3 class="vp-se-insert__heading">{{ bs.heading | escape }}</h3>
+          {%- endif -%}
+          {%- if bs.body != blank -%}
+            <p class="vp-se-insert__body">{{ bs.body | escape }}</p>
+          {%- endif -%}
+          {%- if bs.cta_label != blank -%}
+            <a href="{{ bs.cta_link | default: '#' }}" class="vp-se-insert__cta">{{ bs.cta_label | escape }}</a>
+          {%- endif -%}
+        </div>
       {%- endif -%}
     </div>
   </div>
-</div>
+{%- endif -%}
 
 {%- style -%}
   .vp-se-insert {
     grid-column: 1 / -1;
     background: var(--vp-se-insert-bg, #D5F7FF);
     color: var(--vp-se-insert-text, #0F172A);
-    border-radius: 16px;
+    border-radius: var(--vp-se-insert-radius, 16px);
     overflow: hidden;
+    margin-top: var(--vp-se-insert-spacing-top, 4px);
+    margin-bottom: var(--vp-se-insert-spacing-bottom, 4px);
   }
+  .vp-se-insert--width-page,
+  .vp-se-insert--width-custom { grid-column: 1 / -1; }
 
-  .vp-se-insert--grid { grid-column: span 1; }
+  .vp-se-insert__inner { position: relative; display: grid; grid-template-columns: 1fr; }
 
-  .vp-se-insert__inner {
-    display: grid;
+  .vp-se-insert--text-beside:not(.vp-se-insert--no-media) .vp-se-insert__inner {
     grid-template-columns: 1fr;
   }
-
-  .vp-se-insert--full:not(.vp-se-insert--no-media) .vp-se-insert__inner {
-    grid-template-columns: 1fr;
-  }
-
   @media (min-width: 750px) {
-    .vp-se-insert--full:not(.vp-se-insert--no-media) .vp-se-insert__inner {
+    .vp-se-insert--text-beside:not(.vp-se-insert--no-media) .vp-se-insert__inner {
       grid-template-columns: 1fr 1fr;
       align-items: stretch;
     }
@@ -105,6 +128,8 @@
   .vp-se-insert--ratio-square .vp-se-insert__media { aspect-ratio: 1 / 1; }
   .vp-se-insert--ratio-landscape .vp-se-insert__media { aspect-ratio: 16 / 9; }
   .vp-se-insert--ratio-portrait .vp-se-insert__media { aspect-ratio: 4 / 5; }
+
+  .vp-se-insert--text-overlay .vp-se-insert__media { aspect-ratio: 21 / 9; min-height: 220px; }
 
   .vp-se-insert__image,
   .vp-se-insert__video-wrap,
@@ -116,12 +141,26 @@
   }
   .vp-se-insert__image--mobile { display: none; }
 
+  .vp-se-insert__overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--vp-se-insert-overlay-color, #0F172A);
+    opacity: var(--vp-se-insert-overlay-opacity, 0.35);
+  }
+
   .vp-se-insert__content {
     padding: 24px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 8px;
+  }
+
+  .vp-se-insert--text-overlay .vp-se-insert__content {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    color: #FFFFFF;
   }
 
   .vp-se-insert--align-center .vp-se-insert__content { text-align: center; align-items: center; }
@@ -150,8 +189,8 @@
     display: inline-flex;
     padding: 10px 20px;
     border-radius: 999px;
-    background: #47B5E9;
-    color: #ffffff;
+    background: var(--vp-se-insert-btn-bg, #47B5E9);
+    color: var(--vp-se-insert-btn-text, #ffffff);
     text-decoration: none;
     font-weight: 600;
     font-size: 14px;
