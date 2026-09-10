@@ -1,22 +1,30 @@
 {%- comment -%}
-  Sale-event product feed
+  Sale-event product grid
   --------------------------
-  The core deliverable: a real, shoppable grid of the current collection's
-  products (mobile: 1 column, desktop: 2 or 3 columns), reusing the theme's
-  existing card design language (see snippets/card-product-sale-event.liquid)
-  plus Theme-Editor-placed "editorial insert" blocks between rows.
+  Real, shoppable grid of the current collection's products - vertically
+  stacked rows, no carousel/horizontal-swipe behavior. Desktop 2/3/4 columns
+  (default 4), tablet default 2, mobile default 1 (optionally 2).
 
-  Filtering/sorting reuses the theme's own native facets system unmodified -
-  same snippets/facets.liquid render call and the same #main-collection-filters /
-  #ProductGridContainer / #product-grid(data-id) id contract that
-  sections/main-collection-product-grid.liquid already uses, so assets/facets.js
-  (already loaded globally, not duplicated here) can AJAX-swap this grid exactly
-  like it does the native grid. Pagination reuses snippets/pagination.liquid.
+  Product cards reuse the isolated snippets/card-product-sale-event.liquid,
+  which reproduces the visual design of the existing "Product cards carousel"
+  section (sections/product-cards-carousel.liquid) - that section is never
+  read from or written to here.
 
-  Editorial insert positioning is evaluated against the CURRENT PAGE's product
-  index (pagination-relative), which is deterministic per page. If a configured
-  position number is beyond the current page's product count, that block simply
-  does not render on that page - no error, no broken layout.
+  Filtering/sorting reuse the theme's existing native facets system unmodified
+  - same snippets/facets.liquid render call and the same
+  #main-collection-filters / #ProductGridContainer / #product-grid(data-id)
+  id contract that sections/main-collection-product-grid.liquid already uses,
+  so assets/facets.js (already loaded globally, not duplicated here) can
+  AJAX-swap this grid exactly like it does the native grid. Pagination reuses
+  snippets/pagination.liquid.
+
+  Editorial insert blocks are positioned "after row N", where N is computed
+  using the DESKTOP column count (documented in the block's schema info) -
+  a single canonical row number that reads sensibly at every breakpoint even
+  though the live column count varies. If a configured row number is beyond
+  the current page's rows, the block simply does not render on that page -
+  no error, no broken layout. An insert with no media and no text renders
+  nothing at all (no empty space).
 {%- endcomment -%}
 
 {%- liquid
@@ -28,16 +36,49 @@
     assign feed_collection = collection
   endif
 
-  assign columns_desktop = st.columns_desktop | default: 3
+  assign columns_desktop = st.columns_desktop | times: 1
+  assign columns_tablet = st.columns_tablet | times: 1
+  assign columns_mobile = st.columns_mobile | times: 1
 -%}
 
-<section class="vp-se-feed" id="{{ st.anchor_id | default: 'product-feed' }}" style="--vp-se-feed-columns: {{ columns_desktop }};">
-  <div class="vp-se-feed__inner page-width">
-    {%- if st.heading != blank -%}
+<section
+  class="vp-se-feed vp-se-feed--width-{{ st.width_mode }}"
+  id="{{ st.anchor_id | default: 'product-feed' }}"
+  style="
+    --vp-se-feed-columns-desktop: {{ columns_desktop }};
+    --vp-se-feed-columns-tablet: {{ columns_tablet }};
+    --vp-se-feed-columns-mobile: {{ columns_mobile }};
+    --vp-se-feed-gap: {{ st.grid_gap }}px;
+    --vp-se-feed-padding-top: {{ st.padding_top }}px;
+    --vp-se-feed-padding-bottom: {{ st.padding_bottom }}px;
+    --vp-se-feed-bg: {{ st.color_background }};
+    --vp-se-feed-heading: {{ st.color_heading }};
+    --vp-se-feed-description: {{ st.color_description }};
+    --vp-se-feed-sort-text: {{ st.color_sort_filter_text }};
+    --vp-se-feed-divider: {{ st.color_dividers }};
+    --vp-se-card-bg: {{ st.card_color_background }};
+    --vp-se-card-border: {{ st.card_color_border }};
+    --vp-se-card-title: {{ st.card_color_title }};
+    --vp-se-card-price: {{ st.card_color_price }};
+    --vp-se-card-compare-at: {{ st.card_color_compare_at }};
+    --vp-se-card-star: {{ st.card_color_star }};
+    --vp-se-card-badge-bg: {{ st.card_color_badge_bg }};
+    --vp-se-card-badge-text: {{ st.card_color_badge_text }};
+    --vp-se-card-cta-bg: {{ st.card_color_cta_bg }};
+    --vp-se-card-cta-text: {{ st.card_color_cta_text }};
+    --vp-se-card-cta-hover-bg: {{ st.card_color_cta_hover_bg }};
+    --vp-se-card-cta-hover-text: {{ st.card_color_cta_hover_text }};
+    {% if st.width_mode == 'custom' %}max-width: {{ st.custom_max_width }}px; margin-inline: auto;{% endif %}
+  "
+>
+  <div class="vp-se-feed__inner{% if st.width_mode != 'full' %} page-width{% endif %}">
+    {%- if st.heading != blank or st.description != blank -%}
       <div class="vp-se-feed__heading-wrap">
-        <h2 class="vp-se-feed__heading">{{ st.heading | escape }}</h2>
-        {%- if st.subheading != blank -%}
-          <p class="vp-se-feed__subheading">{{ st.subheading | escape }}</p>
+        {%- if st.heading != blank -%}
+          <h2 class="vp-se-feed__heading">{{ st.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if st.description != blank -%}
+          <div class="vp-se-feed__description rte">{{ st.description }}</div>
         {%- endif -%}
       </div>
     {%- endif -%}
@@ -45,20 +86,30 @@
     {%- if feed_collection == blank or feed_collection.products.size == 0 -%}
       <p class="vp-se-feed__empty">{{ 'sections.collection_template.empty' | t }}</p>
     {%- else -%}
-      {%- if st.enable_filtering or st.enable_sorting -%}
-        <aside
-          aria-labelledby="verticalTitle"
-          class="facets-wrapper{% unless st.enable_filtering %} facets-wrapper--no-filters{% endunless %}"
-          id="main-collection-filters"
-          data-id="{{ section.id }}"
-        >
-          {% render 'facets',
-            results: feed_collection,
-            enable_filtering: st.enable_filtering,
-            enable_sorting: st.enable_sorting,
-            filter_type: st.filter_type
-          %}
-        </aside>
+      {%- if st.show_product_count or st.enable_filtering or st.enable_sorting -%}
+        <div class="vp-se-feed__toolbar">
+          {%- if st.show_product_count -%}
+            <p class="vp-se-feed__count">
+              {{ 'products.facets.product_count_simple' | t: count: feed_collection.products_count }}
+            </p>
+          {%- endif -%}
+
+          {%- if st.enable_filtering or st.enable_sorting -%}
+            <aside
+              aria-labelledby="verticalTitle"
+              class="facets-wrapper{% unless st.enable_filtering %} facets-wrapper--no-filters{% endunless %}"
+              id="main-collection-filters"
+              data-id="{{ section.id }}"
+            >
+              {% render 'facets',
+                results: feed_collection,
+                enable_filtering: st.enable_filtering,
+                enable_sorting: st.enable_sorting,
+                filter_type: st.filter_type
+              %}
+            </aside>
+          {%- endif -%}
+        </div>
       {%- endif -%}
 
       {{ 'component-facets.css' | asset_url | stylesheet_tag }}
@@ -73,17 +124,16 @@
           >
             {%- for product in feed_collection.products -%}
               {%- liquid
-                assign columns_int = columns_desktop | times: 1
                 assign lazy = true
-                if forloop.index <= columns_int
+                if forloop.index <= columns_desktop
                   assign lazy = false
                 endif
 
-                assign row_numerator = forloop.index | plus: columns_int | minus: 1
-                assign current_row = row_numerator | divided_by: columns_int
+                assign row_numerator = forloop.index | plus: columns_desktop | minus: 1
+                assign current_row = row_numerator | divided_by: columns_desktop
 
-                assign row_mod = forloop.index0 | modulo: columns_int
-                assign row_boundary = columns_int | minus: 1
+                assign row_mod = forloop.index0 | modulo: columns_desktop
+                assign row_boundary = columns_desktop | minus: 1
                 assign completes_row = false
                 if row_mod == row_boundary
                   assign completes_row = true
@@ -97,20 +147,13 @@
                 section_id: section.id
               %}
 
-              {%- for block in inserts -%}
-                {%- assign bs = block.settings -%}
-                {%- liquid
-                  assign should_render_insert = false
-                  if bs.position_mode == 'after_product' and forloop.parentloop.index == bs.position_value
-                    assign should_render_insert = true
-                  elsif bs.position_mode == 'after_row' and completes_row and current_row == bs.position_value
-                    assign should_render_insert = true
-                  endif
-                -%}
-                {%- if should_render_insert -%}
-                  {%- render 'sale-event-editorial-insert', block: block, section_id: section.id -%}
-                {%- endif -%}
-              {%- endfor -%}
+              {%- if completes_row -%}
+                {%- for block in inserts -%}
+                  {%- if block.settings.row_number == current_row -%}
+                    {%- render 'sale-event-editorial-insert', block: block, section_id: section.id -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
             {%- endfor -%}
           </div>
 
@@ -126,37 +169,54 @@
 {%- style -%}
   .vp-se-feed {
     font-family: var(--font-body-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
-    padding-block: 32px;
+    background: var(--vp-se-feed-bg, transparent);
+    padding-top: var(--vp-se-feed-padding-top, 32px);
+    padding-bottom: var(--vp-se-feed-padding-bottom, 32px);
     overflow-x: hidden;
   }
+  .vp-se-feed--width-full .vp-se-feed__inner { max-width: none; padding-inline: 24px; }
 
   .vp-se-feed__heading-wrap { text-align: center; margin-bottom: 24px; }
 
   .vp-se-feed__heading {
     font-family: var(--font-heading-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
     font-size: clamp(22px, 3vw, 30px);
-    color: #0F172A;
+    color: var(--vp-se-feed-heading, #0F172A);
     margin: 0 0 6px;
   }
 
-  .vp-se-feed__subheading { margin: 0; color: #0F172A; opacity: 0.75; }
-
+  .vp-se-feed__description { color: var(--vp-se-feed-description, #0F172A); opacity: 0.8; }
   .vp-se-feed__empty { text-align: center; padding: 40px 0; }
+
+  .vp-se-feed__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--vp-se-feed-divider, rgba(15,23,42,.08));
+    color: var(--vp-se-feed-sort-text, #0F172A);
+  }
+  .vp-se-feed__count { margin: 0; font-size: 14px; opacity: 0.75; }
 
   .vp-se-feed__grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px 16px;
-    margin-top: 16px;
+    grid-template-columns: repeat(var(--vp-se-feed-columns-mobile, 1), 1fr);
+    gap: var(--vp-se-feed-gap, 20px);
   }
 
   @media (min-width: 750px) {
-    .vp-se-feed__grid {
-      grid-template-columns: repeat(var(--vp-se-feed-columns, 3), 1fr);
-    }
+    .vp-se-feed__grid { grid-template-columns: repeat(var(--vp-se-feed-columns-tablet, 2), 1fr); }
   }
 
-  /* Card */
+  @media (min-width: 990px) {
+    .vp-se-feed__grid { grid-template-columns: repeat(var(--vp-se-feed-columns-desktop, 4), 1fr); }
+  }
+
+  /* Card - themed via CSS custom properties set on the section root so
+     customization stays scoped to this section instance, never global. */
   .vp-se-card {
     display: flex;
     flex-direction: column;
@@ -164,7 +224,8 @@
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 4px 16px rgba(16, 35, 43, 0.07);
-    background: #ffffff;
+    background: var(--vp-se-card-bg, #ffffff);
+    border: 1px solid var(--vp-se-card-border, transparent);
   }
 
   .vp-se-card__media-link { display: block; }
@@ -187,8 +248,8 @@
     gap: 4px;
     padding: 4px 10px;
     border-radius: 999px;
-    background: #13B6B5;
-    color: #ffffff;
+    background: var(--vp-se-card-badge-bg, #13B6B5);
+    color: var(--vp-se-card-badge-text, #ffffff);
     font-size: 11px;
     font-weight: 700;
   }
@@ -236,7 +297,7 @@
   }
 
   .vp-se-card__title-link {
-    color: #0F172A;
+    color: var(--vp-se-card-title, #0F172A);
     text-decoration: none;
   }
   .vp-se-card__title-link:hover { text-decoration: underline; }
@@ -246,14 +307,14 @@
     align-items: center;
     gap: 4px;
   }
-  .vp-se-card__star { width: 15px; height: 15px; color: #FBBF24; }
+  .vp-se-card__star { width: 15px; height: 15px; color: var(--vp-se-card-star, #FBBF24); }
   .vp-se-card__star--empty { color: #E2E8F0; }
   .vp-se-card__star-wrap { position: relative; display: inline-block; width: 15px; height: 15px; overflow: hidden; }
   .vp-se-card__star-clip { position: absolute; inset: 0; width: 50%; overflow: hidden; }
   .vp-se-card__stars-count { font-size: 12px; color: #0F172A; opacity: 0.6; margin-left: 2px; }
 
-  .vp-se-card__price { font-size: 15px; color: #0F172A; }
-  .vp-se-card__price .price__sale .price-item--regular { text-decoration: line-through; opacity: 0.6; }
+  .vp-se-card__price { font-size: 15px; color: var(--vp-se-card-price, #0F172A); }
+  .vp-se-card__price .price__sale .price-item--regular { text-decoration: line-through; opacity: 0.6; color: var(--vp-se-card-compare-at, inherit); }
 
   .vp-se-card__foot {
     margin-top: auto;
@@ -269,8 +330,8 @@
     align-self: flex-start;
     padding: 4px 10px;
     border-radius: 999px;
-    background: #D5F7FF;
-    color: #0F172A;
+    background: var(--vp-se-card-badge-bg, #D5F7FF);
+    color: var(--vp-se-card-badge-text, #0F172A);
     font-size: 11px;
     font-weight: 600;
   }
@@ -284,16 +345,19 @@
     width: 100%;
     padding: 10px 16px;
     border-radius: 999px;
-    background: #47B5E9;
-    color: #ffffff;
+    background: var(--vp-se-card-cta-bg, #47B5E9);
+    color: var(--vp-se-card-cta-text, #ffffff);
     font-size: 14px;
     font-weight: 600;
     text-decoration: none;
     border: none;
     cursor: pointer;
-    transition: opacity 0.15s ease;
+    transition: background-color 0.15s ease, color 0.15s ease;
   }
-  .vp-se-card__cta:hover { opacity: 0.88; }
+  .vp-se-card__cta:hover {
+    background: var(--vp-se-card-cta-hover-bg, #339FD1);
+    color: var(--vp-se-card-cta-hover-text, #ffffff);
+  }
   .vp-se-card__cta:focus-visible { outline: 2px solid #0F172A; outline-offset: 2px; }
   .vp-se-card__cta .loading-overlay__spinner { width: 16px; height: 16px; }
   .vp-se-card__cta .loading-overlay__spinner .spinner { width: 100%; height: 100%; animation: vp-se-spin 0.8s linear infinite; }
@@ -309,22 +373,42 @@
 
 {% schema %}
 {
-  "name": "Sale-event product feed",
+  "name": "Sale-event product grid",
   "settings": [
-    { "type": "text", "id": "anchor_id", "label": "Anchor id", "default": "product-feed", "info": "Used by nav-chip anchor links." },
+    { "type": "text", "id": "anchor_id", "label": "Anchor id", "default": "product-feed" },
     { "type": "text", "id": "heading", "label": "Heading (optional)" },
-    { "type": "text", "id": "subheading", "label": "Subheading (optional)" },
+    { "type": "richtext", "id": "description", "label": "Description (optional)" },
     { "type": "collection", "id": "collection", "label": "Product source", "info": "Leave blank to use the collection this template is assigned to." },
 
     { "type": "header", "content": "Layout" },
-    { "type": "select", "id": "columns_desktop", "label": "Desktop columns", "default": "3", "options": [
+    { "type": "select", "id": "width_mode", "label": "Section width", "default": "page", "options": [
+      { "value": "full", "label": "Full browser width" },
+      { "value": "page", "label": "Theme page width" },
+      { "value": "custom", "label": "Custom max width" }
+    ] },
+    { "type": "range", "id": "custom_max_width", "min": 900, "max": 1800, "step": 20, "unit": "px", "label": "Custom max width", "default": 1320 },
+    { "type": "select", "id": "columns_desktop", "label": "Desktop columns", "default": "4", "options": [
+      { "value": "2", "label": "2 columns" },
+      { "value": "3", "label": "3 columns" },
+      { "value": "4", "label": "4 columns" }
+    ] },
+    { "type": "select", "id": "columns_tablet", "label": "Tablet columns", "default": "2", "options": [
+      { "value": "1", "label": "1 column" },
       { "value": "2", "label": "2 columns" },
       { "value": "3", "label": "3 columns" }
     ] },
+    { "type": "select", "id": "columns_mobile", "label": "Mobile columns", "default": "1", "options": [
+      { "value": "1", "label": "1 column" },
+      { "value": "2", "label": "2 columns" }
+    ] },
+    { "type": "range", "id": "grid_gap", "min": 8, "max": 40, "step": 2, "unit": "px", "label": "Grid gap", "default": 20 },
     { "type": "range", "id": "products_per_page", "min": 8, "max": 48, "step": 4, "label": "Products per page", "default": 24 },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 96, "step": 4, "unit": "px", "label": "Top spacing", "default": 32 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 96, "step": 4, "unit": "px", "label": "Bottom spacing", "default": 32 },
 
-    { "type": "header", "content": "Filtering and sorting" },
-    { "type": "paragraph", "content": "Reuses the theme's existing filter/sort system - the same one used on the standard collection grid." },
+    { "type": "header", "content": "Product count, filtering and sorting" },
+    { "type": "paragraph", "content": "Filtering and sorting reuse the theme's existing filter/sort system." },
+    { "type": "checkbox", "id": "show_product_count", "label": "Show product count", "default": true },
     { "type": "checkbox", "id": "enable_filtering", "label": "Enable filtering", "default": false },
     { "type": "checkbox", "id": "enable_sorting", "label": "Enable sorting", "default": true },
     { "type": "select", "id": "filter_type", "label": "Filter layout", "default": "horizontal", "options": [
@@ -334,7 +418,29 @@
     ] },
 
     { "type": "header", "content": "Cards" },
-    { "type": "checkbox", "id": "enable_quick_add", "label": "Enable quick add-to-cart on cards", "default": false, "info": "Only used for products with a single variant; other products link through to the product page." }
+    { "type": "checkbox", "id": "enable_quick_add", "label": "Enable quick add-to-cart on cards", "default": true, "info": "Only used for products with a single variant; other products link through to the product page." },
+
+    { "type": "header", "content": "Section colors" },
+    { "type": "color", "id": "color_background", "label": "Section background" },
+    { "type": "color", "id": "color_heading", "label": "Heading", "default": "#0F172A" },
+    { "type": "color", "id": "color_description", "label": "Description", "default": "#0F172A" },
+    { "type": "color", "id": "color_sort_filter_text", "label": "Sort/filter text", "default": "#0F172A" },
+    { "type": "color", "id": "color_dividers", "label": "Dividers", "default": "#E2E8F0" },
+
+    { "type": "header", "content": "Card colors" },
+    { "type": "paragraph", "content": "Scoped to this section only - the theme-wide product card style elsewhere is never changed." },
+    { "type": "color", "id": "card_color_background", "label": "Card background", "default": "#FFFFFF" },
+    { "type": "color", "id": "card_color_border", "label": "Card border", "default": "#FFFFFF" },
+    { "type": "color", "id": "card_color_title", "label": "Card title", "default": "#0F172A" },
+    { "type": "color", "id": "card_color_price", "label": "Price", "default": "#0F172A" },
+    { "type": "color", "id": "card_color_compare_at", "label": "Compare-at price", "default": "#93A2B4" },
+    { "type": "color", "id": "card_color_star", "label": "Review stars", "default": "#F5A623" },
+    { "type": "color", "id": "card_color_badge_bg", "label": "Badge background", "default": "#13B6B5" },
+    { "type": "color", "id": "card_color_badge_text", "label": "Badge text", "default": "#FFFFFF" },
+    { "type": "color", "id": "card_color_cta_bg", "label": "CTA background", "default": "#47B5E9" },
+    { "type": "color", "id": "card_color_cta_text", "label": "CTA text", "default": "#FFFFFF" },
+    { "type": "color", "id": "card_color_cta_hover_bg", "label": "CTA hover background", "default": "#339FD1" },
+    { "type": "color", "id": "card_color_cta_hover_text", "label": "CTA hover text", "default": "#FFFFFF" }
   ],
   "blocks": [
     {
@@ -342,20 +448,10 @@
       "name": "Editorial insert",
       "settings": [
         { "type": "header", "content": "Position" },
-        { "type": "select", "id": "position_mode", "label": "Position mode", "default": "after_product", "options": [
-          { "value": "after_product", "label": "After product number" },
-          { "value": "after_row", "label": "After row number" }
-        ] },
-        { "type": "number", "id": "position_value", "label": "Position value", "default": 6, "info": "Relative to the products shown on the current page. If the page has fewer products than this position, the insert is skipped on that page." },
-
-        { "type": "header", "content": "Content" },
-        { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
-        { "type": "text", "id": "heading", "label": "Heading" },
-        { "type": "textarea", "id": "body", "label": "Body text" },
-        { "type": "text", "id": "cta_label", "label": "CTA label" },
-        { "type": "url", "id": "cta_link", "label": "CTA link" },
+        { "type": "number", "id": "row_number", "label": "Insert after row number", "default": 2, "info": "Row number is calculated using the desktop column count, so it stays predictable across breakpoints. If the current page has fewer rows than this, the insert is skipped on that page." },
 
         { "type": "header", "content": "Media" },
+        { "type": "paragraph", "content": "No default media is set - an insert with no image, video or text renders nothing." },
         { "type": "image_picker", "id": "desktop_image", "label": "Desktop image" },
         { "type": "image_picker", "id": "mobile_image", "label": "Mobile image" },
         { "type": "video", "id": "video", "label": "Shopify-hosted video (optional)" },
@@ -369,26 +465,44 @@
           { "value": "portrait", "label": "Portrait (4:5)" }
         ] },
 
-        { "type": "header", "content": "Layout" },
-        { "type": "select", "id": "width_mode", "label": "Width", "default": "full", "options": [
-          { "value": "full", "label": "Full-width (spans the grid)" },
-          { "value": "grid", "label": "Grid-width (one column)" }
+        { "type": "header", "content": "Text overlay" },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+        { "type": "text", "id": "heading", "label": "Heading" },
+        { "type": "textarea", "id": "body", "label": "Body text" },
+        { "type": "text", "id": "cta_label", "label": "CTA label" },
+        { "type": "url", "id": "cta_link", "label": "CTA link" },
+        { "type": "select", "id": "text_position", "label": "Text position", "default": "beside", "options": [
+          { "value": "beside", "label": "Beside the media" },
+          { "value": "overlay", "label": "Overlaid on the media" }
         ] },
         { "type": "select", "id": "text_alignment", "label": "Text alignment", "default": "left", "options": [
           { "value": "left", "label": "Left" },
           { "value": "center", "label": "Center" },
           { "value": "right", "label": "Right" }
         ] },
+        { "type": "color", "id": "overlay_color", "label": "Overlay color (overlay mode)", "default": "#0F172A" },
+        { "type": "range", "id": "overlay_opacity", "min": 0, "max": 90, "step": 5, "unit": "%", "label": "Overlay opacity", "default": 35 },
+
+        { "type": "header", "content": "Layout" },
+        { "type": "select", "id": "width_mode", "label": "Width", "default": "full", "options": [
+          { "value": "full", "label": "Full grid width" },
+          { "value": "page", "label": "Theme page width" },
+          { "value": "custom", "label": "Custom max width" }
+        ] },
+        { "type": "range", "id": "custom_max_width", "min": 600, "max": 1600, "step": 20, "unit": "px", "label": "Custom max width", "default": 1000 },
+        { "type": "range", "id": "border_radius", "min": 0, "max": 32, "step": 2, "unit": "px", "label": "Corner radius", "default": 16 },
+        { "type": "range", "id": "spacing_top", "min": 0, "max": 64, "step": 4, "unit": "px", "label": "Top spacing", "default": 4 },
+        { "type": "range", "id": "spacing_bottom", "min": 0, "max": 64, "step": 4, "unit": "px", "label": "Bottom spacing", "default": 4 },
         { "type": "color", "id": "color_background", "label": "Background color", "default": "#D5F7FF" },
-        { "type": "color", "id": "color_text", "label": "Text color", "default": "#0F172A" }
+        { "type": "color", "id": "color_text", "label": "Text color", "default": "#0F172A" },
+        { "type": "color", "id": "color_button_bg", "label": "Button background", "default": "#47B5E9" },
+        { "type": "color", "id": "color_button_text", "label": "Button text", "default": "#FFFFFF" }
       ]
     }
   ],
   "max_blocks": 6,
   "presets": [
-    {
-      "name": "Sale-event product feed"
-    }
+    { "name": "Sale-event product grid" }
   ]
 }
 {% endschema %}

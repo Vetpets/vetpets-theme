@@ -24,10 +24,11 @@
   - enable_quick_add: {Boolean} single-variant add-to-cart button instead of a link
   - section_id: {String} id of the parent section, used to scope quick-add form ids
   - lazy_load: {Boolean}
-  - color_accent: {String} hex, CTA background
-  - color_accent_text: {String} hex, CTA text
-  - color_pill_bg: {String} hex, benefit pill background
-  - color_pill_text: {String} hex, benefit pill text
+
+  Colors are not passed as params - they come from CSS custom properties
+  (--vp-se-card-*) set on the parent section root in
+  sections/sale-event-product-feed.liquid, so per-instance theming stays
+  scoped to that section without touching this snippet.
 
   Usage:
   {% render 'card-product-sale-event', card_product: product, section_id: section.id %}

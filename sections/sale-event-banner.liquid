@@ -1,0 +1,392 @@
+{%- comment -%}
+  Sale-event banner
+  --------------------
+  Configurable campaign banner with four modes: text-only, image-only,
+  split (text + image), and background image with a text overlay card.
+  Visual reference: Claude Design project "VetPets sale-event collection page"
+  (bc120b61-4aa0-4ef8-8918-267c0fb182df), artboard "Sale Event Collection.dc.html".
+  Ships with no default image - the section must look correct with text only.
+  Isolated, prefix vp-se-banner__.
+{%- endcomment -%}
+
+{%- liquid
+  assign st = section.settings
+  assign mode = st.mode | default: 'text_only'
+  assign has_desktop_image = false
+  if st.desktop_image != blank
+    assign has_desktop_image = true
+  endif
+
+  assign width_class = 'vp-se-banner--width-' | append: st.width_mode
+  assign height_class_d = 'vp-se-banner--h-d-' | append: st.desktop_height
+  assign height_class_m = 'vp-se-banner--h-m-' | append: st.mobile_height
+
+  assign custom_width_style = ''
+  if st.width_mode == 'custom'
+    assign custom_width_style = 'max-width:' | append: st.custom_max_width | append: 'px;'
+  endif
+
+  assign desktop_focal = st.focal_point
+  if st.desktop_image.presentation.focal_point
+    assign desktop_focal = st.desktop_image.presentation.focal_point
+  endif
+  assign mobile_focal = desktop_focal
+  if st.mobile_image.presentation.focal_point
+    assign mobile_focal = st.mobile_image.presentation.focal_point
+  endif
+-%}
+
+<section
+  class="vp-se-banner vp-se-banner--{{ mode }} {{ width_class }} {{ height_class_d }} {{ height_class_m }}{% if st.border_radius_enabled %} vp-se-banner--radius{% endif %}{% if st.shadow_enabled %} vp-se-banner--shadow{% endif %}{% if st.border_enabled %} vp-se-banner--border{% endif %}"
+  style="
+    --vp-se-banner-bg: {{ st.color_background }};
+    --vp-se-banner-eyebrow-bg: {{ st.color_eyebrow_bg }};
+    --vp-se-banner-eyebrow-text: {{ st.color_eyebrow_text }};
+    --vp-se-banner-heading: {{ st.color_heading }};
+    --vp-se-banner-body: {{ st.color_body }};
+    --vp-se-banner-btn-bg: {{ st.color_button_bg }};
+    --vp-se-banner-btn-text: {{ st.color_button_text }};
+    --vp-se-banner-btn-hover-bg: {{ st.color_button_hover_bg }};
+    --vp-se-banner-btn-hover-text: {{ st.color_button_hover_text }};
+    --vp-se-banner-overlay-color: {{ st.overlay_color }};
+    --vp-se-banner-overlay-opacity: {{ st.overlay_opacity | divided_by: 100.0 }};
+    --vp-se-banner-border-color: {{ st.border_color }};
+    --vp-se-banner-radius: {{ st.border_radius }}px;
+    --vp-se-banner-text-max-width: {{ st.text_max_width }}ch;
+    --vp-se-banner-desktop-height-custom: {{ st.desktop_height_custom }}px;
+    --vp-se-banner-mobile-height-custom: {{ st.mobile_height_custom }}px;
+    --vp-se-banner-padding-top: {{ st.padding_top }}px;
+    --vp-se-banner-padding-bottom: {{ st.padding_bottom }}px;
+    {% if custom_width_style != '' %}{{ custom_width_style }}{% endif %}
+  "
+  data-vp-se-banner-mode="{{ mode }}"
+>
+  <div class="vp-se-banner__frame">
+    {%- if mode == 'image_only' or mode == 'split' or mode == 'background_overlay' -%}
+      <div class="vp-se-banner__media{% if mode == 'split' and st.split_image_position == 'left' %} vp-se-banner__media--order-first{% endif %}">
+        {%- if has_desktop_image -%}
+          {{
+            st.desktop_image
+            | image_url: width: 2000
+            | image_tag:
+              loading: 'eager',
+              fetchpriority: 'high',
+              widths: '750,1100,1500,2000',
+              sizes: '100vw',
+              class: 'vp-se-banner__image vp-se-banner__image--desktop',
+              style: 'object-fit:' | append: st.object_fit | append: '; object-position:' | append: desktop_focal | append: ';',
+              alt: st.heading | default: ''
+          }}
+          {%- if st.mobile_image != blank -%}
+            {{
+              st.mobile_image
+              | image_url: width: 900
+              | image_tag:
+                loading: 'eager',
+                fetchpriority: 'high',
+                widths: '480,640,900',
+                sizes: '100vw',
+                class: 'vp-se-banner__image vp-se-banner__image--mobile',
+                style: 'object-fit:' | append: st.object_fit | append: '; object-position:' | append: mobile_focal | append: ';',
+                alt: st.heading | default: ''
+            }}
+          {%- endif -%}
+          {%- if mode == 'background_overlay' and st.overlay_enabled -%}
+            <div class="vp-se-banner__overlay"></div>
+          {%- endif -%}
+        {%- else -%}
+          <div class="vp-se-banner__media-empty" role="presentation"></div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if mode != 'image_only' -%}
+      <div class="vp-se-banner__content vp-se-banner__content--align-{{ st.text_alignment }} vp-se-banner__content--pos-{{ st.content_position }}">
+        {%- if st.eyebrow != blank -%}
+          <p class="vp-se-banner__eyebrow">{{ st.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if st.heading != blank -%}
+          <h1 class="vp-se-banner__heading">{{ st.heading | escape }}</h1>
+        {%- endif -%}
+        {%- if st.body != blank -%}
+          <div class="vp-se-banner__body rte">{{ st.body }}</div>
+        {%- endif -%}
+        {%- if st.button_label != blank -%}
+          <a href="{{ st.button_link | default: '#' }}" class="vp-se-banner__button">{{ st.button_label | escape }}</a>
+        {%- endif -%}
+      </div>
+    {%- elsif st.button_label != blank and st.button_link != blank -%}
+      <a href="{{ st.button_link }}" class="vp-se-banner__image-link" aria-label="{{ st.button_label | escape }}"></a>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- style -%}
+  .vp-se-banner {
+    background: var(--vp-se-banner-bg, #D5F7FF);
+    font-family: var(--font-body-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+    padding-top: var(--vp-se-banner-padding-top, 44px);
+    padding-bottom: var(--vp-se-banner-padding-bottom, 44px);
+    overflow: hidden;
+  }
+  .vp-se-banner--radius { border-radius: var(--vp-se-banner-radius, 14px); }
+  .vp-se-banner--shadow { box-shadow: 0 6px 18px rgba(13, 35, 64, 0.08); }
+  .vp-se-banner--border { border: 1px solid var(--vp-se-banner-border-color, rgba(15,23,42,.1)); }
+
+  .vp-se-banner__frame {
+    margin-inline: auto;
+    padding-inline: 24px;
+  }
+  .vp-se-banner--width-full_bleed .vp-se-banner__frame { max-width: none; padding-inline: 0; }
+  .vp-se-banner--width-full_width_contained .vp-se-banner__frame { max-width: 1320px; }
+  .vp-se-banner--width-page .vp-se-banner__frame { max-width: var(--page-width, 1200px); }
+  .vp-se-banner--width-custom .vp-se-banner__frame { max-width: var(--vp-se-banner-text-max-width, 1320px); }
+
+  /* text_only */
+  .vp-se-banner--text_only .vp-se-banner__frame { min-height: 184px; display: flex; }
+  .vp-se-banner--h-d-small.vp-se-banner--text_only .vp-se-banner__frame { min-height: 120px; }
+  .vp-se-banner--h-d-large.vp-se-banner--text_only .vp-se-banner__frame { min-height: 260px; }
+  .vp-se-banner--h-d-custom.vp-se-banner--text_only .vp-se-banner__frame { min-height: var(--vp-se-banner-desktop-height-custom, 184px); }
+
+  /* split / image_only / background_overlay frame layout */
+  .vp-se-banner--split .vp-se-banner__frame {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    align-items: stretch;
+    gap: 0;
+  }
+  .vp-se-banner__media--order-first { order: -1; }
+
+  .vp-se-banner--image_only .vp-se-banner__frame,
+  .vp-se-banner--background_overlay .vp-se-banner__frame {
+    position: relative;
+    min-height: 220px;
+  }
+  .vp-se-banner--h-d-small .vp-se-banner__frame { min-height: 160px; }
+  .vp-se-banner--h-d-medium .vp-se-banner__frame { min-height: 280px; }
+  .vp-se-banner--h-d-large .vp-se-banner__frame { min-height: 420px; }
+  .vp-se-banner--h-d-custom .vp-se-banner__frame { min-height: var(--vp-se-banner-desktop-height-custom, 280px); }
+
+  .vp-se-banner__media { position: relative; background: #E2E8F0; min-height: 220px; }
+  .vp-se-banner--image_only .vp-se-banner__media,
+  .vp-se-banner--background_overlay .vp-se-banner__media { position: absolute; inset: 0; min-height: 0; }
+  .vp-se-banner--split .vp-se-banner__media { min-height: 280px; }
+
+  .vp-se-banner__image { width: 100%; height: 100%; display: block; }
+  .vp-se-banner--image_only .vp-se-banner__image,
+  .vp-se-banner--background_overlay .vp-se-banner__image { position: absolute; inset: 0; }
+  .vp-se-banner__image--mobile { display: none; }
+  .vp-se-banner__media-empty { width: 100%; height: 100%; min-height: 220px; background: rgba(15,23,42,.04); }
+
+  .vp-se-banner__overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--vp-se-banner-overlay-color, #0F172A);
+    opacity: var(--vp-se-banner-overlay-opacity, 0.35);
+  }
+
+  .vp-se-banner__image-link { position: absolute; inset: 0; }
+
+  /* content block */
+  .vp-se-banner__content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: var(--vp-se-banner-text-max-width, 52ch);
+  }
+  .vp-se-banner--text_only .vp-se-banner__content { margin-inline: auto; width: 100%; justify-content: center; }
+  .vp-se-banner--split .vp-se-banner__content { padding: 38px 34px; justify-content: center; }
+  .vp-se-banner--background_overlay .vp-se-banner__content {
+    position: relative;
+    z-index: 1;
+    background: rgba(255,255,255,.9);
+    border-radius: 14px;
+    padding: 24px 28px;
+    max-width: min(440px, var(--vp-se-banner-text-max-width, 440px));
+    margin: 24px;
+  }
+  .vp-se-banner--background_overlay .vp-se-banner__frame { display: flex; }
+  .vp-se-banner--background_overlay.vp-se-banner--pos-top .vp-se-banner__content,
+  .vp-se-banner__content--pos-top { align-self: flex-start; }
+  .vp-se-banner__content--pos-middle { align-self: center; }
+  .vp-se-banner__content--pos-bottom { align-self: flex-end; }
+
+  .vp-se-banner__content--align-center { text-align: center; align-items: center; margin-inline: auto; }
+  .vp-se-banner__content--align-right { text-align: right; align-items: flex-end; margin-left: auto; }
+
+  .vp-se-banner__eyebrow {
+    display: inline-flex;
+    align-self: flex-start;
+    margin: 0;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: var(--vp-se-banner-eyebrow-bg, #FFFFFF);
+    color: var(--vp-se-banner-eyebrow-text, #1490CC);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .vp-se-banner__content--align-center .vp-se-banner__eyebrow { align-self: center; }
+  .vp-se-banner__content--align-right .vp-se-banner__eyebrow { align-self: flex-end; }
+
+  .vp-se-banner__heading {
+    margin: 0;
+    font-family: var(--font-heading-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+    font-size: clamp(28px, 4vw, 38px);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    color: var(--vp-se-banner-heading, #0F172A);
+  }
+
+  .vp-se-banner__body {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--vp-se-banner-body, #3A4A5F);
+  }
+
+  .vp-se-banner__button {
+    display: inline-flex;
+    align-self: flex-start;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+    padding: 13px 26px;
+    border-radius: 999px;
+    background: var(--vp-se-banner-btn-bg, #47B5E9);
+    color: var(--vp-se-banner-btn-text, #FFFFFF);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+  .vp-se-banner__content--align-center .vp-se-banner__button { align-self: center; }
+  .vp-se-banner__content--align-right .vp-se-banner__button { align-self: flex-end; }
+  .vp-se-banner__button:hover {
+    background: var(--vp-se-banner-btn-hover-bg, #339FD1);
+    color: var(--vp-se-banner-btn-hover-text, #FFFFFF);
+  }
+  .vp-se-banner__button:focus-visible { outline: 2px solid #0F172A; outline-offset: 2px; }
+
+  @media (max-width: 749px) {
+    .vp-se-banner__image--desktop { display: none; }
+    .vp-se-banner__image--mobile { display: block; }
+    .vp-se-banner--h-m-small .vp-se-banner__frame { min-height: 160px; }
+    .vp-se-banner--h-m-medium .vp-se-banner__frame { min-height: 260px; }
+    .vp-se-banner--h-m-large .vp-se-banner__frame { min-height: 360px; }
+    .vp-se-banner--h-m-custom .vp-se-banner__frame { min-height: var(--vp-se-banner-mobile-height-custom, 260px); }
+    .vp-se-banner--split .vp-se-banner__frame { grid-template-columns: 1fr; }
+    .vp-se-banner__content { max-width: 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vp-se-banner__button { transition: none; }
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Sale-event banner",
+  "settings": [
+    { "type": "select", "id": "mode", "label": "Layout mode", "default": "text_only", "options": [
+      { "value": "text_only", "label": "Text only" },
+      { "value": "image_only", "label": "Image only" },
+      { "value": "split", "label": "Split: text and image" },
+      { "value": "background_overlay", "label": "Background image with text overlay" }
+    ] },
+
+    { "type": "header", "content": "Text" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "text", "id": "heading", "label": "Heading (H1)" },
+    { "type": "richtext", "id": "body", "label": "Body text" },
+    { "type": "text", "id": "button_label", "label": "Button label" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "select", "id": "text_alignment", "label": "Text alignment", "default": "left", "options": [
+      { "value": "left", "label": "Left" },
+      { "value": "center", "label": "Center" },
+      { "value": "right", "label": "Right" }
+    ] },
+    { "type": "select", "id": "content_position", "label": "Content vertical position", "default": "middle", "info": "Used in split and background-image modes.", "options": [
+      { "value": "top", "label": "Top" },
+      { "value": "middle", "label": "Middle" },
+      { "value": "bottom", "label": "Bottom" }
+    ] },
+    { "type": "range", "id": "text_max_width", "min": 20, "max": 70, "step": 2, "unit": "ch", "label": "Text max width", "default": 52 },
+
+    { "type": "header", "content": "Image" },
+    { "type": "paragraph", "content": "The section is designed to look correct with no image selected - image-only and split modes will show a blank placeholder until one is added." },
+    { "type": "image_picker", "id": "desktop_image", "label": "Desktop image" },
+    { "type": "image_picker", "id": "mobile_image", "label": "Mobile image", "info": "Falls back to the desktop image, cropped, if left blank." },
+    { "type": "select", "id": "focal_point", "label": "Image focal point", "default": "center center", "info": "Ignored if the image has a focal point set in Shopify Files.", "options": [
+      { "value": "top left", "label": "Top left" },
+      { "value": "top center", "label": "Top center" },
+      { "value": "top right", "label": "Top right" },
+      { "value": "center left", "label": "Center left" },
+      { "value": "center center", "label": "Center" },
+      { "value": "center right", "label": "Center right" },
+      { "value": "bottom left", "label": "Bottom left" },
+      { "value": "bottom center", "label": "Bottom center" },
+      { "value": "bottom right", "label": "Bottom right" }
+    ] },
+    { "type": "select", "id": "object_fit", "label": "Image fit", "default": "cover", "options": [
+      { "value": "cover", "label": "Cover (fill and crop)" },
+      { "value": "contain", "label": "Contain (show entire image)" }
+    ] },
+    { "type": "select", "id": "split_image_position", "label": "Image position (split mode)", "default": "right", "options": [
+      { "value": "left", "label": "Left" },
+      { "value": "right", "label": "Right" }
+    ] },
+    { "type": "checkbox", "id": "overlay_enabled", "label": "Enable overlay (background-image mode)", "default": true },
+    { "type": "color", "id": "overlay_color", "label": "Overlay color", "default": "#0F172A" },
+    { "type": "range", "id": "overlay_opacity", "min": 0, "max": 90, "step": 5, "unit": "%", "label": "Overlay opacity", "default": 35 },
+
+    { "type": "header", "content": "Width" },
+    { "type": "select", "id": "width_mode", "label": "Section width", "default": "page", "options": [
+      { "value": "full_bleed", "label": "Full browser width (edge to edge)" },
+      { "value": "full_width_contained", "label": "Full width, contained content" },
+      { "value": "page", "label": "Theme page width" },
+      { "value": "custom", "label": "Custom max width" }
+    ] },
+    { "type": "range", "id": "custom_max_width", "min": 600, "max": 1800, "step": 20, "unit": "px", "label": "Custom max width", "default": 1320 },
+
+    { "type": "header", "content": "Height and spacing" },
+    { "type": "select", "id": "desktop_height", "label": "Desktop height", "default": "medium", "options": [
+      { "value": "small", "label": "Small" },
+      { "value": "medium", "label": "Medium" },
+      { "value": "large", "label": "Large" },
+      { "value": "custom", "label": "Custom" }
+    ] },
+    { "type": "range", "id": "desktop_height_custom", "min": 120, "max": 720, "step": 10, "unit": "px", "label": "Custom desktop height", "default": 280 },
+    { "type": "select", "id": "mobile_height", "label": "Mobile height", "default": "medium", "options": [
+      { "value": "small", "label": "Small" },
+      { "value": "medium", "label": "Medium" },
+      { "value": "large", "label": "Large" },
+      { "value": "custom", "label": "Custom" }
+    ] },
+    { "type": "range", "id": "mobile_height_custom", "min": 120, "max": 720, "step": 10, "unit": "px", "label": "Custom mobile height", "default": 260 },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Top padding", "default": 44 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Bottom padding", "default": 44 },
+    { "type": "checkbox", "id": "border_radius_enabled", "label": "Rounded corners", "default": false },
+    { "type": "range", "id": "border_radius", "min": 0, "max": 32, "step": 2, "unit": "px", "label": "Corner radius", "default": 14 },
+    { "type": "checkbox", "id": "shadow_enabled", "label": "Drop shadow", "default": false },
+    { "type": "checkbox", "id": "border_enabled", "label": "Border", "default": false },
+    { "type": "color", "id": "border_color", "label": "Border color", "default": "#E2E8F0" },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "color_background", "label": "Section background", "default": "#D5F7FF" },
+    { "type": "color", "id": "color_eyebrow_bg", "label": "Eyebrow background", "default": "#FFFFFF" },
+    { "type": "color", "id": "color_eyebrow_text", "label": "Eyebrow text", "default": "#1490CC" },
+    { "type": "color", "id": "color_heading", "label": "Heading", "default": "#0F172A" },
+    { "type": "color", "id": "color_body", "label": "Body text", "default": "#3A4A5F" },
+    { "type": "color", "id": "color_button_bg", "label": "Button background", "default": "#47B5E9" },
+    { "type": "color", "id": "color_button_text", "label": "Button text", "default": "#FFFFFF" },
+    { "type": "color", "id": "color_button_hover_bg", "label": "Button hover background", "default": "#339FD1" },
+    { "type": "color", "id": "color_button_hover_text", "label": "Button hover text", "default": "#FFFFFF" }
+  ],
+  "presets": [
+    { "name": "Sale-event banner" }
+  ]
+}
+{% endschema %}
