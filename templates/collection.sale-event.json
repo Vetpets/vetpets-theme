@@ -296,6 +296,29 @@
             "cta_text_color": "#ffffff",
             "cta_radius": 50
           }
+        },
+        "editorial_1": {
+          "type": "editorial_media",
+          "settings": {
+            "desktop_image": "shopify://shop_images/EYEwipes_-_2026-08-13T183754.510.jpg",
+            "mobile_image": "",
+            "video_poster": "",
+            "video_autoplay": false,
+            "video_loop": true,
+            "video_controls": true,
+            "desktop_aspect_ratio": "21:9",
+            "mobile_aspect_ratio": "4:5",
+            "heading": "Why it matters",
+            "text": "Wipe-based routines fit into daily life without a fight - no baths, no brushing battles.",
+            "cta_label": "",
+            "cta_link": "",
+            "width_mode": "contained",
+            "color_background": "#D5F7FF",
+            "color_text": "#0F172A",
+            "border_radius": 16,
+            "spacing_top": 8,
+            "spacing_bottom": 8
+          }
         }
       },
       "block_order": [
@@ -303,6 +326,7 @@
         "product_B8AzdP",
         "product_4LEVNE",
         "product_kb9kyz",
+        "editorial_1",
         "product_iAJPAU"
       ],
       "settings": {
