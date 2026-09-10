@@ -65,6 +65,10 @@
     {%- if mode == 'image_only' or mode == 'split' or mode == 'background_overlay' -%}
       <div class="vp-se-banner__media{% if mode == 'split' and st.split_image_position == 'left' %} vp-se-banner__media--order-first{% endif %}">
         {%- if has_desktop_image -%}
+          {%- liquid
+            assign desktop_image_style = 'object-fit:' | append: st.object_fit | append: '; object-position:' | append: desktop_focal | append: ';'
+            assign mobile_image_style = 'object-fit:' | append: st.object_fit | append: '; object-position:' | append: mobile_focal | append: ';'
+          -%}
           {{
             st.desktop_image
             | image_url: width: 2000
@@ -74,7 +78,7 @@
               widths: '750,1100,1500,2000',
               sizes: '100vw',
               class: 'vp-se-banner__image vp-se-banner__image--desktop',
-              style: 'object-fit:' | append: st.object_fit | append: '; object-position:' | append: desktop_focal | append: ';',
+              style: desktop_image_style,
               alt: st.heading | default: ''
           }}
           {%- if st.mobile_image != blank -%}
@@ -87,7 +91,7 @@
                 widths: '480,640,900',
                 sizes: '100vw',
                 class: 'vp-se-banner__image vp-se-banner__image--mobile',
-                style: 'object-fit:' | append: st.object_fit | append: '; object-position:' | append: mobile_focal | append: ';',
+                style: mobile_image_style,
                 alt: st.heading | default: ''
             }}
           {%- endif -%}

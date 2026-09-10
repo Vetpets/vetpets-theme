@@ -2,34 +2,61 @@
   Sale-event product grid
   --------------------------
   Real, shoppable grid of the current collection's products - vertically
-  stacked rows, no carousel/horizontal-swipe behavior. Desktop 2/3/4 columns
-  (default 4), tablet default 2, mobile default 1 (optionally 2).
+  stacked rows, no carousel/horizontal-swipe behavior.
 
-  Product cards reuse the isolated snippets/card-product-sale-event.liquid,
-  which reproduces the visual design of the existing "Product cards carousel"
-  section (sections/product-cards-carousel.liquid) - that section is never
-  read from or written to here.
+  CARD SOURCE OF TRUTH: sections/product-cards-carousel.liquid embeds its
+  card markup directly (no reusable snippet exists for it - confirmed by
+  inspection). That section is NEVER read from or modified at runtime by
+  this file; instead, the individual card's HTML structure, CSS classes and
+  CSS rules below are a byte-for-byte copy of that section's card (lines
+  ~184-298 markup, ~428-623 + tablet-breakpoint CSS, as of this repo's
+  current sections/product-cards-carousel.liquid). ONLY the outer layout
+  mechanism changes: the slider viewport/track/arrows/dots and their JS are
+  replaced by a plain responsive CSS grid (new class vp-se-grid__item
+  instead of vp-prodcards__slide as the grid cell wrapper). The card itself
+  - .vp-prodcards__card and everything inside it - is unmodified.
 
-  Filtering/sorting reuse the theme's existing native facets system unmodified
-  - same snippets/facets.liquid render call and the same
+  Required adaptations, since this loops over real collection.products
+  instead of merchant-picked blocks with per-product override fields
+  (the carousel's bs.title/bs.image/bs.description/bs.link already fall
+  back to the product when left blank - with no block at all, every field
+  simply always takes that same product-fallback path, so title/link/image/
+  description are identical in effect to an all-fields-blank carousel card):
+    - Review stars: the carousel defaults an unset rating to a flat 5/5.
+      This grid instead reads the real review metafield
+      (product.metafields.reviews.rating.value) and hides the stars row
+      entirely when a product has no real reviews - "use real Shopify
+      product data only, no fake reviews" takes precedence here.
+    - Status label / offer label / benefit pills / badge: these are
+      100% merchant-authored marketing copy with no per-product source.
+      They ship empty/hidden by default (no fake copy invented) but the
+      section exposes optional settings to set the same text uniformly
+      across every card, for a merchant who wants them.
+    - CTA text defaults to "Shop now" - the literal text every existing
+      carousel block already uses - and the link-through behavior (product
+      URL, no in-card add-to-cart) matches the carousel exactly; there is
+      no quick-add here since the carousel has none.
+    - Price + compare-at price: the carousel does not render a price at
+      all. This is the one genuine addition beyond the copied card, added
+      via the theme's own unmodified `price` snippet (real product price/
+      compare-at data) because a real shoppable sale grid needs it - not a
+      redesign of any existing card element.
+
+  Filtering/sorting reuse the theme's existing native facets system
+  unmodified - same snippets/facets.liquid render call and the same
   #main-collection-filters / #ProductGridContainer / #product-grid(data-id)
-  id contract that sections/main-collection-product-grid.liquid already uses,
-  so assets/facets.js (already loaded globally, not duplicated here) can
-  AJAX-swap this grid exactly like it does the native grid. Pagination reuses
+  id contract that sections/main-collection-product-grid.liquid already
+  uses, so assets/facets.js (already loaded globally) can AJAX-swap this
+  grid exactly like it does the native grid. Pagination reuses
   snippets/pagination.liquid.
 
-  Editorial insert blocks are positioned "after row N", where N is computed
-  using the DESKTOP column count (documented in the block's schema info) -
-  a single canonical row number that reads sensibly at every breakpoint even
-  though the live column count varies. If a configured row number is beyond
-  the current page's rows, the block simply does not render on that page -
-  no error, no broken layout. An insert with no media and no text renders
-  nothing at all (no empty space).
+  Editorial insert blocks are positioned "after row N" (N computed from the
+  desktop column count). An insert with no media and no text renders
+  nothing (no empty space).
 {%- endcomment -%}
 
 {%- liquid
   assign st = section.settings
-  assign inserts = section.blocks | where: 'type', 'editorial_insert'
 
   assign feed_collection = st.collection
   if feed_collection == blank
@@ -39,57 +66,73 @@
   assign columns_desktop = st.columns_desktop | times: 1
   assign columns_tablet = st.columns_tablet | times: 1
   assign columns_mobile = st.columns_mobile | times: 1
+
+  assign inserts = section.blocks | where: 'type', 'editorial_insert'
 -%}
 
-<section
-  class="vp-se-feed vp-se-feed--width-{{ st.width_mode }}"
-  id="{{ st.anchor_id | default: 'product-feed' }}"
+{%- capture star_full -%}
+  <svg class="vp-prodcards__star" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false"><path d="M10 1.5l2.47 5.2 5.53.79-4 4.02.95 5.72L10 14.53 5.05 17.23l.95-5.72-4-4.02 5.53-.79L10 1.5z"/></svg>
+{%- endcapture -%}
+{%- capture star_empty -%}
+  <svg class="vp-prodcards__star vp-prodcards__star--empty" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false"><path d="M10 1.5l2.47 5.2 5.53.79-4 4.02.95 5.72L10 14.53 5.05 17.23l.95-5.72-4-4.02 5.53-.79L10 1.5z"/></svg>
+{%- endcapture -%}
+{%- capture star_half -%}
+  <span class="vp-prodcards__star-wrap">
+    {{- star_empty -}}
+    <span class="vp-prodcards__star-clip">{{- star_full -}}</span>
+  </span>
+{%- endcapture -%}
+
+<div
+  id="product-feed"
+  class="vp-prodcards vp-se-grid-wrap"
   style="
-    --vp-se-feed-columns-desktop: {{ columns_desktop }};
-    --vp-se-feed-columns-tablet: {{ columns_tablet }};
-    --vp-se-feed-columns-mobile: {{ columns_mobile }};
-    --vp-se-feed-gap: {{ st.grid_gap }}px;
-    --vp-se-feed-padding-top: {{ st.padding_top }}px;
-    --vp-se-feed-padding-bottom: {{ st.padding_bottom }}px;
-    --vp-se-feed-bg: {{ st.color_background }};
-    --vp-se-feed-heading: {{ st.color_heading }};
-    --vp-se-feed-description: {{ st.color_description }};
-    --vp-se-feed-sort-text: {{ st.color_sort_filter_text }};
-    --vp-se-feed-divider: {{ st.color_dividers }};
-    --vp-se-card-bg: {{ st.card_color_background }};
-    --vp-se-card-border: {{ st.card_color_border }};
-    --vp-se-card-title: {{ st.card_color_title }};
-    --vp-se-card-price: {{ st.card_color_price }};
-    --vp-se-card-compare-at: {{ st.card_color_compare_at }};
-    --vp-se-card-star: {{ st.card_color_star }};
-    --vp-se-card-badge-bg: {{ st.card_color_badge_bg }};
-    --vp-se-card-badge-text: {{ st.card_color_badge_text }};
-    --vp-se-card-cta-bg: {{ st.card_color_cta_bg }};
-    --vp-se-card-cta-text: {{ st.card_color_cta_text }};
-    --vp-se-card-cta-hover-bg: {{ st.card_color_cta_hover_bg }};
-    --vp-se-card-cta-hover-text: {{ st.card_color_cta_hover_text }};
-    {% if st.width_mode == 'custom' %}max-width: {{ st.custom_max_width }}px; margin-inline: auto;{% endif %}
+    --vp-pc-bg: {{ st.color_background | default: '#FFFFFF' }};
+    --vp-pc-card-bg: {{ st.card_bg }};
+    --vp-pc-card-border: {{ st.card_border_color }};
+    --vp-pc-card-radius: {{ st.card_radius }}px;
+    --vp-pc-title: {{ st.title_color }};
+    --vp-pc-title-fs: 18px;
+    --vp-pc-title-fs-m: 16px;
+    --vp-pc-desc: {{ st.desc_color }};
+    --vp-pc-desc-fs: 14px;
+    --vp-pc-desc-fs-m: 13px;
+    --vp-pc-tag-fs: 12px;
+    --vp-pc-tag-fs-m: 11px;
+    --vp-pc-weight: 700;
+    --vp-pc-star: {{ st.star_color }};
+    --vp-pc-star-size: 17px;
+    --vp-pc-star-size-m: 16px;
+    --vp-pc-pad-top: {{ st.padding_top }}px;
+    --vp-pc-pad-bottom: {{ st.padding_bottom }}px;
+    --vp-pc-pad-top-m: {{ st.padding_top }}px;
+    --vp-pc-pad-bottom-m: {{ st.padding_bottom }}px;
+    --vp-se-grid-columns-desktop: {{ columns_desktop }};
+    --vp-se-grid-columns-tablet: {{ columns_tablet }};
+    --vp-se-grid-columns-mobile: {{ columns_mobile }};
+    --vp-se-grid-gap: {{ st.grid_gap }}px;
+    {% if st.width_mode == 'custom' %}--page-width: {{ st.custom_max_width }}px;{% endif %}
   "
 >
-  <div class="vp-se-feed__inner{% if st.width_mode != 'full' %} page-width{% endif %}">
+  <div class="vp-prodcards__inner page-width{% if st.width_mode == 'full' %} page-width--full{% endif %}">
     {%- if st.heading != blank or st.description != blank -%}
-      <div class="vp-se-feed__heading-wrap">
+      <div class="vp-prodcards__intro">
         {%- if st.heading != blank -%}
-          <h2 class="vp-se-feed__heading">{{ st.heading | escape }}</h2>
+          <div class="vp-prodcards__heading">{{ st.heading | escape }}</div>
         {%- endif -%}
         {%- if st.description != blank -%}
-          <div class="vp-se-feed__description rte">{{ st.description }}</div>
+          <div class="vp-prodcards__subheading">{{ st.description }}</div>
         {%- endif -%}
       </div>
     {%- endif -%}
 
     {%- if feed_collection == blank or feed_collection.products.size == 0 -%}
-      <p class="vp-se-feed__empty">{{ 'sections.collection_template.empty' | t }}</p>
+      <p class="vp-se-grid__empty">{{ 'sections.collection_template.empty' | t }}</p>
     {%- else -%}
       {%- if st.show_product_count or st.enable_filtering or st.enable_sorting -%}
-        <div class="vp-se-feed__toolbar">
+        <div class="vp-se-grid__toolbar">
           {%- if st.show_product_count -%}
-            <p class="vp-se-feed__count">
+            <p class="vp-se-grid__count">
               {{ 'products.facets.product_count_simple' | t: count: feed_collection.products_count }}
             </p>
           {%- endif -%}
@@ -117,13 +160,25 @@
 
       <div class="product-grid-container" id="ProductGridContainer">
         {%- paginate feed_collection.products by st.products_per_page -%}
-          <div
-            class="vp-se-feed__grid"
-            id="product-grid"
-            data-id="{{ section.id }}"
-          >
+          <div class="vp-se-grid" id="product-grid" data-id="{{ section.id }}">
             {%- for product in feed_collection.products -%}
               {%- liquid
+                assign card_title = product.title
+                assign card_link = product.url
+                assign card_image = product.featured_image
+                assign card_desc = product.description | strip_html | truncatewords: 18
+
+                assign rating_meta = product.metafields.reviews.rating.value
+                assign rating = 0
+                if rating_meta != blank
+                  assign rating = rating_meta.rating | at_most: 5 | at_least: 0
+                endif
+                assign rating_full = rating | floor
+                assign rating_rest = rating | minus: rating_full
+                assign rating_half_at = rating_full | plus: 1
+
+                assign benefits = st.benefits_text | split: ','
+
                 assign lazy = true
                 if forloop.index <= columns_desktop
                   assign lazy = false
@@ -131,7 +186,6 @@
 
                 assign row_numerator = forloop.index | plus: columns_desktop | minus: 1
                 assign current_row = row_numerator | divided_by: columns_desktop
-
                 assign row_mod = forloop.index0 | modulo: columns_desktop
                 assign row_boundary = columns_desktop | minus: 1
                 assign completes_row = false
@@ -140,12 +194,122 @@
                 endif
               -%}
 
-              {% render 'card-product-sale-event',
-                card_product: product,
-                lazy_load: lazy,
-                enable_quick_add: st.enable_quick_add,
-                section_id: section.id
-              %}
+              <div class="vp-se-grid__item" data-vp-se-grid-item>
+                <article class="vp-prodcards__card{% if st.card_shadow %} vp-prodcards__card--shadow{% endif %}">
+                  <div class="vp-prodcards__media">
+                    {%- if card_image != blank -%}
+                      {{
+                        card_image
+                        | image_url: width: 800
+                        | image_tag: loading: lazy, widths: '200,300,400,600,800', sizes: '(min-width: 990px) 25vw, 80vw', class: 'vp-prodcards__image', alt: card_title
+                      }}
+                    {%- else -%}
+                      {{ 'product-1' | placeholder_svg_tag: 'vp-prodcards__image vp-prodcards__image--placeholder' }}
+                    {%- endif -%}
+
+                    {%- if st.status_label_text != blank -%}
+                      <span
+                        class="vp-prodcards__label vp-prodcards__label--status"
+                        style="background-color: #13B6B5; color: #FFFFFF;"
+                      >
+                        <svg class="vp-prodcards__label-icon" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true" focusable="false"><circle cx="6" cy="6" r="4"/></svg>
+                        {{ st.status_label_text | escape }}
+                      </span>
+                    {%- endif -%}
+
+                    {%- if st.offer_label_text != blank -%}
+                      <span
+                        class="vp-prodcards__label vp-prodcards__label--offer"
+                        style="background-color: #FFFFFF; color: #10232B;"
+                      >
+                        <svg class="vp-prodcards__label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0l-7.2-7.2a2 2 0 0 1-.6-1.4V4.4a2 2 0 0 1 2-2h7.6a2 2 0 0 1 1.4.6l6.8 6.8a2 2 0 0 1 0 2.8z"/><circle cx="8" cy="8" r="1.2" fill="currentColor"/></svg>
+                        {{ st.offer_label_text | escape }}
+                      </span>
+                    {%- endif -%}
+                  </div>
+
+                  <div class="vp-prodcards__body">
+                    {%- if benefits.size > 0 -%}
+                      <ul class="vp-prodcards__benefits" role="list">
+                        {%- for benefit in benefits limit: 4 -%}
+                          {%- assign benefit_text = benefit | strip -%}
+                          {%- if benefit_text != blank -%}
+                            <li
+                              class="vp-prodcards__benefit"
+                              style="background-color: #D5F7FF; color: #10232B;"
+                            >
+                              {{- benefit_text | escape -}}
+                            </li>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </ul>
+                    {%- endif -%}
+
+                    {%- if card_title != blank -%}
+                      <h3 class="vp-prodcards__title">
+                        {%- if card_link != blank -%}
+                          <a class="vp-prodcards__title-link" href="{{ card_link }}">{{ card_title | escape }}</a>
+                        {%- else -%}
+                          {{ card_title | escape }}
+                        {%- endif -%}
+                      </h3>
+                    {%- endif -%}
+
+                    {%- if rating_meta != blank -%}
+                      <div class="vp-prodcards__stars" role="img" aria-label="{{ rating }} out of 5 stars">
+                        {%- for i in (1..5) -%}
+                          {%- if i <= rating_full -%}
+                            {{ star_full }}
+                          {%- elsif rating_rest >= 0.5 and i == rating_half_at -%}
+                            {{ star_half }}
+                          {%- else -%}
+                            {{ star_empty }}
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </div>
+                    {%- endif -%}
+
+                    {%- if card_desc != blank -%}
+                      <p class="vp-prodcards__desc">{{ card_desc | escape }}</p>
+                    {%- endif -%}
+
+                    <div class="vp-se-grid__price">
+                      {% render 'price', product: product, hide_currency_code: true %}
+                    </div>
+
+                    <div class="vp-prodcards__foot">
+                      {%- if st.badge_text != blank -%}
+                        <span
+                          class="vp-prodcards__badge"
+                          style="background-color: #D5F7FF; color: #10232B;"
+                        >
+                          {%- case st.badge_icon -%}
+                            {%- when 'tag' -%}
+                              <svg class="vp-prodcards__badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0l-7.2-7.2a2 2 0 0 1-.6-1.4V4.4a2 2 0 0 1 2-2h7.6a2 2 0 0 1 1.4.6l6.8 6.8a2 2 0 0 1 0 2.8z"/><circle cx="8" cy="8" r="1.2" fill="currentColor"/></svg>
+                            {%- when 'star' -%}
+                              <svg class="vp-prodcards__badge-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false"><path d="M10 1.5l2.47 5.2 5.53.79-4 4.02.95 5.72L10 14.53 5.05 17.23l.95-5.72-4-4.02 5.53-.79L10 1.5z"/></svg>
+                            {%- when 'none' -%}
+                            {%- else -%}
+                              <svg class="vp-prodcards__badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12v9H4v-9"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+                          {%- endcase -%}
+                          {{ st.badge_text | escape }}
+                        </span>
+                      {%- endif -%}
+
+                      {%- if st.cta_text != blank -%}
+                        <a
+                          class="vp-prodcards__cta"
+                          style="background-color: {{ st.cta_bg }}; color: {{ st.cta_text_color }}; border-radius: 50px;"
+                          href="{{ card_link | default: '#' }}"
+                          {% if card_link == blank %}aria-disabled="true"{% endif %}
+                        >
+                          {{- st.cta_text | escape -}}
+                        </a>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                </article>
+              </div>
 
               {%- if completes_row -%}
                 {%- for block in inserts -%}
@@ -164,218 +328,291 @@
       </div>
     {%- endif -%}
   </div>
-</section>
+</div>
 
-{%- style -%}
-  .vp-se-feed {
+{% style %}
+  /* ================================================================
+     Card CSS below (.vp-prodcards__card and its descendants) is an
+     exact copy of sections/product-cards-carousel.liquid's own card
+     CSS - same selectors, same rules, same CSS custom property names
+     and fallback defaults. Do not edit it independently of that file
+     without checking both stay visually identical. Only the grid/
+     layout rules above ".vp-prodcards__card" are new.
+     ================================================================ */
+
+  .vp-se-grid-wrap {
+    background-color: var(--vp-pc-bg, #ffffff);
+    padding-block: var(--vp-pc-pad-top-m, 40px) var(--vp-pc-pad-bottom-m, 40px);
     font-family: var(--font-body-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
-    background: var(--vp-se-feed-bg, transparent);
-    padding-top: var(--vp-se-feed-padding-top, 32px);
-    padding-bottom: var(--vp-se-feed-padding-bottom, 32px);
-    overflow-x: hidden;
   }
-  .vp-se-feed--width-full .vp-se-feed__inner { max-width: none; padding-inline: 24px; }
 
-  .vp-se-feed__heading-wrap { text-align: center; margin-bottom: 24px; }
-
-  .vp-se-feed__heading {
+  .vp-se-grid-wrap .vp-prodcards__inner { display: flex; flex-direction: column; gap: 24px; }
+  .vp-se-grid-wrap .vp-prodcards__intro { display: flex; flex-direction: column; gap: 10px; text-align: center; }
+  .vp-se-grid-wrap .vp-prodcards__heading {
     font-family: var(--font-heading-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
-    font-size: clamp(22px, 3vw, 30px);
-    color: var(--vp-se-feed-heading, #0F172A);
-    margin: 0 0 6px;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #10232B;
   }
+  .vp-se-grid-wrap .vp-prodcards__subheading { font-size: 15px; line-height: 1.5; color: #5A737D; max-width: 62ch; margin-inline: auto; }
 
-  .vp-se-feed__description { color: var(--vp-se-feed-description, #0F172A); opacity: 0.8; }
-  .vp-se-feed__empty { text-align: center; padding: 40px 0; }
+  .vp-se-grid__empty { text-align: center; padding: 40px 0; }
 
-  .vp-se-feed__toolbar {
+  .vp-se-grid__toolbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 12px;
     padding-bottom: 16px;
-    margin-bottom: 16px;
-    border-bottom: 1px solid var(--vp-se-feed-divider, rgba(15,23,42,.08));
-    color: var(--vp-se-feed-sort-text, #0F172A);
+    border-bottom: 1px solid rgba(16, 35, 43, 0.08);
   }
-  .vp-se-feed__count { margin: 0; font-size: 14px; opacity: 0.75; }
+  .vp-se-grid__count { margin: 0; font-size: 14px; color: #5A737D; }
 
-  .vp-se-feed__grid {
+  .vp-se-grid {
     display: grid;
-    grid-template-columns: repeat(var(--vp-se-feed-columns-mobile, 1), 1fr);
-    gap: var(--vp-se-feed-gap, 20px);
+    grid-template-columns: repeat(var(--vp-se-grid-columns-mobile, 1), 1fr);
+    gap: var(--vp-se-grid-gap, 20px);
   }
-
   @media (min-width: 750px) {
-    .vp-se-feed__grid { grid-template-columns: repeat(var(--vp-se-feed-columns-tablet, 2), 1fr); }
+    .vp-se-grid { grid-template-columns: repeat(var(--vp-se-grid-columns-tablet, 2), 1fr); }
   }
-
   @media (min-width: 990px) {
-    .vp-se-feed__grid { grid-template-columns: repeat(var(--vp-se-feed-columns-desktop, 4), 1fr); }
+    .vp-se-grid { grid-template-columns: repeat(var(--vp-se-grid-columns-desktop, 4), 1fr); }
   }
 
-  /* Card - themed via CSS custom properties set on the section root so
-     customization stays scoped to this section instance, never global. */
-  .vp-se-card {
+  .vp-se-grid__item { display: flex; min-width: 0; }
+  .vp-se-grid__item .vp-prodcards__card { width: 100%; }
+
+  .vp-se-grid__price { font-size: 14px; }
+
+  /* ---------- card (exact copy) ---------- */
+
+  .vp-prodcards__card {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    border-radius: 16px;
+    width: 100%;
     overflow: hidden;
-    box-shadow: 0 4px 16px rgba(16, 35, 43, 0.07);
-    background: var(--vp-se-card-bg, #ffffff);
-    border: 1px solid var(--vp-se-card-border, transparent);
+    background-color: var(--vp-pc-card-bg, #ffffff);
+    border: 1px solid var(--vp-pc-card-border, #E3EEF2);
+    border-radius: var(--vp-pc-card-radius, 16px);
   }
 
-  .vp-se-card__media-link { display: block; }
+  .vp-prodcards__card--shadow {
+    box-shadow: 0 4px 16px rgba(16, 35, 43, 0.07);
+  }
 
-  .vp-se-card__media {
+  .vp-prodcards__media {
     position: relative;
     aspect-ratio: 1 / 1;
-    background: #F1F5F9;
+    background-color: rgba(16, 35, 43, 0.03);
   }
 
-  .vp-se-card__image { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .vp-se-card__image--placeholder { padding: 24px; }
+  .vp-prodcards__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-  .vp-se-card__label {
+  .vp-prodcards__image--placeholder {
+    fill: rgba(16, 35, 43, 0.16);
+  }
+
+  .vp-prodcards__label {
     position: absolute;
     top: 10px;
-    left: 10px;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    padding: 4px 10px;
+    gap: 5px;
+    padding: 5px 10px;
     border-radius: 999px;
-    background: var(--vp-se-card-badge-bg, #13B6B5);
-    color: var(--vp-se-card-badge-text, #ffffff);
-    font-size: 11px;
-    font-weight: 700;
+    font-size: var(--vp-pc-tag-fs-m, 11px);
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
   }
 
-  .vp-se-card__label--sale {
-    left: auto;
-    right: 10px;
-    background: #ffffff;
-    color: #0F172A;
+  .vp-prodcards__label--status { left: 10px; }
+  .vp-prodcards__label--offer { right: 10px; }
+
+  .vp-prodcards__label-icon {
+    display: block;
+    width: 1em;
+    height: 1em;
   }
 
-  .vp-se-card__label-icon { width: 10px; height: 10px; }
-
-  .vp-se-card__body {
-    padding: 14px 16px 16px;
+  .vp-prodcards__body {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    flex: 1;
+    align-items: flex-start;
+    gap: 10px;
+    flex: 1 1 auto;
+    padding: 14px;
   }
 
-  .vp-se-card__benefits {
+  .vp-prodcards__benefits {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    list-style: none;
     margin: 0;
     padding: 0;
+    list-style: none;
   }
 
-  .vp-se-card__benefit {
-    padding: 3px 10px;
-    border-radius: 999px;
-    background: #D5F7FF;
-    color: #0F172A;
-    font-size: 11px;
-    font-weight: 600;
-  }
-
-  .vp-se-card__title {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 1.3;
-  }
-
-  .vp-se-card__title-link {
-    color: var(--vp-se-card-title, #0F172A);
-    text-decoration: none;
-  }
-  .vp-se-card__title-link:hover { text-decoration: underline; }
-
-  .vp-se-card__stars {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  .vp-se-card__star { width: 15px; height: 15px; color: var(--vp-se-card-star, #FBBF24); }
-  .vp-se-card__star--empty { color: #E2E8F0; }
-  .vp-se-card__star-wrap { position: relative; display: inline-block; width: 15px; height: 15px; overflow: hidden; }
-  .vp-se-card__star-clip { position: absolute; inset: 0; width: 50%; overflow: hidden; }
-  .vp-se-card__stars-count { font-size: 12px; color: #0F172A; opacity: 0.6; margin-left: 2px; }
-
-  .vp-se-card__price { font-size: 15px; color: var(--vp-se-card-price, #0F172A); }
-  .vp-se-card__price .price__sale .price-item--regular { text-decoration: line-through; opacity: 0.6; color: var(--vp-se-card-compare-at, inherit); }
-
-  .vp-se-card__foot {
-    margin-top: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .vp-se-card__badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    align-self: flex-start;
+  .vp-prodcards__benefit {
     padding: 4px 10px;
     border-radius: 999px;
-    background: var(--vp-se-card-badge-bg, #D5F7FF);
-    color: var(--vp-se-card-badge-text, #0F172A);
-    font-size: 11px;
+    font-size: var(--vp-pc-tag-fs-m, 11px);
     font-weight: 600;
+    line-height: 1.2;
   }
-  .vp-se-card__badge-icon { width: 13px; height: 13px; }
 
-  .vp-se-card__cta {
+  .vp-prodcards__title {
+    margin: 0;
+    font-size: var(--vp-pc-title-fs-m, 16px);
+    font-weight: var(--vp-pc-weight, 700);
+    line-height: 1.25;
+    color: var(--vp-pc-title, #10232B);
+  }
+
+  .vp-prodcards__title-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .vp-prodcards__title-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2rem;
+  }
+
+  .vp-prodcards__stars {
+    display: inline-flex;
+    gap: 2px;
+    color: var(--vp-pc-star, #F5A623);
+  }
+
+  .vp-prodcards__star,
+  .vp-prodcards__star-wrap {
+    display: block;
+    flex: 0 0 auto;
+    width: var(--vp-pc-star-size-m, 16px);
+    height: var(--vp-pc-star-size-m, 16px);
+  }
+
+  .vp-prodcards__star--empty {
+    opacity: 0.22;
+  }
+
+  .vp-prodcards__star-wrap {
+    position: relative;
+  }
+
+  .vp-prodcards__star-wrap > .vp-prodcards__star {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .vp-prodcards__star-clip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .vp-prodcards__star-clip > .vp-prodcards__star {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .vp-prodcards__desc {
+    margin: 0;
+    font-size: var(--vp-pc-desc-fs-m, 13px);
+    line-height: 1.5;
+    color: var(--vp-pc-desc, #5A737D);
+  }
+
+  .vp-prodcards__foot {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+    margin-top: auto;
+    padding-top: 4px;
+  }
+
+  .vp-prodcards__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: var(--vp-pc-tag-fs-m, 11px);
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .vp-prodcards__badge-icon {
+    display: block;
+    width: 1.1em;
+    height: 1.1em;
+  }
+
+  .vp-prodcards__cta {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
     width: 100%;
-    padding: 10px 16px;
-    border-radius: 999px;
-    background: var(--vp-se-card-cta-bg, #47B5E9);
-    color: var(--vp-se-card-cta-text, #ffffff);
-    font-size: 14px;
-    font-weight: 600;
+    padding: 12px 20px;
+    font-size: var(--vp-pc-desc-fs-m, 13px);
+    font-weight: 700;
+    line-height: 1;
     text-decoration: none;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.15s ease, color 0.15s ease;
+    transition: filter 0.18s ease;
   }
-  .vp-se-card__cta:hover {
-    background: var(--vp-se-card-cta-hover-bg, #339FD1);
-    color: var(--vp-se-card-cta-hover-text, #ffffff);
-  }
-  .vp-se-card__cta:focus-visible { outline: 2px solid #0F172A; outline-offset: 2px; }
-  .vp-se-card__cta .loading-overlay__spinner { width: 16px; height: 16px; }
-  .vp-se-card__cta .loading-overlay__spinner .spinner { width: 100%; height: 100%; animation: vp-se-spin 0.8s linear infinite; }
-  .vp-se-card__cta .loading-overlay__spinner .path { stroke: currentColor; }
 
-  @keyframes vp-se-spin { to { transform: rotate(360deg); } }
+  .vp-prodcards__cta:hover {
+    filter: brightness(0.94);
+    text-decoration: none;
+  }
+
+  @media screen and (min-width: 750px) {
+    .vp-se-grid-wrap {
+      padding-block: var(--vp-pc-pad-top, 64px) var(--vp-pc-pad-bottom, 64px);
+    }
+    .vp-se-grid-wrap .vp-prodcards__inner { gap: 32px; }
+    .vp-se-grid-wrap .vp-prodcards__heading { font-size: 40px; }
+    .vp-se-grid-wrap .vp-prodcards__subheading { font-size: 17px; }
+    .vp-prodcards__title { font-size: var(--vp-pc-title-fs, 18px); }
+    .vp-prodcards__desc,
+    .vp-prodcards__cta { font-size: var(--vp-pc-desc-fs, 14px); }
+    .vp-prodcards__label,
+    .vp-prodcards__benefit,
+    .vp-prodcards__badge { font-size: var(--vp-pc-tag-fs, 12px); }
+    .vp-prodcards__star,
+    .vp-prodcards__star-wrap {
+      width: var(--vp-pc-star-size, 17px);
+      height: var(--vp-pc-star-size, 17px);
+    }
+    .vp-prodcards__body { padding: 18px; gap: 12px; }
+  }
 
   @media (prefers-reduced-motion: reduce) {
-    .vp-se-card__cta { transition: none; }
-    .vp-se-card__cta .loading-overlay__spinner .spinner { animation: none; }
+    .vp-prodcards__cta { transition: none; }
   }
-{%- endstyle -%}
+{% endstyle %}
 
 {% schema %}
 {
   "name": "Sale-event product grid",
   "settings": [
-    { "type": "text", "id": "anchor_id", "label": "Anchor id", "default": "product-feed" },
     { "type": "text", "id": "heading", "label": "Heading (optional)" },
     { "type": "richtext", "id": "description", "label": "Description (optional)" },
     { "type": "collection", "id": "collection", "label": "Product source", "info": "Leave blank to use the collection this template is assigned to." },
@@ -401,10 +638,10 @@
       { "value": "1", "label": "1 column" },
       { "value": "2", "label": "2 columns" }
     ] },
-    { "type": "range", "id": "grid_gap", "min": 8, "max": 40, "step": 2, "unit": "px", "label": "Grid gap", "default": 20 },
+    { "type": "range", "id": "grid_gap", "min": 8, "max": 40, "step": 2, "unit": "px", "label": "Grid gap", "default": 16 },
     { "type": "range", "id": "products_per_page", "min": 8, "max": 48, "step": 4, "label": "Products per page", "default": 24 },
-    { "type": "range", "id": "padding_top", "min": 0, "max": 96, "step": 4, "unit": "px", "label": "Top spacing", "default": 32 },
-    { "type": "range", "id": "padding_bottom", "min": 0, "max": 96, "step": 4, "unit": "px", "label": "Bottom spacing", "default": 32 },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 96, "step": 4, "unit": "px", "label": "Top spacing", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 96, "step": 4, "unit": "px", "label": "Bottom spacing", "default": 40 },
 
     { "type": "header", "content": "Product count, filtering and sorting" },
     { "type": "paragraph", "content": "Filtering and sorting reuse the theme's existing filter/sort system." },
@@ -417,30 +654,32 @@
       { "value": "drawer", "label": "Drawer" }
     ] },
 
-    { "type": "header", "content": "Cards" },
-    { "type": "checkbox", "id": "enable_quick_add", "label": "Enable quick add-to-cart on cards", "default": true, "info": "Only used for products with a single variant; other products link through to the product page." },
-
-    { "type": "header", "content": "Section colors" },
-    { "type": "color", "id": "color_background", "label": "Section background" },
-    { "type": "color", "id": "color_heading", "label": "Heading", "default": "#0F172A" },
-    { "type": "color", "id": "color_description", "label": "Description", "default": "#0F172A" },
-    { "type": "color", "id": "color_sort_filter_text", "label": "Sort/filter text", "default": "#0F172A" },
-    { "type": "color", "id": "color_dividers", "label": "Dividers", "default": "#E2E8F0" },
-
     { "type": "header", "content": "Card colors" },
-    { "type": "paragraph", "content": "Scoped to this section only - the theme-wide product card style elsewhere is never changed." },
-    { "type": "color", "id": "card_color_background", "label": "Card background", "default": "#FFFFFF" },
-    { "type": "color", "id": "card_color_border", "label": "Card border", "default": "#FFFFFF" },
-    { "type": "color", "id": "card_color_title", "label": "Card title", "default": "#0F172A" },
-    { "type": "color", "id": "card_color_price", "label": "Price", "default": "#0F172A" },
-    { "type": "color", "id": "card_color_compare_at", "label": "Compare-at price", "default": "#93A2B4" },
-    { "type": "color", "id": "card_color_star", "label": "Review stars", "default": "#F5A623" },
-    { "type": "color", "id": "card_color_badge_bg", "label": "Badge background", "default": "#13B6B5" },
-    { "type": "color", "id": "card_color_badge_text", "label": "Badge text", "default": "#FFFFFF" },
-    { "type": "color", "id": "card_color_cta_bg", "label": "CTA background", "default": "#47B5E9" },
-    { "type": "color", "id": "card_color_cta_text", "label": "CTA text", "default": "#FFFFFF" },
-    { "type": "color", "id": "card_color_cta_hover_bg", "label": "CTA hover background", "default": "#339FD1" },
-    { "type": "color", "id": "card_color_cta_hover_text", "label": "CTA hover text", "default": "#FFFFFF" }
+    { "type": "paragraph", "content": "Defaults exactly match the existing Product cards carousel card. Scoped to this section only." },
+    { "type": "color", "id": "color_background", "label": "Section background", "default": "#FFFFFF" },
+    { "type": "color", "id": "card_bg", "label": "Card background", "default": "#FFFFFF" },
+    { "type": "color", "id": "card_border_color", "label": "Card border", "default": "#E3EEF2" },
+    { "type": "range", "id": "card_radius", "min": 0, "max": 32, "label": "Card corner radius", "unit": "px", "default": 16 },
+    { "type": "checkbox", "id": "card_shadow", "label": "Card shadow", "default": true },
+    { "type": "color", "id": "title_color", "label": "Title", "default": "#10232B" },
+    { "type": "color", "id": "desc_color", "label": "Description", "default": "#5A737D" },
+    { "type": "color", "id": "star_color", "label": "Review stars", "default": "#F5A623" },
+
+    { "type": "header", "content": "Card labels and CTA" },
+    { "type": "paragraph", "content": "The carousel's status/offer/badge labels are per-product merchant copy with no equivalent in real product data, so these ship blank (hidden) and never fabricated automatically. Set text here to apply the same label uniformly across every card. Label colors match the carousel's real existing defaults and are not separately configurable here, to keep this section's setting count manageable." },
+    { "type": "text", "id": "cta_text", "label": "CTA label", "default": "Shop now" },
+    { "type": "color", "id": "cta_bg", "label": "CTA background", "default": "#47B5E9" },
+    { "type": "color", "id": "cta_text_color", "label": "CTA text", "default": "#FFFFFF" },
+    { "type": "text", "id": "status_label_text", "label": "Status label text" },
+    { "type": "text", "id": "offer_label_text", "label": "Offer label text" },
+    { "type": "text", "id": "badge_text", "label": "Badge text" },
+    { "type": "select", "id": "badge_icon", "label": "Badge icon", "default": "gift", "options": [
+      { "value": "tag", "label": "Tag" },
+      { "value": "star", "label": "Star" },
+      { "value": "gift", "label": "Gift" },
+      { "value": "none", "label": "None" }
+    ] },
+    { "type": "text", "id": "benefits_text", "label": "Benefit pills", "info": "Comma-separated, shown on every card. Leave blank for none." }
   ],
   "blocks": [
     {
@@ -448,7 +687,7 @@
       "name": "Editorial insert",
       "settings": [
         { "type": "header", "content": "Position" },
-        { "type": "number", "id": "row_number", "label": "Insert after row number", "default": 2, "info": "Row number is calculated using the desktop column count, so it stays predictable across breakpoints. If the current page has fewer rows than this, the insert is skipped on that page." },
+        { "type": "number", "id": "row_number", "label": "Insert after row number", "default": 2, "info": "Row number is calculated using the desktop column count. If the current page has fewer rows than this, the insert is skipped on that page." },
 
         { "type": "header", "content": "Media" },
         { "type": "paragraph", "content": "No default media is set - an insert with no image, video or text renders nothing." },
