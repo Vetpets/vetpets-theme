@@ -23,8 +23,22 @@
   endfor
 -%}
 
-<section class="vp-se-seo" style="--vp-se-seo-bg: {{ st.color_background }};">
-  <div class="vp-se-seo__inner page-width">
+<section
+  class="vp-se-seo vp-se-seo--width-{{ st.width_mode }}"
+  style="
+    --vp-se-seo-bg: {{ st.color_background }};
+    --vp-se-seo-heading: {{ st.color_heading }};
+    --vp-se-seo-body: {{ st.color_body }};
+    --vp-se-seo-link: {{ st.color_link }};
+    --vp-se-seo-faq-bg: {{ st.color_faq_background }};
+    --vp-se-seo-faq-text: {{ st.color_faq_text }};
+    --vp-se-seo-faq-border: {{ st.color_faq_border }};
+    --vp-se-seo-faq-accent: {{ st.color_faq_icon_accent }};
+    --vp-se-seo-radius: {{ st.border_radius }}px;
+    {% if st.width_mode == 'custom' %}max-width: {{ st.custom_max_width }}px; margin-inline: auto;{% endif %}
+  "
+>
+  <div class="vp-se-seo__inner{% if st.width_mode == 'full' %} page-width{% endif %}">
     {%- if st.heading != blank -%}
       <h2 class="vp-se-seo__heading">{{ st.heading | escape }}</h2>
     {%- endif -%}
@@ -98,30 +112,36 @@
   .vp-se-seo {
     background: var(--vp-se-seo-bg, #ffffff);
     font-family: var(--font-body-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
-    color: #0F172A;
+    color: var(--vp-se-seo-body, #3A4A5F);
     padding-block: 48px;
   }
 
   .vp-se-seo__inner {
     max-width: 720px;
     margin: 0 auto;
+    padding-inline: 24px;
   }
+  .vp-se-seo--width-page .vp-se-seo__inner { max-width: var(--page-width, 720px); }
+  .vp-se-seo--width-custom .vp-se-seo__inner { max-width: 100%; padding-inline: 0; }
+  .vp-se-seo--width-full .vp-se-seo__inner { max-width: 720px; }
 
   .vp-se-seo__heading {
     font-family: var(--font-heading-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
     font-size: clamp(22px, 3vw, 28px);
     margin: 0 0 12px;
+    color: var(--vp-se-seo-heading, #0F172A);
   }
 
   .vp-se-seo__intro { margin-bottom: 24px; line-height: 1.6; }
+  .vp-se-seo__intro a,
+  .vp-se-seo__content-body a { color: var(--vp-se-seo-link, #1490CC); }
 
   .vp-se-seo__content-block { margin-bottom: 24px; }
-  .vp-se-seo__content-heading { font-size: 18px; margin: 0 0 8px; }
+  .vp-se-seo__content-heading { font-size: 18px; margin: 0 0 8px; color: var(--vp-se-seo-heading, #0F172A); }
   .vp-se-seo__content-body { line-height: 1.6; }
-  .vp-se-seo__content-body a { color: #47B5E9; }
 
   .vp-se-seo__faq { margin-top: 32px; }
-  .vp-se-seo__faq-heading { font-size: 20px; margin: 0 0 12px; }
+  .vp-se-seo__faq-heading { font-size: 20px; margin: 0 0 12px; color: var(--vp-se-seo-heading, #0F172A); }
 
   .vp-se-seo__faq-list {
     display: flex;
@@ -130,8 +150,10 @@
   }
 
   .vp-se-seo__faq-item {
-    border: 1px solid rgba(15, 23, 42, 0.12);
-    border-radius: 12px;
+    background: var(--vp-se-seo-faq-bg, transparent);
+    color: var(--vp-se-seo-faq-text, #0F172A);
+    border: 1px solid var(--vp-se-seo-faq-border, rgba(15, 23, 42, 0.12));
+    border-radius: var(--vp-se-seo-radius, 12px);
     padding: 4px 16px;
   }
 
@@ -144,14 +166,16 @@
     font-weight: 600;
     cursor: pointer;
     list-style: none;
+    color: inherit;
   }
   .vp-se-seo__faq-question::-webkit-details-marker { display: none; }
-  .vp-se-seo__faq-question:focus-visible { outline: 2px solid #47B5E9; outline-offset: 2px; }
+  .vp-se-seo__faq-question:focus-visible { outline: 2px solid var(--vp-se-seo-faq-accent, #47B5E9); outline-offset: 2px; }
 
   .vp-se-seo__faq-chevron {
     flex: 0 0 auto;
     width: 18px;
     height: 18px;
+    color: var(--vp-se-seo-faq-accent, #0F172A);
     transition: transform 0.15s ease;
   }
   .vp-se-seo__faq-item[open] .vp-se-seo__faq-chevron { transform: rotate(180deg); }
@@ -171,7 +195,25 @@
     { "type": "richtext", "id": "intro", "label": "Introductory text" },
     { "type": "text", "id": "faq_heading", "label": "FAQ heading (H3)", "default": "Frequently asked questions" },
     { "type": "checkbox", "id": "faq_expanded_by_default", "label": "Expand all FAQs by default", "default": false },
-    { "type": "color", "id": "color_background", "label": "Background color", "default": "#FFFFFF" }
+
+    { "type": "header", "content": "Width and spacing" },
+    { "type": "select", "id": "width_mode", "label": "Section width", "default": "page", "options": [
+      { "value": "page", "label": "Narrow readable width (recommended)" },
+      { "value": "full", "label": "Theme page width" },
+      { "value": "custom", "label": "Custom width" }
+    ] },
+    { "type": "range", "id": "custom_max_width", "min": 480, "max": 1000, "step": 20, "unit": "px", "label": "Custom max width", "default": 720 },
+    { "type": "range", "id": "border_radius", "min": 0, "max": 24, "step": 2, "unit": "px", "label": "FAQ item corner radius", "default": 12 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "color_background", "label": "Section background", "default": "#FFFFFF" },
+    { "type": "color", "id": "color_heading", "label": "Headings", "default": "#0F172A" },
+    { "type": "color", "id": "color_body", "label": "Body text", "default": "#3A4A5F" },
+    { "type": "color", "id": "color_link", "label": "Links", "default": "#1490CC" },
+    { "type": "color", "id": "color_faq_background", "label": "FAQ item background" },
+    { "type": "color", "id": "color_faq_text", "label": "FAQ item text", "default": "#0F172A" },
+    { "type": "color", "id": "color_faq_border", "label": "FAQ item border", "default": "#E2E8F0" },
+    { "type": "color", "id": "color_faq_icon_accent", "label": "FAQ icon / accent", "default": "#47B5E9" }
   ],
   "blocks": [
     {
