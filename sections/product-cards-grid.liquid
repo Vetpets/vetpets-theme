@@ -645,6 +645,13 @@
   .vp-prodgrid-media {
     position: relative;
     grid-column: 1 / -1;
+    /* Grid items stretch to the row's tallest item by default (needed so
+       product cards in the same row line up); opt this block out so its
+       height always matches its own content (the aspect-ratio media, or
+       the text block when there's no media) instead of a taller product
+       card sharing its row - otherwise the block's own background shows
+       as empty space below the image. */
+    align-self: start;
     /* Mobile-first placement - overridden to the desktop setting starting
        at the tablet breakpoint below, so tablet inherits desktop placement. */
     order: var(--vp-pg-order-m, 25);
