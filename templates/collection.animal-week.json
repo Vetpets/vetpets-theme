@@ -418,12 +418,29 @@
         "color_faq_border": "#e2e8f0",
         "color_faq_icon_accent": "#47b5e9"
       }
+    },
+    "section_divider_xnj9cK": {
+      "type": "section-divider",
+      "name": "Section divider",
+      "settings": {
+        "visibility": "always-display",
+        "shape": "waves_2",
+        "flip_horizontal": false,
+        "flip_vertical": false,
+        "shape_color": "background-2",
+        "custom_shape_color": "#dd1d1d",
+        "background_color": "background-1",
+        "custom_background_color": "#FFFFFF",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
     }
   },
   "order": [
     "sale_event_banner",
     "sale_event_countdown",
     "product_cards_grid",
-    "sale_event_seo_faq"
+    "sale_event_seo_faq",
+    "section_divider_xnj9cK"
   ]
 }
