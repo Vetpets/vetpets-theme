@@ -94,7 +94,7 @@
         "desktop_padding_bottom": 15,
         "mobile_padding_top": 15,
         "mobile_padding_bottom": 15,
-        "group_gap": 4,
+        "group_gap": 2,
         "group_padding": 0,
         "group_border_radius": 0,
         "border_enabled": true,
