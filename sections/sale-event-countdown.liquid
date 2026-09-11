@@ -251,7 +251,7 @@
           --vp-se-cd-aw-bg-start: {{ st.aw_bg_gradient_start | default: '#47B5E9' }};
           --vp-se-cd-aw-bg-end: {{ st.aw_bg_gradient_end | default: '#13B6B5' }};
           --vp-se-cd-aw-bg-angle: {{ st.aw_bg_gradient_angle | default: 90 }}deg;
-          --vp-se-cd-aw-pattern-image: {% if aw_pattern_data_uri != blank %}url("{{ aw_pattern_data_uri }}"){% else %}none{% endif %};
+          --vp-se-cd-aw-pattern-image: {% if aw_pattern_data_uri != blank %}url('{{ aw_pattern_data_uri }}'){% else %}none{% endif %};
           --vp-se-cd-aw-pattern-size-d: {{ st.aw_pattern_scale_desktop | default: 100 }}px;
           --vp-se-cd-aw-pattern-size-m: {{ st.aw_pattern_scale_mobile | default: 70 }}px;
           --vp-se-cd-aw-heading-color: {{ st.aw_heading_color | default: '#10232B' }};
