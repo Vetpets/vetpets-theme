@@ -754,6 +754,48 @@
     padding: 8px 14px;
   }
 
+  /* Mobile-only fix: on a narrow phone, 4 boxes at their desktop padding/
+     gap/font-size don't fit on one row and .vp-se-cd__units' own
+     flex-wrap: wrap (further up this file) lets Seconds drop to a second
+     line. nowrap + flex: 1 1 0 on each box is a structural fix, not a
+     tuning one - four equal-width flex children with wrap disabled
+     always sum to exactly the row's width, so wrapping becomes
+     impossible regardless of content length. The clamp()s alongside it
+     just keep that guaranteed-to-fit content comfortably sized instead
+     of cramped. Explicitly undone at 750px below, so desktop (which
+     already fits and was already approved) renders exactly as before -
+     none of this touches how desktop looks. */
+  .vp-se-cd--aw .vp-se-cd__units {
+    flex-wrap: nowrap;
+  }
+  .vp-se-cd--aw .vp-se-cd__unit {
+    flex: 1 1 0;
+    min-width: 0;
+    justify-content: center;
+    overflow: hidden;
+    gap: clamp(2px, 1vw, 5px);
+  }
+  .vp-se-cd--aw .vp-se-cd__number {
+    font-size: clamp(12px, 4.2vw, var(--vp-se-cd-number-fs-m, 19px));
+  }
+  .vp-se-cd--aw .vp-se-cd__label {
+    font-size: clamp(7px, 2.4vw, var(--vp-se-cd-label-fs-m, 11px));
+    white-space: nowrap;
+  }
+  .vp-se-cd--aw-boxes .vp-se-cd__unit {
+    padding: clamp(4px, 1.6vw, 8px) clamp(5px, 2.6vw, 14px);
+  }
+  /* Each box already visually separates its own unit, so the dot
+     separators between them are redundant once boxes are on - removing
+     them (rather than just shrinking them) frees the most space of any
+     single change here, since hiding a flex child also collapses the
+     row-gap on both of its sides. Only when boxes are on: with boxes
+     off there's no border/fill doing that separating job, so the
+     dots stay exactly as they always have. */
+  .vp-se-cd--aw-boxes .vp-se-cd__sep {
+    display: none;
+  }
+
   @media screen and (min-width: 750px) {
     .vp-se-cd-aw__pattern-rect--desktop { display: block; }
     .vp-se-cd-aw__pattern-rect--mobile { display: none; }
@@ -766,6 +808,16 @@
     .vp-se-cd-aw__heading { font-size: var(--vp-se-cd-aw-heading-fs-d, 22px); }
     .vp-se-cd-aw__supporting { font-size: var(--vp-se-cd-aw-supporting-fs-d, 15px); }
     .vp-se-cd-aw__supporting--below { text-align: center; margin-top: var(--vp-se-cd-aw-supporting-gap-d, 10px); }
+
+    /* Restore the exact pre-fix desktop behavior - desktop already fits
+       on one row at its normal sizing, so none of the mobile-only
+       tightening above should carry through. */
+    .vp-se-cd--aw .vp-se-cd__units { flex-wrap: wrap; }
+    .vp-se-cd--aw .vp-se-cd__unit { flex: 0 1 auto; justify-content: flex-start; overflow: visible; gap: 5px; }
+    .vp-se-cd--aw .vp-se-cd__number { font-size: var(--vp-se-cd-number-fs-d, 19px); }
+    .vp-se-cd--aw .vp-se-cd__label { font-size: var(--vp-se-cd-label-fs-d, 11px); }
+    .vp-se-cd--aw-boxes .vp-se-cd__unit { padding: 8px 14px; }
+    .vp-se-cd--aw-boxes .vp-se-cd__sep { display: inline; }
   }
 {%- endstyle -%}
 
