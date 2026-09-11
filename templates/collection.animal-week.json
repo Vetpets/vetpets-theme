@@ -347,7 +347,7 @@
         "heading_gradient_start": "#47b5e9",
         "heading_gradient_end": "#13b6b5",
         "subheading_size": 17,
-        "subheading_size_mobile": 15,
+        "subheading_size_mobile": 13,
         "subheading_color": "#5a737d",
         "columns_desktop": "4",
         "columns_tablet": "2",
@@ -362,13 +362,13 @@
         "title_size_mobile": 16,
         "title_color": "#10232b",
         "desc_size": 14,
-        "desc_size_mobile": 13,
+        "desc_size_mobile": 11,
         "desc_color": "#5a737d",
         "tag_size": 12,
-        "tag_size_mobile": 11,
+        "tag_size_mobile": 9,
         "star_color": "#f5a623",
         "star_size": 17,
-        "star_size_mobile": 16
+        "star_size_mobile": 14
       }
     },
     "sale_event_seo_faq": {
