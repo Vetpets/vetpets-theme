@@ -418,12 +418,272 @@
         "color_faq_border": "#e2e8f0",
         "color_faq_icon_accent": "#47b5e9"
       }
+    },
+    "video_social_proof_TiAnpU": {
+      "type": "video-social-proof",
+      "blocks": {
+        "stat_8xW4yK": {
+          "type": "stat",
+          "settings": {
+            "show_stat": true,
+            "value": "89%",
+            "text": "<p>say VetPets has become part of their pet's daily care routine</p>",
+            "num_color": "#1A1A1A",
+            "num_size": 38,
+            "num_bg_show": false,
+            "num_bg_color": "#FFFFFF",
+            "num_shape": "circle",
+            "row_bg": "",
+            "row_border": "",
+            "row_radius": 0,
+            "row_padding": 0
+          }
+        },
+        "stat_ytezXt": {
+          "type": "stat",
+          "settings": {
+            "show_stat": true,
+            "value": "93%",
+            "text": "<p>notice a visible difference within 30 days</p>",
+            "num_color": "#1A1A1A",
+            "num_size": 38,
+            "num_bg_show": false,
+            "num_bg_color": "#FFFFFF",
+            "num_shape": "circle",
+            "row_bg": "",
+            "row_border": "",
+            "row_radius": 0,
+            "row_padding": 0
+          }
+        },
+        "stat_iBz6pE": {
+          "type": "stat",
+          "settings": {
+            "show_stat": true,
+            "value": "97%",
+            "text": "<p>would recommend VetPets to another pet parent</p>",
+            "num_color": "#1A1A1A",
+            "num_size": 38,
+            "num_bg_show": false,
+            "num_bg_color": "#FFFFFF",
+            "num_shape": "circle",
+            "row_bg": "",
+            "row_border": "",
+            "row_radius": 0,
+            "row_padding": 0
+          }
+        },
+        "video_card_9kqwCp": {
+          "type": "video_card",
+          "settings": {
+            "video_url": "",
+            "poster_url": "",
+            "label": "Samantha",
+            "alt": ""
+          }
+        },
+        "video_card_yhtzcH": {
+          "type": "video_card",
+          "settings": {
+            "video_url": "",
+            "poster_url": "",
+            "label": "Oakley",
+            "alt": ""
+          }
+        },
+        "video_card_td6H8G": {
+          "type": "video_card",
+          "settings": {
+            "video_url": "",
+            "poster_url": "",
+            "label": "Sofia",
+            "alt": ""
+          }
+        },
+        "video_card_7hRhE4": {
+          "type": "video_card",
+          "settings": {
+            "video_url": "",
+            "poster_url": "",
+            "label": "Evie",
+            "alt": ""
+          }
+        },
+        "video_card_jhFfMC": {
+          "type": "video_card",
+          "settings": {
+            "video_url": "",
+            "poster_url": "",
+            "label": "Matthew",
+            "alt": ""
+          }
+        }
+      },
+      "block_order": [
+        "stat_8xW4yK",
+        "stat_ytezXt",
+        "stat_iBz6pE",
+        "video_card_9kqwCp",
+        "video_card_yhtzcH",
+        "video_card_td6H8G",
+        "video_card_7hRhE4",
+        "video_card_jhFfMC"
+      ],
+      "name": "Video social proof",
+      "settings": {
+        "section_width": "page",
+        "custom_max_width": 1200,
+        "bg_color": "#EDFAFF",
+        "accent_color": "#47B5E9",
+        "copy_align": "center",
+        "hide_copy_column": false,
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "heading": "Real pet parents, real routines",
+        "heading_color": "#1A1A1A",
+        "heading_size": 40,
+        "heading_size_mobile": 26,
+        "subheading": "<p>Watch pet parents share how they use VetPets in their day-to-day routine.</p>",
+        "body_color": "#6B7A85",
+        "body_size": 16,
+        "stats_visible": "3",
+        "stat_gap": 18,
+        "stat_number_col": 104,
+        "stat_size_mobile": 30,
+        "guarantee_show": true,
+        "guarantee_number": "100",
+        "guarantee_title": "Day guarantee",
+        "guarantee_text": "Try VetPets with confidence. If it's not right for you, you're covered.",
+        "guarantee_bg": "#FFFFFF",
+        "guarantee_num_color": "#1A1A1A",
+        "guarantee_title_color": "#1A1A1A",
+        "guarantee_text_color": "#6B7A85",
+        "guarantee_border": "",
+        "guarantee_radius": 16,
+        "guarantee_shadow": true,
+        "guarantee_space": 24,
+        "guarantee_space_mobile": 18,
+        "cta_show": false,
+        "cta_label": "Shop VetPets",
+        "cta_link": "",
+        "cta_new_tab": false,
+        "cta_bg": "#47B5E9",
+        "cta_color": "#FFFFFF",
+        "cta_hover_bg": "#2E9FD8",
+        "cta_border": "",
+        "cta_radius": 50,
+        "cta_width": "full",
+        "cta_align": "left",
+        "cta_full_mobile": true,
+        "cta_space": 20,
+        "per_view_desktop": 2.2,
+        "peek_mobile": 18,
+        "card_gap": 16,
+        "card_radius": 20,
+        "start_muted": true,
+        "loop_videos": false
+      }
+    },
+    "icon_bar_eHUecX": {
+      "type": "icon-bar",
+      "blocks": {
+        "column_f99Lwc": {
+          "type": "column",
+          "settings": {
+            "icon": "check_circle",
+            "filled_icon": false,
+            "title": "Icon",
+            "text": "<p>Pair text with an icon to focus on your chosen product, collection, or blog post<p>"
+          }
+        },
+        "column_L467c6": {
+          "type": "column",
+          "settings": {
+            "icon": "check_circle",
+            "filled_icon": false,
+            "title": "Icon",
+            "text": "<p>Pair text with an icon to focus on your chosen product, collection, or blog post<p>"
+          }
+        },
+        "column_EqQAnN": {
+          "type": "column",
+          "settings": {
+            "icon": "check_circle",
+            "filled_icon": false,
+            "title": "Icon",
+            "text": "<p>Pair text with an icon to focus on your chosen product, collection, or blog post<p>"
+          }
+        },
+        "column_zteUBx": {
+          "type": "column",
+          "settings": {
+            "icon": "check_circle",
+            "filled_icon": false,
+            "title": "Icon",
+            "text": "<p>Pair text with an icon to focus on your chosen product, collection, or blog post<p>"
+          }
+        }
+      },
+      "block_order": [
+        "column_f99Lwc",
+        "column_L467c6",
+        "column_EqQAnN",
+        "column_zteUBx"
+      ],
+      "name": "Icon Bar",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "title": "Icon bar",
+        "title_highlight_color": "#6D388B",
+        "heading_size": "h1",
+        "text": "",
+        "color_scheme": "background-1",
+        "icon_layout": "vertical",
+        "icon_size": "medium",
+        "icon_color": "accent-1",
+        "cards_color_scheme": "background-1",
+        "type": "slide",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "desktop_full_page": false,
+        "columns_desktop": 4,
+        "slider_desktop": false,
+        "per_move_desktop": 1,
+        "desktop_spacing": 40,
+        "desktop_side_padding": 0,
+        "desktop_padding_calc": true,
+        "desktop_adaptive_height": false,
+        "desktop_dots_position": "under",
+        "desktop_arrows_position": "sides",
+        "columns_mobile": "1",
+        "slider_mobile": true,
+        "enable_mobile_preview": false,
+        "mobile_adaptive_height": false,
+        "mobile_dots_position": "under",
+        "mobile_arrows_position": "under",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#FFFFFF",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2E2A39",
+        "custom_cards_colors_background": "#F3F3F3",
+        "custom_cards_gradient_background": "",
+        "custom_cards_colors_text": "#2E2A39"
+      }
     }
   },
   "order": [
     "sale_event_banner",
     "sale_event_countdown",
     "product_cards_grid",
-    "sale_event_seo_faq"
+    "sale_event_seo_faq",
+    "video_social_proof_TiAnpU",
+    "icon_bar_eHUecX"
   ]
 }
