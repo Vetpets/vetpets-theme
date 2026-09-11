@@ -45,6 +45,20 @@
   assign st = section.settings
   assign timer_mode = st.timer_mode | default: 'fixed'
 
+  comment
+    Animal Week visual style is a purely additive, opt-in presentation
+    layer - it never touches timer_mode, display_units, or any of the
+    date-validation / roll-up math below. A template that never sets
+    "visual_theme" (every existing template today) resolves to 'default'
+    and renders byte-identical to before this feature existed.
+  endcomment
+  assign visual_theme = st.visual_theme | default: 'default'
+  assign show_supporting_line = false
+  if visual_theme == 'animal_week' and st.aw_supporting_line_show and st.aw_supporting_line != blank
+    assign show_supporting_line = true
+  endif
+  assign aw_pattern = st.aw_pattern | default: 'none'
+
   assign display_units = st.display_units | default: 'dhms'
   assign show_days = false
   assign show_hours = false
@@ -187,12 +201,88 @@
       if show_seconds and seconds_has_larger and seconds_val >= 0 and seconds_val < 10
         assign seconds_display = '0' | append: seconds_val
       endif
+
+      comment
+        Animal Week style computations - purely presentational, no effect
+        on any value above. color_modify is Shopify's built-in Liquid
+        filter for changing a color's alpha channel; used here for the
+        countdown-box translucency (raster-free, CSS/SVG only).
+      endcomment
+      assign aw_pattern_color_val = st.aw_pattern_color | default: '#FFFFFF'
+      assign aw_pattern_opacity_val = st.aw_pattern_opacity | default: 13 | divided_by: 100.0
+      assign aw_pattern_scale_d = st.aw_pattern_scale_desktop | default: 100 | divided_by: 100.0
+      assign aw_pattern_scale_m = st.aw_pattern_scale_mobile | default: 100 | divided_by: 100.0
+      assign aw_id = section.id
+      assign aw_box_opacity_decimal = st.aw_box_opacity | default: 20 | divided_by: 100.0
+      assign aw_box_bg_rgba = st.aw_box_bg_color | default: '#FFFFFF' | color_modify: 'alpha', aw_box_opacity_decimal
+      assign aw_box_border_rgba = st.aw_box_border_color | default: '#FFFFFF' | color_modify: 'alpha', aw_box_opacity_decimal
     -%}
 
+    {%- comment -%}
+      Approved Claude Design pattern ("Option B - hearts with a few paw
+      prints"), ported verbatim: same heart-plus glyph, same paw glyph,
+      same per-mark translate/scale/rotate values, same radial fade
+      gradient stops and mask radii, same 13% base opacity. "Hearts" uses
+      Option A's own all-hearts layout (not B with paws swapped back to
+      hearts - a genuinely different, separately tuned composition in the
+      source file). "Paws" reuses Option A's positions with the paw glyph
+      substituted at every slot, since no paws-only mockup exists and this
+      is the same technique Option B itself uses (swapping the glyph at a
+      fixed slot, not re-deriving new coordinates). Desktop and mobile are
+      two independently laid-out tiles, exactly as designed - never a CSS
+      crop of one another. Real inline SVG (defs/pattern/mask), not a
+      background-image: a childless element here would be caught by this
+      theme's global `div:empty / svg:empty`-style cleanup rules, so every
+      layer below always has real child content.
+    {%- endcomment -%}
+    {%- capture aw_hrt_path -%}<path fill-rule="evenodd" d="M12 21.2c-.3 0-.6-.1-.8-.3C7.9 18 3 14.4 3 10.1 3 6.9 5.4 4.4 8.5 4.4c1.4 0 2.7.6 3.5 1.6.8-1 2.1-1.6 3.5-1.6C18.6 4.4 21 6.9 21 10.1c0 4.3-4.9 7.9-8.2 10.8-.2.2-.5.3-.8.3Z M11 7.6h2v2.6h2.6v2H13v2.6h-2v-2.6H8.4v-2H11z"></path>{%- endcapture -%}
+    {%- capture aw_paw_inner -%}<ellipse cx="6.4" cy="8.4" rx="2" ry="2.5"></ellipse><ellipse cx="10.7" cy="6" rx="2" ry="2.6"></ellipse><ellipse cx="15.1" cy="6" rx="2" ry="2.6"></ellipse><ellipse cx="19.1" cy="8.8" rx="2" ry="2.5"></ellipse><path d="M12.7 10.6c2.9 0 5.3 2.1 5.3 4.7 0 2-1.6 3.2-3.6 3.2-1 0-1.8-.3-2.6-.3-.8 0-1.6.3-2.6.3-2 0-3.6-1.2-3.6-3.2 0-2.6 2.4-4.7 5.3-4.7Z"></path>{%- endcapture -%}
+
+    {%- capture aw_marks_d -%}
+      {%- case aw_pattern -%}
+        {%- when 'hearts' -%}
+          <use href="#hrt-{{ aw_id }}" transform="translate(16,10) scale(1.417) rotate(-10,12,12)"></use><use href="#hrt-{{ aw_id }}" transform="translate(120,24) scale(0.750) rotate(12,12,12)"></use><use href="#hrt-{{ aw_id }}" transform="translate(212,4) scale(1.083) rotate(-4,12,12)"></use><use href="#hrt-{{ aw_id }}" transform="translate(272,58) scale(0.667) rotate(14,12,12)"></use><use href="#hrt-{{ aw_id }}" transform="translate(62,64) scale(0.917) rotate(8,12,12)"></use><use href="#hrt-{{ aw_id }}" transform="translate(166,76) scale(1.583) rotate(-12,12,12)"></use><use href="#hrt-{{ aw_id }}" transform="translate(6,106) scale(0.833) rotate(6,12,12)"></use><use href="#hrt-{{ aw_id }}" transform="translate(108,118) scale(1.167) rotate(-8,12,12)"></use><use href="#hrt-{{ aw_id }}" transform="translate(238,110) scale(0.792) rotate(10,12,12)"></use>
+        {%- when 'paws' -%}
+          <use href="#paw-{{ aw_id }}" transform="translate(16,10) scale(1.417) rotate(-10,12,12)"></use><use href="#paw-{{ aw_id }}" transform="translate(120,24) scale(0.750) rotate(12,12,12)"></use><use href="#paw-{{ aw_id }}" transform="translate(212,4) scale(1.083) rotate(-4,12,12)"></use><use href="#paw-{{ aw_id }}" transform="translate(272,58) scale(0.667) rotate(14,12,12)"></use><use href="#paw-{{ aw_id }}" transform="translate(62,64) scale(0.917) rotate(8,12,12)"></use><use href="#paw-{{ aw_id }}" transform="translate(166,76) scale(1.583) rotate(-12,12,12)"></use><use href="#paw-{{ aw_id }}" transform="translate(6,106) scale(0.833) rotate(6,12,12)"></use><use href="#paw-{{ aw_id }}" transform="translate(108,118) scale(1.167) rotate(-8,12,12)"></use><use href="#paw-{{ aw_id }}" transform="translate(238,110) scale(0.792) rotate(10,12,12)"></use>
+        {%- when 'hearts_paws' -%}
+          <use href="#hrt-{{ aw_id }}" transform="translate(16,10) scale(1.417) rotate(-10,12,12)"></use><use href="#hrt-{{ aw_id }}" transform="translate(120,24) scale(0.750) rotate(12,12,12)"></use><use href="#paw-{{ aw_id }}" transform="translate(212,4) scale(0.932) rotate(-4,12,12)"></use><use href="#hrt-{{ aw_id }}" transform="translate(272,58) scale(0.667) rotate(14,12,12)"></use><use href="#hrt-{{ aw_id }}" transform="translate(62,64) scale(0.917) rotate(8,12,12)"></use><use href="#hrt-{{ aw_id }}" transform="translate(166,76) scale(1.583) rotate(-12,12,12)"></use><use href="#paw-{{ aw_id }}" transform="translate(6,106) scale(0.717) rotate(6,12,12)"></use><use href="#hrt-{{ aw_id }}" transform="translate(108,118) scale(1.167) rotate(-8,12,12)"></use><use href="#hrt-{{ aw_id }}" transform="translate(238,110) scale(0.792) rotate(10,12,12)"></use>
+      {%- endcase -%}
+    {%- endcapture -%}
+
+    {%- capture aw_marks_m -%}
+      {%- case aw_pattern -%}
+        {%- when 'hearts' -%}
+          <use href="#hrt-{{ aw_id }}" transform="translate(10,6) scale(1.167) rotate(-8,12,12)"></use><use href="#hrt-{{ aw_id }}" transform="translate(104,18) scale(0.667) rotate(10,12,12)"></use><use href="#hrt-{{ aw_id }}" transform="translate(58,56) scale(0.833) rotate(6,12,12)"></use><use href="#hrt-{{ aw_id }}" transform="translate(134,68) scale(1.250) rotate(-12,12,12)"></use><use href="#hrt-{{ aw_id }}" transform="translate(4,94) scale(0.750) rotate(12,12,12)"></use><use href="#hrt-{{ aw_id }}" transform="translate(84,108) scale(1.000) rotate(-6,12,12)"></use>
+        {%- when 'paws' -%}
+          <use href="#paw-{{ aw_id }}" transform="translate(10,6) scale(1.167) rotate(-8,12,12)"></use><use href="#paw-{{ aw_id }}" transform="translate(104,18) scale(0.667) rotate(10,12,12)"></use><use href="#paw-{{ aw_id }}" transform="translate(58,56) scale(0.833) rotate(6,12,12)"></use><use href="#paw-{{ aw_id }}" transform="translate(134,68) scale(1.250) rotate(-12,12,12)"></use><use href="#paw-{{ aw_id }}" transform="translate(4,94) scale(0.750) rotate(12,12,12)"></use><use href="#paw-{{ aw_id }}" transform="translate(84,108) scale(1.000) rotate(-6,12,12)"></use>
+        {%- when 'hearts_paws' -%}
+          <use href="#hrt-{{ aw_id }}" transform="translate(10,6) scale(1.167) rotate(-8,12,12)"></use><use href="#paw-{{ aw_id }}" transform="translate(104,18) scale(0.600) rotate(10,12,12)"></use><use href="#hrt-{{ aw_id }}" transform="translate(58,56) scale(0.833) rotate(6,12,12)"></use><use href="#hrt-{{ aw_id }}" transform="translate(134,68) scale(1.250) rotate(-12,12,12)"></use><use href="#paw-{{ aw_id }}" transform="translate(4,94) scale(0.675) rotate(12,12,12)"></use><use href="#hrt-{{ aw_id }}" transform="translate(84,108) scale(1.000) rotate(-6,12,12)"></use>
+      {%- endcase -%}
+    {%- endcapture -%}
+
     <section
-      class="vp-se-cd vp-se-cd--{{ st.style }} vp-se-cd--width-{{ st.width_mode }} vp-se-cd--align-{{ st.alignment }} vp-se-cd--mode-{{ timer_mode }}{% if timer_mode == 'fixed' and is_expired %} vp-se-cd--expired{% endif %}{% if st.separators_enabled %} vp-se-cd--separators{% endif %}{% if st.border_enabled %} vp-se-cd--border{% endif %}"
+      class="vp-se-cd vp-se-cd--{{ st.style }} vp-se-cd--width-{{ st.width_mode }} vp-se-cd--align-{{ st.alignment }} vp-se-cd--mode-{{ timer_mode }}{% if timer_mode == 'fixed' and is_expired %} vp-se-cd--expired{% endif %}{% if st.separators_enabled %} vp-se-cd--separators{% endif %}{% if st.border_enabled %} vp-se-cd--border{% endif %}{% if visual_theme == 'animal_week' %} vp-se-cd--aw vp-se-cd--aw-bg-{{ st.aw_bg_style | default: 'solid' }}{% if st.aw_boxes_enabled %} vp-se-cd--aw-boxes{% endif %}{% endif %}"
       style="
         --vp-se-cd-bg: {{ st.color_background }};
+        {% if visual_theme == 'animal_week' %}
+          --vp-se-cd-aw-bg-solid: {{ st.aw_bg_solid_color | default: '#47B5E9' }};
+          --vp-se-cd-aw-bg-start: {{ st.aw_bg_gradient_start | default: '#47B5E9' }};
+          --vp-se-cd-aw-bg-end: {{ st.aw_bg_gradient_end | default: '#13B6B5' }};
+          --vp-se-cd-aw-bg-angle: {{ st.aw_bg_gradient_angle | default: 90 }}deg;
+          --vp-se-cd-aw-heading-color: {{ st.aw_heading_color | default: '#10232B' }};
+          --vp-se-cd-aw-supporting-color: {{ st.aw_supporting_line_color | default: '#3A4A5F' }};
+          --vp-se-cd-aw-number-color: {{ st.aw_number_color | default: '#10232B' }};
+          --vp-se-cd-aw-label-color: {{ st.aw_label_color | default: '#3A4A5F' }};
+          --vp-se-cd-aw-heading-fs-d: {{ st.aw_heading_font_size_desktop | default: 22 }}px;
+          --vp-se-cd-aw-heading-fs-m: {{ st.aw_heading_font_size_mobile | default: 18 }}px;
+          --vp-se-cd-aw-supporting-fs-d: {{ st.aw_supporting_font_size_desktop | default: 15 }}px;
+          --vp-se-cd-aw-supporting-fs-m: {{ st.aw_supporting_font_size_mobile | default: 13 }}px;
+          --vp-se-cd-aw-supporting-gap-d: {{ st.aw_supporting_gap_desktop | default: 10 }}px;
+          --vp-se-cd-aw-supporting-gap-m: {{ st.aw_supporting_gap_mobile | default: 8 }}px;
+          --vp-se-cd-aw-box-bg: {{ aw_box_bg_rgba }};
+          --vp-se-cd-aw-box-border: {{ aw_box_border_rgba }};
+          --vp-se-cd-aw-box-radius: {{ st.aw_box_radius | default: 12 }}px;
+        {% endif %}
         --vp-se-cd-prefix: {{ st.color_prefix }};
         --vp-se-cd-number: {{ st.color_number }};
         --vp-se-cd-label: {{ st.color_label }};
@@ -233,6 +323,35 @@
       data-show-minutes="{{ show_minutes }}"
       data-show-seconds="{{ show_seconds }}"
     >
+      {%- if visual_theme == 'animal_week' -%}
+        {%- if aw_pattern != 'none' -%}
+          <svg aria-hidden="true" focusable="false" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0">
+            <defs>
+              <g id="hrt-{{ aw_id }}" fill="{{ aw_pattern_color_val }}">{{ aw_hrt_path }}</g>
+              <g id="paw-{{ aw_id }}" fill="{{ aw_pattern_color_val }}" opacity=".72">{{ aw_paw_inner }}</g>
+              <pattern id="pat-d-{{ aw_id }}" patternUnits="userSpaceOnUse" width="300" height="152" patternTransform="scale({{ aw_pattern_scale_d }})">{{ aw_marks_d }}</pattern>
+              <pattern id="pat-m-{{ aw_id }}" patternUnits="userSpaceOnUse" width="172" height="148" patternTransform="scale({{ aw_pattern_scale_m }})">{{ aw_marks_m }}</pattern>
+              <radialGradient id="fade-d-{{ aw_id }}" cx="50%" cy="50%" r="70%">
+                <stop offset="0" stop-color="#000000"></stop>
+                <stop offset=".38" stop-color="#0A0A0A"></stop>
+                <stop offset=".72" stop-color="#8C8C8C"></stop>
+                <stop offset="1" stop-color="#FFFFFF"></stop>
+              </radialGradient>
+              <radialGradient id="fade-m-{{ aw_id }}" cx="50%" cy="50%" r="64%">
+                <stop offset="0" stop-color="#000000"></stop>
+                <stop offset=".38" stop-color="#0A0A0A"></stop>
+                <stop offset=".72" stop-color="#8C8C8C"></stop>
+                <stop offset="1" stop-color="#FFFFFF"></stop>
+              </radialGradient>
+              <mask id="mask-d-{{ aw_id }}"><rect width="100%" height="100%" fill="url(#fade-d-{{ aw_id }})"></rect></mask>
+              <mask id="mask-m-{{ aw_id }}"><rect width="100%" height="100%" fill="url(#fade-m-{{ aw_id }})"></rect></mask>
+            </defs>
+            <rect class="vp-se-cd-aw__pattern-rect vp-se-cd-aw__pattern-rect--desktop" width="100%" height="100%" fill="url(#pat-d-{{ aw_id }})" mask="url(#mask-d-{{ aw_id }})" opacity="{{ aw_pattern_opacity_val }}"></rect>
+            <rect class="vp-se-cd-aw__pattern-rect vp-se-cd-aw__pattern-rect--mobile" width="100%" height="100%" fill="url(#pat-m-{{ aw_id }})" mask="url(#mask-m-{{ aw_id }})" opacity="{{ aw_pattern_opacity_val }}"></rect>
+          </svg>
+        {%- endif -%}
+        <div class="vp-se-cd-aw__vignette" aria-hidden="true"></div>
+      {%- endif -%}
       <div class="vp-se-cd__inner">
         {%- if timer_mode == 'fixed' and is_expired and st.expired_behavior == 'show_message' -%}
           <div class="vp-se-cd__expired" data-vp-se-countdown-expired>
@@ -244,50 +363,76 @@
             {%- endif -%}
           </div>
         {%- else -%}
-          <div class="vp-se-cd__live" data-vp-se-countdown-live>
-            {%- if timer_mode == 'daily_recurring' -%}
-              {%- if st.daily_prefix_text != blank -%}
-                <span class="vp-se-cd__prefix">{{ st.daily_prefix_text | escape }}</span>
+          {%- comment -%}
+            live_inner is the exact, unmodified countdown markup - same
+            classes, same data attributes the tick script queries for.
+            Animal Week style only changes what wraps it (an optional
+            heading + supporting line), never this content, so the timer
+            itself is byte-identical in both visual styles.
+          {%- endcomment -%}
+          {%- capture live_inner -%}
+            <div class="vp-se-cd__live" data-vp-se-countdown-live>
+              {%- if timer_mode == 'daily_recurring' -%}
+                {%- if st.daily_prefix_text != blank -%}
+                  <span class="vp-se-cd__prefix">{{ st.daily_prefix_text | escape }}</span>
+                {%- endif -%}
+              {%- else -%}
+                {%- if st.prefix_text != blank -%}
+                  <span class="vp-se-cd__prefix">{{ st.prefix_text | escape }}</span>
+                {%- endif -%}
+                {%- if st.deadline_text != blank -%}
+                  <span class="vp-se-cd__deadline-text">{{ st.deadline_text | escape }}</span>
+                {%- endif -%}
               {%- endif -%}
-            {%- else -%}
-              {%- if st.prefix_text != blank -%}
-                <span class="vp-se-cd__prefix">{{ st.prefix_text | escape }}</span>
-              {%- endif -%}
-              {%- if st.deadline_text != blank -%}
-                <span class="vp-se-cd__deadline-text">{{ st.deadline_text | escape }}</span>
-              {%- endif -%}
-            {%- endif -%}
 
-            <span class="vp-se-cd__units" data-vp-se-countdown-units{% if timer_mode == 'daily_recurring' %} hidden{% endif %}>
-              {%- if show_days -%}
-                <span class="vp-se-cd__unit" data-vp-se-unit-wrap="days">
-                  <span class="vp-se-cd__number" data-vp-se-unit="days">{{ days_val }}</span>
-                  <span class="vp-se-cd__label">{{ st.label_days | escape }}</span>
-                </span>
+              <span class="vp-se-cd__units" data-vp-se-countdown-units{% if timer_mode == 'daily_recurring' %} hidden{% endif %}>
+                {%- if show_days -%}
+                  <span class="vp-se-cd__unit" data-vp-se-unit-wrap="days">
+                    <span class="vp-se-cd__number" data-vp-se-unit="days">{{ days_val }}</span>
+                    <span class="vp-se-cd__label">{{ st.label_days | escape }}</span>
+                  </span>
+                {%- endif -%}
+                {%- if show_hours -%}
+                  {%- if show_days -%}<span class="vp-se-cd__sep" aria-hidden="true">{{ st.separator_character | default: '·' }}</span>{%- endif -%}
+                  <span class="vp-se-cd__unit" data-vp-se-unit-wrap="hours">
+                    <span class="vp-se-cd__number" data-vp-se-unit="hours">{{ hours_display }}</span>
+                    <span class="vp-se-cd__label">{{ st.label_hours | escape }}</span>
+                  </span>
+                {%- endif -%}
+                {%- if show_minutes -%}
+                  {%- if show_days or show_hours -%}<span class="vp-se-cd__sep" aria-hidden="true">{{ st.separator_character | default: '·' }}</span>{%- endif -%}
+                  <span class="vp-se-cd__unit" data-vp-se-unit-wrap="minutes">
+                    <span class="vp-se-cd__number" data-vp-se-unit="minutes">{{ minutes_display }}</span>
+                    <span class="vp-se-cd__label">{{ st.label_minutes | escape }}</span>
+                  </span>
+                {%- endif -%}
+                {%- if show_seconds -%}
+                  {%- if show_days or show_hours or show_minutes -%}<span class="vp-se-cd__sep" aria-hidden="true">{{ st.separator_character | default: '·' }}</span>{%- endif -%}
+                  <span class="vp-se-cd__unit vp-se-cd__unit--accent" data-vp-se-unit-wrap="seconds">
+                    <span class="vp-se-cd__number vp-se-cd__number--accent" data-vp-se-unit="seconds">{{ seconds_display }}</span>
+                    <span class="vp-se-cd__label">{{ st.label_seconds | escape }}</span>
+                  </span>
+                {%- endif -%}
+              </span>
+            </div>
+          {%- endcapture -%}
+
+          {%- if visual_theme == 'animal_week' -%}
+            <div class="vp-se-cd-aw__row">
+              {%- if st.aw_heading != blank -%}
+                <p class="vp-se-cd-aw__heading">{{ st.aw_heading | escape }}</p>
               {%- endif -%}
-              {%- if show_hours -%}
-                {%- if show_days -%}<span class="vp-se-cd__sep" aria-hidden="true">{{ st.separator_character | default: '·' }}</span>{%- endif -%}
-                <span class="vp-se-cd__unit" data-vp-se-unit-wrap="hours">
-                  <span class="vp-se-cd__number" data-vp-se-unit="hours">{{ hours_display }}</span>
-                  <span class="vp-se-cd__label">{{ st.label_hours | escape }}</span>
-                </span>
+              {{ live_inner }}
+              {%- if show_supporting_line and st.aw_supporting_line_position == 'beside' -%}
+                <p class="vp-se-cd-aw__supporting vp-se-cd-aw__supporting--beside">{{ st.aw_supporting_line | escape }}</p>
               {%- endif -%}
-              {%- if show_minutes -%}
-                {%- if show_days or show_hours -%}<span class="vp-se-cd__sep" aria-hidden="true">{{ st.separator_character | default: '·' }}</span>{%- endif -%}
-                <span class="vp-se-cd__unit" data-vp-se-unit-wrap="minutes">
-                  <span class="vp-se-cd__number" data-vp-se-unit="minutes">{{ minutes_display }}</span>
-                  <span class="vp-se-cd__label">{{ st.label_minutes | escape }}</span>
-                </span>
-              {%- endif -%}
-              {%- if show_seconds -%}
-                {%- if show_days or show_hours or show_minutes -%}<span class="vp-se-cd__sep" aria-hidden="true">{{ st.separator_character | default: '·' }}</span>{%- endif -%}
-                <span class="vp-se-cd__unit vp-se-cd__unit--accent" data-vp-se-unit-wrap="seconds">
-                  <span class="vp-se-cd__number vp-se-cd__number--accent" data-vp-se-unit="seconds">{{ seconds_display }}</span>
-                  <span class="vp-se-cd__label">{{ st.label_seconds | escape }}</span>
-                </span>
-              {%- endif -%}
-            </span>
-          </div>
+            </div>
+            {%- if show_supporting_line and st.aw_supporting_line_position != 'beside' -%}
+              <p class="vp-se-cd-aw__supporting vp-se-cd-aw__supporting--below">{{ st.aw_supporting_line | escape }}</p>
+            {%- endif -%}
+          {%- else -%}
+            {{ live_inner }}
+          {%- endif -%}
         {%- endif -%}
       </div>
     </section>
@@ -530,6 +675,98 @@
     .vp-se-cd__expired-headline { font-size: var(--vp-se-cd-expired-fs-d, 14px); }
     .vp-se-cd--compact_grouped .vp-se-cd__number { font-size: calc(var(--vp-se-cd-number-fs-d, 19px) + 11px); }
   }
+
+  /* ---------- Animal Week visual style (opt-in via "Visual style" setting) ---------- */
+  /* Entirely scoped under .vp-se-cd--aw, so a section that never sets
+     visual_theme to "animal_week" is completely unaffected by anything
+     below - same selectors, same specificity, zero risk of bleeding into
+     the default look used by every existing template today. */
+
+  .vp-se-cd--aw { position: relative; overflow: hidden; }
+  .vp-se-cd--aw-bg-solid { background: var(--vp-se-cd-aw-bg-solid, #47B5E9); }
+  .vp-se-cd--aw-bg-gradient {
+    background: linear-gradient(var(--vp-se-cd-aw-bg-angle, 90deg), var(--vp-se-cd-aw-bg-start, #47B5E9), var(--vp-se-cd-aw-bg-end, #13B6B5));
+  }
+
+  /* The pattern is a real inline <svg> (see the section markup), not a
+     background-image: a childless element here would be caught by this
+     theme's global empty-element cleanup rules (div:empty etc), which is
+     exactly what silently hid an earlier background-image-only attempt.
+     Mobile-first: the mobile <rect> shows by default, the desktop one
+     takes over at the same 750px breakpoint used everywhere else in this
+     file. Both patterns and their defs are always present in the DOM;
+     only which <rect> paints is switched, so there's no flash/relayout
+     when the viewport crosses the breakpoint. */
+  .vp-se-cd-aw__pattern-rect--desktop { display: none; }
+  .vp-se-cd-aw__pattern-rect--mobile { display: block; }
+
+  .vp-se-cd-aw__vignette {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse 62% 130% at 50% 50%, rgba(5, 50, 76, .34) 0%, rgba(5, 50, 76, .16) 52%, rgba(5, 50, 76, 0) 80%);
+  }
+
+  .vp-se-cd--aw .vp-se-cd__inner { position: relative; z-index: 1; }
+
+  /* Animal Week uses its own heading/supporting line in place of the
+     default prefix/deadline text, so those are hidden here rather than
+     showing both and looking cluttered. */
+  .vp-se-cd--aw .vp-se-cd__prefix,
+  .vp-se-cd--aw .vp-se-cd__deadline-text { display: none; }
+
+  .vp-se-cd-aw__row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .vp-se-cd-aw__heading {
+    margin: 0;
+    font-size: var(--vp-se-cd-aw-heading-fs-m, 18px);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--vp-se-cd-aw-heading-color, #10232B);
+    text-shadow: 0 1px 3px rgba(15, 23, 42, 0.18);
+  }
+
+  .vp-se-cd-aw__supporting {
+    margin: 0;
+    font-size: var(--vp-se-cd-aw-supporting-fs-m, 13px);
+    font-weight: 600;
+    color: var(--vp-se-cd-aw-supporting-color, #3A4A5F);
+    text-shadow: 0 1px 3px rgba(15, 23, 42, 0.14);
+  }
+  .vp-se-cd-aw__supporting--below { text-align: center; margin-top: var(--vp-se-cd-aw-supporting-gap-m, 8px); }
+
+  .vp-se-cd--aw .vp-se-cd__number,
+  .vp-se-cd--aw .vp-se-cd__number--accent { color: var(--vp-se-cd-aw-number-color, #10232B); text-shadow: 0 1px 3px rgba(15, 23, 42, 0.18); }
+  .vp-se-cd--aw .vp-se-cd__label { color: var(--vp-se-cd-aw-label-color, #3A4A5F); }
+
+  .vp-se-cd--aw-boxes .vp-se-cd__unit {
+    background: var(--vp-se-cd-aw-box-bg, transparent);
+    border: 1px solid var(--vp-se-cd-aw-box-border, transparent);
+    border-radius: var(--vp-se-cd-aw-box-radius, 12px);
+    padding: 8px 14px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .vp-se-cd-aw__pattern-rect--desktop { display: block; }
+    .vp-se-cd-aw__pattern-rect--mobile { display: none; }
+    .vp-se-cd-aw__row {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 24px;
+      text-align: left;
+    }
+    .vp-se-cd-aw__heading { font-size: var(--vp-se-cd-aw-heading-fs-d, 22px); }
+    .vp-se-cd-aw__supporting { font-size: var(--vp-se-cd-aw-supporting-fs-d, 15px); }
+    .vp-se-cd-aw__supporting--below { text-align: center; margin-top: var(--vp-se-cd-aw-supporting-gap-d, 10px); }
+  }
 {%- endstyle -%}
 
 {% schema %}
@@ -634,7 +871,65 @@
     { "type": "color", "id": "color_separator", "label": "Separators", "default": "#A9C4D6" },
     { "type": "color", "id": "color_accent", "label": "Accent (seconds)", "default": "#1490CC" },
     { "type": "color", "id": "color_border", "label": "Border", "default": "#E0EEF5" },
-    { "type": "color", "id": "color_expired_text", "label": "Expired-state text", "default": "#0F172A" }
+    { "type": "color", "id": "color_expired_text", "label": "Expired-state text", "default": "#0F172A" },
+
+    { "type": "header", "content": "Visual style" },
+    { "type": "select", "id": "visual_theme", "label": "Visual style", "default": "default", "options": [
+      { "value": "default", "label": "Default" },
+      { "value": "animal_week", "label": "Animal Week" }
+    ], "info": "Animal Week unlocks the settings below. It never changes the countdown's timing, timer mode or expiry behavior - only how it looks." },
+
+    { "type": "header", "content": "Animal Week - content" },
+    { "type": "paragraph", "content": "Only used when Visual style above is set to Animal Week. Replaces the default prefix/supporting-line text above with a short heading and an independent supporting line." },
+    { "type": "text", "id": "aw_heading", "label": "Heading" },
+    { "type": "text", "id": "aw_supporting_line", "label": "Supporting line" },
+    { "type": "checkbox", "id": "aw_supporting_line_show", "label": "Show supporting line", "default": true },
+    { "type": "select", "id": "aw_supporting_line_position", "label": "Supporting-line position", "default": "below", "options": [
+      { "value": "below", "label": "Below countdown" },
+      { "value": "beside", "label": "Beside countdown on desktop" }
+    ], "info": "On mobile the supporting line always sits below the countdown, regardless of this setting." },
+    { "type": "range", "id": "aw_supporting_gap_desktop", "min": 0, "max": 32, "step": 1, "unit": "px", "label": "Supporting-line gap - desktop", "default": 10, "info": "Space between the countdown and the supporting line when its position is \"Below countdown\"." },
+    { "type": "range", "id": "aw_supporting_gap_mobile", "min": 0, "max": 24, "step": 1, "unit": "px", "label": "Supporting-line gap - mobile", "default": 8 },
+
+    { "type": "header", "content": "Animal Week - pattern" },
+    { "type": "select", "id": "aw_pattern", "label": "Pattern", "default": "none", "options": [
+      { "value": "none", "label": "None" },
+      { "value": "hearts", "label": "VetPets hearts" },
+      { "value": "paws", "label": "Paw prints" },
+      { "value": "hearts_paws", "label": "Hearts + paws" }
+    ], "info": "A lightweight inline SVG pattern, not an uploaded image. Static - it never moves or animates." },
+    { "type": "color", "id": "aw_pattern_color", "label": "Pattern color", "default": "#FFFFFF" },
+    { "type": "range", "id": "aw_pattern_opacity", "min": 0, "max": 20, "step": 1, "unit": "%", "label": "Pattern opacity", "default": 13, "info": "Kept low on purpose so the pattern stays subtle - 13% matches the approved design exactly." },
+    { "type": "range", "id": "aw_pattern_scale_desktop", "min": 50, "max": 200, "step": 5, "unit": "%", "label": "Pattern scale - desktop", "default": 100, "info": "100% matches the approved design exactly; scales the whole tile (icon sizes and spacing together)." },
+    { "type": "range", "id": "aw_pattern_scale_mobile", "min": 50, "max": 200, "step": 5, "unit": "%", "label": "Pattern scale - mobile", "default": 100 },
+
+    { "type": "header", "content": "Animal Week - background" },
+    { "type": "select", "id": "aw_bg_style", "label": "Background style", "default": "solid", "options": [
+      { "value": "solid", "label": "Solid" },
+      { "value": "gradient", "label": "Gradient" }
+    ] },
+    { "type": "color", "id": "aw_bg_solid_color", "label": "Solid background color", "default": "#47B5E9" },
+    { "type": "color", "id": "aw_bg_gradient_start", "label": "Gradient start color", "default": "#47B5E9" },
+    { "type": "color", "id": "aw_bg_gradient_end", "label": "Gradient end color", "default": "#13B6B5" },
+    { "type": "range", "id": "aw_bg_gradient_angle", "min": 0, "max": 360, "step": 5, "unit": "deg", "label": "Gradient angle", "default": 90 },
+
+    { "type": "header", "content": "Animal Week - countdown boxes" },
+    { "type": "checkbox", "id": "aw_boxes_enabled", "label": "Show boxes around each number", "default": false },
+    { "type": "color", "id": "aw_box_bg_color", "label": "Box background color", "default": "#FFFFFF" },
+    { "type": "color", "id": "aw_box_border_color", "label": "Box border color", "default": "#FFFFFF" },
+    { "type": "range", "id": "aw_box_opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "label": "Box opacity", "default": 20, "info": "Applies to both the box background and border, for a cohesive translucent look." },
+    { "type": "range", "id": "aw_box_radius", "min": 0, "max": 32, "step": 2, "unit": "px", "label": "Box corner radius", "default": 12 },
+    { "type": "color", "id": "aw_number_color", "label": "Number color", "default": "#10232B" },
+    { "type": "color", "id": "aw_label_color", "label": "Unit-label color", "default": "#3A4A5F" },
+
+    { "type": "header", "content": "Animal Week - typography" },
+    { "type": "paragraph", "content": "Countdown-number and unit-label sizes are shared with the default style above (\"Number size\" / \"Unit label size\")." },
+    { "type": "color", "id": "aw_heading_color", "label": "Heading color", "default": "#10232B" },
+    { "type": "range", "id": "aw_heading_font_size_desktop", "min": 14, "max": 40, "unit": "px", "label": "Heading size - desktop", "default": 22 },
+    { "type": "range", "id": "aw_heading_font_size_mobile", "min": 12, "max": 32, "unit": "px", "label": "Heading size - mobile", "default": 18 },
+    { "type": "color", "id": "aw_supporting_line_color", "label": "Supporting-line color", "default": "#3A4A5F" },
+    { "type": "range", "id": "aw_supporting_font_size_desktop", "min": 10, "max": 24, "unit": "px", "label": "Supporting-line size - desktop", "default": 15 },
+    { "type": "range", "id": "aw_supporting_font_size_mobile", "min": 10, "max": 20, "unit": "px", "label": "Supporting-line size - mobile", "default": 13 }
   ],
   "presets": [
     { "name": "Sale-event countdown" }
