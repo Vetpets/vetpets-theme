@@ -256,6 +256,8 @@
         "editorial_1": {
           "type": "editorial_media",
           "settings": {
+            "desktop_after_product": 4,
+            "mobile_after_product": 2,
             "desktop_width": "3",
             "tablet_width": "2",
             "desktop_image": "shopify://shop_images/World_Animal_Week_2026.jpg",
