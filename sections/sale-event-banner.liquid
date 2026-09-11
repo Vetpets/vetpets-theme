@@ -249,8 +249,24 @@
           {%- endcase -%}
         {%- endfor -%}
       </div>
-    {%- elsif st.button_label != blank and st.button_link != blank -%}
-      <a href="{{ st.button_link }}" class="vp-se-banner__image-link" aria-label="{{ st.button_label | escape }}"></a>
+    {%- else -%}
+      {%- comment -%}
+        image_only mode has no visible content block, so it has no visible
+        heading either - but the page still needs exactly one real <h1> for
+        accessibility and SEO. Reuses the same "heading" setting other modes
+        already use (falling back to the collection's own title when it's
+        blank), rendered visually-hidden with the theme's existing
+        .visually-hidden utility (clip-rect, not display:none, so it stays
+        in the accessibility tree and is crawlable) rather than shown on
+        top of the image.
+      {%- endcomment -%}
+      {%- assign hidden_h1_text = st.heading | default: collection.title -%}
+      {%- if hidden_h1_text != blank -%}
+        <h1 class="visually-hidden">{{ hidden_h1_text | escape }}</h1>
+      {%- endif -%}
+      {%- if st.button_label != blank and st.button_link != blank -%}
+        <a href="{{ st.button_link }}" class="vp-se-banner__image-link" aria-label="{{ st.button_label | escape }}"></a>
+      {%- endif -%}
     {%- endif -%}
   </div>
 </section>
