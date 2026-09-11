@@ -1,0 +1,643 @@
+{%- comment -%}
+  Sale-event countdown
+  ----------------------
+  Two truthful timer modes:
+
+  1. Fixed deadline - counts down to one real, merchant-configured
+     date/time in the shop's timezone. There is no session/localStorage
+     state - remaining time is always (deadline - now), computed fresh on
+     every render and every tick, so it cannot "reset" on refresh, session,
+     device or visitor.
+
+  2. Daily recurring - counts down to 23:59:59 in the VISITOR'S OWN
+     browser/device local time, using only the native JS Date API (no
+     shop-timezone math at all for this mode). Because "end of today" is
+     recomputed fresh on every tick from the visitor's current local clock,
+     it naturally rolls over to tomorrow's 23:59:59 the instant local
+     midnight passes - no special reset logic needed, and DST/timezone
+     changes are handled for free by the browser. This mode has no
+     no-JS/server-rendered value (the server cannot know a visitor's local
+     clock), so its numbers appear the instant the tick script runs rather
+     than being present in the initial HTML - documented in the schema.
+
+  Robust date parsing: end_date/end_time are strictly validated (exact
+  YYYY-MM-DD / HH:MM shape, in-range values) in Liquid before any date math
+  runs. An invalid or incomplete value is treated as "not configured" (the
+  countdown does not render) rather than being handed to Liquid's `date`
+  filter, which silently returns unparseable input unchanged - the likely
+  cause of a prior "ddd"-style broken-literal-text bug when a placeholder
+  or partial value ended up in the field.
+
+  Accessibility: the ticking numbers are intentionally NOT an aria-live
+  region - a live region here would cause screen readers to announce a
+  change every second, which is exactly the noisy behavior to avoid.
+
+  Editor robustness: the tick script clears its own interval on
+  shopify:section:unload (keyed by this exact section id) before a fresh
+  copy starts on shopify:section:load, so repeated edits in the Theme
+  Editor never stack up duplicate intervals. The interval is also paused
+  while the tab is hidden (document.visibilitychange) and immediately
+  recalculated from the real current time when the tab becomes visible
+  again, rather than drifting.
+{%- endcomment -%}
+
+{%- liquid
+  assign st = section.settings
+  assign timer_mode = st.timer_mode | default: 'fixed'
+
+  assign display_units = st.display_units | default: 'dhms'
+  assign show_days = false
+  assign show_hours = false
+  assign show_minutes = true
+  assign show_seconds = false
+  if display_units == 'dhms'
+    assign show_days = true
+    assign show_hours = true
+    assign show_seconds = true
+  elsif display_units == 'hms'
+    assign show_hours = true
+    assign show_seconds = true
+  elsif display_units == 'ms'
+    assign show_seconds = true
+  elsif display_units == 'hm'
+    assign show_hours = true
+  endif
+
+  assign show_section = false
+  if st.enabled and timer_mode == 'daily_recurring'
+    assign show_section = true
+  endif
+
+  comment
+    Strict validation: only a well-formed, in-range date/time reaches the
+    `date` filter. Anything else is treated as "not configured" rather
+    than rendered as garbage.
+  endcomment
+  assign date_valid = false
+  assign time_valid = false
+  if st.end_date.size == 10
+    assign date_parts = st.end_date | split: '-'
+    if date_parts.size == 3 and date_parts[0].size == 4 and date_parts[1].size == 2 and date_parts[2].size == 2
+      assign yy = date_parts[0] | times: 1
+      assign parsed_month = date_parts[1] | times: 1
+      assign parsed_day = date_parts[2] | times: 1
+      if yy >= 2000 and yy <= 2100 and parsed_month >= 1 and parsed_month <= 12 and parsed_day >= 1 and parsed_day <= 31
+        assign date_valid = true
+      endif
+    endif
+  endif
+  if st.end_time.size == 5
+    assign time_parts = st.end_time | split: ':'
+    if time_parts.size == 2 and time_parts[0].size == 2 and time_parts[1].size == 2
+      assign parsed_hour = time_parts[0] | times: 1
+      assign parsed_minute = time_parts[1] | times: 1
+      if parsed_hour >= 0 and parsed_hour <= 23 and parsed_minute >= 0 and parsed_minute <= 59
+        assign time_valid = true
+      endif
+    endif
+  endif
+
+  if st.enabled and timer_mode == 'fixed' and date_valid and time_valid
+    assign show_section = true
+  endif
+-%}
+
+{%- if show_section -%}
+  {%- liquid
+    assign deadline_ts = 0
+    assign is_expired = false
+
+    if timer_mode == 'fixed'
+      assign deadline_string = st.end_date | append: 'T' | append: st.end_time | append: ':00'
+      assign deadline_ts = deadline_string | date: '%s' | times: 1
+      assign now_ts = 'now' | date: '%s' | times: 1
+      assign seconds_left = deadline_ts | minus: now_ts
+      if seconds_left <= 0
+        assign is_expired = true
+      endif
+    endif
+  -%}
+
+  {%- if timer_mode == 'fixed' and is_expired and st.expired_behavior == 'hide' -%}
+    {%- comment -%} Deadline passed, merchant chose to hide. {%- endcomment -%}
+  {%- else -%}
+    {%- liquid
+      assign remaining = seconds_left
+      assign days_val = -1
+      assign hours_val = -1
+      assign minutes_val = -1
+      assign seconds_val = -1
+
+      if timer_mode == 'fixed' and is_expired and st.expired_behavior == 'show_zero'
+        assign remaining = 0
+      endif
+
+      comment
+        Roll-up: each enabled unit consumes whatever is left in `remaining`
+        at its own granularity, so the first enabled unit always shows the
+        TOTAL remaining duration at that granularity (e.g. Hours shows 55
+        when Days is disabled and 2.3 days remain).
+      endcomment
+      if show_days
+        assign days_val = remaining | divided_by: 86400
+        assign days_seconds = days_val | times: 86400
+        assign remaining = remaining | minus: days_seconds
+      endif
+
+      if show_hours
+        assign hours_val = remaining | divided_by: 3600
+        assign hours_seconds = hours_val | times: 3600
+        assign remaining = remaining | minus: hours_seconds
+      endif
+
+      if show_minutes
+        assign minutes_val = remaining | divided_by: 60
+        assign minutes_seconds = minutes_val | times: 60
+        assign remaining = remaining | minus: minutes_seconds
+      endif
+
+      if show_seconds
+        assign seconds_val = remaining
+      endif
+
+      comment
+        Zero-pad the same way the tick script does, so the first JS tick
+        never visibly changes the text - a unit is padded only when it is
+        a "remainder" unit following a larger visible unit.
+      endcomment
+      assign hours_display = hours_val
+      if show_hours and show_days and hours_val >= 0 and hours_val < 10
+        assign hours_display = '0' | append: hours_val
+      endif
+
+      assign minutes_display = minutes_val
+      assign minutes_has_larger = false
+      if show_days or show_hours
+        assign minutes_has_larger = true
+      endif
+      if show_minutes and minutes_has_larger and minutes_val >= 0 and minutes_val < 10
+        assign minutes_display = '0' | append: minutes_val
+      endif
+
+      assign seconds_display = seconds_val
+      assign seconds_has_larger = false
+      if show_days or show_hours or show_minutes
+        assign seconds_has_larger = true
+      endif
+      if show_seconds and seconds_has_larger and seconds_val >= 0 and seconds_val < 10
+        assign seconds_display = '0' | append: seconds_val
+      endif
+    -%}
+
+    <section
+      class="vp-se-cd vp-se-cd--{{ st.style }} vp-se-cd--width-{{ st.width_mode }} vp-se-cd--align-{{ st.alignment }} vp-se-cd--mode-{{ timer_mode }}{% if timer_mode == 'fixed' and is_expired %} vp-se-cd--expired{% endif %}{% if st.separators_enabled %} vp-se-cd--separators{% endif %}{% if st.border_enabled %} vp-se-cd--border{% endif %}"
+      style="
+        --vp-se-cd-bg: {{ st.color_background }};
+        --vp-se-cd-prefix: {{ st.color_prefix }};
+        --vp-se-cd-number: {{ st.color_number }};
+        --vp-se-cd-label: {{ st.color_label }};
+        --vp-se-cd-separator: {{ st.color_separator }};
+        --vp-se-cd-accent: {{ st.color_accent }};
+        --vp-se-cd-border: {{ st.color_border }};
+        --vp-se-cd-expired-text: {{ st.color_expired_text }};
+        --vp-se-cd-box-bg: {{ st.color_timer_box_background }};
+        --vp-se-cd-group-gap: {{ st.group_gap }}px;
+        --vp-se-cd-group-padding: {{ st.group_padding }}px;
+        --vp-se-cd-group-radius: {{ st.group_border_radius }}px;
+        --vp-se-cd-font-weight: {{ st.font_weight }};
+        --vp-se-cd-text-transform: {{ st.text_transform }};
+        --vp-se-cd-letter-spacing: {{ st.letter_spacing | divided_by: 100.0 }}em;
+        --vp-se-cd-prefix-fs-d: {{ st.prefix_font_size_desktop }}px;
+        --vp-se-cd-prefix-fs-m: {{ st.prefix_font_size_mobile }}px;
+        --vp-se-cd-number-fs-d: {{ st.number_font_size_desktop }}px;
+        --vp-se-cd-number-fs-m: {{ st.number_font_size_mobile }}px;
+        --vp-se-cd-label-fs-d: {{ st.label_font_size_desktop }}px;
+        --vp-se-cd-label-fs-m: {{ st.label_font_size_mobile }}px;
+        --vp-se-cd-sep-fs-d: {{ st.separator_font_size_desktop }}px;
+        --vp-se-cd-sep-fs-m: {{ st.separator_font_size_mobile }}px;
+        --vp-se-cd-expired-fs-d: {{ st.expired_font_size_desktop }}px;
+        --vp-se-cd-expired-fs-m: {{ st.expired_font_size_mobile }}px;
+        --vp-se-cd-pad-top-d: {{ st.desktop_padding_top }}px;
+        --vp-se-cd-pad-bottom-d: {{ st.desktop_padding_bottom }}px;
+        --vp-se-cd-pad-top-m: {{ st.mobile_padding_top }}px;
+        --vp-se-cd-pad-bottom-m: {{ st.mobile_padding_bottom }}px;
+        {% if st.width_mode == 'custom' %}max-width: {{ st.custom_max_width }}px;{% endif %}
+      "
+      data-vp-se-countdown
+      data-section-id="{{ section.id }}"
+      data-mode="{{ timer_mode }}"
+      data-deadline="{{ deadline_ts }}"
+      data-expired-behavior="{{ st.expired_behavior }}"
+      data-show-days="{{ show_days }}"
+      data-show-hours="{{ show_hours }}"
+      data-show-minutes="{{ show_minutes }}"
+      data-show-seconds="{{ show_seconds }}"
+    >
+      <div class="vp-se-cd__inner">
+        {%- if timer_mode == 'fixed' and is_expired and st.expired_behavior == 'show_message' -%}
+          <div class="vp-se-cd__expired" data-vp-se-countdown-expired>
+            {%- if st.expired_headline != blank -%}
+              <p class="vp-se-cd__expired-headline">{{ st.expired_headline | escape }}</p>
+            {%- endif -%}
+            {%- if st.expired_body != blank -%}
+              <p class="vp-se-cd__expired-body">{{ st.expired_body | escape }}</p>
+            {%- endif -%}
+          </div>
+        {%- else -%}
+          <div class="vp-se-cd__live" data-vp-se-countdown-live>
+            {%- if timer_mode == 'daily_recurring' -%}
+              {%- if st.daily_prefix_text != blank -%}
+                <span class="vp-se-cd__prefix">{{ st.daily_prefix_text | escape }}</span>
+              {%- endif -%}
+            {%- else -%}
+              {%- if st.prefix_text != blank -%}
+                <span class="vp-se-cd__prefix">{{ st.prefix_text | escape }}</span>
+              {%- endif -%}
+              {%- if st.deadline_text != blank -%}
+                <span class="vp-se-cd__deadline-text">{{ st.deadline_text | escape }}</span>
+              {%- endif -%}
+            {%- endif -%}
+
+            <span class="vp-se-cd__units" data-vp-se-countdown-units{% if timer_mode == 'daily_recurring' %} hidden{% endif %}>
+              {%- if show_days -%}
+                <span class="vp-se-cd__unit" data-vp-se-unit-wrap="days">
+                  <span class="vp-se-cd__number" data-vp-se-unit="days">{{ days_val }}</span>
+                  <span class="vp-se-cd__label">{{ st.label_days | escape }}</span>
+                </span>
+              {%- endif -%}
+              {%- if show_hours -%}
+                {%- if show_days -%}<span class="vp-se-cd__sep" aria-hidden="true">{{ st.separator_character | default: '·' }}</span>{%- endif -%}
+                <span class="vp-se-cd__unit" data-vp-se-unit-wrap="hours">
+                  <span class="vp-se-cd__number" data-vp-se-unit="hours">{{ hours_display }}</span>
+                  <span class="vp-se-cd__label">{{ st.label_hours | escape }}</span>
+                </span>
+              {%- endif -%}
+              {%- if show_minutes -%}
+                {%- if show_days or show_hours -%}<span class="vp-se-cd__sep" aria-hidden="true">{{ st.separator_character | default: '·' }}</span>{%- endif -%}
+                <span class="vp-se-cd__unit" data-vp-se-unit-wrap="minutes">
+                  <span class="vp-se-cd__number" data-vp-se-unit="minutes">{{ minutes_display }}</span>
+                  <span class="vp-se-cd__label">{{ st.label_minutes | escape }}</span>
+                </span>
+              {%- endif -%}
+              {%- if show_seconds -%}
+                {%- if show_days or show_hours or show_minutes -%}<span class="vp-se-cd__sep" aria-hidden="true">{{ st.separator_character | default: '·' }}</span>{%- endif -%}
+                <span class="vp-se-cd__unit vp-se-cd__unit--accent" data-vp-se-unit-wrap="seconds">
+                  <span class="vp-se-cd__number vp-se-cd__number--accent" data-vp-se-unit="seconds">{{ seconds_display }}</span>
+                  <span class="vp-se-cd__label">{{ st.label_seconds | escape }}</span>
+                </span>
+              {%- endif -%}
+            </span>
+          </div>
+        {%- endif -%}
+      </div>
+    </section>
+
+    <script>
+      (function () {
+        var sectionId = {{ section.id | json }};
+        var root = document.querySelector('[data-vp-se-countdown][data-section-id="' + sectionId + '"]');
+        if (!root) return;
+
+        var mode = root.getAttribute('data-mode');
+        var fixedDeadlineTs = parseInt(root.getAttribute('data-deadline'), 10) * 1000;
+        var expiredBehavior = root.getAttribute('data-expired-behavior');
+        var showDays = root.getAttribute('data-show-days') === 'true';
+        var showHours = root.getAttribute('data-show-hours') === 'true';
+        var showMinutes = root.getAttribute('data-show-minutes') === 'true';
+        var showSeconds = root.getAttribute('data-show-seconds') === 'true';
+
+        var liveEl = root.querySelector('[data-vp-se-countdown-live]');
+        var unitsEl = root.querySelector('[data-vp-se-countdown-units]');
+        var expiredEl = root.querySelector('[data-vp-se-countdown-expired]');
+        var daysEl = root.querySelector('[data-vp-se-unit="days"]');
+        var hoursEl = root.querySelector('[data-vp-se-unit="hours"]');
+        var minutesEl = root.querySelector('[data-vp-se-unit="minutes"]');
+        var secondsEl = root.querySelector('[data-vp-se-unit="seconds"]');
+
+        function pad(n) {
+          return String(n).length < 2 ? '0' + n : String(n);
+        }
+
+        function getDeadline() {
+          if (mode === 'daily_recurring') {
+            var now = new Date();
+            return new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999).getTime();
+          }
+          return fixedDeadlineTs;
+        }
+
+        function render() {
+          var deadline = getDeadline();
+          var remainingMs = deadline - Date.now();
+
+          if (unitsEl && unitsEl.hidden) unitsEl.hidden = false;
+
+          if (remainingMs <= 0) {
+            if (mode === 'daily_recurring') {
+              // getDeadline() recomputes "end of today" from the current
+              // local clock on every call, so the very next tick already
+              // reflects the new day - nothing else to reset.
+              return true;
+            }
+            if (expiredBehavior === 'hide') {
+              root.hidden = true;
+              return false;
+            }
+            if (expiredBehavior === 'show_zero') {
+              if (daysEl) daysEl.textContent = 0;
+              if (hoursEl) hoursEl.textContent = showDays ? '00' : 0;
+              if (minutesEl) minutesEl.textContent = (showDays || showHours) ? '00' : 0;
+              if (secondsEl) secondsEl.textContent = (showDays || showHours || showMinutes) ? '00' : 0;
+              return true;
+            }
+            // show_message
+            if (liveEl) liveEl.hidden = true;
+            if (expiredEl) expiredEl.hidden = false;
+            root.classList.add('vp-se-cd--expired');
+            return false;
+          }
+
+          var remaining = Math.floor(remainingMs / 1000);
+
+          if (showDays) {
+            var days = Math.floor(remaining / 86400);
+            remaining -= days * 86400;
+            if (daysEl) daysEl.textContent = days;
+          }
+          if (showHours) {
+            var hours = Math.floor(remaining / 3600);
+            remaining -= hours * 3600;
+            if (hoursEl) hoursEl.textContent = showDays ? pad(hours) : hours;
+          }
+          if (showMinutes) {
+            var minutes = Math.floor(remaining / 60);
+            remaining -= minutes * 60;
+            if (minutesEl) minutesEl.textContent = (showDays || showHours) ? pad(minutes) : minutes;
+          }
+          if (showSeconds) {
+            var seconds = remaining;
+            if (secondsEl) secondsEl.textContent = (showDays || showHours || showMinutes) ? pad(seconds) : seconds;
+          }
+          return true;
+        }
+
+        var intervalId = null;
+
+        function start() {
+          if (intervalId) return;
+          var keepTicking = render();
+          if (keepTicking) {
+            intervalId = window.setInterval(function () {
+              if (!render()) stop();
+            }, 1000);
+          }
+        }
+
+        function stop() {
+          if (intervalId) {
+            window.clearInterval(intervalId);
+            intervalId = null;
+          }
+        }
+
+        start();
+
+        document.addEventListener('visibilitychange', function () {
+          if (document.hidden) {
+            stop();
+          } else {
+            start();
+          }
+        });
+
+        document.addEventListener('shopify:section:unload', function (event) {
+          if (event.target && event.target.getAttribute && event.target.getAttribute('data-section-id') === sectionId) {
+            stop();
+          }
+        });
+      })();
+    </script>
+  {%- endif -%}
+{%- endif -%}
+
+{%- style -%}
+  .vp-se-cd {
+    background: var(--vp-se-cd-bg, #EAF6FD);
+    font-family: var(--font-body-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+  }
+  .vp-se-cd--border { border-top: 1px solid var(--vp-se-cd-border, rgba(20,144,204,.16)); border-bottom: 1px solid var(--vp-se-cd-border, rgba(20,144,204,.16)); }
+
+  .vp-se-cd__inner {
+    margin-inline: auto;
+    padding: var(--vp-se-cd-pad-top-m, 15px) 24px var(--vp-se-cd-pad-bottom-m, 15px);
+  }
+  .vp-se-cd--width-full .vp-se-cd__inner { max-width: none; }
+  .vp-se-cd--width-page .vp-se-cd__inner { max-width: var(--page-width, 1200px); }
+  .vp-se-cd--width-contained .vp-se-cd__inner { max-width: 1320px; }
+  .vp-se-cd--width-custom .vp-se-cd__inner { max-width: 100%; }
+
+  .vp-se-cd__live {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: center;
+    gap: 10px 18px;
+    min-height: 24px;
+    text-transform: var(--vp-se-cd-text-transform, none);
+  }
+  .vp-se-cd--align-left .vp-se-cd__live { justify-content: flex-start; }
+  .vp-se-cd--align-right .vp-se-cd__live { justify-content: flex-end; }
+
+  .vp-se-cd__prefix {
+    font-size: var(--vp-se-cd-prefix-fs-m, 11px);
+    font-weight: 700;
+    letter-spacing: var(--vp-se-cd-letter-spacing, 0.16em);
+    color: var(--vp-se-cd-prefix, #1490CC);
+  }
+
+  .vp-se-cd__deadline-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--vp-se-cd-number, #0F172A);
+  }
+
+  .vp-se-cd__units {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--vp-se-cd-group-gap, 12px);
+  }
+
+  .vp-se-cd__unit {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 5px;
+    padding: var(--vp-se-cd-group-padding, 0px);
+    border-radius: var(--vp-se-cd-group-radius, 0px);
+    background: var(--vp-se-cd-box-bg, transparent);
+  }
+
+  .vp-se-cd__number {
+    font-variant-numeric: tabular-nums;
+    font-size: var(--vp-se-cd-number-fs-m, 19px);
+    font-weight: var(--vp-se-cd-font-weight, 700);
+    letter-spacing: -0.01em;
+    color: var(--vp-se-cd-number, #0F172A);
+  }
+  .vp-se-cd__number--accent { color: var(--vp-se-cd-accent, #1490CC); }
+
+  .vp-se-cd__label {
+    font-size: var(--vp-se-cd-label-fs-m, 11px);
+    font-weight: 600;
+    letter-spacing: var(--vp-se-cd-letter-spacing, 0.1em);
+    text-transform: var(--vp-se-cd-text-transform, uppercase);
+    color: var(--vp-se-cd-label, #5A6B80);
+  }
+
+  .vp-se-cd__sep {
+    color: var(--vp-se-cd-separator, #A9C4D6);
+    font-size: var(--vp-se-cd-sep-fs-m, 15px);
+  }
+  .vp-se-cd:not(.vp-se-cd--separators) .vp-se-cd__sep { display: none; }
+
+  .vp-se-cd__expired { text-align: center; padding: 4px 0; width: 100%; }
+  .vp-se-cd__expired-headline { margin: 0 0 4px; font-weight: 700; font-size: var(--vp-se-cd-expired-fs-m, 14px); color: var(--vp-se-cd-expired-text, #0F172A); }
+  .vp-se-cd__expired-body { margin: 0; font-size: 13px; color: var(--vp-se-cd-expired-text, #0F172A); opacity: 0.85; }
+
+  /* compact_grouped style: stacked, larger numbers, no separators */
+  .vp-se-cd--compact_grouped .vp-se-cd__inner { padding-top: max(var(--vp-se-cd-pad-top-m, 15px), 28px); padding-bottom: max(var(--vp-se-cd-pad-bottom-m, 15px), 28px); }
+  .vp-se-cd--compact_grouped .vp-se-cd__live { flex-direction: column; align-items: center; gap: 10px; }
+  .vp-se-cd--compact_grouped.vp-se-cd--align-left .vp-se-cd__live { align-items: flex-start; }
+  .vp-se-cd--compact_grouped.vp-se-cd--align-right .vp-se-cd__live { align-items: flex-end; }
+  .vp-se-cd--compact_grouped .vp-se-cd__units { gap: max(var(--vp-se-cd-group-gap, 12px), 30px); }
+  .vp-se-cd--compact_grouped .vp-se-cd__unit { flex-direction: column; align-items: center; gap: 2px; min-width: 52px; }
+  .vp-se-cd--compact_grouped .vp-se-cd__number { font-size: calc(var(--vp-se-cd-number-fs-m, 19px) + 11px); line-height: 1; }
+  .vp-se-cd--compact_grouped .vp-se-cd__sep { display: none; }
+
+  /* hero_integrated style: same slim layout, tighter padding */
+  .vp-se-cd--hero_integrated .vp-se-cd__inner { padding-top: min(var(--vp-se-cd-pad-top-m, 15px), 13px); padding-bottom: min(var(--vp-se-cd-pad-bottom-m, 15px), 13px); }
+
+  @media (max-width: 480px) {
+    .vp-se-cd__units { row-gap: 6px; }
+  }
+
+  @media screen and (min-width: 750px) {
+    .vp-se-cd__inner { padding-top: var(--vp-se-cd-pad-top-d, 15px); padding-bottom: var(--vp-se-cd-pad-bottom-d, 15px); }
+    .vp-se-cd__prefix { font-size: var(--vp-se-cd-prefix-fs-d, 11px); }
+    .vp-se-cd__number { font-size: var(--vp-se-cd-number-fs-d, 19px); }
+    .vp-se-cd__label { font-size: var(--vp-se-cd-label-fs-d, 11px); }
+    .vp-se-cd__sep { font-size: var(--vp-se-cd-sep-fs-d, 15px); }
+    .vp-se-cd__expired-headline { font-size: var(--vp-se-cd-expired-fs-d, 14px); }
+    .vp-se-cd--compact_grouped .vp-se-cd__number { font-size: calc(var(--vp-se-cd-number-fs-d, 19px) + 11px); }
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Sale-event countdown",
+  "settings": [
+    { "type": "checkbox", "id": "enabled", "label": "Enable countdown", "default": false, "info": "Ships off by default." },
+    { "type": "select", "id": "timer_mode", "label": "Timer mode", "default": "fixed", "options": [
+      { "value": "fixed", "label": "Fixed end date and time" },
+      { "value": "daily_recurring", "label": "Daily recurring (visitor local time)" }
+    ] },
+
+    { "type": "header", "content": "Fixed deadline" },
+    { "type": "paragraph", "content": "Used when Timer mode is \"Fixed end date and time\". Read in the shop's own timezone (the same timezone Shopify admin shows you)." },
+    { "type": "text", "id": "end_date", "label": "Campaign end date", "info": "Format YYYY-MM-DD, e.g. 2026-09-30. An incomplete or invalid value is treated as not configured - the countdown stays hidden rather than showing broken text." },
+    { "type": "text", "id": "end_time", "label": "Campaign end time", "info": "Format HH:MM, 24-hour, e.g. 23:59" },
+    { "type": "text", "id": "prefix_text", "label": "Prefix text", "default": "Sale ends in" },
+    { "type": "text", "id": "deadline_text", "label": "Optional supporting line", "info": "e.g. \"Sale ends Sunday 11 October\"." },
+    { "type": "select", "id": "expired_behavior", "label": "Expired behavior", "default": "show_message", "options": [
+      { "value": "hide", "label": "Hide the countdown entirely" },
+      { "value": "show_message", "label": "Show an ended-state message" },
+      { "value": "show_zero", "label": "Show zero values (00:00:00)" }
+    ] },
+    { "type": "text", "id": "expired_headline", "label": "Ended headline", "default": "This event has ended" },
+    { "type": "text", "id": "expired_body", "label": "Ended body text (optional)", "default": "Check back soon for the next event." },
+
+    { "type": "header", "content": "Daily recurring" },
+    { "type": "paragraph", "content": "Used when Timer mode is \"Daily recurring\". Counts down to 23:59:59 in each visitor's own browser/device local time and automatically restarts every day at their local midnight - it never uses the shop's timezone. Only use this mode when the offer genuinely renews every day; using it for a one-time deadline is misleading." },
+    { "type": "text", "id": "daily_prefix_text", "label": "Prefix text", "default": "Today's offer ends in" },
+
+    { "type": "header", "content": "Displayed units" },
+    { "type": "select", "id": "display_units", "label": "Units shown", "default": "dhms", "options": [
+      { "value": "dhms", "label": "Days + hours + minutes + seconds" },
+      { "value": "hms", "label": "Hours + minutes + seconds" },
+      { "value": "ms", "label": "Minutes + seconds" },
+      { "value": "hm", "label": "Hours + minutes" }
+    ], "info": "If Days is not shown, Hours displays the total remaining hours (can exceed 24) for a fixed deadline." },
+    { "type": "text", "id": "label_days", "label": "Days label", "default": "Days" },
+    { "type": "text", "id": "label_hours", "label": "Hours label", "default": "Hrs" },
+    { "type": "text", "id": "label_minutes", "label": "Minutes label", "default": "Min" },
+    { "type": "text", "id": "label_seconds", "label": "Seconds label", "default": "Sec" },
+    { "type": "checkbox", "id": "separators_enabled", "label": "Show separators between units", "default": true },
+    { "type": "text", "id": "separator_character", "label": "Separator character", "default": "·" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "style", "label": "Visual style", "default": "slim_inline", "options": [
+      { "value": "slim_inline", "label": "Slim inline" },
+      { "value": "compact_grouped", "label": "Compact grouped" },
+      { "value": "hero_integrated", "label": "Hero-integrated (place directly under the banner)" }
+    ] },
+    { "type": "select", "id": "alignment", "label": "Alignment", "default": "center", "options": [
+      { "value": "left", "label": "Left" },
+      { "value": "center", "label": "Center" },
+      { "value": "right", "label": "Right" }
+    ] },
+    { "type": "select", "id": "width_mode", "label": "Section width", "default": "contained", "options": [
+      { "value": "full", "label": "Full browser width" },
+      { "value": "contained", "label": "Full width, contained content" },
+      { "value": "page", "label": "Theme page width" },
+      { "value": "custom", "label": "Custom" }
+    ] },
+    { "type": "range", "id": "custom_max_width", "min": 480, "max": 1600, "step": 20, "unit": "px", "label": "Custom max width", "default": 1320 },
+    { "type": "range", "id": "desktop_padding_top", "min": 0, "max": 80, "step": 1, "unit": "px", "label": "Desktop top padding", "default": 15 },
+    { "type": "range", "id": "desktop_padding_bottom", "min": 0, "max": 80, "step": 1, "unit": "px", "label": "Desktop bottom padding", "default": 15 },
+    { "type": "range", "id": "mobile_padding_top", "min": 0, "max": 80, "step": 1, "unit": "px", "label": "Mobile top padding", "default": 15 },
+    { "type": "range", "id": "mobile_padding_bottom", "min": 0, "max": 80, "step": 1, "unit": "px", "label": "Mobile bottom padding", "default": 15 },
+    { "type": "range", "id": "group_gap", "min": 0, "max": 48, "step": 2, "unit": "px", "label": "Gap between timer groups", "default": 12 },
+    { "type": "range", "id": "group_padding", "min": 0, "max": 24, "step": 2, "unit": "px", "label": "Group padding (timer-box look)", "default": 0 },
+    { "type": "range", "id": "group_border_radius", "min": 0, "max": 24, "step": 2, "unit": "px", "label": "Group corner radius", "default": 0 },
+    { "type": "checkbox", "id": "border_enabled", "label": "Top/bottom section border", "default": true },
+
+    { "type": "header", "content": "Typography" },
+    { "type": "select", "id": "font_weight", "label": "Number font weight", "default": "700", "options": [
+      { "value": "400", "label": "Regular (400)" },
+      { "value": "600", "label": "Semibold (600)" },
+      { "value": "700", "label": "Bold (700)" }
+    ] },
+    { "type": "select", "id": "text_transform", "label": "Text transform (prefix/labels)", "default": "uppercase", "options": [
+      { "value": "none", "label": "None" },
+      { "value": "uppercase", "label": "Uppercase" },
+      { "value": "lowercase", "label": "Lowercase" },
+      { "value": "capitalize", "label": "Capitalize" }
+    ] },
+    { "type": "range", "id": "letter_spacing", "min": -2, "max": 20, "step": 1, "label": "Letter spacing (prefix/labels)", "info": "In hundredths of an em, e.g. 16 = 0.16em", "default": 16 },
+    { "type": "range", "id": "prefix_font_size_desktop", "min": 8, "max": 24, "unit": "px", "label": "Prefix size - desktop", "default": 11 },
+    { "type": "range", "id": "prefix_font_size_mobile", "min": 8, "max": 24, "unit": "px", "label": "Prefix size - mobile", "default": 11 },
+    { "type": "range", "id": "number_font_size_desktop", "min": 12, "max": 48, "unit": "px", "label": "Number size - desktop", "default": 19 },
+    { "type": "range", "id": "number_font_size_mobile", "min": 12, "max": 48, "unit": "px", "label": "Number size - mobile", "default": 19 },
+    { "type": "range", "id": "label_font_size_desktop", "min": 8, "max": 20, "unit": "px", "label": "Unit label size - desktop", "default": 11 },
+    { "type": "range", "id": "label_font_size_mobile", "min": 8, "max": 20, "unit": "px", "label": "Unit label size - mobile", "default": 11 },
+    { "type": "range", "id": "separator_font_size_desktop", "min": 8, "max": 28, "unit": "px", "label": "Separator size - desktop", "default": 15 },
+    { "type": "range", "id": "separator_font_size_mobile", "min": 8, "max": 28, "unit": "px", "label": "Separator size - mobile", "default": 15 },
+    { "type": "range", "id": "expired_font_size_desktop", "min": 10, "max": 28, "unit": "px", "label": "Expired message size - desktop", "default": 14 },
+    { "type": "range", "id": "expired_font_size_mobile", "min": 10, "max": 28, "unit": "px", "label": "Expired message size - mobile", "default": 14 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "color_background", "label": "Background", "default": "#EAF6FD" },
+    { "type": "color", "id": "color_timer_box_background", "label": "Timer-box background", "info": "Only visible once group padding/radius is set above 0." },
+    { "type": "color", "id": "color_prefix", "label": "Prefix text", "default": "#1490CC" },
+    { "type": "color", "id": "color_number", "label": "Numbers", "default": "#0F172A" },
+    { "type": "color", "id": "color_label", "label": "Unit labels", "default": "#5A6B80" },
+    { "type": "color", "id": "color_separator", "label": "Separators", "default": "#A9C4D6" },
+    { "type": "color", "id": "color_accent", "label": "Accent (seconds)", "default": "#1490CC" },
+    { "type": "color", "id": "color_border", "label": "Border", "default": "#E0EEF5" },
+    { "type": "color", "id": "color_expired_text", "label": "Expired-state text", "default": "#0F172A" }
+  ],
+  "presets": [
+    { "name": "Sale-event countdown" }
+  ]
+}
+{% endschema %}

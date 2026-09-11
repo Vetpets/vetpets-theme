@@ -1,0 +1,247 @@
+{%- comment -%}
+  Sale-event SEO content + FAQ
+  --------------------------------
+  Bottom-of-page SEO block. All copy renders as real, visible HTML (no
+  visually-hidden keyword stuffing). FAQPage JSON-LD is emitted only when at
+  least one faq_item block has both a question and an answer, and is built
+  directly from those same visible blocks - no separate data source, no
+  duplicate FAQ schema (confirmed none exists elsewhere in this theme).
+  Collection SEO title/description remain managed in Shopify admin and are not
+  read or overridden here.
+{%- endcomment -%}
+
+{%- liquid
+  assign st = section.settings
+  assign content_blocks = section.blocks | where: 'type', 'content_block'
+  assign faq_blocks = section.blocks | where: 'type', 'faq_item'
+
+  assign valid_faqs = 0
+  for block in faq_blocks
+    if block.settings.question != blank and block.settings.answer != blank
+      assign valid_faqs = valid_faqs | plus: 1
+    endif
+  endfor
+-%}
+
+<section
+  class="vp-se-seo vp-se-seo--width-{{ st.width_mode }}"
+  style="
+    --vp-se-seo-bg: {{ st.color_background }};
+    --vp-se-seo-heading: {{ st.color_heading }};
+    --vp-se-seo-body: {{ st.color_body }};
+    --vp-se-seo-link: {{ st.color_link }};
+    --vp-se-seo-faq-bg: {{ st.color_faq_background }};
+    --vp-se-seo-faq-text: {{ st.color_faq_text }};
+    --vp-se-seo-faq-border: {{ st.color_faq_border }};
+    --vp-se-seo-faq-accent: {{ st.color_faq_icon_accent }};
+    --vp-se-seo-radius: {{ st.border_radius }}px;
+    {% if st.width_mode == 'custom' %}max-width: {{ st.custom_max_width }}px; margin-inline: auto;{% endif %}
+  "
+>
+  <div class="vp-se-seo__inner{% if st.width_mode == 'full' %} page-width{% endif %}">
+    {%- if st.heading != blank -%}
+      <h2 class="vp-se-seo__heading">{{ st.heading | escape }}</h2>
+    {%- endif -%}
+
+    {%- if st.intro != blank -%}
+      <div class="vp-se-seo__intro rte">{{ st.intro }}</div>
+    {%- endif -%}
+
+    {%- for block in content_blocks -%}
+      {%- assign bs = block.settings -%}
+      <div class="vp-se-seo__content-block" {{ block.shopify_attributes }}>
+        {%- if bs.heading != blank -%}
+          <h3 class="vp-se-seo__content-heading">{{ bs.heading | escape }}</h3>
+        {%- endif -%}
+        {%- if bs.body != blank -%}
+          <div class="vp-se-seo__content-body rte">{{ bs.body }}</div>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+
+    {%- if faq_blocks.size > 0 -%}
+      <div class="vp-se-seo__faq">
+        {%- if st.faq_heading != blank -%}
+          <h3 class="vp-se-seo__faq-heading">{{ st.faq_heading | escape }}</h3>
+        {%- endif -%}
+
+        <div class="vp-se-seo__faq-list">
+          {%- for block in faq_blocks -%}
+            {%- assign bs = block.settings -%}
+            {%- if bs.question != blank and bs.answer != blank -%}
+              <details class="vp-se-seo__faq-item"{% if st.faq_expanded_by_default %} open{% endif %} {{ block.shopify_attributes }}>
+                <summary class="vp-se-seo__faq-question">
+                  {{ bs.question | escape }}
+                  <svg class="vp-se-seo__faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg>
+                </summary>
+                <div class="vp-se-seo__faq-answer rte">{{ bs.answer }}</div>
+              </details>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- if valid_faqs > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for block in faq_blocks -%}
+          {%- assign bs = block.settings -%}
+          {%- if bs.question != blank and bs.answer != blank -%}
+            {
+              "@type": "Question",
+              "name": {{ bs.question | strip_html | json }},
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": {{ bs.answer | strip_html | json }}
+              }
+            }{% unless forloop.last %},{% endunless %}
+          {%- endif -%}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{%- style -%}
+  .vp-se-seo {
+    background: var(--vp-se-seo-bg, #ffffff);
+    font-family: var(--font-body-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+    color: var(--vp-se-seo-body, #3A4A5F);
+    padding-block: 48px;
+  }
+
+  .vp-se-seo__inner {
+    max-width: 720px;
+    margin: 0 auto;
+    padding-inline: 24px;
+  }
+  .vp-se-seo--width-page .vp-se-seo__inner { max-width: var(--page-width, 720px); }
+  .vp-se-seo--width-custom .vp-se-seo__inner { max-width: 100%; padding-inline: 0; }
+  .vp-se-seo--width-full .vp-se-seo__inner { max-width: 720px; }
+
+  .vp-se-seo__heading {
+    font-family: var(--font-heading-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+    font-size: clamp(22px, 3vw, 28px);
+    margin: 0 0 12px;
+    color: var(--vp-se-seo-heading, #0F172A);
+  }
+
+  .vp-se-seo__intro { margin-bottom: 24px; line-height: 1.6; }
+  .vp-se-seo__intro a,
+  .vp-se-seo__content-body a { color: var(--vp-se-seo-link, #1490CC); }
+
+  .vp-se-seo__content-block { margin-bottom: 24px; }
+  .vp-se-seo__content-heading { font-size: 18px; margin: 0 0 8px; color: var(--vp-se-seo-heading, #0F172A); }
+  .vp-se-seo__content-body { line-height: 1.6; }
+
+  .vp-se-seo__faq { margin-top: 32px; }
+  .vp-se-seo__faq-heading { font-size: 20px; margin: 0 0 12px; color: var(--vp-se-seo-heading, #0F172A); }
+
+  .vp-se-seo__faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .vp-se-seo__faq-item {
+    background: var(--vp-se-seo-faq-bg, transparent);
+    color: var(--vp-se-seo-faq-text, #0F172A);
+    border: 1px solid var(--vp-se-seo-faq-border, rgba(15, 23, 42, 0.12));
+    border-radius: var(--vp-se-seo-radius, 12px);
+    padding: 4px 16px;
+  }
+
+  .vp-se-seo__faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+    color: inherit;
+  }
+  .vp-se-seo__faq-question::-webkit-details-marker { display: none; }
+  .vp-se-seo__faq-question:focus-visible { outline: 2px solid var(--vp-se-seo-faq-accent, #47B5E9); outline-offset: 2px; }
+
+  .vp-se-seo__faq-chevron {
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    color: var(--vp-se-seo-faq-accent, #0F172A);
+    transition: transform 0.15s ease;
+  }
+  .vp-se-seo__faq-item[open] .vp-se-seo__faq-chevron { transform: rotate(180deg); }
+
+  .vp-se-seo__faq-answer { padding: 0 0 14px; line-height: 1.6; opacity: 0.9; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vp-se-seo__faq-chevron { transition: none; }
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Sale-event SEO + FAQ",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading (H2)", "default": "Everything you need to know" },
+    { "type": "richtext", "id": "intro", "label": "Introductory text" },
+    { "type": "text", "id": "faq_heading", "label": "FAQ heading (H3)", "default": "Frequently asked questions" },
+    { "type": "checkbox", "id": "faq_expanded_by_default", "label": "Expand all FAQs by default", "default": false },
+
+    { "type": "header", "content": "Width and spacing" },
+    { "type": "select", "id": "width_mode", "label": "Section width", "default": "page", "options": [
+      { "value": "page", "label": "Narrow readable width (recommended)" },
+      { "value": "full", "label": "Theme page width" },
+      { "value": "custom", "label": "Custom width" }
+    ] },
+    { "type": "range", "id": "custom_max_width", "min": 480, "max": 1000, "step": 20, "unit": "px", "label": "Custom max width", "default": 720 },
+    { "type": "range", "id": "border_radius", "min": 0, "max": 24, "step": 2, "unit": "px", "label": "FAQ item corner radius", "default": 12 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "color_background", "label": "Section background", "default": "#FFFFFF" },
+    { "type": "color", "id": "color_heading", "label": "Headings", "default": "#0F172A" },
+    { "type": "color", "id": "color_body", "label": "Body text", "default": "#3A4A5F" },
+    { "type": "color", "id": "color_link", "label": "Links", "default": "#1490CC" },
+    { "type": "color", "id": "color_faq_background", "label": "FAQ item background" },
+    { "type": "color", "id": "color_faq_text", "label": "FAQ item text", "default": "#0F172A" },
+    { "type": "color", "id": "color_faq_border", "label": "FAQ item border", "default": "#E2E8F0" },
+    { "type": "color", "id": "color_faq_icon_accent", "label": "FAQ icon / accent", "default": "#47B5E9" }
+  ],
+  "blocks": [
+    {
+      "type": "content_block",
+      "name": "Content block (H3)",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading (H3)" },
+        { "type": "richtext", "id": "body", "label": "Body text", "info": "Use this for internal links - richtext links are crawlable." }
+      ]
+    },
+    {
+      "type": "faq_item",
+      "name": "FAQ item",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Answer" }
+      ]
+    }
+  ],
+  "max_blocks": 16,
+  "presets": [
+    {
+      "name": "Sale-event SEO + FAQ",
+      "blocks": [
+        { "type": "faq_item", "settings": { "question": "How long does the event run?", "answer": "<p>Check the countdown or offer banner above for the exact dates - this section stays up to date with the current campaign.</p>" } },
+        { "type": "faq_item", "settings": { "question": "Do offers apply automatically?", "answer": "<p>Eligible offers are applied at checkout. If a code is required, it will be shown in the offer details above.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
