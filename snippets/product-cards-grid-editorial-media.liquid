@@ -18,6 +18,10 @@
 
   Accepts:
   - block: {Block} an editorial_media block
+  - order_desktop: {Number} CSS `order` value for tablet/desktop (the
+    caller has already resolved the block's "place after product" setting
+    and clamped it to the section's actual product count)
+  - order_mobile: {Number} CSS `order` value for mobile
 {%- endcomment -%}
 
 {%- liquid
@@ -71,6 +75,8 @@
       --vp-pgm-pad-m: {{ bs.content_padding_mobile }}px;
       --vp-pg-media-span-d: {{ span_d }};
       --vp-pg-media-span-t: {{ span_t }};
+      --vp-pg-order-m: {{ order_mobile }};
+      --vp-pg-order-d: {{ order_desktop }};
     "
     {{ block.shopify_attributes }}
   >

@@ -64,6 +64,24 @@
   if st.heading_gradient
     assign heading_class = 'vp-prodcards__heading vp-prodcards__heading--grad'
   endif
+
+  comment
+    Editorial media blocks are placed by CSS `order`, not by their position
+    in block_order, so each viewport can show them after a different
+    product-card count. Product cards get a stable order (index * 10,
+    counting product blocks only) that never changes per viewport; each
+    editorial block's desktop/mobile "place after product N" setting maps
+    to order (N * 10) + 5, landing it between product N and product N+1.
+    order-step of 10 leaves room without collisions; ties between multiple
+    editorial blocks at the same N resolve by source order, per the CSS
+    grid spec, which is already deterministic here.
+  endcomment
+  assign product_count = 0
+  for block in all_blocks
+    if block.type == 'product'
+      assign product_count = product_count | plus: 1
+    endif
+  endfor
 -%}
 
 {%- capture star_full -%}
@@ -137,11 +155,14 @@
       {%- endif -%}
 
       <div class="vp-prodgrid__grid">
+        {%- liquid assign product_index = 0 -%}
         {%- for block in all_blocks -%}
         {%- if block.type == 'product' -%}
           {%- liquid
             assign bs = block.settings
             assign product = bs.product
+            assign product_index = product_index | plus: 1
+            assign product_order = product_index | times: 10
 
             assign card_title = bs.title
             if card_title == blank
@@ -171,7 +192,7 @@
             assign benefits = bs.benefits | split: ','
           -%}
 
-          <div class="vp-prodgrid__item" {{ block.shopify_attributes }}>
+          <div class="vp-prodgrid__item" style="order: {{ product_order }};" {{ block.shopify_attributes }}>
             <article class="vp-prodcards__card{% if st.card_shadow %} vp-prodcards__card--shadow{% endif %}">
               <div class="vp-prodcards__media">
                 {%- if card_image != blank -%}
@@ -287,7 +308,20 @@
             </article>
           </div>
         {%- elsif block.type == 'editorial_media' -%}
-          {%- render 'product-cards-grid-editorial-media', block: block -%}
+          {%- liquid
+            assign bs = block.settings
+            assign desktop_after = bs.desktop_after_product | default: 4
+            if desktop_after > product_count
+              assign desktop_after = product_count
+            endif
+            assign mobile_after = bs.mobile_after_product | default: 2
+            if mobile_after > product_count
+              assign mobile_after = product_count
+            endif
+            assign order_desktop = desktop_after | times: 10 | plus: 5
+            assign order_mobile = mobile_after | times: 10 | plus: 5
+          -%}
+          {%- render 'product-cards-grid-editorial-media', block: block, order_desktop: order_desktop, order_mobile: order_mobile -%}
         {%- endif -%}
         {%- endfor -%}
       </div>
@@ -611,6 +645,9 @@
   .vp-prodgrid-media {
     position: relative;
     grid-column: 1 / -1;
+    /* Mobile-first placement - overridden to the desktop setting starting
+       at the tablet breakpoint below, so tablet inherits desktop placement. */
+    order: var(--vp-pg-order-m, 25);
     background: var(--vp-pgm-bg, transparent);
     color: var(--vp-pgm-text, #10232B);
     margin-top: var(--vp-pgm-spacing-top, 8px);
@@ -732,7 +769,7 @@
   .vp-prodgrid-media__cta:focus-visible { outline: 2px solid #10232B; outline-offset: 2px; }
 
   @media screen and (min-width: 750px) {
-    .vp-prodgrid__grid > .vp-prodgrid-media { grid-column: span var(--vp-pg-media-span-t, 2); }
+    .vp-prodgrid__grid > .vp-prodgrid-media { grid-column: span var(--vp-pg-media-span-t, 2); order: var(--vp-pg-order-d, 45); }
     .vp-prodgrid-media__media { aspect-ratio: var(--vp-pgm-ratio-d, 21/9); min-height: var(--vp-pgm-min-h-d, 0); }
     .vp-prodgrid-media__image--desktop-only { display: block; }
     .vp-prodgrid-media__image--mobile-only { display: none; }
@@ -1257,7 +1294,31 @@
       "settings": [
         {
           "type": "paragraph",
-          "content": "Drag this block to any position in the list above to place it between product cards. It occupies the selected number of grid columns and never counts toward the 4/2/1 product column layout. No default media is set - a block with no image, video or text renders nothing."
+          "content": "Position in the Theme Editor block list doesn't control where this appears - use the placement settings below. It occupies the selected number of grid columns and never counts toward the 4/2/1 product column layout. No default media is set - a block with no image, video or text renders nothing."
+        },
+        {
+          "type": "header",
+          "content": "Placement"
+        },
+        {
+          "type": "range",
+          "id": "desktop_after_product",
+          "label": "Place after product - desktop",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "default": 4,
+          "info": "Counts product cards only, not other editorial blocks. 0 places it before the first product. If higher than the number of products, it places after the last one. Tablet uses this same value."
+        },
+        {
+          "type": "range",
+          "id": "mobile_after_product",
+          "label": "Place after product - mobile",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "default": 2,
+          "info": "Mobile stacks one card per row, so a lower number here surfaces this sooner in the scroll."
         },
         {
           "type": "header",
