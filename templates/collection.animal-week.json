@@ -124,7 +124,7 @@
         "aw_heading": "ANIMAL WEEK ENDS IN",
         "aw_supporting_line": "Buy more. Get more. Give more.",
         "aw_supporting_line_show": true,
-        "aw_supporting_line_position": "below",
+        "aw_supporting_line_position": "beside",
         "aw_supporting_gap_desktop": 10,
         "aw_supporting_gap_mobile": 8,
         "aw_pattern": "hearts_paws",
