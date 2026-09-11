@@ -71,9 +71,9 @@
       "settings": {
         "enabled": true,
         "timer_mode": "fixed",
-        "end_date": "2026-09-11",
+        "end_date": "2026-10-04",
         "end_time": "16:37",
-        "prefix_text": "Sale ends in",
+        "prefix_text": "Sale ends in:",
         "deadline_text": "",
         "expired_behavior": "show_message",
         "expired_headline": "This event has ended",
