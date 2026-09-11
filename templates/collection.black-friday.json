@@ -1,18 +1,9 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "sale_event_banner": {
       "type": "sale-event-banner",
       "settings": {
-        "mode": "image_only",
+        "mode": "text_only",
         "eyebrow": "",
         "heading": "Save on everyday care essentials",
         "body": "<p>Browse this event's featured products below.</p>",
@@ -53,7 +44,7 @@
         "shadow_enabled": false,
         "border_enabled": false,
         "border_color": "#e2e8f0",
-        "color_background": "#d5f7ff",
+        "color_background": "#D5F7FF",
         "color_eyebrow_bg": "#ffffff",
         "color_eyebrow_text": "#1490cc",
         "color_heading": "#0f172a",
@@ -64,29 +55,13 @@
         "color_button_hover_text": "#ffffff"
       }
     },
-    "section_divider_3njM4i": {
-      "type": "section-divider",
-      "name": "Section divider",
-      "settings": {
-        "visibility": "always-display",
-        "shape": "waves_2",
-        "flip_horizontal": false,
-        "flip_vertical": true,
-        "shape_color": "background-2",
-        "custom_shape_color": "#dd1d1d",
-        "background_color": "background-1",
-        "custom_background_color": "#FFFFFF",
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
     "sale_event_countdown": {
       "type": "sale-event-countdown",
       "settings": {
-        "enabled": true,
+        "enabled": false,
         "timer_mode": "fixed",
-        "end_date": "2026-09-11",
-        "end_time": "16:37",
+        "end_date": "",
+        "end_time": "",
         "prefix_text": "Sale ends in",
         "deadline_text": "",
         "expired_behavior": "show_message",
@@ -115,9 +90,9 @@
         "font_weight": "700",
         "text_transform": "uppercase",
         "letter_spacing": 16,
-        "prefix_font_size_desktop": 18,
+        "prefix_font_size_desktop": 11,
         "prefix_font_size_mobile": 11,
-        "number_font_size_desktop": 28,
+        "number_font_size_desktop": 19,
         "number_font_size_mobile": 19,
         "label_font_size_desktop": 11,
         "label_font_size_mobile": 11,
@@ -125,15 +100,15 @@
         "separator_font_size_mobile": 15,
         "expired_font_size_desktop": 14,
         "expired_font_size_mobile": 14,
-        "color_background": "#47B5E9",
+        "color_background": "#EAF6FD",
         "color_timer_box_background": "",
-        "color_prefix": "#FFFFFF",
-        "color_number": "#FFFFFF",
-        "color_label": "#FFFFFF",
-        "color_separator": "#a9c4d6",
-        "color_accent": "#D5F7FF",
-        "color_border": "#e0eef5",
-        "color_expired_text": "#0f172a"
+        "color_prefix": "#1490CC",
+        "color_number": "#0F172A",
+        "color_label": "#5A6B80",
+        "color_separator": "#A9C4D6",
+        "color_accent": "#1490CC",
+        "color_border": "#E0EEF5",
+        "color_expired_text": "#0F172A"
       }
     },
     "product_cards_grid": {
@@ -267,39 +242,6 @@
             "cta_radius": 50
           }
         },
-        "editorial_1": {
-          "type": "editorial_media",
-          "settings": {
-            "desktop_width": "3",
-            "tablet_width": "2",
-            "desktop_image": "shopify://shop_images/EYEwipes_-_2026-08-13T183754.510.jpg",
-            "video_autoplay": false,
-            "video_loop": true,
-            "video_controls": true,
-            "image_fit": "cover",
-            "focal_point": "center center",
-            "desktop_aspect_ratio": "21:9",
-            "mobile_aspect_ratio": "4:5",
-            "min_height_desktop": 0,
-            "min_height_mobile": 0,
-            "heading": "Why it matters",
-            "text": "Wipe-based routines fit into daily life without a fight - no baths, no brushing battles.",
-            "cta_label": "",
-            "cta_link": "",
-            "block_link": "",
-            "content_position": "bottom_left",
-            "text_alignment": "left",
-            "overlay_opacity": 35,
-            "width_mode": "contained",
-            "color_background": "#d5f7ff",
-            "color_text": "#0f172a",
-            "border_radius": 16,
-            "content_padding_desktop": 28,
-            "content_padding_mobile": 20,
-            "spacing_top": 8,
-            "spacing_bottom": 8
-          }
-        },
         "product_iAJPAU": {
           "type": "product",
           "settings": {
@@ -338,7 +280,6 @@
         "product_B8AzdP",
         "product_4LEVNE",
         "product_kb9kyz",
-        "editorial_1",
         "product_iAJPAU"
       ],
       "settings": {
@@ -433,7 +374,6 @@
   },
   "order": [
     "sale_event_banner",
-    "section_divider_3njM4i",
     "sale_event_countdown",
     "product_cards_grid",
     "sale_event_seo_faq"

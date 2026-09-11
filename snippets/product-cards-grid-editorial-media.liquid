@@ -1,0 +1,125 @@
+{%- comment -%}
+  Editorial media block for sections/product-cards-grid.liquid
+  ------------------------------------------------------------------
+  Renders one "editorial_media" block inline among the product-card blocks,
+  in whatever position the merchant drags it to in the Theme Editor. It
+  occupies `desktop_width` grid columns on desktop, `tablet_width` on
+  tablet, and always the full single column on mobile - standard CSS grid
+  auto-placement (sparse, row flow, left-to-right in DOM order) then lets
+  the next block(s) fill any remaining columns in that same row, exactly
+  like any other same-sized grid item, before continuing to the next row.
+  It never counts toward the 4/2/1 product-card column math - that math
+  only governs the grid's own template-columns count, not how many tracks
+  any individual item spans.
+
+  Image-only and video-only both work without forcing any text: the
+  content/overlay block only renders when at least one of heading/text/CTA
+  is present.
+
+  Accepts:
+  - block: {Block} an editorial_media block
+{%- endcomment -%}
+
+{%- liquid
+  assign bs = block.settings
+  assign has_video = false
+  if bs.video != blank
+    assign has_video = true
+  endif
+  assign has_media = false
+  if has_video or bs.desktop_image != blank
+    assign has_media = true
+  endif
+  assign has_text = false
+  if bs.heading != blank or bs.text != blank or bs.cta_label != blank
+    assign has_text = true
+  endif
+
+  assign span_d = bs.desktop_width | default: '4'
+  assign span_t = bs.tablet_width | default: '2'
+
+  comment
+    A single full-cover link is only safe when there is no separately
+    visible CTA button (nested <a> elements are invalid HTML) - when both
+    are configured, the CTA button remains the one clickable target.
+  endcomment
+  assign use_full_link = false
+  if bs.block_link != blank and bs.cta_label == blank
+    assign use_full_link = true
+  endif
+
+  assign focal = bs.focal_point | default: 'center center'
+-%}
+
+{%- if has_media or has_text -%}
+  <div
+    class="vp-prodgrid-media vp-prodgrid-media--{{ bs.width_mode }} vp-prodgrid-media--pos-{{ bs.content_position }} vp-prodgrid-media--align-{{ bs.text_alignment }}{% unless has_media %} vp-prodgrid-media--no-media{% endunless %}"
+    style="
+      --vp-pgm-bg: {{ bs.color_background }};
+      --vp-pgm-text: {{ bs.color_text }};
+      --vp-pgm-radius: {{ bs.border_radius }}px;
+      --vp-pgm-spacing-top: {{ bs.spacing_top }}px;
+      --vp-pgm-spacing-bottom: {{ bs.spacing_bottom }}px;
+      --vp-pgm-ratio-d: {{ bs.desktop_aspect_ratio | default: '21:9' | replace: ':', '/' }};
+      --vp-pgm-ratio-m: {{ bs.mobile_aspect_ratio | default: '4:5' | replace: ':', '/' }};
+      --vp-pgm-min-h-d: {{ bs.min_height_desktop }}px;
+      --vp-pgm-min-h-m: {{ bs.min_height_mobile }}px;
+      --vp-pgm-fit: {{ bs.image_fit | default: 'cover' }};
+      --vp-pgm-focal: {{ focal }};
+      --vp-pgm-overlay-opacity: {{ bs.overlay_opacity | divided_by: 100.0 }};
+      --vp-pgm-pad-d: {{ bs.content_padding_desktop }}px;
+      --vp-pgm-pad-m: {{ bs.content_padding_mobile }}px;
+      --vp-pg-media-span-d: {{ span_d }};
+      --vp-pg-media-span-t: {{ span_t }};
+    "
+    {{ block.shopify_attributes }}
+  >
+    {%- if use_full_link -%}
+      <a href="{{ bs.block_link }}" class="vp-prodgrid-media__full-link" aria-label="{{ bs.heading | default: 'View more' | escape }}"></a>
+    {%- endif -%}
+
+    {%- if has_media -%}
+      <div class="vp-prodgrid-media__media">
+        {%- if has_video -%}
+          <internal-video class="vp-prodgrid-media__video-wrap"{% if bs.video_autoplay %} data-autoplay="true" data-no-play-btn="true"{% endif %}>
+            <video
+              class="vp-prodgrid-media__video"
+              poster="{% if bs.video_poster != blank %}{{ bs.video_poster | image_url: width: 1600 }}{% else %}{{ bs.video.preview_image | image_url: width: 1600 }}{% endif %}"
+              {% if bs.video_loop %}loop{% endif %}
+              {% if bs.video_autoplay %}muted{% endif %}
+              playsinline
+              {% if bs.video_controls %}controls{% endif %}
+            >
+              {%- for source in bs.video.sources -%}
+                <source {% if bs.video_autoplay %}data-{% endif %}src="{{ source.url }}" type="{{ source.mime_type }}">
+              {%- endfor -%}
+            </video>
+          </internal-video>
+        {%- elsif bs.mobile_image != blank -%}
+          {{ bs.desktop_image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600,900,1200,1600', sizes: '100vw', class: 'vp-prodgrid-media__image vp-prodgrid-media__image--desktop-only', alt: bs.heading | default: '' }}
+          {{ bs.mobile_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '480,640,900', sizes: '100vw', class: 'vp-prodgrid-media__image vp-prodgrid-media__image--mobile-only', alt: bs.heading | default: '' }}
+        {%- else -%}
+          {{ bs.desktop_image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '480,640,900,1200,1600', sizes: '100vw', class: 'vp-prodgrid-media__image', alt: bs.heading | default: '' }}
+        {%- endif -%}
+
+        {%- if has_text -%}
+          <div class="vp-prodgrid-media__overlay"></div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if has_text -%}
+      <div class="vp-prodgrid-media__content">
+        {%- if bs.heading != blank -%}
+          <h3 class="vp-prodgrid-media__heading">{{ bs.heading | escape }}</h3>
+        {%- endif -%}
+        {%- if bs.text != blank -%}
+          <p class="vp-prodgrid-media__text">{{ bs.text | escape }}</p>
+        {%- endif -%}
+        {%- if bs.cta_label != blank -%}
+          <a href="{{ bs.cta_link | default: bs.block_link | default: '#' }}" class="vp-prodgrid-media__cta">{{ bs.cta_label | escape }}</a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+{%- endif -%}
