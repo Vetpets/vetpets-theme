@@ -208,7 +208,7 @@
         filter for changing a color's alpha channel; used here instead of
         raster assets so pattern/box translucency comes from CSS/SVG only.
       endcomment
-      assign aw_pattern_opacity_decimal = st.aw_pattern_opacity | default: 7 | divided_by: 100.0
+      assign aw_pattern_opacity_decimal = st.aw_pattern_opacity | default: 11 | divided_by: 100.0
       assign aw_pattern_fill = st.aw_pattern_color | default: '#FFFFFF' | color_modify: 'alpha', aw_pattern_opacity_decimal
       assign aw_box_opacity_decimal = st.aw_box_opacity | default: 20 | divided_by: 100.0
       assign aw_box_bg_rgba = st.aw_box_bg_color | default: '#FFFFFF' | color_modify: 'alpha', aw_box_opacity_decimal
@@ -262,6 +262,8 @@
           --vp-se-cd-aw-heading-fs-m: {{ st.aw_heading_font_size_mobile | default: 18 }}px;
           --vp-se-cd-aw-supporting-fs-d: {{ st.aw_supporting_font_size_desktop | default: 15 }}px;
           --vp-se-cd-aw-supporting-fs-m: {{ st.aw_supporting_font_size_mobile | default: 13 }}px;
+          --vp-se-cd-aw-supporting-gap-d: {{ st.aw_supporting_gap_desktop | default: 10 }}px;
+          --vp-se-cd-aw-supporting-gap-m: {{ st.aw_supporting_gap_mobile | default: 8 }}px;
           --vp-se-cd-aw-box-bg: {{ aw_box_bg_rgba }};
           --vp-se-cd-aw-box-border: {{ aw_box_border_rgba }};
           --vp-se-cd-aw-box-radius: {{ st.aw_box_radius | default: 12 }}px;
@@ -306,9 +308,6 @@
       data-show-minutes="{{ show_minutes }}"
       data-show-seconds="{{ show_seconds }}"
     >
-      {%- if visual_theme == 'animal_week' and aw_pattern_data_uri != blank -%}
-        <div class="vp-se-cd-aw__pattern" aria-hidden="true"></div>
-      {%- endif -%}
       <div class="vp-se-cd__inner">
         {%- if timer_mode == 'fixed' and is_expired and st.expired_behavior == 'show_message' -%}
           <div class="vp-se-cd__expired" data-vp-se-countdown-expired>
@@ -645,7 +644,14 @@
     background: linear-gradient(var(--vp-se-cd-aw-bg-angle, 90deg), var(--vp-se-cd-aw-bg-start, #47B5E9), var(--vp-se-cd-aw-bg-end, #13B6B5));
   }
 
-  .vp-se-cd-aw__pattern {
+  /* A ::before pseudo-element, not a live DOM node - this theme's base
+     stylesheet hides every genuinely empty element (div:empty, a:empty,
+     etc, for accessibility/cleanup), and a childless pattern div with
+     no text content matched that rule and was silently display:none,
+     regardless of its own background-image. A pseudo-element is immune:
+     it isn't a DOM child at all, so :empty can never match it. */
+  .vp-se-cd--aw::before {
+    content: '';
     position: absolute;
     inset: 0;
     z-index: 0;
@@ -689,7 +695,7 @@
     color: var(--vp-se-cd-aw-supporting-color, #3A4A5F);
     text-shadow: 0 1px 3px rgba(15, 23, 42, 0.14);
   }
-  .vp-se-cd-aw__supporting--below { text-align: center; }
+  .vp-se-cd-aw__supporting--below { text-align: center; margin-top: var(--vp-se-cd-aw-supporting-gap-m, 8px); }
 
   .vp-se-cd--aw .vp-se-cd__number,
   .vp-se-cd--aw .vp-se-cd__number--accent { color: var(--vp-se-cd-aw-number-color, #10232B); text-shadow: 0 1px 3px rgba(15, 23, 42, 0.18); }
@@ -703,7 +709,7 @@
   }
 
   @media screen and (min-width: 750px) {
-    .vp-se-cd-aw__pattern {
+    .vp-se-cd--aw::before {
       background-size: var(--vp-se-cd-aw-pattern-size-d, 100px) var(--vp-se-cd-aw-pattern-size-d, 100px);
     }
     .vp-se-cd-aw__row {
@@ -714,7 +720,7 @@
     }
     .vp-se-cd-aw__heading { font-size: var(--vp-se-cd-aw-heading-fs-d, 22px); }
     .vp-se-cd-aw__supporting { font-size: var(--vp-se-cd-aw-supporting-fs-d, 15px); }
-    .vp-se-cd-aw__supporting--below { text-align: center; }
+    .vp-se-cd-aw__supporting--below { text-align: center; margin-top: var(--vp-se-cd-aw-supporting-gap-d, 10px); }
   }
 {%- endstyle -%}
 
@@ -837,6 +843,8 @@
       { "value": "below", "label": "Below countdown" },
       { "value": "beside", "label": "Beside countdown on desktop" }
     ], "info": "On mobile the supporting line always sits below the countdown, regardless of this setting." },
+    { "type": "range", "id": "aw_supporting_gap_desktop", "min": 0, "max": 32, "step": 1, "unit": "px", "label": "Supporting-line gap - desktop", "default": 10, "info": "Space between the countdown and the supporting line when its position is \"Below countdown\"." },
+    { "type": "range", "id": "aw_supporting_gap_mobile", "min": 0, "max": 24, "step": 1, "unit": "px", "label": "Supporting-line gap - mobile", "default": 8 },
 
     { "type": "header", "content": "Animal Week - pattern" },
     { "type": "select", "id": "aw_pattern", "label": "Pattern", "default": "none", "options": [
@@ -846,7 +854,7 @@
       { "value": "hearts_paws", "label": "Hearts + paws" }
     ], "info": "A lightweight inline SVG pattern, not an uploaded image. Static - it never moves or animates." },
     { "type": "color", "id": "aw_pattern_color", "label": "Pattern color", "default": "#FFFFFF" },
-    { "type": "range", "id": "aw_pattern_opacity", "min": 0, "max": 20, "step": 1, "unit": "%", "label": "Pattern opacity", "default": 7, "info": "Kept low on purpose so the pattern stays subtle." },
+    { "type": "range", "id": "aw_pattern_opacity", "min": 0, "max": 20, "step": 1, "unit": "%", "label": "Pattern opacity", "default": 11, "info": "Kept low on purpose so the pattern stays subtle." },
     { "type": "range", "id": "aw_pattern_scale_desktop", "min": 40, "max": 200, "step": 10, "unit": "px", "label": "Pattern scale - desktop", "default": 100 },
     { "type": "range", "id": "aw_pattern_scale_mobile", "min": 30, "max": 160, "step": 10, "unit": "px", "label": "Pattern scale - mobile", "default": 70 },
 
