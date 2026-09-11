@@ -767,6 +767,7 @@
      none of this touches how desktop looks. */
   .vp-se-cd--aw .vp-se-cd__units {
     flex-wrap: nowrap;
+    gap: clamp(2px, 1.5vw, var(--vp-se-cd-group-gap, 12px));
   }
   .vp-se-cd--aw .vp-se-cd__unit {
     flex: 1 1 0;
@@ -812,7 +813,7 @@
     /* Restore the exact pre-fix desktop behavior - desktop already fits
        on one row at its normal sizing, so none of the mobile-only
        tightening above should carry through. */
-    .vp-se-cd--aw .vp-se-cd__units { flex-wrap: wrap; }
+    .vp-se-cd--aw .vp-se-cd__units { flex-wrap: wrap; gap: var(--vp-se-cd-group-gap, 12px); }
     .vp-se-cd--aw .vp-se-cd__unit { flex: 0 1 auto; justify-content: flex-start; overflow: visible; gap: 5px; }
     .vp-se-cd--aw .vp-se-cd__number { font-size: var(--vp-se-cd-number-fs-d, 19px); }
     .vp-se-cd--aw .vp-se-cd__label { font-size: var(--vp-se-cd-label-fs-d, 11px); }
