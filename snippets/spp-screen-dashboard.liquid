@@ -175,8 +175,9 @@
     <div class="spp__split-side">
 
       {%- comment -%}
-        VetPoints. Hidden for launch by data-spp-loyalty — see LOYALTY_ENABLED
-        in the controller for why, and for the one line that brings it back.
+        VetPoints. Gated by data-spp-loyalty — see LOYALTY_ENABLED in the
+        controller. Live by default now that the ledger exists; toggling that
+        constant off hides this card again without a markup change.
       {%- endcomment -%}
       <div class="spp__points" data-spp-loyalty hidden>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
@@ -184,18 +185,18 @@
           <span style="opacity:.9;">{% render 'spp-icon', icon: 'sparkle', size: 22, stroke: '#FFFFFF' %}</span>
         </div>
         <div class="spp__points-value">
-          <b data-spp-field="loyalty.points">640</b>
+          <b data-spp-field="loyalty.points">0</b>
           <span>points</span>
         </div>
         <div class="spp__progress spp__progress--on-blue">
           <span data-spp-style-width="loyalty.progressPercent"></span>
         </div>
         <p>
-          <span data-spp-field="loyalty.toNextReward">160</span> more points unlock
-          <span data-spp-field="loyalty.nextRewardName">a free plush toy</span>.
+          <span data-spp-field="loyalty.toNextReward">800</span> more points unlock
+          <span data-spp-field="loyalty.nextRewardName">Free Surprise Gift</span>.
           Each renewal adds <span data-spp-field="loyalty.perRenewal">100</span> points.
         </p>
-        <p class="spp__points-fine" data-spp-field="loyalty.disclosure">Placeholder points logic &mdash; thresholds and rewards are configurable.</p>
+        <p class="spp__points-fine" data-spp-field="loyalty.disclosure"></p>
         <button type="button" class="spp__btn" data-spp-go="loyalty">View rewards</button>
       </div>
 

@@ -74,7 +74,7 @@
   data-spp-latency="{{ section.settings.mock_latency | default: 900 }}"
   data-spp-points-per-renewal="{{ section.settings.points_per_renewal | default: 100 }}"
   data-spp-next-reward-at="{{ section.settings.next_reward_at | default: 800 }}"
-  data-spp-next-reward-name="{{ section.settings.next_reward_name | default: 'a free plush toy' | escape }}"
+  data-spp-next-reward-name="{{ section.settings.next_reward_name | default: 'Free Surprise Gift' | escape }}"
   data-spp-dev-default="{{ dev_default }}"
   data-spp-img-freshwipes="{{ img_fresh }}"
   data-spp-img-eyewipes="{{ img_eye }}"
@@ -241,11 +241,11 @@
     },
     {
       "type": "header",
-      "content": "VetPoints (placeholder economics)"
+      "content": "VetPoints"
     },
     {
       "type": "paragraph",
-      "content": "Earn rate, thresholds and reward items are placeholders pending founder-approved economics."
+      "content": "Balance and history come from the VetPoints ledger (POST /portal/vetpoints). The reward threshold and name below are theme settings, not part of the ledger."
     },
     {
       "type": "range",
@@ -269,7 +269,7 @@
       "type": "text",
       "id": "next_reward_name",
       "label": "Next reward name",
-      "default": "a free plush toy"
+      "default": "Free Surprise Gift"
     },
     {
       "type": "header",

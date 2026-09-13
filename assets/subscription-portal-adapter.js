@@ -166,7 +166,7 @@
 
     var pointsPerRenewal = config.pointsPerRenewal || 100;
     var nextRewardAt = config.nextRewardAt || 800;
-    var nextRewardName = config.nextRewardName || 'a free plush toy';
+    var nextRewardName = config.nextRewardName || 'Free Surprise Gift';
 
     var currency = config.currencyCode || 'USD';
 
@@ -519,6 +519,7 @@
    *   POST {base}/auth/request-link  { email }        -> 202, always neutral
    *   POST {base}/auth/exchange      { vp_handoff }   -> { session }
    *   POST {base}/portal/subscription { session }     -> portal view model
+   *   POST {base}/portal/vetpoints   { session }      -> VetPoints ledger
    *   POST {base}/auth/logout        { session }      -> 200, idempotent
    *
    * Rules this file must keep:
@@ -656,6 +657,12 @@
     var today = opts.today || VetPetsPortal.dates.toISO(new Date());
     // Resolved once, from the rendered page, never from the URL.
     var previewReturn = 'themeId' in opts ? previewThemeId(opts.themeId) : previewThemeId();
+
+    // The reward threshold and name are theme settings, not something the
+    // ledger invents — the ledger only ever owns the balance and the history.
+    var pointsPerRenewal = opts.pointsPerRenewal || 100;
+    var nextRewardAt = opts.nextRewardAt || 800;
+    var nextRewardName = opts.nextRewardName || 'Free Surprise Gift';
 
     /** One place that talks to the backend. Same-origin, first-party. */
     function post(path, body) {
@@ -824,6 +831,64 @@
       });
 
       return pending;
+    }
+
+    /**
+     * VetPoints has its own endpoint and its own cache, separate from
+     * readPortal(): the ledger is not part of the subscription view Phoenix
+     * returns, and a customer with no subscription can still hold points.
+     */
+    var loyaltyPending = null;
+
+    function readLoyalty(force) {
+      if (loyaltyPending && !force) return loyaltyPending;
+
+      loyaltyPending = post('/portal/vetpoints', { session: requireSession() }).then(function (r) {
+        if (r.status === 401) {
+          store.clear();
+          loyaltyPending = null;
+          throw PortalError('unauthenticated', 'Your session has expired.');
+        }
+        if (!r.ok || !r.data) {
+          loyaltyPending = null;
+          throw PortalError(
+            (r.data && r.data.error) || 'server',
+            'VetPoints is temporarily unavailable.'
+          );
+        }
+        return r.data;
+      }, function (err) {
+        loyaltyPending = null;
+        throw err;
+      });
+
+      return loyaltyPending;
+    }
+
+    /**
+     * Map the ledger's response into what the controller renders.
+     *
+     * The balance and the history are the ledger's own — nothing here invents
+     * a number. The reward threshold and name stay theme settings unless the
+     * ledger sends its own, matching how the mock persona already works.
+     */
+    function projectLoyalty(data) {
+      var points = typeof data.points === 'number' ? data.points : 0;
+      var perRenewal = typeof data.perRenewal === 'number' ? data.perRenewal : pointsPerRenewal;
+      var rewardAt = typeof data.nextRewardAt === 'number' ? data.nextRewardAt : nextRewardAt;
+      var rewardName = data.nextRewardName || nextRewardName;
+
+      return {
+        source: 'live',
+        points: points,
+        perRenewal: perRenewal,
+        nextRewardAt: rewardAt,
+        nextRewardName: rewardName,
+        toNextReward: Math.max(0, rewardAt - points),
+        progressPercent: rewardAt > 0 ? Math.min(100, Math.round((points / rewardAt) * 100)) : 0,
+        disclosure: data.disclosure || '',
+        history: Array.isArray(data.history) ? data.history : []
+      };
     }
 
     function daysUntil(iso) {
@@ -1178,12 +1243,24 @@
         return mutate('/portal/reactivate', {}, opts);
       },
 
-      /* --- loyalty: not part of this phase, and not faked --- */
-
-      getLoyalty: function () {
-        // VetPoints has no backend yet. Returning a number here would put a
-        // fabricated balance in front of a real customer.
-        return Promise.resolve(null);
+      /* --- loyalty: VetPoints, read from its own ledger endpoint ---------
+       *
+       * A ledger outage must not take down the subscription, deliveries or
+       * cancellation screens with it: those are read through readPortal() and
+       * this never touches that cache. An expired session (401) is the one
+       * failure shared with everything else, because that ends the whole
+       * visit regardless of which read surfaced it first — every other
+       * failure here resolves to an error marker the VetPoints screen alone
+       * reacts to, rather than rejecting the whole portal load.
+       *
+       * `force` bypasses the per-load cache — used by the screen's own retry,
+       * never by the initial load.
+       */
+      getLoyalty: function (force) {
+        return readLoyalty(force).then(projectLoyalty, function (err) {
+          if (err && err.code === 'unauthenticated') throw err;
+          return { error: { code: (err && err.code) || 'server' } };
+        });
       },
 
       listRewards: function () {

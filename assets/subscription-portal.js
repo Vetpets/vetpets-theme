@@ -72,6 +72,7 @@
       reasonError: null,
       data: null,
       loyalty: null,
+      loyaltyPending: false,
       customer: null,
       inactive: [],
       deliveries: null,
@@ -100,7 +101,7 @@
       latency: parseInt(d.sppLatency, 10) || 0,
       pointsPerRenewal: parseInt(d.sppPointsPerRenewal, 10) || 100,
       nextRewardAt: parseInt(d.sppNextRewardAt, 10) || 800,
-      nextRewardName: d.sppNextRewardName || 'a free plush toy',
+      nextRewardName: d.sppNextRewardName || 'Free Surprise Gift',
       images: {
         freshwipes: d.sppImgFreshwipes || '',
         eyewipes: d.sppImgEyewipes || '',
@@ -421,30 +422,22 @@
    * ================================================================= */
 
   /**
-   * VETPOINTS IS OFF.
+   * VETPOINTS IS LIVE.
    *
-   * Not a design decision — a truthfulness one. There is no VetPoints backend
-   * at all: no ledger table, no balance, no reward catalogue, no redemption
-   * route, no fulfilment record. `/health` reports `loyalty: false` and says
-   * so in a comment next to the constant.
+   * The ledger now exists: `getLoyalty()` reads a real balance and history
+   * from POST /portal/vetpoints, session-authenticated exactly like every
+   * other portal read. Nothing here fabricates a number — a customer with no
+   * ledger entry yet sees zero, not a placeholder.
    *
-   * Every number the card can show today therefore comes from theme settings:
-   * a points balance, a progress bar, a threshold, "each renewal adds 100
-   * points". Shown to a real customer those are not placeholders, they are
-   * claims about a balance they own — and the moment a real ledger exists,
-   * whatever it says will contradict them.
+   * The reward catalogue and redemption request are still out of scope: the
+   * screen shows the balance, the progress toward the configured threshold,
+   * and the transaction history, and nothing more.
    *
-   * The worst version of this is a customer who believes they have banked
-   * points that no system has ever recorded. So the whole surface is hidden
-   * rather than shipped unfinished: card, account row, navigation, the
-   * cancelled-screen line, and the sentence in the skip sheet that asserted an
-   * earning rule.
-   *
-   * Flipping this to true reveals every [data-spp-loyalty] element again. Do
-   * that only when the ledger, the balance, the catalogue, the redemption
-   * request and its fulfilment status are real and tested.
+   * Flipping this back to false re-hides every [data-spp-loyalty] element and
+   * makes the loyalty screen unreachable again — kept as an emergency switch
+   * if the ledger ever needs to come back down without a code review.
    */
-  var LOYALTY_ENABLED = false;
+  var LOYALTY_ENABLED = true;
 
   /** Screens a customer must not reach while their feature is off. */
   var DISABLED_SCREENS = LOYALTY_ENABLED ? {} : { loyalty: 1 };
@@ -923,7 +916,11 @@
       vm['sheet.rescheduleError'] = this.rescheduleError() || '';
     }
 
-    if (loy) {
+    // A failed VetPoints read is never rendered as a balance: loy.error marks
+    // the ledger call that failed, and the screen shows its own error state
+    // instead of these fields (see the data-spp-when="loyalty:*" toggle in
+    // render(), below).
+    if (loy && !loy.error) {
       vm['loyalty.points'] = String(loy.points);
       vm['loyalty.perRenewal'] = String(loy.perRenewal);
       vm['loyalty.nextRewardAt'] = String(loy.nextRewardAt);
@@ -932,6 +929,7 @@
       vm['loyalty.progressPercent'] = loy.progressPercent;
       vm['loyalty.disclosure'] = loy.disclosure || '';
     }
+    vm['label.retryLoyalty'] = s.loyaltyPending ? 'Retrying…' : 'Try again';
 
     vm['account.activeCount'] = sub && sub.status !== 'cancelled' ? '1 active' : '0 active';
     vm['account.inactiveCount'] = String(s.inactive.length);
@@ -1058,10 +1056,21 @@
     // Status is a single canonical value: active or cancelled. At most one
     // conditional block can ever be visible.
     var status = this.state.data ? this.state.data.status : 'active';
+
+    // A failed VetPoints read (anything but an expired session, which signs
+    // the whole visit out instead) is its own condition, checked here rather
+    // than folded into `loy` truthiness so a screen can show "no data yet"
+    // and "the read failed" differently if it ever needs to.
+    var loy = this.state.loyalty;
+    var loyaltyFailed = !!(loy && loy.error);
+    var loyaltyHistoryCount = (loy && !loy.error && loy.history) ? loy.history.length : 0;
+
     var conds = this.root.querySelectorAll('[data-spp-when]');
     for (i = 0; i < conds.length; i++) {
       var expr = conds[i].getAttribute('data-spp-when').split(':');
       if (expr[0] === 'status') conds[i].hidden = status !== expr[1];
+      if (expr[0] === 'loyalty') conds[i].hidden = (expr[1] === 'error') !== loyaltyFailed;
+      if (expr[0] === 'loyaltyHistory') conds[i].hidden = (expr[1] === 'has') !== (loyaltyHistoryCount > 0);
     }
 
     var badge = this.root.querySelector('[data-spp-status-badge]');
@@ -1297,7 +1306,7 @@
         });
 
       case 'pointsHistory':
-        return (s.loyalty ? s.loyalty.history : []).map(function (h) {
+        return (s.loyalty && !s.loyalty.error && s.loyalty.history ? s.loyalty.history : []).map(function (h) {
           return {
             label: h.label,
             dateLong: self.fmtDate(h.date, 'full'),
@@ -1820,6 +1829,28 @@
         if (!this.hasSession()) { this.fail(NS.PortalError('unauthenticated', '')); return; }
         this.show('loading');
         this.load().then(function () { self.show('dashboard'); }).catch(function (e) { self.fail(e); });
+        return;
+
+      /**
+       * Re-read VetPoints only. A ledger outage is scoped to this one screen
+       * (see the adapter's getLoyalty), so retrying it never touches the
+       * subscription, deliveries or cancellation state — no full-portal
+       * reload, no loading screen.
+       */
+      case 'retryLoyalty':
+        if (s.loyaltyPending) return;
+        s.loyaltyPending = true;
+        this.render();
+        this.adapter.getLoyalty(true).then(function (loy) {
+          s.loyaltyPending = false;
+          s.loyalty = loy;
+          self.render();
+        }, function (err) {
+          // The one failure this can still throw is an expired session,
+          // which ends the visit exactly like any other read would.
+          s.loyaltyPending = false;
+          self.fail(err);
+        });
         return;
 
       /* --- POST /update-next-billing-date --- */

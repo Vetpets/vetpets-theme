@@ -1,0 +1,10 @@
+{
+  "capturedAt": "2026-08-30",
+  "note": "Live capture from shopvetpets.com. See README.md for the exact curl.",
+  "requestedUrl": "https://shopvetpets.com/pages/subscription-policy?spp_dev=1&view=subscription-portal&preview_theme_id=181692858635&vp_handoff=TESTCODE123",
+  "status": 302,
+  "location": "https://shopvetpets.com/pages/subscription-policy?spp_dev=1&view=subscription-portal&vp_handoff=TESTCODE123",
+  "setCookieName": "_shopify_essential",
+  "setCookieHttpOnly": true,
+  "finalUrl": "https://shopvetpets.com/pages/subscription-policy?spp_dev=1&view=subscription-portal&vp_handoff=TESTCODE123"
+}
