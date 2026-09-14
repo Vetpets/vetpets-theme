@@ -75,7 +75,6 @@
   data-spp-points-per-renewal="{{ section.settings.points_per_renewal | default: 100 }}"
   data-spp-next-reward-at="{{ section.settings.next_reward_at | default: 800 }}"
   data-spp-next-reward-name="{{ section.settings.next_reward_name | default: 'Free Surprise Gift' | escape }}"
-  data-spp-vet-video-url="{{ section.settings.vet_video_url | escape }}"
   data-spp-dev-default="{{ dev_default }}"
   data-spp-img-freshwipes="{{ img_fresh }}"
   data-spp-img-eyewipes="{{ img_eye }}"
@@ -272,16 +271,6 @@
       "id": "next_reward_name",
       "label": "Next reward name",
       "default": "Free Surprise Gift"
-    },
-    {
-      "type": "header",
-      "content": "Cancellation flow"
-    },
-    {
-      "type": "url",
-      "id": "vet_video_url",
-      "label": "Vet introduction video URL",
-      "info": "Optional. A hosted video URL (YouTube, Vimeo, or a direct .mp4) shown on cancellation step 1, above the benefits list. Leave blank to show the static image instead — never a placeholder video. Set this only once a real video exists; nothing here is invented."
     },
     {
       "type": "header",

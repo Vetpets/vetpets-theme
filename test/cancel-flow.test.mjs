@@ -30,6 +30,7 @@ const read = (...p) => readFileSync(resolve(here, '..', ...p), 'utf8');
 const src = read('assets', 'subscription-portal.js');
 const cancelScreens = read('snippets', 'spp-screen-cancel.liquid');
 const css = read('assets', 'subscription-portal.css');
+const sectionSource = read('sections', 'subscription-portal.liquid');
 
 /* ---------------------------------------------------------------- helpers */
 
@@ -358,10 +359,38 @@ describe('step 2 — before you cancel', () => {
     assert.match(step, /Why consistency matters/);
   });
 
-  test('uses the approved 16:9 image, not a generated substitute', () => {
-    assert.match(step, /spp-cancel-benefits\.png/);
-    assert.match(step, /spp__media-16x9/);
-    assert.match(step, /alt="[^"]+"/, 'the image must be described');
+  test('the final vet video replaces the placeholder — desktop/tablet gets 16:9, mobile gets 1:1', () => {
+    // One <video>, two <source>s: the browser's own resource-selection
+    // algorithm fetches only the first matching source, so a phone never
+    // downloads the desktop file and vice versa — see spp__vet-video in
+    // subscription-portal.css for the matching container aspect-ratio.
+    assert.match(step, /spp__vet-video/);
+    assert.match(
+      step,
+      /<source src="https:\/\/cdn\.shopify\.com\/videos\/c\/o\/v\/be6c0d1c00b3463797270f2fc43c2815\.mp4" type="video\/mp4" media="\(min-width: 1024px\)">/,
+    );
+    assert.match(
+      step,
+      /<source src="https:\/\/cdn\.shopify\.com\/videos\/c\/o\/v\/1d4391c64d264e46b877c356e1396f4a\.mp4" type="video\/mp4">/,
+    );
+  });
+
+  test('plays inline with visible controls, and autoplays muted rather than with sound', () => {
+    const video = /<video[^>]*>/.exec(step);
+    assert.ok(video, 'the <video> element must exist');
+    for (const attr of ['playsinline', 'muted', 'autoplay', 'controls']) {
+      assert.match(video[0], new RegExp(`\\b${attr}\\b`), `<video> must have ${attr}`);
+    }
+  });
+
+  test('keeps the approved poster image, described for assistive tech', () => {
+    assert.match(step, /poster="[^"]*spp-cancel-benefits\.png[^"]*"/);
+    assert.match(step, /aria-label="[^"]+"/, 'the video must be described');
+  });
+
+  test('the old vet_video_url placeholder setting is gone — this IS the final video', () => {
+    assert.ok(!/vet_video_url/.test(src), 'the superseded theme setting must not survive in the controller either');
+    assert.ok(!/data-spp-vet-video-url/.test(sectionSource), 'the section must not still read the removed setting');
   });
 
   test('the real, aggregate trust bar stands in for the named-reviewer carousel', () => {

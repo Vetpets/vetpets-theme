@@ -1372,6 +1372,30 @@
   object-fit: contain;
 }
 
+/* The final "before you cancel" veterinarian video — see the <source>
+   pair in spp-screen-cancel.liquid. 1:1 by default (the mobile video's
+   own shape); 16:9 at the same 1024px breakpoint the browser itself uses
+   to pick the desktop <source>, so the reserved space always matches
+   whichever file actually loads. object-fit: contain, never cover, so
+   neither video is cropped to fit the other's aspect ratio. */
+.spp__vet-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--spp-surface-neutral, #F2FAFE);
+}
+.spp__vet-video-el {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+@media (min-width: 1024px) {
+  .spp__vet-video { aspect-ratio: 16 / 9; }
+}
+
 /* The small capsule above a heading — "More time, not the end". */
 .spp__pill {
   display: inline-flex;
@@ -1496,4 +1520,5 @@
   /* The composed 16:9 images carry small product labels; letting them
      run the full width keeps those legible on a phone. */
   .spp__media-16x9 { border-radius: 12px; }
+  .spp__vet-video { border-radius: 12px; }
 }

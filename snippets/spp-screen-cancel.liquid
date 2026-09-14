@@ -100,7 +100,7 @@
       carousel, which quotes a named, verified individual customer. There
       is no such real, attributable quote in this codebase to show
       instead, and inventing one is exactly the kind of fabrication this
-      portal avoids everywhere else (see the vet-video note just below).
+      portal avoids everywhere else.
     {%- endcomment -%}
     <div class="spp__trustbar">
       <span class="spp__trustbar-stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
@@ -108,24 +108,37 @@
     </div>
 
     {%- comment -%}
-      Veterinarian introduction video — a replaceable config value, never a
-      fabricated video. data-spp-vet-video-url (root element, from
-      section.settings.vet_video_url) is empty by default, in which case
-      this stays exactly the static image it always was. Only when a real
-      video URL is set in the theme editor does init() in
-      subscription-portal.js swap [data-spp-vet-video] in for the image —
-      see applyVetVideo() there. Nothing renders here until that setting is
-      filled in with an actual, hosted video.
+      Final veterinarian video — replaces the temporary placeholder
+      entirely (the old vet_video_url theme setting and its empty-by-
+      default image/video swap are gone; there is nothing left to
+      configure here, this IS the approved video).
+
+      One <video> with two <source>s, not two <video> elements: the
+      browser's resource-selection algorithm evaluates each <source>'s
+      `media` attribute in order and fetches ONLY the first one that
+      matches — so a phone never downloads the desktop 16:9 file and a
+      desktop browser never downloads the mobile 1:1 file. 1024px matches
+      the one desktop breakpoint already used everywhere else in this
+      file (see .spp__ms-row). Sized with no forced aspect-ratio beyond
+      what .spp__vet-video sets at that same breakpoint, and object-fit:
+      contain rather than cover, so neither video is ever cropped or
+      stretched to fit the other's shape.
     {%- endcomment -%}
     <div class="spp__eyebrow" style="margin-top:18px;">Watch &middot; about 90 seconds</div>
     <h2 class="spp__h2" style="margin-top:4px;">Why consistency matters</h2>
-    <div class="spp__media-16x9" data-spp-vet-media style="margin-top:10px;">
-      <img
-        data-spp-vet-image
-        src="{{ 'spp-cancel-benefits.png' | asset_url }}"
-        alt="A dog resting, waiting for its daily care routine"
-        width="1280" height="720" loading="lazy" decoding="async">
-      <div data-spp-vet-video hidden></div>
+    <div class="spp__vet-video" style="margin-top:10px;">
+      <video
+        class="spp__vet-video-el"
+        playsinline
+        muted
+        autoplay
+        controls
+        preload="metadata"
+        poster="{{ 'spp-cancel-benefits.png' | asset_url }}"
+        aria-label="A veterinarian explains why consistency matters for your dog's daily care routine">
+        <source src="https://cdn.shopify.com/videos/c/o/v/be6c0d1c00b3463797270f2fc43c2815.mp4" type="video/mp4" media="(min-width: 1024px)">
+        <source src="https://cdn.shopify.com/videos/c/o/v/1d4391c64d264e46b877c356e1396f4a.mp4" type="video/mp4">
+      </video>
     </div>
 
     <button type="button" class="spp__btn spp__btn--primary" style="margin-top:20px;" data-spp-go="subscription">Never mind, keep my Routine Care</button>
