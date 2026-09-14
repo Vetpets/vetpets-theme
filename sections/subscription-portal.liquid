@@ -75,6 +75,7 @@
   data-spp-points-per-renewal="{{ section.settings.points_per_renewal | default: 100 }}"
   data-spp-next-reward-at="{{ section.settings.next_reward_at | default: 800 }}"
   data-spp-next-reward-name="{{ section.settings.next_reward_name | default: 'Free Surprise Gift' | escape }}"
+  data-spp-vet-video-url="{{ section.settings.vet_video_url | escape }}"
   data-spp-dev-default="{{ dev_default }}"
   data-spp-img-freshwipes="{{ img_fresh }}"
   data-spp-img-eyewipes="{{ img_eye }}"
@@ -119,7 +120,7 @@
     <nav class="spp__nav" aria-label="Portal sections">
       <button type="button" class="spp__nav-link" data-spp-go="dashboard" data-spp-nav="dashboard">Overview</button>
       <button type="button" class="spp__nav-link" data-spp-go="deliveries" data-spp-nav="deliveries">Deliveries</button>
-      <button type="button" class="spp__nav-link" data-spp-go="loyalty" data-spp-nav="loyalty">VetPoints</button>
+      <button type="button" class="spp__nav-link" data-spp-go="loyalty" data-spp-nav="loyalty" data-spp-loyalty hidden>VetPoints</button>
       <button type="button" class="spp__nav-link" data-spp-go="account" data-spp-nav="account">Account</button>
       <span class="spp__avatar" data-spp-field="customer.initials" aria-hidden="true">ME</span>
     </nav>
@@ -151,7 +152,7 @@
       {% render 'spp-icon', icon: 'tab-deliveries' %}
       Deliveries
     </button>
-    <button type="button" class="spp__tab" data-spp-go="loyalty" data-spp-nav="loyalty">
+    <button type="button" class="spp__tab" data-spp-go="loyalty" data-spp-nav="loyalty" data-spp-loyalty hidden>
       {% render 'spp-icon', icon: 'tab-points' %}
       VetPoints
     </button>
@@ -270,6 +271,16 @@
       "id": "next_reward_name",
       "label": "Next reward name",
       "default": "Free Surprise Gift"
+    },
+    {
+      "type": "header",
+      "content": "Cancellation flow"
+    },
+    {
+      "type": "url",
+      "id": "vet_video_url",
+      "label": "Vet introduction video URL",
+      "info": "Optional. A hosted video URL (YouTube, Vimeo, or a direct .mp4) shown on cancellation step 1, above the benefits list. Leave blank to show the static image instead — never a placeholder video. Set this only once a real video exists; nothing here is invented."
     },
     {
       "type": "header",

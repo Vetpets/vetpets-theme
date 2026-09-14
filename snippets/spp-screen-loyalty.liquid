@@ -44,54 +44,59 @@
           <div class="spp__progress spp__progress--on-blue">
             <span data-spp-style-width="loyalty.progressPercent"></span>
           </div>
-          <p class="spp__points-fine">
-            <span data-spp-field="loyalty.nextRewardAt">800</span> VetPoints &rarr;
-            <span data-spp-field="loyalty.nextRewardName">Free Surprise Gift</span>
+          <p data-spp-when="loyaltyMilestones:complete" hidden>
+            You&rsquo;ve unlocked every VetPoints reward. Thank you for being a VetPets subscriber.
           </p>
-          <p>
-            <span data-spp-field="loyalty.toNextReward">800</span> points remaining until your reward
-          </p>
+          <div data-spp-when="loyaltyMilestones:remaining" hidden>
+            <p class="spp__points-fine">
+              <span data-spp-field="loyalty.nextRewardAt">800</span> VetPoints &rarr;
+              <span data-spp-field="loyalty.nextRewardName">Free Surprise Gift</span>
+            </p>
+            <p>
+              <span data-spp-field="loyalty.toNextReward">800</span> points remaining until your next reward
+            </p>
+          </div>
         </div>
 
+        {%- comment -%}
+          The VetPoints journey — one row per founder-approved milestone,
+          200 through 1,600. Achieved / current / locked state is computed
+          from the real balance alone (see the `milestones` list in
+          assets/subscription-portal.js) — nothing here is redeemed or
+          requested by the customer; every reward is issued automatically
+          by the backend the moment its threshold is crossed.
+        {%- endcomment -%}
         <div class="spp__card">
-          <h2 class="spp__h2" style="margin-bottom:14px;">How VetPoints work</h2>
-          <div style="display:flex;flex-direction:column;gap:14px;">
-            <div style="display:flex;gap:13px;align-items:flex-start;">
-              <span class="spp__disc" style="width:38px;height:38px;margin:0;flex:0 0 auto;color:var(--spp-accent);">
-                {% render 'spp-icon', icon: 'paw', size: 20 %}
-              </span>
-              <p style="margin:0;font:500 14.5px/1.5 var(--spp-font);color:var(--spp-body);">
-                <strong style="color:var(--spp-ink);"><span data-spp-field="loyalty.perRenewal">100</span> points</strong>
-                for every delivery that renews successfully.
-              </p>
-            </div>
-            <div style="display:flex;gap:13px;align-items:flex-start;">
-              <span class="spp__disc" style="width:38px;height:38px;margin:0;flex:0 0 auto;color:var(--spp-accent);">
-                {% render 'spp-icon', icon: 'sparkle', size: 20 %}
-              </span>
-              <p style="margin:0;font:500 14.5px/1.5 var(--spp-font);color:var(--spp-body);">
-                Rewards unlock starting at
-                <strong style="color:var(--spp-ink);"><span data-spp-field="loyalty.nextRewardAt">800</span> points</strong>
-                &mdash; redeem whenever you like.
-              </p>
-            </div>
-            <div style="display:flex;gap:13px;align-items:flex-start;">
-              <span class="spp__disc" style="width:38px;height:38px;margin:0;flex:0 0 auto;color:var(--spp-accent);">
-                {% render 'spp-icon', icon: 'eye', size: 20 %}
-              </span>
-              <p style="margin:0;font:500 14.5px/1.5 var(--spp-font);color:var(--spp-body);">
-                Points are kept for 12 months, including while a subscription is paused.
-              </p>
-            </div>
+          <h2 class="spp__h2" style="margin-bottom:4px;">Your VetPoints journey</h2>
+          <p class="spp__note" style="margin:0 0 14px;">
+            Rewards are sent to you automatically the moment you reach each milestone &mdash; nothing to redeem.
+          </p>
+          <div data-spp-list="milestones">
+            <template data-spp-tpl="milestones">
+              <div class="spp__milestone">
+                <span class="spp__thumb spp__thumb--lg" data-spp-thumb><img data-spp-img alt=""></span>
+                <div class="spp__milestone-body">
+                  <div class="spp__media-title" data-spp-field="name">Dental Chew Ball</div>
+                  <div class="spp__media-meta" data-spp-field="pointsLabel">200 points</div>
+                </div>
+                <span class="spp__milestone-badge" data-spp-milestone-badge></span>
+              </div>
+            </template>
+          </div>
+          <div style="display:flex;gap:13px;align-items:flex-start;margin-top:16px;padding-top:16px;border-top:1px solid rgba(13,35,64,.09);">
+            <span class="spp__disc" style="width:38px;height:38px;margin:0;flex:0 0 auto;color:var(--spp-accent);">
+              {% render 'spp-icon', icon: 'paw', size: 20 %}
+            </span>
+            <p style="margin:0;font:500 14.5px/1.5 var(--spp-font);color:var(--spp-body);">
+              <strong style="color:var(--spp-ink);"><span data-spp-field="loyalty.perRenewal">100</span> points</strong>
+              for every delivery that renews successfully.
+            </p>
           </div>
           <p class="spp__info spp__info--dashed" style="margin-top:16px;padding:11px 13px;border-radius:12px;" data-spp-field="loyalty.disclosure"></p>
           <p class="spp__note" style="margin-top:10px;">
             Points are awarded by VetPets from settled recurring orders and are reconciled against refunds.
-            Requesting a reward reserves your points; the reward is added to an upcoming delivery by our team.
           </p>
         </div>
-
-        <button type="button" class="spp__btn spp__btn--primary" data-spp-go="rewards">Browse rewards catalogue</button>
       </div>
     </div>
 

@@ -245,7 +245,7 @@ describe('live mode shows no prototype data', () => {
     const liveAdapterSrc = adapter.slice(adapter.indexOf('VetPetsPortal.createHttpAdapter'));
     const projected = /function projectLoyalty\(data\)[\s\S]*?\n    \}/.exec(liveAdapterSrc);
     assert.ok(projected, 'the live adapter must map the ledger response, not fabricate one');
-    assert.match(projected[0], /data\.points/, 'the balance must come from the ledger response');
+    assert.match(projected[0], /data\.balance/, 'the balance must come from the ledger response');
     assert.match(projected[0], /data\.history/, 'the history must come from the ledger response');
 
     // A failed read resolves to a marked failure, never a substituted number.

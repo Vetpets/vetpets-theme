@@ -1064,6 +1064,7 @@
     var loy = this.state.loyalty;
     var loyaltyFailed = !!(loy && loy.error);
     var loyaltyHistoryCount = (loy && !loy.error && loy.history) ? loy.history.length : 0;
+    var loyaltyAllReached = !!(loy && !loy.error && loy.allMilestonesReached);
 
     var conds = this.root.querySelectorAll('[data-spp-when]');
     for (i = 0; i < conds.length; i++) {
@@ -1071,6 +1072,7 @@
       if (expr[0] === 'status') conds[i].hidden = status !== expr[1];
       if (expr[0] === 'loyalty') conds[i].hidden = (expr[1] === 'error') !== loyaltyFailed;
       if (expr[0] === 'loyaltyHistory') conds[i].hidden = (expr[1] === 'has') !== (loyaltyHistoryCount > 0);
+      if (expr[0] === 'loyaltyMilestones') conds[i].hidden = (expr[1] === 'complete') !== loyaltyAllReached;
     }
 
     var badge = this.root.querySelector('[data-spp-status-badge]');
@@ -1176,6 +1178,20 @@
     '<rect x="3.2" y="5.2" width="17.6" height="13.6" rx="2.6" stroke="currentColor" stroke-width="1.6"/>' +
     '<circle cx="8.6" cy="10" r="1.6" fill="currentColor"/>' +
     '<path d="M3.6 16.4l4.6-4 3.4 3 3.2-2.6 5.4 4.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>' +
+    '</svg>';
+
+  /* VetPoints milestone ladder badges — same paths as spp-icon.liquid's
+     'check-circle' and 'lock', inlined because a list row is rebuilt in JS,
+     not rendered through Liquid. Keep both in sync with spp-icon.liquid by
+     hand if that snippet's paths ever change. */
+  var MILESTONE_CHECK_SVG = '<svg width="20" height="20" viewBox="0 0 19 19" fill="none" aria-hidden="true" focusable="false">' +
+    '<circle cx="9.5" cy="9.5" r="8.4" fill="var(--spp-accent)"/>' +
+    '<path d="M5.8 9.7l2.6 2.6 5-5.4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>' +
+    '</svg>';
+  var MILESTONE_LOCK_SVG = '<svg width="18" height="20" viewBox="0 0 26 30" fill="none" aria-hidden="true" focusable="false">' +
+    '<rect x="3" y="12" width="20" height="15" rx="4" stroke="var(--spp-muted)" stroke-width="2"/>' +
+    '<path d="M8 12V8a5 5 0 0110 0v4" stroke="var(--spp-muted)" stroke-width="2" stroke-linecap="round"/>' +
+    '<circle cx="13" cy="19.5" r="2" fill="var(--spp-muted)"/>' +
     '</svg>';
 
   /**
@@ -1313,6 +1329,38 @@
             delta: (h.delta > 0 ? '+' : '−') + Math.abs(h.delta)
           };
         });
+
+      case 'milestones': {
+        // The real balance is the only thing that decides achieved/current/
+        // locked. The ladder itself (thresholds, names, images) is fixed —
+        // see VetPetsPortal.vetpointsMilestones — and identical to what the
+        // backend awards against, so this never needs its own data source.
+        var balance = (s.loyalty && !s.loyalty.error) ? s.loyalty.points : 0;
+        var nextPoints = null;
+        for (var mi = 0; mi < NS.vetpointsMilestones.length; mi++) {
+          if (NS.vetpointsMilestones[mi].points > balance) { nextPoints = NS.vetpointsMilestones[mi].points; break; }
+        }
+        return NS.vetpointsMilestones.map(function (m) {
+          var achieved = balance >= m.points;
+          var current = !achieved && m.points === nextPoints;
+          var stateLabel = achieved ? 'Unlocked'
+            : current ? (Math.max(0, m.points - balance) + ' points to go')
+            : 'Locked';
+          return {
+            name: m.name,
+            pointsLabel: m.points + ' points',
+            stateLabel: stateLabel,
+            // Shown at every state, including locked — the point of a
+            // journey is seeing what is still ahead. Only a genuinely
+            // unresolved reward (no product chosen yet) falls back to the
+            // pending-photo tile, via _pending below.
+            _image: m.image || '',
+            _pending: !m.image,
+            _alt2: m.name,
+            _milestoneState: achieved ? 'achieved' : (current ? 'current' : 'locked')
+          };
+        });
+      }
 
       case 'rewards':
         return s.rewards.map(function (r) {
@@ -1515,6 +1563,29 @@
           btn.style.background = 'var(--spp-surface-neutral)';
           btn.style.color = 'var(--spp-muted)';
           btn.setAttribute('aria-disabled', 'true');
+        }
+      }
+    }
+
+    if (listName === 'milestones') {
+      node.classList.remove('spp__milestone--achieved', 'spp__milestone--current', 'spp__milestone--locked');
+      node.classList.add('spp__milestone--' + item._milestoneState);
+
+      var mThumb = node.querySelector('[data-spp-thumb]');
+      if (mThumb) mThumb.classList.toggle('spp__thumb--muted', item._milestoneState === 'locked');
+
+      var badge = node.querySelector('[data-spp-milestone-badge]');
+      if (badge) {
+        if (item._milestoneState === 'achieved') {
+          badge.innerHTML = MILESTONE_CHECK_SVG;
+          badge.className = 'spp__milestone-badge';
+        } else if (item._milestoneState === 'current') {
+          badge.innerHTML = '';
+          badge.className = 'spp__milestone-badge spp__milestone-badge--current';
+          badge.textContent = item.stateLabel;
+        } else {
+          badge.innerHTML = MILESTONE_LOCK_SVG;
+          badge.className = 'spp__milestone-badge';
         }
       }
     }

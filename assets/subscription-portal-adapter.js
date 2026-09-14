@@ -48,6 +48,63 @@
 
   var VetPetsPortal = (window.VetPetsPortal = window.VetPetsPortal || {});
 
+  /**
+   * The VetPoints milestone ladder — six founder-approved rewards, every
+   * threshold and product resolved against the live Shopify catalogue
+   * (see the backend's migrations/0007_vetpoints.sql and
+   * src/vetpoints/milestones.ts). This is the SAME list the backend uses to
+   * decide when a reward order is created; it is duplicated here only for
+   * display, never to decide anything. The real balance always comes from
+   * POST /portal/vetpoints — see readLoyalty() below — and this ladder is
+   * pure UI: which of the six a real balance has reached.
+   *
+   * `image` is the resolved product's own real Shopify product photo — not
+   * mockup art — for the three milestones with an unambiguous variant. The
+   * three still-ambiguous rewards (see the migration's own notes on why
+   * each was left unresolved rather than guessed) carry `image: null` and
+   * render with the lock/placeholder treatment regardless of achieved
+   * state, so nothing here silently claims a product before a human has
+   * actually chosen it.
+   *
+   * There is deliberately no 2,000-point entry. The tier that used to sit
+   * there ("Complete Dog Care Box") was removed outright, not hidden.
+   */
+  VetPetsPortal.vetpointsMilestones = [
+    {
+      points: 200, name: 'Dental Chew Ball',
+      image: null // AMBIGUOUS product match — see migrations/0008_vetpoints_rewards.sql
+    },
+    {
+      points: 300, name: 'Bite-Resistant Duck Toy',
+      image: 'https://cdn.shopify.com/s/files/1/0735/4833/3323/files/Namnlosdesign-2026-09-13T144149.823.jpg?v=1789305530'
+    },
+    {
+      points: 500, name: 'GloveWipes',
+      image: null // AMBIGUOUS product match — see migrations/0008_vetpoints_rewards.sql
+    },
+    {
+      points: 800, name: 'PawFoam',
+      image: 'https://cdn.shopify.com/s/files/1/0735/4833/3323/files/1_fd2ab80a-51df-46ec-97a6-7f684ee410fe.png?v=1786032201'
+    },
+    {
+      points: 1200, name: 'EarWipes',
+      image: 'https://cdn.shopify.com/s/files/1/0735/4833/3323/files/Namnlosdesign-2026-08-02T164842.665.jpg?v=1785682219'
+    },
+    {
+      points: 1600, name: 'FurEase Brush',
+      image: null // AMBIGUOUS product match — see migrations/0008_vetpoints_rewards.sql
+    }
+  ];
+
+  /** The smallest ladder entry a real balance has not yet reached, or null if every milestone is reached. */
+  VetPetsPortal.nextVetpointsMilestone = function (balance) {
+    var ladder = VetPetsPortal.vetpointsMilestones;
+    for (var i = 0; i < ladder.length; i++) {
+      if (ladder[i].points > balance) return ladder[i];
+    }
+    return null;
+  };
+
   /* ---------------------------------------------------------------
    * Errors
    * --------------------------------------------------------------- */
@@ -865,29 +922,57 @@
       return loyaltyPending;
     }
 
+    /** Human copy for a ledger entry's `reason` — never the raw backend slug. */
+    var HISTORY_REASON_LABELS = {
+      order_paid: 'Order renewed',
+      refund_full: 'Refund reversal',
+      cancelled: 'Order cancelled'
+    };
+
     /**
      * Map the ledger's response into what the controller renders.
      *
-     * The balance and the history are the ledger's own — nothing here invents
-     * a number. The reward threshold and name stay theme settings unless the
-     * ledger sends its own, matching how the mock persona already works.
+     * `balance` and `history` are the ledger's own — nothing here invents a
+     * number. The next-reward threshold and name come from the SAME fixed
+     * milestone ladder the backend awards against (VetPetsPortal.
+     * vetpointsMilestones, above), computed against the real balance —
+     * never from a theme setting, which is now a last-resort fallback only
+     * for the (should-never-happen) case where every milestone is null.
      */
     function projectLoyalty(data) {
-      var points = typeof data.points === 'number' ? data.points : 0;
-      var perRenewal = typeof data.perRenewal === 'number' ? data.perRenewal : pointsPerRenewal;
-      var rewardAt = typeof data.nextRewardAt === 'number' ? data.nextRewardAt : nextRewardAt;
-      var rewardName = data.nextRewardName || nextRewardName;
+      var points = typeof data.balance === 'number' ? data.balance : 0;
+      var next = VetPetsPortal.nextVetpointsMilestone(points);
+      var rewardAt = next ? next.points : nextRewardAt;
+      var rewardName = next ? next.name : nextRewardName;
+
+      var history = (Array.isArray(data.history) ? data.history : []).map(function (h) {
+        // The backend's own shape is {type, delta, reason, createdAt(ms)} —
+        // see src/routes/vetpoints.ts. Mapped here, once, to the
+        // {label, date, delta} shape every renderer of `loyalty.history`
+        // already expects (see listData('pointsHistory') below).
+        var iso = '';
+        try { iso = new Date(h.createdAt).toISOString().slice(0, 10); } catch (e) { iso = ''; }
+        return {
+          label: HISTORY_REASON_LABELS[h.reason] || (h.type === 'reversed' ? 'Points reversed' : 'Points earned'),
+          date: iso,
+          delta: typeof h.delta === 'number' ? h.delta : 0
+        };
+      });
 
       return {
         source: 'live',
         points: points,
-        perRenewal: perRenewal,
+        perRenewal: pointsPerRenewal,
         nextRewardAt: rewardAt,
         nextRewardName: rewardName,
-        toNextReward: Math.max(0, rewardAt - points),
+        // No milestone left ahead — every reward reached. Distinct from "no
+        // ledger yet": the controller shows a "fully unlocked" state for
+        // this rather than "0 more points", which would read as broken.
+        allMilestonesReached: !next,
+        toNextReward: next ? Math.max(0, rewardAt - points) : 0,
         progressPercent: rewardAt > 0 ? Math.min(100, Math.round((points / rewardAt) * 100)) : 0,
         disclosure: data.disclosure || '',
-        history: Array.isArray(data.history) ? data.history : []
+        history: history
       };
     }
 

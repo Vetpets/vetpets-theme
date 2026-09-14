@@ -191,7 +191,10 @@
         <div class="spp__progress spp__progress--on-blue">
           <span data-spp-style-width="loyalty.progressPercent"></span>
         </div>
-        <p>
+        <p data-spp-when="loyaltyMilestones:complete" hidden>
+          You&rsquo;ve unlocked every VetPoints reward.
+        </p>
+        <p data-spp-when="loyaltyMilestones:remaining" hidden>
           <span data-spp-field="loyalty.toNextReward">800</span> more points unlock
           <span data-spp-field="loyalty.nextRewardName">Free Surprise Gift</span>.
           Each renewal adds <span data-spp-field="loyalty.perRenewal">100</span> points.

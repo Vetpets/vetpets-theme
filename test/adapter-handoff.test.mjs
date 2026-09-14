@@ -430,14 +430,20 @@ describe('live adapter — session handling', () => {
   });
 
   test('reads the VetPoints balance and history from their own ledger endpoint', async () => {
+    // The real backend response shape (src/routes/vetpoints.ts on the
+    // subscription-backend repo): {state, balance, history: [{type, delta,
+    // reason, createdAt(ms)}], nextMilestone?}. NOT {points, history:
+    // [{label, date}]} — that was this test's own pre-launch guess, written
+    // before the ledger endpoint existed, and never reconciled against it.
     const { adapter, sent } = adapterWith([
       { status: 200, body: JSON.stringify({ status: 'ok', session: 'S' }) },
       {
         status: 200,
         body: JSON.stringify({
-          points: 450,
+          state: 'ok',
+          balance: 450,
           history: [
-            { label: 'Delivery renewed', date: '2026-07-10', delta: 100, sourceOrderId: 'PHX-1' },
+            { type: 'earned', delta: 100, reason: 'order_paid', createdAt: Date.parse('2026-07-10') },
           ],
         }),
       },
@@ -449,14 +455,17 @@ describe('live adapter — session handling', () => {
     // The balance and history are the ledger's own.
     assert.equal(loyalty.points, 450);
     assert.equal(loyalty.history.length, 1);
-    assert.equal(loyalty.history[0].label, 'Delivery renewed');
-    // The threshold and reward name are theme settings, not the ledger's to
-    // invent — defaulted here since this call passed none.
+    assert.equal(loyalty.history[0].label, 'Order renewed');
+    assert.equal(loyalty.history[0].date, '2026-07-10');
+    assert.equal(loyalty.history[0].delta, 100);
+    // The next reward comes from the real milestone ladder (200, 300, 500,
+    // 800, 1200, 1600 — see VetPetsPortal.vetpointsMilestones), not a theme
+    // setting: 450 points sits between the 300 and 500 milestones.
     assert.equal(loyalty.perRenewal, 100);
-    assert.equal(loyalty.nextRewardAt, 800);
-    assert.equal(loyalty.nextRewardName, 'Free Surprise Gift');
-    assert.equal(loyalty.toNextReward, 350);
-    assert.equal(loyalty.progressPercent, 56);
+    assert.equal(loyalty.nextRewardAt, 500);
+    assert.equal(loyalty.nextRewardName, 'GloveWipes');
+    assert.equal(loyalty.toNextReward, 50);
+    assert.equal(loyalty.progressPercent, 90);
 
     const call = sent.find((s) => s.url.includes('/portal/vetpoints'));
     assert.ok(call, 'the adapter must call /portal/vetpoints');
@@ -470,16 +479,32 @@ describe('live adapter — session handling', () => {
   test('a VetPoints read that finds no ledger entry shows zero, not a placeholder', async () => {
     const { adapter } = adapterWith([
       { status: 200, body: JSON.stringify({ status: 'ok', session: 'S' }) },
-      { status: 200, body: JSON.stringify({ points: 0, history: [] }) },
+      { status: 200, body: JSON.stringify({ state: 'no-points', balance: 0, history: [] }) },
     ]);
 
     await adapter.exchangeHandoff('CODE');
     const loyalty = await adapter.getLoyalty();
 
     assert.equal(loyalty.points, 0);
-    assert.equal(loyalty.toNextReward, 800);
+    // The first rung of the real ladder, not the theme-setting fallback.
+    assert.equal(loyalty.nextRewardAt, 200);
+    assert.equal(loyalty.toNextReward, 200);
     assert.equal(loyalty.progressPercent, 0);
     assert.equal(loyalty.history.length, 0);
+  });
+
+  test('every milestone reached renders as complete, not a stale threshold', async () => {
+    const { adapter } = adapterWith([
+      { status: 200, body: JSON.stringify({ status: 'ok', session: 'S' }) },
+      { status: 200, body: JSON.stringify({ state: 'ok', balance: 1600, history: [] }) },
+    ]);
+
+    await adapter.exchangeHandoff('CODE');
+    const loyalty = await adapter.getLoyalty();
+
+    assert.equal(loyalty.points, 1600);
+    assert.equal(loyalty.allMilestonesReached, true);
+    assert.equal(loyalty.toNextReward, 0);
   });
 
   test('an expired session on the VetPoints read behaves exactly like any other', async () => {

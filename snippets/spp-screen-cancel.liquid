@@ -23,11 +23,23 @@
   </button>
 
   <div class="spp__narrow">
-    <div class="spp__media-16x9">
+    {%- comment -%}
+      Veterinarian introduction video — a replaceable config value, never a
+      fabricated video. data-spp-vet-video-url (root element, from
+      section.settings.vet_video_url) is empty by default, in which case
+      this stays exactly the static image it always was. Only when a real
+      video URL is set in the theme editor does init() in
+      subscription-portal.js swap [data-spp-vet-video] in for the image —
+      see applyVetVideo() there. Nothing renders here until that setting is
+      filled in with an actual, hosted video.
+    {%- endcomment -%}
+    <div class="spp__media-16x9" data-spp-vet-media>
       <img
+        data-spp-vet-image
         src="{{ 'spp-cancel-benefits.png' | asset_url }}"
         alt="A dog resting, waiting for its daily care routine"
         width="1280" height="720" loading="lazy" decoding="async">
+      <div data-spp-vet-video hidden></div>
     </div>
 
     <h1 class="spp__h1" id="spp-cb-h" style="margin-top:18px;">They can&rsquo;t tell you when it comes back</h1>
