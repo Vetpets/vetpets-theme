@@ -1036,7 +1036,43 @@
  * Welcome screen — the approved "RoutineCare benefits" screen shown once
  * after a fresh sign-in. See spp-screen-welcome.liquid.
  * ------------------------------------------------------------------ */
-.spp__card--welcome-delivery { margin: 16px 0 22px; }
+/* The approved design's own 820px content width for this screen —
+ * wider than the .spp__narrow (520px) column most other screens use.
+ * Scoped to this screen only. */
+.spp__welcome { max-width: 820px; margin: 0 auto; }
+.spp__welcome-h1 { font-size: 27px; }
+.spp__welcome-lede { max-width: 560px; }
+
+/* Hero photo + delivery card. Mobile: a plain stacked column (image,
+ * then the card, both full width). Desktop: the card floats over the
+ * image's bottom-right corner instead, exactly as approved — switched
+ * at the same 1024px breakpoint the rest of this file already uses for
+ * desktop/mobile behaviour. */
+.spp__welcome-hero { position: relative; margin-bottom: 24px; }
+.spp__welcome-hero picture { display: block; }
+.spp__welcome-hero-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center;
+  border-radius: var(--spp-r-card-sm);
+  background: var(--spp-light);
+}
+.spp__welcome .spp__card--welcome-delivery { margin: 16px 0 0; }
+@media (min-width: 1024px) {
+  .spp__welcome-hero { margin-bottom: 62px; }
+  .spp__welcome-hero-img { aspect-ratio: 16 / 9; }
+  .spp__welcome .spp__card--welcome-delivery {
+    position: absolute;
+    right: 18px;
+    bottom: -46px;
+    width: 318px;
+    margin: 0;
+    box-shadow: var(--spp-shadow-card-lg);
+  }
+}
+
 .spp__welcome-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1053,8 +1089,8 @@
 .spp__welcome-tile span { font: 500 13px/1.4 var(--spp-font); color: var(--spp-muted); }
 .spp__welcome-tick {
   display: inline-flex;
-  width: 26px;
-  height: 26px;
+  width: 32px;
+  height: 32px;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
@@ -1377,14 +1413,25 @@
    own shape); 16:9 at the same 1024px breakpoint the browser itself uses
    to pick the desktop <source>, so the reserved space always matches
    whichever file actually loads. object-fit: contain, never cover, so
-   neither video is cropped to fit the other's aspect ratio. */
+   neither video is cropped to fit the other's aspect ratio.
+
+   background-image carries the real first-frame poster for whichever
+   file is about to load — two CSS custom properties set inline (per
+   screen instance) rather than the <video> element's single `poster`
+   attribute, since HTML allows only one poster but there are two real
+   source files. This paints instantly, and the <video> paints over it
+   the moment its own first frame is ready, so there is never a blank
+   rectangle while either file loads. */
 .spp__vet-video {
   position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 14px;
   overflow: hidden;
-  background: var(--spp-surface-neutral, #F2FAFE);
+  background-color: var(--spp-surface-neutral, #F2FAFE);
+  background-image: var(--spp-vet-poster-mobile);
+  background-size: cover;
+  background-position: center;
 }
 .spp__vet-video-el {
   display: block;
@@ -1393,8 +1440,160 @@
   object-fit: contain;
 }
 @media (min-width: 1024px) {
-  .spp__vet-video { aspect-ratio: 16 / 9; }
+  .spp__vet-video { aspect-ratio: 16 / 9; background-image: var(--spp-vet-poster-desktop); }
 }
+
+/* Cancel step 2's wide column — the approved design's own 960px content
+   width for this one screen, wider than the .spp__narrow (520px) column
+   every other cancel screen uses. Scoped to this screen only. */
+.spp__cancel-wide { max-width: 960px; margin: 0 auto; }
+
+/* Back link + step indicator, side by side on one row — the approved
+   design's own "‹ Back    BEFORE YOU CANCEL · STEP 2 OF 7" layout. */
+.spp__step-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin-bottom: 12px;
+}
+.spp__step-row .spp__back { margin-bottom: 0; }
+.spp__cancel-step {
+  font: 600 11px/1 var(--spp-font);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--spp-accent);
+}
+
+/* The large blue "Important: before you cancel" panel — bigger and
+   bolder than the shared .spp__pill + .spp__info combo used elsewhere in
+   this file (e.g. cancel-alt's "Did you know?" panel), so it gets its
+   own class rather than changing a rule other screens depend on. */
+.spp__cancel-important {
+  background: var(--spp-light);
+  border: 1.5px solid var(--spp-accent);
+  border-radius: var(--spp-r-card-sm);
+  padding: 18px 20px;
+  margin-bottom: 18px;
+}
+.spp__cancel-important-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font: 800 13px/1.2 var(--spp-font);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--spp-accent);
+}
+.spp__cancel-important-lead {
+  margin: 0 0 9px;
+  font: 600 16.5px/1.45 var(--spp-font);
+  color: var(--spp-ink);
+}
+.spp__cancel-important-lead b { color: var(--spp-accent); font-weight: 800; }
+.spp__cancel-important-body {
+  margin: 0;
+  font: 400 14.5px/1.55 var(--spp-font);
+  color: var(--spp-ink);
+}
+
+/* Two real customer review cards, in the same panel shape as the
+   important-panel above. */
+.spp__reviews-panel {
+  background: var(--spp-light);
+  border-radius: var(--spp-r-card-sm);
+  padding: 12px 12px 11px;
+  margin-bottom: 22px;
+}
+.spp__reviews-head {
+  margin-bottom: 9px;
+  font: 600 13px/1.2 var(--spp-font);
+  color: var(--spp-body);
+  letter-spacing: -0.005em;
+}
+.spp__reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.spp__review-card {
+  background: var(--spp-surface);
+  border-radius: 12px;
+  padding: 11px 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.spp__review-stars { color: #F5A524; font-size: 12px; letter-spacing: 1px; }
+.spp__review-quote {
+  margin: 0;
+  padding-left: 10px;
+  border-left: 2px solid var(--spp-hair-2);
+  font: italic 400 13.5px/1.45 var(--spp-font);
+  color: var(--spp-ink);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+}
+.spp__review-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.spp__review-tag {
+  display: inline-flex;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: var(--spp-primary);
+  color: var(--spp-primary-fg);
+  font: 600 11px/1 var(--spp-font);
+}
+.spp__review-name { font: 700 13px/1 var(--spp-font); color: var(--spp-ink); }
+.spp__review-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font: 600 11.5px/1 var(--spp-font);
+  color: var(--spp-accent);
+}
+@media (max-width: 560px) {
+  .spp__reviews-grid { grid-template-columns: 1fr; }
+}
+
+/* Short lede sitting between the "Why consistency matters" heading and
+   the video itself — approved design copy, this screen only. */
+.spp__cancel-video-lede { margin: 0 0 14px; max-width: 640px; }
+
+/* Veterinarian identity/credential card, directly beneath the video. */
+.spp__vet-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+  padding: 12px 14px;
+  margin: 14px 0 22px;
+  background: var(--spp-surface);
+  border: 1px solid var(--spp-border);
+  border-radius: var(--spp-r-field);
+}
+.spp__vet-card-photo { width: 48px; height: 48px; flex: 0 0 auto; border-radius: 50%; object-fit: cover; }
+.spp__vet-card-body { flex: 1 1 190px; min-width: 190px; }
+.spp__vet-card-body b { display: block; font: 600 14.5px/1.3 var(--spp-font); color: var(--spp-ink); }
+.spp__vet-card-body span { display: block; font: 500 12.5px/1.45 var(--spp-font); color: var(--spp-muted); margin-top: 2px; }
+.spp__vet-card-badge {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--spp-light);
+  font: 600 11.5px/1 var(--spp-font);
+  color: var(--spp-ink);
+}
+.spp__vet-card-badge span { letter-spacing: .1em; text-transform: uppercase; font-size: 11px; }
+
+/* Primary CTA + secondary cancellation link, centred and capped to the
+   same width the design uses for this pair on every cancel screen. */
+.spp__cancel-cta { max-width: 460px; margin: 20px auto 0; }
 
 /* The small capsule above a heading — "More time, not the end". */
 .spp__pill {

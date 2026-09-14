@@ -8,9 +8,15 @@
   passes through here again. There is no data-spp-go="welcome" anywhere in
   this theme's regular nav or tab bar, by design.
 
-  Content and layout are ported field-for-field from the design's
-  "RoutineCare benefits" screen. Two departures from it, both required by
-  what Phoenix actually exposes:
+  Rebuilt field-for-field against the approved Claude Design mockup
+  ("VetPets Portal V2", the isWelcome screen), including its real
+  "hero-lifestyle" photography (captured directly from the design project's
+  own approved assets — see spp-welcome-hero-wide.jpg / -tall.jpg below —
+  never a generated or guessed substitute) and its desktop/mobile split:
+  a wide 16:9 crop with the delivery card floating over its corner on
+  desktop, a tall 4:5 crop with the same card stacked plainly below it on
+  mobile. Two departures from the design, both required by what Phoenix
+  actually exposes:
   - The lede does not name pets. Phoenix has no pet record (see the
     identical note on spp-screen-dashboard.liquid's own greeting) — a real
     customer must never read a fabricated dog's name.
@@ -19,42 +25,39 @@
     what Skip and Delay can actually do.
 {%- endcomment -%}
 <section class="spp__screen" data-spp-screen="welcome" hidden aria-labelledby="spp-wel-h">
-  <div class="spp__narrow">
+  <div class="spp__welcome">
     <div class="spp__pill" data-spp-field="customer.welcomeBack">Welcome back</div>
 
-    <h1 class="spp__h1" id="spp-wel-h" style="margin-top:10px;">
+    <h1 class="spp__h1 spp__welcome-h1" id="spp-wel-h" style="margin-top:10px;">
       Everything included with your RoutineCare membership
     </h1>
-    <p class="spp__lede">
+    <p class="spp__lede spp__welcome-lede">
       Your daily care is set up and running. This is what your membership quietly
       takes care of between deliveries.
     </p>
 
-    {%- comment -%}
-      Reuses the same real, already-approved photo as the cancellation
-      benefits screen (spp-cancel-benefits.png) rather than invent a new
-      "customer holding jars" asset that does not exist in this theme yet.
-      Swap the file once a dedicated welcome photo is uploaded — nothing
-      else on this screen depends on which image is here.
-    {%- endcomment -%}
-    <div class="spp__media-16x9">
-      <img
-        src="{{ 'spp-cancel-benefits.png' | asset_url }}"
-        alt="A dog resting, waiting for its daily care routine"
-        width="1280" height="720" loading="lazy" decoding="async">
-    </div>
+    <div class="spp__welcome-hero">
+      <picture>
+        <source media="(min-width: 700px)" srcset="{{ 'spp-welcome-hero-wide.jpg' | asset_url }}">
+        <img
+          class="spp__welcome-hero-img"
+          src="{{ 'spp-welcome-hero-tall.jpg' | asset_url }}"
+          alt="A VetPets member with her dog and the FreshWipes, EyeWipes and EarWipes jars"
+          width="1200" height="675" loading="lazy" decoding="async">
+      </picture>
 
-    <div class="spp__card spp__card--welcome-delivery">
-      <div class="spp__eyebrow">Upcoming delivery</div>
-      <div class="spp__next-date" data-spp-field="subscription.nextOrderMedium">Tue, Sep 8</div>
-      <div class="spp__next-meta">
-        <span data-spp-field="pricing.total">$62.73</span> ·
-        every <span data-spp-field="subscription.intervalDays">60</span> days · free shipping
-      </div>
-      <div class="spp__next-thumbs" data-spp-list="lineThumbs">
-        <template data-spp-tpl="lineThumbs">
-          <span class="spp__thumb spp__thumb--sm" data-spp-thumb><img data-spp-img alt=""></span>
-        </template>
+      <div class="spp__card spp__card--welcome-delivery">
+        <div class="spp__eyebrow">Upcoming delivery</div>
+        <div class="spp__next-date" data-spp-field="subscription.nextOrderMedium">Tue, Sep 8</div>
+        <div class="spp__next-meta">
+          <span data-spp-field="pricing.total">$62.73</span> ·
+          every <span data-spp-field="subscription.intervalDays">60</span> days · free shipping
+        </div>
+        <div class="spp__next-thumbs" data-spp-list="lineThumbs">
+          <template data-spp-tpl="lineThumbs">
+            <span class="spp__thumb spp__thumb--sm" data-spp-thumb><img data-spp-img alt=""></span>
+          </template>
+        </div>
       </div>
     </div>
 

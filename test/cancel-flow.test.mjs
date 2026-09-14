@@ -66,8 +66,8 @@ const load = method('load');
 // listData closes over the journey's module-scope tables.
 const listData = method(
   'listData',
-  ['REASONS', 'GAP_OPTIONS', 'STARTED_CATEGORIES'],
-  [constant('REASONS'), constant('GAP_OPTIONS'), constant('STARTED_CATEGORIES')],
+  ['REASONS', 'GAP_OPTIONS', 'STARTED_CATEGORIES', 'REVIEW_BANK'],
+  [constant('REASONS'), constant('GAP_OPTIONS'), constant('STARTED_CATEGORIES'), constant('REVIEW_BANK')],
 );
 // viewModel also closes over NS (the adapter namespace) and the retention
 // journey's module-scope tables; a minimal NS stub is enough here since
@@ -355,8 +355,59 @@ describe('step 2 — before you cancel', () => {
   const step = screen('cancel-benefits');
 
   test('leads with the approved 95%/90-day fact, not a discount', () => {
-    assert.match(step, /95% of VetPets customers see meaningful results after 90 days/);
+    assert.match(step, /95%<\/b> of VetPets customers see meaningful results after <b>90 days/);
     assert.match(step, /Why consistency matters/);
+  });
+
+  test('has the wide layout, the correct back target, and the design’s own step indicator', () => {
+    assert.match(step, /spp__cancel-wide/, 'this screen must not use the narrow centred layout');
+    assert.ok(!/spp__narrow/.test(step), 'the narrow column class must not appear on this screen');
+    assert.match(step, /Before you cancel\s*&middot;\s*Step 2 of 7/);
+    const back = buttonWith(step, 'Back');
+    assert.match(back, /data-spp-go="cancel-choose"/, 'Back must return to step 1, not jump out of the flow');
+  });
+
+  test('the large blue "important" panel carries both the label and the two facts', () => {
+    assert.match(step, /spp__cancel-important/);
+    assert.match(step, /Important: before you cancel/i);
+    assert.match(step, /consistent daily use/);
+    assert.match(step, /giving it the full 90 days gives both the/);
+  });
+
+  test('two real, verified review cards render from cancelReviews, never a fabricated one', () => {
+    assert.match(step, /spp__reviews-panel/);
+    assert.match(step, /data-spp-list="cancelReviews"/);
+    assert.match(step, /data-spp-field="quote"/);
+    assert.match(step, /data-spp-field="name"/);
+    assert.match(step, /data-spp-field="category"/);
+
+    const items = listData.call(
+      { state: { data: { lines: [{ productKey: 'freshwipes' }, { productKey: 'eyewipes' }] }, draft: {} } },
+      'cancelReviews',
+    );
+    assert.equal(items.length, 2, 'exactly two cards, matching the design');
+    assert.equal(items[0].category, 'Dental');
+    assert.equal(items[1].category, 'Eyes');
+    assert.ok(items[0].name && items[0].quote, 'every card must carry a real name and quote');
+
+    // A single-product subscription still gets two cards — a second real
+    // review for the SAME product, never one invented for a product the
+    // customer does not have.
+    const single = listData.call(
+      { state: { data: { lines: [{ productKey: 'eyewipes' }] }, draft: {} } },
+      'cancelReviews',
+    );
+    assert.equal(single.length, 2);
+    assert.equal(single[0].category, 'Eyes');
+    assert.equal(single[1].category, 'Eyes');
+    assert.notEqual(single[0].name, single[1].name, 'the two cards must not repeat the same reviewer');
+  });
+
+  test('the approved veterinarian identity/credential card sits beneath the video', () => {
+    assert.match(step, /spp__vet-card\b/);
+    assert.match(step, /Dr\. Michael Thompson/);
+    assert.match(step, /Veterinarian\s*&middot;\s*VetPets/);
+    assert.match(step, /ewof-vet-dr-michael-thompson\.webp/, 'must reuse the existing approved portrait asset');
   });
 
   test('the final vet video replaces the placeholder — desktop/tablet gets 16:9, mobile gets 1:1', () => {
@@ -383,9 +434,15 @@ describe('step 2 — before you cancel', () => {
     }
   });
 
-  test('keeps the approved poster image, described for assistive tech', () => {
-    assert.match(step, /poster="[^"]*spp-cancel-benefits\.png[^"]*"/);
+  test('shows a real first-frame poster per viewport, described for assistive tech', () => {
+    // Two real posters, one per source's own actual first frame — set as
+    // CSS custom properties (see .spp__vet-video in subscription-portal.css)
+    // rather than the <video>'s single `poster` attribute, since HTML
+    // allows only one poster but there are two real source files.
+    assert.match(step, /--spp-vet-poster-mobile:url\([^)]*spp-cancel-benefits-mobile\.jpg[^)]*\)/);
+    assert.match(step, /--spp-vet-poster-desktop:url\([^)]*spp-cancel-benefits-desktop\.jpg[^)]*\)/);
     assert.match(step, /aria-label="[^"]+"/, 'the video must be described');
+    assert.ok(!/poster="/.test(/<video[^>]*>/.exec(step)[0]), 'the <video> element itself must not carry a single poster attribute');
   });
 
   test('the old vet_video_url placeholder setting is gone — this IS the final video', () => {

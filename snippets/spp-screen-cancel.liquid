@@ -75,32 +75,48 @@
 </section>
 
 {%- comment -%} ---------- 2 · Before you cancel ---------- {%- endcomment -%}
+{%- comment -%}
+  Rebuilt field-for-field against the approved Claude Design mockup
+  ("VetPets Portal V2", the isCancelProof screen) — wide 960px column
+  (not this file's usual .spp__narrow), a Back link that returns to step
+  1 rather than jumping out of the flow, and the step indicator the
+  design itself renders ("Before you cancel · Step 2 of 7" — the design
+  counts its own 7 cancel-flow decision screens, with "Cancelled" as the
+  terminal outcome afterward, matching this file's 8-screen count).
+{%- endcomment -%}
 <section class="spp__screen" data-spp-screen="cancel-benefits" hidden aria-labelledby="spp-cb-h">
-  <button type="button" class="spp__back" data-spp-go="subscription">
-    {% render 'spp-icon', icon: 'chevron-left' %}Subscription
-  </button>
+  <div class="spp__cancel-wide">
+    <div class="spp__step-row">
+      <button type="button" class="spp__back" data-spp-go="cancel-choose">
+        {% render 'spp-icon', icon: 'chevron-left' %}Back
+      </button>
+      <span class="spp__cancel-step">Before you cancel &middot; Step 2 of 7</span>
+    </div>
 
-  <div class="spp__narrow">
-    <div class="spp__pill spp__pill--info">Important: before you cancel</div>
-
-    <div class="spp__info spp__info--icon" style="margin:14px 0;">
-      {% render 'spp-icon', icon: 'clock-action', size: 19 %}
-      <p>
-        <b>95% of VetPets customers see meaningful results after 90 days</b> of consistent
-        daily use. Daily care takes consistency, and your dog may also need time to become
-        comfortable with the routine &mdash; giving it the full 90 days gives both the product and
-        your pet a fair chance.
+    <div class="spp__cancel-important">
+      <div class="spp__cancel-important-head">
+        {% render 'spp-icon', icon: 'clock-action', size: 20 %}
+        <span>Important: before you cancel</span>
+      </div>
+      <p class="spp__cancel-important-lead">
+        <b>95%</b> of VetPets customers see meaningful results after <b>90 days</b> of
+        consistent daily use.
+      </p>
+      <p class="spp__cancel-important-body">
+        Daily care takes consistency, and your dog may also need time to become
+        comfortable with the routine &mdash; giving it the full 90 days gives both the
+        product and your pet a fair chance.
       </p>
     </div>
 
     {%- comment -%}
-      "4.8/5 · Trusted by 45,000+ Dog Owners" is the same real, already-
+      "4.8/5 · Trusted by 45,000+ Dog Owners" — the same real, already-
       approved aggregate rating used on the EyeWipes/FreshWipes offer and
-      prelander pages — reused here in place of the design's own reviews
-      carousel, which quotes a named, verified individual customer. There
-      is no such real, attributable quote in this codebase to show
-      instead, and inventing one is exactly the kind of fabrication this
-      portal avoids everywhere else.
+      prelander pages. Kept alongside the two real review cards below
+      rather than replaced by them: one is the aggregate trust signal,
+      the other is specific, attributable proof — the design's own
+      review carousel plus this codebase's existing rating row are not
+      mutually exclusive.
     {%- endcomment -%}
     <div class="spp__trustbar">
       <span class="spp__trustbar-stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
@@ -108,25 +124,63 @@
     </div>
 
     {%- comment -%}
-      Final veterinarian video — replaces the temporary placeholder
-      entirely (the old vet_video_url theme setting and its empty-by-
-      default image/video swap are gone; there is nothing left to
-      configure here, this IS the approved video).
+      Two real, verified customer reviews — reproduces the design's own
+      review carousel, which its source comments describe as "genuine
+      reviews lifted verbatim from the live VetPets homepage reviews
+      module." That design picks by a single hardcoded mock product;
+      cancelReviews (see listData() in subscription-portal.js) generalizes
+      the same idea to whichever real product categories are actually in
+      THIS subscription, falling back to a second real quote for the same
+      product rather than ever inventing a review for a product the
+      customer does not have.
+    {%- endcomment -%}
+    <div class="spp__reviews-panel">
+      <div class="spp__reviews-head">What VetPets pet parents are saying</div>
+      <div class="spp__reviews-grid" data-spp-list="cancelReviews">
+        <template data-spp-tpl="cancelReviews">
+          <div class="spp__review-card">
+            <div class="spp__review-stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="spp__review-quote" data-spp-field="quote"></p>
+            <div class="spp__review-meta">
+              <span class="spp__review-tag" data-spp-field="category"></span>
+              <span class="spp__review-name" data-spp-field="name"></span>
+              <span class="spp__review-verified">
+                {% render 'spp-icon', icon: 'check-circle', size: 12 %}Verified
+              </span>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
 
-      One <video> with two <source>s, not two <video> elements: the
-      browser's resource-selection algorithm evaluates each <source>'s
-      `media` attribute in order and fetches ONLY the first one that
-      matches — so a phone never downloads the desktop 16:9 file and a
-      desktop browser never downloads the mobile 1:1 file. 1024px matches
-      the one desktop breakpoint already used everywhere else in this
-      file (see .spp__ms-row). Sized with no forced aspect-ratio beyond
-      what .spp__vet-video sets at that same breakpoint, and object-fit:
-      contain rather than cover, so neither video is ever cropped or
-      stretched to fit the other's shape.
+    {%- comment -%}
+      Final veterinarian video — a real <video> with two <source>s, not
+      two <video> elements: the browser's resource-selection algorithm
+      evaluates each <source>'s `media` attribute in order and fetches
+      ONLY the first one that matches, so a phone never downloads the
+      desktop 16:9 file and a desktop browser never downloads the mobile
+      1:1 file. 1024px matches the one desktop breakpoint already used
+      everywhere else in this file.
+
+      The poster is set via two CSS custom properties rather than the
+      <video>'s single `poster` attribute, because there are two real
+      posters (one per source's own actual first frame, captured from the
+      video files themselves — never a generic stand-in) and HTML allows
+      only one poster per element. .spp__vet-video's background-image
+      shows the matching frame the instant the element paints, and the
+      <video> itself paints over it as soon as its own first frame is
+      ready — so the player is never a blank rectangle while loading,
+      whichever file is loading.
     {%- endcomment -%}
     <div class="spp__eyebrow" style="margin-top:18px;">Watch &middot; about 90 seconds</div>
     <h2 class="spp__h2" style="margin-top:4px;">Why consistency matters</h2>
-    <div class="spp__vet-video" style="margin-top:10px;">
+    <p class="spp__lede spp__cancel-video-lede">
+      A short explanation of what daily care is quietly doing for your dog, and what
+      changes when it stops.
+    </p>
+    <div
+      class="spp__vet-video"
+      style="margin-top:10px; --spp-vet-poster-mobile:url('{{ 'spp-cancel-benefits-mobile.jpg' | asset_url }}'); --spp-vet-poster-desktop:url('{{ 'spp-cancel-benefits-desktop.jpg' | asset_url }}');">
       <video
         class="spp__vet-video-el"
         playsinline
@@ -134,16 +188,38 @@
         autoplay
         controls
         preload="metadata"
-        poster="{{ 'spp-cancel-benefits.png' | asset_url }}"
         aria-label="A veterinarian explains why consistency matters for your dog's daily care routine">
         <source src="https://cdn.shopify.com/videos/c/o/v/be6c0d1c00b3463797270f2fc43c2815.mp4" type="video/mp4" media="(min-width: 1024px)">
         <source src="https://cdn.shopify.com/videos/c/o/v/1d4391c64d264e46b877c356e1396f4a.mp4" type="video/mp4">
       </video>
     </div>
 
-    <button type="button" class="spp__btn spp__btn--primary" style="margin-top:20px;" data-spp-go="subscription">Never mind, keep my Routine Care</button>
-    <div class="spp__quiet-row">
-      <button type="button" class="spp__btn spp__btn--link" data-spp-go="cancel-started">Continue cancellation</button>
+    {%- comment -%}
+      Veterinarian identity/credential card — the same real, already-
+      approved "Dr. Michael Thompson, Veterinarian · VetPets" identity
+      used on the EyeWipes/FreshWipes offer and prelander pages, not a
+      new persona invented for this screen.
+    {%- endcomment -%}
+    <div class="spp__vet-card">
+      <img
+        class="spp__vet-card-photo"
+        src="{{ 'ewof-vet-dr-michael-thompson.webp' | asset_url }}"
+        alt="Dr. Michael Thompson" width="48" height="48" loading="lazy" decoding="async">
+      <span class="spp__vet-card-body">
+        <b>Dr. Michael Thompson</b>
+        <span>Veterinarian &middot; VetPets</span>
+      </span>
+      <span class="spp__vet-card-badge">
+        {% render 'spp-icon', icon: 'check-circle', size: 12 %}
+        <span>Vet reviewed</span>
+      </span>
+    </div>
+
+    <div class="spp__cancel-cta">
+      <button type="button" class="spp__btn spp__btn--primary" data-spp-go="subscription">Never mind, keep my Routine Care</button>
+      <div class="spp__quiet-row">
+        <button type="button" class="spp__btn spp__btn--link" data-spp-go="cancel-started">Continue cancellation</button>
+      </div>
     </div>
   </div>
 </section>

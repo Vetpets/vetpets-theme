@@ -1513,6 +1513,35 @@
         return facts.map(function (t) { return { text: t }; });
       }
 
+      case 'cancelReviews': {
+        // One real review per distinct real product category in this
+        // subscription, in a fixed priority order, falling back to a
+        // second real review for the SAME category so there are always
+        // two cards — never a fabricated one for a product not on this
+        // account. See REVIEW_BANK above.
+        if (!sub) return [];
+        var seenKeys = [];
+        (sub.lines || []).forEach(function (l) {
+          if (REVIEW_BANK[l.productKey] && seenKeys.indexOf(l.productKey) === -1) {
+            seenKeys.push(l.productKey);
+          }
+        });
+        if (seenKeys.length === 0) seenKeys.push('freshwipes');
+        var picks = [];
+        if (seenKeys.length >= 2) {
+          picks.push({ key: seenKeys[0], idx: 0 });
+          picks.push({ key: seenKeys[1], idx: 0 });
+        } else {
+          picks.push({ key: seenKeys[0], idx: 0 });
+          picks.push({ key: seenKeys[0], idx: 1 });
+        }
+        return picks.map(function (p) {
+          var bank = REVIEW_BANK[p.key];
+          var r = bank.quotes[p.idx] || bank.quotes[0];
+          return { quote: r.quote, name: r.name, category: bank.category };
+        });
+      }
+
       case 'startedCategories':
         // Cancel step 3 ("why you started"). A soft, non-blocking question
         // — the pick only drives this row's own selected styling; it is
@@ -1892,6 +1921,32 @@
     ['skin', 'Skin & coat care', 'Dirt, odor or keeping your dog fresh between baths'],
     ['other', 'Something else', '']
   ];
+
+  /**
+   * Cancel step 2's two real customer reviews — reproduces the approved
+   * Portal V2 design's own review carousel, whose source comments describe
+   * it as "genuine reviews lifted verbatim from the live VetPets homepage
+   * reviews module." That design picks reviews by a single hardcoded mock
+   * product; this generalizes the same idea to the real subscription's
+   * actual line items (see the 'cancelReviews' listData case below), so
+   * nothing here is invented for a product the customer does not have.
+   */
+  var REVIEW_BANK = {
+    freshwipes: {
+      category: 'Dental',
+      quotes: [
+        { name: 'Marilu P.', quote: 'My Pom loves the wipes! Way less hassle than when I used to brush her teeth. Thank you!' },
+        { name: 'Lynn H.', quote: 'My two 8 month old dogs are really good at having their teeth cleaned. I can get to their back teeth and all around their mouth.' }
+      ]
+    },
+    eyewipes: {
+      category: 'Eyes',
+      quotes: [
+        { name: 'Pauline L.', quote: 'The wipes softens the crusty buildup over night and makes it easier to remove. Eyes are looking much cleaner and Argo is much happier.' },
+        { name: 'Barbara M.', quote: 'These are the only things I have used, which are many, that has actually worked. Very happy' }
+      ]
+    }
+  };
 
   /** Every option maps to an operation proven end to end against Phoenix. */
   var GAP_OPTIONS = [

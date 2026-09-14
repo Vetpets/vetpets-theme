@@ -34,9 +34,21 @@ describe('the welcome screen has every approved element', () => {
     assert.match(markup, /Everything included with your RoutineCare membership/);
   });
 
-  test('a hero image area', () => {
-    assert.match(markup, /spp__media-16x9/);
+  test('the approved hero-lifestyle photo, art-directed by viewport', () => {
+    // Captured directly from the Claude Design project's own approved
+    // hero-lifestyle-wide.png / hero-lifestyle-tall.png assets — never a
+    // generated or guessed substitute, and never the "before you cancel"
+    // photo this screen used to borrow as a placeholder.
+    assert.match(markup, /spp__welcome-hero\b/);
+    assert.match(markup, /<source media="\(min-width: 700px\)" srcset="[^"]*spp-welcome-hero-wide\.jpg[^"]*">/);
+    assert.match(markup, /src="[^"]*spp-welcome-hero-tall\.jpg[^"]*"/);
+    assert.ok(!/spp-cancel-benefits\.png/.test(markup), 'must not still reuse the cancel screen’s placeholder photo');
     assert.match(markup, /alt="[^"]+"/, 'the image must be described');
+  });
+
+  test('is the design’s own wide 820px column, not the narrow one', () => {
+    assert.match(markup, /spp__welcome\b/);
+    assert.ok(!/spp__narrow/.test(markup), 'the narrow column class must not appear on this screen');
   });
 
   test('an upcoming-delivery card, using the real subscription fields', () => {
