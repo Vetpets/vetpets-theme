@@ -68,13 +68,11 @@
       sheet: null,
       pending: null,
       lastFocus: null,
-      // focusProduct: the customer's own pick of which line in their
-      // subscription is driving the decision to cancel. It is used ONLY to
-      // word the benefits/reason/offer screens — the cancel(id) mutation
-      // always ends the WHOLE subscription, because Phoenix has no per-line
-      // cancel. See show()'s cancel-intro handling and viewModel()'s
-      // cancel.* fields.
-      draft: { delay: 7, reason: null, restart: 0, date: null, note: '', gap: null, focusProduct: null },
+      // startedCategory: a soft, non-blocking answer to "why did you start"
+      // (cancel-started screen) — captured for the UI's own selection state
+      // only. It is never sent to Phoenix and never personalizes anything
+      // else; see cancel-started in spp-screen-cancel.liquid.
+      draft: { delay: 7, reason: null, restart: 0, date: null, note: '', gap: null, startedCategory: null },
       reasonError: null,
       data: null,
       loyalty: null,
@@ -225,9 +223,12 @@
     var token = params.get('spp_token');
 
     if (token) {
+      // A FRESH magic-link authentication — lands on the welcome screen
+      // once, per the approved journey, never straight on the dashboard.
+      // See bootLive()'s handoff branch for the live-mode equivalent.
       this.adapter.verifyMagicLink(token)
         .then(function () { return self.load(); })
-        .then(function () { self.show(start || 'dashboard'); })
+        .then(function () { self.show(start || 'welcome'); })
         .catch(function (err) {
           if (err && err.code === 'expired_link') self.show('expired');
           else self.fail(err);
@@ -235,6 +236,9 @@
       return;
     }
 
+    // A returning, already-authenticated visit (reload, deep link) — the
+    // welcome screen has already been shown once this session; skip
+    // straight to the dashboard, exactly as before.
     this.load()
       .then(function () { self.show(start || 'dashboard'); })
       .catch(function (err) { self.fail(err); });
@@ -259,8 +263,8 @@
     // Synchronous and first. Nothing may await before this returns.
     var handoff = NS.takeHandoffFromUrl();
 
-    function loadAndShow() {
-      return self.load().then(function () { self.show(start || 'dashboard'); });
+    function loadAndShow(target) {
+      return self.load().then(function () { self.show(start || target); });
     }
 
     // One handler, shared with retry and every action: fail() itself decides
@@ -271,16 +275,21 @@
     }
 
     if (handoff) {
+      // A FRESH authentication — the handoff only exists once, the moment
+      // the emailed link is exchanged for a session. That is the one event
+      // the approved welcome screen exists for; every later load of this
+      // tab (below) carries no handoff and goes straight to the dashboard.
       this.adapter.exchangeHandoff(handoff)
-        .then(loadAndShow)
+        .then(function () { return loadAndShow('welcome'); })
         .catch(onFailure);
       return;
     }
 
     // A reload in the same tab reuses the unexpired session; closing the tab
-    // ends it, because sessionStorage does.
+    // ends it, because sessionStorage does. Not a fresh authentication, so
+    // the welcome screen does not reappear.
     if (this.adapter.hasSession && this.adapter.hasSession()) {
-      loadAndShow().catch(onFailure);
+      loadAndShow('dashboard').catch(onFailure);
       return;
     }
 
@@ -466,29 +475,6 @@
      * approved journey: Longer Gap goes straight to Final Confirmation. */
     if (screen === 'cancel-offer' && this.state.data && this.state.data.retentionOfferRedeemed) {
       screen = 'cancel-confirm';
-    }
-
-    /* Cancel step 1 is a "which product is the main reason" picker — it
-     * exists to personalize the screens after it, nothing more. Almost
-     * every customer's subscription has exactly one product, and asking
-     * someone to pick between one option is not a question. With one line
-     * (or none, a state this screen should never reach anyway) there is
-     * nothing to ask, so it is skipped straight to cancel-benefits with
-     * that single product pre-selected. With more than one line the
-     * picker shows, and the previous or first pick is kept selected so
-     * "Continue" always has an honest answer to personalize with. */
-    if (screen === 'cancel-intro') {
-      var focusLines = (this.state.data && this.state.data.lines) || [];
-      if (focusLines.length <= 1) {
-        this.state.draft.focusProduct = focusLines[0] ? focusLines[0].id : null;
-        screen = 'cancel-benefits';
-      } else {
-        var hasFocus = false;
-        for (var fi = 0; fi < focusLines.length; fi++) {
-          if (focusLines[fi].id === this.state.draft.focusProduct) { hasFocus = true; break; }
-        }
-        if (!hasFocus) this.state.draft.focusProduct = focusLines[0].id;
-      }
     }
 
     if (this.state.screen !== screen) this.state.history.push(this.state.screen);
@@ -891,6 +877,9 @@
     // rendered a bare "Hi" whenever Phoenix had no first name, and a dangling
     // comma if punctuation had been added to the markup instead.
     vm['customer.greeting'] = cus && cus.firstName ? 'Hi, ' + cus.firstName : 'Hi there';
+    // Same one-slot rule as the greeting above — no dangling comma when
+    // Phoenix has no first name yet.
+    vm['customer.welcomeBack'] = cus && cus.firstName ? 'Welcome back, ' + cus.firstName : 'Welcome back';
 
     if (sub) {
       vm['subscription.reference'] = sub.reference;
@@ -933,18 +922,18 @@
         return l.title.replace(/ (jar|pack).*$/, '') + ' ×' + l.quantity;
       }).join(', ');
 
-      // Cancellation personalization only — see draft.focusProduct above.
-      // With one line there is nothing to pick, so that line is always the
-      // focus; with several, it is whichever the customer picked on step 1
-      // (defaulted to the first by show()). The fallback string is what
-      // renders before a real subscription has loaded at all.
-      var focusLine = null;
-      for (var fli = 0; fli < sub.lines.length; fli++) {
-        if (sub.lines[fli].id === d.focusProduct) { focusLine = sub.lines[fli]; break; }
-      }
-      if (!focusLine && sub.lines.length === 1) focusLine = sub.lines[0];
-      vm['cancel.focusName'] = focusLine ? focusLine.title.replace(/ (jar|pack).*$/, '') : 'Routine Care';
-      vm['cancel.reasonHeading'] = focusLine ? ('Why are you cancelling ' + vm['cancel.focusName'] + '?') : 'Why are you cancelling?';
+      // Cancellation personalization — automatic, never a customer choice.
+      // A single-product subscription (the vast majority) is named
+      // directly on the started/reason/offer screens; a multi-product one
+      // falls back to generic "Routine Care" wording, because there is no
+      // honest way to pick ONE of several real products to speak for the
+      // whole subscription. cancel(id) itself is unaffected either way —
+      // cancelFacts below states plainly that EVERY product stops.
+      var soleLine = sub.lines.length === 1 ? sub.lines[0] : null;
+      var soleLineName = soleLine ? soleLine.title.replace(/ (jar|pack).*$/, '') : '';
+      vm['cancel.focusName'] = soleLine ? soleLineName : 'Routine Care';
+      vm['cancel.reasonHeading'] = soleLine ? ('Why are you cancelling ' + soleLineName + '?') : 'Why are you cancelling?';
+      vm['cancel.startedHeading'] = soleLine ? ('Cancelling · ' + soleLine.title) : 'Cancelling · your Routine Care subscription';
 
       vm['pricing.total'] = this.fmtMoney(sub.pricing.total);
       vm['pricing.discount'] = this.fmtMoney(sub.pricing.discount);
@@ -1128,11 +1117,6 @@
     var loyaltyHistoryCount = (loy && !loy.error && loy.history) ? loy.history.length : 0;
     var loyaltyAllReached = !!(loy && !loy.error && loy.allMilestonesReached);
 
-    // Only meaningful with more than one product in the subscription — with
-    // one, "personalized for X" would just restate the only thing the
-    // customer has, which is not personalization, it is noise.
-    var cancelLines = (this.state.data && this.state.data.lines) || [];
-
     var conds = this.root.querySelectorAll('[data-spp-when]');
     for (i = 0; i < conds.length; i++) {
       var expr = conds[i].getAttribute('data-spp-when').split(':');
@@ -1140,7 +1124,6 @@
       if (expr[0] === 'loyalty') conds[i].hidden = (expr[1] === 'error') !== loyaltyFailed;
       if (expr[0] === 'loyaltyHistory') conds[i].hidden = (expr[1] === 'has') !== (loyaltyHistoryCount > 0);
       if (expr[0] === 'loyaltyMilestones') conds[i].hidden = (expr[1] === 'complete') !== loyaltyAllReached;
-      if (expr[0] === 'cancelFocus') conds[i].hidden = (expr[1] === 'multi') !== (cancelLines.length > 1);
     }
 
     var badge = this.root.querySelector('[data-spp-status-badge]');
@@ -1197,7 +1180,10 @@
     var confirmBack = this.root.querySelector('[data-spp-confirm-back]');
     if (confirmBack) {
       var redeemed = this.state.data && this.state.data.retentionOfferRedeemed;
-      confirmBack.setAttribute('data-spp-go', redeemed ? 'cancel-alt' : 'cancel-offer');
+      // Reason (not alt) is the screen immediately before the offer in the
+      // approved Portal V2 order — that is the safe fallback once the offer
+      // screen itself refuses to show.
+      confirmBack.setAttribute('data-spp-go', redeemed ? 'cancel-reason' : 'cancel-offer');
     }
   };
 
@@ -1468,16 +1454,6 @@
         });
 
 
-      case 'benefits':
-        return [
-          ['20% off Routine Care pricing', 'Your subscriber price on every refill.'],
-          ['Free shipping on every refill', 'No delivery charge, whatever the order size.'],
-          ['Automatic refills', 'The next jar arrives before you run out.'],
-          ['Flexible deliveries', 'Skip a delivery or move it to a date that suits you.'],
-          ['Subscriber-only perks', 'Extras that only go out to Routine Care members.'],
-          ['100-day guarantee', 'Covers your deliveries for as long as the subscription runs.']
-        ].map(function (b) { return { title: b[0], body: b[1] }; });
-
       case 'gapOptions':
         return GAP_OPTIONS.map(function (g) {
           return { label: g[1], meta: g[2], _value: g[0], _checked: d.gap === g[0] };
@@ -1537,23 +1513,14 @@
         return facts.map(function (t) { return { text: t }; });
       }
 
-      case 'cancelFocusProducts':
-        // Step 1 of cancellation, shown only when there is a real choice to
-        // make (show() skips straight past this with one line). The pick
-        // here personalizes wording on the screens that follow — it is
-        // never sent anywhere, and never changes what cancel(id) does.
-        return (sub ? sub.lines : []).map(function (l) {
-          var img = self.lineImage(l);
-          var name = l.title.replace(/ (jar|pack).*$/, '');
-          return {
-            name: name,
-            subtitle: 'Routine Care · ×' + l.quantity +
-              (sub.intervalDays ? ' every ' + sub.intervalDays + ' days' : '') +
-              ' · next ' + self.fmtDate(sub.nextOrderDate, 'short'),
-            _value: l.id,
-            _checked: d.focusProduct === l.id,
-            _image: img._image, _pending: img._pending, _alt2: img._alt2
-          };
+      case 'startedCategories':
+        // Cancel step 3 ("why you started"). A soft, non-blocking question
+        // — the pick only drives this row's own selected styling; it is
+        // never sent to Phoenix and never personalizes any other screen
+        // (unlike the product name, which comes from real subscription
+        // data — see cancel.startedHeading in viewModel()).
+        return STARTED_CATEGORIES.map(function (c) {
+          return { name: c[1], subtitle: c[2], _value: c[0], _checked: d.startedCategory === c[0] };
         });
 
       default:
@@ -1881,7 +1848,7 @@
       this.state.reasonError = null;
     }
     else if (kind === 'restart') d.restart = parseInt(el.dataset.sppIndex, 10);
-    else if (kind === 'focusProduct') d.focusProduct = value;
+    else if (kind === 'startedCategory') d.startedCategory = value;
     this.render();
   };
 
@@ -1910,6 +1877,20 @@
     ['order_issue', 'I had an issue with my order'],
     ['break', 'Just taking a break'],
     ['other', 'Something else']
+  ];
+
+  /**
+   * Cancel step 3, "why you started" — the approved Portal V2 categories,
+   * verbatim. Never sent anywhere and never bucketed like REASONS above;
+   * see the 'startedCategories' listData case.
+   */
+  var STARTED_CATEGORIES = [
+    ['dental', 'Dental care', 'Bad breath, plaque or tartar buildup'],
+    ['eye', 'Eye care', 'Tear stains, discharge or recurring buildup'],
+    ['ear', 'Ear care', 'Odor, dirt or wax buildup'],
+    ['paw', 'Paw care', 'Mud, dirt or regular paw cleaning'],
+    ['skin', 'Skin & coat care', 'Dirt, odor or keeping your dog fresh between baths'],
+    ['other', 'Something else', '']
   ];
 
   /** Every option maps to an operation proven end to end against Phoenix. */
@@ -2006,8 +1987,11 @@
       }
 
       case 'openLink':
+        // Mock-only stand-in for clicking the emailed link — the same
+        // fresh-authentication event bootLive()'s handoff branch handles in
+        // live mode, so it lands on 'welcome' the same way.
         this.show('loading');
-        this.load().then(function () { self.show('dashboard'); }).catch(function (e) { self.fail(e); });
+        this.load().then(function () { self.show('welcome'); }).catch(function (e) { self.fail(e); });
         return;
 
       case 'resend':
@@ -2147,7 +2131,9 @@
           // Best effort: analysis must never block a customer continuing.
           self.adapter.recordCancelReason(d.reason, noteText).catch(function () {});
         }
-        this.show('cancel-alt');
+        // Reason now sits at step 5 of the approved Portal V2 order — after
+        // alternatives, not before — so it leads to the retention offer.
+        this.show('cancel-offer');
         return;
       }
 

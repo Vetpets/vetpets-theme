@@ -65,8 +65,8 @@ const load = method('load');
 // listData closes over the journey's module-scope tables.
 const listData = method(
   'listData',
-  ['REASONS', 'GAP_OPTIONS'],
-  [constant('REASONS'), constant('GAP_OPTIONS')],
+  ['REASONS', 'GAP_OPTIONS', 'STARTED_CATEGORIES'],
+  [constant('REASONS'), constant('GAP_OPTIONS'), constant('STARTED_CATEGORIES')],
 );
 // viewModel also closes over NS (the adapter namespace) and the retention
 // journey's module-scope tables; a minimal NS stub is enough here since
@@ -350,14 +350,12 @@ describe('cancel success and failure', () => {
  * THE THREE STEPS
  * ================================================================== */
 
-describe('step 1 — benefits', () => {
+describe('step 2 — before you cancel', () => {
   const step = screen('cancel-benefits');
 
-  test('leads with what is at stake for the dog, not the discount', () => {
-    assert.match(step, /They can&rsquo;t tell you when it comes back/);
-    // Eyes and teeth first; ears are not the lead concern for these routines.
-    assert.match(step, /tear stain/i);
-    assert.match(step, /teeth/i);
+  test('leads with the approved 95%/90-day fact, not a discount', () => {
+    assert.match(step, /95% of VetPets customers see meaningful results after 90 days/);
+    assert.match(step, /Why consistency matters/);
   });
 
   test('uses the approved 16:9 image, not a generated substitute', () => {
@@ -366,25 +364,24 @@ describe('step 1 — benefits', () => {
     assert.match(step, /alt="[^"]+"/, 'the image must be described');
   });
 
+  test('the real, aggregate trust bar stands in for the named-reviewer carousel', () => {
+    // The approved design quotes one named, verified customer here. There is
+    // no such real, attributable quote in this codebase — inventing one
+    // would be exactly the kind of fabrication this portal avoids
+    // everywhere else, so the same real aggregate rating already used on
+    // the EyeWipes/FreshWipes marketing pages appears instead.
+    assert.match(step, /4\.8\/5/);
+    assert.match(step, /45,000\+/);
+  });
+
   test('keeping is the primary action, continuing is the quiet one', () => {
     const keep = buttonWith(step, 'Never mind, keep my Routine Care');
     assert.match(keep, /spp__btn--primary/);
 
-    const cont = buttonWith(step, 'Continue cancelling');
+    const cont = buttonWith(step, 'Continue cancellation');
     assert.match(cont, /spp__btn--link/);
     assert.ok(!/spp__btn--primary/.test(cont));
-    assert.match(cont, /data-spp-go="cancel-reason"/);
-  });
-
-  test('the real Routine Care benefits are listed', () => {
-    const benefits = listData.call(
-      { state: { data: {}, loyalty: null, inactive: [], draft: {} }, fmtDate: (x) => String(x) },
-      'benefits',
-    );
-    const text = benefits.map((b) => b.title + ' ' + b.body).join(' | ');
-    for (const claim of ['20% off', 'Free shipping', 'Automatic refills', 'Flexible deliveries', 'Subscriber-only', '100-day']) {
-      assert.ok(text.includes(claim), `missing benefit: ${claim}`);
-    }
+    assert.match(cont, /data-spp-go="cancel-started"/);
   });
 });
 
@@ -481,15 +478,15 @@ describe('step 3 — longer gap', () => {
     assert.match(step, /type="date"/);
   });
 
-  test('"No thanks" is the smaller underlined action', () => {
-    const no = buttonWith(step, 'continue cancelling');
+  test('"Continue cancellation" is the smaller underlined action', () => {
+    const no = buttonWith(step, 'Continue cancellation');
     assert.match(no, /spp__btn--link/);
     assert.ok(!/spp__btn--quiet/.test(no), 'no longer the large outlined button');
-    assert.match(no, /data-spp-go="cancel-offer"/);
+    assert.match(no, /data-spp-go="cancel-reason"/);
   });
 
-  test('"No thanks" stays clickable and accessible', () => {
-    const no = buttonWith(step, 'continue cancelling');
+  test('"Continue cancellation" stays clickable and accessible', () => {
+    const no = buttonWith(step, 'Continue cancellation');
     assert.match(no, /<button/);
     assert.match(no, /type="button"/);
     assert.ok(!/aria-hidden/.test(no));
@@ -722,7 +719,7 @@ describe('the cancelled screen says nothing internal, and nothing untrue', () =>
   });
 
   test('NO screen in the cancellation flow exposes an internal identifier', () => {
-    for (const name of ['cancel-intro', 'cancel-reason', 'cancel-alt', 'cancel-confirm', 'cancel-done', 'inactive']) {
+    for (const name of ['cancel-choose', 'cancel-started', 'cancel-reason', 'cancel-alt', 'cancel-confirm', 'cancel-done', 'inactive']) {
       const markup = screen(name);
       assert.ok(
         !/subscription\.reference/.test(markup),
@@ -740,22 +737,20 @@ describe('the corrected V2 journey', () => {
     'utf8',
   ).replace(/\{%-?\s*comment\s*-?%\}[\s\S]*?\{%-?\s*endcomment\s*-?%\}/g, '');
 
-  test('Cancel enters INTRO, not Benefits or the reason list', () => {
-    // The intro screen states plainly that nothing changes until the customer
-    // confirms at the end — skipping it (straight to Benefits, or worse,
-    // straight to Reasons) drops that reassurance entirely.
+  test('Cancel enters CHOOSE SUBSCRIPTION, the approved journey\'s first step', () => {
     const cancel = buttonWith(subscriptionScreen, 'Cancel subscription');
-    assert.match(cancel, /data-spp-go="cancel-intro"/);
+    assert.match(cancel, /data-spp-go="cancel-choose"/);
     assert.ok(!/data-spp-go="cancel-benefits"/.test(cancel));
     assert.ok(!/data-spp-go="cancel-reason"/.test(cancel));
   });
 
-  test('the seven screens run in the approved order', () => {
+  test('the eight approved Portal V2 screens run in order', () => {
     const order = [
-      'cancel-intro',
+      'cancel-choose',
       'cancel-benefits',
-      'cancel-reason',
+      'cancel-started',
       'cancel-alt',
+      'cancel-reason',
       'cancel-offer',
       'cancel-confirm',
       'cancel-done',
@@ -777,11 +772,26 @@ describe('the corrected V2 journey', () => {
         `${from} must lead to ${to}`,
       );
     };
-    hop('cancel-intro', 'cancel-benefits');
-    hop('cancel-benefits', 'cancel-reason');
-    hop('cancel-reason', 'cancel-alt');
-    hop('cancel-alt', 'cancel-offer');
+    hop('cancel-choose', 'cancel-benefits');
+    hop('cancel-benefits', 'cancel-started');
+    hop('cancel-started', 'cancel-alt');
+    hop('cancel-alt', 'cancel-reason');
+    hop('cancel-reason', 'cancel-offer'); // via data-spp-act="reasonContinue"
     hop('cancel-offer', 'cancel-confirm');
+  });
+
+  test('cancel-choose shows the real subscription as one card, never a per-product picker', () => {
+    const step = screen('cancel-choose');
+    assert.match(step, /Which subscription do you want to cancel\?/);
+    // The design's own subtitle claims each product is its own
+    // subscription, which is not true of this data model — it must not
+    // survive verbatim.
+    assert.ok(!/is its own subscription/.test(step), 'must not repeat the false per-product claim');
+    assert.match(step, /subscription\.quantitySummary/, 'lists every product in the one real subscription');
+    // Exactly one selectable row — a radiogroup with more than one card
+    // would be the fabricated per-product picker this screen must avoid.
+    const rows = step.match(/role="radio"/g) || [];
+    assert.equal(rows.length, 1, 'must render exactly one subscription card');
   });
 });
 
@@ -794,18 +804,18 @@ describe('the corrected V2 journey', () => {
  * this asks which product is the main reason instead, and uses the answer
  * only to word later screens.
  */
-describe('cancellation personalizes by product, without a fabricated per-line cancel', () => {
+describe('cancellation personalizes by real product data, never a fabricated per-line cancel', () => {
   const twoLines = [
     { id: 'line_fresh', title: 'FreshWipes jar', quantity: 2 },
     { id: 'line_eye', title: 'EyeWipes jar', quantity: 1 },
   ];
 
-  function subWith(lines, focusProduct) {
+  function subWith(lines) {
     return {
       state: {
         data: { nextOrderDate: '2026-09-08', intervalDays: 60, lines, payment: null, pricing: { total: 0, discount: 0 } },
         loyalty: null,
-        draft: { focusProduct },
+        draft: {},
         inactive: [],
         pending: null,
         error: null,
@@ -821,30 +831,21 @@ describe('cancellation personalizes by product, without a fabricated per-line ca
   }
 
   test('one product: it is named directly, since there is nothing to disambiguate', () => {
-    const vm = viewModel.call(subWith([twoLines[0]], null));
+    const vm = viewModel.call(subWith([twoLines[0]]));
     assert.equal(vm['cancel.reasonHeading'], 'Why are you cancelling FreshWipes?');
     assert.equal(vm['cancel.focusName'], 'FreshWipes');
+    assert.equal(vm['cancel.startedHeading'], 'Cancelling · FreshWipes jar');
   });
 
-  test('several products, none picked yet: still generic — nothing was chosen', () => {
-    const vm = viewModel.call(subWith(twoLines, null));
+  test('several products: no customer pick decides this — it is automatic, and generic', () => {
+    // There is no picker screen any more (the founder removed it): a
+    // multi-product subscription always falls back to generic wording,
+    // because there is no honest way to speak for the whole subscription
+    // in the name of just one of its products.
+    const vm = viewModel.call(subWith(twoLines));
     assert.equal(vm['cancel.reasonHeading'], 'Why are you cancelling?');
     assert.equal(vm['cancel.focusName'], 'Routine Care');
-  });
-
-  test('several products, one picked: the reason and offer screens name it', () => {
-    const vm = viewModel.call(subWith(twoLines, 'line_eye'));
-    assert.equal(vm['cancel.reasonHeading'], 'Why are you cancelling EyeWipes?');
-    assert.equal(vm['cancel.focusName'], 'EyeWipes');
-  });
-
-  test('pick() records a focusProduct choice like any other radio pick', () => {
-    const p = { state: { draft: { focusProduct: null } }, render() {} };
-    pick.call(p, {
-      getAttribute: () => 'focusProduct',
-      dataset: { sppValue: 'line_eye' },
-    });
-    assert.equal(p.state.draft.focusProduct, 'line_eye');
+    assert.equal(vm['cancel.startedHeading'], 'Cancelling · your Routine Care subscription');
   });
 
   test('the confirmation screen states plainly that EVERY product stops, only when there was a real choice', () => {
@@ -866,11 +867,39 @@ describe('cancellation personalizes by product, without a fabricated per-line ca
     );
   });
 
-  test('the focus-product screen picks are never sent anywhere — cancel() still takes only (id, reason)', () => {
+  test('cancel() still takes only (id, reason) — no per-product identity reaches it', () => {
     const start = src.indexOf("case 'cancel':");
     const block = src.slice(start, src.indexOf("case 'reactivate'", start));
-    assert.ok(!/focusProduct/.test(block), 'the cancel mutation must not reference the personalization pick');
+    assert.ok(!/focusProduct/.test(block), 'the cancel mutation must not reference any product-personalization field');
     assert.match(block, /adapter\.cancel\(id, d\.reason, null,/);
+  });
+});
+
+describe('"why you started" is soft and non-blocking, and personalizes nothing', () => {
+  test('pick() records a startedCategory choice like any other radio pick', () => {
+    const p = { state: { draft: { startedCategory: null } }, render() {} };
+    pick.call(p, {
+      getAttribute: () => 'startedCategory',
+      dataset: { sppValue: 'dental' },
+    });
+    assert.equal(p.state.draft.startedCategory, 'dental');
+  });
+
+  test('the six approved categories are offered', () => {
+    const items = listData.call(
+      { state: { data: { lines: [] }, draft: { startedCategory: null } } },
+      'startedCategories',
+    );
+    const names = items.map((c) => c.name).join(' | ');
+    for (const claim of ['Dental care', 'Eye care', 'Ear care', 'Paw care', 'Skin & coat care', 'Something else']) {
+      assert.ok(names.includes(claim), `missing category: ${claim}`);
+    }
+  });
+
+  test('the pick is never sent to Phoenix', () => {
+    const start = src.indexOf("case 'cancel':");
+    const block = src.slice(start, src.indexOf("case 'reactivate'", start));
+    assert.ok(!/startedCategory/.test(block));
   });
 });
 
@@ -1179,7 +1208,7 @@ describe('Back on Final Confirmation goes to the right previous step', () => {
   function confirmScreenPortal(retentionOfferRedeemed) {
     const backBtn = el('button', { class: 'spp__back', 'data-spp-confirm-back': '', 'data-spp-go': 'cancel-offer' });
     const screens = {};
-    for (const name of ['cancel-alt', 'cancel-offer', 'cancel-confirm']) {
+    for (const name of ['cancel-reason', 'cancel-offer', 'cancel-confirm']) {
       screens[name] = el('section', { 'data-spp-screen': name });
     }
     const root = el('div');
@@ -1212,11 +1241,15 @@ describe('Back on Final Confirmation goes to the right previous step', () => {
     assert.equal(portal.state.screen, 'cancel-offer');
   });
 
-  test('a REDEEMED customer: Back goes to the longer gap, never the offer', () => {
+  test('a REDEEMED customer: Back goes to the reason screen, never the offer', () => {
+    // Reason is the screen immediately before the offer in the approved
+    // Portal V2 order (choose → benefits → started → alt → reason →
+    // offer → confirm) — that is the safe fallback once the offer screen
+    // itself refuses to render.
     const { portal, backBtn, click } = confirmScreenPortal(true);
-    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-alt');
+    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-reason');
     click(backBtn);
-    assert.equal(portal.state.screen, 'cancel-alt');
+    assert.equal(portal.state.screen, 'cancel-reason');
   });
 
   test('the target updates if redemption status changes mid-session', () => {
@@ -1227,7 +1260,7 @@ describe('Back on Final Confirmation goes to the right previous step', () => {
     assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-offer');
     portal.state.data.retentionOfferRedeemed = true;
     portal.renderCancelJourney();
-    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-alt');
+    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-reason');
   });
 
   test('Back stays wired correctly regardless of reason-screen state', () => {
@@ -1237,7 +1270,7 @@ describe('Back on Final Confirmation goes to the right previous step', () => {
     portal.state.draft.reason = 'other';
     portal.state.draft.note = 'something';
     portal.renderCancelJourney();
-    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-alt');
+    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-reason');
     assert.equal(backBtn.disabled, undefined, 'the button must never become disabled');
   });
 
@@ -1590,12 +1623,12 @@ describe('a reason row can actually be selected', () => {
     assert.equal(errBox.attrs.hidden, '');
   });
 
-  test('reason click -> state set -> Continue advances to the longer-gap screen', () => {
+  test('reason click -> state set -> Continue advances to the retention offer', () => {
     const { portal, click } = mountReasonScreen();
     click(portal.rows[idxOf('break')]);
     assert.equal(portal.reasonProblem(), null, 'validation must now pass');
     act.call(portal, 'reasonContinue');
-    assert.deepEqual(portal.shown, ['cancel-alt']);
+    assert.deepEqual(portal.shown, ['cancel-offer']);
   });
 
   test('with nothing picked, Continue refuses, says so, and moves focus', () => {
