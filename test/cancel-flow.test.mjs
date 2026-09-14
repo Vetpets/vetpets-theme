@@ -381,8 +381,12 @@ describe('step 2 — before you cancel', () => {
     assert.match(step, /data-spp-field="name"/);
     assert.match(step, /data-spp-field="category"/);
 
+    // Keyed off l.title, not a product id: neither adapter mode puts an
+    // internal product key on the line objects it hands to the portal
+    // (see projectSubscription() in subscription-portal-adapter.js, mock
+    // and live) — title is what survives in both.
     const items = listData.call(
-      { state: { data: { lines: [{ productKey: 'freshwipes' }, { productKey: 'eyewipes' }] }, draft: {} } },
+      { state: { data: { lines: [{ title: 'FreshWipes jar' }, { title: 'EyeWipes jar' }] }, draft: {} } },
       'cancelReviews',
     );
     assert.equal(items.length, 2, 'exactly two cards, matching the design');
@@ -394,7 +398,7 @@ describe('step 2 — before you cancel', () => {
     // review for the SAME product, never one invented for a product the
     // customer does not have.
     const single = listData.call(
-      { state: { data: { lines: [{ productKey: 'eyewipes' }] }, draft: {} } },
+      { state: { data: { lines: [{ title: 'EyeWipes jar' }] }, draft: {} } },
       'cancelReviews',
     );
     assert.equal(single.length, 2);

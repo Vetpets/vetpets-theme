@@ -1519,12 +1519,21 @@
         // second real review for the SAME category so there are always
         // two cards — never a fabricated one for a product not on this
         // account. See REVIEW_BANK above.
+        //
+        // Keyed off l.title, not a product id: neither adapter mode
+        // (see projectSubscription(), mock and live) puts an internal
+        // product key on the line objects it hands to the portal — title
+        // is the only field guaranteed to survive in both, and every real
+        // product title contains its own name ("FreshWipes jar",
+        // "EyeWipes jar", a live Phoenix title, etc.).
         if (!sub) return [];
         var seenKeys = [];
         (sub.lines || []).forEach(function (l) {
-          if (REVIEW_BANK[l.productKey] && seenKeys.indexOf(l.productKey) === -1) {
-            seenKeys.push(l.productKey);
-          }
+          var t = (l.title || '').toLowerCase();
+          var key = t.indexOf('fresh') !== -1 ? 'freshwipes'
+            : t.indexOf('eye') !== -1 ? 'eyewipes'
+            : null;
+          if (key && seenKeys.indexOf(key) === -1) seenKeys.push(key);
         });
         if (seenKeys.length === 0) seenKeys.push('freshwipes');
         var picks = [];
