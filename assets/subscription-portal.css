@@ -439,44 +439,187 @@
 .spp__media-title { font: 600 15.5px/1.3 var(--spp-font); color: var(--spp-ink); }
 .spp__media-meta { font: 500 13.5px/1.4 var(--spp-font); color: var(--spp-muted); margin-top: 3px; }
 
-/* VetPoints milestone journey — one row per reward, 200 through 1,600.
+/* VetPoints milestone journey — a full-width horizontal connected line on
+   desktop, a vertical connected line on mobile. Ported field-for-field from
+   the approved Claude Design mockup ("VetPets Portal V2", the `journey`
+   view-model) — colours, radii and the two-icon-plus-lock node states are
+   literal values from that design, not this theme's usual CSS variables,
+   so a rebrand there and a rebrand here have to move together deliberately.
    Achieved/current/locked is a JS-applied modifier class (see
-   assets/subscription-portal.js, listName === 'milestones'); nothing here
-   depends on the reward's identity, only on which state it renders. */
-.spp__milestone {
+   assets/subscription-portal.js, listName === 'milestones'); the only
+   continuous (non-class) value is the connecting line's fill percentage,
+   set inline per item because it interpolates between two milestones. */
+.spp__card--journey {
+  background: linear-gradient(180deg, #F7FCFE 0%, #FFFFFF 55%);
+  border: 1px solid rgba(71, 181, 233, .22);
+  border-radius: 24px;
+  box-shadow: 0 14px 34px rgba(13, 35, 64, .09);
+}
+.spp__ms-head {
   display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
   gap: 14px;
-  align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(13, 35, 64, .09);
+  flex-wrap: wrap;
 }
-.spp__milestone:last-child { border-bottom: none; padding-bottom: 0; }
-.spp__milestone-body { flex: 1; min-width: 0; }
-.spp__milestone--locked .spp__media-title,
-.spp__milestone--locked .spp__media-meta { color: var(--spp-muted); }
-.spp__milestone--current {
-  margin: 0 -14px;
-  padding: 12px 14px;
-  border-radius: 14px;
-  border-bottom-color: transparent;
-  background: var(--spp-surface-tint);
-  box-shadow: inset 0 0 0 1.5px var(--spp-accent);
+.spp__ms-eyebrow {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #EAF6FD;
+  font: 600 11px/1 var(--spp-font);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--spp-accent);
 }
-.spp__milestone-badge {
+.spp__ms-next-name { margin-top: 12px; font: 700 20px/1.25 var(--spp-font); color: var(--spp-ink); letter-spacing: -0.015em; }
+.spp__ms-next-meta { margin-top: 5px; font: 500 14px/1.45 var(--spp-font); color: var(--spp-body); }
+.spp__ms-counter {
   flex: 0 0 auto;
+  padding: 9px 15px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid rgba(71, 181, 233, .3);
+  font: 700 13.5px/1 var(--spp-font);
+  color: var(--spp-ink);
+}
+
+/* Desktop: one row, six equal columns, connected by a single fill line
+   running behind every node. Hidden by default — mobile-first — shown at
+   the same 1024px breakpoint every other desktop-only chrome in this
+   portal switches on (see the bottom of this file). */
+.spp__ms-row { display: none; margin-top: 22px; }
+.spp__ms-col {
+  padding: 10px 6px 12px;
+  border-radius: 18px;
+  text-align: center;
+  background: transparent;
+  border: 1.5px solid transparent;
+}
+.spp__ms-col--current { background: #F2FAFE; border-color: rgba(71, 181, 233, .45); }
+.spp__ms-flag {
+  height: 16px;
+  margin-bottom: 8px;
+  visibility: hidden;
+  font: 700 10px/16px var(--spp-font);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--spp-accent);
+}
+.spp__ms-col--current .spp__ms-flag { visibility: visible; }
+
+.spp__ms-tile {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  border-radius: 16px;
+  background: #fff;
+  border: 1px solid rgba(13, 35, 64, .09);
+  overflow: hidden;
+}
+.spp__ms-col--current .spp__ms-tile { border: 1.5px solid rgba(71, 181, 233, .55); }
+.spp__ms-col--locked .spp__ms-tile { filter: grayscale(.6) opacity(.55); }
+.spp__ms-tile img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+.spp__ms-line { display: flex; align-items: center; height: 44px; margin: 10px -7.5px 0; }
+.spp__ms-track { flex: 1 1 auto; height: 6px; background: #E4F2FB; overflow: hidden; }
+.spp__ms-col--edge-a .spp__ms-track-a,
+.spp__ms-col--edge-b .spp__ms-track-b { background: transparent; }
+.spp__ms-fill { display: block; height: 100%; width: 0; background: var(--spp-accent); }
+.spp__ms-node {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #EAF4FB;
+  border: 2px solid #DCEAF4;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.spp__milestone-badge--current {
-  font: 700 12px/1 var(--spp-font);
-  color: var(--spp-accent-deep);
-  background: var(--spp-light);
-  padding: 7px 11px;
-  border-radius: var(--spp-r-pill);
-  white-space: nowrap;
-  text-align: center;
+.spp__ms-col--achieved .spp__ms-node { background: var(--spp-accent); border: 2px solid var(--spp-accent); }
+.spp__ms-col--current .spp__ms-node { background: #fff; border: 3px solid var(--spp-accent); box-shadow: 0 0 0 6px rgba(71, 181, 233, .16); }
+
+.spp__ms-pts { margin-top: 10px; font: 700 15px/1.2 var(--spp-font); color: #64798C; }
+.spp__ms-name { margin-top: 4px; min-height: 34px; font: 600 12.5px/1.35 var(--spp-font); color: #64798C; text-wrap: pretty; }
+.spp__ms-sub { margin-top: 5px; font: 500 11.5px/1.35 var(--spp-font); color: #5C7184; }
+.spp__ms-col--achieved .spp__ms-pts,
+.spp__ms-col--achieved .spp__ms-name,
+.spp__ms-col--current .spp__ms-pts,
+.spp__ms-col--current .spp__ms-name { color: var(--spp-ink); }
+.spp__ms-col--achieved .spp__ms-sub { color: var(--spp-accent); }
+.spp__ms-col--current .spp__ms-sub { color: var(--spp-ink); font-weight: 700; }
+
+/* Mobile: the same three-state node and line, rotated into a vertical
+   track down the left side of each row. Shown by default; hidden on
+   desktop where the horizontal row above takes over. */
+.spp__ms-vertical { margin-top: 20px; }
+.spp__ms-vrow { display: flex; gap: 12px; align-items: stretch; }
+.spp__ms-vtrack {
+  width: 38px;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+.spp__ms-vtrack .spp__ms-track { width: 6px; height: 12px; flex: 0 0 12px; }
+.spp__ms-vtrack .spp__ms-track:last-child { flex: 1 1 auto; height: auto; }
+.spp__ms-vtrack .spp__ms-fill { width: 100%; height: 0; }
+.spp__ms-vtrack .spp__ms-node { margin: 2px 0; }
+.spp__ms-vcard {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  gap: 13px;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 11px 13px;
+  border-radius: 16px;
+  background: transparent;
+  border: 1.5px solid transparent;
+}
+.spp__ms-col--current .spp__ms-vcard { background: #F2FAFE; border-color: rgba(71, 181, 233, .45); }
+.spp__ms-vtile {
+  width: 62px;
+  height: 62px;
+  flex: 0 0 auto;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid rgba(13, 35, 64, .09);
+  overflow: hidden;
+}
+.spp__ms-col--current .spp__ms-vtile { border: 1.5px solid rgba(71, 181, 233, .55); }
+.spp__ms-col--locked .spp__ms-vtile { filter: grayscale(.6) opacity(.55); }
+.spp__ms-vtile img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.spp__ms-vbody { flex: 1 1 auto; min-width: 0; }
+.spp__ms-vtop { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.spp__ms-vpts { font: 700 15px/1.2 var(--spp-font); color: #64798C; }
+.spp__ms-vsub { font: 500 11.5px/1.3 var(--spp-font); color: #5C7184; }
+.spp__ms-vname { margin-top: 4px; font: 600 14px/1.3 var(--spp-font); color: #64798C; text-wrap: pretty; }
+.spp__ms-col--achieved .spp__ms-vpts, .spp__ms-col--achieved .spp__ms-vname,
+.spp__ms-col--current .spp__ms-vpts, .spp__ms-col--current .spp__ms-vname { color: var(--spp-ink); }
+.spp__ms-col--achieved .spp__ms-vsub { color: var(--spp-accent); }
+.spp__ms-col--current .spp__ms-vsub { color: var(--spp-ink); font-weight: 700; }
+
+.spp__ms-foot {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(13, 35, 64, .08);
+}
+.spp__ms-foot-icon {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #EAF6FD;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.spp__ms-foot p { margin: 0; font: 600 14px/1.5 var(--spp-font); color: var(--spp-ink); }
 .spp__media-price { font: 700 15px/1 var(--spp-font); color: var(--spp-ink); flex: 0 0 auto; }
 
 /* Stepper pill (quantity on dashboard) */
@@ -1101,6 +1244,10 @@
 
   /* Bottom tab bar is mobile-only */
   .spp__tabs { display: none; }
+
+  /* VetPoints journey: one full-width horizontal row, six columns. */
+  .spp__ms-row { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .spp__ms-vertical { display: none; }
 
   /* Sheets become centred modals */
   .spp__overlay { align-items: center; padding: 24px; }

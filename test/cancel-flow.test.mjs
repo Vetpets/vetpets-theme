@@ -68,6 +68,20 @@ const listData = method(
   ['REASONS', 'GAP_OPTIONS'],
   [constant('REASONS'), constant('GAP_OPTIONS')],
 );
+// viewModel also closes over NS (the adapter namespace) and the retention
+// journey's module-scope tables; a minimal NS stub is enough here since
+// these tests only exercise the cancel.* fields, never loyalty or the
+// deliveries list that would need its real date helpers.
+const viewModel = method(
+  'viewModel',
+  ['NS', 'REASONS', 'OFFER_PERCENT', 'STANDARD_PERCENT'],
+  [
+    { dates: { addDays: () => null, parseISO: () => new Date(0) }, vetpointsMilestones: [] },
+    constant('REASONS'),
+    constant('OFFER_PERCENT'),
+    constant('STANDARD_PERCENT'),
+  ],
+);
 
 /**
  * The section of markup for one screen, with Liquid comments stripped.
@@ -494,7 +508,15 @@ describe('step 4 — the retention offer', () => {
 
   test('renders the approved offer exactly', () => {
     assert.match(step, /One-time offer/i);
-    assert.match(step, /off your next Routine Care delivery/);
+    assert.match(step, /Before you go,/);
+    // "Routine Care" is cancel.focusName's fallback text — a single-product
+    // account (the vast majority) reads exactly this; a multi-product
+    // account that named a product on step 1 sees that product's name in
+    // its place instead (see viewModel()). The binding sits between "next"
+    // and "delivery", so this tolerates it without requiring one exact
+    // product name.
+    assert.match(step, /off your next[\s\S]*?Routine Care[\s\S]*?delivery/);
+    assert.match(step, /data-spp-field="cancel\.focusName"/);
     assert.match(step, /One delivery only/);
     assert.match(step, /returns to your usual\s+Routine Care pricing/);
   });
@@ -700,7 +722,7 @@ describe('the cancelled screen says nothing internal, and nothing untrue', () =>
   });
 
   test('NO screen in the cancellation flow exposes an internal identifier', () => {
-    for (const name of ['cancel-reason', 'cancel-alt', 'cancel-confirm', 'cancel-done', 'inactive']) {
+    for (const name of ['cancel-intro', 'cancel-reason', 'cancel-alt', 'cancel-confirm', 'cancel-done', 'inactive']) {
       const markup = screen(name);
       assert.ok(
         !/subscription\.reference/.test(markup),
@@ -718,16 +740,19 @@ describe('the corrected V2 journey', () => {
     'utf8',
   ).replace(/\{%-?\s*comment\s*-?%\}[\s\S]*?\{%-?\s*endcomment\s*-?%\}/g, '');
 
-  test('Cancel enters BENEFITS, not the reason list', () => {
-    // It used to jump straight to Reasons, skipping the one screen whose whole
-    // job is to give the customer a reason to stay.
+  test('Cancel enters INTRO, not Benefits or the reason list', () => {
+    // The intro screen states plainly that nothing changes until the customer
+    // confirms at the end — skipping it (straight to Benefits, or worse,
+    // straight to Reasons) drops that reassurance entirely.
     const cancel = buttonWith(subscriptionScreen, 'Cancel subscription');
-    assert.match(cancel, /data-spp-go="cancel-benefits"/);
+    assert.match(cancel, /data-spp-go="cancel-intro"/);
+    assert.ok(!/data-spp-go="cancel-benefits"/.test(cancel));
     assert.ok(!/data-spp-go="cancel-reason"/.test(cancel));
   });
 
   test('the seven screens run in the approved order', () => {
     const order = [
+      'cancel-intro',
       'cancel-benefits',
       'cancel-reason',
       'cancel-alt',
@@ -752,10 +777,100 @@ describe('the corrected V2 journey', () => {
         `${from} must lead to ${to}`,
       );
     };
+    hop('cancel-intro', 'cancel-benefits');
     hop('cancel-benefits', 'cancel-reason');
     hop('cancel-reason', 'cancel-alt');
     hop('cancel-alt', 'cancel-offer');
     hop('cancel-offer', 'cancel-confirm');
+  });
+});
+
+/**
+ * Step 1 personalizes wording; it never invents a per-line cancel.
+ *
+ * Phoenix has exactly one operation, cancel(id), and it always ends the
+ * WHOLE subscription. The approved Portal V2 design frames step 1 as
+ * choosing which subscription to cancel — which does not exist here — so
+ * this asks which product is the main reason instead, and uses the answer
+ * only to word later screens.
+ */
+describe('cancellation personalizes by product, without a fabricated per-line cancel', () => {
+  const twoLines = [
+    { id: 'line_fresh', title: 'FreshWipes jar', quantity: 2 },
+    { id: 'line_eye', title: 'EyeWipes jar', quantity: 1 },
+  ];
+
+  function subWith(lines, focusProduct) {
+    return {
+      state: {
+        data: { nextOrderDate: '2026-09-08', intervalDays: 60, lines, payment: null, pricing: { total: 0, discount: 0 } },
+        loyalty: null,
+        draft: { focusProduct },
+        inactive: [],
+        pending: null,
+        error: null,
+        success: null,
+        customer: null,
+      },
+      fmtDate: () => 'Sep 8',
+      fmtMoney: () => '',
+      escape: (s) => s,
+      delayTargetIso: () => null,
+      rescheduleError: () => null,
+    };
+  }
+
+  test('one product: it is named directly, since there is nothing to disambiguate', () => {
+    const vm = viewModel.call(subWith([twoLines[0]], null));
+    assert.equal(vm['cancel.reasonHeading'], 'Why are you cancelling FreshWipes?');
+    assert.equal(vm['cancel.focusName'], 'FreshWipes');
+  });
+
+  test('several products, none picked yet: still generic — nothing was chosen', () => {
+    const vm = viewModel.call(subWith(twoLines, null));
+    assert.equal(vm['cancel.reasonHeading'], 'Why are you cancelling?');
+    assert.equal(vm['cancel.focusName'], 'Routine Care');
+  });
+
+  test('several products, one picked: the reason and offer screens name it', () => {
+    const vm = viewModel.call(subWith(twoLines, 'line_eye'));
+    assert.equal(vm['cancel.reasonHeading'], 'Why are you cancelling EyeWipes?');
+    assert.equal(vm['cancel.focusName'], 'EyeWipes');
+  });
+
+  test('pick() records a focusProduct choice like any other radio pick', () => {
+    const p = { state: { draft: { focusProduct: null } }, render() {} };
+    pick.call(p, {
+      getAttribute: () => 'focusProduct',
+      dataset: { sppValue: 'line_eye' },
+    });
+    assert.equal(p.state.draft.focusProduct, 'line_eye');
+  });
+
+  test('the confirmation screen states plainly that EVERY product stops, only when there was a real choice', () => {
+    const multi = listData.call(
+      { state: { data: { nextOrderDate: '2026-09-08', payment: null, lines: twoLines }, draft: {} }, fmtDate: () => 'Sep 8' },
+      'cancelFacts',
+    ).map((f) => f.text).join(' | ');
+    assert.match(multi, /whole Routine Care subscription/);
+    assert.match(multi, /FreshWipes/);
+    assert.match(multi, /EyeWipes/);
+
+    const single = listData.call(
+      { state: { data: { nextOrderDate: '2026-09-08', payment: null, lines: [twoLines[0]] }, draft: {} }, fmtDate: () => 'Sep 8' },
+      'cancelFacts',
+    ).map((f) => f.text).join(' | ');
+    assert.ok(
+      !/whole Routine Care subscription/.test(single),
+      'a single-product account has nothing to disambiguate, so this line must not appear',
+    );
+  });
+
+  test('the focus-product screen picks are never sent anywhere — cancel() still takes only (id, reason)', () => {
+    const start = src.indexOf("case 'cancel':");
+    const block = src.slice(start, src.indexOf("case 'reactivate'", start));
+    assert.ok(!/focusProduct/.test(block), 'the cancel mutation must not reference the personalization pick');
+    assert.match(block, /adapter\.cancel\(id, d\.reason, null,/);
   });
 });
 

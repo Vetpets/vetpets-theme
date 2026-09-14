@@ -68,7 +68,13 @@
       sheet: null,
       pending: null,
       lastFocus: null,
-      draft: { delay: 7, reason: null, restart: 0, date: null, note: '', gap: null },
+      // focusProduct: the customer's own pick of which line in their
+      // subscription is driving the decision to cancel. It is used ONLY to
+      // word the benefits/reason/offer screens — the cancel(id) mutation
+      // always ends the WHOLE subscription, because Phoenix has no per-line
+      // cancel. See show()'s cancel-intro handling and viewModel()'s
+      // cancel.* fields.
+      draft: { delay: 7, reason: null, restart: 0, date: null, note: '', gap: null, focusProduct: null },
       reasonError: null,
       data: null,
       loyalty: null,
@@ -460,6 +466,29 @@
      * approved journey: Longer Gap goes straight to Final Confirmation. */
     if (screen === 'cancel-offer' && this.state.data && this.state.data.retentionOfferRedeemed) {
       screen = 'cancel-confirm';
+    }
+
+    /* Cancel step 1 is a "which product is the main reason" picker — it
+     * exists to personalize the screens after it, nothing more. Almost
+     * every customer's subscription has exactly one product, and asking
+     * someone to pick between one option is not a question. With one line
+     * (or none, a state this screen should never reach anyway) there is
+     * nothing to ask, so it is skipped straight to cancel-benefits with
+     * that single product pre-selected. With more than one line the
+     * picker shows, and the previous or first pick is kept selected so
+     * "Continue" always has an honest answer to personalize with. */
+    if (screen === 'cancel-intro') {
+      var focusLines = (this.state.data && this.state.data.lines) || [];
+      if (focusLines.length <= 1) {
+        this.state.draft.focusProduct = focusLines[0] ? focusLines[0].id : null;
+        screen = 'cancel-benefits';
+      } else {
+        var hasFocus = false;
+        for (var fi = 0; fi < focusLines.length; fi++) {
+          if (focusLines[fi].id === this.state.draft.focusProduct) { hasFocus = true; break; }
+        }
+        if (!hasFocus) this.state.draft.focusProduct = focusLines[0].id;
+      }
     }
 
     if (this.state.screen !== screen) this.state.history.push(this.state.screen);
@@ -869,6 +898,7 @@
       vm['subscription.intervalDays'] = sub.intervalDays == null ? '' : String(sub.intervalDays);
       vm['subscription.nextOrderMedium'] = this.fmtDate(sub.nextOrderDate, 'medium');
       vm['subscription.nextOrderShort'] = this.fmtDate(sub.nextOrderDate, 'short');
+      vm['subscription.nextOrderLong'] = this.fmtDate(sub.nextOrderDate, 'full');
       vm['subscription.startedLong'] = this.fmtDate(sub.startedOn, 'full');
       vm['subscription.deliveriesSoFar'] = sub.deliveriesSoFar == null ? '' : String(sub.deliveriesSoFar);
       vm['subscription.discountPercent'] = sub.discountRate == null ? '' : String(Math.round(sub.discountRate * 100));
@@ -903,6 +933,19 @@
         return l.title.replace(/ (jar|pack).*$/, '') + ' ×' + l.quantity;
       }).join(', ');
 
+      // Cancellation personalization only — see draft.focusProduct above.
+      // With one line there is nothing to pick, so that line is always the
+      // focus; with several, it is whichever the customer picked on step 1
+      // (defaulted to the first by show()). The fallback string is what
+      // renders before a real subscription has loaded at all.
+      var focusLine = null;
+      for (var fli = 0; fli < sub.lines.length; fli++) {
+        if (sub.lines[fli].id === d.focusProduct) { focusLine = sub.lines[fli]; break; }
+      }
+      if (!focusLine && sub.lines.length === 1) focusLine = sub.lines[0];
+      vm['cancel.focusName'] = focusLine ? focusLine.title.replace(/ (jar|pack).*$/, '') : 'Routine Care';
+      vm['cancel.reasonHeading'] = focusLine ? ('Why are you cancelling ' + vm['cancel.focusName'] + '?') : 'Why are you cancelling?';
+
       vm['pricing.total'] = this.fmtMoney(sub.pricing.total);
       vm['pricing.discount'] = this.fmtMoney(sub.pricing.discount);
 
@@ -928,6 +971,25 @@
       vm['loyalty.toNextReward'] = String(loy.toNextReward);
       vm['loyalty.progressPercent'] = loy.progressPercent;
       vm['loyalty.disclosure'] = loy.disclosure || '';
+
+      // The journey card's own header — matches the approved design exactly
+      // (Claude Design "VetPets Portal V2", journeyNextName/journeyNextMeta/
+      // journeyCounter). Computed straight from the real balance against the
+      // same fixed ladder the milestone list itself uses — see listData()'s
+      // 'milestones' case, just below.
+      var ladder = NS.vetpointsMilestones;
+      var jNext = null;
+      for (var ji = 0; ji < ladder.length; ji++) {
+        if (ladder[ji].points > loy.points) { jNext = ladder[ji]; break; }
+      }
+      var fmtPts = function (n) { return n.toLocaleString('en-US'); };
+      vm['loyalty.journeyNextName'] = jNext ? jNext.name : 'Every reward unlocked';
+      vm['loyalty.journeyNextMeta'] = jNext
+        ? 'Unlocks at ' + fmtPts(jNext.points) + ' VetPoints · ' + fmtPts(Math.max(0, jNext.points - loy.points)) + ' points to go'
+        : 'You have reached every milestone on the journey.';
+      vm['loyalty.journeyCounter'] = jNext
+        ? fmtPts(loy.points) + ' / ' + fmtPts(jNext.points)
+        : fmtPts(loy.points) + ' / ' + fmtPts(ladder[ladder.length - 1].points);
     }
     vm['label.retryLoyalty'] = s.loyaltyPending ? 'Retrying…' : 'Try again';
 
@@ -1066,6 +1128,11 @@
     var loyaltyHistoryCount = (loy && !loy.error && loy.history) ? loy.history.length : 0;
     var loyaltyAllReached = !!(loy && !loy.error && loy.allMilestonesReached);
 
+    // Only meaningful with more than one product in the subscription — with
+    // one, "personalized for X" would just restate the only thing the
+    // customer has, which is not personalization, it is noise.
+    var cancelLines = (this.state.data && this.state.data.lines) || [];
+
     var conds = this.root.querySelectorAll('[data-spp-when]');
     for (i = 0; i < conds.length; i++) {
       var expr = conds[i].getAttribute('data-spp-when').split(':');
@@ -1073,6 +1140,7 @@
       if (expr[0] === 'loyalty') conds[i].hidden = (expr[1] === 'error') !== loyaltyFailed;
       if (expr[0] === 'loyaltyHistory') conds[i].hidden = (expr[1] === 'has') !== (loyaltyHistoryCount > 0);
       if (expr[0] === 'loyaltyMilestones') conds[i].hidden = (expr[1] === 'complete') !== loyaltyAllReached;
+      if (expr[0] === 'cancelFocus') conds[i].hidden = (expr[1] === 'multi') !== (cancelLines.length > 1);
     }
 
     var badge = this.root.querySelector('[data-spp-status-badge]');
@@ -1184,14 +1252,22 @@
      'check-circle' and 'lock', inlined because a list row is rebuilt in JS,
      not rendered through Liquid. Keep both in sync with spp-icon.liquid by
      hand if that snippet's paths ever change. */
-  var MILESTONE_CHECK_SVG = '<svg width="20" height="20" viewBox="0 0 19 19" fill="none" aria-hidden="true" focusable="false">' +
-    '<circle cx="9.5" cy="9.5" r="8.4" fill="var(--spp-accent)"/>' +
-    '<path d="M5.8 9.7l2.6 2.6 5-5.4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>' +
+  /* The node itself (.spp__ms-node) supplies the achieved/current/locked
+     background and border per the approved design — these three are the
+     icon ALONE, exactly the paths from that design, so they drop into
+     whichever node background is already showing. */
+  var MILESTONE_CHECK_SVG = '<svg width="17" height="17" viewBox="0 0 18 18" fill="none" aria-hidden="true" focusable="false">' +
+    '<path d="M3.9 9.5l3.2 3.2 7-7.4" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>' +
     '</svg>';
-  var MILESTONE_LOCK_SVG = '<svg width="18" height="20" viewBox="0 0 26 30" fill="none" aria-hidden="true" focusable="false">' +
-    '<rect x="3" y="12" width="20" height="15" rx="4" stroke="var(--spp-muted)" stroke-width="2"/>' +
-    '<path d="M8 12V8a5 5 0 0110 0v4" stroke="var(--spp-muted)" stroke-width="2" stroke-linecap="round"/>' +
-    '<circle cx="13" cy="19.5" r="2" fill="var(--spp-muted)"/>' +
+  var MILESTONE_CURRENT_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">' +
+    '<rect x="3.6" y="10.4" width="16.8" height="10.2" rx="2" stroke="var(--spp-accent)" stroke-width="1.9"/>' +
+    '<rect x="2.4" y="6.6" width="19.2" height="4.2" rx="1.5" stroke="var(--spp-accent)" stroke-width="1.9"/>' +
+    '<path d="M12 6.6v14" stroke="var(--spp-accent)" stroke-width="1.9"/>' +
+    '<path d="M12 6.6H8.9c-1.3 0-2.3-1-2.3-2.1 0-1.1.9-1.9 2-1.9 2.1 0 3.4 4 3.4 4zM12 6.6h3.1c1.3 0 2.3-1 2.3-2.1 0-1.1-.9-1.9-2-1.9-2.1 0-3.4 4-3.4 4z" stroke="var(--spp-accent)" stroke-width="1.9" stroke-linejoin="round"/>' +
+    '</svg>';
+  var MILESTONE_LOCK_SVG = '<svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false">' +
+    '<rect x="3.4" y="7" width="9.2" height="6.6" rx="1.6" stroke="#A9BDCC" stroke-width="1.6"/>' +
+    '<path d="M5.6 7V5.4a2.4 2.4 0 014.8 0V7" stroke="#A9BDCC" stroke-width="1.6" stroke-linecap="round"/>' +
     '</svg>';
 
   /**
@@ -1335,29 +1411,41 @@
         // locked. The ladder itself (thresholds, names, images) is fixed —
         // see VetPetsPortal.vetpointsMilestones — and identical to what the
         // backend awards against, so this never needs its own data source.
+        //
+        // The fillA/fillB math below is copied verbatim from the approved
+        // Claude Design mockup ("VetPets Portal V2", the `journey` builder)
+        // so the connecting line between two nodes fills continuously and
+        // meets in the middle exactly as designed, not as a binary on/off.
         var balance = (s.loyalty && !s.loyalty.error) ? s.loyalty.points : 0;
-        var nextPoints = null;
-        for (var mi = 0; mi < NS.vetpointsMilestones.length; mi++) {
-          if (NS.vetpointsMilestones[mi].points > balance) { nextPoints = NS.vetpointsMilestones[mi].points; break; }
+        var ladder = NS.vetpointsMilestones;
+        var nextIdx = -1;
+        for (var mi = 0; mi < ladder.length; mi++) {
+          if (ladder[mi].points > balance) { nextIdx = mi; break; }
         }
-        return NS.vetpointsMilestones.map(function (m) {
-          var achieved = balance >= m.points;
-          var current = !achieved && m.points === nextPoints;
-          var stateLabel = achieved ? 'Unlocked'
-            : current ? (Math.max(0, m.points - balance) + ' points to go')
-            : 'Locked';
+        function clamp01(n) { return Math.max(0, Math.min(1, n)); }
+        function fmtN(n) { return n.toLocaleString('en-US'); }
+        return ladder.map(function (m, i) {
+          var done = balance >= m.points;
+          var isNext = i === nextIdx;
+          var live = done || isNext;
+          var segNext = i < ladder.length - 1
+            ? clamp01((balance - m.points) / (ladder[i + 1].points - m.points))
+            : 0;
+          var segPrev = i > 0
+            ? clamp01((balance - ladder[i - 1].points) / (m.points - ladder[i - 1].points))
+            : 0;
           return {
             name: m.name,
-            pointsLabel: m.points + ' points',
-            stateLabel: stateLabel,
-            // Shown at every state, including locked — the point of a
-            // journey is seeing what is still ahead. Only a genuinely
-            // unresolved reward (no product chosen yet) falls back to the
-            // pending-photo tile, via _pending below.
+            ptsNumber: fmtN(m.points),
+            sub: done ? 'Unlocked' : (isNext ? (fmtN(Math.max(0, m.points - balance)) + ' points to go') : 'Locked'),
             _image: m.image || '',
             _pending: !m.image,
             _alt2: m.name,
-            _milestoneState: achieved ? 'achieved' : (current ? 'current' : 'locked')
+            _milestoneState: done ? 'achieved' : (isNext ? 'current' : 'locked'),
+            _isFirst: i === 0,
+            _isLast: i === ladder.length - 1,
+            _fillA: Math.round(clamp01(segPrev * 2 - 1) * 100),
+            _fillB: Math.round(clamp01(segNext * 2) * 100)
           };
         });
       }
@@ -1423,18 +1511,50 @@
       case 'cancelFacts': {
         if (!sub) return [];
         var card = sub.payment;
-        return [
-          'Your ' + self.fmtDate(sub.nextOrderDate, 'short') + ' delivery will not ship.',
-          card && card.brand
-            ? 'No further charges will be made to ' + card.brand +
-              (card.last4 ? ' ···· ' + card.last4 : '') + '.'
-            : 'No further charges will be made.',
-          'You can reactivate with the same products and price at any time.',
-          // Last, and phrased as care rather than pressure: by this screen the
-          // decision is made, and a sales pitch here would read as one.
-          'RoutineCare keeps daily care consistent, helping prevent buildup before it becomes a recurring problem.'
-        ].map(function (t) { return { text: t }; });
+        var facts = [];
+        var factLines = sub.lines || [];
+        // Only the product the customer named on step 1 was ever discussed
+        // on the screens since — this is the one place that must say, in
+        // plain words, that confirming ends every product in the
+        // subscription, not only that one. Skipped when there is only one
+        // product: there is nothing to disambiguate.
+        if (factLines.length > 1) {
+          facts.push(
+            'This cancels your whole Routine Care subscription — ' +
+            factLines.map(function (l) { return l.title.replace(/ (jar|pack).*$/, ''); }).join(', ') +
+            ' will all stop, not only the product you told us about.'
+          );
+        }
+        facts.push('Your ' + self.fmtDate(sub.nextOrderDate, 'short') + ' delivery will not ship.');
+        facts.push(card && card.brand
+          ? 'No further charges will be made to ' + card.brand +
+            (card.last4 ? ' ···· ' + card.last4 : '') + '.'
+          : 'No further charges will be made.');
+        facts.push('You can reactivate with the same products and price at any time.');
+        // Last, and phrased as care rather than pressure: by this screen the
+        // decision is made, and a sales pitch here would read as one.
+        facts.push('RoutineCare keeps daily care consistent, helping prevent buildup before it becomes a recurring problem.');
+        return facts.map(function (t) { return { text: t }; });
       }
+
+      case 'cancelFocusProducts':
+        // Step 1 of cancellation, shown only when there is a real choice to
+        // make (show() skips straight past this with one line). The pick
+        // here personalizes wording on the screens that follow — it is
+        // never sent anywhere, and never changes what cancel(id) does.
+        return (sub ? sub.lines : []).map(function (l) {
+          var img = self.lineImage(l);
+          var name = l.title.replace(/ (jar|pack).*$/, '');
+          return {
+            name: name,
+            subtitle: 'Routine Care · ×' + l.quantity +
+              (sub.intervalDays ? ' every ' + sub.intervalDays + ' days' : '') +
+              ' · next ' + self.fmtDate(sub.nextOrderDate, 'short'),
+            _value: l.id,
+            _checked: d.focusProduct === l.id,
+            _image: img._image, _pending: img._pending, _alt2: img._alt2
+          };
+        });
 
       default:
         return [];
@@ -1568,26 +1688,34 @@
     }
 
     if (listName === 'milestones') {
-      node.classList.remove('spp__milestone--achieved', 'spp__milestone--current', 'spp__milestone--locked');
-      node.classList.add('spp__milestone--' + item._milestoneState);
+      // node here is one .spp__ms-col (desktop) or .spp__ms-vrow (mobile) —
+      // the outer element cloned from whichever of the two templates this
+      // call is filling. Both carry the same state classes and the same
+      // inner [data-spp-ms-*] parts, so everything below works for either.
+      node.classList.remove('spp__ms-col--achieved', 'spp__ms-col--current', 'spp__ms-col--locked');
+      node.classList.add('spp__ms-col--' + item._milestoneState);
+      node.classList.toggle('spp__ms-col--edge-a', !!item._isFirst);
+      node.classList.toggle('spp__ms-col--edge-b', !!item._isLast);
 
-      var mThumb = node.querySelector('[data-spp-thumb]');
-      if (mThumb) mThumb.classList.toggle('spp__thumb--muted', item._milestoneState === 'locked');
-
-      var badge = node.querySelector('[data-spp-milestone-badge]');
-      if (badge) {
-        if (item._milestoneState === 'achieved') {
-          badge.innerHTML = MILESTONE_CHECK_SVG;
-          badge.className = 'spp__milestone-badge';
-        } else if (item._milestoneState === 'current') {
-          badge.innerHTML = '';
-          badge.className = 'spp__milestone-badge spp__milestone-badge--current';
-          badge.textContent = item.stateLabel;
-        } else {
-          badge.innerHTML = MILESTONE_LOCK_SVG;
-          badge.className = 'spp__milestone-badge';
-        }
+      var nodeIcon = node.querySelector('[data-spp-ms-node]');
+      if (nodeIcon) {
+        nodeIcon.innerHTML = item._milestoneState === 'achieved' ? MILESTONE_CHECK_SVG
+          : item._milestoneState === 'current' ? MILESTONE_CURRENT_SVG
+          : MILESTONE_LOCK_SVG;
       }
+
+      var fillA = node.querySelector('[data-spp-ms-fill-a]');
+      var fillB = node.querySelector('[data-spp-ms-fill-b]');
+      // Desktop tracks run horizontally (width); the mobile vertical track
+      // reuses the identical markup rotated with CSS, so the fill there has
+      // to be a height instead. `node` is a detached clone at this point
+      // (fillNode runs before the caller appends it — see renderLists), so
+      // this reads the root element's OWN class rather than walking to an
+      // ancestor that does not exist yet.
+      var isVertical = node.classList.contains('spp__ms-vrow');
+      var dim = isVertical ? 'height' : 'width';
+      if (fillA) fillA.style[dim] = (item._fillA || 0) + '%';
+      if (fillB) fillB.style[dim] = (item._fillB || 0) + '%';
     }
   };
 
@@ -1753,6 +1881,7 @@
       this.state.reasonError = null;
     }
     else if (kind === 'restart') d.restart = parseInt(el.dataset.sppIndex, 10);
+    else if (kind === 'focusProduct') d.focusProduct = value;
     this.render();
   };
 

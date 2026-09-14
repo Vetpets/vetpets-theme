@@ -15,111 +15,130 @@
     {% render 'spp-icon', icon: 'chevron-left' %}Overview
   </button>
 
-  <h1 class="spp__sr" id="spp-loy-h">VetPoints</h1>
+  {%- comment -%}
+    One stacked column, full content width — matches the approved Claude
+    Design mockup ("VetPets Portal V2") exactly: header, then the journey
+    card, then reward history below it. Deliberately NOT the .spp__split
+    two-column layout every other screen here uses; that mockup has no
+    side column on this screen at any width.
+  {%- endcomment -%}
 
-  <div class="spp__split">
-    <div class="spp__split-main">
+  {%- comment -%} ---------- Ledger read failed ---------- {%- endcomment -%}
+  <div class="spp__card" data-spp-when="loyalty:error" hidden>
+    <div class="spp__banner spp__banner--error" style="margin-bottom:0;">
+      <span class="spp__banner-icon spp__banner-icon--error" style="width:26px;height:26px;font:700 15px/26px var(--spp-font);">!</span>
+      <div>
+        <div class="spp__banner-title">VetPoints is temporarily unavailable</div>
+        <p>We couldn&rsquo;t load your balance just now. Your subscription and deliveries are not affected.</p>
+      </div>
+    </div>
+    <button type="button" class="spp__btn spp__btn--secondary" style="margin-top:14px;min-height:48px;font-size:15px;" data-spp-act="retryLoyalty">
+      <span data-spp-field="label.retryLoyalty">Try again</span>
+    </button>
+  </div>
 
-      {%- comment -%} ---------- Ledger read failed ---------- {%- endcomment -%}
-      <div class="spp__card" data-spp-when="loyalty:error" hidden>
-        <div class="spp__banner spp__banner--error" style="margin-bottom:0;">
-          <span class="spp__banner-icon spp__banner-icon--error" style="width:26px;height:26px;font:700 15px/26px var(--spp-font);">!</span>
-          <div>
-            <div class="spp__banner-title">VetPoints is temporarily unavailable</div>
-            <p>We couldn&rsquo;t load your balance just now. Your subscription and deliveries are not affected.</p>
-          </div>
+  <div data-spp-when="loyalty:ok" hidden style="display:flex;flex-direction:column;gap:16px;">
+    <div>
+      <h1 class="spp__h1" id="spp-loy-h" style="margin-bottom:4px;">Your VetPoints</h1>
+      <div style="display:flex;align-items:baseline;gap:9px;font:700 44px/1.05 var(--spp-font);color:var(--spp-ink);letter-spacing:-0.03em;margin:6px 0 6px;">
+        <span data-spp-field="loyalty.points">0</span>
+        <span style="font:600 19px/1 var(--spp-font);color:var(--spp-body);">VetPoints</span>
+      </div>
+      <p style="margin:0;font:500 15px/1.45 var(--spp-font);color:var(--spp-body);">
+        Earn <span data-spp-field="loyalty.perRenewal">100</span> VetPoints with every order.
+      </p>
+    </div>
+
+    {%- comment -%}
+      The VetPoints journey — one node per founder-approved milestone, 200
+      through 1,600. Achieved / current / locked state, and the connecting
+      line's fill amount, are computed from the real balance alone (see the
+      `milestones` list builder in assets/subscription-portal.js). Nothing
+      here is redeemed or requested by the customer — every reward is
+      issued automatically by the backend the moment its threshold is
+      crossed. Rendered twice from the SAME data (see listData('milestones')
+      in the controller): once into the desktop row below, once into the
+      mobile vertical list — only one is ever visible at a time (CSS,
+      1024px breakpoint), matching the mockup's own data-only split.
+    {%- endcomment -%}
+    <div class="spp__card spp__card--journey">
+      <div class="spp__ms-head">
+        <div style="min-width:0;">
+          <span class="spp__ms-eyebrow">Milestone journey</span>
+          <div class="spp__ms-next-name">Next reward: <span data-spp-field="loyalty.journeyNextName">Dental Chew Ball</span></div>
+          <div class="spp__ms-next-meta" data-spp-field="loyalty.journeyNextMeta">Unlocks at 200 VetPoints</div>
         </div>
-        <button type="button" class="spp__btn spp__btn--secondary" style="margin-top:14px;min-height:48px;font-size:15px;" data-spp-act="retryLoyalty">
-          <span data-spp-field="label.retryLoyalty">Try again</span>
-        </button>
+        <span class="spp__ms-counter" data-spp-field="loyalty.journeyCounter">0 / 200</span>
       </div>
 
-      <div data-spp-when="loyalty:ok" hidden style="display:flex;flex-direction:column;gap:16px;">
-        <div class="spp__points spp__points--tall">
-          <div class="spp__eyebrow" style="color:#fff;opacity:.85;letter-spacing:.16em;font-size:11px;margin-bottom:12px;">VetPoints balance</div>
-          <div class="spp__points-value">
-            <b data-spp-field="loyalty.points">0</b>
-            <span>points</span>
+      {%- comment -%} Desktop: one full-width row, six columns. {%- endcomment -%}
+      <div class="spp__ms-row" data-spp-list="milestones">
+        <template data-spp-tpl="milestones">
+          <div class="spp__ms-col">
+            <div class="spp__ms-flag">Next up</div>
+            <div class="spp__ms-tile" data-spp-thumb><img data-spp-img alt=""></div>
+            <div class="spp__ms-line">
+              <span class="spp__ms-track spp__ms-track-a" data-spp-ms-track-a><span class="spp__ms-fill" data-spp-ms-fill-a></span></span>
+              <span class="spp__ms-node" data-spp-ms-node></span>
+              <span class="spp__ms-track spp__ms-track-b" data-spp-ms-track-b><span class="spp__ms-fill" data-spp-ms-fill-b></span></span>
+            </div>
+            <div class="spp__ms-pts" data-spp-field="ptsNumber">200</div>
+            <div class="spp__ms-name" data-spp-field="name">Dental Chew Ball</div>
+            <div class="spp__ms-sub" data-spp-field="sub">Locked</div>
           </div>
-          <div class="spp__progress spp__progress--on-blue">
-            <span data-spp-style-width="loyalty.progressPercent"></span>
-          </div>
-          <p data-spp-when="loyaltyMilestones:complete" hidden>
-            You&rsquo;ve unlocked every VetPoints reward. Thank you for being a VetPets subscriber.
-          </p>
-          <div data-spp-when="loyaltyMilestones:remaining" hidden>
-            <p class="spp__points-fine">
-              <span data-spp-field="loyalty.nextRewardAt">800</span> VetPoints &rarr;
-              <span data-spp-field="loyalty.nextRewardName">Free Surprise Gift</span>
-            </p>
-            <p>
-              <span data-spp-field="loyalty.toNextReward">800</span> points remaining until your next reward
-            </p>
-          </div>
-        </div>
+        </template>
+      </div>
 
-        {%- comment -%}
-          The VetPoints journey — one row per founder-approved milestone,
-          200 through 1,600. Achieved / current / locked state is computed
-          from the real balance alone (see the `milestones` list in
-          assets/subscription-portal.js) — nothing here is redeemed or
-          requested by the customer; every reward is issued automatically
-          by the backend the moment its threshold is crossed.
-        {%- endcomment -%}
-        <div class="spp__card">
-          <h2 class="spp__h2" style="margin-bottom:4px;">Your VetPoints journey</h2>
-          <p class="spp__note" style="margin:0 0 14px;">
-            Rewards are sent to you automatically the moment you reach each milestone &mdash; nothing to redeem.
-          </p>
-          <div data-spp-list="milestones">
-            <template data-spp-tpl="milestones">
-              <div class="spp__milestone">
-                <span class="spp__thumb spp__thumb--lg" data-spp-thumb><img data-spp-img alt=""></span>
-                <div class="spp__milestone-body">
-                  <div class="spp__media-title" data-spp-field="name">Dental Chew Ball</div>
-                  <div class="spp__media-meta" data-spp-field="pointsLabel">200 points</div>
+      {%- comment -%} Mobile: the same nodes and line, stacked vertically. {%- endcomment -%}
+      <div class="spp__ms-vertical" data-spp-list="milestones">
+        <template data-spp-tpl="milestones">
+          <div class="spp__ms-vrow">
+            <div class="spp__ms-vtrack">
+              <span class="spp__ms-track spp__ms-track-a" data-spp-ms-track-a><span class="spp__ms-fill" data-spp-ms-fill-a></span></span>
+              <span class="spp__ms-node" data-spp-ms-node></span>
+              <span class="spp__ms-track spp__ms-track-b" data-spp-ms-track-b><span class="spp__ms-fill" data-spp-ms-fill-b></span></span>
+            </div>
+            <div class="spp__ms-vcard">
+              <div class="spp__ms-vtile" data-spp-thumb><img data-spp-img alt=""></div>
+              <div class="spp__ms-vbody">
+                <div class="spp__ms-vtop">
+                  <span class="spp__ms-vpts" data-spp-field="ptsNumber">200</span>
+                  <span class="spp__ms-vsub" data-spp-field="sub">Locked</span>
                 </div>
-                <span class="spp__milestone-badge" data-spp-milestone-badge></span>
+                <div class="spp__ms-vname" data-spp-field="name">Dental Chew Ball</div>
               </div>
-            </template>
+            </div>
           </div>
-          <div style="display:flex;gap:13px;align-items:flex-start;margin-top:16px;padding-top:16px;border-top:1px solid rgba(13,35,64,.09);">
-            <span class="spp__disc" style="width:38px;height:38px;margin:0;flex:0 0 auto;color:var(--spp-accent);">
-              {% render 'spp-icon', icon: 'paw', size: 20 %}
-            </span>
-            <p style="margin:0;font:500 14.5px/1.5 var(--spp-font);color:var(--spp-body);">
-              <strong style="color:var(--spp-ink);"><span data-spp-field="loyalty.perRenewal">100</span> points</strong>
-              for every delivery that renews successfully.
-            </p>
-          </div>
-          <p class="spp__info spp__info--dashed" style="margin-top:16px;padding:11px 13px;border-radius:12px;" data-spp-field="loyalty.disclosure"></p>
-          <p class="spp__note" style="margin-top:10px;">
-            Points are awarded by VetPets from settled recurring orders and are reconciled against refunds.
-          </p>
-        </div>
+        </template>
+      </div>
+
+      <div class="spp__ms-foot">
+        <span class="spp__ms-foot-icon">
+          {% render 'spp-icon', icon: 'sparkle', size: 17 %}
+        </span>
+        <p>Your rewards are automatically added to your next delivery.</p>
       </div>
     </div>
 
-    <div class="spp__split-side" data-spp-when="loyalty:ok" hidden>
-      <div class="spp__card">
-        <h2 class="spp__h2" style="margin-bottom:8px;">Reward history</h2>
-        <div data-spp-when="loyaltyHistory:has" hidden>
-          <div data-spp-list="pointsHistory">
-            <template data-spp-tpl="pointsHistory">
-              <div class="spp__delivery" style="padding:12px 0;">
-                <div style="flex:1;min-width:0;">
-                  <div class="spp__delivery-title" data-spp-field="label">Delivery renewed</div>
-                  <div class="spp__delivery-meta" data-spp-field="dateLong">10 July 2026</div>
-                </div>
-                <span style="font:700 14.5px/1 var(--spp-font);color:var(--spp-ink);" data-spp-field="delta">+100</span>
+    <div class="spp__card">
+      <h2 class="spp__h2" style="margin-bottom:8px;">Reward history</h2>
+      <div data-spp-when="loyaltyHistory:has" hidden>
+        <div data-spp-list="pointsHistory">
+          <template data-spp-tpl="pointsHistory">
+            <div class="spp__delivery" style="padding:12px 0;">
+              <div style="flex:1;min-width:0;">
+                <div class="spp__delivery-title" data-spp-field="label">Delivery renewed</div>
+                <div class="spp__delivery-meta" data-spp-field="dateLong">10 July 2026</div>
               </div>
-            </template>
-          </div>
+              <span style="font:700 14.5px/1 var(--spp-font);color:var(--spp-accent);" data-spp-field="delta">+100</span>
+            </div>
+          </template>
         </div>
-        <p class="spp__note" data-spp-when="loyaltyHistory:empty" hidden>
-          No VetPoints activity yet &mdash; points appear here after your first renewal.
-        </p>
       </div>
+      <p class="spp__note" data-spp-when="loyaltyHistory:empty" hidden>
+        No VetPoints activity yet &mdash; points appear here after your first renewal.
+      </p>
+      <p class="spp__info spp__info--dashed" style="margin-top:16px;padding:11px 13px;border-radius:12px;" data-spp-field="loyalty.disclosure"></p>
     </div>
   </div>
 </section>

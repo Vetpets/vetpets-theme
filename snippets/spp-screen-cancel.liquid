@@ -1,15 +1,66 @@
 {%- comment -%}
-  Screens: cancellation flow (1 benefits → 2 reason → 3 alternatives →
-  4 offer → 5 confirm → 6 cancelled), reactivation, inactive list, empty
-  account.
+  Screens: cancellation flow (1 focus product → 2 benefits → 3 reason →
+  4 alternatives → 5 offer → 6 confirm → 7 cancelled), reactivation,
+  inactive list, empty account.
 
   Cancellation stays completable throughout: the save-offers are shown
   once, and "continue to cancel" is always present.
 {%- endcomment -%}
 
-{%- comment -%} ---------- 1 · Benefits ---------- {%- endcomment -%}
+{%- comment -%} ---------- 1 · Focus product ---------- {%- endcomment -%}
 {%- comment -%}
-  Step one of the approved journey. Optimised for EyeWipes and FreshWipes
+  Ported from the approved Claude Design mockup ("VetPets Portal V2"), which
+  frames step 1 as "which subscription do you want to cancel" — Phoenix has
+  no such thing; a customer has ONE subscription that may hold several
+  products, and cancel(id) always ends the whole thing, never a single line
+  (see cancel-confirm below, and the 'cancel' case in subscription-portal.js).
+
+  So this asks a question Phoenix CAN answer honestly: which product, if
+  any, is the main reason cancellation is on the table. That pick only
+  personalizes the wording on the benefits/reason/offer screens that follow
+  — see cancel.focusName and cancel.reasonHeading in viewModel(). It is
+  never sent to Phoenix and never changes what confirming does.
+
+  Almost every subscription holds one product, and a picker with one row is
+  not a question — show()'s cancel-intro handling skips this screen
+  entirely in that case, auto-selecting the sole product. This section only
+  ever renders for the multi-product minority.
+{%- endcomment -%}
+<section class="spp__screen" data-spp-screen="cancel-intro" hidden aria-labelledby="spp-ci-h">
+  <button type="button" class="spp__back" data-spp-go="subscription">
+    {% render 'spp-icon', icon: 'chevron-left' %}Subscription
+  </button>
+
+  <div class="spp__narrow">
+    <h1 class="spp__h1" id="spp-ci-h">What&rsquo;s the main reason you&rsquo;re considering cancelling?</h1>
+    <p class="spp__lede">
+      Pick the product that matters most here &mdash; we&rsquo;ll use it to personalize what&rsquo;s next.
+      Cancelling always ends your whole Routine Care subscription, not just one product.
+    </p>
+
+    <div class="spp__choices" role="radiogroup" aria-label="Which product is the main reason" data-spp-list="cancelFocusProducts">
+      <template data-spp-tpl="cancelFocusProducts">
+        <button type="button" class="spp__choice spp__choice--stacked" role="radio" aria-checked="false" data-spp-pick="focusProduct">
+          <span class="spp__radio"></span>
+          <span class="spp__thumb" data-spp-thumb><img data-spp-img alt=""></span>
+          <span class="spp__choice-text">
+            <b data-spp-field="name">FreshWipes</b>
+            <span data-spp-field="subtitle">Routine Care · ×2 every 60 days · next Sep 8</span>
+          </span>
+        </button>
+      </template>
+    </div>
+
+    <button type="button" class="spp__btn spp__btn--primary" style="margin-top:18px;" data-spp-go="cancel-benefits">Continue</button>
+    <div class="spp__quiet-row">
+      <button type="button" class="spp__btn spp__btn--link" data-spp-go="subscription">Never mind, take me back</button>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ---------- 2 · Benefits ---------- {%- endcomment -%}
+{%- comment -%}
+  Step two of the approved journey. Optimised for EyeWipes and FreshWipes
   subscribers: the concerns named first are the ones those routines address.
 
   The headline is deliberately about the dog rather than the subscription. A
@@ -23,6 +74,15 @@
   </button>
 
   <div class="spp__narrow">
+    {%- comment -%}
+      Shown only when the customer actually made a choice on step 1 — i.e.
+      there was more than one product to choose between. See cancelFocus:*
+      in render() and cancel.focusName in viewModel().
+    {%- endcomment -%}
+    <div class="spp__pill" data-spp-when="cancelFocus:multi" hidden style="margin-bottom:14px;">
+      Personalized for <span data-spp-field="cancel.focusName">FreshWipes</span>
+    </div>
+
     {%- comment -%}
       Veterinarian introduction video — a replaceable config value, never a
       fabricated video. data-spp-vet-video-url (root element, from
@@ -42,7 +102,21 @@
       <div data-spp-vet-video hidden></div>
     </div>
 
-    <h1 class="spp__h1" id="spp-cb-h" style="margin-top:18px;">They can&rsquo;t tell you when it comes back</h1>
+    {%- comment -%}
+      The approved Portal V2 design leads "before you cancel" with this
+      stat, verbatim — a company-wide adherence figure, not a per-product
+      claim, so it renders the same regardless of which product the
+      customer picked on step 1.
+    {%- endcomment -%}
+    <div class="spp__info spp__info--icon" style="margin:16px 0;">
+      {% render 'spp-icon', icon: 'clock-action', size: 19 %}
+      <p>
+        <strong>95% of VetPets customers see meaningful results after 90 days</strong> of consistent
+        daily use. Giving the routine the full 90 days gives your pet a fair chance.
+      </p>
+    </div>
+
+    <h1 class="spp__h1" id="spp-cb-h">They can&rsquo;t tell you when it comes back</h1>
     <p class="spp__lede">
       Watery eyes and tear staining creep back first. Then the build-up on the teeth.
       Prevention is easy to overlook while it&rsquo;s working &mdash; you notice it when it stops.
@@ -73,13 +147,20 @@
   </div>
 </section>
 
-{%- comment -%} ---------- 2 · Reason ---------- {%- endcomment -%}
+{%- comment -%} ---------- 3 · Reason ---------- {%- endcomment -%}
 <section class="spp__screen" data-spp-screen="cancel-reason" hidden aria-labelledby="spp-cr-h">
   <button type="button" class="spp__back" data-spp-go="subscription">
     {% render 'spp-icon', icon: 'chevron-left' %}Subscription
   </button>
 
-  <h1 class="spp__h1" id="spp-cr-h">Why are you cancelling?</h1>
+  {%- comment -%}
+    Names the actual product — the sole one on a single-product account,
+    or whichever was picked on step 1 for a multi-product account — see
+    cancel.reasonHeading in viewModel(). The generic fallback only renders
+    for a multi-product account that reached this screen without a pick
+    at all (a direct deep link; the normal flow always defaults one).
+  {%- endcomment -%}
+  <h1 class="spp__h1" id="spp-cr-h" data-spp-field="cancel.reasonHeading">Why are you cancelling?</h1>
   <p class="spp__lede">
     One question, then we&rsquo;ll finish the cancellation. Your answer helps us fix the routine for other owners.
   </p>
@@ -125,7 +206,7 @@
   </div>
 </section>
 
-{%- comment -%} ---------- 3 · Alternatives ---------- {%- endcomment -%}
+{%- comment -%} ---------- 4 · Alternatives ---------- {%- endcomment -%}
 <section class="spp__screen" data-spp-screen="cancel-alt" hidden aria-labelledby="spp-ca-h">
   <button type="button" class="spp__back" data-spp-go="cancel-reason">
     {% render 'spp-icon', icon: 'chevron-left' %}Back
@@ -176,7 +257,7 @@
   </div>
 </section>
 
-{%- comment -%} ---------- 4 · Retention offer ---------- {%- endcomment -%}
+{%- comment -%} ---------- 5 · Retention offer ---------- {%- endcomment -%}
 {%- comment -%}
   THE ACCEPTANCE ACTION IS GATED.
 
@@ -204,8 +285,18 @@
     </div>
 
     <div class="spp__pill" style="margin-top:18px;">One-time offer</div>
+    {%- comment -%}
+      "Routine Care" is the fallback text of cancel.focusName — the same
+      binding used on the reason screen — so a single-product account (the
+      vast majority) reads exactly as before. A multi-product account that
+      named a product on step 1 sees its own product name here instead,
+      matching the approved design's "Before you go, 40% off your next
+      FreshWipes delivery" heading. It is wording only: the offer itself is
+      whole-subscription, same as everything else on this screen.
+    {%- endcomment -%}
     <h1 class="spp__h1" id="spp-co-h">
-      <span data-spp-field="offer.percent">40</span>% off your next Routine Care delivery
+      Before you go, <span data-spp-field="offer.percent">40</span>% off your next
+      <span data-spp-field="cancel.focusName">Routine Care</span> delivery
     </h1>
 
     <div class="spp__card" style="margin:16px 0 14px;padding:16px;">
@@ -238,7 +329,7 @@
   </div>
 </section>
 
-{%- comment -%} ---------- 5 · Confirm ---------- {%- endcomment -%}
+{%- comment -%} ---------- 6 · Confirm ---------- {%- endcomment -%}
 <section class="spp__screen" data-spp-screen="cancel-confirm" hidden aria-labelledby="spp-cc-h">
   {%- comment -%}
     data-spp-go is a fallback for a customer who somehow never eligible for
@@ -299,7 +390,7 @@
   </div>
 </section>
 
-{%- comment -%} ---------- 6 · Cancelled ---------- {%- endcomment -%}
+{%- comment -%} ---------- 7 · Cancelled ---------- {%- endcomment -%}
 <section class="spp__screen spp__centred" data-spp-screen="cancel-done" hidden aria-labelledby="spp-cd-h">
   <div style="padding:26px 0;">
     <div class="spp__disc spp__disc--neutral">

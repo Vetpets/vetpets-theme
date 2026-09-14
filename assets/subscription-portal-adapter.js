@@ -58,13 +58,14 @@
    * POST /portal/vetpoints — see readLoyalty() below — and this ladder is
    * pure UI: which of the six a real balance has reached.
    *
-   * `image` is the resolved product's own real Shopify product photo — not
-   * mockup art — for the three milestones with an unambiguous variant. The
-   * three still-ambiguous rewards (see the migration's own notes on why
-   * each was left unresolved rather than guessed) carry `image: null` and
-   * render with the lock/placeholder treatment regardless of achieved
-   * state, so nothing here silently claims a product before a human has
-   * actually chosen it.
+   * `image` is every reward's own real Shopify product photo (`featuredImage`),
+   * read directly off the exact product each milestone resolves to in
+   * migrations/0008_vetpoints_rewards.sql — never mockup art, never a
+   * missing-image placeholder. Three of the six (GloveWipes, EarWipes,
+   * FurEase Brush) had several real products sharing the reward name; each
+   * was resolved there on Shopify's own ACTIVE-vs-UNLISTED/TEST/copy status
+   * signal, and the image below is that SAME resolved product's photo —
+   * verified 2026-09-14, not re-guessed here.
    *
    * There is deliberately no 2,000-point entry. The tier that used to sit
    * there ("Complete Dog Care Box") was removed outright, not hidden.
@@ -72,27 +73,33 @@
   VetPetsPortal.vetpointsMilestones = [
     {
       points: 200, name: 'Dental Chew Ball',
-      image: null // AMBIGUOUS product match — see migrations/0008_vetpoints_rewards.sql
+      // DentalChew Ball — gid://shopify/Product/10865064968459
+      image: 'https://cdn.shopify.com/s/files/1/0735/4833/3323/files/DinHundsLeendespelarocksaroll-2026-08-25T093121.612.jpg?v=1787643088'
     },
     {
       points: 300, name: 'Bite-Resistant Duck Toy',
+      // Bite-Resistant Duck Toy — gid://shopify/Product/11038948753675
       image: 'https://cdn.shopify.com/s/files/1/0735/4833/3323/files/Namnlosdesign-2026-09-13T144149.823.jpg?v=1789305530'
     },
     {
       points: 500, name: 'GloveWipes',
-      image: null // AMBIGUOUS product match — see migrations/0008_vetpoints_rewards.sql
+      // GloveWipes Quick Clean Kit (ACTIVE) — gid://shopify/Product/10944501317899
+      image: 'https://cdn.shopify.com/s/files/1/0735/4833/3323/files/GloveWipes.jpg?v=1780939144'
     },
     {
       points: 800, name: 'PawFoam',
+      // PawFoam — Paw Cleansing Foam — gid://shopify/Product/11016385200395
       image: 'https://cdn.shopify.com/s/files/1/0735/4833/3323/files/1_fd2ab80a-51df-46ec-97a6-7f684ee410fe.png?v=1786032201'
     },
     {
       points: 1200, name: 'EarWipes',
+      // EarWipes Kit - Protects against ear problems (ACTIVE) — gid://shopify/Product/10222498513163
       image: 'https://cdn.shopify.com/s/files/1/0735/4833/3323/files/Namnlosdesign-2026-08-02T164842.665.jpg?v=1785682219'
     },
     {
       points: 1600, name: 'FurEase Brush',
-      image: null // AMBIGUOUS product match — see migrations/0008_vetpoints_rewards.sql
+      // FurEase Brush - Effective Brushing (ACTIVE) — gid://shopify/Product/10566408110347
+      image: 'https://cdn.shopify.com/s/files/1/0735/4833/3323/files/1_f6e51b71-ca0e-4691-af78-04bb1e7dc797.jpg?v=1769439993'
     }
   ];
 
