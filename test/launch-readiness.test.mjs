@@ -5,8 +5,11 @@
  * of it rather than screen by screen:
  *
  *   1. No internal identifier from Phoenix ever reaches a customer.
- *   2. Nothing claims a fact the system cannot back — above all a VetPoints
- *      balance, for which no ledger, no catalogue and no redemption exist.
+ *   2. Nothing claims a fact the system cannot back. VetPoints now has a real
+ *      ledger behind it (POST /portal/vetpoints), so the balance and history
+ *      it shows are real — but the reward catalogue and redemption request
+ *      are still out of scope, and a ledger read that fails must say so
+ *      rather than show a stale or invented number.
  *
  * Run with:  node --test test/launch-readiness.test.mjs
  */
@@ -89,12 +92,12 @@ describe('no internal Phoenix identifier reaches a customer', () => {
   });
 });
 
-describe('VetPoints is hidden, not half-built', () => {
-  test('the switch is off', () => {
-    assert.equal(constant('LOYALTY_ENABLED'), false);
+describe('VetPoints is live, backed by a real ledger', () => {
+  test('the switch is on, now that a real ledger exists', () => {
+    assert.equal(constant('LOYALTY_ENABLED'), true);
   });
 
-  test('every loyalty surface is marked and hidden by default', () => {
+  test('every loyalty surface still ships marked and hidden in the static markup', () => {
     const marked = PORTAL_SNIPPETS.filter((s) => /data-spp-loyalty/.test(s.markup));
     assert.ok(marked.length >= 4, 'the card, the account row, the nav and more');
 
@@ -117,15 +120,21 @@ describe('VetPoints is hidden, not half-built', () => {
     assert.match(render[0], /applyLoyaltyVisibility\(\)/);
   });
 
-  test('the loyalty screen is unreachable, not merely unlinked', () => {
+  test('show() routes through the kill switch, which is open today and can still close', () => {
     const m = /Portal\.prototype\.show = function[\s\S]*?\n  \};/.exec(src);
     assert.ok(m);
     assert.match(m[0], /DISABLED_SCREENS\[screen\]/, 'a deep link must be redirected');
-    const disabled = new Function(
+
+    const disabledScreens = (loyaltyEnabled) => new Function(
       'LOYALTY_ENABLED',
       `return ${/var DISABLED_SCREENS = ([^;]+);/.exec(src)[1]}`,
-    )(false);
-    assert.deepEqual(disabled, { loyalty: 1 });
+    )(loyaltyEnabled);
+
+    // Today, with the real ledger live, nothing is disabled...
+    assert.deepEqual(disabledScreens(true), {});
+    // ...but the formula still redirects the screen the moment the switch
+    // flips back off, so the kill switch keeps working if it is ever needed.
+    assert.deepEqual(disabledScreens(false), { loyalty: 1 });
   });
 
   test('no points balance is claimed anywhere a customer can read', () => {
@@ -167,7 +176,9 @@ describe('VetPoints is hidden, not half-built', () => {
     };
 
     for (const { name, markup } of PORTAL_SNIPPETS) {
-      // The loyalty screen itself is unreachable — show() redirects it.
+      // The loyalty screen itself is exempt: showing "VetPoints" is its whole
+      // purpose once a customer navigates there. This test is about every
+      // OTHER surface never claiming a balance outside a gated element.
       if (name === 'spp-screen-loyalty.liquid') continue;
 
       const visible = stripLoyalty(markup);
@@ -216,9 +227,14 @@ describe('live mode shows no prototype data', () => {
      * on screen. Same defect as the cancelled screen's dangling sentence, with
      * a worse failure mode.
      */
+    // info@shopvetpets.com is the one deliberate exception: VetPets' own
+    // real, already-public support address (see the cancel flow's contact
+    // block), not a fictional customer's. Everything else — any OTHER
+    // literal address, most importantly the demo persona's — stays banned.
+    const REAL_SUPPORT_ADDRESS = 'info@shopvetpets.com';
     for (const { name, markup } of PORTAL_SNIPPETS) {
       const emails = markup.match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g) || [];
-      const real = emails.filter((e) => !/@example\.(com|org)$/.test(e));
+      const real = emails.filter((e) => !/@example\.(com|org)$/.test(e) && e !== REAL_SUPPORT_ADDRESS);
       assert.deepEqual(real, [], `${name} ships a literal email address: ${real}`);
     }
   });
@@ -227,8 +243,20 @@ describe('live mode shows no prototype data', () => {
     assert.match(src, /mode === 'live' \? NS\.dates\.toISO\(new Date\(\)\)/);
   });
 
-  test('no invented balance can be rendered: loyalty is off', () => {
-    assert.equal(constant('LOYALTY_ENABLED'), false);
+  test('no invented balance can be rendered: the live read reports real data or a marked failure', () => {
+    assert.equal(constant('LOYALTY_ENABLED'), true);
+
+    // The live adapter's own mapping function, not the mock's namesake.
+    const liveAdapterSrc = adapter.slice(adapter.indexOf('VetPetsPortal.createHttpAdapter'));
+    const projected = /function projectLoyalty\(data\)[\s\S]*?\n    \}/.exec(liveAdapterSrc);
+    assert.ok(projected, 'the live adapter must map the ledger response, not fabricate one');
+    assert.match(projected[0], /data\.balance/, 'the balance must come from the ledger response');
+    assert.match(projected[0], /data\.history/, 'the history must come from the ledger response');
+
+    // A failed read resolves to a marked failure, never a substituted number.
+    const getLoyalty = /getLoyalty: function \(force\)[\s\S]*?\n      \},/.exec(liveAdapterSrc);
+    assert.ok(getLoyalty);
+    assert.match(getLoyalty[0], /error: \{ code:/);
   });
 
   test('a theme with NO stored setting defaults to live, not mock', () => {

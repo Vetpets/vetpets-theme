@@ -48,6 +48,70 @@
 
   var VetPetsPortal = (window.VetPetsPortal = window.VetPetsPortal || {});
 
+  /**
+   * The VetPoints milestone ladder — six founder-approved rewards, every
+   * threshold and product resolved against the live Shopify catalogue
+   * (see the backend's migrations/0007_vetpoints.sql and
+   * src/vetpoints/milestones.ts). This is the SAME list the backend uses to
+   * decide when a reward order is created; it is duplicated here only for
+   * display, never to decide anything. The real balance always comes from
+   * POST /portal/vetpoints — see readLoyalty() below — and this ladder is
+   * pure UI: which of the six a real balance has reached.
+   *
+   * `image` is every reward's own real Shopify product photo (`featuredImage`),
+   * read directly off the exact product each milestone resolves to in
+   * migrations/0008_vetpoints_rewards.sql — never mockup art, never a
+   * missing-image placeholder. Three of the six (GloveWipes, EarWipes,
+   * FurEase Brush) had several real products sharing the reward name; each
+   * was resolved there on Shopify's own ACTIVE-vs-UNLISTED/TEST/copy status
+   * signal, and the image below is that SAME resolved product's photo —
+   * verified 2026-09-14, not re-guessed here.
+   *
+   * There is deliberately no 2,000-point entry. The tier that used to sit
+   * there ("Complete Dog Care Box") was removed outright, not hidden.
+   */
+  VetPetsPortal.vetpointsMilestones = [
+    {
+      points: 200, name: 'Dental Chew Ball',
+      // DentalChew Ball — gid://shopify/Product/10865064968459
+      image: 'https://cdn.shopify.com/s/files/1/0735/4833/3323/files/DinHundsLeendespelarocksaroll-2026-08-25T093121.612.jpg?v=1787643088'
+    },
+    {
+      points: 300, name: 'Bite-Resistant Duck Toy',
+      // Bite-Resistant Duck Toy — gid://shopify/Product/11038948753675
+      image: 'https://cdn.shopify.com/s/files/1/0735/4833/3323/files/Namnlosdesign-2026-09-13T144149.823.jpg?v=1789305530'
+    },
+    {
+      points: 500, name: 'GloveWipes',
+      // GloveWipes Quick Clean Kit (ACTIVE) — gid://shopify/Product/10944501317899
+      image: 'https://cdn.shopify.com/s/files/1/0735/4833/3323/files/GloveWipes.jpg?v=1780939144'
+    },
+    {
+      points: 800, name: 'PawFoam',
+      // PawFoam — Paw Cleansing Foam — gid://shopify/Product/11016385200395
+      image: 'https://cdn.shopify.com/s/files/1/0735/4833/3323/files/1_fd2ab80a-51df-46ec-97a6-7f684ee410fe.png?v=1786032201'
+    },
+    {
+      points: 1200, name: 'EarWipes',
+      // EarWipes Kit - Protects against ear problems (ACTIVE) — gid://shopify/Product/10222498513163
+      image: 'https://cdn.shopify.com/s/files/1/0735/4833/3323/files/Namnlosdesign-2026-08-02T164842.665.jpg?v=1785682219'
+    },
+    {
+      points: 1600, name: 'FurEase Brush',
+      // FurEase Brush - Effective Brushing (ACTIVE) — gid://shopify/Product/10566408110347
+      image: 'https://cdn.shopify.com/s/files/1/0735/4833/3323/files/1_f6e51b71-ca0e-4691-af78-04bb1e7dc797.jpg?v=1769439993'
+    }
+  ];
+
+  /** The smallest ladder entry a real balance has not yet reached, or null if every milestone is reached. */
+  VetPetsPortal.nextVetpointsMilestone = function (balance) {
+    var ladder = VetPetsPortal.vetpointsMilestones;
+    for (var i = 0; i < ladder.length; i++) {
+      if (ladder[i].points > balance) return ladder[i];
+    }
+    return null;
+  };
+
   /* ---------------------------------------------------------------
    * Errors
    * --------------------------------------------------------------- */
@@ -166,7 +230,7 @@
 
     var pointsPerRenewal = config.pointsPerRenewal || 100;
     var nextRewardAt = config.nextRewardAt || 800;
-    var nextRewardName = config.nextRewardName || 'a free plush toy';
+    var nextRewardName = config.nextRewardName || 'Free Surprise Gift';
 
     var currency = config.currencyCode || 'USD';
 
@@ -526,6 +590,7 @@
    *   POST {base}/auth/request-link  { email }        -> 202, always neutral
    *   POST {base}/auth/exchange      { vp_handoff }   -> { session }
    *   POST {base}/portal/subscription { session }     -> portal view model
+   *   POST {base}/portal/vetpoints   { session }      -> VetPoints ledger
    *   POST {base}/auth/logout        { session }      -> 200, idempotent
    *
    * Rules this file must keep:
@@ -663,6 +728,12 @@
     var today = opts.today || VetPetsPortal.dates.toISO(new Date());
     // Resolved once, from the rendered page, never from the URL.
     var previewReturn = 'themeId' in opts ? previewThemeId(opts.themeId) : previewThemeId();
+
+    // The reward threshold and name are theme settings, not something the
+    // ledger invents — the ledger only ever owns the balance and the history.
+    var pointsPerRenewal = opts.pointsPerRenewal || 100;
+    var nextRewardAt = opts.nextRewardAt || 800;
+    var nextRewardName = opts.nextRewardName || 'Free Surprise Gift';
 
     /** One place that talks to the backend. Same-origin, first-party. */
     function post(path, body) {
@@ -839,6 +910,92 @@
       });
 
       return pending;
+    }
+
+    /**
+     * VetPoints has its own endpoint and its own cache, separate from
+     * readPortal(): the ledger is not part of the subscription view Phoenix
+     * returns, and a customer with no subscription can still hold points.
+     */
+    var loyaltyPending = null;
+
+    function readLoyalty(force) {
+      if (loyaltyPending && !force) return loyaltyPending;
+
+      loyaltyPending = post('/portal/vetpoints', { session: requireSession() }).then(function (r) {
+        if (r.status === 401) {
+          store.clear();
+          loyaltyPending = null;
+          throw PortalError('unauthenticated', 'Your session has expired.');
+        }
+        if (!r.ok || !r.data) {
+          loyaltyPending = null;
+          throw PortalError(
+            (r.data && r.data.error) || 'server',
+            'VetPoints is temporarily unavailable.'
+          );
+        }
+        return r.data;
+      }, function (err) {
+        loyaltyPending = null;
+        throw err;
+      });
+
+      return loyaltyPending;
+    }
+
+    /** Human copy for a ledger entry's `reason` — never the raw backend slug. */
+    var HISTORY_REASON_LABELS = {
+      order_paid: 'Order renewed',
+      refund_full: 'Refund reversal',
+      cancelled: 'Order cancelled'
+    };
+
+    /**
+     * Map the ledger's response into what the controller renders.
+     *
+     * `balance` and `history` are the ledger's own — nothing here invents a
+     * number. The next-reward threshold and name come from the SAME fixed
+     * milestone ladder the backend awards against (VetPetsPortal.
+     * vetpointsMilestones, above), computed against the real balance —
+     * never from a theme setting, which is now a last-resort fallback only
+     * for the (should-never-happen) case where every milestone is null.
+     */
+    function projectLoyalty(data) {
+      var points = typeof data.balance === 'number' ? data.balance : 0;
+      var next = VetPetsPortal.nextVetpointsMilestone(points);
+      var rewardAt = next ? next.points : nextRewardAt;
+      var rewardName = next ? next.name : nextRewardName;
+
+      var history = (Array.isArray(data.history) ? data.history : []).map(function (h) {
+        // The backend's own shape is {type, delta, reason, createdAt(ms)} —
+        // see src/routes/vetpoints.ts. Mapped here, once, to the
+        // {label, date, delta} shape every renderer of `loyalty.history`
+        // already expects (see listData('pointsHistory') below).
+        var iso = '';
+        try { iso = new Date(h.createdAt).toISOString().slice(0, 10); } catch (e) { iso = ''; }
+        return {
+          label: HISTORY_REASON_LABELS[h.reason] || (h.type === 'reversed' ? 'Points reversed' : 'Points earned'),
+          date: iso,
+          delta: typeof h.delta === 'number' ? h.delta : 0
+        };
+      });
+
+      return {
+        source: 'live',
+        points: points,
+        perRenewal: pointsPerRenewal,
+        nextRewardAt: rewardAt,
+        nextRewardName: rewardName,
+        // No milestone left ahead — every reward reached. Distinct from "no
+        // ledger yet": the controller shows a "fully unlocked" state for
+        // this rather than "0 more points", which would read as broken.
+        allMilestonesReached: !next,
+        toNextReward: next ? Math.max(0, rewardAt - points) : 0,
+        progressPercent: rewardAt > 0 ? Math.min(100, Math.round((points / rewardAt) * 100)) : 0,
+        disclosure: data.disclosure || '',
+        history: history
+      };
     }
 
     function daysUntil(iso) {
@@ -1068,8 +1225,12 @@
        * ----------------------------------------------------------------- */
 
       /* --- Cancellation Retention V2 -------------------------------- *
-       * Neither of these is a Phoenix mutation. The first writes to our own
-       * store; the second currently writes nothing anywhere.
+       * None of recordCancelReason/recordRetentionEvent/recordCancelOutcome
+       * is a Phoenix mutation. recordCancelReason and recordRetentionEvent
+       * write to Retention Command Center's own store and are live and
+       * proven on Main (backend Worker dcf1e1f6-59d3-460f-b70d-fb3a0089d1fa);
+       * recordCancelOutcome currently writes nothing anywhere — kept only as
+       * a fallback attribution path alongside the journey-scoped one above.
        * --------------------------------------------------------------- */
 
       /**
@@ -1162,10 +1323,17 @@
       /**
        * Accept the 40%-off-next-delivery offer.
        *
-       * GATED. There is no proven Phoenix operation that discounts one
-       * delivery and then restores the standing price, so the server answers
-       * `offer_unavailable` and nothing is applied. This method exists in its
-       * final shape so that connecting it later changes the server only.
+       * Live and working on Main today: the endpoint, payload and error
+       * handling below are the proven implementation, unchanged from Main's
+       * `assets/subscription-portal-adapter.js` — this is not a new backend
+       * feature to connect later. Eligibility is one-time-per-subscription,
+       * decided and enforced entirely server-side (see `already_applied`
+       * and `offer_unavailable` below, and `retentionOfferRedeemed` in
+       * projectSubscription() — the client only routes AROUND an offer the
+       * server has already refused, it never decides whether one applies).
+       * `offer_unavailable` is a real, legitimate answer for an ineligible
+       * attempt, not a permanent stub — do not read it as "this feature
+       * doesn't work" when testing.
        */
       acceptRetentionOffer: function (opts) {
         var body;
@@ -1238,12 +1406,24 @@
         return mutate('/portal/reactivate', {}, opts);
       },
 
-      /* --- loyalty: not part of this phase, and not faked --- */
-
-      getLoyalty: function () {
-        // VetPoints has no backend yet. Returning a number here would put a
-        // fabricated balance in front of a real customer.
-        return Promise.resolve(null);
+      /* --- loyalty: VetPoints, read from its own ledger endpoint ---------
+       *
+       * A ledger outage must not take down the subscription, deliveries or
+       * cancellation screens with it: those are read through readPortal() and
+       * this never touches that cache. An expired session (401) is the one
+       * failure shared with everything else, because that ends the whole
+       * visit regardless of which read surfaced it first — every other
+       * failure here resolves to an error marker the VetPoints screen alone
+       * reacts to, rather than rejecting the whole portal load.
+       *
+       * `force` bypasses the per-load cache — used by the screen's own retry,
+       * never by the initial load.
+       */
+      getLoyalty: function (force) {
+        return readLoyalty(force).then(projectLoyalty, function (err) {
+          if (err && err.code === 'unauthenticated') throw err;
+          return { error: { code: (err && err.code) || 'server' } };
+        });
       },
 
       listRewards: function () {

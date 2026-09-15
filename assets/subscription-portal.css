@@ -438,6 +438,188 @@
 .spp__media-body { flex: 1; min-width: 0; }
 .spp__media-title { font: 600 15.5px/1.3 var(--spp-font); color: var(--spp-ink); }
 .spp__media-meta { font: 500 13.5px/1.4 var(--spp-font); color: var(--spp-muted); margin-top: 3px; }
+
+/* VetPoints milestone journey — a full-width horizontal connected line on
+   desktop, a vertical connected line on mobile. Ported field-for-field from
+   the approved Claude Design mockup ("VetPets Portal V2", the `journey`
+   view-model) — colours, radii and the two-icon-plus-lock node states are
+   literal values from that design, not this theme's usual CSS variables,
+   so a rebrand there and a rebrand here have to move together deliberately.
+   Achieved/current/locked is a JS-applied modifier class (see
+   assets/subscription-portal.js, listName === 'milestones'); the only
+   continuous (non-class) value is the connecting line's fill percentage,
+   set inline per item because it interpolates between two milestones. */
+.spp__card--journey {
+  background: linear-gradient(180deg, #F7FCFE 0%, #FFFFFF 55%);
+  border: 1px solid rgba(71, 181, 233, .22);
+  border-radius: 24px;
+  box-shadow: 0 14px 34px rgba(13, 35, 64, .09);
+}
+.spp__ms-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.spp__ms-eyebrow {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #EAF6FD;
+  font: 600 11px/1 var(--spp-font);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--spp-accent);
+}
+.spp__ms-next-name { margin-top: 12px; font: 700 20px/1.25 var(--spp-font); color: var(--spp-ink); letter-spacing: -0.015em; }
+.spp__ms-next-meta { margin-top: 5px; font: 500 14px/1.45 var(--spp-font); color: var(--spp-body); }
+.spp__ms-counter {
+  flex: 0 0 auto;
+  padding: 9px 15px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid rgba(71, 181, 233, .3);
+  font: 700 13.5px/1 var(--spp-font);
+  color: var(--spp-ink);
+}
+
+/* Desktop: one row, six equal columns, connected by a single fill line
+   running behind every node. Hidden by default — mobile-first — shown at
+   the same 1024px breakpoint every other desktop-only chrome in this
+   portal switches on (see the bottom of this file). */
+.spp__ms-row { display: none; margin-top: 22px; }
+.spp__ms-col {
+  padding: 10px 6px 12px;
+  border-radius: 18px;
+  text-align: center;
+  background: transparent;
+  border: 1.5px solid transparent;
+}
+.spp__ms-col--current { background: #F2FAFE; border-color: rgba(71, 181, 233, .45); }
+.spp__ms-flag {
+  height: 16px;
+  margin-bottom: 8px;
+  visibility: hidden;
+  font: 700 10px/16px var(--spp-font);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--spp-accent);
+}
+.spp__ms-col--current .spp__ms-flag { visibility: visible; }
+
+.spp__ms-tile {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  border-radius: 16px;
+  background: #fff;
+  border: 1px solid rgba(13, 35, 64, .09);
+  overflow: hidden;
+}
+.spp__ms-col--current .spp__ms-tile { border: 1.5px solid rgba(71, 181, 233, .55); }
+.spp__ms-col--locked .spp__ms-tile { filter: grayscale(.6) opacity(.55); }
+.spp__ms-tile img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+.spp__ms-line { display: flex; align-items: center; height: 44px; margin: 10px -7.5px 0; }
+.spp__ms-track { flex: 1 1 auto; height: 6px; background: #E4F2FB; overflow: hidden; }
+.spp__ms-col--edge-a .spp__ms-track-a,
+.spp__ms-col--edge-b .spp__ms-track-b { background: transparent; }
+.spp__ms-fill { display: block; height: 100%; width: 0; background: var(--spp-accent); }
+.spp__ms-node {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #EAF4FB;
+  border: 2px solid #DCEAF4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.spp__ms-col--achieved .spp__ms-node { background: var(--spp-accent); border: 2px solid var(--spp-accent); }
+.spp__ms-col--current .spp__ms-node { background: #fff; border: 3px solid var(--spp-accent); box-shadow: 0 0 0 6px rgba(71, 181, 233, .16); }
+
+.spp__ms-pts { margin-top: 10px; font: 700 15px/1.2 var(--spp-font); color: #64798C; }
+.spp__ms-name { margin-top: 4px; min-height: 34px; font: 600 12.5px/1.35 var(--spp-font); color: #64798C; text-wrap: pretty; }
+.spp__ms-sub { margin-top: 5px; font: 500 11.5px/1.35 var(--spp-font); color: #5C7184; }
+.spp__ms-col--achieved .spp__ms-pts,
+.spp__ms-col--achieved .spp__ms-name,
+.spp__ms-col--current .spp__ms-pts,
+.spp__ms-col--current .spp__ms-name { color: var(--spp-ink); }
+.spp__ms-col--achieved .spp__ms-sub { color: var(--spp-accent); }
+.spp__ms-col--current .spp__ms-sub { color: var(--spp-ink); font-weight: 700; }
+
+/* Mobile: the same three-state node and line, rotated into a vertical
+   track down the left side of each row. Shown by default; hidden on
+   desktop where the horizontal row above takes over. */
+.spp__ms-vertical { margin-top: 20px; }
+.spp__ms-vrow { display: flex; gap: 12px; align-items: stretch; }
+.spp__ms-vtrack {
+  width: 38px;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.spp__ms-vtrack .spp__ms-track { width: 6px; height: 12px; flex: 0 0 12px; }
+.spp__ms-vtrack .spp__ms-track:last-child { flex: 1 1 auto; height: auto; }
+.spp__ms-vtrack .spp__ms-fill { width: 100%; height: 0; }
+.spp__ms-vtrack .spp__ms-node { margin: 2px 0; }
+.spp__ms-vcard {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  gap: 13px;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 11px 13px;
+  border-radius: 16px;
+  background: transparent;
+  border: 1.5px solid transparent;
+}
+.spp__ms-col--current .spp__ms-vcard { background: #F2FAFE; border-color: rgba(71, 181, 233, .45); }
+.spp__ms-vtile {
+  width: 62px;
+  height: 62px;
+  flex: 0 0 auto;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid rgba(13, 35, 64, .09);
+  overflow: hidden;
+}
+.spp__ms-col--current .spp__ms-vtile { border: 1.5px solid rgba(71, 181, 233, .55); }
+.spp__ms-col--locked .spp__ms-vtile { filter: grayscale(.6) opacity(.55); }
+.spp__ms-vtile img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.spp__ms-vbody { flex: 1 1 auto; min-width: 0; }
+.spp__ms-vtop { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.spp__ms-vpts { font: 700 15px/1.2 var(--spp-font); color: #64798C; }
+.spp__ms-vsub { font: 500 11.5px/1.3 var(--spp-font); color: #5C7184; }
+.spp__ms-vname { margin-top: 4px; font: 600 14px/1.3 var(--spp-font); color: #64798C; text-wrap: pretty; }
+.spp__ms-col--achieved .spp__ms-vpts, .spp__ms-col--achieved .spp__ms-vname,
+.spp__ms-col--current .spp__ms-vpts, .spp__ms-col--current .spp__ms-vname { color: var(--spp-ink); }
+.spp__ms-col--achieved .spp__ms-vsub { color: var(--spp-accent); }
+.spp__ms-col--current .spp__ms-vsub { color: var(--spp-ink); font-weight: 700; }
+
+.spp__ms-foot {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(13, 35, 64, .08);
+}
+.spp__ms-foot-icon {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #EAF6FD;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.spp__ms-foot p { margin: 0; font: 600 14px/1.5 var(--spp-font); color: var(--spp-ink); }
 .spp__media-price { font: 700 15px/1 var(--spp-font); color: var(--spp-ink); flex: 0 0 auto; }
 
 /* Stepper pill (quantity on dashboard) */
@@ -803,6 +985,122 @@
 .spp__info--icon { display: flex; gap: 12px; align-items: center; }
 .spp__info--icon p { margin: 0; font: 500 13.5px/1.45 var(--spp-font); color: var(--spp-muted); }
 
+/* "Important: before you cancel" / "Did you know?" pill — same shape as
+   .spp__pill, marked distinctly so a future style pass can tell the two
+   apart without re-reading every screen that uses one or the other. */
+.spp__pill--info { background: var(--spp-light, #D5F7FF); color: var(--spp-accent-deep, var(--spp-primary)); }
+
+/* Cancel step 2/4's real, aggregate trust bar — reused verbatim from the
+   EyeWipes/FreshWipes offer pages in place of the approved design's
+   single named-reviewer carousel, which this codebase has no real,
+   attributable quote to reproduce honestly. See spp-screen-cancel.liquid. */
+.spp__trustbar {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 14px 0 4px;
+  font: 600 13.5px/1 var(--spp-font);
+  color: var(--spp-ink);
+}
+.spp__trustbar-stars { color: #F5A623; font-size: 14px; letter-spacing: 1px; }
+
+/* Small decorative fact tags — "90 days" / "Once daily" / "Keep it simple". */
+.spp__tagrow { display: flex; flex-wrap: wrap; gap: 8px; }
+.spp__tag {
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: var(--spp-surface-tint);
+  font: 600 12.5px/1 var(--spp-font);
+  color: var(--spp-body);
+}
+
+/* "Cancelling · FreshWipes jar" eyebrow row on the "why you started" screen. */
+.spp__eyebrow-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 14px;
+  font: 600 13px/1 var(--spp-font);
+  color: var(--spp-muted);
+}
+.spp__eyebrow-row .spp__thumb--xs { border-radius: 8px; }
+
+/* Cancel step 1's single, always-selected subscription card — a real
+   radio's visual state (checked, non-interactive) without a functional
+   radio, because there is only ever one option here. */
+.spp__choice--sub { cursor: default; }
+.spp__choice-products { display: flex; gap: 6px; margin-top: 10px; }
+.spp__choice-summary { display: block; margin-top: 8px; font: 500 13.5px/1.4 var(--spp-font); color: var(--spp-muted); }
+
+/* ------------------------------------------------------------------ *
+ * Welcome screen — the approved "RoutineCare benefits" screen shown once
+ * after a fresh sign-in. See spp-screen-welcome.liquid.
+ * ------------------------------------------------------------------ */
+/* The approved design's own 820px content width for this screen —
+ * wider than the .spp__narrow (520px) column most other screens use.
+ * Scoped to this screen only. */
+.spp__welcome { max-width: 820px; margin: 0 auto; }
+.spp__welcome-h1 { font-size: 27px; }
+.spp__welcome-lede { max-width: 560px; }
+
+/* Hero photo + delivery card. Mobile: a plain stacked column (image,
+ * then the card, both full width). Desktop: the card floats over the
+ * image's bottom-right corner instead, exactly as approved — switched
+ * at the same 1024px breakpoint the rest of this file already uses for
+ * desktop/mobile behaviour. */
+.spp__welcome-hero { position: relative; margin-bottom: 24px; }
+.spp__welcome-hero picture { display: block; }
+.spp__welcome-hero-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center;
+  border-radius: var(--spp-r-card-sm);
+  background: var(--spp-light);
+}
+.spp__welcome .spp__card--welcome-delivery { margin: 16px 0 0; }
+@media (min-width: 1024px) {
+  .spp__welcome-hero { margin-bottom: 62px; }
+  .spp__welcome-hero-img { aspect-ratio: 16 / 9; }
+  .spp__welcome .spp__card--welcome-delivery {
+    position: absolute;
+    right: 18px;
+    bottom: -46px;
+    width: 318px;
+    margin: 0;
+    box-shadow: var(--spp-shadow-card-lg);
+  }
+}
+
+.spp__welcome-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.spp__welcome-tile {
+  padding: 16px;
+  border: 1px solid var(--spp-border);
+  border-radius: var(--spp-r-field);
+  background: var(--spp-surface);
+}
+.spp__welcome-tile b { display: block; margin: 8px 0 4px; font: 600 14.5px/1.3 var(--spp-font); color: var(--spp-ink); }
+.spp__welcome-tile span { font: 500 13px/1.4 var(--spp-font); color: var(--spp-muted); }
+.spp__welcome-tick {
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--spp-light, #D5F7FF);
+  color: var(--spp-accent);
+}
+@media (max-width: 420px) {
+  .spp__welcome-grid { grid-template-columns: 1fr; }
+}
+
 /* ------------------------------------------------------------------ *
  * Grids
  * ------------------------------------------------------------------ */
@@ -1063,6 +1361,10 @@
   /* Bottom tab bar is mobile-only */
   .spp__tabs { display: none; }
 
+  /* VetPoints journey: one full-width horizontal row, six columns. */
+  .spp__ms-row { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .spp__ms-vertical { display: none; }
+
   /* Sheets become centred modals */
   .spp__overlay { align-items: center; padding: 24px; }
   .spp__sheet {
@@ -1105,6 +1407,225 @@
   height: 100%;
   object-fit: contain;
 }
+
+/* The final "before you cancel" veterinarian video. 1:1 by default (the
+   mobile file's own shape); 16:9 at the same 1024px breakpoint
+   Portal.prototype.syncVetVideo (subscription-portal.js) uses to pick
+   the real `src`, so the reserved space always matches whichever file
+   is actually loaded. object-fit: contain, never cover, so neither
+   video is ever cropped to fit the other's aspect ratio.
+
+   The poster is a real `poster` attribute set entirely by syncVetVideo
+   (there is no static default in the markup to flash the wrong shape
+   before JS corrects it) — this background-color is what shows in the
+   brief gap before that runs, and the fallback if an image ever fails
+   to load. Each poster is the real veterinarian's own first frame from
+   the matching file, never the dog-benefits graphic used elsewhere on
+   this screen — see .spp__vet-video-play below for the button drawn
+   over it, since neither viewport autoplays. */
+.spp__vet-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 14px;
+  overflow: hidden;
+  background-color: var(--spp-surface-neutral, #F2FAFE);
+}
+.spp__vet-video-el {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+@media (min-width: 1024px) {
+  .spp__vet-video { aspect-ratio: 16 / 9; }
+}
+
+/* Custom play button, centered over the poster on both viewports. There
+   is no native `controls` in the markup until Portal.prototype.
+   bindVetVideoControls (subscription-portal.js) adds it on tap, so this
+   button is the only way to start playback — and the only thing shown
+   on top of the veterinarian's first-frame poster until then. */
+.spp__vet-video-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72px;
+  height: 72px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(18, 18, 18, 0.6);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color .15s ease, transform .15s ease;
+}
+.spp__vet-video-play svg { margin-left: 3px; }
+.spp__vet-video-play:hover { background: rgba(18, 18, 18, 0.75); }
+.spp__vet-video-play:active { transform: translate(-50%, -50%) scale(0.96); }
+.spp__vet-video-play[hidden] { display: none; }
+
+/* Cancel step 2's wide column — the approved design's own 960px content
+   width for this one screen, wider than the .spp__narrow (520px) column
+   every other cancel screen uses. Scoped to this screen only. */
+.spp__cancel-wide { max-width: 960px; margin: 0 auto; }
+
+/* Back link + step indicator, side by side on one row — the approved
+   design's own "‹ Back    BEFORE YOU CANCEL · STEP 2 OF 7" layout. */
+.spp__step-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin-bottom: 12px;
+}
+.spp__step-row .spp__back { margin-bottom: 0; }
+.spp__cancel-step {
+  font: 600 11px/1 var(--spp-font);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--spp-accent);
+}
+
+/* The large blue "Important: before you cancel" panel — bigger and
+   bolder than the shared .spp__pill + .spp__info combo used elsewhere in
+   this file (e.g. cancel-alt's "Did you know?" panel), so it gets its
+   own class rather than changing a rule other screens depend on. */
+.spp__cancel-important {
+  background: var(--spp-light);
+  border: 1.5px solid var(--spp-accent);
+  border-radius: var(--spp-r-card-sm);
+  padding: 18px 20px;
+  margin-bottom: 18px;
+}
+.spp__cancel-important-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font: 800 13px/1.2 var(--spp-font);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--spp-accent);
+}
+.spp__cancel-important-lead {
+  margin: 0 0 9px;
+  font: 600 16.5px/1.45 var(--spp-font);
+  color: var(--spp-ink);
+}
+.spp__cancel-important-lead b { color: var(--spp-accent); font-weight: 800; }
+.spp__cancel-important-body {
+  margin: 0;
+  font: 400 14.5px/1.55 var(--spp-font);
+  color: var(--spp-ink);
+}
+
+/* Two real customer review cards, in the same panel shape as the
+   important-panel above. */
+.spp__reviews-panel {
+  background: var(--spp-light);
+  border-radius: var(--spp-r-card-sm);
+  padding: 12px 12px 11px;
+  margin-bottom: 22px;
+}
+.spp__reviews-head {
+  margin-bottom: 9px;
+  font: 600 13px/1.2 var(--spp-font);
+  color: var(--spp-body);
+  letter-spacing: -0.005em;
+}
+.spp__reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.spp__review-card {
+  background: var(--spp-surface);
+  border-radius: 12px;
+  padding: 11px 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.spp__review-stars { color: #F5A524; font-size: 12px; letter-spacing: 1px; }
+.spp__review-quote {
+  margin: 0;
+  padding-left: 10px;
+  border-left: 2px solid var(--spp-hair-2);
+  font: italic 400 13.5px/1.45 var(--spp-font);
+  color: var(--spp-ink);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+}
+.spp__review-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.spp__review-tag {
+  display: inline-flex;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: var(--spp-primary);
+  color: var(--spp-primary-fg);
+  font: 600 11px/1 var(--spp-font);
+}
+.spp__review-name { font: 700 13px/1 var(--spp-font); color: var(--spp-ink); }
+.spp__review-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font: 600 11.5px/1 var(--spp-font);
+  color: var(--spp-accent);
+}
+@media (max-width: 560px) {
+  .spp__reviews-grid { grid-template-columns: 1fr; }
+}
+
+/* Short lede sitting between the "Why consistency matters" heading and
+   the video itself — approved design copy, this screen only. */
+.spp__cancel-video-lede { margin: 0 0 14px; max-width: 640px; }
+
+/* Veterinarian identity/credential card, directly beneath the video. */
+.spp__vet-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+  padding: 12px 14px;
+  margin: 14px 0 22px;
+  background: var(--spp-surface);
+  border: 1px solid var(--spp-border);
+  border-radius: var(--spp-r-field);
+}
+.spp__vet-card-photo { width: 48px; height: 48px; flex: 0 0 auto; border-radius: 50%; object-fit: cover; }
+.spp__vet-card-body { flex: 1 1 190px; min-width: 190px; }
+.spp__vet-card-body b { display: block; font: 600 14.5px/1.3 var(--spp-font); color: var(--spp-ink); }
+.spp__vet-card-body span { display: block; font: 500 12.5px/1.45 var(--spp-font); color: var(--spp-muted); margin-top: 2px; }
+.spp__vet-card-badge {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--spp-light);
+  font: 600 11.5px/1 var(--spp-font);
+  color: var(--spp-ink);
+}
+.spp__vet-card-badge span { letter-spacing: .1em; text-transform: uppercase; font-size: 11px; }
+
+/* Primary CTA + secondary cancellation link, centred and capped to the
+   same width the design uses for this pair on every cancel screen. */
+.spp__cancel-cta { max-width: 460px; margin: 20px auto 0; }
+
+/* Plain contact information on cancel step 4 — deliberately not a card,
+   button or choice row, so it never reads as a portal action. */
+.spp__support-note { margin-top: 12px; }
+.spp__support-note-title { margin: 0 0 4px; font: 600 14px/1.4 var(--spp-font); color: var(--spp-ink); }
+.spp__support-note-body { margin: 0; font: 500 13.5px/1.4 var(--spp-font); color: var(--spp-muted); }
+.spp__support-note-link { color: var(--spp-accent); font-weight: 600; text-decoration: underline; }
 
 /* The small capsule above a heading — "More time, not the end". */
 .spp__pill {
@@ -1230,4 +1751,5 @@
   /* The composed 16:9 images carry small product labels; letting them
      run the full width keeps those legible on a phone. */
   .spp__media-16x9 { border-radius: 12px; }
+  .spp__vet-video { border-radius: 12px; }
 }

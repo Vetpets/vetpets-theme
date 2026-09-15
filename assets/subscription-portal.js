@@ -68,7 +68,11 @@
       sheet: null,
       pending: null,
       lastFocus: null,
-      draft: { delay: 7, reason: null, restart: 0, date: null, note: '', gap: null },
+      // startedCategory: a soft, non-blocking answer to "why did you start"
+      // (cancel-started screen) — captured for the UI's own selection state
+      // only. It is never sent to Phoenix and never personalizes anything
+      // else; see cancel-started in spp-screen-cancel.liquid.
+      draft: { delay: 7, reason: null, restart: 0, date: null, note: '', gap: null, startedCategory: null },
       reasonError: null,
       // The one journey id for this cancellation attempt, adopted from
       // whichever call — the cancellation_started beacon or the reason
@@ -84,6 +88,7 @@
       reasonSaveError: null,
       data: null,
       loyalty: null,
+      loyaltyPending: false,
       customer: null,
       inactive: [],
       deliveries: null,
@@ -112,7 +117,7 @@
       latency: parseInt(d.sppLatency, 10) || 0,
       pointsPerRenewal: parseInt(d.sppPointsPerRenewal, 10) || 100,
       nextRewardAt: parseInt(d.sppNextRewardAt, 10) || 800,
-      nextRewardName: d.sppNextRewardName || 'a free plush toy',
+      nextRewardName: d.sppNextRewardName || 'Free Surprise Gift',
       images: {
         freshwipes: d.sppImgFreshwipes || '',
         eyewipes: d.sppImgEyewipes || '',
@@ -230,9 +235,12 @@
     var token = params.get('spp_token');
 
     if (token) {
+      // A FRESH magic-link authentication — lands on the welcome screen
+      // once, per the approved journey, never straight on the dashboard.
+      // See bootLive()'s handoff branch for the live-mode equivalent.
       this.adapter.verifyMagicLink(token)
         .then(function () { return self.load(); })
-        .then(function () { self.show(start || 'dashboard'); })
+        .then(function () { self.show(start || 'welcome'); })
         .catch(function (err) {
           if (err && err.code === 'expired_link') self.show('expired');
           else self.fail(err);
@@ -240,6 +248,9 @@
       return;
     }
 
+    // A returning, already-authenticated visit (reload, deep link) — the
+    // welcome screen has already been shown once this session; skip
+    // straight to the dashboard, exactly as before.
     this.load()
       .then(function () { self.show(start || 'dashboard'); })
       .catch(function (err) { self.fail(err); });
@@ -264,8 +275,8 @@
     // Synchronous and first. Nothing may await before this returns.
     var handoff = NS.takeHandoffFromUrl();
 
-    function loadAndShow() {
-      return self.load().then(function () { self.show(start || 'dashboard'); });
+    function loadAndShow(target) {
+      return self.load().then(function () { self.show(start || target); });
     }
 
     // One handler, shared with retry and every action: fail() itself decides
@@ -276,16 +287,21 @@
     }
 
     if (handoff) {
+      // A FRESH authentication — the handoff only exists once, the moment
+      // the emailed link is exchanged for a session. That is the one event
+      // the approved welcome screen exists for; every later load of this
+      // tab (below) carries no handoff and goes straight to the dashboard.
       this.adapter.exchangeHandoff(handoff)
-        .then(loadAndShow)
+        .then(function () { return loadAndShow('welcome'); })
         .catch(onFailure);
       return;
     }
 
     // A reload in the same tab reuses the unexpired session; closing the tab
-    // ends it, because sessionStorage does.
+    // ends it, because sessionStorage does. Not a fresh authentication, so
+    // the welcome screen does not reappear.
     if (this.adapter.hasSession && this.adapter.hasSession()) {
-      loadAndShow().catch(onFailure);
+      loadAndShow('dashboard').catch(onFailure);
       return;
     }
 
@@ -433,30 +449,22 @@
    * ================================================================= */
 
   /**
-   * VETPOINTS IS OFF.
+   * VETPOINTS IS LIVE.
    *
-   * Not a design decision — a truthfulness one. There is no VetPoints backend
-   * at all: no ledger table, no balance, no reward catalogue, no redemption
-   * route, no fulfilment record. `/health` reports `loyalty: false` and says
-   * so in a comment next to the constant.
+   * The ledger now exists: `getLoyalty()` reads a real balance and history
+   * from POST /portal/vetpoints, session-authenticated exactly like every
+   * other portal read. Nothing here fabricates a number — a customer with no
+   * ledger entry yet sees zero, not a placeholder.
    *
-   * Every number the card can show today therefore comes from theme settings:
-   * a points balance, a progress bar, a threshold, "each renewal adds 100
-   * points". Shown to a real customer those are not placeholders, they are
-   * claims about a balance they own — and the moment a real ledger exists,
-   * whatever it says will contradict them.
+   * The reward catalogue and redemption request are still out of scope: the
+   * screen shows the balance, the progress toward the configured threshold,
+   * and the transaction history, and nothing more.
    *
-   * The worst version of this is a customer who believes they have banked
-   * points that no system has ever recorded. So the whole surface is hidden
-   * rather than shipped unfinished: card, account row, navigation, the
-   * cancelled-screen line, and the sentence in the skip sheet that asserted an
-   * earning rule.
-   *
-   * Flipping this to true reveals every [data-spp-loyalty] element again. Do
-   * that only when the ledger, the balance, the catalogue, the redemption
-   * request and its fulfilment status are real and tested.
+   * Flipping this back to false re-hides every [data-spp-loyalty] element and
+   * makes the loyalty screen unreachable again — kept as an emergency switch
+   * if the ledger ever needs to come back down without a code review.
    */
-  var LOYALTY_ENABLED = false;
+  var LOYALTY_ENABLED = true;
 
   /** Screens a customer must not reach while their feature is off. */
   var DISABLED_SCREENS = LOYALTY_ENABLED ? {} : { loyalty: 1 };
@@ -539,6 +547,12 @@
    * this on every re-render of the same screen — a refresh, a browser
    * back/forward, revisiting — can never double-count a step; nothing
    * client-side needs to guard against that.
+   *
+   * The keys here are the four screens this ties to Retention Command
+   * Center's funnel, by NAME, not by their position in the approved
+   * Portal V2 order — cancel-reason now sits at step 5, after cancel-alt's
+   * step 4, but each event still means exactly what its name says
+   * regardless of when the customer reaches it.
    */
   var RETENTION_SCREEN_EVENTS = {
     'cancel-reason': 'cancellation_started',
@@ -921,6 +935,9 @@
     // rendered a bare "Hi" whenever Phoenix had no first name, and a dangling
     // comma if punctuation had been added to the markup instead.
     vm['customer.greeting'] = cus && cus.firstName ? 'Hi, ' + cus.firstName : 'Hi there';
+    // Same one-slot rule as the greeting above — no dangling comma when
+    // Phoenix has no first name yet.
+    vm['customer.welcomeBack'] = cus && cus.firstName ? 'Welcome back, ' + cus.firstName : 'Welcome back';
 
     if (sub) {
       vm['subscription.reference'] = sub.reference;
@@ -928,6 +945,7 @@
       vm['subscription.intervalDays'] = sub.intervalDays == null ? '' : String(sub.intervalDays);
       vm['subscription.nextOrderMedium'] = this.fmtDate(sub.nextOrderDate, 'medium');
       vm['subscription.nextOrderShort'] = this.fmtDate(sub.nextOrderDate, 'short');
+      vm['subscription.nextOrderLong'] = this.fmtDate(sub.nextOrderDate, 'full');
       vm['subscription.startedLong'] = this.fmtDate(sub.startedOn, 'full');
       vm['subscription.deliveriesSoFar'] = sub.deliveriesSoFar == null ? '' : String(sub.deliveriesSoFar);
       vm['subscription.discountPercent'] = sub.discountRate == null ? '' : String(Math.round(sub.discountRate * 100));
@@ -962,6 +980,19 @@
         return l.title.replace(/ (jar|pack).*$/, '') + ' ×' + l.quantity;
       }).join(', ');
 
+      // Cancellation personalization — automatic, never a customer choice.
+      // A single-product subscription (the vast majority) is named
+      // directly on the started/reason/offer screens; a multi-product one
+      // falls back to generic "Routine Care" wording, because there is no
+      // honest way to pick ONE of several real products to speak for the
+      // whole subscription. cancel(id) itself is unaffected either way —
+      // cancelFacts below states plainly that EVERY product stops.
+      var soleLine = sub.lines.length === 1 ? sub.lines[0] : null;
+      var soleLineName = soleLine ? soleLine.title.replace(/ (jar|pack).*$/, '') : '';
+      vm['cancel.focusName'] = soleLine ? soleLineName : 'Routine Care';
+      vm['cancel.reasonHeading'] = soleLine ? ('Why are you cancelling ' + soleLineName + '?') : 'Why are you cancelling?';
+      vm['cancel.startedHeading'] = soleLine ? ('Cancelling · ' + soleLine.title) : 'Cancelling · your Routine Care subscription';
+
       vm['pricing.total'] = this.fmtMoney(sub.pricing.total);
       vm['pricing.discount'] = this.fmtMoney(sub.pricing.discount);
 
@@ -975,7 +1006,11 @@
       vm['sheet.rescheduleError'] = this.rescheduleError() || '';
     }
 
-    if (loy) {
+    // A failed VetPoints read is never rendered as a balance: loy.error marks
+    // the ledger call that failed, and the screen shows its own error state
+    // instead of these fields (see the data-spp-when="loyalty:*" toggle in
+    // render(), below).
+    if (loy && !loy.error) {
       vm['loyalty.points'] = String(loy.points);
       vm['loyalty.perRenewal'] = String(loy.perRenewal);
       vm['loyalty.nextRewardAt'] = String(loy.nextRewardAt);
@@ -983,7 +1018,27 @@
       vm['loyalty.toNextReward'] = String(loy.toNextReward);
       vm['loyalty.progressPercent'] = loy.progressPercent;
       vm['loyalty.disclosure'] = loy.disclosure || '';
+
+      // The journey card's own header — matches the approved design exactly
+      // (Claude Design "VetPets Portal V2", journeyNextName/journeyNextMeta/
+      // journeyCounter). Computed straight from the real balance against the
+      // same fixed ladder the milestone list itself uses — see listData()'s
+      // 'milestones' case, just below.
+      var ladder = NS.vetpointsMilestones;
+      var jNext = null;
+      for (var ji = 0; ji < ladder.length; ji++) {
+        if (ladder[ji].points > loy.points) { jNext = ladder[ji]; break; }
+      }
+      var fmtPts = function (n) { return n.toLocaleString('en-US'); };
+      vm['loyalty.journeyNextName'] = jNext ? jNext.name : 'Every reward unlocked';
+      vm['loyalty.journeyNextMeta'] = jNext
+        ? 'Unlocks at ' + fmtPts(jNext.points) + ' VetPoints · ' + fmtPts(Math.max(0, jNext.points - loy.points)) + ' points to go'
+        : 'You have reached every milestone on the journey.';
+      vm['loyalty.journeyCounter'] = jNext
+        ? fmtPts(loy.points) + ' / ' + fmtPts(jNext.points)
+        : fmtPts(loy.points) + ' / ' + fmtPts(ladder[ladder.length - 1].points);
     }
+    vm['label.retryLoyalty'] = s.loyaltyPending ? 'Retrying…' : 'Try again';
 
     vm['account.activeCount'] = sub && sub.status !== 'cancelled' ? '1 active' : '0 active';
     vm['account.inactiveCount'] = String(s.inactive.length);
@@ -1110,10 +1165,23 @@
     // Status is a single canonical value: active or cancelled. At most one
     // conditional block can ever be visible.
     var status = this.state.data ? this.state.data.status : 'active';
+
+    // A failed VetPoints read (anything but an expired session, which signs
+    // the whole visit out instead) is its own condition, checked here rather
+    // than folded into `loy` truthiness so a screen can show "no data yet"
+    // and "the read failed" differently if it ever needs to.
+    var loy = this.state.loyalty;
+    var loyaltyFailed = !!(loy && loy.error);
+    var loyaltyHistoryCount = (loy && !loy.error && loy.history) ? loy.history.length : 0;
+    var loyaltyAllReached = !!(loy && !loy.error && loy.allMilestonesReached);
+
     var conds = this.root.querySelectorAll('[data-spp-when]');
     for (i = 0; i < conds.length; i++) {
       var expr = conds[i].getAttribute('data-spp-when').split(':');
       if (expr[0] === 'status') conds[i].hidden = status !== expr[1];
+      if (expr[0] === 'loyalty') conds[i].hidden = (expr[1] === 'error') !== loyaltyFailed;
+      if (expr[0] === 'loyaltyHistory') conds[i].hidden = (expr[1] === 'has') !== (loyaltyHistoryCount > 0);
+      if (expr[0] === 'loyaltyMilestones') conds[i].hidden = (expr[1] === 'complete') !== loyaltyAllReached;
     }
 
     var badge = this.root.querySelector('[data-spp-status-badge]');
@@ -1175,7 +1243,10 @@
     var confirmBack = this.root.querySelector('[data-spp-confirm-back]');
     if (confirmBack) {
       var redeemed = this.state.data && this.state.data.retentionOfferRedeemed;
-      confirmBack.setAttribute('data-spp-go', redeemed ? 'cancel-alt' : 'cancel-offer');
+      // Reason (not alt) is the screen immediately before the offer in the
+      // approved Portal V2 order — that is the safe fallback once the offer
+      // screen itself refuses to show.
+      confirmBack.setAttribute('data-spp-go', redeemed ? 'cancel-reason' : 'cancel-offer');
     }
   };
 
@@ -1224,6 +1295,28 @@
     '<rect x="3.2" y="5.2" width="17.6" height="13.6" rx="2.6" stroke="currentColor" stroke-width="1.6"/>' +
     '<circle cx="8.6" cy="10" r="1.6" fill="currentColor"/>' +
     '<path d="M3.6 16.4l4.6-4 3.4 3 3.2-2.6 5.4 4.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>' +
+    '</svg>';
+
+  /* VetPoints milestone ladder badges — same paths as spp-icon.liquid's
+     'check-circle' and 'lock', inlined because a list row is rebuilt in JS,
+     not rendered through Liquid. Keep both in sync with spp-icon.liquid by
+     hand if that snippet's paths ever change. */
+  /* The node itself (.spp__ms-node) supplies the achieved/current/locked
+     background and border per the approved design — these three are the
+     icon ALONE, exactly the paths from that design, so they drop into
+     whichever node background is already showing. */
+  var MILESTONE_CHECK_SVG = '<svg width="17" height="17" viewBox="0 0 18 18" fill="none" aria-hidden="true" focusable="false">' +
+    '<path d="M3.9 9.5l3.2 3.2 7-7.4" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>' +
+    '</svg>';
+  var MILESTONE_CURRENT_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">' +
+    '<rect x="3.6" y="10.4" width="16.8" height="10.2" rx="2" stroke="var(--spp-accent)" stroke-width="1.9"/>' +
+    '<rect x="2.4" y="6.6" width="19.2" height="4.2" rx="1.5" stroke="var(--spp-accent)" stroke-width="1.9"/>' +
+    '<path d="M12 6.6v14" stroke="var(--spp-accent)" stroke-width="1.9"/>' +
+    '<path d="M12 6.6H8.9c-1.3 0-2.3-1-2.3-2.1 0-1.1.9-1.9 2-1.9 2.1 0 3.4 4 3.4 4zM12 6.6h3.1c1.3 0 2.3-1 2.3-2.1 0-1.1-.9-1.9-2-1.9-2.1 0-3.4 4-3.4 4z" stroke="var(--spp-accent)" stroke-width="1.9" stroke-linejoin="round"/>' +
+    '</svg>';
+  var MILESTONE_LOCK_SVG = '<svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false">' +
+    '<rect x="3.4" y="7" width="9.2" height="6.6" rx="1.6" stroke="#A9BDCC" stroke-width="1.6"/>' +
+    '<path d="M5.6 7V5.4a2.4 2.4 0 014.8 0V7" stroke="#A9BDCC" stroke-width="1.6" stroke-linecap="round"/>' +
     '</svg>';
 
   /**
@@ -1354,13 +1447,57 @@
         });
 
       case 'pointsHistory':
-        return (s.loyalty ? s.loyalty.history : []).map(function (h) {
+        return (s.loyalty && !s.loyalty.error && s.loyalty.history ? s.loyalty.history : []).map(function (h) {
           return {
             label: h.label,
             dateLong: self.fmtDate(h.date, 'full'),
             delta: (h.delta > 0 ? '+' : '−') + Math.abs(h.delta)
           };
         });
+
+      case 'milestones': {
+        // The real balance is the only thing that decides achieved/current/
+        // locked. The ladder itself (thresholds, names, images) is fixed —
+        // see VetPetsPortal.vetpointsMilestones — and identical to what the
+        // backend awards against, so this never needs its own data source.
+        //
+        // The fillA/fillB math below is copied verbatim from the approved
+        // Claude Design mockup ("VetPets Portal V2", the `journey` builder)
+        // so the connecting line between two nodes fills continuously and
+        // meets in the middle exactly as designed, not as a binary on/off.
+        var balance = (s.loyalty && !s.loyalty.error) ? s.loyalty.points : 0;
+        var ladder = NS.vetpointsMilestones;
+        var nextIdx = -1;
+        for (var mi = 0; mi < ladder.length; mi++) {
+          if (ladder[mi].points > balance) { nextIdx = mi; break; }
+        }
+        function clamp01(n) { return Math.max(0, Math.min(1, n)); }
+        function fmtN(n) { return n.toLocaleString('en-US'); }
+        return ladder.map(function (m, i) {
+          var done = balance >= m.points;
+          var isNext = i === nextIdx;
+          var live = done || isNext;
+          var segNext = i < ladder.length - 1
+            ? clamp01((balance - m.points) / (ladder[i + 1].points - m.points))
+            : 0;
+          var segPrev = i > 0
+            ? clamp01((balance - ladder[i - 1].points) / (m.points - ladder[i - 1].points))
+            : 0;
+          return {
+            name: m.name,
+            ptsNumber: fmtN(m.points),
+            sub: done ? 'Unlocked' : (isNext ? (fmtN(Math.max(0, m.points - balance)) + ' points to go') : 'Locked'),
+            _image: m.image || '',
+            _pending: !m.image,
+            _alt2: m.name,
+            _milestoneState: done ? 'achieved' : (isNext ? 'current' : 'locked'),
+            _isFirst: i === 0,
+            _isLast: i === ladder.length - 1,
+            _fillA: Math.round(clamp01(segPrev * 2 - 1) * 100),
+            _fillB: Math.round(clamp01(segNext * 2) * 100)
+          };
+        });
+      }
 
       case 'rewards':
         return s.rewards.map(function (r) {
@@ -1379,16 +1516,6 @@
           return { label: r[1], _value: r[0], _checked: d.reason === r[0] };
         });
 
-
-      case 'benefits':
-        return [
-          ['20% off Routine Care pricing', 'Your subscriber price on every refill.'],
-          ['Free shipping on every refill', 'No delivery charge, whatever the order size.'],
-          ['Automatic refills', 'The next jar arrives before you run out.'],
-          ['Flexible deliveries', 'Skip a delivery or move it to a date that suits you.'],
-          ['Subscriber-only perks', 'Extras that only go out to Routine Care members.'],
-          ['100-day guarantee', 'Covers your deliveries for as long as the subscription runs.']
-        ].map(function (b) { return { title: b[0], body: b[1] }; });
 
       case 'gapOptions':
         return GAP_OPTIONS.map(function (g) {
@@ -1423,18 +1550,79 @@
       case 'cancelFacts': {
         if (!sub) return [];
         var card = sub.payment;
-        return [
-          'Your ' + self.fmtDate(sub.nextOrderDate, 'short') + ' delivery will not ship.',
-          card && card.brand
-            ? 'No further charges will be made to ' + card.brand +
-              (card.last4 ? ' ···· ' + card.last4 : '') + '.'
-            : 'No further charges will be made.',
-          'You can reactivate with the same products and price at any time.',
-          // Last, and phrased as care rather than pressure: by this screen the
-          // decision is made, and a sales pitch here would read as one.
-          'RoutineCare keeps daily care consistent, helping prevent buildup before it becomes a recurring problem.'
-        ].map(function (t) { return { text: t }; });
+        var facts = [];
+        var factLines = sub.lines || [];
+        // Only the product the customer named on step 1 was ever discussed
+        // on the screens since — this is the one place that must say, in
+        // plain words, that confirming ends every product in the
+        // subscription, not only that one. Skipped when there is only one
+        // product: there is nothing to disambiguate.
+        if (factLines.length > 1) {
+          facts.push(
+            'This cancels your whole Routine Care subscription — ' +
+            factLines.map(function (l) { return l.title.replace(/ (jar|pack).*$/, ''); }).join(', ') +
+            ' will all stop, not only the product you told us about.'
+          );
+        }
+        facts.push('Your ' + self.fmtDate(sub.nextOrderDate, 'short') + ' delivery will not ship.');
+        facts.push(card && card.brand
+          ? 'No further charges will be made to ' + card.brand +
+            (card.last4 ? ' ···· ' + card.last4 : '') + '.'
+          : 'No further charges will be made.');
+        facts.push('You can reactivate with the same products and price at any time.');
+        // Last, and phrased as care rather than pressure: by this screen the
+        // decision is made, and a sales pitch here would read as one.
+        facts.push('RoutineCare keeps daily care consistent, helping prevent buildup before it becomes a recurring problem.');
+        return facts.map(function (t) { return { text: t }; });
       }
+
+      case 'cancelReviews': {
+        // One real review per distinct real product category in this
+        // subscription, in a fixed priority order, falling back to a
+        // second real review for the SAME category so there are always
+        // two cards — never a fabricated one for a product not on this
+        // account. See REVIEW_BANK above.
+        //
+        // Keyed off l.title, not a product id: neither adapter mode
+        // (see projectSubscription(), mock and live) puts an internal
+        // product key on the line objects it hands to the portal — title
+        // is the only field guaranteed to survive in both, and every real
+        // product title contains its own name ("FreshWipes jar",
+        // "EyeWipes jar", a live Phoenix title, etc.).
+        if (!sub) return [];
+        var seenKeys = [];
+        (sub.lines || []).forEach(function (l) {
+          var t = (l.title || '').toLowerCase();
+          var key = t.indexOf('fresh') !== -1 ? 'freshwipes'
+            : t.indexOf('eye') !== -1 ? 'eyewipes'
+            : null;
+          if (key && seenKeys.indexOf(key) === -1) seenKeys.push(key);
+        });
+        if (seenKeys.length === 0) seenKeys.push('freshwipes');
+        var picks = [];
+        if (seenKeys.length >= 2) {
+          picks.push({ key: seenKeys[0], idx: 0 });
+          picks.push({ key: seenKeys[1], idx: 0 });
+        } else {
+          picks.push({ key: seenKeys[0], idx: 0 });
+          picks.push({ key: seenKeys[0], idx: 1 });
+        }
+        return picks.map(function (p) {
+          var bank = REVIEW_BANK[p.key];
+          var r = bank.quotes[p.idx] || bank.quotes[0];
+          return { quote: r.quote, name: r.name, category: bank.category };
+        });
+      }
+
+      case 'startedCategories':
+        // Cancel step 3 ("why you started"). A soft, non-blocking question
+        // — the pick only drives this row's own selected styling; it is
+        // never sent to Phoenix and never personalizes any other screen
+        // (unlike the product name, which comes from real subscription
+        // data — see cancel.startedHeading in viewModel()).
+        return STARTED_CATEGORIES.map(function (c) {
+          return { name: c[1], subtitle: c[2], _value: c[0], _checked: d.startedCategory === c[0] };
+        });
 
       default:
         return [];
@@ -1566,6 +1754,37 @@
         }
       }
     }
+
+    if (listName === 'milestones') {
+      // node here is one .spp__ms-col (desktop) or .spp__ms-vrow (mobile) —
+      // the outer element cloned from whichever of the two templates this
+      // call is filling. Both carry the same state classes and the same
+      // inner [data-spp-ms-*] parts, so everything below works for either.
+      node.classList.remove('spp__ms-col--achieved', 'spp__ms-col--current', 'spp__ms-col--locked');
+      node.classList.add('spp__ms-col--' + item._milestoneState);
+      node.classList.toggle('spp__ms-col--edge-a', !!item._isFirst);
+      node.classList.toggle('spp__ms-col--edge-b', !!item._isLast);
+
+      var nodeIcon = node.querySelector('[data-spp-ms-node]');
+      if (nodeIcon) {
+        nodeIcon.innerHTML = item._milestoneState === 'achieved' ? MILESTONE_CHECK_SVG
+          : item._milestoneState === 'current' ? MILESTONE_CURRENT_SVG
+          : MILESTONE_LOCK_SVG;
+      }
+
+      var fillA = node.querySelector('[data-spp-ms-fill-a]');
+      var fillB = node.querySelector('[data-spp-ms-fill-b]');
+      // Desktop tracks run horizontally (width); the mobile vertical track
+      // reuses the identical markup rotated with CSS, so the fill there has
+      // to be a height instead. `node` is a detached clone at this point
+      // (fillNode runs before the caller appends it — see renderLists), so
+      // this reads the root element's OWN class rather than walking to an
+      // ancestor that does not exist yet.
+      var isVertical = node.classList.contains('spp__ms-vrow');
+      var dim = isVertical ? 'height' : 'width';
+      if (fillA) fillA.style[dim] = (item._fillA || 0) + '%';
+      if (fillB) fillB.style[dim] = (item._fillB || 0) + '%';
+    }
   };
 
   /* =================================================================
@@ -1596,7 +1815,49 @@
         e.preventDefault(); self.openSheet(el.getAttribute('data-spp-sheet')); return;
       }
       if ((el = e.target.closest('[data-spp-pick]'))) {
-        e.preventDefault(); self.pick(el); return;
+        e.preventDefault();
+        /* TEMPORARY DIAGNOSTIC — DEV ONLY, NOT SHIPPED TO LIVE.
+         * Added to capture a live-reported "some reasons don't select"
+         * defect that a synthetic DOM harness could not reproduce. Logs only
+         * the attempted reason code, the raw click target's tag/class, the
+         * resolved [data-spp-pick] element's tag/class, and draft.reason
+         * before/after pick() runs. No PII, no email, no Phoenix id.
+         * Remove once the live defect is captured and understood. */
+        if (el.getAttribute('data-spp-pick') === 'reason') {
+          var __diagValue = el.dataset.sppValue;
+          var __diagTargetTag = e.target.tagName;
+          var __diagTargetClass = e.target.className;
+          var __diagBefore = self.state.draft.reason;
+          var __diagRect = null;
+          try { __diagRect = el.getBoundingClientRect(); } catch (rectErr) {}
+          self.pick(el);
+          try {
+            // el is now STALE: render() -> renderLists() destroys and
+            // rebuilds the whole list on every pick, so el's own
+            // aria-checked would just show what it was cloned with BEFORE
+            // this click. Re-query the CURRENT node for the row that was
+            // supposed to end up selected, by the value actually attempted.
+            var freshRow = self.root.querySelector(
+              '[data-spp-pick="reason"][data-spp-value="' + __diagValue + '"]'
+            );
+            console.log('[spp-diag reason-click]', {
+              attemptedValue: __diagValue,
+              targetTag: __diagTargetTag,
+              targetClass: __diagTargetClass,
+              rowWidth: __diagRect ? Math.round(__diagRect.width) : null,
+              rowHeight: __diagRect ? Math.round(__diagRect.height) : null,
+              draftReasonBefore: __diagBefore,
+              draftReasonAfter: self.state.draft.reason,
+              matchedIntendedValue: self.state.draft.reason === __diagValue,
+              freshRowFound: !!freshRow,
+              freshRowAriaChecked: freshRow ? freshRow.getAttribute('aria-checked') : null
+            });
+          } catch (diagErr) {
+            console.log('[spp-diag reason-click] logging failed', String(diagErr));
+          }
+          return;
+        }
+        self.pick(el); return;
       }
       if ((el = e.target.closest('[data-spp-act]'))) {
         e.preventDefault();
@@ -1675,6 +1936,88 @@
       if (e.key === 'Escape' && self.state.sheet && !self.state.pending) { self.closeSheet(); return; }
       if (e.key === 'Tab' && self.state.sheet) self.trapFocus(e);
     });
+
+    this.syncVetVideo();
+    this.bindVetVideoControls();
+    window.addEventListener('resize', function () { self.syncVetVideo(); });
+  };
+
+  /**
+   * Cancel step 2's veterinarian video ships two real files, one per
+   * viewport (16:9 desktop/tablet, 1:1 mobile). Picking the file here, in
+   * JS, is deliberate: the browser's own <source media> selection — what
+   * shipped before this fix — was not reliable on real devices, where
+   * both files could end up loaded and visibly overlapping. A single
+   * <video> with a plain `src` this method sets cannot have that failure
+   * mode, because there is only ever one src, and the OTHER file's URL
+   * is never assigned to anything — never fetched, on either viewport.
+   *
+   * The poster is kept in sync the same way, from a genuinely blank
+   * start (see spp-screen-cancel.liquid — there is no static `poster`
+   * attribute to correct away from any more): whichever real file's own
+   * actual first frame matches the file about to load.
+   *
+   * Neither viewport autoplays: the video stays paused on its poster,
+   * with only the custom .spp__vet-video-play button visible, until the
+   * customer taps it (see bindVetVideoControls). Muted here just means
+   * "silent if anything ever plays it before that tap" — the tap itself
+   * is what turns sound on.
+   *
+   * Safe to call any time (bind(), and again on resize): it never
+   * touches a video the customer has already started — currentTime > 0
+   * or a non-paused element means playback is underway, and the file
+   * that is already loading is the one that stays.
+   */
+  Portal.prototype.syncVetVideo = function () {
+    var video = this.root.querySelector('.spp__vet-video-el');
+    if (!video) return;
+    var wantDesktop = window.matchMedia('(min-width: 1024px)').matches;
+    var wanted = wantDesktop ? video.dataset.sppVetSrcDesktop : video.dataset.sppVetSrcMobile;
+    if (!wanted || video.dataset.sppVetSrcActive === wanted) return;
+    if (!video.paused || video.currentTime > 0) return;
+    video.dataset.sppVetSrcActive = wanted;
+    video.poster = wantDesktop ? video.dataset.sppVetPosterDesktop : video.dataset.sppVetPosterMobile;
+    video.muted = true;
+    video.src = wanted;
+    video.load();
+  };
+
+  /**
+   * Wires the custom play button drawn over the vet video's poster (see
+   * spp-screen-cancel.liquid). Native `controls` is deliberately absent
+   * from the markup so nothing but that button shows before the
+   * customer's own tap; the tap is also the user gesture that lets JS
+   * turn sound on, which an autoplay call could never do reliably.
+   *
+   * On tap: unmute at normal volume, reveal native controls, hide the
+   * custom button, start playback. On 'ended': hand the video back to
+   * its poster state — `load()` re-arms the poster (a played element
+   * would otherwise keep showing its last frame, not the poster, once
+   * paused) — remove native controls, and bring the custom button back,
+   * exactly like before the first tap.
+   */
+  Portal.prototype.bindVetVideoControls = function () {
+    var container = this.root.querySelector('.spp__vet-video');
+    if (!container) return;
+    var video = container.querySelector('.spp__vet-video-el');
+    var playBtn = container.querySelector('.spp__vet-video-play');
+    if (!video || !playBtn) return;
+
+    playBtn.addEventListener('click', function () {
+      video.muted = false;
+      video.volume = 1;
+      video.setAttribute('controls', '');
+      playBtn.hidden = true;
+      var playAttempt = video.play();
+      if (playAttempt && typeof playAttempt.catch === 'function') playAttempt.catch(function () {});
+    });
+
+    video.addEventListener('ended', function () {
+      video.removeAttribute('controls');
+      video.muted = true;
+      video.load();
+      playBtn.hidden = false;
+    });
   };
 
   Portal.prototype.trapFocus = function (e) {
@@ -1705,6 +2048,7 @@
       this.state.reasonSaveError = null;
     }
     else if (kind === 'restart') d.restart = parseInt(el.dataset.sppIndex, 10);
+    else if (kind === 'startedCategory') d.startedCategory = value;
     this.render();
   };
 
@@ -1734,6 +2078,46 @@
     ['break', 'Just taking a break'],
     ['other', 'Something else']
   ];
+
+  /**
+   * Cancel step 3, "why you started" — the approved Portal V2 categories,
+   * verbatim. Never sent anywhere and never bucketed like REASONS above;
+   * see the 'startedCategories' listData case.
+   */
+  var STARTED_CATEGORIES = [
+    ['dental', 'Dental care', 'Bad breath, plaque or tartar buildup'],
+    ['eye', 'Eye care', 'Tear stains, discharge or recurring buildup'],
+    ['ear', 'Ear care', 'Odor, dirt or wax buildup'],
+    ['paw', 'Paw care', 'Mud, dirt or regular paw cleaning'],
+    ['skin', 'Skin & coat care', 'Dirt, odor or keeping your dog fresh between baths'],
+    ['other', 'Something else', '']
+  ];
+
+  /**
+   * Cancel step 2's two real customer reviews — reproduces the approved
+   * Portal V2 design's own review carousel, whose source comments describe
+   * it as "genuine reviews lifted verbatim from the live VetPets homepage
+   * reviews module." That design picks reviews by a single hardcoded mock
+   * product; this generalizes the same idea to the real subscription's
+   * actual line items (see the 'cancelReviews' listData case below), so
+   * nothing here is invented for a product the customer does not have.
+   */
+  var REVIEW_BANK = {
+    freshwipes: {
+      category: 'Dental',
+      quotes: [
+        { name: 'Marilu P.', quote: 'My Pom loves the wipes! Way less hassle than when I used to brush her teeth. Thank you!' },
+        { name: 'Lynn H.', quote: 'My two 8 month old dogs are really good at having their teeth cleaned. I can get to their back teeth and all around their mouth.' }
+      ]
+    },
+    eyewipes: {
+      category: 'Eyes',
+      quotes: [
+        { name: 'Pauline L.', quote: 'The wipes softens the crusty buildup over night and makes it easier to remove. Eyes are looking much cleaner and Argo is much happier.' },
+        { name: 'Barbara M.', quote: 'These are the only things I have used, which are many, that has actually worked. Very happy' }
+      ]
+    }
+  };
 
   /** Every option maps to an operation proven end to end against Phoenix. */
   var GAP_OPTIONS = [
@@ -1796,6 +2180,10 @@
    * Two short backoffs (300ms, 700ms) — a healthy network never notices;
    * the worst case is under a second before the customer sees a retry
    * affordance, never a silent, unrecoverable loss.
+   *
+   * Advances to cancel-offer, not cancel-alt: the approved Portal V2 order
+   * has the reason screen at step 5, after alternatives (step 4), so a
+   * saved reason leads straight to the retention offer.
    */
   Portal.prototype.submitReason = function (reasonCode, noteText) {
     var self = this;
@@ -1827,7 +2215,7 @@
         if (result && result.journeyId) self.state.retentionJourneyId = result.journeyId;
         self.state.pending = null;
         self.applyPending(false);
-        self.show('cancel-alt');
+        self.show('cancel-offer');
       }, function (err) {
         // Any DEFINITIVE server response — even a failure — means that key
         // is now permanently spent server-side (the same key can never
@@ -1916,8 +2304,11 @@
       }
 
       case 'openLink':
+        // Mock-only stand-in for clicking the emailed link — the same
+        // fresh-authentication event bootLive()'s handoff branch handles in
+        // live mode, so it lands on 'welcome' the same way.
         this.show('loading');
-        this.load().then(function () { self.show('dashboard'); }).catch(function (e) { self.fail(e); });
+        this.load().then(function () { self.show('welcome'); }).catch(function (e) { self.fail(e); });
         return;
 
       case 'resend':
@@ -1939,6 +2330,28 @@
         if (!this.hasSession()) { this.fail(NS.PortalError('unauthenticated', '')); return; }
         this.show('loading');
         this.load().then(function () { self.show('dashboard'); }).catch(function (e) { self.fail(e); });
+        return;
+
+      /**
+       * Re-read VetPoints only. A ledger outage is scoped to this one screen
+       * (see the adapter's getLoyalty), so retrying it never touches the
+       * subscription, deliveries or cancellation state — no full-portal
+       * reload, no loading screen.
+       */
+      case 'retryLoyalty':
+        if (s.loyaltyPending) return;
+        s.loyaltyPending = true;
+        this.render();
+        this.adapter.getLoyalty(true).then(function (loy) {
+          s.loyaltyPending = false;
+          s.loyalty = loy;
+          self.render();
+        }, function (err) {
+          // The one failure this can still throw is an expired session,
+          // which ends the visit exactly like any other read would.
+          s.loyaltyPending = false;
+          self.fail(err);
+        });
         return;
 
       /* --- POST /update-next-billing-date --- */
@@ -2033,7 +2446,10 @@
         this.state.reasonSaveError = null;
         var noteText = d.reason === 'other' ? (d.note || '').trim() : '';
 
-        if (!self.adapter.recordCancelReason) { this.show('cancel-alt'); return; }
+        // Reason now sits at step 5 of the approved Portal V2 order — after
+        // alternatives, not before — so a saved reason leads to the
+        // retention offer, handled inside submitReason() itself.
+        if (!self.adapter.recordCancelReason) { this.show('cancel-offer'); return; }
         this.submitReason(d.reason, noteText);
         return;
       }
@@ -2200,7 +2616,10 @@
 
       case 'support':
       case 'faq':
-        this.toast('Support is not wired up in this prototype');
+        // The real, already-public VetPets support address (see the cancel
+        // flow's plain contact block) — not a fabricated "message support"
+        // channel this codebase has no backend for.
+        window.location.href = 'mailto:info@shopvetpets.com';
         return;
     }
   };

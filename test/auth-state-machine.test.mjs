@@ -296,3 +296,70 @@ describe('SUB-503 is reserved for an authenticated service failure', () => {
     assert.match(buildReference.call(p, NS.PortalError('server', '')), /^SUB-503 /);
   });
 });
+
+/**
+ * The approved Portal V2 welcome screen ("RoutineCare benefits") must
+ * appear exactly once — the moment a FRESH authentication hands the
+ * browser a session — and never again for an already-authenticated visit
+ * (a reload, a deep link). bootLive() is the live-mode entry point that
+ * decides this; see the identical rule in boot()'s mock-mode token/openLink
+ * paths, covered informally by manual DEV verification since boot() only
+ * runs in a real page context.
+ */
+describe('the welcome screen appears once, after a FRESH authentication only', () => {
+  function bootLiveWith(handoffValue) {
+    const re = /Portal\.prototype\.bootLive = function \(([^)]*)\) \{([\s\S]*?)\n  \};/;
+    const m = re.exec(controllerSource);
+    assert.ok(m, 'Portal.prototype.bootLive must exist');
+    const localNS = { takeHandoffFromUrl: () => handoffValue };
+    const factory = new Function('NS', `return function (${m[1]}) {${m[2]}\n};`);
+    return factory(localNS);
+  }
+
+  async function flush() {
+    for (let i = 0; i < 6; i++) await Promise.resolve();
+  }
+
+  function portalFor({ handoff, hasSession }) {
+    const shown = [];
+    const bootLive = bootLiveWith(handoff);
+    const p = {
+      adapter: {
+        hasSession: () => hasSession,
+        exchangeHandoff: () => Promise.resolve(),
+      },
+      load: () => Promise.resolve(),
+      show(name) { shown.push(name); },
+      fail() { shown.push('__failed__'); },
+    };
+    return { p, bootLive, shown };
+  }
+
+  test('a fresh handoff (the emailed link, just clicked) lands on welcome', async () => {
+    const { p, bootLive, shown } = portalFor({ handoff: 'abc123', hasSession: false });
+    bootLive.call(p, null);
+    await flush();
+    assert.deepEqual(shown, ['welcome']);
+  });
+
+  test('an existing session (reload, deep link) lands on the dashboard, never welcome again', async () => {
+    const { p, bootLive, shown } = portalFor({ handoff: null, hasSession: true });
+    bootLive.call(p, null);
+    await flush();
+    assert.deepEqual(shown, ['dashboard']);
+  });
+
+  test('no session and no handoff is the plain sign-in screen, not an error', async () => {
+    const { p, bootLive, shown } = portalFor({ handoff: null, hasSession: false });
+    bootLive.call(p, null);
+    await flush();
+    assert.deepEqual(shown, ['login']);
+  });
+
+  test('an explicit start screen (?spp_screen=) wins over welcome too', async () => {
+    const { p, bootLive, shown } = portalFor({ handoff: 'abc123', hasSession: false });
+    bootLive.call(p, 'loyalty');
+    await flush();
+    assert.deepEqual(shown, ['loyalty']);
+  });
+});

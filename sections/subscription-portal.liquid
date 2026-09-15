@@ -47,19 +47,6 @@
   fabricated VetPoints balance. No credential is emitted either way;
   base_path is a same-origin path.
 
-  THE DEFAULT IS "live", AND THAT MATTERS.
-
-  It used to be "mock", which meant a theme with no stored setting for this
-  section served the prototype persona. The development theme had the setting
-  saved and behaved correctly, so the fault was invisible until the section
-  reached a theme that had never been opened in the editor — and then the
-  published page showed a real customer a fabricated subscription belonging to
-  a fictional person.
-
-  Mock is a development affordance and must be asked for. The default a fresh
-  theme inherits has to be the one that either tells the truth or fails
-  loudly, never the one that invents a customer.
-
   NEVER put a Liquid tag between two attributes. The whitespace-stripping
   hyphens in {%- ... -%} consume the newlines on both sides and weld the
   neighbouring attributes into one, which silently destroys the attribute
@@ -87,7 +74,7 @@
   data-spp-latency="{{ section.settings.mock_latency | default: 900 }}"
   data-spp-points-per-renewal="{{ section.settings.points_per_renewal | default: 100 }}"
   data-spp-next-reward-at="{{ section.settings.next_reward_at | default: 800 }}"
-  data-spp-next-reward-name="{{ section.settings.next_reward_name | default: 'a free plush toy' | escape }}"
+  data-spp-next-reward-name="{{ section.settings.next_reward_name | default: 'Free Surprise Gift' | escape }}"
   data-spp-dev-default="{{ dev_default }}"
   data-spp-img-freshwipes="{{ img_fresh }}"
   data-spp-img-eyewipes="{{ img_eye }}"
@@ -132,7 +119,7 @@
     <nav class="spp__nav" aria-label="Portal sections">
       <button type="button" class="spp__nav-link" data-spp-go="dashboard" data-spp-nav="dashboard">Overview</button>
       <button type="button" class="spp__nav-link" data-spp-go="deliveries" data-spp-nav="deliveries">Deliveries</button>
-      <button type="button" class="spp__nav-link" data-spp-go="loyalty" data-spp-nav="loyalty">VetPoints</button>
+      <button type="button" class="spp__nav-link" data-spp-go="loyalty" data-spp-nav="loyalty" data-spp-loyalty hidden>VetPoints</button>
       <button type="button" class="spp__nav-link" data-spp-go="account" data-spp-nav="account">Account</button>
       <span class="spp__avatar" data-spp-field="customer.initials" aria-hidden="true">ME</span>
     </nav>
@@ -143,6 +130,7 @@
     <div class="spp__pad">
       <div class="spp__col">
         {% render 'spp-screen-auth' %}
+        {% render 'spp-screen-welcome' %}
         {% render 'spp-screen-dashboard' %}
         {% render 'spp-screen-subscription' %}
         {% render 'spp-screen-deliveries' %}
@@ -164,7 +152,7 @@
       {% render 'spp-icon', icon: 'tab-deliveries' %}
       Deliveries
     </button>
-    <button type="button" class="spp__tab" data-spp-go="loyalty" data-spp-nav="loyalty">
+    <button type="button" class="spp__tab" data-spp-go="loyalty" data-spp-nav="loyalty" data-spp-loyalty hidden>
       {% render 'spp-icon', icon: 'tab-points' %}
       VetPoints
     </button>
@@ -254,11 +242,11 @@
     },
     {
       "type": "header",
-      "content": "VetPoints (placeholder economics)"
+      "content": "VetPoints"
     },
     {
       "type": "paragraph",
-      "content": "Earn rate, thresholds and reward items are placeholders pending founder-approved economics."
+      "content": "Balance and history come from the VetPoints ledger (POST /portal/vetpoints). The reward threshold and name below are theme settings, not part of the ledger."
     },
     {
       "type": "range",
@@ -282,7 +270,7 @@
       "type": "text",
       "id": "next_reward_name",
       "label": "Next reward name",
-      "default": "a free plush toy"
+      "default": "Free Surprise Gift"
     },
     {
       "type": "header",

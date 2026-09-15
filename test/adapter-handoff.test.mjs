@@ -367,10 +367,11 @@ describe('live adapter — session handling', () => {
     assert.equal(win.__store.has('vp_portal_session'), false);
   });
 
-  test('six reads make one backend request', async () => {
+  test('five reads make two backend requests: one shared, one for VetPoints', async () => {
     const { adapter, sent } = adapterWith([
       { status: 200, body: JSON.stringify({ status: 'ok', session: 'S' }) },
       { status: 200, body: JSON.stringify({ state: 'no-subscription' }) },
+      { status: 200, body: JSON.stringify({ points: 0, history: [] }) },
     ]);
 
     await adapter.exchangeHandoff('CODE');
@@ -382,8 +383,10 @@ describe('live adapter — session handling', () => {
       adapter.listRewards(),
     ]);
 
-    // One exchange plus one portal read. Not five reads.
-    assert.equal(sent.length, 2);
+    // One exchange, one shared /portal/subscription read (getCustomer,
+    // listSubscriptions and listDeliveries share readPortal's cache), and one
+    // dedicated /portal/vetpoints read. Not five reads.
+    assert.equal(sent.length, 3);
   });
 
   test('returns every field the controller dereferences on a subscription', async () => {
@@ -426,15 +429,106 @@ describe('live adapter — session handling', () => {
     assert.equal(sub.lines.length, 1);
   });
 
-  test('invents no loyalty balance when there is no ledger behind it', async () => {
-    const { adapter } = adapterWith([
+  test('reads the VetPoints balance and history from their own ledger endpoint', async () => {
+    // The real backend response shape (src/routes/vetpoints.ts on the
+    // subscription-backend repo): {state, balance, history: [{type, delta,
+    // reason, createdAt(ms)}], nextMilestone?}. NOT {points, history:
+    // [{label, date}]} — that was this test's own pre-launch guess, written
+    // before the ledger endpoint existed, and never reconciled against it.
+    const { adapter, sent } = adapterWith([
       { status: 200, body: JSON.stringify({ status: 'ok', session: 'S' }) },
+      {
+        status: 200,
+        body: JSON.stringify({
+          state: 'ok',
+          balance: 450,
+          history: [
+            { type: 'earned', delta: 100, reason: 'order_paid', createdAt: Date.parse('2026-07-10') },
+          ],
+        }),
+      },
     ]);
 
     await adapter.exchangeHandoff('CODE');
-    assert.equal(await adapter.getLoyalty(), null);
+    const loyalty = await adapter.getLoyalty();
+
+    // The balance and history are the ledger's own.
+    assert.equal(loyalty.points, 450);
+    assert.equal(loyalty.history.length, 1);
+    assert.equal(loyalty.history[0].label, 'Order renewed');
+    assert.equal(loyalty.history[0].date, '2026-07-10');
+    assert.equal(loyalty.history[0].delta, 100);
+    // The next reward comes from the real milestone ladder (200, 300, 500,
+    // 800, 1200, 1600 — see VetPetsPortal.vetpointsMilestones), not a theme
+    // setting: 450 points sits between the 300 and 500 milestones.
+    assert.equal(loyalty.perRenewal, 100);
+    assert.equal(loyalty.nextRewardAt, 500);
+    assert.equal(loyalty.nextRewardName, 'GloveWipes');
+    assert.equal(loyalty.toNextReward, 50);
+    assert.equal(loyalty.progressPercent, 90);
+
+    const call = sent.find((s) => s.url.includes('/portal/vetpoints'));
+    assert.ok(call, 'the adapter must call /portal/vetpoints');
+    assert.equal(JSON.parse(call.init.body).session, 'S');
+
     // Length, not deepEqual: the array is built inside the vm realm, so its
     // prototype differs from this realm's Array.
     assert.equal((await adapter.listRewards()).length, 0);
+  });
+
+  test('a VetPoints read that finds no ledger entry shows zero, not a placeholder', async () => {
+    const { adapter } = adapterWith([
+      { status: 200, body: JSON.stringify({ status: 'ok', session: 'S' }) },
+      { status: 200, body: JSON.stringify({ state: 'no-points', balance: 0, history: [] }) },
+    ]);
+
+    await adapter.exchangeHandoff('CODE');
+    const loyalty = await adapter.getLoyalty();
+
+    assert.equal(loyalty.points, 0);
+    // The first rung of the real ladder, not the theme-setting fallback.
+    assert.equal(loyalty.nextRewardAt, 200);
+    assert.equal(loyalty.toNextReward, 200);
+    assert.equal(loyalty.progressPercent, 0);
+    assert.equal(loyalty.history.length, 0);
+  });
+
+  test('every milestone reached renders as complete, not a stale threshold', async () => {
+    const { adapter } = adapterWith([
+      { status: 200, body: JSON.stringify({ status: 'ok', session: 'S' }) },
+      { status: 200, body: JSON.stringify({ state: 'ok', balance: 1600, history: [] }) },
+    ]);
+
+    await adapter.exchangeHandoff('CODE');
+    const loyalty = await adapter.getLoyalty();
+
+    assert.equal(loyalty.points, 1600);
+    assert.equal(loyalty.allMilestonesReached, true);
+    assert.equal(loyalty.toNextReward, 0);
+  });
+
+  test('an expired session on the VetPoints read behaves exactly like any other', async () => {
+    const { adapter } = adapterWith([
+      { status: 200, body: JSON.stringify({ status: 'ok', session: 'S' }) },
+      { status: 401, body: JSON.stringify({ error: 'unauthenticated' }) },
+    ]);
+
+    await adapter.exchangeHandoff('CODE');
+    await assert.rejects(() => adapter.getLoyalty(), (err) => err.code === 'unauthenticated');
+    assert.equal(adapter.hasSession(), false);
+  });
+
+  test('a VetPoints backend failure is reported, never fabricated as a balance', async () => {
+    const { adapter } = adapterWith([
+      { status: 200, body: JSON.stringify({ status: 'ok', session: 'S' }) },
+      { status: 500, body: '{}' },
+    ]);
+
+    await adapter.exchangeHandoff('CODE');
+    const loyalty = await adapter.getLoyalty();
+
+    // Never a rejection here — a ledger outage must not take the rest of the
+    // portal load down with it. The failure is a marker the screen reads.
+    assert.equal(loyalty.error.code, 'server');
   });
 });

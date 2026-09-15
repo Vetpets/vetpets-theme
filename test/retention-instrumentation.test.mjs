@@ -11,6 +11,16 @@
  * and reason capture has to survive a flaky network without ever silently
  * losing what the customer picked.
  *
+ * Ported from Main's proven implementation (commit f0610ef,
+ * feat(retention): live screen-view beacons, retry-safe reason capture,
+ * gap-save attribution — backend Worker dcf1e1f6-59d3-460f-b70d-fb3a0089d1fa
+ * already live) onto DEV's approved Portal V2 screen order. The only
+ * adaptation: a saved reason now advances to cancel-offer, not cancel-alt —
+ * Portal V2 moved the reason screen to step 5, after alternatives (step 4),
+ * so "continue past the reason" leads straight to the retention offer.
+ * RETENTION_SCREEN_EVENTS itself is unchanged: it maps by screen NAME, not
+ * position, and Portal V2 kept the same four screen names for these steps.
+ *
  * Run with:  node --test test/retention-instrumentation.test.mjs
  */
 
@@ -264,7 +274,7 @@ describe('submitReason: retry-safe delivery that reuses the beacon-opened journe
     return p;
   }
 
-  test('a clean first attempt sends the held journey id and one key, then advances', async () => {
+  test('a clean first attempt sends the held journey id and one key, then advances to the retention offer', async () => {
     const p = portal({
       recordCancelReason: (code, note, opts) => {
         p.calls.push(opts);
@@ -278,7 +288,9 @@ describe('submitReason: retry-safe delivery that reuses the beacon-opened journe
     assert.equal(p.calls.length, 1);
     assert.equal(p.calls[0].journeyId, 'j-open');
     assert.equal(p.state.retentionJourneyId, 'j-reason', 'the reason write wins the tie over an earlier beacon');
-    assert.deepEqual(p.shown, ['cancel-alt']);
+    // Portal V2 order: reason is step 5, after alternatives (step 4) — a
+    // saved reason leads straight to the retention offer, not back to alt.
+    assert.deepEqual(p.shown, ['cancel-offer']);
     assert.equal(p.state.reasonSaveError, null);
   });
 
@@ -297,7 +309,7 @@ describe('submitReason: retry-safe delivery that reuses the beacon-opened journe
 
     assert.equal(p.calls.length, 2);
     assert.equal(p.calls[0], p.calls[1], 'a network failure must not mint a fresh key — the server may already have applied it');
-    assert.deepEqual(p.shown, ['cancel-alt']);
+    assert.deepEqual(p.shown, ['cancel-offer']);
   });
 
   test('a DEFINITIVE server rejection mints a fresh key for the next attempt', async () => {

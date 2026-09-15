@@ -30,6 +30,7 @@ const read = (...p) => readFileSync(resolve(here, '..', ...p), 'utf8');
 const src = read('assets', 'subscription-portal.js');
 const cancelScreens = read('snippets', 'spp-screen-cancel.liquid');
 const css = read('assets', 'subscription-portal.css');
+const sectionSource = read('sections', 'subscription-portal.liquid');
 
 /* ---------------------------------------------------------------- helpers */
 
@@ -65,9 +66,69 @@ const load = method('load');
 // listData closes over the journey's module-scope tables.
 const listData = method(
   'listData',
-  ['REASONS', 'GAP_OPTIONS'],
-  [constant('REASONS'), constant('GAP_OPTIONS')],
+  ['REASONS', 'GAP_OPTIONS', 'STARTED_CATEGORIES', 'REVIEW_BANK'],
+  [constant('REASONS'), constant('GAP_OPTIONS'), constant('STARTED_CATEGORIES'), constant('REVIEW_BANK')],
 );
+// viewModel also closes over NS (the adapter namespace) and the retention
+// journey's module-scope tables; a minimal NS stub is enough here since
+// these tests only exercise the cancel.* fields, never loyalty or the
+// deliveries list that would need its real date helpers.
+const viewModel = method(
+  'viewModel',
+  ['NS', 'REASONS', 'OFFER_PERCENT', 'STANDARD_PERCENT'],
+  [
+    { dates: { addDays: () => null, parseISO: () => new Date(0) }, vetpointsMilestones: [] },
+    constant('REASONS'),
+    constant('OFFER_PERCENT'),
+    constant('STANDARD_PERCENT'),
+  ],
+);
+
+// syncVetVideo closes over `window`. isDesktop is mutable so one extracted
+// function can stand in for the real matchMedia across both viewports.
+const fakeMatchMedia = { isDesktop: false };
+const syncVetVideo = method(
+  'syncVetVideo',
+  ['window'],
+  [{ matchMedia: () => ({ matches: fakeMatchMedia.isDesktop }) }],
+);
+const bindVetVideoControls = method('bindVetVideoControls');
+function fakeVetVideo(overrides) {
+  return Object.assign(
+    {
+      dataset: {
+        sppVetSrcDesktop: 'https://cdn.shopify.com/videos/c/o/v/be6c0d1c00b3463797270f2fc43c2815.mp4',
+        sppVetSrcMobile: 'https://cdn.shopify.com/videos/c/o/v/1d4391c64d264e46b877c356e1396f4a.mp4',
+        sppVetPosterDesktop: 'https://cdn.shopify.com/spp-cancel-benefits-desktop.jpg',
+        sppVetPosterMobile: 'https://cdn.shopify.com/spp-cancel-benefits-mobile.jpg',
+      },
+      paused: true,
+      currentTime: 0,
+      src: '',
+      poster: '',
+      muted: false,
+      volume: 0,
+      attrs: {},
+      listeners: {},
+      loadCalls: 0,
+      playCalls: 0,
+      load() { this.loadCalls += 1; },
+      play() { this.playCalls += 1; return Promise.resolve(); },
+      setAttribute(k, v) { this.attrs[k] = v; },
+      removeAttribute(k) { delete this.attrs[k]; },
+      getAttribute(k) { return k in this.attrs ? this.attrs[k] : null; },
+      addEventListener(evt, fn) { this.listeners[evt] = fn; },
+    },
+    overrides,
+  );
+}
+function fakeVetPlayButton() {
+  return {
+    hidden: false,
+    listeners: {},
+    addEventListener(evt, fn) { this.listeners[evt] = fn; },
+  };
+}
 
 /**
  * The section of markup for one screen, with Liquid comments stripped.
@@ -336,41 +397,228 @@ describe('cancel success and failure', () => {
  * THE THREE STEPS
  * ================================================================== */
 
-describe('step 1 — benefits', () => {
+describe('step 2 — before you cancel', () => {
   const step = screen('cancel-benefits');
 
-  test('leads with what is at stake for the dog, not the discount', () => {
-    assert.match(step, /They can&rsquo;t tell you when it comes back/);
-    // Eyes and teeth first; ears are not the lead concern for these routines.
-    assert.match(step, /tear stain/i);
-    assert.match(step, /teeth/i);
+  test('leads with the approved 95%/90-day fact, not a discount', () => {
+    assert.match(step, /95%<\/b> of VetPets customers see meaningful results after <b>90 days/);
+    assert.match(step, /Why consistency matters/);
   });
 
-  test('uses the approved 16:9 image, not a generated substitute', () => {
-    assert.match(step, /spp-cancel-benefits\.png/);
-    assert.match(step, /spp__media-16x9/);
-    assert.match(step, /alt="[^"]+"/, 'the image must be described');
+  test('has the wide layout, the correct back target, and the design’s own step indicator', () => {
+    assert.match(step, /spp__cancel-wide/, 'this screen must not use the narrow centred layout');
+    assert.ok(!/spp__narrow/.test(step), 'the narrow column class must not appear on this screen');
+    assert.match(step, /Before you cancel\s*&middot;\s*Step 2 of 7/);
+    const back = buttonWith(step, 'Back');
+    assert.match(back, /data-spp-go="cancel-choose"/, 'Back must return to step 1, not jump out of the flow');
+  });
+
+  test('the large blue "important" panel carries both the label and the two facts', () => {
+    assert.match(step, /spp__cancel-important/);
+    assert.match(step, /Important: before you cancel/i);
+    assert.match(step, /consistent daily use/);
+    assert.match(step, /giving it the full 90 days gives both the/);
+  });
+
+  test('two real, verified review cards render from cancelReviews, never a fabricated one', () => {
+    assert.match(step, /spp__reviews-panel/);
+    assert.match(step, /data-spp-list="cancelReviews"/);
+    assert.match(step, /data-spp-field="quote"/);
+    assert.match(step, /data-spp-field="name"/);
+    assert.match(step, /data-spp-field="category"/);
+
+    // Keyed off l.title, not a product id: neither adapter mode puts an
+    // internal product key on the line objects it hands to the portal
+    // (see projectSubscription() in subscription-portal-adapter.js, mock
+    // and live) — title is what survives in both.
+    const items = listData.call(
+      { state: { data: { lines: [{ title: 'FreshWipes jar' }, { title: 'EyeWipes jar' }] }, draft: {} } },
+      'cancelReviews',
+    );
+    assert.equal(items.length, 2, 'exactly two cards, matching the design');
+    assert.equal(items[0].category, 'Dental');
+    assert.equal(items[1].category, 'Eyes');
+    assert.ok(items[0].name && items[0].quote, 'every card must carry a real name and quote');
+
+    // A single-product subscription still gets two cards — a second real
+    // review for the SAME product, never one invented for a product the
+    // customer does not have.
+    const single = listData.call(
+      { state: { data: { lines: [{ title: 'EyeWipes jar' }] }, draft: {} } },
+      'cancelReviews',
+    );
+    assert.equal(single.length, 2);
+    assert.equal(single[0].category, 'Eyes');
+    assert.equal(single[1].category, 'Eyes');
+    assert.notEqual(single[0].name, single[1].name, 'the two cards must not repeat the same reviewer');
+  });
+
+  test('the approved veterinarian identity/credential card sits beneath the video', () => {
+    assert.match(step, /spp__vet-card\b/);
+    assert.match(step, /Dr\. Michael Thompson/);
+    assert.match(step, /Veterinarian\s*&middot;\s*VetPets/);
+    assert.match(step, /ewof-vet-dr-michael-thompson\.webp/, 'must reuse the existing approved portrait asset');
+  });
+
+  test('the final vet video carries both real URLs, resolved to a single src in JS, never via <source>', () => {
+    // No <source> children at all: the browser's own <source media>
+    // selection shipped before this fix and was not reliable on real
+    // devices — both files could end up loaded, so the desktop 16:9 video
+    // and the mobile 1:1 video visually overlapped. Portal.prototype.
+    // syncVetVideo (see below) is the only thing that ever sets a src,
+    // from these two data attributes, so exactly one file is ever
+    // fetched or shown.
+    assert.match(step, /spp__vet-video/);
+    const video = /<video[^>]*>/.exec(step);
+    assert.ok(video, 'the <video> element must exist');
+    assert.ok(!/<source/.test(step), 'no <source> element must exist — one file at a time is enforced in JS, not by the browser');
+    assert.match(video[0], /data-spp-vet-src-desktop="https:\/\/cdn\.shopify\.com\/videos\/c\/o\/v\/be6c0d1c00b3463797270f2fc43c2815\.mp4"/);
+    assert.match(video[0], /data-spp-vet-src-mobile="https:\/\/cdn\.shopify\.com\/videos\/c\/o\/v\/1d4391c64d264e46b877c356e1396f4a\.mp4"/);
+    assert.ok(!video[0].includes(' src='), 'the liquid markup itself must not hardcode a src — only JS may set one, based on the real viewport');
+  });
+
+  test('plays inline, with no autoplay, no forced mute, and no native controls until the customer taps play', () => {
+    // No autoplay on either viewport, and no native `controls` in the
+    // static markup either: the only thing visible before playback is
+    // the poster and the custom .spp__vet-video-play button below.
+    // bindVetVideoControls (subscription-portal.js) adds `controls` only
+    // once the customer's own tap — a real user gesture — starts it.
+    const video = /<video[^>]*>/.exec(step);
+    assert.ok(video, 'the <video> element must exist');
+    assert.match(video[0], /\bplaysinline\b/, '<video> must have playsinline');
+    assert.match(video[0], /preload="metadata"/);
+    assert.ok(!/\bautoplay\b/.test(video[0]), '<video> must not autoplay');
+    assert.ok(!/\bmuted\b/.test(video[0]), '<video> must not be forced muted in the static markup');
+    assert.ok(!/\bcontrols\b/.test(video[0]), '<video> must not show native controls before the customer taps play');
+  });
+
+  test('a large custom play button sits centered over the poster', () => {
+    const videoBlock = step.slice(step.indexOf('spp__vet-video'), step.indexOf('spp__vet-video') + 1200);
+    const playBtn = /<button[^>]*spp__vet-video-play[^>]*>[\s\S]*?<\/button>/.exec(videoBlock);
+    assert.ok(playBtn, 'a .spp__vet-video-play button must exist over the video');
+    assert.match(playBtn[0], /aria-label="[^"]+"/, 'the play button must be described for screen readers');
+    assert.match(css, /\.spp__vet-video-play\s*\{[^}]*position:\s*absolute/, 'the play button must be positioned over the video');
+    assert.match(css, /\.spp__vet-video-play\s*\{[^}]*transform:\s*translate\(-50%,\s*-50%\)/, 'the play button must be centered');
+  });
+
+  test('carries both real first-frame posters for JS to pick from, with no static default to correct away from', () => {
+    // A hardcoded default (either shape) painted before subscription-
+    // portal.js's `defer`red load could run was exactly the bug this
+    // guards against: the desktop 16:9 photo showing, letterboxed,
+    // inside the square mobile container. With no static `poster`
+    // attribute at all, the gap before JS runs shows the neutral
+    // .spp__vet-video background instead — correct for both viewports.
+    const video = /<video[^>]*>/.exec(step)[0];
+    assert.ok(!/\bposter="/.test(video), 'no static poster attribute — it would be wrong for one of the two viewports');
+    assert.match(video, /data-spp-vet-poster-desktop="[^"]*spp-cancel-benefits-desktop\.jpg[^"]*"/);
+    assert.match(video, /data-spp-vet-poster-mobile="[^"]*spp-cancel-benefits-mobile\.jpg[^"]*"/);
+    assert.match(step, /aria-label="[^"]+"/, 'the video must be described');
+  });
+
+  test('syncVetVideo picks exactly one real file, by the real viewport, and never both, and never autoplays', () => {
+    fakeMatchMedia.isDesktop = true;
+    const desktopVideo = fakeVetVideo();
+    syncVetVideo.call({ root: { querySelector: () => desktopVideo } });
+    assert.equal(desktopVideo.src, desktopVideo.dataset.sppVetSrcDesktop);
+    assert.equal(desktopVideo.dataset.sppVetSrcActive, desktopVideo.dataset.sppVetSrcDesktop);
+    assert.equal(desktopVideo.poster, desktopVideo.dataset.sppVetPosterDesktop, 'the poster must be swapped in lockstep with the src');
+    assert.equal(desktopVideo.loadCalls, 1);
+    // Neither viewport autoplays — the video stays on its poster until
+    // the customer's own tap on the custom play button.
+    assert.equal(desktopVideo.muted, true);
+    assert.equal(desktopVideo.playCalls, 0, 'must not call play() itself — that is the customer’s tap to do');
+
+    fakeMatchMedia.isDesktop = false;
+    const mobileVideo = fakeVetVideo();
+    syncVetVideo.call({ root: { querySelector: () => mobileVideo } });
+    assert.equal(mobileVideo.src, mobileVideo.dataset.sppVetSrcMobile);
+    assert.equal(mobileVideo.dataset.sppVetSrcActive, mobileVideo.dataset.sppVetSrcMobile);
+    assert.equal(mobileVideo.poster, mobileVideo.dataset.sppVetPosterMobile);
+    assert.notEqual(mobileVideo.src, mobileVideo.dataset.sppVetSrcDesktop, 'never both files at once');
+    assert.equal(mobileVideo.muted, true);
+    assert.equal(mobileVideo.playCalls, 0, 'must not call play() itself — that is the customer’s tap to do');
+  });
+
+  test('syncVetVideo is a no-op once the matching src is already active', () => {
+    fakeMatchMedia.isDesktop = true;
+    const video = fakeVetVideo({ dataset: {
+      sppVetSrcDesktop: 'https://cdn.shopify.com/videos/c/o/v/be6c0d1c00b3463797270f2fc43c2815.mp4',
+      sppVetSrcMobile: 'https://cdn.shopify.com/videos/c/o/v/1d4391c64d264e46b877c356e1396f4a.mp4',
+      sppVetSrcActive: 'https://cdn.shopify.com/videos/c/o/v/be6c0d1c00b3463797270f2fc43c2815.mp4',
+    } });
+    syncVetVideo.call({ root: { querySelector: () => video } });
+    assert.equal(video.loadCalls, 0, 'must not reload a file that is already the active one');
+  });
+
+  test('syncVetVideo never swaps the file out from under a video the customer has already started', () => {
+    fakeMatchMedia.isDesktop = true;
+    const playing = fakeVetVideo({ paused: false });
+    syncVetVideo.call({ root: { querySelector: () => playing } });
+    assert.equal(playing.loadCalls, 0, 'a playing video must be left alone even if the viewport now disagrees');
+
+    fakeMatchMedia.isDesktop = false;
+    const scrubbed = fakeVetVideo({ paused: true, currentTime: 4.2 });
+    syncVetVideo.call({ root: { querySelector: () => scrubbed } });
+    assert.equal(scrubbed.loadCalls, 0, 'a video already past 0:00 must be left alone even when paused');
+  });
+
+  test('tapping the custom play button unmutes at normal volume, reveals native controls, hides itself, and starts playback', () => {
+    const video = fakeVetVideo();
+    const playBtn = fakeVetPlayButton();
+    const container = {
+      querySelector: (sel) => (sel === '.spp__vet-video-el' ? video : sel === '.spp__vet-video-play' ? playBtn : null),
+    };
+    bindVetVideoControls.call({ root: { querySelector: () => container } });
+    assert.ok(playBtn.listeners.click, 'a click handler must be bound to the play button');
+
+    playBtn.listeners.click();
+    assert.equal(video.muted, false, 'sound must turn on automatically on tap');
+    assert.equal(video.volume, 1, 'must play at normal volume, not silently or at some reduced level');
+    assert.equal(video.getAttribute('controls'), '', 'native controls must appear once playback starts');
+    assert.equal(playBtn.hidden, true, 'the custom button must hide once playback starts');
+    assert.equal(video.playCalls, 1, 'must explicitly start playback on tap');
+  });
+
+  test('when the video ends, it returns to the poster with native controls gone and the custom play button back', () => {
+    const video = fakeVetVideo();
+    const playBtn = fakeVetPlayButton();
+    const container = {
+      querySelector: (sel) => (sel === '.spp__vet-video-el' ? video : sel === '.spp__vet-video-play' ? playBtn : null),
+    };
+    bindVetVideoControls.call({ root: { querySelector: () => container } });
+    playBtn.listeners.click();
+    assert.ok(video.listeners.ended, 'an ended handler must be bound to the video');
+
+    video.listeners.ended();
+    assert.equal(video.getAttribute('controls'), null, 'native controls must be removed once the video ends');
+    assert.equal(video.muted, true, 'must go silent again before the next tap');
+    assert.equal(video.loadCalls, 1, 'load() re-arms the poster — a played element would otherwise keep showing its last frame');
+    assert.equal(playBtn.hidden, false, 'the custom play button must reappear over the poster');
+  });
+
+  test('the old vet_video_url placeholder setting is gone — this IS the final video', () => {
+    assert.ok(!/vet_video_url/.test(src), 'the superseded theme setting must not survive in the controller either');
+    assert.ok(!/data-spp-vet-video-url/.test(sectionSource), 'the section must not still read the removed setting');
+  });
+
+  test('the real, aggregate trust bar stands in for the named-reviewer carousel', () => {
+    // The approved design quotes one named, verified customer here. There is
+    // no such real, attributable quote in this codebase — inventing one
+    // would be exactly the kind of fabrication this portal avoids
+    // everywhere else, so the same real aggregate rating already used on
+    // the EyeWipes/FreshWipes marketing pages appears instead.
+    assert.match(step, /4\.8\/5/);
+    assert.match(step, /45,000\+/);
   });
 
   test('keeping is the primary action, continuing is the quiet one', () => {
     const keep = buttonWith(step, 'Never mind, keep my Routine Care');
     assert.match(keep, /spp__btn--primary/);
 
-    const cont = buttonWith(step, 'Continue cancelling');
+    const cont = buttonWith(step, 'Continue cancellation');
     assert.match(cont, /spp__btn--link/);
     assert.ok(!/spp__btn--primary/.test(cont));
-    assert.match(cont, /data-spp-go="cancel-reason"/);
-  });
-
-  test('the real Routine Care benefits are listed', () => {
-    const benefits = listData.call(
-      { state: { data: {}, loyalty: null, inactive: [], draft: {} }, fmtDate: (x) => String(x) },
-      'benefits',
-    );
-    const text = benefits.map((b) => b.title + ' ' + b.body).join(' | ');
-    for (const claim of ['20% off', 'Free shipping', 'Automatic refills', 'Flexible deliveries', 'Subscriber-only', '100-day']) {
-      assert.ok(text.includes(claim), `missing benefit: ${claim}`);
-    }
+    assert.match(cont, /data-spp-go="cancel-started"/);
   });
 });
 
@@ -467,15 +715,15 @@ describe('step 3 — longer gap', () => {
     assert.match(step, /type="date"/);
   });
 
-  test('"No thanks" is the smaller underlined action', () => {
-    const no = buttonWith(step, 'continue cancelling');
+  test('"Continue cancellation" is the smaller underlined action', () => {
+    const no = buttonWith(step, 'Continue cancellation');
     assert.match(no, /spp__btn--link/);
     assert.ok(!/spp__btn--quiet/.test(no), 'no longer the large outlined button');
-    assert.match(no, /data-spp-go="cancel-offer"/);
+    assert.match(no, /data-spp-go="cancel-reason"/);
   });
 
-  test('"No thanks" stays clickable and accessible', () => {
-    const no = buttonWith(step, 'continue cancelling');
+  test('"Continue cancellation" stays clickable and accessible', () => {
+    const no = buttonWith(step, 'Continue cancellation');
     assert.match(no, /<button/);
     assert.match(no, /type="button"/);
     assert.ok(!/aria-hidden/.test(no));
@@ -487,6 +735,38 @@ describe('step 3 — longer gap', () => {
     assert.match(apply, /spp__btn--primary/);
     assert.match(apply, /data-spp-act="applyGap"/);
   });
+
+  test('contact support is plain information, not a portal action', () => {
+    // No data-spp-act="support" here: this screen shows a direct mailto
+    // link inline rather than routing through the shared support/faq
+    // handler (which itself now also opens a real mailto — see
+    // Portal.prototype.act's 'support'/'faq' case — but this particular
+    // block is deliberately always-visible information, not a button a
+    // customer has to notice and press).
+    assert.match(step, /spp__support-note/);
+    assert.match(step, /Need help choosing the best option for your routine\?/);
+    assert.match(step, /<a[^>]*href="mailto:info@shopvetpets\.com"[^>]*>info@shopvetpets\.com<\/a>/);
+    assert.ok(!/Contact us for help/.test(step), 'the old button copy must be gone');
+    assert.ok(!/data-spp-act="support"/.test(step), 'must not fire the shared act() handler');
+    assert.ok(!/Get help finding the best option for your routine\./.test(step), 'the old button subtext must be gone');
+  });
+
+  test('the shared support/faq action opens a real mailto, not a prototype toast', () => {
+    const originalWindow = global.window;
+    global.window = { location: {} };
+    try {
+      const p = portal();
+      act.call(p, 'support');
+      assert.equal(global.window.location.href, 'mailto:info@shopvetpets.com');
+      assert.deepEqual(p.calls.toasts, [], 'must not fall back to the old placeholder toast');
+
+      global.window.location.href = '';
+      act.call(p, 'faq');
+      assert.equal(global.window.location.href, 'mailto:info@shopvetpets.com');
+    } finally {
+      global.window = originalWindow;
+    }
+  });
 });
 
 describe('step 4 — the retention offer', () => {
@@ -494,7 +774,15 @@ describe('step 4 — the retention offer', () => {
 
   test('renders the approved offer exactly', () => {
     assert.match(step, /One-time offer/i);
-    assert.match(step, /off your next Routine Care delivery/);
+    assert.match(step, /Before you go,/);
+    // "Routine Care" is cancel.focusName's fallback text — a single-product
+    // account (the vast majority) reads exactly this; a multi-product
+    // account that named a product on step 1 sees that product's name in
+    // its place instead (see viewModel()). The binding sits between "next"
+    // and "delivery", so this tolerates it without requiring one exact
+    // product name.
+    assert.match(step, /off your next[\s\S]*?Routine Care[\s\S]*?delivery/);
+    assert.match(step, /data-spp-field="cancel\.focusName"/);
     assert.match(step, /One delivery only/);
     assert.match(step, /returns to your usual\s+Routine Care pricing/);
   });
@@ -700,7 +988,7 @@ describe('the cancelled screen says nothing internal, and nothing untrue', () =>
   });
 
   test('NO screen in the cancellation flow exposes an internal identifier', () => {
-    for (const name of ['cancel-reason', 'cancel-alt', 'cancel-confirm', 'cancel-done', 'inactive']) {
+    for (const name of ['cancel-choose', 'cancel-started', 'cancel-reason', 'cancel-alt', 'cancel-confirm', 'cancel-done', 'inactive']) {
       const markup = screen(name);
       assert.ok(
         !/subscription\.reference/.test(markup),
@@ -718,19 +1006,20 @@ describe('the corrected V2 journey', () => {
     'utf8',
   ).replace(/\{%-?\s*comment\s*-?%\}[\s\S]*?\{%-?\s*endcomment\s*-?%\}/g, '');
 
-  test('Cancel enters BENEFITS, not the reason list', () => {
-    // It used to jump straight to Reasons, skipping the one screen whose whole
-    // job is to give the customer a reason to stay.
+  test('Cancel enters CHOOSE SUBSCRIPTION, the approved journey\'s first step', () => {
     const cancel = buttonWith(subscriptionScreen, 'Cancel subscription');
-    assert.match(cancel, /data-spp-go="cancel-benefits"/);
+    assert.match(cancel, /data-spp-go="cancel-choose"/);
+    assert.ok(!/data-spp-go="cancel-benefits"/.test(cancel));
     assert.ok(!/data-spp-go="cancel-reason"/.test(cancel));
   });
 
-  test('the seven screens run in the approved order', () => {
+  test('the eight approved Portal V2 screens run in order', () => {
     const order = [
+      'cancel-choose',
       'cancel-benefits',
-      'cancel-reason',
+      'cancel-started',
       'cancel-alt',
+      'cancel-reason',
       'cancel-offer',
       'cancel-confirm',
       'cancel-done',
@@ -752,10 +1041,134 @@ describe('the corrected V2 journey', () => {
         `${from} must lead to ${to}`,
       );
     };
-    hop('cancel-benefits', 'cancel-reason');
-    hop('cancel-reason', 'cancel-alt');
-    hop('cancel-alt', 'cancel-offer');
+    hop('cancel-choose', 'cancel-benefits');
+    hop('cancel-benefits', 'cancel-started');
+    hop('cancel-started', 'cancel-alt');
+    hop('cancel-alt', 'cancel-reason');
+    hop('cancel-reason', 'cancel-offer'); // via data-spp-act="reasonContinue"
     hop('cancel-offer', 'cancel-confirm');
+  });
+
+  test('cancel-choose shows the real subscription as one card, never a per-product picker', () => {
+    const step = screen('cancel-choose');
+    assert.match(step, /Which subscription do you want to cancel\?/);
+    // The design's own subtitle claims each product is its own
+    // subscription, which is not true of this data model — it must not
+    // survive verbatim.
+    assert.ok(!/is its own subscription/.test(step), 'must not repeat the false per-product claim');
+    assert.match(step, /subscription\.quantitySummary/, 'lists every product in the one real subscription');
+    // Exactly one selectable row — a radiogroup with more than one card
+    // would be the fabricated per-product picker this screen must avoid.
+    const rows = step.match(/role="radio"/g) || [];
+    assert.equal(rows.length, 1, 'must render exactly one subscription card');
+  });
+});
+
+/**
+ * Step 1 personalizes wording; it never invents a per-line cancel.
+ *
+ * Phoenix has exactly one operation, cancel(id), and it always ends the
+ * WHOLE subscription. The approved Portal V2 design frames step 1 as
+ * choosing which subscription to cancel — which does not exist here — so
+ * this asks which product is the main reason instead, and uses the answer
+ * only to word later screens.
+ */
+describe('cancellation personalizes by real product data, never a fabricated per-line cancel', () => {
+  const twoLines = [
+    { id: 'line_fresh', title: 'FreshWipes jar', quantity: 2 },
+    { id: 'line_eye', title: 'EyeWipes jar', quantity: 1 },
+  ];
+
+  function subWith(lines) {
+    return {
+      state: {
+        data: { nextOrderDate: '2026-09-08', intervalDays: 60, lines, payment: null, pricing: { total: 0, discount: 0 } },
+        loyalty: null,
+        draft: {},
+        inactive: [],
+        pending: null,
+        error: null,
+        success: null,
+        customer: null,
+      },
+      fmtDate: () => 'Sep 8',
+      fmtMoney: () => '',
+      escape: (s) => s,
+      delayTargetIso: () => null,
+      rescheduleError: () => null,
+    };
+  }
+
+  test('one product: it is named directly, since there is nothing to disambiguate', () => {
+    const vm = viewModel.call(subWith([twoLines[0]]));
+    assert.equal(vm['cancel.reasonHeading'], 'Why are you cancelling FreshWipes?');
+    assert.equal(vm['cancel.focusName'], 'FreshWipes');
+    assert.equal(vm['cancel.startedHeading'], 'Cancelling · FreshWipes jar');
+  });
+
+  test('several products: no customer pick decides this — it is automatic, and generic', () => {
+    // There is no picker screen any more (the founder removed it): a
+    // multi-product subscription always falls back to generic wording,
+    // because there is no honest way to speak for the whole subscription
+    // in the name of just one of its products.
+    const vm = viewModel.call(subWith(twoLines));
+    assert.equal(vm['cancel.reasonHeading'], 'Why are you cancelling?');
+    assert.equal(vm['cancel.focusName'], 'Routine Care');
+    assert.equal(vm['cancel.startedHeading'], 'Cancelling · your Routine Care subscription');
+  });
+
+  test('the confirmation screen states plainly that EVERY product stops, only when there was a real choice', () => {
+    const multi = listData.call(
+      { state: { data: { nextOrderDate: '2026-09-08', payment: null, lines: twoLines }, draft: {} }, fmtDate: () => 'Sep 8' },
+      'cancelFacts',
+    ).map((f) => f.text).join(' | ');
+    assert.match(multi, /whole Routine Care subscription/);
+    assert.match(multi, /FreshWipes/);
+    assert.match(multi, /EyeWipes/);
+
+    const single = listData.call(
+      { state: { data: { nextOrderDate: '2026-09-08', payment: null, lines: [twoLines[0]] }, draft: {} }, fmtDate: () => 'Sep 8' },
+      'cancelFacts',
+    ).map((f) => f.text).join(' | ');
+    assert.ok(
+      !/whole Routine Care subscription/.test(single),
+      'a single-product account has nothing to disambiguate, so this line must not appear',
+    );
+  });
+
+  test('cancel() still takes only (id, reason) — no per-product identity reaches it', () => {
+    const start = src.indexOf("case 'cancel':");
+    const block = src.slice(start, src.indexOf("case 'reactivate'", start));
+    assert.ok(!/focusProduct/.test(block), 'the cancel mutation must not reference any product-personalization field');
+    assert.match(block, /adapter\.cancel\(id, d\.reason, null,/);
+  });
+});
+
+describe('"why you started" is soft and non-blocking, and personalizes nothing', () => {
+  test('pick() records a startedCategory choice like any other radio pick', () => {
+    const p = { state: { draft: { startedCategory: null } }, render() {} };
+    pick.call(p, {
+      getAttribute: () => 'startedCategory',
+      dataset: { sppValue: 'dental' },
+    });
+    assert.equal(p.state.draft.startedCategory, 'dental');
+  });
+
+  test('the six approved categories are offered', () => {
+    const items = listData.call(
+      { state: { data: { lines: [] }, draft: { startedCategory: null } } },
+      'startedCategories',
+    );
+    const names = items.map((c) => c.name).join(' | ');
+    for (const claim of ['Dental care', 'Eye care', 'Ear care', 'Paw care', 'Skin & coat care', 'Something else']) {
+      assert.ok(names.includes(claim), `missing category: ${claim}`);
+    }
+  });
+
+  test('the pick is never sent to Phoenix', () => {
+    const start = src.indexOf("case 'cancel':");
+    const block = src.slice(start, src.indexOf("case 'reactivate'", start));
+    assert.ok(!/startedCategory/.test(block));
   });
 });
 
@@ -1065,7 +1478,7 @@ describe('Back on Final Confirmation goes to the right previous step', () => {
   function confirmScreenPortal(retentionOfferRedeemed) {
     const backBtn = el('button', { class: 'spp__back', 'data-spp-confirm-back': '', 'data-spp-go': 'cancel-offer' });
     const screens = {};
-    for (const name of ['cancel-alt', 'cancel-offer', 'cancel-confirm']) {
+    for (const name of ['cancel-reason', 'cancel-offer', 'cancel-confirm']) {
       screens[name] = el('section', { 'data-spp-screen': name });
     }
     const root = el('div');
@@ -1083,8 +1496,8 @@ describe('Back on Final Confirmation goes to the right previous step', () => {
       closeSheet() {},
       render() {},
       markCurrentNav() {},
-      reasonProblem: () => null,
       beaconScreenView() {},
+      reasonProblem: () => null,
       show(v) { return show.call(this, v); },
       renderCancelJourney() { return renderCancelJourney.call(this); },
     };
@@ -1099,11 +1512,15 @@ describe('Back on Final Confirmation goes to the right previous step', () => {
     assert.equal(portal.state.screen, 'cancel-offer');
   });
 
-  test('a REDEEMED customer: Back goes to the longer gap, never the offer', () => {
+  test('a REDEEMED customer: Back goes to the reason screen, never the offer', () => {
+    // Reason is the screen immediately before the offer in the approved
+    // Portal V2 order (choose → benefits → started → alt → reason →
+    // offer → confirm) — that is the safe fallback once the offer screen
+    // itself refuses to render.
     const { portal, backBtn, click } = confirmScreenPortal(true);
-    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-alt');
+    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-reason');
     click(backBtn);
-    assert.equal(portal.state.screen, 'cancel-alt');
+    assert.equal(portal.state.screen, 'cancel-reason');
   });
 
   test('the target updates if redemption status changes mid-session', () => {
@@ -1114,7 +1531,7 @@ describe('Back on Final Confirmation goes to the right previous step', () => {
     assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-offer');
     portal.state.data.retentionOfferRedeemed = true;
     portal.renderCancelJourney();
-    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-alt');
+    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-reason');
   });
 
   test('Back stays wired correctly regardless of reason-screen state', () => {
@@ -1124,7 +1541,7 @@ describe('Back on Final Confirmation goes to the right previous step', () => {
     portal.state.draft.reason = 'other';
     portal.state.draft.note = 'something';
     portal.renderCancelJourney();
-    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-alt');
+    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-reason');
     assert.equal(backBtn.disabled, undefined, 'the button must never become disabled');
   });
 
@@ -1477,12 +1894,12 @@ describe('a reason row can actually be selected', () => {
     assert.equal(errBox.attrs.hidden, '');
   });
 
-  test('reason click -> state set -> Continue advances to the longer-gap screen', () => {
+  test('reason click -> state set -> Continue advances to the retention offer', () => {
     const { portal, click } = mountReasonScreen();
     click(portal.rows[idxOf('break')]);
     assert.equal(portal.reasonProblem(), null, 'validation must now pass');
     act.call(portal, 'reasonContinue');
-    assert.deepEqual(portal.shown, ['cancel-alt']);
+    assert.deepEqual(portal.shown, ['cancel-offer']);
   });
 
   test('with nothing picked, Continue refuses, says so, and moves focus', () => {

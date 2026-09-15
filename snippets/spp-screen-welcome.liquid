@@ -1,0 +1,92 @@
+{%- comment -%}
+  Screen: welcome — the approved Portal V2 "RoutineCare benefits" screen,
+  shown exactly ONCE, immediately after a customer authenticates for the
+  first time in a session (a fresh magic-link handoff, live mode; the
+  'openLink'/token mock equivalents). See boot()/bootLive()/openLink in
+  subscription-portal.js — a reload of an already-authenticated tab, or any
+  ordinary in-portal navigation, goes straight to the dashboard and never
+  passes through here again. There is no data-spp-go="welcome" anywhere in
+  this theme's regular nav or tab bar, by design.
+
+  Rebuilt field-for-field against the approved Claude Design mockup
+  ("VetPets Portal V2", the isWelcome screen), including its real
+  "hero-lifestyle" photography (captured directly from the design project's
+  own approved assets — see spp-welcome-hero-wide.jpg / -tall.jpg below —
+  never a generated or guessed substitute) and its desktop/mobile split:
+  a wide 16:9 crop with the delivery card floating over its corner on
+  desktop, a tall 4:5 crop with the same card stacked plainly below it on
+  mobile. Two departures from the design, both required by what Phoenix
+  actually exposes:
+  - The lede does not name pets. Phoenix has no pet record (see the
+    identical note on spp-screen-dashboard.liquid's own greeting) — a real
+    customer must never read a fabricated dog's name.
+  - "Skip, pause or adjust anytime" is shortened to "Skip or adjust
+    anytime": Phoenix has no pause operation, so the card only promises
+    what Skip and Delay can actually do.
+{%- endcomment -%}
+<section class="spp__screen" data-spp-screen="welcome" hidden aria-labelledby="spp-wel-h">
+  <div class="spp__welcome">
+    <div class="spp__pill" data-spp-field="customer.welcomeBack">Welcome back</div>
+
+    <h1 class="spp__h1 spp__welcome-h1" id="spp-wel-h" style="margin-top:10px;">
+      Everything included with your RoutineCare membership
+    </h1>
+    <p class="spp__lede spp__welcome-lede">
+      Your daily care is set up and running. This is what your membership quietly
+      takes care of between deliveries.
+    </p>
+
+    <div class="spp__welcome-hero">
+      <picture>
+        <source media="(min-width: 700px)" srcset="{{ 'spp-welcome-hero-wide.jpg' | asset_url }}">
+        <img
+          class="spp__welcome-hero-img"
+          src="{{ 'spp-welcome-hero-tall.jpg' | asset_url }}"
+          alt="A VetPets member with her dog and the FreshWipes, EyeWipes and EarWipes jars"
+          width="1200" height="675" loading="lazy" decoding="async">
+      </picture>
+
+      <div class="spp__card spp__card--welcome-delivery">
+        <div class="spp__eyebrow">Upcoming delivery</div>
+        <div class="spp__next-date" data-spp-field="subscription.nextOrderMedium">Tue, Sep 8</div>
+        <div class="spp__next-meta">
+          <span data-spp-field="pricing.total">$62.73</span> ·
+          every <span data-spp-field="subscription.intervalDays">60</span> days · free shipping
+        </div>
+        <div class="spp__next-thumbs" data-spp-list="lineThumbs">
+          <template data-spp-tpl="lineThumbs">
+            <span class="spp__thumb spp__thumb--sm" data-spp-thumb><img data-spp-img alt=""></span>
+          </template>
+        </div>
+      </div>
+    </div>
+
+    <div class="spp__welcome-grid">
+      <div class="spp__welcome-tile">
+        <span class="spp__welcome-tick" aria-hidden="true">{% render 'spp-icon', icon: 'check-circle', size: 17 %}</span>
+        <b>Save 20% on every refill</b>
+        <span>Your member price, applied automatically.</span>
+      </div>
+      <div class="spp__welcome-tile">
+        <span class="spp__welcome-tick" aria-hidden="true">{% render 'spp-icon', icon: 'check-circle', size: 17 %}</span>
+        <b>Free shipping</b>
+        <span>Every delivery, whatever the order size.</span>
+      </div>
+      <div class="spp__welcome-tile">
+        <span class="spp__welcome-tick" aria-hidden="true">{% render 'spp-icon', icon: 'check-circle', size: 17 %}</span>
+        <b>Skip or adjust anytime</b>
+        <span>Move a date or skip a delivery in a couple of taps.</span>
+      </div>
+      <div class="spp__welcome-tile">
+        <span class="spp__welcome-tick" aria-hidden="true">{% render 'spp-icon', icon: 'check-circle', size: 17 %}</span>
+        <b>Member gifts and surprise treats</b>
+        <span>Extras that only go out to RoutineCare members.</span>
+      </div>
+    </div>
+
+    <button type="button" class="spp__btn spp__btn--primary" data-spp-go="dashboard">
+      View my subscriptions
+      {% render 'spp-icon', icon: 'chevron-right', size: 16 %}
+    </button>
+  </div>
+</section>
