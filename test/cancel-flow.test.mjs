@@ -737,16 +737,35 @@ describe('step 3 — longer gap', () => {
   });
 
   test('contact support is plain information, not a portal action', () => {
-    // No data-spp-act="support" here any more: that shared handler shows
-    // the generic "Support is not wired up in this prototype" toast, and
-    // still correctly does so on the account/system screens — this
-    // screen must never trigger it.
+    // No data-spp-act="support" here: this screen shows a direct mailto
+    // link inline rather than routing through the shared support/faq
+    // handler (which itself now also opens a real mailto — see
+    // Portal.prototype.act's 'support'/'faq' case — but this particular
+    // block is deliberately always-visible information, not a button a
+    // customer has to notice and press).
     assert.match(step, /spp__support-note/);
     assert.match(step, /Need help choosing the best option for your routine\?/);
     assert.match(step, /<a[^>]*href="mailto:info@shopvetpets\.com"[^>]*>info@shopvetpets\.com<\/a>/);
     assert.ok(!/Contact us for help/.test(step), 'the old button copy must be gone');
-    assert.ok(!/data-spp-act="support"/.test(step), 'must not fire the shared prototype-toast handler');
+    assert.ok(!/data-spp-act="support"/.test(step), 'must not fire the shared act() handler');
     assert.ok(!/Get help finding the best option for your routine\./.test(step), 'the old button subtext must be gone');
+  });
+
+  test('the shared support/faq action opens a real mailto, not a prototype toast', () => {
+    const originalWindow = global.window;
+    global.window = { location: {} };
+    try {
+      const p = portal();
+      act.call(p, 'support');
+      assert.equal(global.window.location.href, 'mailto:info@shopvetpets.com');
+      assert.deepEqual(p.calls.toasts, [], 'must not fall back to the old placeholder toast');
+
+      global.window.location.href = '';
+      act.call(p, 'faq');
+      assert.equal(global.window.location.href, 'mailto:info@shopvetpets.com');
+    } finally {
+      global.window = originalWindow;
+    }
   });
 });
 

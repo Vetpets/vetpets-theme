@@ -2430,7 +2430,10 @@
 
       case 'support':
       case 'faq':
-        this.toast('Support is not wired up in this prototype');
+        // The real, already-public VetPets support address (see the cancel
+        // flow's plain contact block) — not a fabricated "message support"
+        // channel this codebase has no backend for.
+        window.location.href = 'mailto:info@shopvetpets.com';
         return;
     }
   };
