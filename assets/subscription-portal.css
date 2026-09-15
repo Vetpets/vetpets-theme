@@ -1595,6 +1595,13 @@
    same width the design uses for this pair on every cancel screen. */
 .spp__cancel-cta { max-width: 460px; margin: 20px auto 0; }
 
+/* Plain contact information on cancel step 4 — deliberately not a card,
+   button or choice row, so it never reads as a portal action. */
+.spp__support-note { margin-top: 12px; }
+.spp__support-note-title { margin: 0 0 4px; font: 600 14px/1.4 var(--spp-font); color: var(--spp-ink); }
+.spp__support-note-body { margin: 0; font: 500 13.5px/1.4 var(--spp-font); color: var(--spp-muted); }
+.spp__support-note-link { color: var(--spp-accent); font-weight: 600; text-decoration: underline; }
+
 /* The small capsule above a heading — "More time, not the end". */
 .spp__pill {
   display: inline-flex;

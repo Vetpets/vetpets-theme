@@ -154,23 +154,31 @@
     </div>
 
     {%- comment -%}
-      Final veterinarian video — a real <video> with two <source>s, not
-      two <video> elements: the browser's resource-selection algorithm
-      evaluates each <source>'s `media` attribute in order and fetches
-      ONLY the first one that matches, so a phone never downloads the
-      desktop 16:9 file and a desktop browser never downloads the mobile
-      1:1 file. 1024px matches the one desktop breakpoint already used
-      everywhere else in this file.
+      Final veterinarian video — exactly ONE file loaded and shown at a
+      time, chosen in JS (see Portal.prototype.syncVetVideo in
+      subscription-portal.js), never via the browser's own <source media>
+      selection. That mechanism is what shipped before this fix and it
+      was not reliable on real devices — both the desktop 16:9 file and
+      the mobile 1:1 file could end up loaded, so the two videos visually
+      overlapped. A single <video> with no <source> children and a plain
+      `src` set by JS from the two data-spp-vet-src-* URLs below cannot
+      have that failure mode: there is only ever one src.
 
-      The poster is set via two CSS custom properties rather than the
-      <video>'s single `poster` attribute, because there are two real
-      posters (one per source's own actual first frame, captured from the
-      video files themselves — never a generic stand-in) and HTML allows
-      only one poster per element. .spp__vet-video's background-image
-      shows the matching frame the instant the element paints, and the
-      <video> itself paints over it as soon as its own first frame is
-      ready — so the player is never a blank rectangle while loading,
-      whichever file is loading.
+      No autoplay, no muted: browsers already block reliable autoplay
+      with sound, so this never attempts to autoplay at all. Without
+      autoplay, a <video controls poster> shows the poster with a native,
+      centred Play button and nothing plays until the customer taps it —
+      at which point that tap is a real user gesture, so the browser
+      allows sound from the very first frame.
+
+      The poster is still set via two CSS custom properties rather than
+      the <video>'s single `poster` attribute, because there are two real
+      posters (one per file's own actual first frame, captured from the
+      video itself — never a generic stand-in) and HTML allows only one
+      poster per element. .spp__vet-video's background-image shows the
+      matching frame the instant the element paints, and the <video>
+      itself paints over it once its own first frame is ready — so the
+      player is never a blank (or black) rectangle while loading.
     {%- endcomment -%}
     <div class="spp__eyebrow" style="margin-top:18px;">Watch &middot; about 90 seconds</div>
     <h2 class="spp__h2" style="margin-top:4px;">Why consistency matters</h2>
@@ -184,13 +192,11 @@
       <video
         class="spp__vet-video-el"
         playsinline
-        muted
-        autoplay
         controls
         preload="metadata"
+        data-spp-vet-src-desktop="https://cdn.shopify.com/videos/c/o/v/be6c0d1c00b3463797270f2fc43c2815.mp4"
+        data-spp-vet-src-mobile="https://cdn.shopify.com/videos/c/o/v/1d4391c64d264e46b877c356e1396f4a.mp4"
         aria-label="A veterinarian explains why consistency matters for your dog's daily care routine">
-        <source src="https://cdn.shopify.com/videos/c/o/v/be6c0d1c00b3463797270f2fc43c2815.mp4" type="video/mp4" media="(min-width: 1024px)">
-        <source src="https://cdn.shopify.com/videos/c/o/v/1d4391c64d264e46b877c356e1396f4a.mp4" type="video/mp4">
       </video>
     </div>
 
@@ -311,10 +317,9 @@
       because Phoenix cannot perform one" is a rule already established
       elsewhere in this file (see the reschedule screen). The five proven
       schedule changes below stand in for the first card (every one maps
-      to an operation verified end to end against Phoenix); the third card
-      (Contact us for help) is reproduced as designed, real and unwired to
-      anything but the honest "not available yet" data-spp-act="support"
-      already used elsewhere in this portal.
+      to an operation verified end to end against Phoenix); the third
+      card is now plain contact information, not a button — see the
+      spp__support-note block below, after the gap-date fields.
     {%- endcomment -%}
     <div class="spp__choices" role="radiogroup" aria-label="How to move the next delivery" data-spp-list="gapOptions" style="margin-top:16px;">
       <template data-spp-tpl="gapOptions">
@@ -343,12 +348,18 @@
       <span data-spp-field="label.applyGap">Confirm this change</span>
     </button>
 
-    <button type="button" class="spp__choice spp__choice--stacked" style="margin-top:12px;" data-spp-act="support">
-      <span class="spp__choice-text">
-        <b>Contact us for help</b>
-        <span>Get help finding the best option for your routine.</span>
-      </span>
-    </button>
+    {%- comment -%}
+      Plain contact information, not a portal action: no data-spp-act, so
+      it can never fire the shared "not wired up in this prototype" toast
+      that data-spp-act="support" still (correctly) shows on the account
+      and system screens. A real mailto link, nothing else.
+    {%- endcomment -%}
+    <div class="spp__support-note">
+      <p class="spp__support-note-title">Need help choosing the best option for your routine?</p>
+      <p class="spp__support-note-body">
+        Email us at <a class="spp__support-note-link" href="mailto:info@shopvetpets.com">info@shopvetpets.com</a>
+      </p>
+    </div>
 
     <div class="spp__quiet-row">
       <button type="button" class="spp__btn spp__btn--link" data-spp-go="cancel-reason">Continue cancellation</button>

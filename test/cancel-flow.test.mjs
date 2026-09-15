@@ -84,6 +84,31 @@ const viewModel = method(
   ],
 );
 
+// syncVetVideo closes over `window`. isDesktop is mutable so one extracted
+// function can stand in for the real matchMedia across both viewports.
+const fakeMatchMedia = { isDesktop: false };
+const syncVetVideo = method(
+  'syncVetVideo',
+  ['window'],
+  [{ matchMedia: () => ({ matches: fakeMatchMedia.isDesktop }) }],
+);
+function fakeVetVideo(overrides) {
+  return Object.assign(
+    {
+      dataset: {
+        sppVetSrcDesktop: 'https://cdn.shopify.com/videos/c/o/v/be6c0d1c00b3463797270f2fc43c2815.mp4',
+        sppVetSrcMobile: 'https://cdn.shopify.com/videos/c/o/v/1d4391c64d264e46b877c356e1396f4a.mp4',
+      },
+      paused: true,
+      currentTime: 0,
+      src: '',
+      loadCalls: 0,
+      load() { this.loadCalls += 1; },
+    },
+    overrides,
+  );
+}
+
 /**
  * The section of markup for one screen, with Liquid comments stripped.
  *
@@ -414,28 +439,37 @@ describe('step 2 — before you cancel', () => {
     assert.match(step, /ewof-vet-dr-michael-thompson\.webp/, 'must reuse the existing approved portrait asset');
   });
 
-  test('the final vet video replaces the placeholder — desktop/tablet gets 16:9, mobile gets 1:1', () => {
-    // One <video>, two <source>s: the browser's own resource-selection
-    // algorithm fetches only the first matching source, so a phone never
-    // downloads the desktop file and vice versa — see spp__vet-video in
-    // subscription-portal.css for the matching container aspect-ratio.
+  test('the final vet video carries both real URLs, resolved to a single src in JS, never via <source>', () => {
+    // No <source> children at all: the browser's own <source media>
+    // selection shipped before this fix and was not reliable on real
+    // devices — both files could end up loaded, so the desktop 16:9 video
+    // and the mobile 1:1 video visually overlapped. Portal.prototype.
+    // syncVetVideo (see below) is the only thing that ever sets a src,
+    // from these two data attributes, so exactly one file is ever
+    // fetched or shown.
     assert.match(step, /spp__vet-video/);
-    assert.match(
-      step,
-      /<source src="https:\/\/cdn\.shopify\.com\/videos\/c\/o\/v\/be6c0d1c00b3463797270f2fc43c2815\.mp4" type="video\/mp4" media="\(min-width: 1024px\)">/,
-    );
-    assert.match(
-      step,
-      /<source src="https:\/\/cdn\.shopify\.com\/videos\/c\/o\/v\/1d4391c64d264e46b877c356e1396f4a\.mp4" type="video\/mp4">/,
-    );
-  });
-
-  test('plays inline with visible controls, and autoplays muted rather than with sound', () => {
     const video = /<video[^>]*>/.exec(step);
     assert.ok(video, 'the <video> element must exist');
-    for (const attr of ['playsinline', 'muted', 'autoplay', 'controls']) {
+    assert.ok(!/<source/.test(step), 'no <source> element must exist — one file at a time is enforced in JS, not by the browser');
+    assert.match(video[0], /data-spp-vet-src-desktop="https:\/\/cdn\.shopify\.com\/videos\/c\/o\/v\/be6c0d1c00b3463797270f2fc43c2815\.mp4"/);
+    assert.match(video[0], /data-spp-vet-src-mobile="https:\/\/cdn\.shopify\.com\/videos\/c\/o\/v\/1d4391c64d264e46b877c356e1396f4a\.mp4"/);
+    assert.ok(!video[0].includes(' src='), 'the liquid markup itself must not hardcode a src — only JS may set one, based on the real viewport');
+  });
+
+  test('plays inline with visible controls, no autoplay and no forced mute', () => {
+    // Browsers block reliable autoplay with sound, so this never attempts
+    // autoplay at all: no autoplay attribute means nothing plays, and
+    // therefore nothing needs muting, until the customer's own tap on the
+    // native Play button — a real user gesture, which browsers do allow
+    // to start playback with sound.
+    const video = /<video[^>]*>/.exec(step);
+    assert.ok(video, 'the <video> element must exist');
+    for (const attr of ['playsinline', 'controls']) {
       assert.match(video[0], new RegExp(`\\b${attr}\\b`), `<video> must have ${attr}`);
     }
+    assert.match(video[0], /preload="metadata"/);
+    assert.ok(!/\bautoplay\b/.test(video[0]), '<video> must not autoplay — sound cannot be relied on with autoplay');
+    assert.ok(!/\bmuted\b/.test(video[0]), '<video> must not be forced muted — the customer’s tap should start it with sound');
   });
 
   test('shows a real first-frame poster per viewport, described for assistive tech', () => {
@@ -447,6 +481,45 @@ describe('step 2 — before you cancel', () => {
     assert.match(step, /--spp-vet-poster-desktop:url\([^)]*spp-cancel-benefits-desktop\.jpg[^)]*\)/);
     assert.match(step, /aria-label="[^"]+"/, 'the video must be described');
     assert.ok(!/poster="/.test(/<video[^>]*>/.exec(step)[0]), 'the <video> element itself must not carry a single poster attribute');
+  });
+
+  test('syncVetVideo picks exactly one real file, by the real viewport, and never both', () => {
+    fakeMatchMedia.isDesktop = true;
+    const desktopVideo = fakeVetVideo();
+    syncVetVideo.call({ root: { querySelector: () => desktopVideo } });
+    assert.equal(desktopVideo.src, desktopVideo.dataset.sppVetSrcDesktop);
+    assert.equal(desktopVideo.dataset.sppVetSrcActive, desktopVideo.dataset.sppVetSrcDesktop);
+    assert.equal(desktopVideo.loadCalls, 1);
+
+    fakeMatchMedia.isDesktop = false;
+    const mobileVideo = fakeVetVideo();
+    syncVetVideo.call({ root: { querySelector: () => mobileVideo } });
+    assert.equal(mobileVideo.src, mobileVideo.dataset.sppVetSrcMobile);
+    assert.equal(mobileVideo.dataset.sppVetSrcActive, mobileVideo.dataset.sppVetSrcMobile);
+    assert.notEqual(mobileVideo.src, mobileVideo.dataset.sppVetSrcDesktop, 'never both files at once');
+  });
+
+  test('syncVetVideo is a no-op once the matching src is already active', () => {
+    fakeMatchMedia.isDesktop = true;
+    const video = fakeVetVideo({ dataset: {
+      sppVetSrcDesktop: 'https://cdn.shopify.com/videos/c/o/v/be6c0d1c00b3463797270f2fc43c2815.mp4',
+      sppVetSrcMobile: 'https://cdn.shopify.com/videos/c/o/v/1d4391c64d264e46b877c356e1396f4a.mp4',
+      sppVetSrcActive: 'https://cdn.shopify.com/videos/c/o/v/be6c0d1c00b3463797270f2fc43c2815.mp4',
+    } });
+    syncVetVideo.call({ root: { querySelector: () => video } });
+    assert.equal(video.loadCalls, 0, 'must not reload a file that is already the active one');
+  });
+
+  test('syncVetVideo never swaps the file out from under a video the customer has already started', () => {
+    fakeMatchMedia.isDesktop = true;
+    const playing = fakeVetVideo({ paused: false });
+    syncVetVideo.call({ root: { querySelector: () => playing } });
+    assert.equal(playing.loadCalls, 0, 'a playing video must be left alone even if the viewport now disagrees');
+
+    fakeMatchMedia.isDesktop = false;
+    const scrubbed = fakeVetVideo({ paused: true, currentTime: 4.2 });
+    syncVetVideo.call({ root: { querySelector: () => scrubbed } });
+    assert.equal(scrubbed.loadCalls, 0, 'a video already past 0:00 must be left alone even when paused');
   });
 
   test('the old vet_video_url placeholder setting is gone — this IS the final video', () => {
@@ -587,6 +660,19 @@ describe('step 3 — longer gap', () => {
     const apply = buttonWith(step, 'Confirm this change');
     assert.match(apply, /spp__btn--primary/);
     assert.match(apply, /data-spp-act="applyGap"/);
+  });
+
+  test('contact support is plain information, not a portal action', () => {
+    // No data-spp-act="support" here any more: that shared handler shows
+    // the generic "Support is not wired up in this prototype" toast, and
+    // still correctly does so on the account/system screens — this
+    // screen must never trigger it.
+    assert.match(step, /spp__support-note/);
+    assert.match(step, /Need help choosing the best option for your routine\?/);
+    assert.match(step, /<a[^>]*href="mailto:info@shopvetpets\.com"[^>]*>info@shopvetpets\.com<\/a>/);
+    assert.ok(!/Contact us for help/.test(step), 'the old button copy must be gone');
+    assert.ok(!/data-spp-act="support"/.test(step), 'must not fire the shared prototype-toast handler');
+    assert.ok(!/Get help finding the best option for your routine\./.test(step), 'the old button subtext must be gone');
   });
 });
 

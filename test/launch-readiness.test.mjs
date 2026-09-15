@@ -227,9 +227,14 @@ describe('live mode shows no prototype data', () => {
      * on screen. Same defect as the cancelled screen's dangling sentence, with
      * a worse failure mode.
      */
+    // info@shopvetpets.com is the one deliberate exception: VetPets' own
+    // real, already-public support address (see the cancel flow's contact
+    // block), not a fictional customer's. Everything else — any OTHER
+    // literal address, most importantly the demo persona's — stays banned.
+    const REAL_SUPPORT_ADDRESS = 'info@shopvetpets.com';
     for (const { name, markup } of PORTAL_SNIPPETS) {
       const emails = markup.match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g) || [];
-      const real = emails.filter((e) => !/@example\.(com|org)$/.test(e));
+      const real = emails.filter((e) => !/@example\.(com|org)$/.test(e) && e !== REAL_SUPPORT_ADDRESS);
       assert.deepEqual(real, [], `${name} ships a literal email address: ${real}`);
     }
   });

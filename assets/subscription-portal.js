@@ -1857,6 +1857,35 @@
       if (e.key === 'Escape' && self.state.sheet && !self.state.pending) { self.closeSheet(); return; }
       if (e.key === 'Tab' && self.state.sheet) self.trapFocus(e);
     });
+
+    this.syncVetVideo();
+    window.addEventListener('resize', function () { self.syncVetVideo(); });
+  };
+
+  /**
+   * Cancel step 2's veterinarian video ships two real files, one per
+   * viewport (16:9 desktop/tablet, 1:1 mobile). Picking the file here, in
+   * JS, is deliberate: the browser's own <source media> selection — what
+   * shipped before this fix — was not reliable on real devices, where
+   * both files could end up loaded and visibly overlapping. A single
+   * <video> with a plain `src` this method sets cannot have that failure
+   * mode, because there is only ever one src.
+   *
+   * Safe to call any time (bind(), and again on resize): it never
+   * touches a video the customer has already started — currentTime > 0
+   * or a non-paused element means playback is underway, and the file
+   * that is already loading is the one that stays.
+   */
+  Portal.prototype.syncVetVideo = function () {
+    var video = this.root.querySelector('.spp__vet-video-el');
+    if (!video) return;
+    var wantDesktop = window.matchMedia('(min-width: 1024px)').matches;
+    var wanted = wantDesktop ? video.dataset.sppVetSrcDesktop : video.dataset.sppVetSrcMobile;
+    if (!wanted || video.dataset.sppVetSrcActive === wanted) return;
+    if (!video.paused || video.currentTime > 0) return;
+    video.dataset.sppVetSrcActive = wanted;
+    video.src = wanted;
+    video.load();
   };
 
   Portal.prototype.trapFocus = function (e) {
