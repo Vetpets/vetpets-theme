@@ -670,7 +670,7 @@
       "subscription-portal": {
         "type": "subscription-portal",
         "settings": {
-          "data_mode": "live",
+          "data_mode": "mock",
           "base_path": "/apps/subscriptions",
           "prototype_today": "2026-08-21",
           "prototype_currency": "USD",
@@ -747,7 +747,7 @@
       "colors_background_1": "#FDFBF7",
       "gradient_background_1": "linear-gradient(180deg, rgba(240, 244, 236, 1), rgba(241, 235, 226, 1) 100%)",
       "colors_background_2": "#EDFFA7",
-      "gradient_background_2": "radial-gradient(rgba(255, 229, 229, 1), rgba(255, 224, 218, 1) 25%, rgba(215, 255, 137, 1) 100%)",
+      "gradient_background_2": "radial-gradient(rgba(255, 229, 229, 1), rgba(215, 255, 137, 1) 100%)",
       "type_header_font": "harmonia_sans_n6",
       "heading_scale": 130,
       "type_body_font": "harmonia_sans_n4",
