@@ -33,7 +33,7 @@
   class="vphp"
   id="vphp-root"
   data-vphp-portal
-  data-vphp-mode="{{ section.settings.data_mode | default: 'mock' }}"
+  data-vphp-mode="{{ section.settings.data_mode | default: 'live' }}"
   data-vphp-base-path="{{ section.settings.base_path | default: '/apps/subscriptions-dev' }}"
   data-vphp-locale="{{ request.locale.iso_code | default: 'en' }}"
   data-vphp-latency="{{ section.settings.mock_latency | default: 500 }}"
@@ -88,7 +88,7 @@
         { "value": "mock", "label": "Mock (prototype)" },
         { "value": "live", "label": "Live (DEV backend)" }
       ],
-      "default": "mock"
+      "default": "live"
     },
     {
       "type": "text",
