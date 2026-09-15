@@ -98,10 +98,13 @@ function fakeVetVideo(overrides) {
       dataset: {
         sppVetSrcDesktop: 'https://cdn.shopify.com/videos/c/o/v/be6c0d1c00b3463797270f2fc43c2815.mp4',
         sppVetSrcMobile: 'https://cdn.shopify.com/videos/c/o/v/1d4391c64d264e46b877c356e1396f4a.mp4',
+        sppVetPosterDesktop: 'https://cdn.shopify.com/spp-cancel-benefits-desktop.jpg',
+        sppVetPosterMobile: 'https://cdn.shopify.com/spp-cancel-benefits-mobile.jpg',
       },
       paused: true,
       currentTime: 0,
       src: '',
+      poster: '',
       loadCalls: 0,
       load() { this.loadCalls += 1; },
     },
@@ -473,14 +476,19 @@ describe('step 2 — before you cancel', () => {
   });
 
   test('shows a real first-frame poster per viewport, described for assistive tech', () => {
-    // Two real posters, one per source's own actual first frame — set as
-    // CSS custom properties (see .spp__vet-video in subscription-portal.css)
-    // rather than the <video>'s single `poster` attribute, since HTML
-    // allows only one poster but there are two real source files.
-    assert.match(step, /--spp-vet-poster-mobile:url\([^)]*spp-cancel-benefits-mobile\.jpg[^)]*\)/);
-    assert.match(step, /--spp-vet-poster-desktop:url\([^)]*spp-cancel-benefits-desktop\.jpg[^)]*\)/);
+    // A CSS background-image trick was tried first and does not work
+    // here: without autoplay, the <video> can sit at readyState 0
+    // indefinitely, and a browser paints THAT state as opaque black,
+    // covering anything behind it. Only the real `poster` attribute is
+    // painted in that state, so it — not a CSS property — must carry
+    // one of the two real first-frame images, and syncVetVideo must be
+    // able to correct it to the other one from these same data
+    // attributes.
+    const video = /<video[^>]*>/.exec(step)[0];
+    assert.match(video, /poster="[^"]*spp-cancel-benefits-desktop\.jpg[^"]*"/, 'a real poster attribute, not just a CSS background, must be present from the start');
+    assert.match(video, /data-spp-vet-poster-desktop="[^"]*spp-cancel-benefits-desktop\.jpg[^"]*"/);
+    assert.match(video, /data-spp-vet-poster-mobile="[^"]*spp-cancel-benefits-mobile\.jpg[^"]*"/);
     assert.match(step, /aria-label="[^"]+"/, 'the video must be described');
-    assert.ok(!/poster="/.test(/<video[^>]*>/.exec(step)[0]), 'the <video> element itself must not carry a single poster attribute');
   });
 
   test('syncVetVideo picks exactly one real file, by the real viewport, and never both', () => {
@@ -489,6 +497,7 @@ describe('step 2 — before you cancel', () => {
     syncVetVideo.call({ root: { querySelector: () => desktopVideo } });
     assert.equal(desktopVideo.src, desktopVideo.dataset.sppVetSrcDesktop);
     assert.equal(desktopVideo.dataset.sppVetSrcActive, desktopVideo.dataset.sppVetSrcDesktop);
+    assert.equal(desktopVideo.poster, desktopVideo.dataset.sppVetPosterDesktop, 'the poster must be swapped in lockstep with the src');
     assert.equal(desktopVideo.loadCalls, 1);
 
     fakeMatchMedia.isDesktop = false;
@@ -496,6 +505,7 @@ describe('step 2 — before you cancel', () => {
     syncVetVideo.call({ root: { querySelector: () => mobileVideo } });
     assert.equal(mobileVideo.src, mobileVideo.dataset.sppVetSrcMobile);
     assert.equal(mobileVideo.dataset.sppVetSrcActive, mobileVideo.dataset.sppVetSrcMobile);
+    assert.equal(mobileVideo.poster, mobileVideo.dataset.sppVetPosterMobile);
     assert.notEqual(mobileVideo.src, mobileVideo.dataset.sppVetSrcDesktop, 'never both files at once');
   });
 

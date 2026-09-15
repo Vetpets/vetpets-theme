@@ -171,14 +171,19 @@
       at which point that tap is a real user gesture, so the browser
       allows sound from the very first frame.
 
-      The poster is still set via two CSS custom properties rather than
-      the <video>'s single `poster` attribute, because there are two real
-      posters (one per file's own actual first frame, captured from the
-      video itself — never a generic stand-in) and HTML allows only one
-      poster per element. .spp__vet-video's background-image shows the
-      matching frame the instant the element paints, and the <video>
-      itself paints over it once its own first frame is ready — so the
-      player is never a blank (or black) rectangle while loading.
+      The poster is a real HTML `poster` attribute, kept in sync with
+      `src` by the same syncVetVideo call (from the matching
+      data-spp-vet-poster-* URL below — one per file's own actual first
+      frame, captured from the video itself, never a generic stand-in).
+      A CSS background-image trick was tried first and does NOT work
+      here: without autoplay, the <video> element can sit at readyState 0
+      indefinitely (until the customer taps play), and browsers paint
+      that idle state as an opaque black rectangle that covers anything
+      behind it, poster or no — the `poster` attribute is the one thing
+      the browser itself paints in exactly that state. The `poster`
+      attribute below is the desktop frame, a reasonable default for the
+      instant before JS runs; syncVetVideo corrects it to the mobile
+      frame when the real viewport is mobile.
     {%- endcomment -%}
     <div class="spp__eyebrow" style="margin-top:18px;">Watch &middot; about 90 seconds</div>
     <h2 class="spp__h2" style="margin-top:4px;">Why consistency matters</h2>
@@ -186,16 +191,17 @@
       A short explanation of what daily care is quietly doing for your dog, and what
       changes when it stops.
     </p>
-    <div
-      class="spp__vet-video"
-      style="margin-top:10px; --spp-vet-poster-mobile:url('{{ 'spp-cancel-benefits-mobile.jpg' | asset_url }}'); --spp-vet-poster-desktop:url('{{ 'spp-cancel-benefits-desktop.jpg' | asset_url }}');">
+    <div class="spp__vet-video" style="margin-top:10px;">
       <video
         class="spp__vet-video-el"
         playsinline
         controls
         preload="metadata"
+        poster="{{ 'spp-cancel-benefits-desktop.jpg' | asset_url }}"
         data-spp-vet-src-desktop="https://cdn.shopify.com/videos/c/o/v/be6c0d1c00b3463797270f2fc43c2815.mp4"
         data-spp-vet-src-mobile="https://cdn.shopify.com/videos/c/o/v/1d4391c64d264e46b877c356e1396f4a.mp4"
+        data-spp-vet-poster-desktop="{{ 'spp-cancel-benefits-desktop.jpg' | asset_url }}"
+        data-spp-vet-poster-mobile="{{ 'spp-cancel-benefits-mobile.jpg' | asset_url }}"
         aria-label="A veterinarian explains why consistency matters for your dog's daily care routine">
       </video>
     </div>

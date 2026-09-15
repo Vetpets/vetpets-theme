@@ -1871,6 +1871,13 @@
    * <video> with a plain `src` this method sets cannot have that failure
    * mode, because there is only ever one src.
    *
+   * The poster is kept in sync the same way and for a related reason:
+   * without autoplay, the <video> can sit at readyState 0 indefinitely
+   * (until the customer taps play), and a browser paints that idle state
+   * as an opaque black rectangle — the `poster` attribute is the one
+   * thing it will paint instead, whichever real file's own first frame
+   * matches the file about to load.
+   *
    * Safe to call any time (bind(), and again on resize): it never
    * touches a video the customer has already started — currentTime > 0
    * or a non-paused element means playback is underway, and the file
@@ -1884,6 +1891,7 @@
     if (!wanted || video.dataset.sppVetSrcActive === wanted) return;
     if (!video.paused || video.currentTime > 0) return;
     video.dataset.sppVetSrcActive = wanted;
+    video.poster = wantDesktop ? video.dataset.sppVetPosterDesktop : video.dataset.sppVetPosterMobile;
     video.src = wanted;
     video.load();
   };

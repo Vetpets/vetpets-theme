@@ -1408,20 +1408,16 @@
   object-fit: contain;
 }
 
-/* The final "before you cancel" veterinarian video — see the <source>
-   pair in spp-screen-cancel.liquid. 1:1 by default (the mobile video's
-   own shape); 16:9 at the same 1024px breakpoint the browser itself uses
-   to pick the desktop <source>, so the reserved space always matches
-   whichever file actually loads. object-fit: contain, never cover, so
-   neither video is cropped to fit the other's aspect ratio.
+/* The final "before you cancel" veterinarian video. 1:1 by default (the
+   mobile file's own shape); 16:9 at the same 1024px breakpoint
+   Portal.prototype.syncVetVideo (subscription-portal.js) uses to pick
+   the real `src`, so the reserved space always matches whichever file
+   is actually loaded. object-fit: contain, never cover, so neither
+   video is ever cropped to fit the other's aspect ratio.
 
-   background-image carries the real first-frame poster for whichever
-   file is about to load — two CSS custom properties set inline (per
-   screen instance) rather than the <video> element's single `poster`
-   attribute, since HTML allows only one poster but there are two real
-   source files. This paints instantly, and the <video> paints over it
-   the moment its own first frame is ready, so there is never a blank
-   rectangle while either file loads. */
+   The poster is a real `poster` attribute (also kept in sync by
+   syncVetVideo, not a CSS trick) — this background-color is only the
+   fallback behind it if an image ever fails to load. */
 .spp__vet-video {
   position: relative;
   width: 100%;
@@ -1429,9 +1425,6 @@
   border-radius: 14px;
   overflow: hidden;
   background-color: var(--spp-surface-neutral, #F2FAFE);
-  background-image: var(--spp-vet-poster-mobile);
-  background-size: cover;
-  background-position: center;
 }
 .spp__vet-video-el {
   display: block;
@@ -1440,7 +1433,7 @@
   object-fit: contain;
 }
 @media (min-width: 1024px) {
-  .spp__vet-video { aspect-ratio: 16 / 9; background-image: var(--spp-vet-poster-desktop); }
+  .spp__vet-video { aspect-ratio: 16 / 9; }
 }
 
 /* Cancel step 2's wide column — the approved design's own 960px content
