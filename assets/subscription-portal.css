@@ -1415,9 +1415,11 @@
    is actually loaded. object-fit: contain, never cover, so neither
    video is ever cropped to fit the other's aspect ratio.
 
-   The poster is a real `poster` attribute (also kept in sync by
-   syncVetVideo, not a CSS trick) — this background-color is only the
-   fallback behind it if an image ever fails to load. */
+   The poster is a real `poster` attribute set entirely by syncVetVideo
+   (there is no static default in the markup to flash the wrong shape
+   before JS corrects it) — this background-color is what shows in the
+   brief gap before that runs, and the fallback if an image ever fails
+   to load. */
 .spp__vet-video {
   position: relative;
   width: 100%;

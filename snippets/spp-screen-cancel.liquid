@@ -157,33 +157,31 @@
       Final veterinarian video — exactly ONE file loaded and shown at a
       time, chosen in JS (see Portal.prototype.syncVetVideo in
       subscription-portal.js), never via the browser's own <source media>
-      selection. That mechanism is what shipped before this fix and it
-      was not reliable on real devices — both the desktop 16:9 file and
-      the mobile 1:1 file could end up loaded, so the two videos visually
-      overlapped. A single <video> with no <source> children and a plain
-      `src` set by JS from the two data-spp-vet-src-* URLs below cannot
-      have that failure mode: there is only ever one src.
+      selection: that mechanism let both the desktop 16:9 file and the
+      mobile 1:1 file end up loaded on real devices, so the two videos
+      visually overlapped. A single <video> with no <source> children
+      and a plain `src` set by JS from the two data-spp-vet-src-* URLs
+      below cannot have that failure mode: there is only ever one src.
 
-      No autoplay, no muted: browsers already block reliable autoplay
-      with sound, so this never attempts to autoplay at all. Without
-      autoplay, a <video controls poster> shows the poster with a native,
-      centred Play button and nothing plays until the customer taps it —
-      at which point that tap is a real user gesture, so the browser
-      allows sound from the very first frame.
+      Deliberately NO static `poster` attribute here, and this is not an
+      oversight: subscription-portal.js loads with `defer` (see
+      layout/subscription-portal.liquid), which runs after the HTML
+      parses but is not instant — a hardcoded poster picked one desktop
+      or mobile shape and painted it before JS could correct it for the
+      OTHER viewport, which is exactly how the desktop 16:9 photo
+      (non-square) briefly showed, letterboxed, inside the square mobile
+      container. With no poster attribute, that gap shows the neutral
+      background colour on .spp__vet-video instead — correct for BOTH
+      viewports, never wrong for either — until syncVetVideo sets the
+      real matching poster from the two data-spp-vet-poster-* URLs below
+      (one per file's own actual first frame, captured from the video
+      itself, never a generic stand-in).
 
-      The poster is a real HTML `poster` attribute, kept in sync with
-      `src` by the same syncVetVideo call (from the matching
-      data-spp-vet-poster-* URL below — one per file's own actual first
-      frame, captured from the video itself, never a generic stand-in).
-      A CSS background-image trick was tried first and does NOT work
-      here: without autoplay, the <video> element can sit at readyState 0
-      indefinitely (until the customer taps play), and browsers paint
-      that idle state as an opaque black rectangle that covers anything
-      behind it, poster or no — the `poster` attribute is the one thing
-      the browser itself paints in exactly that state. The `poster`
-      attribute below is the desktop frame, a reasonable default for the
-      instant before JS runs; syncVetVideo corrects it to the mobile
-      frame when the real viewport is mobile.
+      Autoplay/muted are also JS-only, and asymmetric by design:
+      mobile autoplays muted (browsers allow this; the customer can
+      unmute from the native controls at any time), desktop does not —
+      browsers block reliable autoplay WITH sound, so the desktop file
+      only ever plays, with sound, from the customer's own tap.
     {%- endcomment -%}
     <div class="spp__eyebrow" style="margin-top:18px;">Watch &middot; about 90 seconds</div>
     <h2 class="spp__h2" style="margin-top:4px;">Why consistency matters</h2>
@@ -197,7 +195,6 @@
         playsinline
         controls
         preload="metadata"
-        poster="{{ 'spp-cancel-benefits-desktop.jpg' | asset_url }}"
         data-spp-vet-src-desktop="https://cdn.shopify.com/videos/c/o/v/be6c0d1c00b3463797270f2fc43c2815.mp4"
         data-spp-vet-src-mobile="https://cdn.shopify.com/videos/c/o/v/1d4391c64d264e46b877c356e1396f4a.mp4"
         data-spp-vet-poster-desktop="{{ 'spp-cancel-benefits-desktop.jpg' | asset_url }}"

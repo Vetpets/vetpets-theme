@@ -105,8 +105,12 @@ function fakeVetVideo(overrides) {
       currentTime: 0,
       src: '',
       poster: '',
+      muted: false,
+      autoplay: false,
       loadCalls: 0,
+      playCalls: 0,
       load() { this.loadCalls += 1; },
+      play() { this.playCalls += 1; return Promise.resolve(); },
     },
     overrides,
   );
@@ -475,17 +479,15 @@ describe('step 2 — before you cancel', () => {
     assert.ok(!/\bmuted\b/.test(video[0]), '<video> must not be forced muted — the customer’s tap should start it with sound');
   });
 
-  test('shows a real first-frame poster per viewport, described for assistive tech', () => {
-    // A CSS background-image trick was tried first and does not work
-    // here: without autoplay, the <video> can sit at readyState 0
-    // indefinitely, and a browser paints THAT state as opaque black,
-    // covering anything behind it. Only the real `poster` attribute is
-    // painted in that state, so it — not a CSS property — must carry
-    // one of the two real first-frame images, and syncVetVideo must be
-    // able to correct it to the other one from these same data
-    // attributes.
+  test('carries both real first-frame posters for JS to pick from, with no static default to correct away from', () => {
+    // A hardcoded default (either shape) painted before subscription-
+    // portal.js's `defer`red load could run was exactly the bug this
+    // guards against: the desktop 16:9 photo showing, letterboxed,
+    // inside the square mobile container. With no static `poster`
+    // attribute at all, the gap before JS runs shows the neutral
+    // .spp__vet-video background instead — correct for both viewports.
     const video = /<video[^>]*>/.exec(step)[0];
-    assert.match(video, /poster="[^"]*spp-cancel-benefits-desktop\.jpg[^"]*"/, 'a real poster attribute, not just a CSS background, must be present from the start');
+    assert.ok(!/\bposter="/.test(video), 'no static poster attribute — it would be wrong for one of the two viewports');
     assert.match(video, /data-spp-vet-poster-desktop="[^"]*spp-cancel-benefits-desktop\.jpg[^"]*"/);
     assert.match(video, /data-spp-vet-poster-mobile="[^"]*spp-cancel-benefits-mobile\.jpg[^"]*"/);
     assert.match(step, /aria-label="[^"]+"/, 'the video must be described');
@@ -499,6 +501,11 @@ describe('step 2 — before you cancel', () => {
     assert.equal(desktopVideo.dataset.sppVetSrcActive, desktopVideo.dataset.sppVetSrcDesktop);
     assert.equal(desktopVideo.poster, desktopVideo.dataset.sppVetPosterDesktop, 'the poster must be swapped in lockstep with the src');
     assert.equal(desktopVideo.loadCalls, 1);
+    // Desktop must never autoplay — browsers block reliable autoplay
+    // with sound, so it only ever plays, with sound, from a real tap.
+    assert.equal(desktopVideo.autoplay, false);
+    assert.equal(desktopVideo.muted, false);
+    assert.equal(desktopVideo.playCalls, 0, 'must not call play() itself on desktop — that is the customer’s tap to do');
 
     fakeMatchMedia.isDesktop = false;
     const mobileVideo = fakeVetVideo();
@@ -507,6 +514,11 @@ describe('step 2 — before you cancel', () => {
     assert.equal(mobileVideo.dataset.sppVetSrcActive, mobileVideo.dataset.sppVetSrcMobile);
     assert.equal(mobileVideo.poster, mobileVideo.dataset.sppVetPosterMobile);
     assert.notEqual(mobileVideo.src, mobileVideo.dataset.sppVetSrcDesktop, 'never both files at once');
+    // Mobile autoplays muted — browsers allow that — and the customer
+    // can unmute from the native controls at any time.
+    assert.equal(mobileVideo.autoplay, true);
+    assert.equal(mobileVideo.muted, true);
+    assert.equal(mobileVideo.playCalls, 1, 'must explicitly call play(), not just set the attribute, to reliably start it');
   });
 
   test('syncVetVideo is a no-op once the matching src is already active', () => {

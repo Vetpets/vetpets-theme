@@ -1869,14 +1869,19 @@
    * shipped before this fix — was not reliable on real devices, where
    * both files could end up loaded and visibly overlapping. A single
    * <video> with a plain `src` this method sets cannot have that failure
-   * mode, because there is only ever one src.
+   * mode, because there is only ever one src, and the OTHER file's URL
+   * is never assigned to anything — never fetched, on either viewport.
    *
-   * The poster is kept in sync the same way and for a related reason:
-   * without autoplay, the <video> can sit at readyState 0 indefinitely
-   * (until the customer taps play), and a browser paints that idle state
-   * as an opaque black rectangle — the `poster` attribute is the one
-   * thing it will paint instead, whichever real file's own first frame
-   * matches the file about to load.
+   * The poster is kept in sync the same way, from a genuinely blank
+   * start (see spp-screen-cancel.liquid — there is no static `poster`
+   * attribute to correct away from any more): whichever real file's own
+   * actual first frame matches the file about to load.
+   *
+   * Mobile autoplays muted — browsers allow that — so the customer sees
+   * real footage immediately, not a static frame; they can unmute from
+   * the native controls at any time. Desktop does not autoplay: browsers
+   * block reliable autoplay WITH sound, so the desktop file only ever
+   * plays, with sound, from the customer's own tap on the same controls.
    *
    * Safe to call any time (bind(), and again on resize): it never
    * touches a video the customer has already started — currentTime > 0
@@ -1892,8 +1897,14 @@
     if (!video.paused || video.currentTime > 0) return;
     video.dataset.sppVetSrcActive = wanted;
     video.poster = wantDesktop ? video.dataset.sppVetPosterDesktop : video.dataset.sppVetPosterMobile;
+    video.muted = !wantDesktop;
+    video.autoplay = !wantDesktop;
     video.src = wanted;
     video.load();
+    if (!wantDesktop) {
+      var playAttempt = video.play();
+      if (playAttempt && typeof playAttempt.catch === 'function') playAttempt.catch(function () {});
+    }
   };
 
   Portal.prototype.trapFocus = function (e) {
