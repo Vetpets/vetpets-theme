@@ -1419,7 +1419,10 @@
    (there is no static default in the markup to flash the wrong shape
    before JS corrects it) — this background-color is what shows in the
    brief gap before that runs, and the fallback if an image ever fails
-   to load. */
+   to load. Each poster is the real veterinarian's own first frame from
+   the matching file, never the dog-benefits graphic used elsewhere on
+   this screen — see .spp__vet-video-play below for the button drawn
+   over it, since neither viewport autoplays. */
 .spp__vet-video {
   position: relative;
   width: 100%;
@@ -1437,6 +1440,33 @@
 @media (min-width: 1024px) {
   .spp__vet-video { aspect-ratio: 16 / 9; }
 }
+
+/* Custom play button, centered over the poster on both viewports. There
+   is no native `controls` in the markup until Portal.prototype.
+   bindVetVideoControls (subscription-portal.js) adds it on tap, so this
+   button is the only way to start playback — and the only thing shown
+   on top of the veterinarian's first-frame poster until then. */
+.spp__vet-video-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72px;
+  height: 72px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(18, 18, 18, 0.6);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color .15s ease, transform .15s ease;
+}
+.spp__vet-video-play svg { margin-left: 3px; }
+.spp__vet-video-play:hover { background: rgba(18, 18, 18, 0.75); }
+.spp__vet-video-play:active { transform: translate(-50%, -50%) scale(0.96); }
+.spp__vet-video-play[hidden] { display: none; }
 
 /* Cancel step 2's wide column — the approved design's own 960px content
    width for this one screen, wider than the .spp__narrow (520px) column

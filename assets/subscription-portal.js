@@ -1859,6 +1859,7 @@
     });
 
     this.syncVetVideo();
+    this.bindVetVideoControls();
     window.addEventListener('resize', function () { self.syncVetVideo(); });
   };
 
@@ -1877,11 +1878,11 @@
    * attribute to correct away from any more): whichever real file's own
    * actual first frame matches the file about to load.
    *
-   * Mobile autoplays muted — browsers allow that — so the customer sees
-   * real footage immediately, not a static frame; they can unmute from
-   * the native controls at any time. Desktop does not autoplay: browsers
-   * block reliable autoplay WITH sound, so the desktop file only ever
-   * plays, with sound, from the customer's own tap on the same controls.
+   * Neither viewport autoplays: the video stays paused on its poster,
+   * with only the custom .spp__vet-video-play button visible, until the
+   * customer taps it (see bindVetVideoControls). Muted here just means
+   * "silent if anything ever plays it before that tap" — the tap itself
+   * is what turns sound on.
    *
    * Safe to call any time (bind(), and again on resize): it never
    * touches a video the customer has already started — currentTime > 0
@@ -1897,14 +1898,47 @@
     if (!video.paused || video.currentTime > 0) return;
     video.dataset.sppVetSrcActive = wanted;
     video.poster = wantDesktop ? video.dataset.sppVetPosterDesktop : video.dataset.sppVetPosterMobile;
-    video.muted = !wantDesktop;
-    video.autoplay = !wantDesktop;
+    video.muted = true;
     video.src = wanted;
     video.load();
-    if (!wantDesktop) {
+  };
+
+  /**
+   * Wires the custom play button drawn over the vet video's poster (see
+   * spp-screen-cancel.liquid). Native `controls` is deliberately absent
+   * from the markup so nothing but that button shows before the
+   * customer's own tap; the tap is also the user gesture that lets JS
+   * turn sound on, which an autoplay call could never do reliably.
+   *
+   * On tap: unmute at normal volume, reveal native controls, hide the
+   * custom button, start playback. On 'ended': hand the video back to
+   * its poster state — `load()` re-arms the poster (a played element
+   * would otherwise keep showing its last frame, not the poster, once
+   * paused) — remove native controls, and bring the custom button back,
+   * exactly like before the first tap.
+   */
+  Portal.prototype.bindVetVideoControls = function () {
+    var container = this.root.querySelector('.spp__vet-video');
+    if (!container) return;
+    var video = container.querySelector('.spp__vet-video-el');
+    var playBtn = container.querySelector('.spp__vet-video-play');
+    if (!video || !playBtn) return;
+
+    playBtn.addEventListener('click', function () {
+      video.muted = false;
+      video.volume = 1;
+      video.setAttribute('controls', '');
+      playBtn.hidden = true;
       var playAttempt = video.play();
       if (playAttempt && typeof playAttempt.catch === 'function') playAttempt.catch(function () {});
-    }
+    });
+
+    video.addEventListener('ended', function () {
+      video.removeAttribute('controls');
+      video.muted = true;
+      video.load();
+      playBtn.hidden = false;
+    });
   };
 
   Portal.prototype.trapFocus = function (e) {

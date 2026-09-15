@@ -163,25 +163,25 @@
       and a plain `src` set by JS from the two data-spp-vet-src-* URLs
       below cannot have that failure mode: there is only ever one src.
 
-      Deliberately NO static `poster` attribute here, and this is not an
-      oversight: subscription-portal.js loads with `defer` (see
+      No static `poster` attribute here either, for the same reason as
+      before: subscription-portal.js loads with `defer` (see
       layout/subscription-portal.liquid), which runs after the HTML
-      parses but is not instant — a hardcoded poster picked one desktop
-      or mobile shape and painted it before JS could correct it for the
-      OTHER viewport, which is exactly how the desktop 16:9 photo
-      (non-square) briefly showed, letterboxed, inside the square mobile
-      container. With no poster attribute, that gap shows the neutral
-      background colour on .spp__vet-video instead — correct for BOTH
-      viewports, never wrong for either — until syncVetVideo sets the
-      real matching poster from the two data-spp-vet-poster-* URLs below
-      (one per file's own actual first frame, captured from the video
-      itself, never a generic stand-in).
+      parses but is not instant, so a hardcoded default would paint the
+      wrong viewport's shape first. The gap shows the neutral background
+      colour on .spp__vet-video instead, until syncVetVideo sets the real
+      matching poster from the two data-spp-vet-poster-* URLs below — each
+      one the corresponding file's own real first frame (the veterinarian,
+      never the dog-benefits graphic used elsewhere on this screen).
 
-      Autoplay/muted are also JS-only, and asymmetric by design:
-      mobile autoplays muted (browsers allow this; the customer can
-      unmute from the native controls at any time), desktop does not —
-      browsers block reliable autoplay WITH sound, so the desktop file
-      only ever plays, with sound, from the customer's own tap.
+      No autoplay, on either viewport: the video only ever plays from the
+      customer's own tap on the custom .spp__vet-video-play button drawn
+      over the poster (see syncVetVideo and bindVetVideoControls in
+      subscription-portal.js) — that tap is also the user gesture that
+      lets JS turn sound on, which a page-initiated autoplay could not do
+      reliably. Native `controls` is added only once playback has actually
+      started (again in JS), so the un-played poster state shows nothing
+      but the custom button — no native scrubber sitting on top of a
+      frozen frame.
     {%- endcomment -%}
     <div class="spp__eyebrow" style="margin-top:18px;">Watch &middot; about 90 seconds</div>
     <h2 class="spp__h2" style="margin-top:4px;">Why consistency matters</h2>
@@ -193,7 +193,6 @@
       <video
         class="spp__vet-video-el"
         playsinline
-        controls
         preload="metadata"
         data-spp-vet-src-desktop="https://cdn.shopify.com/videos/c/o/v/be6c0d1c00b3463797270f2fc43c2815.mp4"
         data-spp-vet-src-mobile="https://cdn.shopify.com/videos/c/o/v/1d4391c64d264e46b877c356e1396f4a.mp4"
@@ -201,6 +200,9 @@
         data-spp-vet-poster-mobile="{{ 'spp-cancel-benefits-mobile.jpg' | asset_url }}"
         aria-label="A veterinarian explains why consistency matters for your dog's daily care routine">
       </video>
+      <button type="button" class="spp__vet-video-play" aria-label="Play video">
+        {% render 'spp-icon', icon: 'play', size: 28 %}
+      </button>
     </div>
 
     {%- comment -%}

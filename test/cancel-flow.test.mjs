@@ -92,6 +92,7 @@ const syncVetVideo = method(
   ['window'],
   [{ matchMedia: () => ({ matches: fakeMatchMedia.isDesktop }) }],
 );
+const bindVetVideoControls = method('bindVetVideoControls');
 function fakeVetVideo(overrides) {
   return Object.assign(
     {
@@ -106,14 +107,27 @@ function fakeVetVideo(overrides) {
       src: '',
       poster: '',
       muted: false,
-      autoplay: false,
+      volume: 0,
+      attrs: {},
+      listeners: {},
       loadCalls: 0,
       playCalls: 0,
       load() { this.loadCalls += 1; },
       play() { this.playCalls += 1; return Promise.resolve(); },
+      setAttribute(k, v) { this.attrs[k] = v; },
+      removeAttribute(k) { delete this.attrs[k]; },
+      getAttribute(k) { return k in this.attrs ? this.attrs[k] : null; },
+      addEventListener(evt, fn) { this.listeners[evt] = fn; },
     },
     overrides,
   );
+}
+function fakeVetPlayButton() {
+  return {
+    hidden: false,
+    listeners: {},
+    addEventListener(evt, fn) { this.listeners[evt] = fn; },
+  };
 }
 
 /**
@@ -463,20 +477,28 @@ describe('step 2 — before you cancel', () => {
     assert.ok(!video[0].includes(' src='), 'the liquid markup itself must not hardcode a src — only JS may set one, based on the real viewport');
   });
 
-  test('plays inline with visible controls, no autoplay and no forced mute', () => {
-    // Browsers block reliable autoplay with sound, so this never attempts
-    // autoplay at all: no autoplay attribute means nothing plays, and
-    // therefore nothing needs muting, until the customer's own tap on the
-    // native Play button — a real user gesture, which browsers do allow
-    // to start playback with sound.
+  test('plays inline, with no autoplay, no forced mute, and no native controls until the customer taps play', () => {
+    // No autoplay on either viewport, and no native `controls` in the
+    // static markup either: the only thing visible before playback is
+    // the poster and the custom .spp__vet-video-play button below.
+    // bindVetVideoControls (subscription-portal.js) adds `controls` only
+    // once the customer's own tap — a real user gesture — starts it.
     const video = /<video[^>]*>/.exec(step);
     assert.ok(video, 'the <video> element must exist');
-    for (const attr of ['playsinline', 'controls']) {
-      assert.match(video[0], new RegExp(`\\b${attr}\\b`), `<video> must have ${attr}`);
-    }
+    assert.match(video[0], /\bplaysinline\b/, '<video> must have playsinline');
     assert.match(video[0], /preload="metadata"/);
-    assert.ok(!/\bautoplay\b/.test(video[0]), '<video> must not autoplay — sound cannot be relied on with autoplay');
-    assert.ok(!/\bmuted\b/.test(video[0]), '<video> must not be forced muted — the customer’s tap should start it with sound');
+    assert.ok(!/\bautoplay\b/.test(video[0]), '<video> must not autoplay');
+    assert.ok(!/\bmuted\b/.test(video[0]), '<video> must not be forced muted in the static markup');
+    assert.ok(!/\bcontrols\b/.test(video[0]), '<video> must not show native controls before the customer taps play');
+  });
+
+  test('a large custom play button sits centered over the poster', () => {
+    const videoBlock = step.slice(step.indexOf('spp__vet-video'), step.indexOf('spp__vet-video') + 1200);
+    const playBtn = /<button[^>]*spp__vet-video-play[^>]*>[\s\S]*?<\/button>/.exec(videoBlock);
+    assert.ok(playBtn, 'a .spp__vet-video-play button must exist over the video');
+    assert.match(playBtn[0], /aria-label="[^"]+"/, 'the play button must be described for screen readers');
+    assert.match(css, /\.spp__vet-video-play\s*\{[^}]*position:\s*absolute/, 'the play button must be positioned over the video');
+    assert.match(css, /\.spp__vet-video-play\s*\{[^}]*transform:\s*translate\(-50%,\s*-50%\)/, 'the play button must be centered');
   });
 
   test('carries both real first-frame posters for JS to pick from, with no static default to correct away from', () => {
@@ -493,7 +515,7 @@ describe('step 2 — before you cancel', () => {
     assert.match(step, /aria-label="[^"]+"/, 'the video must be described');
   });
 
-  test('syncVetVideo picks exactly one real file, by the real viewport, and never both', () => {
+  test('syncVetVideo picks exactly one real file, by the real viewport, and never both, and never autoplays', () => {
     fakeMatchMedia.isDesktop = true;
     const desktopVideo = fakeVetVideo();
     syncVetVideo.call({ root: { querySelector: () => desktopVideo } });
@@ -501,11 +523,10 @@ describe('step 2 — before you cancel', () => {
     assert.equal(desktopVideo.dataset.sppVetSrcActive, desktopVideo.dataset.sppVetSrcDesktop);
     assert.equal(desktopVideo.poster, desktopVideo.dataset.sppVetPosterDesktop, 'the poster must be swapped in lockstep with the src');
     assert.equal(desktopVideo.loadCalls, 1);
-    // Desktop must never autoplay — browsers block reliable autoplay
-    // with sound, so it only ever plays, with sound, from a real tap.
-    assert.equal(desktopVideo.autoplay, false);
-    assert.equal(desktopVideo.muted, false);
-    assert.equal(desktopVideo.playCalls, 0, 'must not call play() itself on desktop — that is the customer’s tap to do');
+    // Neither viewport autoplays — the video stays on its poster until
+    // the customer's own tap on the custom play button.
+    assert.equal(desktopVideo.muted, true);
+    assert.equal(desktopVideo.playCalls, 0, 'must not call play() itself — that is the customer’s tap to do');
 
     fakeMatchMedia.isDesktop = false;
     const mobileVideo = fakeVetVideo();
@@ -514,11 +535,8 @@ describe('step 2 — before you cancel', () => {
     assert.equal(mobileVideo.dataset.sppVetSrcActive, mobileVideo.dataset.sppVetSrcMobile);
     assert.equal(mobileVideo.poster, mobileVideo.dataset.sppVetPosterMobile);
     assert.notEqual(mobileVideo.src, mobileVideo.dataset.sppVetSrcDesktop, 'never both files at once');
-    // Mobile autoplays muted — browsers allow that — and the customer
-    // can unmute from the native controls at any time.
-    assert.equal(mobileVideo.autoplay, true);
     assert.equal(mobileVideo.muted, true);
-    assert.equal(mobileVideo.playCalls, 1, 'must explicitly call play(), not just set the attribute, to reliably start it');
+    assert.equal(mobileVideo.playCalls, 0, 'must not call play() itself — that is the customer’s tap to do');
   });
 
   test('syncVetVideo is a no-op once the matching src is already active', () => {
@@ -542,6 +560,40 @@ describe('step 2 — before you cancel', () => {
     const scrubbed = fakeVetVideo({ paused: true, currentTime: 4.2 });
     syncVetVideo.call({ root: { querySelector: () => scrubbed } });
     assert.equal(scrubbed.loadCalls, 0, 'a video already past 0:00 must be left alone even when paused');
+  });
+
+  test('tapping the custom play button unmutes at normal volume, reveals native controls, hides itself, and starts playback', () => {
+    const video = fakeVetVideo();
+    const playBtn = fakeVetPlayButton();
+    const container = {
+      querySelector: (sel) => (sel === '.spp__vet-video-el' ? video : sel === '.spp__vet-video-play' ? playBtn : null),
+    };
+    bindVetVideoControls.call({ root: { querySelector: () => container } });
+    assert.ok(playBtn.listeners.click, 'a click handler must be bound to the play button');
+
+    playBtn.listeners.click();
+    assert.equal(video.muted, false, 'sound must turn on automatically on tap');
+    assert.equal(video.volume, 1, 'must play at normal volume, not silently or at some reduced level');
+    assert.equal(video.getAttribute('controls'), '', 'native controls must appear once playback starts');
+    assert.equal(playBtn.hidden, true, 'the custom button must hide once playback starts');
+    assert.equal(video.playCalls, 1, 'must explicitly start playback on tap');
+  });
+
+  test('when the video ends, it returns to the poster with native controls gone and the custom play button back', () => {
+    const video = fakeVetVideo();
+    const playBtn = fakeVetPlayButton();
+    const container = {
+      querySelector: (sel) => (sel === '.spp__vet-video-el' ? video : sel === '.spp__vet-video-play' ? playBtn : null),
+    };
+    bindVetVideoControls.call({ root: { querySelector: () => container } });
+    playBtn.listeners.click();
+    assert.ok(video.listeners.ended, 'an ended handler must be bound to the video');
+
+    video.listeners.ended();
+    assert.equal(video.getAttribute('controls'), null, 'native controls must be removed once the video ends');
+    assert.equal(video.muted, true, 'must go silent again before the next tap');
+    assert.equal(video.loadCalls, 1, 'load() re-arms the poster — a played element would otherwise keep showing its last frame');
+    assert.equal(playBtn.hidden, false, 'the custom play button must reappear over the poster');
   });
 
   test('the old vet_video_url placeholder setting is gone — this IS the final video', () => {
