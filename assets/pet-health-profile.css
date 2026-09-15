@@ -1,0 +1,420 @@
+/*
+ * VetPets Pet Health Profile
+ * Scoped entirely under .vphp — nothing here can reach another template.
+ *
+ * Tokens below are transcribed from the approved Claude Design export
+ * ("Pet Health Profile.dc.html", VetPets Subscription Portal project) —
+ * exact hex values, radii and type scale, not a re-interpretation. The
+ * mock has exactly two fixed frame sizes (390px / 1160px); the desktop
+ * media query below reproduces its documented overrides at a real
+ * breakpoint, and the range between the two is ordinary fluid layout.
+ */
+
+/* ------------------------------------------------------------------ *
+ * Tokens
+ * ------------------------------------------------------------------ */
+.vphp {
+  --vphp-accent: #47B5E9;
+  --vphp-accent-hover: #2FA3DB;
+  --vphp-teal: #13B6B5;
+
+  --vphp-ink: #0F172A;
+  --vphp-body: #3D4A5C;
+  --vphp-muted: #727272;
+  --vphp-hint: #5C7184;
+  --vphp-base-text: #1A1A1A;
+
+  --vphp-bg-grad: linear-gradient(180deg, #FFFFFF 0%, #EFFBFF 45%, #D5F7FF 100%);
+  --vphp-bg: #F7FCFE;
+  --vphp-surface: #FFFFFF;
+  --vphp-surface-tint: #F2FAFE;
+  --vphp-surface-tint-2: #EAF6FD;
+  --vphp-tag-active-bg: #D5F7FF;
+  --vphp-tag-active-fg: #0F172A;
+  --vphp-tag-neutral-bg: #F1F5F8;
+  --vphp-tag-neutral-fg: #5C7184;
+
+  --vphp-disabled-bg: #DCE6EE;
+  --vphp-disabled-fg: #8C9AA8;
+  --vphp-danger: #D92D20;
+  --vphp-danger-hover: #B42318;
+  --vphp-danger-surface: #FBEAE9;
+
+  --vphp-border-card: rgba(71, 181, 233, .18);
+  --vphp-border-option: rgba(13, 35, 64, .14);
+  --vphp-border-option-selected: #47B5E9;
+  --vphp-border-input: rgba(13, 35, 64, .16);
+  --vphp-hair: rgba(13, 35, 64, .07);
+  --vphp-hair-2: rgba(13, 35, 64, .08);
+  --vphp-radio-ring: rgba(13, 35, 64, .26);
+
+  --vphp-shadow-card: 0 6px 18px rgba(13, 35, 64, .06);
+
+  --vphp-r-pill: 999px;
+  --vphp-r-card: 20px;
+  --vphp-r-card-sm: 16px;
+  --vphp-r-field: 14px;
+  --vphp-r-field-sm: 13px;
+  --vphp-r-indicator: 8px;
+
+  --vphp-font: "GeistVphp", "Geist", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --vphp-pad-x: 18px;
+  --vphp-tap: 44px;
+}
+
+/* ------------------------------------------------------------------ *
+ * Reset / shell
+ * ------------------------------------------------------------------ */
+.vphp *, .vphp *::before, .vphp *::after { box-sizing: border-box; }
+.vphp [hidden] { display: none !important; }
+
+.vphp {
+  font-family: var(--vphp-font);
+  color: var(--vphp-base-text);
+  background: var(--vphp-bg-grad);
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.vphp__skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--vphp-ink);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 0 0 8px 0;
+  z-index: 100;
+}
+.vphp__skip:focus { left: 0; }
+
+/* ------------------------------------------------------------------ *
+ * Header
+ * ------------------------------------------------------------------ */
+.vphp__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px var(--vphp-pad-x);
+  background: var(--vphp-surface);
+  border-bottom: 1px solid var(--vphp-hair-2);
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 5;
+}
+.vphp__logo { height: 22px; width: auto; display: block; }
+.vphp__badge {
+  padding: 7px 12px;
+  border-radius: var(--vphp-r-pill);
+  background: var(--vphp-surface-tint-2);
+  color: var(--vphp-ink);
+  font: 600 11.5px/1 var(--vphp-font);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------------ *
+ * Scroll region / columns
+ * ------------------------------------------------------------------ */
+.vphp__main { flex: 1; }
+.vphp__pad { padding: 22px var(--vphp-pad-x) 40px; }
+.vphp__col { max-width: 620px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+.vphp__col--narrow { max-width: 480px; }
+.vphp__center { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+
+.vphp__screen { display: block; }
+.vphp__screen[hidden] { display: none; }
+[data-vphp-screen="loading"],
+[data-vphp-screen="signin"],
+[data-vphp-screen="error"] { min-height: 60vh; display: flex; align-items: center; justify-content: center; }
+
+/* ------------------------------------------------------------------ *
+ * Typography
+ * ------------------------------------------------------------------ */
+.vphp__h1 { margin: 0; font: 700 25px/1.2 var(--vphp-font); color: var(--vphp-ink); }
+.vphp__h1--q { font-size: 25px; }
+.vphp__body { margin: 0; font: 400 16.5px/1.55 var(--vphp-font); color: var(--vphp-body); }
+.vphp__q-sub { margin: -6px 0 0; font: 400 15.5px/1.5 var(--vphp-font); color: var(--vphp-body); }
+.vphp__fineprint { margin: 0; font: 500 13px/1.4 var(--vphp-font); color: var(--vphp-muted); }
+.vphp__eyebrow {
+  display: block;
+  margin-bottom: 12px;
+  font: 600 11px/1 var(--vphp-font);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--vphp-teal);
+}
+.vphp__disclaimer { margin: 12px 0 0; font: 500 12.5px/1.5 var(--vphp-font); color: var(--vphp-muted); }
+.vphp__link {
+  background: none; border: none; padding: 0; cursor: pointer;
+  font: 600 14px/1.4 var(--vphp-font); color: var(--vphp-accent); text-decoration: underline;
+}
+.vphp__link:hover { color: var(--vphp-accent-hover); }
+
+/* ------------------------------------------------------------------ *
+ * Buttons
+ * ------------------------------------------------------------------ */
+.vphp__btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 56px; padding: 0 22px;
+  border-radius: var(--vphp-r-pill);
+  font: 600 16.5px/1 var(--vphp-font);
+  cursor: pointer; text-decoration: none;
+  border: none; background: var(--vphp-accent); color: #fff;
+  transition: background 160ms ease-out, border-color 160ms ease-out, color 160ms ease-out;
+}
+.vphp__btn--primary:hover { background: var(--vphp-accent-hover); }
+.vphp__btn--primary:disabled,
+.vphp__btn--primary[aria-disabled="true"] {
+  background: var(--vphp-disabled-bg); color: var(--vphp-disabled-fg); cursor: not-allowed;
+}
+.vphp__btn--outline {
+  background: var(--vphp-surface); color: var(--vphp-ink);
+  border: 1.5px solid var(--vphp-accent);
+}
+.vphp__btn--outline:hover { background: var(--vphp-surface-tint); }
+.vphp__btn--full { width: 100%; }
+.vphp__btn--foot { flex: 1; min-height: 54px; font-size: 15.5px; }
+.vphp__btn.vphp__btn--outline.vphp__btn--foot { flex: 0 0 34%; border-width: 1.5px; border-color: var(--vphp-border-input); }
+.vphp__btn.vphp__btn--outline.vphp__btn--foot:hover { border-color: var(--vphp-accent); }
+
+/* ------------------------------------------------------------------ *
+ * Icon circle
+ * ------------------------------------------------------------------ */
+.vphp__icon-circle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 62px; height: 62px; border-radius: 50%;
+  background: var(--vphp-surface-tint-2);
+}
+.vphp__icon-circle--danger { background: var(--vphp-danger-surface); }
+.vphp__icon-circle--done { background: var(--vphp-tag-active-bg); }
+
+/* ------------------------------------------------------------------ *
+ * Progress bar
+ * ------------------------------------------------------------------ */
+.vphp__progress { display: flex; flex-direction: column; gap: 8px; }
+.vphp__progress-row { display: flex; align-items: center; justify-content: space-between; }
+.vphp__progress-label {
+  font: 600 12.5px/1 var(--vphp-font); letter-spacing: .06em; text-transform: uppercase; color: var(--vphp-teal);
+}
+.vphp__progress-pct { font: 600 12.5px/1 var(--vphp-font); color: var(--vphp-muted); }
+.vphp__progress-track { height: 8px; border-radius: var(--vphp-r-pill); background: var(--vphp-surface-tint-2); overflow: hidden; }
+.vphp__progress-fill { height: 100%; border-radius: var(--vphp-r-pill); background: var(--vphp-accent); transition: width 240ms ease-out; }
+
+/* ------------------------------------------------------------------ *
+ * Choice grid (single + multi select)
+ * ------------------------------------------------------------------ */
+.vphp__opts { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.vphp__opts--2col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+.vphp__choice {
+  display: flex; align-items: center; gap: 12px;
+  width: 100%; min-height: 56px; padding: 13px 16px;
+  border: 1px solid var(--vphp-border-option); border-radius: var(--vphp-r-card-sm);
+  background: var(--vphp-surface); text-align: left; cursor: pointer;
+  font: inherit; color: inherit;
+  transition: border-color 140ms ease-out, background 140ms ease-out;
+}
+.vphp__choice:hover { border-color: var(--vphp-border-option-selected); }
+.vphp__choice.is-selected { border: 1.5px solid var(--vphp-border-option-selected); background: var(--vphp-surface-tint); }
+
+.vphp__choice-indicator {
+  flex: 0 0 auto; width: 24px; height: 24px; border-radius: 50%;
+  border: 1.5px solid var(--vphp-radio-ring);
+  display: flex; align-items: center; justify-content: center;
+}
+.vphp__choice.is-selected .vphp__choice-indicator { border-color: var(--vphp-accent); }
+.vphp__choice-indicator--square { border-radius: var(--vphp-r-indicator); }
+.vphp__choice-indicator svg { opacity: 0; transition: opacity 120ms ease-out; }
+.vphp__choice.is-selected .vphp__choice-indicator svg { opacity: 1; }
+
+.vphp__choice-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.vphp__choice-label { font: 600 15.5px/1.3 var(--vphp-font); color: var(--vphp-ink); }
+.vphp__choice-hint { font: 500 13px/1.3 var(--vphp-font); color: var(--vphp-hint); }
+
+.vphp__multi-hint { margin: -6px 0 0; font: 500 13px/1.4 var(--vphp-font); color: var(--vphp-muted); }
+
+/* ------------------------------------------------------------------ *
+ * Text input card (name / breed, and the "Other" branch)
+ * ------------------------------------------------------------------ */
+.vphp__field-card {
+  background: var(--vphp-surface); border: 1px solid var(--vphp-border-card);
+  border-radius: var(--vphp-r-card); padding: 20px; box-shadow: var(--vphp-shadow-card);
+}
+.vphp__field-label {
+  display: block; margin-bottom: 9px; font: 600 13px/1 var(--vphp-font); color: var(--vphp-ink);
+}
+.vphp__field-input {
+  width: 100%; min-height: 56px; padding: 0 16px;
+  border: 1.5px solid var(--vphp-border-input); border-radius: var(--vphp-r-field);
+  font: 400 16.5px/1 var(--vphp-font); color: var(--vphp-base-text);
+  background: var(--vphp-surface); outline: none;
+}
+.vphp__field-input:focus {
+  border-color: var(--vphp-accent);
+  box-shadow: 0 0 0 4px rgba(71, 181, 233, .2);
+}
+.vphp__field-helper { margin: 13px 0 0; font: 500 13px/1.5 var(--vphp-font); color: var(--vphp-muted); }
+
+.vphp__other-field { margin-top: 14px; }
+.vphp__other-field .vphp__field-input { min-height: 48px; border-radius: var(--vphp-r-field-sm); font-size: 15.5px; }
+
+/* ------------------------------------------------------------------ *
+ * Footer bar
+ * ------------------------------------------------------------------ */
+.vphp__footbar {
+  position: sticky; bottom: env(safe-area-inset-bottom, 0px);
+  background: var(--vphp-surface); border-top: 1px solid var(--vphp-hair-2);
+  padding: 14px var(--vphp-pad-x) calc(18px + env(safe-area-inset-bottom, 0px));
+}
+.vphp__footinner { max-width: 620px; margin: 0 auto; display: flex; gap: 10px; }
+
+.vphp__save-row { min-height: 18px; }
+.vphp__saving { font: 500 13px/1.4 var(--vphp-font); color: var(--vphp-muted); }
+.vphp__save-error {
+  margin: 0; font: 600 13.5px/1.4 var(--vphp-font); color: var(--vphp-danger);
+}
+
+/* ------------------------------------------------------------------ *
+ * Welcome benefits + skip row
+ * ------------------------------------------------------------------ */
+.vphp__benefits { display: flex; flex-direction: column; gap: 14px; }
+.vphp__benefit { display: flex; gap: 12px; align-items: flex-start; }
+.vphp__benefit-icon {
+  flex: 0 0 auto; width: 38px; height: 38px; border-radius: 50%;
+  background: var(--vphp-surface-tint-2); display: flex; align-items: center; justify-content: center;
+}
+.vphp__benefit b { font: 600 15px/1.3 var(--vphp-font); color: var(--vphp-ink); }
+.vphp__benefit p { margin: 3px 0 0; font: 400 14px/1.5 var(--vphp-font); color: var(--vphp-body); }
+
+.vphp__skip-row { margin: 4px 0 0; text-align: center; font: 500 13.5px/1.5 var(--vphp-font); color: var(--vphp-muted); }
+
+/* ------------------------------------------------------------------ *
+ * Generic card + summary (done screen)
+ * ------------------------------------------------------------------ */
+.vphp__card {
+  background: var(--vphp-surface); border: 1px solid var(--vphp-border-card);
+  border-radius: var(--vphp-r-card); padding: 20px; box-shadow: var(--vphp-shadow-card);
+}
+.vphp__summary-list { margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.vphp__summary-list > div { display: flex; justify-content: space-between; gap: 12px; }
+.vphp__summary-list dt { margin: 0; font: 500 14px/1.4 var(--vphp-font); color: var(--vphp-muted); }
+.vphp__summary-list dd { margin: 0; font: 600 14px/1.4 var(--vphp-font); color: var(--vphp-ink); text-align: right; }
+
+/* ------------------------------------------------------------------ *
+ * Loading spinner
+ * ------------------------------------------------------------------ */
+.vphp__spinner {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 3px solid var(--vphp-surface-tint-2); border-top-color: var(--vphp-accent);
+  animation: vphp-spin 800ms linear infinite;
+}
+.vphp__loading-text { margin: 0; font: 500 14.5px/1.5 var(--vphp-font); color: var(--vphp-muted); }
+@keyframes vphp-spin { to { transform: rotate(360deg); } }
+
+/* ------------------------------------------------------------------ *
+ * Profile view
+ * ------------------------------------------------------------------ */
+.vphp__profile-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.vphp__profile-head-text { flex: 1; min-width: 0; }
+.vphp__profile-line { margin: 2px 0 0; font: 500 14.5px/1.4 var(--vphp-font); color: var(--vphp-body); }
+.vphp__avatar {
+  flex: 0 0 auto; width: 48px; height: 48px; border-radius: 50%;
+  background: var(--vphp-accent); color: #fff; display: flex; align-items: center; justify-content: center;
+  font: 700 18px/1 var(--vphp-font);
+}
+.vphp__pill {
+  padding: 6px 12px; border-radius: var(--vphp-r-pill); font: 600 12px/1 var(--vphp-font);
+}
+.vphp__pill--done { background: var(--vphp-tag-active-bg); color: var(--vphp-tag-active-fg); }
+.vphp__pill--started { background: var(--vphp-tag-neutral-bg); color: var(--vphp-tag-neutral-fg); }
+
+.vphp__detail-grid { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 18px; }
+.vphp__detail-grid dt { margin: 0; font: 500 12.5px/1.3 var(--vphp-font); color: var(--vphp-muted); }
+.vphp__detail-grid dd { margin: 3px 0 0; font: 600 15px/1.3 var(--vphp-font); color: var(--vphp-ink); }
+
+.vphp__concerns { display: flex; flex-direction: column; gap: 14px; }
+.vphp__concern-group b { display: block; margin-bottom: 8px; font: 600 13.5px/1.3 var(--vphp-font); color: var(--vphp-ink); }
+.vphp__tag-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.vphp__tag {
+  padding: 5px 11px; border-radius: var(--vphp-r-pill); font: 600 12.5px/1 var(--vphp-font);
+}
+.vphp__tag--active { background: var(--vphp-tag-active-bg); color: var(--vphp-tag-active-fg); }
+.vphp__tag--neutral { background: var(--vphp-tag-neutral-bg); color: var(--vphp-tag-neutral-fg); }
+
+.vphp__product-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; }
+.vphp__product-row + .vphp__product-row { border-top: 1px solid var(--vphp-hair); }
+.vphp__product-icon {
+  flex: 0 0 auto; width: 34px; height: 34px; border-radius: 10px;
+  background: var(--vphp-surface-tint-2); display: flex; align-items: center; justify-content: center;
+}
+.vphp__product-name { font: 600 14.5px/1.3 var(--vphp-font); color: var(--vphp-ink); }
+.vphp__product-meta { font: 500 12.5px/1.3 var(--vphp-font); color: var(--vphp-muted); }
+.vphp__empty-note { margin: 0; font: 500 14px/1.5 var(--vphp-font); color: var(--vphp-muted); }
+
+.vphp__focus-list { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 8px; }
+.vphp__focus-list li { font: 500 14.5px/1.5 var(--vphp-font); color: var(--vphp-body); }
+
+.vphp__profile-actions { display: flex; flex-direction: column; gap: 10px; }
+
+.vphp__other-pets { display: flex; flex-direction: column; gap: 10px; }
+.vphp__pet-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.vphp__pet-chip {
+  display: flex; align-items: center; gap: 8px; padding: 8px 14px 8px 8px;
+  border: 1px solid var(--vphp-border-option); border-radius: var(--vphp-r-pill);
+  background: var(--vphp-surface); cursor: pointer; font: inherit; color: inherit;
+}
+.vphp__pet-chip:hover { border-color: var(--vphp-accent); }
+.vphp__pet-chip-avatar {
+  width: 26px; height: 26px; border-radius: 50%; background: var(--vphp-surface-tint-2);
+  display: flex; align-items: center; justify-content: center; font: 700 12px/1 var(--vphp-font); color: var(--vphp-ink);
+}
+.vphp__pet-chip-name { font: 600 13.5px/1.2 var(--vphp-font); color: var(--vphp-ink); }
+.vphp__pet-chip-status { font: 500 11.5px/1.2 var(--vphp-font); color: var(--vphp-muted); }
+
+/* ------------------------------------------------------------------ *
+ * Dev switcher (mirrors .spp__dev)
+ * ------------------------------------------------------------------ */
+.vphp__dev {
+  position: fixed; right: 12px; bottom: 12px; z-index: 200;
+  width: 220px; max-height: 70vh; overflow-y: auto;
+  background: #fff; border: 1px solid var(--vphp-hair-2); border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(13, 35, 64, .2);
+  font: 500 12.5px/1.4 var(--vphp-font);
+}
+.vphp__dev-toggle {
+  display: block; width: 100%; text-align: left; padding: 10px 12px;
+  border: none; background: var(--vphp-ink); color: #fff; border-radius: 14px 14px 0 0;
+  font: 700 12px/1 var(--vphp-font); cursor: pointer;
+}
+.vphp__dev-body { padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; }
+.vphp__dev-group { margin-top: 8px; font: 700 10.5px/1 var(--vphp-font); letter-spacing: .06em; text-transform: uppercase; color: var(--vphp-muted); }
+.vphp__dev-body button {
+  text-align: left; padding: 6px 8px; border: 1px solid var(--vphp-hair-2); border-radius: 8px;
+  background: #fff; cursor: pointer; font: inherit; color: var(--vphp-ink);
+}
+.vphp__dev-body button:hover { border-color: var(--vphp-accent); }
+.vphp__dev-note { margin: 8px 0 0; color: var(--vphp-muted); }
+
+/* ------------------------------------------------------------------ *
+ * Desktop — reproduces the mock's documented [data-device="desktop"]
+ * overrides at a real breakpoint instead of a second fixed frame size.
+ * ------------------------------------------------------------------ */
+@media (min-width: 900px) {
+  .vphp__pad { padding: 40px var(--vphp-pad-x) 56px; }
+  .vphp__col { max-width: 760px; gap: 22px; }
+  .vphp__col--narrow { max-width: 620px; }
+  .vphp__h1 { font-size: 32px; }
+  .vphp__h1--q { font-size: 32px; }
+  .vphp__opts--2col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .vphp__footinner { max-width: 760px; }
+  .vphp__footbar { padding: 16px 40px; }
+  .vphp__detail-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vphp__spinner { animation-duration: 1600ms; }
+  .vphp__progress-fill, .vphp__choice, .vphp__btn { transition: none; }
+}

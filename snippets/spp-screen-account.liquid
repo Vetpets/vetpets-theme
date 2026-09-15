@@ -35,6 +35,17 @@
         no address or payment-method mutation in the portal's scope.
       {%- endcomment -%}
       <div class="spp__card spp__card--rows">
+        {%- comment -%}
+          Real page navigation, not an in-app screen switch (data-spp-go) —
+          this is how an already-authenticated portal customer reaches the
+          Pet Health Profile flow (requirement: same saved profile, same
+          session). See assets/pet-health-profile-adapter.js for why the
+          session that page reads is the one this session already set.
+        {%- endcomment -%}
+        <a class="spp__row" href="/pages/pet-health-profile">
+          <span class="spp__row-label">Pet health profile</span>
+          {% render 'spp-icon', icon: 'chevron-right' %}
+        </a>
         <div class="spp__row" style="cursor:default;">
           <span class="spp__row-label">Delivery address</span>
           <span class="spp__row-value" data-spp-field="subscription.addressShort">Portland, OR</span>

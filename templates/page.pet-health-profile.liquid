@@ -1,0 +1,20 @@
+{% layout 'pet-health-profile' %}
+{%- comment -%}
+  VetPets Pet Health Profile — the approved 12-question flow.
+
+  Template suffix: pet-health-profile
+  Intended page:   /pages/pet-health-profile
+
+  DEV theme only, hitting /apps/subscriptions-dev — see
+  sections/pet-health-profile.liquid's "Data source" settings. The Shopify
+  Page itself is deliberately not created/published as part of this
+  change, following the same convention subscription-portal already
+  established (see templates/page.subscription-portal.liquid): on the
+  DEV theme this template is reachable on any existing page via
+  ?view=pet-health-profile until a founder decision creates the real page
+  with this handle.
+
+  Uses layout/pet-health-profile.liquid so no global theme header,
+  navigation or footer renders around the questionnaire.
+{%- endcomment -%}
+{% section 'pet-health-profile' %}

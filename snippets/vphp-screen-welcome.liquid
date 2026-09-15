@@ -1,0 +1,51 @@
+{%- comment -%}
+  Welcome / intro — ported field-for-field from the approved Claude Design
+  export. Title copy has two variants depending on entry path
+  (data-vphp-field toggles the text at runtime); everything else is
+  identical either way.
+{%- endcomment -%}
+<section class="vphp__screen" data-vphp-screen="welcome" hidden aria-labelledby="vphp-welcome-h">
+  <div class="vphp__col vphp__col--narrow">
+    <div class="vphp__center">
+      <span class="vphp__icon-circle">{% render 'spp-icon', icon: 'paw', size: 28, stroke: '#47B5E9' %}</span>
+      <h1 class="vphp__h1" id="vphp-welcome-h" data-vphp-field="welcome.title">Create Your Pet's Free Health Profile</h1>
+      <p class="vphp__body">
+        Answer a few quick questions to receive personalized care recommendations for your pet.
+      </p>
+      <button type="button" class="vphp__btn vphp__btn--primary vphp__btn--full" data-vphp-act="start-pet">
+        Create My Pet's Profile
+        {% render 'spp-icon', icon: 'arrow-right', size: 18 %}
+      </button>
+      <p class="vphp__fineprint">12 questions &middot; about 2 minutes &middot; free</p>
+    </div>
+
+    <div class="vphp__benefits">
+      <div class="vphp__benefit">
+        <span class="vphp__benefit-icon">{% render 'spp-icon', icon: 'sparkle', size: 20, stroke: '#13B6B5' %}</span>
+        <div>
+          <b>Care suggestions that fit</b>
+          <p>Routine advice matched to what you actually see day to day.</p>
+        </div>
+      </div>
+      <div class="vphp__benefit">
+        <span class="vphp__benefit-icon">{% render 'spp-icon', icon: 'paw', size: 20, stroke: '#13B6B5' %}</span>
+        <div>
+          <b>One profile per pet</b>
+          <p>Add every pet in the house and keep their needs separate.</p>
+        </div>
+      </div>
+      <div class="vphp__benefit">
+        <span class="vphp__benefit-icon">{% render 'vphp-icon', icon: 'refresh', size: 20, stroke: '#13B6B5' %}</span>
+        <div>
+          <b>Change it whenever</b>
+          <p>Answers stay editable from your account at any time.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="vphp__skip-row" data-vphp-skip-row>
+      <button type="button" class="vphp__link" data-vphp-act="skip-welcome">Skip for now</button>
+      &mdash; you can start this any time from your account.
+    </p>
+  </div>
+</section>

@@ -1,0 +1,48 @@
+{%- comment -%}
+  The 12 questions — ONE dynamic screen, matching the approved Claude
+  Design export's own architecture (a single parameterized `question`
+  screen driven by a `step` index, not 12 near-duplicate screens). Copy,
+  options and kind (text / single-select / multi-select) for each of the
+  12 steps live in the QUESTIONS array in assets/pet-health-profile.js and
+  are rendered into the containers below at runtime; see that file for the
+  exact wording ported from the design.
+
+  Autosave: assets/pet-health-profile.js calls save-progress after every
+  answered Continue — data-vphp-saving / data-vphp-save-error are not in
+  the approved mockup (which has no backend to fail against) but are
+  required so a failed autosave is visible rather than silently lost.
+{%- endcomment -%}
+<section class="vphp__screen" data-vphp-screen="question" hidden aria-labelledby="vphp-q-h">
+  <div class="vphp__col vphp__col--narrow" data-vphp-col>
+    <div class="vphp__progress">
+      <div class="vphp__progress-row">
+        <span class="vphp__progress-label" data-vphp-field="q.stepLabel">Question 1 of 12</span>
+        <span class="vphp__progress-pct" data-vphp-field="q.stepPct">8%</span>
+      </div>
+      <div class="vphp__progress-track">
+        <div class="vphp__progress-fill" data-vphp-bar style="width:8%;"></div>
+      </div>
+    </div>
+
+    <h1 class="vphp__h1 vphp__h1--q" id="vphp-q-h" data-vphp-field="q.title">What is your pet's name?</h1>
+    <p class="vphp__q-sub" data-vphp-field="q.sub">Everything after this is written for them by name.</p>
+
+    <div data-vphp-qcontent></div>
+
+    <p class="vphp__multi-hint" data-vphp-multi-hint hidden>Select all that apply.</p>
+
+    <div class="vphp__save-row">
+      <span class="vphp__saving" data-vphp-saving hidden>Saving&hellip;</span>
+      <p class="vphp__save-error" data-vphp-save-error hidden role="alert">
+        Couldn't save your last answer. Check your connection and try again.
+      </p>
+    </div>
+  </div>
+
+  <div class="vphp__footbar" data-vphp-chrome>
+    <div class="vphp__footinner">
+      <button type="button" class="vphp__btn vphp__btn--outline vphp__btn--foot" data-vphp-act="back">Back</button>
+      <button type="button" class="vphp__btn vphp__btn--primary vphp__btn--foot" data-vphp-act="next" disabled>Continue</button>
+    </div>
+  </div>
+</section>

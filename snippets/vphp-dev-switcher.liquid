@@ -1,0 +1,28 @@
+{%- comment -%}
+  Review-only screen switcher, mirroring snippets/spp-dev-switcher.liquid.
+  Hidden unless the URL carries ?vphp_dev=1 (or the section setting is on).
+  Mock mode only — performs no mutation beyond the mock adapter.
+{%- endcomment -%}
+<aside class="vphp__dev" data-vphp-dev hidden aria-label="Pet health profile review switcher">
+  <button type="button" class="vphp__dev-toggle" data-vphp-dev-toggle>Review tools</button>
+
+  <div class="vphp__dev-body">
+    <div class="vphp__dev-group">Screens</div>
+    <button type="button" data-vphp-go="loading">Loading</button>
+    <button type="button" data-vphp-go="signin">Sign in</button>
+    <button type="button" data-vphp-go="error">Error</button>
+    <button type="button" data-vphp-go="welcome">Welcome</button>
+    <button type="button" data-vphp-go="question" data-vphp-dev-step="0">Q1 &middot; Name</button>
+    <button type="button" data-vphp-go="question" data-vphp-dev-step="1">Q2 &middot; Species</button>
+    <button type="button" data-vphp-go="question" data-vphp-dev-step="2">Q3 &middot; Breed</button>
+    <button type="button" data-vphp-go="question" data-vphp-dev-step="11">Q12 &middot; Priority</button>
+    <button type="button" data-vphp-go="done">Done</button>
+    <button type="button" data-vphp-go="profile">Saved profile</button>
+
+    <div class="vphp__dev-group">Entry path</div>
+    <button type="button" data-vphp-dev-entry="phx">PHX thank-you page</button>
+    <button type="button" data-vphp-dev-entry="portal">Portal (signed in)</button>
+
+    <p class="vphp__dev-note">Mock data. Nothing here reaches the real backend.</p>
+  </div>
+</aside>

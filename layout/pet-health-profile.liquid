@@ -1,0 +1,64 @@
+<!doctype html>
+{%- comment -%}
+  VetPets Pet Health Profile — dedicated layout.
+
+  Used only by templates/page.pet-health-profile.liquid. Mirrors
+  layout/subscription-portal.liquid: no store header, navigation,
+  announcement bar or footer — this is a standalone account experience,
+  reached either from the PHX order thank-you page (no login) or from an
+  already-authenticated subscription-portal session in the same tab.
+
+  DEV ONLY while the approved 12-question flow is reviewed. Not linked from
+  global navigation; see sections/pet-health-profile.liquid for the data
+  mode / base path settings that keep it pointed at
+  /apps/subscriptions-dev.
+{%- endcomment -%}
+<html class="vphp-html" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#47B5E9">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    <title>Pet Health Profile &ndash; VetPets</title>
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    {%- comment -%}
+      Reuses the EyeWipes prelander's committed Geist files under a local
+      family name — layout/subscription-portal.liquid references
+      spp-geist-*.woff2 files that were never committed as theme assets
+      (they 404 silently; the browser falls back). Pointing at a real,
+      already-shipped asset avoids repeating that gap.
+    {%- endcomment -%}
+    <link rel="preload" as="font" type="font/woff2" href="{{ 'ewpl-geist-regular.woff2' | asset_url }}" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="{{ 'ewpl-geist-semibold.woff2' | asset_url }}" crossorigin>
+    <link rel="stylesheet" href="{{ 'pet-health-profile.css' | asset_url }}">
+
+    <style>
+      @font-face { font-family: "GeistVphp"; src: url("{{ 'ewpl-geist-regular.woff2'   | asset_url }}") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+      @font-face { font-family: "GeistVphp"; src: url("{{ 'ewpl-geist-medium.woff2'    | asset_url }}") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+      @font-face { font-family: "GeistVphp"; src: url("{{ 'ewpl-geist-semibold.woff2'  | asset_url }}") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+      @font-face { font-family: "GeistVphp"; src: url("{{ 'ewpl-geist-bold.woff2'      | asset_url }}") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+
+      html, body { margin: 0; padding: 0; background: #F7FCFE; }
+      body { overflow-x: hidden; }
+    </style>
+
+    {{ content_for_header }}
+  </head>
+  <body class="vphp-body">
+    {{ content_for_layout }}
+    <script src="{{ 'subscription-portal-adapter.js' | asset_url }}" defer></script>
+    <script src="{{ 'pet-health-profile-adapter.js' | asset_url }}" defer></script>
+    <script src="{{ 'pet-health-profile.js' | asset_url }}" defer></script>
+  </body>
+</html>

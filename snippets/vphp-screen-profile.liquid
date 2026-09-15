@@ -1,0 +1,65 @@
+{%- comment -%}
+  Saved profile view — ported field-for-field from the approved Claude
+  Design export's "profile" screen. Reached from "View Profile" on the
+  completion screen, or directly on return visits once a pet's assessment
+  is completed (see [[dev-theme-visual-qa-via-mock-mode]]-style boot logic
+  in assets/pet-health-profile.js). "Edit Profile" re-enters the 12
+  questions pre-filled, matching the design's own editPet() behaviour —
+  a full re-walk that updates the same pet rather than creating a new one.
+{%- endcomment -%}
+<section class="vphp__screen" data-vphp-screen="profile" hidden aria-labelledby="vphp-profile-h">
+  <div class="vphp__col">
+    <div class="vphp__card vphp__profile-head">
+      <span class="vphp__avatar" data-vphp-field="profile.initial">B</span>
+      <div class="vphp__profile-head-text">
+        <h1 class="vphp__h1" id="vphp-profile-h" data-vphp-field="profile.name">Pet</h1>
+        <p class="vphp__profile-line" data-vphp-field="profile.line">Dog &middot; Breed &middot; Age</p>
+      </div>
+      <span class="vphp__pill vphp__pill--done">Profile complete</span>
+    </div>
+
+    <div class="vphp__card">
+      <span class="vphp__eyebrow">Pet details</span>
+      <dl class="vphp__detail-grid" data-vphp-details></dl>
+    </div>
+
+    <div class="vphp__card">
+      <span class="vphp__eyebrow">Main care concerns</span>
+      <div class="vphp__concerns" data-vphp-concerns></div>
+    </div>
+
+    <div class="vphp__card">
+      <span class="vphp__eyebrow">Current routine</span>
+      <p class="vphp__body" data-vphp-field="profile.routine">&mdash;</p>
+      <p class="vphp__body">
+        Most wants to improve:
+        <b data-vphp-field="profile.priority">&mdash;</b>
+      </p>
+    </div>
+
+    <div class="vphp__card">
+      <span class="vphp__eyebrow">VetPets products in use</span>
+      <div data-vphp-products></div>
+    </div>
+
+    <div class="vphp__card">
+      <span class="vphp__eyebrow">Personalized care focus</span>
+      <p class="vphp__body" data-vphp-field="profile.focusSub">Suggested routine order based on your pet's answers.</p>
+      <ol class="vphp__focus-list" data-vphp-focus></ol>
+      <p class="vphp__disclaimer">
+        General care suggestions only &mdash; not veterinary advice or a diagnosis. Speak to your vet
+        about anything that concerns you.
+      </p>
+    </div>
+
+    <div class="vphp__profile-actions">
+      <button type="button" class="vphp__btn vphp__btn--primary vphp__btn--full" data-vphp-act="edit-profile">Edit Profile</button>
+      <button type="button" class="vphp__btn vphp__btn--outline vphp__btn--full" data-vphp-act="add-another-pet">Add Another Pet</button>
+    </div>
+
+    <div class="vphp__other-pets" data-vphp-other-pets hidden>
+      <span class="vphp__eyebrow">Your other pets</span>
+      <div class="vphp__pet-chips" data-vphp-pet-chips></div>
+    </div>
+  </div>
+</section>

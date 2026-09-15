@@ -1,0 +1,12 @@
+{%- comment -%}
+  Loading — not in the approved mockup (a local-state-only design has
+  nothing to wait on); added because a real boot exchanges a handoff and
+  fetches the customer's pets before anything else can render. Styled with
+  the design's own accent colour rather than a generic spinner.
+{%- endcomment -%}
+<section class="vphp__screen" data-vphp-screen="loading" aria-live="polite">
+  <div class="vphp__col vphp__col--narrow vphp__center">
+    <span class="vphp__spinner" aria-hidden="true"></span>
+    <p class="vphp__loading-text" data-vphp-field="loading.message">Loading your pet's profile&hellip;</p>
+  </div>
+</section>

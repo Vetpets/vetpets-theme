@@ -1,0 +1,30 @@
+{%- comment -%}
+  Completion — ported field-for-field from the approved Claude Design
+  export. Shown once, immediately after the 12th question is submitted;
+  returning later goes straight to the saved-profile screen instead (see
+  assets/pet-health-profile.js's boot logic).
+{%- endcomment -%}
+<section class="vphp__screen" data-vphp-screen="done" hidden aria-labelledby="vphp-done-h">
+  <div class="vphp__col vphp__col--narrow">
+    <div class="vphp__center">
+      <span class="vphp__icon-circle vphp__icon-circle--done">{% render 'spp-icon', icon: 'check', size: 26, stroke: '#13B6B5' %}</span>
+      <h1 class="vphp__h1" id="vphp-done-h" data-vphp-field="done.title">Your Pet's Health Profile Is Ready</h1>
+      <p class="vphp__body" data-vphp-field="done.body">
+        Your answers have been saved to your VetPets account. We'll use them to provide more
+        relevant care recommendations for your pet.
+      </p>
+      <button type="button" class="vphp__btn vphp__btn--primary vphp__btn--full" data-vphp-act="view-profile">
+        <span data-vphp-field="done.viewLabel">View Profile</span>
+        {% render 'spp-icon', icon: 'arrow-right', size: 18 %}
+      </button>
+      <button type="button" class="vphp__btn vphp__btn--outline vphp__btn--full" data-vphp-act="add-another-pet">
+        Add Another Pet
+      </button>
+    </div>
+
+    <div class="vphp__card vphp__summary">
+      <span class="vphp__eyebrow">What you told us</span>
+      <dl class="vphp__summary-list" data-vphp-summary></dl>
+    </div>
+  </div>
+</section>

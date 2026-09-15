@@ -1,0 +1,60 @@
+{%- comment -%}
+  Pet Health Profile — icons not already covered by snippets/spp-icon.liquid
+  (chevron-left, arrow-right, check, check-circle, paw, eye and ear are
+  reused directly from that shared set instead of being duplicated here).
+
+  Usage: {% render 'vphp-icon', icon: 'tooth', size: 20 %}
+{%- endcomment -%}
+
+{%- liquid
+  assign s = size | default: 20
+  assign sc = stroke | default: 'currentColor'
+-%}
+
+{%- case icon -%}
+
+  {%- when 'tooth' -%}
+    <svg width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <path d="M12 3.2c-2.1 0-3 1.1-4.3 1.1-1.8 0-3.1-1.5-3.9-.6-.9 1-.2 3 .1 4.7.4 2.3.7 5.9 1.6 8.4.5 1.4 1.1 2.4 2 2.4.9 0 1-2.1 1.4-3.7.3-1.2.6-2.3 1.1-2.3s.8 1.1 1.1 2.3c.4 1.6.5 3.7 1.4 3.7.9 0 1.5-1 2-2.4.9-2.5 1.2-6.1 1.6-8.4.3-1.7 1-3.7.1-4.7-.8-.9-2.1.6-3.9.6-1.3 0-2.2-1.1-4.3-1.1z" stroke="{{ sc }}" stroke-width="1.6" stroke-linejoin="round"/>
+    </svg>
+
+  {%- when 'scale' -%}
+    <svg width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <rect x="3.4" y="3.4" width="17.2" height="17.2" rx="4.5" stroke="{{ sc }}" stroke-width="1.6"/>
+      <path d="M7.4 14.6a4.6 4.6 0 109.2 0" stroke="{{ sc }}" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M12 14.6V7.4" stroke="{{ sc }}" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+
+  {%- when 'calendar' -%}
+    <svg width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <rect x="3.4" y="5.2" width="17.2" height="15.4" rx="2.6" stroke="{{ sc }}" stroke-width="1.6"/>
+      <path d="M3.4 9.6h17.2M8 3.2v3.6M16 3.2v3.6" stroke="{{ sc }}" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+
+  {%- when 'box' -%}
+    <svg width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <path d="M3.6 8.2L12 3.6l8.4 4.6v8L12 20.8l-8.4-4.6v-8z" stroke="{{ sc }}" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M3.6 8.2L12 12.8l8.4-4.6M12 12.8v8" stroke="{{ sc }}" stroke-width="1.6" stroke-linejoin="round"/>
+    </svg>
+
+  {%- when 'target' -%}
+    <svg width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <circle cx="12" cy="12" r="8.6" stroke="{{ sc }}" stroke-width="1.6"/>
+      <circle cx="12" cy="12" r="4.6" stroke="{{ sc }}" stroke-width="1.6"/>
+      <circle cx="12" cy="12" r="1.4" fill="{{ sc }}"/>
+    </svg>
+
+  {%- when 'refresh' -%}
+    <svg width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <path d="M4 12a8 8 0 0113.9-5.4M20 12a8 8 0 01-13.9 5.4" stroke="{{ sc }}" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M17 3.6v3.6h-3.6M7 20.4v-3.6h3.6" stroke="{{ sc }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+
+  {%- when 'alert' -%}
+    <svg width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <path d="M12 3.6l9.6 16.6H2.4L12 3.6z" stroke="{{ sc }}" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M12 9.6v4.4" stroke="{{ sc }}" stroke-width="1.8" stroke-linecap="round"/>
+      <circle cx="12" cy="17" r="1" fill="{{ sc }}"/>
+    </svg>
+
+{%- endcase -%}

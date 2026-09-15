@@ -1,0 +1,153 @@
+{%- comment -%}
+  VetPets Pet Health Profile — section shell.
+
+  Renders the questionnaire chrome and composes every screen snippet. All
+  behaviour lives in assets/pet-health-profile.js; all data comes from the
+  adapter in assets/pet-health-profile-adapter.js, which shares its
+  session (sessionStorage key `vp_portal_session`) and handoff handling
+  (`vp_handoff`) with assets/subscription-portal-adapter.js — the same
+  session either page mints is honoured by the other, which is what lets
+  an existing portal customer reach this page already signed in.
+
+  Ported field-for-field from the approved Claude Design export
+  ("Pet Health Profile.dc.html" in the VetPets Subscription Portal
+  project): 1 welcome screen, the 12 questions in their approved order and
+  copy, a completion screen and a saved-profile view. That export has no
+  loading, error, sign-in or resume state (it is a local-state-only
+  mockup with no backend) — those four are added here because this build
+  talks to a real API and cannot leave a stalled request unexplained; they
+  reuse the export's own colour and type tokens rather than inventing a
+  different visual language.
+
+  SECURITY: no key, token, secret or vendor hostname may be emitted here.
+{%- endcomment -%}
+
+{%- liquid
+  assign dev_default = false
+  if section.settings.enable_dev_switcher
+    assign dev_default = true
+  endif
+-%}
+
+<div
+  class="vphp"
+  id="vphp-root"
+  data-vphp-portal
+  data-vphp-mode="{{ section.settings.data_mode | default: 'mock' }}"
+  data-vphp-base-path="{{ section.settings.base_path | default: '/apps/subscriptions-dev' }}"
+  data-vphp-locale="{{ request.locale.iso_code | default: 'en' }}"
+  data-vphp-latency="{{ section.settings.mock_latency | default: 500 }}"
+  data-vphp-mock-entry="{{ section.settings.mock_entry | default: 'phx' }}"
+  data-vphp-mock-has-profile="{{ section.settings.mock_has_profile | default: false }}"
+  data-vphp-dev-default="{{ dev_default }}"
+>
+  <a class="vphp__skip" href="#vphp-main">Skip to pet health profile content</a>
+
+  <header class="vphp__header" data-vphp-chrome>
+    <img
+      class="vphp__logo"
+      src="{{ 'ewof-vetpets-logo.webp' | asset_url }}"
+      alt="VetPets"
+      width="112"
+      height="24"
+    >
+    <span class="vphp__badge">Pet health profile</span>
+  </header>
+
+  <main class="vphp__main" id="vphp-main" tabindex="-1">
+    <div class="vphp__pad">
+      {% render 'vphp-screen-loading' %}
+      {% render 'vphp-screen-signin' %}
+      {% render 'vphp-screen-error' %}
+      {% render 'vphp-screen-welcome' %}
+      {% render 'vphp-screen-question' %}
+      {% render 'vphp-screen-done' %}
+      {% render 'vphp-screen-profile' %}
+    </div>
+  </main>
+
+  {% render 'vphp-dev-switcher' %}
+</div>
+
+{% schema %}
+{
+  "name": "Pet health profile",
+  "tag": "div",
+  "class": "vphp-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Data source"
+    },
+    {
+      "type": "select",
+      "id": "data_mode",
+      "label": "Data mode",
+      "info": "Mock runs the in-browser prototype for visual QA. Live calls the DEV backend at the base path below and makes mock data impossible.",
+      "options": [
+        { "value": "mock", "label": "Mock (prototype)" },
+        { "value": "live", "label": "Live (DEV backend)" }
+      ],
+      "default": "mock"
+    },
+    {
+      "type": "text",
+      "id": "base_path",
+      "label": "Backend base path",
+      "info": "Same-origin App Proxy path only. Must stay the DEV proxy (/apps/subscriptions-dev) — never the production path — until this flow is founder-approved to ship.",
+      "default": "/apps/subscriptions-dev"
+    },
+    {
+      "type": "header",
+      "content": "Prototype data"
+    },
+    {
+      "type": "paragraph",
+      "content": "These settings only affect mock mode. No real pet profile is read or changed while mock is selected."
+    },
+    {
+      "type": "select",
+      "id": "mock_entry",
+      "label": "Simulated entry path",
+      "options": [
+        { "value": "phx", "label": "PHX thank-you page (no login)" },
+        { "value": "portal", "label": "Already-signed-in portal customer" }
+      ],
+      "default": "phx"
+    },
+    {
+      "type": "checkbox",
+      "id": "mock_has_profile",
+      "label": "Start with an existing completed profile",
+      "info": "Only meaningful for the portal entry path — a PHX entry always starts a fresh pet.",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "mock_latency",
+      "label": "Simulated request latency",
+      "min": 0,
+      "max": 2000,
+      "step": 100,
+      "unit": "ms",
+      "default": 500
+    },
+    {
+      "type": "header",
+      "content": "Review tools"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_dev_switcher",
+      "label": "Always show the screen switcher",
+      "info": "Leave off. The switcher is available on demand by adding ?vphp_dev=1 to the preview URL.",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pet health profile"
+    }
+  ]
+}
+{% endschema %}

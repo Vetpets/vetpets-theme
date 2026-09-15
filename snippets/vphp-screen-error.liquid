@@ -1,0 +1,20 @@
+{%- comment -%}
+  Error — not in the approved mockup (no fetch exists in that local-state
+  prototype, so nothing there can fail). Added for the real network/server
+  failures a live backend can return; "Try again" re-runs whatever step
+  failed rather than reloading the whole page where that would lose
+  in-memory answers.
+{%- endcomment -%}
+<section class="vphp__screen" data-vphp-screen="error" hidden aria-live="assertive">
+  <div class="vphp__col vphp__col--narrow vphp__center">
+    <span class="vphp__icon-circle vphp__icon-circle--danger">{% render 'vphp-icon', icon: 'alert', size: 26 %}</span>
+    <h1 class="vphp__h1" data-vphp-field="error.title">Something went wrong</h1>
+    <p class="vphp__body" data-vphp-field="error.message">
+      We couldn't reach your pet's profile just now. Check your connection and try again.
+    </p>
+    <button type="button" class="vphp__btn vphp__btn--primary" data-vphp-act="retry">
+      {% render 'vphp-icon', icon: 'refresh', size: 18 %}
+      Try again
+    </button>
+  </div>
+</section>

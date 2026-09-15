@@ -1,0 +1,23 @@
+{%- comment -%}
+  Sign-in required — not in the approved mockup, which only models the two
+  entry paths that already carry identity (a PHX handoff, or an
+  already-authenticated portal tab). This page mints no login of its own
+  (magic-link email always lands on /pages/manage-subscription — see
+  src/routes/auth.ts's PORTAL_PATH in the backend); reached only when
+  neither a handoff nor an existing session is present, e.g. a bookmarked
+  link opened cold or a session that expired.
+{%- endcomment -%}
+<section class="vphp__screen" data-vphp-screen="signin" hidden>
+  <div class="vphp__col vphp__col--narrow vphp__center">
+    <span class="vphp__icon-circle">{% render 'spp-icon', icon: 'paw', size: 26, stroke: '#47B5E9' %}</span>
+    <h1 class="vphp__h1">Sign in to continue</h1>
+    <p class="vphp__body">
+      Your pet's health profile lives in your VetPets account. Sign in from your
+      subscription portal to pick up where you left off.
+    </p>
+    <a class="vphp__btn vphp__btn--primary" data-vphp-signin-link href="/pages/manage-subscription">
+      Go to my account
+      {% render 'spp-icon', icon: 'arrow-right', size: 18 %}
+    </a>
+  </div>
+</section>
