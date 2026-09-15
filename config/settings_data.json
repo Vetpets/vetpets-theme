@@ -670,7 +670,7 @@
       "subscription-portal": {
         "type": "subscription-portal",
         "settings": {
-          "data_mode": "live",
+          "data_mode": "mock",
           "base_path": "/apps/subscriptions",
           "prototype_today": "2026-08-21",
           "prototype_currency": "USD",
