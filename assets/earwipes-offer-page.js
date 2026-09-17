@@ -289,6 +289,20 @@
     });
   }
 
+  /* Kaching's admin-configured tier title (e.g. "Starter Kit", "Value Pack")
+     is internal naming, not the approved customer-facing kit name. Kaching
+     still owns quantity, price and discount for this bar; only the visible
+     title text is relabelled to the approved name from this page's own
+     schema settings. */
+  function decorateTitles() {
+    $$('.kaching-bundles__bar[data-deal-bar-id]').forEach(function (bar) {
+      var tier = tierForBar(bar);
+      if (!tier || !tier.name) return;
+      var title = bar.querySelector('.kaching-bundles__bar-content-left > *:first-child');
+      if (title && title.textContent !== tier.name) title.textContent = tier.name;
+    });
+  }
+
   /* teal "discount applied" line, and the RoutineCare free-shipping note */
   function decorateStatics() {
     $$('.kaching-bundles__bar[data-deal-bar-id]').forEach(function (bar) {
@@ -339,6 +353,7 @@
     decorateGifts();
     decorateStatics();
     decorateBadges();
+    decorateTitles();
     var bar = barNow;
     var tier = tierForBar(bar);
     var plan = fieldValue('selling_plan');
