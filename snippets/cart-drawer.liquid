@@ -149,15 +149,19 @@
                               <div class="cart-item__media" role="cell">
                                 {%- comment -%}
                                   VetPets offer-page bundle image.
-                                  The FreshWipes offer page (?view=freshwipes-offer-page) tags only its MAIN
-                                  product line with private _vp_* properties so this drawer can show the
-                                  2/4/6-pack the customer actually selected instead of the single-jar
-                                  product image. Free-gift lines and every other product carry no
-                                  _vp_offer_source, so they fall through to the unchanged item.image path.
+                                  The FreshWipes offer page (?view=freshwipes-offer-page) and the EarWipes
+                                  offer page (?view=earwipes-offer-page) tag only their MAIN product line
+                                  with private _vp_* properties so this drawer can show the 2/4/6-jar bundle
+                                  the customer actually selected instead of the single-jar product image.
+                                  Free-gift lines and every other product carry no _vp_offer_source, so they
+                                  fall through to the unchanged item.image path. EyeWipes does not set these
+                                  properties, so it is unaffected by this check either way.
                                 {%- endcomment -%}
                                 {%- assign vp_bundle_image = '' -%}
-                                {%- if item.properties._vp_offer_source == 'freshwipes-offer-page' and item.properties._vp_bundle_image != blank -%}
-                                  {%- assign vp_bundle_image = item.properties._vp_bundle_image -%}
+                                {%- if item.properties._vp_bundle_image != blank -%}
+                                  {%- if item.properties._vp_offer_source == 'freshwipes-offer-page' or item.properties._vp_offer_source == 'earwipes-offer-page' -%}
+                                    {%- assign vp_bundle_image = item.properties._vp_bundle_image -%}
+                                  {%- endif -%}
                                 {%- endif -%}
                                 {% if vp_bundle_image != '' %}
                                   {% comment %} Leave empty space due to a:empty CSS display: none rule {% endcomment %}
@@ -686,6 +690,8 @@
                     {% endif %}
                   </span>
                 </button>
+
+                
                 {%- if block.settings.show_additional_checkout_buttons and additional_checkout_buttons -%}
                   <div class="cart__dynamic-checkout-buttons additional-checkout-buttons">
                     {{ content_for_additional_checkout_buttons }}
