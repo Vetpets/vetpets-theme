@@ -1,0 +1,660 @@
+{%- comment -%}
+  EarWipes offer page — standard (evergreen) build
+  =================================================
+  Faithful Shopify implementation of the founder-approved Claude Design frames
+  "EarWipes Standard - Desktop.dc.html" / "EarWipes Standard - Mobile.dc.html"
+  (project: VetPets EarWipes Offer Page). The World Animal Week frames in the
+  same project are NOT implemented here and must stay Claude-Design-only.
+
+  Rendered only through templates/product.earwipes-offer-page.json, assigned to
+  the existing live EarWipes product. The canonical product URL is unchanged;
+  this page is reached via ?view=earwipes-offer-page, exactly like the proven
+  FreshWipes/EyeWipes offer pages.
+
+  COMMERCE OWNERSHIP
+  ------------------
+  Kaching Bundles is the source of truth for tier, quantity, deal, selling plan,
+  bundle properties and free gifts. Its app block is rendered below inside the
+  purchase module and its real controls stay authoritative — assets/earwipes-offer-page.css
+  restyles those exact nodes to the approved design rather than cloning them.
+
+  There is exactly ONE add-to-cart pathway: the theme's <product-form> rendered
+  in `.eawof-form-host`. The sticky bar and the final offer CTA are proxies that
+  submit that same form; they carry no quantity, gift or selling-plan logic.
+
+  DEVIATIONS FROM THE DESIGN FILE (documented, not silent)
+  ----------------------------------------------------------
+  1. Prices: the design file ships placeholder tier prices ($43/$66/$96) with its
+     own dev annotation admitting they "need confirming... confirm each figure in
+     Kaching before launch." This build uses the REAL, verified Kaching config for
+     the live EarWipes product (deal bars 60da5b14/542ff3c9/82e81df9 on product
+     10222498513163): $41 / $70 / $104 one-time, 20% off via the shared RoutineCare
+     selling plan (gid://shopify/SellingPlan/10423959819) = $32.80 / $56.00 / $83.20.
+  2. "Buy 2, Get 2 Free" is founder-prohibited on this standard page. It appeared
+     in the design's top bar, a tier corner badge (this is Kaching's OWN live admin
+     badge text on deal bar 542ff3c9 — see the CSS's `.kaching-bundles__bar-most-popular`
+     override), a CTA link and the final offer badge. All four are replaced with
+     compliant copy; the Kaching-rendered badge node is hidden and replaced with a
+     theme-owned "Most Popular" corner badge, same position/styling.
+  3. The design's ticking "Offer ends in HH:MM:SS" countdown was dropped — it isn't
+     tied to real inventory or time data, so it stays fake/resetting urgency. The
+     top bar keeps a rotating message strip instead (same proven mechanism already
+     used by the FreshWipes/EyeWipes offer pages).
+  4. Two of the design's approved copy variants differ between the Desktop and
+     Mobile frames. Where the choice affects a compliance guardrail (no "guarantees
+     results within a specific timeline"), the more conservative approved variant
+     was used: the guarantee card uses the Mobile title/body ("Try the routine for
+     100 days...") instead of the Desktop's "Cleaner ears in three weeks", and the
+     final offer card's third bullet uses the Mobile wording ("Backed by the 100-day
+     money-back guarantee") instead of the Desktop's "Cleaner ears in three weeks —
+     or every penny back". Every other line is the approved copy verbatim.
+{%- endcomment -%}
+
+{%- liquid
+  assign v = product.selected_or_first_available_variant
+  assign product_form_id = 'eawof-product-form-' | append: section.id
+-%}
+
+{{ 'earwipes-offer-page.css' | asset_url | stylesheet_tag }}
+
+<link rel="preload" as="image" href="{{ 'eawof-tier-2pack.jpg' | asset_url }}">
+<link rel="preload" as="image" href="{{ 'eawof-tier-4pack.jpg' | asset_url }}">
+<link rel="preload" as="image" href="{{ 'eawof-tier-6pack.jpg' | asset_url }}">
+
+<div id="earwipes-offer-page" data-rc="on" data-tier="build">
+
+  {%- comment -%} ---------- rotating announcement bar (no countdown, no scarcity copy) ---------- {%- endcomment -%}
+  <div class="topbar">
+    <div class="topbar-in">
+      <div class="announce" role="status" aria-label="Offer highlights">
+        <span class="announce-msg" data-announce-msg>
+          <svg class="announce-icon" data-announce-icon viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M11.5 3H5a2 2 0 0 0-2 2v6.5a2 2 0 0 0 .586 1.414l8.5 8.5a2 2 0 0 0 2.828 0l6.5-6.5a2 2 0 0 0 0-2.828l-8.5-8.5A2 2 0 0 0 11.5 3Z"></path>
+            <circle cx="7.25" cy="7.25" r="1.1" fill="currentColor" stroke="none"></circle>
+          </svg>
+          <span class="announce-text" data-announce-text>{{ section.settings.announce_msg1 }}</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ---------- SECTION 1 — above the fold ---------- {%- endcomment -%}
+  <section class="hero" id="eawof-hero">
+    <div class="hero-in">
+
+      {%- comment -%} gallery: tier-driven slide 1 + live PDP photography {%- endcomment -%}
+      <div class="gal">
+        <div class="g-badges" aria-live="polite">
+          <span class="g-pill">Build The Habit Kit · 4-Month Supply</span>
+          <span class="g-pill2" hidden></span>
+        </div>
+        <div class="railwrap">
+          <div class="rail" id="eawof-rail" tabindex="0" role="group" aria-label="EarWipes gallery — use left and right arrow keys">
+            <div class="slide s-offer">
+              <img
+                class="im im-fit"
+                id="eawof-tier-img"
+                src="{{ 'eawof-tier-4pack.jpg' | asset_url }}"
+                width="1254"
+                height="1254"
+                fetchpriority="high"
+                decoding="async"
+                alt="Four jars of VetPets EarWipes with the EarWipes e-book and a textured finger wipe">
+            </div>
+            {%- assign pdp_slides = 'https://shopvetpets.com/cdn/shop/files/Earww.jpg|The same dog ear photographed on day one and after fourteen days;https://shopvetpets.com/cdn/shop/files/Earww_1.jpg|Smooth wipes move buildup, textured wipes remove it;https://shopvetpets.com/cdn/shop/files/Earww_2.jpg|What came out of one ear in thirty seconds;https://shopvetpets.com/cdn/shop/files/Earww_3.jpg|Why owners switch from ear drops to EarWipes;https://shopvetpets.com/cdn/shop/files/Earww_4.jpg|Where the buildup actually starts — the part of the ear you clean;https://shopvetpets.com/cdn/shop/files/Earww_5.jpg|What to expect with a consistent daily routine;https://shopvetpets.com/cdn/shop/files/Earww_6.jpg|EarWipes compared with ear drops, cotton swabs and vet cleaning' | split: ';' -%}
+            {%- for s in pdp_slides -%}
+              {%- assign parts = s | split: '|' -%}
+              <div class="slide s-pdp">
+                <img class="im im-fit" src="{{ parts[0] }}" width="1080" height="1080" loading="lazy" decoding="async" alt="{{ parts[1] }}">
+              </div>
+            {%- endfor -%}
+            <div class="slide s-pdp">
+              <img class="im im-fit" src="{{ 'eawof-packshot.jpg' | asset_url }}" width="800" height="800" loading="lazy" decoding="async" alt="The VetPets EarWipes jar">
+            </div>
+          </div>
+          <button type="button" class="navbtn navbtn-p" aria-label="Previous image">&lsaquo;</button>
+          <button type="button" class="navbtn navbtn-n" aria-label="Next image">&rsaquo;</button>
+        </div>
+
+        <div class="dots" role="tablist" aria-label="Gallery slides">
+          {%- for i in (1..9) -%}
+            <button type="button" class="dot{% if forloop.first %} on{% endif %}" aria-label="Slide {{ i }}"></button>
+          {%- endfor -%}
+        </div>
+
+        <div class="thumbs" role="tablist" aria-label="Gallery thumbnails">
+          <button type="button" class="thumb on" aria-label="Selected kit bundle" aria-selected="true">
+            <img src="{{ 'eawof-tier-4pack.jpg' | asset_url }}" data-eawof-tier-thumb width="1254" height="1254" alt="">
+          </button>
+          {%- for s in pdp_slides -%}
+            {%- assign parts = s | split: '|' -%}
+            <button type="button" class="thumb" aria-label="{{ parts[1] }}" aria-selected="false">
+              <img src="{{ parts[0] }}" width="1080" height="1080" loading="lazy" alt="">
+            </button>
+          {%- endfor -%}
+          <button type="button" class="thumb" aria-label="The VetPets EarWipes jar" aria-selected="false">
+            <img src="{{ 'eawof-packshot.jpg' | asset_url }}" width="800" height="800" loading="lazy" alt="">
+          </button>
+        </div>
+      </div>
+
+      {%- comment -%} purchase module {%- endcomment -%}
+      <div class="buy">
+        <h1 class="h1">{{ section.settings.heading }}
+          <span class="h1-sub">{{ section.settings.subheading }}</span>
+        </h1>
+
+        <div class="rating" style="margin-top:11px">
+          <span class="stars" role="img" aria-label="Rated 4.9 out of 5">★★★★★</span>
+          <span>4.9/5 · 15,000+ Happy Customers</span>
+        </div>
+
+        <div class="bullets">
+          {%- assign bullets = 'Lifts wax and debris from the outer ear|Antibacterial texture removes odor-causing bacteria|30 seconds a day — no drops, no mess, no fight' | split: '|' -%}
+          {%- for b in bullets -%}
+            <div class="bullet">
+              {% render 'eawof-check', size: 19 %}
+              <span>{{ b }}</span>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <div class="pick-h">{{ section.settings.picker_heading }}</div>
+
+        {%- comment -%}
+          Kaching Bundles app block — the real tier radios, the real RoutineCare
+          subscription card and the real free-gift rows. Restyled by CSS, never cloned.
+        {%- endcomment -%}
+        <div class="eawof-kaching">
+          {%- for block in section.blocks -%}
+            {%- if block.type == '@app' -%}
+              {% render block %}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        {%- comment -%} the ONE authoritative add-to-cart pathway {%- endcomment -%}
+        <div class="eawof-form-host">
+          {%- if product != blank -%}
+            <product-form
+              id="ProductForm-{{ section.id }}"
+              class="product-form main-product-form"
+              data-section="{{ section.id }}"
+              data-main="true"
+            >
+              <div class="product-form__error-message-wrapper" role="alert" hidden>
+                <svg aria-hidden="true" focusable="false" class="icon icon-error" viewBox="0 0 13 13" width="13" height="13">
+                  <circle cx="6.5" cy="6.5" r="5.5" fill="#EB001B" stroke="#EB001B" stroke-width="0.7"></circle>
+                  <path d="M5.87413 3.52832L5.97439 7.57216H7.02713L7.12739 3.52832H5.87413ZM6.50076 9.66091C6.88091 9.66091 7.18169 9.37267 7.18169 9.00504C7.18169 8.63742 6.88091 8.34917 6.50076 8.34917C6.12061 8.34917 5.81982 8.63742 5.81982 9.00504C5.81982 9.37267 6.12061 9.66091 6.50076 9.66091Z" fill="white"></path>
+                </svg>
+                <span class="product-form__error-message"></span>
+              </div>
+
+              {%- form 'product',
+                product,
+                id: product_form_id,
+                class: 'form',
+                novalidate: 'novalidate',
+                data-type: 'add-to-cart-form'
+              -%}
+                <input type="hidden" name="id" value="{{ v.id }}" class="product-variant-id">
+                {%- comment -%}
+                  Private line-item properties for the cart drawer's bundle image.
+                  These ride the MAIN EarWipes item only. Kaching adds free gifts as
+                  separate lines and its `propagate_line_properties` flag is false, so
+                  gift lines never inherit them. The JS keeps tier/image in sync.
+                {%- endcomment -%}
+                <input type="hidden" name="properties[_vp_offer_source]" value="earwipes-offer-page">
+                <input type="hidden" name="properties[_vp_bundle_tier]" id="eawof-prop-tier" value="4-jar">
+                <input type="hidden" name="properties[_vp_bundle_image]" id="eawof-prop-image" value="{{ 'eawof-tier-4pack.jpg' | asset_url }}">
+                <button
+                  id="ProductSubmitButton-{{ section.id }}"
+                  type="submit"
+                  name="add"
+                  data-eawof-submit
+                  class="atc-button product-form__submit main-product-atc cta btn-buy"
+                  {% if v.available == false %}disabled{% endif %}
+                >
+                  <span><span data-eawof-cta-label>ADD TO CART — BUILD THE HABIT KIT</span> <span aria-hidden="true">→</span></span>
+                </button>
+              {%- endform -%}
+            </product-form>
+          {%- endif -%}
+        </div>
+
+        <div class="guar-row">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#13B6B5"></circle><path d="m7.4 12.3 3 3 6.2-6.6" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <span>100-Day Money-Back Guarantee</span>
+        </div>
+
+        <div class="pay">
+          <img class="pay-strip" src="{{ 'fwof-payment-badges.webp' | asset_url }}" width="700" height="64" loading="lazy" decoding="async" alt="Accepted payment methods: Mastercard, Visa, PayPal, American Express, Discover and Apple Pay">
+        </div>
+
+        <div class="secure">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="2.2" fill="#6B7A85"></rect><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="#6B7A85" stroke-width="2.2" stroke-linecap="round"></path></svg>
+          <span>All transactions are secure and encrypted</span>
+        </div>
+
+        {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url -%}
+
+        {%- comment -%} information panel {%- endcomment -%}
+        <div class="info">
+          <div class="info-tabs" role="tablist" aria-label="About EarWipes">
+            <button type="button" class="info-tab on" role="tab" aria-selected="true">Vet Reviewed</button>
+            <button type="button" class="info-tab" role="tab" aria-selected="false">Ingredients</button>
+            <button type="button" class="info-tab" role="tab" aria-selected="false">How To Use</button>
+            <button type="button" class="info-tab" role="tab" aria-selected="false">Benefits</button>
+          </div>
+          <div class="info-body">
+            <div class="info-panel" role="tabpanel">
+              <div class="vet">
+                <div class="vet-eyebrow">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.6 4.8 5.4v6.1c0 4.5 3 8.6 7.2 9.9 4.2-1.3 7.2-5.4 7.2-9.9V5.4L12 2.6Z" fill="#1F7FB8"></path><path d="m8.6 12.2 2.6 2.6 4.4-4.7" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  Veterinarian Reviewed
+                </div>
+                <h3 class="vet-h">A Practical Approach to Daily Ear Care</h3>
+                <div class="vet-grid">
+                  <p class="vet-p">EarWipes gives pet owners a simple, controlled way to help remove the visible wax and debris that collect in the outer ear each day. The textured wipes help lift buildup away instead of pushing it deeper, with no liquid to pour, making the routine easy to repeat consistently.</p>
+                  <div class="vet-row">
+                    <div class="vet-por"><img src="{{ 'fwpl-vet-portrait.webp' | asset_url }}" width="720" height="900" loading="lazy" alt="Dr. Michael Thompson, veterinarian at VetPets"></div>
+                    <div class="vet-who">
+                      <div class="vet-name">Reviewed by Dr. Michael Thompson</div>
+                      <div class="vet-role">Veterinarian · VetPets</div>
+                      <span class="vet-badge">
+                        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.6 4.8 5.4v6.1c0 4.5 3 8.6 7.2 9.9 4.2-1.3 7.2-5.4 7.2-9.9V5.4L12 2.6Z" fill="#FFFFFF"></path><path d="m8.6 12.2 2.6 2.6 4.4-4.7" stroke="#13B6B5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        Vet Reviewed
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="info-panel" role="tabpanel" hidden>
+              <div class="info-ing">
+                <div class="info-ing-r"><strong>EDI-purified water</strong> — base solution</div>
+                <div class="info-ing-r"><strong>Aloe Vera (Aloe Barbadensis)</strong> — soothes and moisturizes the skin around the ear</div>
+                <div class="info-ing-r"><strong>Chamomile (Chamomilla Recutita)</strong> — known for its gentle, anti-inflammatory properties</div>
+                <div class="info-ing-r"><strong>Glycerin</strong> — binds moisture and protects the skin</div>
+                <div class="info-ing-r"><strong>Ethylhexylglycerin</strong> — gentle preservative with antibacterial effect</div>
+                <div class="info-ing-r"><strong>Decyl Glucoside</strong> — mild cleansing surfactant from plants</div>
+                <div class="info-ing-r"><strong>Polyhexamethylene Biguanide Hydrochloride</strong> — antibacterial, prevents irritation</div>
+                <div class="info-ing-r"><strong>Vitamin E</strong> — strengthens and protects sensitive skin</div>
+              </div>
+              <div class="info-free">
+                <span>pH-balanced &amp; fragrance-free</span>
+                <span>Cruelty-free</span>
+                <span>No alcohol, parabens or sulfates</span>
+              </div>
+            </div>
+
+            <div class="info-panel" role="tabpanel" hidden>
+              <ul class="info-list">
+                {%- assign howto = 'Once daily is ideal for most dogs — one wipe per ear.|Wipe the visible part of the outer ear — never push into the ear canal.|No rinsing needed — use the wipe, then discard it.|After swimming or a bath, wipe the ears dry. Consistency matters more than frequency.' | split: '|' -%}
+                {%- for h in howto -%}
+                  <li class="info-li">{% render 'eawof-check', size: 16 %}<span>{{ h }}</span></li>
+                {%- endfor -%}
+              </ul>
+            </div>
+
+            <div class="info-panel" role="tabpanel" hidden>
+              <ul class="info-list">
+                {%- assign benefits = 'Textured surface lifts wax and debris without pushing it deeper.|Antibacterial texture removes odor-causing bacteria.|Safe for puppies, adult dogs and sensitive ears — no alcohol, no harsh chemicals.|A 30-second routine you can actually keep up with.|No liquid mess — and no wrestling with ear-drop bottles.' | split: '|' -%}
+                {%- for b in benefits -%}
+                  <li class="info-li">{% render 'eawof-check', size: 16 %}<span>{{ b }}</span></li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="urg">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 22 20H2L12 3Z" fill="#D64545"></path><path d="M12 9.5v4.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path><circle cx="12" cy="17" r="1.2" fill="#FFFFFF"></circle></svg>
+          <div class="urg-t">We are selling out more than expected. <strong>Order now before we run out again.</strong></div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  {%- comment -%} ---------- SECTION 2 — marquee ---------- {%- endcomment -%}
+  {%- assign claims = '45,000+ Happy Dog Owners|100-Day Money-Back Guarantee|pH-Balanced & Fragrance-Free|Works In 30 Seconds A Day' | split: '|' -%}
+  <div class="mq">
+    <ul class="eawof-sr">
+      {%- for c in claims -%}<li>{{ c }}</li>{%- endfor -%}
+    </ul>
+    <div class="mq-track">
+      {%- for group in (1..2) -%}
+        <div class="mq-group" aria-hidden="true">
+          {%- for copy in (1..2) -%}
+            {%- for c in claims -%}
+              <span class="mq-item"><span>{{ c }}</span>{% render 'eawof-paw' %}</span>
+            {%- endfor -%}
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {%- comment -%} ---------- SECTION 3 — proof ---------- {%- endcomment -%}
+  <section class="sec">
+    <div class="col-c">
+      <div class="eyebrow eyebrow-red">See it for yourself</div>
+      <h2 class="h2">The proof is <span class="accent">on the pad</span></h2>
+      <p class="lead">One pass around the accessible outer ear. Then look at the wipe.</p>
+      <div class="proof-grid">
+        {%- assign proofs = 'eawof-proof-light.jpg|Light wax and debris lifted from a dog’s outer ear onto an EarWipes wipe;eawof-proof-medium.jpg|A moderate amount of wax and debris lifted onto an EarWipes wipe;eawof-proof-heavy.jpg|Heavy wax and debris buildup lifted onto an EarWipes wipe' | split: ';' -%}
+        {%- for pr in proofs -%}
+          {%- assign pp = pr | split: '|' -%}
+          <div class="imw proof-tile">
+            <img class="im" src="{{ pp[0] | asset_url }}" width="1448" height="1086" loading="lazy" decoding="async" alt="{{ pp[1] }}">
+          </div>
+        {%- endfor -%}
+      </div>
+      <p class="body-copy">That brown is wax and debris that was sitting in the outer ear. How much comes off varies from dog to dog — paper towels and cotton pads tend to push it deeper instead of lifting it out.</p>
+      <a class="cta btn-outline" href="#eawof-hero">Shop The Routine ↑</a>
+    </div>
+  </section>
+
+  {%- comment -%} ---------- SECTION 3B — why texture matters ---------- {%- endcomment -%}
+  <section class="sec" id="eawof-mech">
+    <div class="col-c">
+      <div class="eyebrow" style="white-space:nowrap">Why texture matters</div>
+      <h2 class="h2">Why <span class="accent">textured wipes</span> lift what smooth wipes leave behind</h2>
+      <p class="lead">A smooth wipe glides across the surface. EarWipes' raised texture creates more contact points to catch and lift wax and debris from the outer ear.</p>
+
+      <div class="mech-grid">
+        <div class="mech-card mech-plain">
+          <span class="mech-label">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="#8494A0" stroke-width="2"></circle><path d="m8.6 8.6 6.8 6.8m0-6.8-6.8 6.8" stroke="#8494A0" stroke-width="2" stroke-linecap="round"></path></svg>
+            Ordinary smooth wipe
+          </span>
+          <div class="imw mech-media"><img class="im" src="{{ 'eawof-smooth-wipe.jpg' | asset_url }}" width="1448" height="1086" loading="lazy" decoding="async" alt="An ordinary smooth wipe"></div>
+          <h3 class="mech-h">Slides over stubborn buildup</h3>
+          <p class="mech-p">A flat surface makes limited contact with dried wax, allowing buildup to stay in the folds of the ear.</p>
+        </div>
+
+        <div class="mech-card mech-blue">
+          <span class="mech-label mech-label-on">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#13B6B5"></circle><path d="m7.4 12.3 3 3 6.2-6.6" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            Textured EarWipes wipe
+          </span>
+          <div class="imw mech-media"><img class="im" src="{{ 'eawof-textured-wipe.jpg' | asset_url }}" width="1448" height="1086" loading="lazy" decoding="async" alt="The textured EarWipes wipe"></div>
+          <h3 class="mech-h">Raised texture helps lift it away</h3>
+          <p class="mech-p">The soft raised pattern reaches around the buildup, helping catch and lift wax and debris during the daily wipe.</p>
+        </div>
+      </div>
+
+      <div class="mech-row">
+        <div class="mech-item">
+          <span class="mech-ic" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="#1F7FB8"><circle cx="6" cy="6" r="2"></circle><circle cx="12" cy="6" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="6" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="18" cy="12" r="2"></circle><circle cx="6" cy="18" r="2"></circle><circle cx="12" cy="18" r="2"></circle><circle cx="18" cy="18" r="2"></circle></svg></span>
+          <span><span class="mech-it">Textured surface</span><span class="mech-id">More contact with wax and debris in the outer ear.</span></span>
+        </div>
+        <div class="mech-item">
+          <span class="mech-ic" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="#1F7FB8"><path d="M12 2.8c3.4 4.3 6.4 8 6.4 11.4A6.4 6.4 0 0 1 12 21.2a6.4 6.4 0 0 1-6.4-7c0-3.4 3-7.1 6.4-11.4Z"></path></svg></span>
+          <span><span class="mech-it">Pre-moistened</span><span class="mech-id">Ready to use without rinsing, mixing or preparation.</span></span>
+        </div>
+        <div class="mech-item">
+          <span class="mech-ic" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#1F7FB8" stroke-width="2.2"></circle><path d="M12 7.4V12l3.4 2.2" stroke="#1F7FB8" stroke-width="2.2" stroke-linecap="round"></path></svg></span>
+          <span><span class="mech-it">30-second routine</span><span class="mech-id">Simple enough to repeat as part of daily care.</span></span>
+        </div>
+      </div>
+
+      <a class="cta btn-outline" href="#eawof-hero">Shop The Routine ↑</a>
+    </div>
+  </section>
+
+  {% render 'eawof-wave', down: true %}
+
+  {%- comment -%} ---------- SECTION 4 — first three weeks ---------- {%- endcomment -%}
+  <section class="sec sec-pale">
+    <div class="col-c">
+      <h2 class="h2">What the <span class="accent">first three weeks</span> look like</h2>
+      <div class="tl">
+        <div class="tl-line" aria-hidden="true"></div>
+        {%- assign weeks = 'Week 1|Start with the visible buildup. One gentle pass around the accessible outer-ear folds helps lift the wax and debris already sitting there.|Week 1 — visible outer-ear buildup before starting the EarWipes routine;Week 2|Less buildup has time to collect. With a consistent routine, you remove visible surface wax before it has as much time to accumulate.|Week 2 — visibly reduced surface buildup with a consistent EarWipes routine;Week 3|A clean ear becomes easier to maintain. The routine feels familiar, and the accessible outer ear looks visibly cleaner and well maintained.|Week 3 — a clean, well-maintained outer ear' | split: ';' -%}
+        {%- for w in weeks -%}
+          {%- assign wp = w | split: '|' -%}
+          {%- assign wi = forloop.index -%}
+          {%- assign wasset = 'eawof-progress-week-' | append: wi | append: '.jpg' -%}
+          <div class="tl-item">
+            <div class="tl-av tl-av-{{ wi }}"><img src="{{ wasset | asset_url }}" width="680" height="680" loading="lazy" decoding="async" alt="{{ wp[2] }}"></div>
+            <div class="tl-copy">
+              <div class="tl-chip">{{ wp[0] }}</div>
+              <p class="tl-text">{{ wp[1] }}</p>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+      <p class="body-copy" style="font-size:12.5px;color:var(--muted);max-width:720px">Every pet is different. Visible buildup depends on how much is present, how long it has been there and how consistently the routine is maintained.</p>
+      <a class="cta btn-outline" href="#eawof-hero">Shop The Routine ↑</a>
+    </div>
+  </section>
+
+  {% render 'eawof-wave' %}
+
+  {%- comment -%} ---------- SECTION 5 — reviews ---------- {%- endcomment -%}
+  <section class="sec">
+    <div class="col-c">
+      <h2 class="h2">45,000+ dog owners are <span class="accent">keeping ears clean without the stress</span></h2>
+      <div class="rv-grid">
+        {% render 'eawof-review', name: 'Emily R.', quote: '"Started using these wipes about 2 weeks ago and the scratching is almost completely gone. The smell disappeared too which is honestly the best part… He just sits there now, doesn&#39;t even try to pull away."' %}
+        {% render 'eawof-review', name: 'Michael T.', quote: '"Started cleaning his ears with these twice a week after his groomer recommended them. It&#39;s been 5 months and NO infections. My vet actually commented on how good his ears looked at his last checkup."' %}
+        {% render 'eawof-review', name: 'Sarah K.', quote: '"These wipes are so much easier — I just do it right after he swims while he&#39;s still tired. Takes maybe a minute for both ears. The smell doesn&#39;t come back anymore and his ears stay dry."' %}
+        {% render 'eawof-review', name: 'Linda M.', quote: '"These don&#39;t seem to bother her at all. I can actually see the brown gunk on the wipe when I&#39;m done… Her ears are finally that healthy pink color instead of inflamed."' %}
+        {% render 'eawof-review', name: 'James W.', quote: '"Started cleaning her ears with these right away, just a couple times a week. Six months later and we haven&#39;t had a single infection. Not one… Super easy to use and she doesn&#39;t fight me on it."' %}
+        {% render 'eawof-review', name: 'John B.', quote: '"Working. Up to the present.will advise you after 30days as recomended.Got my daughter to purchase some as well.After she had seen Buddy."' %}
+      </div>
+    </div>
+  </section>
+
+  {% render 'eawof-wave', down: true %}
+
+  {%- comment -%} ---------- SECTION 6 — guarantee + final offer ---------- {%- endcomment -%}
+  <section class="sec sec-pale" id="eawof-offer">
+    <div class="col-c" style="gap:9px">
+      <h2 class="h2">You're the kind of owner who notices. <span class="accent">The tools failed — not you.</span></h2>
+      <p class="lead" style="margin-bottom:8px">One textured wipe around the outer ear, once a day. That is the whole routine.</p>
+    </div>
+
+    <div class="guar">
+      <div class="guar-card">
+        <svg width="40" height="45" viewBox="0 0 44 50" fill="none" aria-hidden="true"><path d="M22 1.5 41.5 8.8v14.4c0 11.6-8.3 20.4-19.5 24.8C10.8 43.6 2.5 34.8 2.5 23.2V8.8L22 1.5Z" fill="#47B5E9"></path><path d="m13.5 24.5 5.5 5.5 11.5-11.5" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></svg>
+        <h3 class="guar-t">Try the routine for 100 days — or <span class="accent">every penny back</span></h3>
+        <p class="guar-c">Use EarWipes daily for up to 100 days. If they are not right for your pet, contact VetPets for a full refund. No questions, no forms, no hassle.</p>
+      </div>
+      <div class="guar-media"><img src="{{ 'eawof-ugc-collage.jpg' | asset_url }}" width="1098" height="618" loading="lazy" decoding="async" alt="A grid of photographs sent in by VetPets customers: dogs and cats at home alongside their jars of EarWipes, FreshWipes and EyeWipes"></div>
+    </div>
+
+    <div class="offer-wrap">
+      <div class="offer-badge">100-Day Risk-Free Home Trial + Free Gifts</div>
+      <div class="offer-card">
+        <div class="offer-media"><img src="{{ 'eawof-packshot.jpg' | asset_url }}" width="800" height="800" loading="lazy" decoding="async" alt="The VetPets EarWipes jar"></div>
+        <div class="offer-body">
+          <div class="rating">
+            <span class="stars" role="img" aria-label="Rated 4.9 out of 5">★★★★★</span>
+            <span>4.9/5 · 15,000+ Happy Customers</span>
+          </div>
+          <h3 class="offer-name">EarWipes — Gentle Care for Sensitive Ears</h3>
+          <div class="offer-bullets">
+            {%- assign obullets = 'Lifts the wax and debris that cause odor|Gentle enough for daily use — pH-balanced & fragrance-free|Backed by the 100-day money-back guarantee' | split: '|' -%}
+            {%- for b in obullets -%}
+              <div class="bullet">{% render 'eawof-check', size: 20 %}<span>{{ b }}</span></div>
+            {%- endfor -%}
+          </div>
+          <div class="lead" style="font-size:12px;color:var(--muted)">High demand — EarWipes tend to sell out. If this page is live, they're still in stock.</div>
+          <button type="button" class="cta btn-buy" data-eawof-submit>
+            <span><span data-eawof-cta-label>ADD TO CART — BUILD THE HABIT KIT</span> <span aria-hidden="true">→</span></span>
+          </button>
+          <div class="trustline" style="text-align:left">100-Day Money-Back Guarantee · Free &amp; Fast Shipping</div>
+          {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url -%}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% render 'eawof-wave' %}
+
+  {%- comment -%} ---------- SECTION 7 — FAQ (8) ---------- {%- endcomment -%}
+  <section class="sec">
+    <div class="col-c">
+      <div class="eyebrow" style="white-space:nowrap">Questions, answered</div>
+      <h2 class="h2">Everything you need to know <span class="accent">before starting</span></h2>
+      <div class="faq">
+        {%- assign faq_q = section.settings.faq_questions | newline_to_br | split: '<br />' -%}
+        {%- assign faq_a = section.settings.faq_answers | newline_to_br | split: '<br />' -%}
+        {%- for q in faq_q -%}
+          {%- assign qt = q | strip_newlines | strip -%}
+          {%- if qt != blank -%}
+            {%- assign at = faq_a[forloop.index0] | strip_newlines | strip -%}
+            <div class="faq-row">
+              <button type="button" class="faq-q" aria-expanded="false" aria-controls="eawof-faq-a{{ forloop.index0 }}">
+                <span>{{ qt }}</span><span class="faq-ic" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-wrap" id="eawof-faq-a{{ forloop.index0 }}">
+                <p class="faq-a">{{ at }}</p>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ---------- SECTION 8 — footer ---------- {%- endcomment -%}
+  <footer class="foot">
+    <img class="foot-logo" src="{{ 'fwof-vetpets-logo.webp' | asset_url }}" width="290" height="110" loading="lazy" decoding="async" alt="VetPets">
+  </footer>
+
+  {%- comment -%} ---------- sticky purchase bar ---------- {%- endcomment -%}
+  <div class="sticky eawof-sticky" role="region" aria-label="EarWipes offer">
+    <div class="sticky-in">
+      <div class="sticky-r1">
+        <div class="sticky-thumb"><img src="{{ 'eawof-tier-4pack.jpg' | asset_url }}" data-eawof-tier-thumb width="1254" height="1254" loading="lazy" alt=""></div>
+        <div class="sticky-copy">
+          <div class="sticky-offer">Build The Habit Kit</div>
+          <div class="sticky-sub">
+            <span class="sticky-price"></span>
+            <span class="sticky-rc" hidden><span class="sticky-rc-short">RC −20%</span><span class="sticky-rc-full">RoutineCare −20%</span></span>
+            <span class="sticky-sub-full">· 4.9/5 · 15,000+ Happy Customers</span>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="cta btn-buy" data-eawof-submit>
+        <span class="sticky-cta-full"><span data-eawof-cta-label>ADD TO CART — BUILD THE HABIT KIT</span> <span aria-hidden="true">→</span></span>
+        <span class="sticky-cta-short">Add To Cart <span aria-hidden="true">→</span></span>
+      </button>
+    </div>
+  </div>
+
+  {%- comment -%} tier map: deal ids are settings, not hardcoded constants {%- endcomment -%}
+  <script type="application/json" id="eawof-config">
+    {
+      "rc_note": {{ section.settings.rc_note | json }},
+      "announce": [
+        {{ section.settings.announce_msg1 | json }},
+        {{ section.settings.announce_msg2 | json }},
+        {{ section.settings.announce_msg3 | json }}
+      ],
+      "error_text": "Something went wrong adding this to your cart. Please try again.",
+      "tiers": [
+        {
+          "key": "start",
+          "deal_id": {{ section.settings.deal_start | json }},
+          "name": "Start The Routine Kit",
+          "cta": "ADD TO CART — START THE ROUTINE KIT",
+          "badge": "Start The Routine Kit · 2-Month Supply",
+          "pill": "",
+          "corner_badge": "",
+          "applied_label": "",
+          "prop_tier": "2-jar",
+          "image": {{ 'eawof-tier-2pack.jpg' | asset_url | json }},
+          "image_alt": "Two jars of VetPets EarWipes with the EarWipes e-book and a textured finger wipe"
+        },
+        {
+          "key": "build",
+          "deal_id": {{ section.settings.deal_build | json }},
+          "name": "Build The Habit Kit",
+          "cta": "ADD TO CART — BUILD THE HABIT KIT",
+          "badge": "Build The Habit Kit · 4-Month Supply",
+          "pill": "",
+          "corner_badge": "Most Popular",
+          "applied_label": "Your Build The Habit Kit discount is applied",
+          "prop_tier": "4-jar",
+          "image": {{ 'eawof-tier-4pack.jpg' | asset_url | json }},
+          "image_alt": "Four jars of VetPets EarWipes with the EarWipes e-book and a textured finger wipe"
+        },
+        {
+          "key": "multi",
+          "deal_id": {{ section.settings.deal_multi | json }},
+          "name": "Multi-Pet Relief Plan",
+          "cta": "ADD TO CART — MULTI-PET RELIEF PLAN",
+          "badge": "Multi-Pet Relief Plan · 6-Month Supply",
+          "pill": "Best For Multi-Pet Households",
+          "corner_badge": "Best For Multi-Pet Households",
+          "applied_label": "Your Multi-Pet Relief Plan discount is applied",
+          "prop_tier": "6-jar",
+          "image": {{ 'eawof-tier-6pack.jpg' | asset_url | json }},
+          "image_alt": "Six jars of VetPets EarWipes with the EarWipes e-book and a textured finger wipe"
+        }
+      ]
+    }
+  </script>
+</div>
+
+<script src="{{ 'earwipes-offer-page.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "EarWipes offer page",
+  "tag": "div",
+  "class": "earwipes-offer-page-section",
+  "blocks": [{ "type": "@app" }],
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Add the Kaching Bundles app block to this section. Kaching stays the source of truth for tier, quantity, selling plan and free gifts — this section only restyles it."
+    },
+    { "type": "header", "content": "Top bar — rotating announcement messages" },
+    { "type": "text", "id": "announce_msg1", "label": "Message 1", "default": "100-Day Risk-Free Home Trial" },
+    { "type": "text", "id": "announce_msg2", "label": "Message 2", "default": "Free Shipping with RoutineCare" },
+    { "type": "text", "id": "announce_msg3", "label": "Message 3", "default": "Free Gifts Included" },
+    { "type": "header", "content": "Hero" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Clean, Fresh Ears In 30 Seconds A Day" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Textured antibacterial wipes for dogs with wax buildup, odor & itchy ears" },
+    { "type": "text", "id": "picker_heading", "label": "Plan picker heading", "default": "Choose Your Plan" },
+    { "type": "text", "id": "rc_note", "label": "RoutineCare note", "default": "Free shipping on every order" },
+    { "type": "header", "content": "PayFac subscription disclosure" },
+    {
+      "type": "paragraph",
+      "content": "Resolved from the shared \"Save 20% with RoutineCare\" selling plan (gid://shopify/SellingPlan/10423959819): billing/delivery interval is 28 days, one flat percentage price policy with no after-cycle step (no trial). Update this text only if that selling plan's cadence changes."
+    },
+    { "type": "text", "id": "rc_frequency_label", "label": "RoutineCare billing frequency", "default": "28 days" },
+    { "type": "text", "id": "manage_subscription_url", "label": "Manage Subscription link", "default": "https://shopvetpets.com/pages/manage-subscription" },
+    { "type": "header", "content": "Kaching deal IDs" },
+    {
+      "type": "paragraph",
+      "content": "Verified 2026-09-17 from the live EarWipes product (gid://shopify/Product/10222498513163) deal-block config. If a deal is rebuilt in Kaching, update the ID here — the page falls back to on-page order if an ID no longer matches."
+    },
+    { "type": "text", "id": "deal_start", "label": "Start The Routine Kit deal ID (2 Month Supply, $41)", "default": "60da5b14-2381-4859-9876-186cc95a2d62" },
+    { "type": "text", "id": "deal_build", "label": "Build The Habit Kit deal ID (4 Month Supply, $70)", "default": "542ff3c9-8b85-489a-9891-d137cf7eb560" },
+    { "type": "text", "id": "deal_multi", "label": "Multi-Pet Relief Plan deal ID (6 Month Supply, $104)", "default": "82e81df9-215a-4903-a3c1-e5e6c864d067" },
+    { "type": "header", "content": "FAQ" },
+    {
+      "type": "textarea",
+      "id": "faq_questions",
+      "label": "Questions (one per line, max 8)",
+      "default": "How soon will I see a difference?\nAre EarWipes safe for sensitive ears and puppies?\nCan the wax and the odor come back?\nHow often should I use EarWipes, and do I need to rinse afterward?\nWhat if my dog dislikes having their ears touched?\nHow long does one jar last, and which plan should I choose?\nWhat makes EarWipes different from paper towels, cotton pads and ear drops?\nHow do RoutineCare and the 100-day money-back guarantee work?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_answers",
+      "label": "Answers (one per line, same order)",
+      "default": "You may see the wax and debris EarWipes removes on the wipe from the very first use. How quickly the ears look and smell cleaner depends on how much buildup is present, how long it has been there and how consistently you follow the routine.\nEarWipes are designed for gentle external use on the outer ear of dogs, including puppies and sensitive ears, when used as directed. Use a fresh wipe for each ear and never push the wipe into the ear canal. If your dog has persistent redness, swelling, pain, discharge or constant head shaking, contact your veterinarian.\nEarWipes remove the wax, dirt and debris that collect in the outer ear. Because moisture and wax are produced continuously, buildup and odor can gradually return if the daily routine is stopped — particularly after swimming or a bath.\nUse EarWipes once daily as part of your dog's regular care routine. With a fresh wipe for each ear, gently clean the visible part of the outer ear, then discard the wipe. No rinsing, mixing or preparation is needed.\nStart slowly and let your dog sniff the wipe first. Choose a calm moment, keep the first sessions short and reward relaxed behavior afterward. Never force the routine. Most dogs become more comfortable when the process stays gentle, predictable and quick.\nEach EarWipes jar contains 50 wipes. Used once a day, one jar typically lasts around seven weeks for one dog. Start The Routine Kit is the smallest option, Build The Habit Kit provides a longer routine, and the Multi-Pet Relief Plan is best suited to longer use or homes with more than one pet. Actual duration depends on the number of pets and wipes used.\nEarWipes are made specifically for daily external care of the outer ear. Their raised textured surface creates more contact with wax and debris and lifts it away, while paper towels and cotton pads can push it deeper. There is no liquid to pour, so the routine avoids the mess of ear-drop bottles. EarWipes are pre-moistened, pH-balanced, fragrance-free and alcohol-free.\nRoutineCare saves 20% and includes free shipping on every recurring order. Deliveries can be skipped, changed or cancelled when needed. Your purchase is also protected by our 100-day money-back guarantee—if EarWipes are not right for your pet, contact VetPets within 100 days of purchase for help with your refund."
+    }
+  ],
+  "presets": [{ "name": "EarWipes offer page" }]
+}
+{% endschema %}
