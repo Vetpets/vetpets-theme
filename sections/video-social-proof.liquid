@@ -586,8 +586,10 @@
     overscroll-behavior-x: contain;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    /* Horizontal swipe is the rail's, vertical scrolling stays with the page. */
-    touch-action: pan-y pinch-zoom;
+    /* Horizontal swipe is the rail's, vertical scrolling stays with the page.
+       pan-x (not pan-y) is what hands touch panning to this axis - pan-y here
+       was backwards and blocked the only gesture this element scrolls on. */
+    touch-action: pan-x pinch-zoom;
     padding-bottom: 4px;
   }
 
