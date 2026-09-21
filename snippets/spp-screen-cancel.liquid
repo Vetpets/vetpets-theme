@@ -429,75 +429,219 @@
   </div>
 </section>
 
-{%- comment -%} ---------- 6 · Retention ---------- {%- endcomment -%}
+{%- comment -%} ---------- 6 · Adjust your routine ---------- {%- endcomment -%}
 {%- comment -%}
-  THE ACCEPTANCE ACTION IS GATED.
+  Step 6 of the approved "VetPets Portal V2" cancel flow: the reason-
+  personalized "Adjust your routine" screen. It keeps the screen key
+  `cancel-offer` (and so every existing back/forward/tracking hook that
+  names it), but what it SHOWS now depends on the reason chosen on step 5:
 
-  The screen renders exactly as approved, because the offer itself is
-  approved. What is not established is whether the billing system can make it
-  TRUE: no proven Phoenix operation discounts one delivery and then restores
-  the standing price, and the Solvpath contract that comes closest carries no
-  reversion semantics at all.
+    Too expensive        -> the 40% next-delivery offer (unchanged Phoenix path)
+    Too much product     -> move my next delivery 30 days later
+    Not seeing results   -> "Give the routine time to work"
+    Dog doesn't like it  -> routine guidance
+    Other / the rest     -> the adjustment options
 
-  So the button is real, the copy is real, and pressing it produces an honest
-  "not available yet" rather than a success the next invoice would contradict.
-  Connecting it is a server change; nothing on this screen moves.
+  Every block below is rendered hidden and switched by renderRetain() in
+  subscription-portal.js — nothing here is a decision.
+
+  HONESTY RULES (see subscription-portal.js, RETAIN_*):
+   - Phoenix has NO recurring-frequency or pause operation. Nothing on this
+     screen says a frequency changed. "Move" and "Pause until a date" both
+     move the NEXT BILLING DATE via the proven update-next-billing-date
+     write, and success is shown only after a fresh re-read confirms it.
+   - "Keep my RoutineCare active" changes nothing in Phoenix, so it is
+     tracked as a kept recommendation and is NEVER counted as a save.
 {%- endcomment -%}
 <section class="spp__screen" data-spp-screen="cancel-offer" hidden aria-labelledby="spp-co-h">
-  <button type="button" class="spp__back" data-spp-go="cancel-reason">
-    {% render 'spp-icon', icon: 'chevron-left' %}Back
-  </button>
-
   <div class="spp__narrow">
-    <div class="spp__media-16x9">
-      <img
-        src="{{ 'spp-cancel-offer.png' | asset_url }}"
-        alt="A dog running, with the FreshWipes and EyeWipes jars"
-        width="1280" height="720" loading="lazy" decoding="async">
+    <div class="spp__step-row">
+      <button type="button" class="spp__back" data-spp-go="cancel-reason">
+        {% render 'spp-icon', icon: 'chevron-left' %}Back
+      </button>
+      <span class="spp__cancel-step">Cancel &middot; Step 6 of 7</span>
     </div>
 
-    <div class="spp__pill" style="margin-top:18px;">One-time offer</div>
+    <h1 class="spp__h1" id="spp-co-h">Adjust your routine</h1>
+    <p class="spp__lede">
+      Cancelling is one option. Based on what you told us there is probably a change
+      that fits better, and nothing happens until you choose it.
+    </p>
+
+    <div class="spp__line spp__retain-told">
+      <span>
+        <b style="display:block;">You told us</b>
+        <span data-spp-field="reason.label" style="color:var(--spp-body);">Not given</span>
+      </span>
+      <button type="button" class="spp__btn spp__btn--link" style="min-height:40px;" data-spp-go="cancel-reason">Change</button>
+    </div>
+
+    <div class="spp__card spp__retain" data-spp-retain
+         data-spp-asset-base="{{ 'spp-cancel-benefits-mobile.jpg' | asset_url }}">
+      <div class="spp__eyebrow">Recommended for you</div>
+      <h2 class="spp__h2 spp__retain-title" data-spp-field="retain.title">Take 40% off your next delivery</h2>
+      <p class="spp__lede spp__retain-body" data-spp-field="retain.body"></p>
+
+      {%- comment -%} offer: this delivery vs every delivery after {%- endcomment -%}
+      <div class="spp__retain-block" data-spp-retain-block="offer" hidden>
+        <div class="spp__retain-pair">
+          <div class="spp__line" style="padding:0 0 12px;border-bottom:1px solid var(--spp-hair);">
+            <span><b data-spp-field="cancel.focusName">Routine Care</b> &middot; <span data-spp-field="subscription.nextOrderShort">Sep 8</span></span>
+            <b style="color:var(--spp-primary);font-size:19px;"><span data-spp-field="offer.percent">40</span>% off</b>
+          </div>
+          <div class="spp__line" style="padding:12px 0 0;">
+            <span>Every delivery after that</span>
+            <b>RoutineCare price, <span data-spp-field="offer.standard">20</span>% saving</b>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} move: the date now vs the date after the change {%- endcomment -%}
+      <div class="spp__retain-block" data-spp-retain-block="delay" hidden>
+        <div class="spp__retain-pair">
+          <div class="spp__line" style="padding:0 0 12px;border-bottom:1px solid var(--spp-hair);">
+            <span>Now</span><b data-spp-field="retain.dateNow">Sep 8</b>
+          </div>
+          <div class="spp__line" style="padding:12px 0 0;">
+            <span>Recommended</span><b style="color:var(--spp-primary);" data-spp-field="retain.dateAfter">Oct 8</b>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} not seeing results {%- endcomment -%}
+      <div class="spp__retain-block" data-spp-retain-block="keep" hidden>
+        <span class="spp__retain-chip">
+          <span data-spp-field="retain.careLabel">Dental care</span>
+          <span class="spp__retain-chip-note">from why you started</span>
+        </span>
+
+        {%- comment -%}
+          The before/after column exists ONLY for Dental, Eye and Ear, and only
+          once its approved image has actually loaded (JS un-hides it from the
+          <img> load event). Until then — and always for Coat, Paw and Other —
+          there is no column, no empty slot and no placeholder, and the
+          timeline is full width. Image files (not yet supplied):
+          spp-before-after-dental.jpg / -eye.jpg / -ear.jpg
+        {%- endcomment -%}
+        <div class="spp__retain-tlwrap" data-spp-ba-wrap>
+          <div class="spp__retain-ba" data-spp-ba hidden>
+            <img data-spp-ba-img alt="" width="100" height="112" decoding="async">
+          </div>
+          <ol class="spp__retain-tl" data-spp-list="retainTimeline">
+            <template data-spp-tpl="retainTimeline">
+              <li class="spp__retain-tl-item">
+                <span class="spp__retain-tl-dot" aria-hidden="true"></span>
+                <span class="spp__retain-tl-text">
+                  <b data-spp-field="label">Weeks 1&ndash;2</b>
+                  <span data-spp-field="body"></span>
+                </span>
+              </li>
+            </template>
+          </ol>
+        </div>
+
+        <p class="spp__retain-note" data-spp-field="retain.productNote"></p>
+
+        <div class="spp__retain-warn" role="note">
+          <span class="spp__retain-warn-icon" aria-hidden="true">{% render 'spp-icon', icon: 'clock-action', size: 20 %}</span>
+          <span>
+            <b>Don&rsquo;t lose the progress you&rsquo;ve started</b>
+            <span>Stopping early can allow the original problem to return. Consistent care helps protect your dog&rsquo;s long-term health.</span>
+          </span>
+        </div>
+
+        <figure class="spp__retain-review" data-spp-retain-review hidden>
+          <blockquote data-spp-field="retain.reviewQuote"></blockquote>
+          <figcaption>
+            <span class="spp__review-verified">{% render 'spp-icon', icon: 'check-circle', size: 12 %}Verified</span>
+            <b data-spp-field="retain.reviewName"></b>
+            <span data-spp-field="retain.reviewCategory"></span>
+          </figcaption>
+        </figure>
+
+        <div class="spp__retain-guarantee">
+          {% render 'spp-icon', icon: 'check-circle', size: 20 %}
+          <span>You&rsquo;re protected by our <b>100-Day Money-Back Guarantee</b> while you give the routine time to work.</span>
+        </div>
+      </div>
+
+      {%- comment -%} routine guidance {%- endcomment -%}
+      <div class="spp__retain-block" data-spp-retain-block="easier" hidden>
+        <div class="spp__retain-tips">
+          <div class="spp__retain-tips-title">Try these first</div>
+          <ul data-spp-list="retainTips">
+            <template data-spp-tpl="retainTips"><li data-spp-field="text"></li></template>
+          </ul>
+        </div>
+      </div>
+
+      <ul class="spp__retain-points" data-spp-list="retainPoints">
+        <template data-spp-tpl="retainPoints">
+          <li>{% render 'spp-icon', icon: 'check-circle', size: 16 %}<span data-spp-field="text"></span></li>
+        </template>
+      </ul>
+
+      <p class="spp__retain-error" data-spp-retain-error role="alert" hidden></p>
+
+      <button type="button" class="spp__btn spp__btn--primary" data-spp-act="retainPrimary">
+        <span data-spp-field="retain.cta">Keep my RoutineCare active</span>
+      </button>
+      <p class="spp__fine spp__retain-foot" data-spp-field="retain.foot"></p>
+    </div>
+
+    <h2 class="spp__h2" style="margin-top:26px;">Other ways to adjust your routine</h2>
+    <div class="spp__choices" role="radiogroup" aria-label="Other ways to adjust your routine" data-spp-list="retainAdjRows" style="margin-top:12px;">
+      <template data-spp-tpl="retainAdjRows">
+        <button type="button" class="spp__choice spp__choice--stacked" role="radio" aria-checked="false" data-spp-pick="retainAdj">
+          <span class="spp__radio"></span>
+          <span class="spp__choice-text">
+            <b data-spp-field="label">Skip next delivery</b>
+            <span data-spp-field="meta"></span>
+          </span>
+        </button>
+      </template>
+    </div>
+
     {%- comment -%}
-      "Routine Care" is the fallback text of cancel.focusName — the same
-      binding used on the reason screen — so a single-product account (the
-      vast majority) reads exactly as before. A multi-product account sees
-      the generic word instead of any one of its products, matching the
-      approved design's "Before you go, 40% off your next FreshWipes
-      delivery" heading as closely as this data model allows. It is
-      wording only: the offer itself is whole-subscription, same as
-      everything else on this screen.
+      One inline panel per chosen adjustment (skip / move / frequency / pause).
+      All four run through the SAME proven update-next-billing-date write;
+      see act('retainAdjust').
     {%- endcomment -%}
-    <h1 class="spp__h1" id="spp-co-h">
-      Before you go, <span data-spp-field="offer.percent">40</span>% off your next
-      <span data-spp-field="cancel.focusName">Routine Care</span> delivery
-    </h1>
+    <div class="spp__retain-panel" data-spp-retain-panel hidden>
+      <p class="spp__retain-panel-lead" data-spp-field="retain.adjLead"></p>
 
-    <div class="spp__card" style="margin:16px 0 14px;padding:16px;">
-      <div class="spp__line" style="padding:0 0 12px;border-bottom:1px solid var(--spp-hair);">
-        <span><b>Next delivery</b> &middot; <span data-spp-field="subscription.nextOrderShort">Sep 8</span></span>
-        <b style="color:var(--spp-primary);font-size:19px;"><span data-spp-field="offer.percent">40</span>% off</b>
+      <div data-spp-retain-tiles hidden>
+        <div class="spp__choices spp__choices--row" role="radiogroup" aria-label="How far to move it" data-spp-list="retainAdjTiles">
+          <template data-spp-tpl="retainAdjTiles">
+            <button type="button" class="spp__tile" role="radio" aria-checked="false" data-spp-pick="retainTile">
+              <span data-spp-field="label"></span>
+            </button>
+          </template>
+        </div>
       </div>
-      <div class="spp__line" style="padding:12px 0 0;">
-        <span>Every delivery after that</span>
-        <b><span data-spp-field="offer.standard">20</span>% off, as now</b>
+
+      <div data-spp-retain-date-wrap hidden style="margin-top:12px;">
+        <label class="spp__label" for="spp-retain-date">Resume on</label>
+        <input type="date" id="spp-retain-date" data-spp-retain-date class="spp__input"
+          aria-describedby="spp-retain-date-error"
+          style="width:100%;box-sizing:border-box;min-height:48px;padding:12px 14px;border-radius:12px;border:1px solid rgba(13,35,64,.18);background:var(--spp-surface);font:500 15px/1.2 var(--spp-font);color:var(--spp-ink);">
       </div>
+
+      <div class="spp__info" data-spp-retain-fromto style="margin:14px 0;" hidden>
+        <span data-spp-field="retain.adjFrom">Sep 8</span>
+        <span aria-hidden="true">&rarr;</span>
+        <b data-spp-field="retain.adjTo">Sep 15</b>
+      </div>
+
+      <p id="spp-retain-date-error" class="spp__retain-error" data-spp-retain-adj-error role="alert" hidden></p>
+
+      <button type="button" class="spp__btn spp__btn--secondary" data-spp-act="retainAdjust">
+        <span data-spp-field="label.retainAdjust">Confirm this change</span>
+      </button>
     </div>
 
-    <p class="spp__lede" style="font-size:14.5px;">
-      One delivery only. After it ships, your subscription returns to your usual
-      Routine Care pricing &mdash; currently <span data-spp-field="offer.standard">20</span>% off.
-    </p>
-
-    <p class="spp__fine">
-      Your Routine Care benefits &mdash; free shipping, flexible deliveries, the
-      100-day guarantee &mdash; carry on unchanged.
-    </p>
-
-    <button type="button" class="spp__btn spp__btn--primary" data-spp-act="acceptOffer">
-      <span data-spp-field="label.acceptOffer">Apply 40% to my next delivery</span>
-    </button>
     <div class="spp__quiet-row">
-      <button type="button" class="spp__btn spp__btn--link" data-spp-go="cancel-confirm">No thanks, continue cancelling</button>
+      <button type="button" class="spp__btn spp__btn--link" data-spp-go="cancel-confirm">Continue cancellation</button>
     </div>
   </div>
 </section>

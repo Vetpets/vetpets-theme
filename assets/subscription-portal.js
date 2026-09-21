@@ -72,7 +72,11 @@
       // (cancel-started screen) — captured for the UI's own selection state
       // only. It is never sent to Phoenix and never personalizes anything
       // else; see cancel-started in spp-screen-cancel.liquid.
-      draft: { delay: 7, reason: null, restart: 0, date: null, note: '', gap: null, startedCategory: null },
+      draft: { delay: 7, reason: null, restart: 0, date: null, note: '', gap: null, startedCategory: null,
+        // Step 6 "Adjust your routine": which secondary adjustment is open, the
+        // chosen tile (7/15/30 days, or 1/2/3 months for a pause) and the resume date.
+        retainAdj: null, retainTile: null, retainDate: '' },
+      retainError: null,
       reasonError: null,
       // The one journey id for this cancellation attempt, adopted from
       // whichever call — the cancellation_started beacon or the reason
@@ -485,7 +489,8 @@
      * one button that used to link to it, so a deep link, browser back/
      * forward, or a future caller cannot resurface it either. Per the
      * approved journey: Longer Gap goes straight to Final Confirmation. */
-    if (screen === 'cancel-offer' && this.state.data && this.state.data.retentionOfferRedeemed) {
+    if (screen === 'cancel-offer' && this.state.data && this.state.data.retentionOfferRedeemed &&
+        this.retainKind().kind === 'offer') {
       screen = 'cancel-confirm';
     }
 
@@ -509,6 +514,8 @@
      * sheet is. Navigation is the customer asking again.
      */
     this.state.confirmSpent = false;
+    // A step-6 failure message belongs to the attempt that produced it.
+    this.state.retainError = null;
 
     var sections = this.root.querySelectorAll('[data-spp-screen]');
     for (var i = 0; i < sections.length; i++) {
@@ -566,16 +573,30 @@
     var eventType = RETENTION_SCREEN_EVENTS[screen];
     if (!eventType || !self.adapter.recordRetentionEvent) return;
 
-    self.adapter.recordRetentionEvent(eventType, self.state.retentionJourneyId, 'next_delivery_40')
-      .then(function (result) {
-        // Adopt the journey id only if we did not already have one — the
-        // reason write (or an earlier beacon) always wins if it got there
-        // first, so every event for this attempt lands on one journey.
-        if (result && result.journeyId && !self.state.retentionJourneyId) {
-          self.state.retentionJourneyId = result.journeyId;
-        }
-      })
-      .catch(function () {});
+    /* cancel-offer is now the reason-personalized step. offer_shown keeps
+     * meaning exactly what it always did — "the customer was shown the 40%
+     * offer" — so it fires only when the recommendation IS that offer. Every
+     * recommendation, offer included, is additionally reported through the
+     * additive recommendation_shown event, typed by its action key. */
+    var rec = null;
+    if (screen === 'cancel-offer') {
+      rec = self.retainKind();
+      if (rec.kind !== 'offer') eventType = null;
+    }
+
+    if (eventType) {
+      self.adapter.recordRetentionEvent(eventType, self.state.retentionJourneyId, 'next_delivery_40')
+        .then(function (result) {
+          // Adopt the journey id only if we did not already have one — the
+          // reason write (or an earlier beacon) always wins if it got there
+          // first, so every event for this attempt lands on one journey.
+          if (result && result.journeyId && !self.state.retentionJourneyId) {
+            self.state.retentionJourneyId = result.journeyId;
+          }
+        })
+        .catch(function () {});
+    }
+    if (rec) self.trackRetention('recommendation_shown', rec.action);
   };
 
   Portal.prototype.markCurrentNav = function (screen) {
@@ -842,10 +863,18 @@
       message = 'That is not available yet.';
     } else if (code === 'network') {
       message = 'No connection. Check your signal and try again.';
+    } else if (code === 'unverified') {
+      // The write was accepted but a fresh read did not show the new date.
+      // Nothing is claimed as done; the customer is told to check before
+      // trying again, so a second attempt cannot double-apply.
+      message = 'We could not confirm that change yet. Refresh to check your next delivery date before trying again.';
     } else {
       message = 'That did not go through. Nothing has changed — please try again.';
     }
 
+    // Step 6 keeps its failure ON the screen, next to the button that
+    // failed, as well as in the toast — the customer is still on the screen.
+    if (this.state.screen === 'cancel-offer') this.state.retainError = message;
     this.toast(message);
     this.render();
   };
@@ -1191,6 +1220,7 @@
     this.renderDatePicker();
     this.applyLoyaltyVisibility();
     this.renderCancelJourney();
+    this.renderRetain();
   };
 
   /**
@@ -1242,7 +1272,8 @@
      * retentionOfferRedeemed from false to true. */
     var confirmBack = this.root.querySelector('[data-spp-confirm-back]');
     if (confirmBack) {
-      var redeemed = this.state.data && this.state.data.retentionOfferRedeemed;
+      var redeemed = this.state.data && this.state.data.retentionOfferRedeemed &&
+        this.retainKind().kind === 'offer';
       // Reason (not alt) is the screen immediately before the offer in the
       // approved Portal V2 order — that is the safe fallback once the offer
       // screen itself refuses to show.
@@ -1614,6 +1645,38 @@
         });
       }
 
+      case 'retainPoints':
+        return this.retainContent().points.map(function (t) { return { text: t }; });
+
+      case 'retainTips':
+        return this.retainContent().tips.map(function (t) { return { text: t }; });
+
+      case 'retainTimeline':
+        return this.retainContent().timeline;
+
+      case 'retainAdjRows': {
+        var adjNext = sub && sub.nextOrderDate;
+        var adjMeta = {
+          skip: adjNext ? 'Nothing ships ' + self.fmtDate(adjNext, 'short') + '. The one after is unchanged.' : 'Nothing ships. The one after is unchanged.',
+          move: '7, 15 or 30 days later \u2014 your cadence stays the same',
+          freq: sub && sub.intervalDays ? 'Currently every ' + sub.intervalDays + ' days' : 'Move your next delivery later',
+          pause: 'Choose the date your deliveries resume'
+        };
+        return RETAIN_ADJUSTMENTS.map(function (a) {
+          return { label: a[1], meta: adjMeta[a[0]], _value: a[0], _checked: d.retainAdj === a[0] };
+        });
+      }
+
+      case 'retainAdjTiles':
+        if (d.retainAdj === 'pause') {
+          return [['m1', '1 month'], ['m2', '2 months'], ['m3', '3 months']].map(function (t) {
+            return { label: t[1], _value: t[0], _checked: d.retainTile === t[0] };
+          });
+        }
+        return [7, 15, 30].map(function (n) {
+          return { label: n + ' days', _value: 'd' + n, _checked: d.retainTile === 'd' + n };
+        });
+
       case 'startedCategories':
         // Cancel step 3 ("why you started"). A soft, non-blocking question
         // — the pick only drives this row's own selected styling; it is
@@ -1806,7 +1869,11 @@
          * from every other way of reaching cancel-confirm (the Longer Gap
          * path, or the already-redeemed redirect show() itself performs). */
         if (self.state.screen === 'cancel-offer' && goTarget === 'cancel-confirm' && self.adapter.recordRetentionEvent) {
-          self.adapter.recordRetentionEvent('offer_declined', self.state.retentionJourneyId, 'next_delivery_40').catch(function () {});
+          var declined = self.retainKind();
+          if (declined.kind === 'offer') {
+            self.adapter.recordRetentionEvent('offer_declined', self.state.retentionJourneyId, 'next_delivery_40').catch(function () {});
+          }
+          self.trackRetention('recommendation_declined', declined.action);
         }
         self.show(goTarget);
         return;
@@ -1917,6 +1984,14 @@
           self.state.reasonSaveError = null;
           if (errEl) { errEl.hidden = true; errEl.textContent = ''; }
         }
+        return;
+      }
+      var retainDate = e.target.closest('[data-spp-retain-date]');
+      if (retainDate) {
+        self.state.draft.retainDate = retainDate.value || '';
+        self.state.draft.retainTile = null;
+        self.state.retainError = null;
+        self.render();
         return;
       }
       var date = e.target.closest('[data-spp-date]');
@@ -2042,6 +2117,9 @@
     if (kind === 'delay') d.delay = value === 'custom' ? 'custom' : parseInt(value, 10);
     else if (kind === 'gap') d.gap = value;
     else if (kind === 'reason') {
+      // A different reason is a different recommendation: any half-chosen
+      // step-6 adjustment belongs to the old one and must not carry over.
+      if (d.reason !== value) { d.retainAdj = null; d.retainTile = null; d.retainDate = ''; }
       d.reason = value;
       // A standing complaint must not outlive the problem it describes.
       this.state.reasonError = null;
@@ -2049,6 +2127,19 @@
     }
     else if (kind === 'restart') d.restart = parseInt(el.dataset.sppIndex, 10);
     else if (kind === 'startedCategory') d.startedCategory = value;
+    else if (kind === 'retainAdj') {
+      d.retainAdj = value;
+      d.retainTile = null;
+      d.retainDate = '';
+      this.state.retainError = null;
+    }
+    else if (kind === 'retainTile') {
+      d.retainTile = value;
+      if (d.retainAdj === 'pause') {
+        d.retainDate = NS.dates.addMonths(this.rescheduleBounds().min, parseInt(value.slice(1), 10));
+      }
+      this.state.retainError = null;
+    }
     this.render();
   };
 
@@ -2063,7 +2154,7 @@
   /**
    * Cancellation Retention V2.
    *
-   * The eight reasons, and the five schedule changes that can actually be
+   * The nine reasons, and the five schedule changes that can actually be
    * performed. Codes are stable and shared with the server: the label is what
    * the customer reads, the code is what analysis groups on, and changing a
    * label must never silently re-bucket a year of answers.
@@ -2073,6 +2164,7 @@
     ['too_much', 'I have too much product'],
     ['not_using', 'I\u2019m not using it enough'],
     ['no_results', 'I didn\u2019t see the results I expected'],
+    ['dislike', 'My dog doesn\u2019t like it'],
     ['not_needed', 'My pet no longer needs it'],
     ['order_issue', 'I had an issue with my order'],
     ['break', 'Just taking a break'],
@@ -2134,6 +2226,88 @@
 
   /** How much the customer must actually write for "Something else". */
   var MIN_REASON_NOTE = 3;
+
+  /* =================================================================
+   * Step 6 — "Adjust your routine" (reason-personalized)
+   * =================================================================
+   * reason code -> [kind, action key]. The action key is what tracking
+   * records as the recommendation shown (retention_event.offer_type).
+   * `next_delivery_40` is the historical offer key and is reused unchanged
+   * for the 40% offer so no old metric is redefined.
+   *
+   * The four legacy reasons the approved design does not list (not_using,
+   * not_needed, order_issue, break) are preserved and share the approved
+   * "adjustment options" recommendation.
+   */
+  var RETAIN_BY_REASON = {
+    price: ['offer', 'next_delivery_40'],
+    too_much: ['delay', 'move_delivery_30'],
+    no_results: ['keep', 'keep_results'],
+    dislike: ['easier', 'routine_guidance'],
+    other: ['note', 'adjust_options'],
+    not_using: ['note', 'adjust_options'],
+    not_needed: ['note', 'adjust_options'],
+    order_issue: ['note', 'adjust_options'],
+    'break': ['note', 'adjust_options']
+  };
+
+  /** Phoenix can move the next billing date; it cannot change a frequency. */
+  var RETAIN_MOVE_DAYS = 30;
+
+  /** Secondary adjustments — the SAME four rows for every reason. */
+  var RETAIN_ADJUSTMENTS = [
+    ['skip', 'Skip next delivery'],
+    ['move', 'Move next delivery'],
+    ['freq', 'Deliver less often'],
+    ['pause', 'Pause RoutineCare']
+  ];
+  var RETAIN_ADJ_ACTION = {
+    skip: 'skip_delivery', move: 'move_delivery', freq: 'move_delivery', pause: 'pause_until_date'
+  };
+
+  var RETAIN_STAGE_LABELS = ['Weeks 1–2', 'Weeks 2–3', 'Days 60–90'];
+
+  /** Care-goal stories — verbatim from the approved design (step 3 answer). */
+  var CARE_STORIES = {
+    dental: {
+      label: 'Dental care', img: true, note: 'FreshWipes',
+      noteTail: ' works along the gum line — the same 30 seconds each day is what keeps the progress going.',
+      stages: ['Your dog becomes more comfortable having their mouth handled.', 'Early improvement in breath and surface plaque may begin.', 'Meaningful dental results build through consistent daily use.']
+    },
+    eye: {
+      label: 'Eye care', img: true, note: 'EyeWipes',
+      noteTail: ' works best used daily, before buildup has a chance to settle into the fur.',
+      stages: ['Your dog becomes more comfortable with wiping around the eyes.', 'Early improvement in tear-stain buildup may begin.', 'Meaningful results around the eye area build through consistency.']
+    },
+    ear: {
+      label: 'Ear care', img: true, note: 'EarWipes',
+      noteTail: ' works best on a steady weekly rhythm, and always after water.',
+      stages: ['Your dog becomes more comfortable having their ears handled.', 'Early improvement in ear cleanliness may begin.', 'Meaningful ear results build through consistent weekly care.']
+    },
+    skin: {
+      label: 'Skin & coat care', img: false, note: 'GloveWipes',
+      noteTail: ' works best straight after walks, as part of coming back indoors.',
+      stages: ['Your dog becomes more comfortable with the wipe-down routine.', 'Early improvement in coat cleanliness and freshness may begin.', 'Meaningful coat and skin results build through consistency.']
+    },
+    paw: {
+      label: 'Paw care', img: false, note: 'Paw Foam',
+      noteTail: ' works best at the door, every time — that regularity is what does the work.',
+      stages: ['Your dog becomes more comfortable having their paws handled.', 'Early improvement in paw cleanliness may begin.', 'Meaningful paw results build through consistency.']
+    },
+    other: {
+      label: 'Long-term care', img: false, note: null,
+      stages: ['Your dog becomes more comfortable with the routine.', 'Early improvements may begin.', 'Meaningful results build through consistency.']
+    }
+  };
+
+  /** "Try these first" tips per product — verbatim from the approved design. */
+  var RETAIN_TIPS = {
+    fresh: ['Start with one tooth, not the whole mouth, and build up over a week.', 'Let them sniff and lick the wipe before it goes near their teeth.', 'Try it after exercise, when they are calm rather than excited.'],
+    eye: ['Warm the wipe in your hand first so it is not a cold surprise.', 'Come from below the eye line rather than head-on.', 'One eye per session for the first week.'],
+    ear: ['Hold the ear flap open and wipe in one slow movement.', 'Pair it with something they already like — a brush, or a treat straight after.', 'Little and often beats one long session.'],
+    glove: ['Start with the back and shoulders and leave the paws until later.', 'Keep the first sessions to about twenty seconds.', 'Do it while they are eating, so it happens around something good.'],
+    paw: ['One paw at a time, front paws first.', 'Foam into your own hand first so the sound is not a surprise.', 'Reward immediately after the last paw, every time.']
+  };
 
   /**
    * Why the reason screen cannot continue yet, or null when it can.
@@ -2241,6 +2415,356 @@
     var startJourneyId = ('_reasonRetryJourneyId' in this) ? this._reasonRetryJourneyId : this.state.retentionJourneyId;
     delete this._reasonRetryJourneyId;
     attempt(0, startJourneyId);
+  };
+
+  /* =================================================================
+   * Step 6 — "Adjust your routine": content, targets, verification
+   * ================================================================= */
+
+  /** Which recommendation the chosen reason gets, and its tracking key. */
+  Portal.prototype.retainKind = function () {
+    var d = this.state.draft;
+    var r = d && RETAIN_BY_REASON[d.reason];
+    return r ? { kind: r[0], action: r[1] } : { kind: 'note', action: 'adjust_options' };
+  };
+
+  /** Best-effort retention beacon. Never blocks, never a mutation. */
+  Portal.prototype.trackRetention = function (eventType, action) {
+    var self = this;
+    if (!this.adapter || !this.adapter.recordRetentionEvent) return;
+    this.adapter.recordRetentionEvent(eventType, this.state.retentionJourneyId, action)
+      .then(function (result) {
+        if (result && result.journeyId && !self.state.retentionJourneyId) {
+          self.state.retentionJourneyId = result.journeyId;
+        }
+      })
+      .catch(function () {});
+  };
+
+  function retainProductKey(title) {
+    var t = String(title || '').toLowerCase();
+    return t.indexOf('fresh') !== -1 ? 'fresh'
+      : t.indexOf('eye') !== -1 ? 'eye'
+      : t.indexOf('ear') !== -1 ? 'ear'
+      : t.indexOf('glove') !== -1 ? 'glove'
+      : t.indexOf('paw') !== -1 ? 'paw'
+      : null;
+  }
+
+  /**
+   * Everything the step-6 card shows for the current reason. Pure of side
+   * effects, so tests can call it directly.
+   */
+  Portal.prototype.retainContent = function () {
+    var sub = this.state.data;
+    var d = this.state.draft;
+    var k = this.retainKind();
+    var lines = (sub && sub.lines) || [];
+    var P = lines.length === 1 ? lines[0].title.replace(/ (jar|pack).*$/, '') : 'Routine Care';
+    var next = sub && sub.nextOrderDate;
+    var freq = sub && sub.intervalDays;
+    var nextMedium = next ? this.fmtDate(next, 'medium') : 'next';
+    var out = {
+      kind: k.kind, action: k.action, title: '', body: '', points: [], tips: [], timeline: [],
+      cta: 'Keep my RoutineCare active', foot: '',
+      careLabel: '', productNote: '', review: null, imageKey: null,
+      dateNow: next ? this.fmtDate(next, 'short') : '', dateAfter: ''
+    };
+
+    if (k.kind === 'offer') {
+      out.title = 'Take ' + OFFER_PERCENT + '% off your next ' + P + ' delivery';
+      out.body = 'Keep the routine going for less this time. Once that delivery ships, your normal RoutineCare pricing and the usual ' +
+        STANDARD_PERCENT + '% saving resume automatically — nothing to remember, nothing to cancel later.';
+      out.points = [
+        'Applies to your ' + nextMedium + ' delivery only.',
+        'Normal RoutineCare pricing and the ' + STANDARD_PERCENT + '% saving resume automatically after it.',
+        'Free shipping, flexible deliveries and the 100-day guarantee are unchanged.'
+      ];
+      out.cta = 'Apply ' + OFFER_PERCENT + '% to my next delivery';
+      out.foot = 'One delivery only. No code to enter.';
+    } else if (k.kind === 'delay') {
+      var moved = next ? NS.dates.addDays(next, RETAIN_MOVE_DAYS) : null;
+      out.dateAfter = moved ? this.fmtDate(moved, 'short') : '';
+      out.title = 'Move your next delivery ' + RETAIN_MOVE_DAYS + ' days later';
+      out.body = 'You receive ' + P + (freq ? ' every ' + freq + ' days' : ' regularly') +
+        '. Moving your next delivery ' + RETAIN_MOVE_DAYS + ' days later gives you time to get through the jars you already have before the next one comes. The routine itself carries on exactly as it is.';
+      out.points = [
+        'One delivery moves — same product, same RoutineCare price and free shipping.',
+        'Later deliveries follow from your new date. Your delivery cadence is not changed.',
+        'Skip, choose another date or pause below instead.'
+      ];
+      out.cta = 'Move my next delivery ' + RETAIN_MOVE_DAYS + ' days later';
+      out.foot = 'Takes effect immediately. Nothing ships today.';
+    } else if (k.kind === 'keep') {
+      var cat = CARE_STORIES[d.startedCategory] ? d.startedCategory : 'other';
+      var story = CARE_STORIES[cat];
+      out.title = 'Give the routine time to work';
+      out.body = 'Progress builds through consistent use — and you’re protected for 100 days.';
+      out.careLabel = story.label;
+      out.timeline = story.stages.map(function (body, i) { return { label: RETAIN_STAGE_LABELS[i], body: body }; });
+      out.productNote = story.note
+        ? story.note + story.noteTail
+        : 'A steady ' + P + ' routine is what keeps long-term care working — little and often, rather than in bursts.';
+      // Only Dental and Eye have a verified review. None is invented for the rest.
+      var bank = cat === 'dental' ? REVIEW_BANK.freshwipes : cat === 'eye' ? REVIEW_BANK.eyewipes : null;
+      if (bank) out.review = { quote: bank.quotes[0].quote, name: bank.quotes[0].name, category: bank.category };
+      out.imageKey = story.img ? cat : null;
+      out.foot = 'No change to your delivery date or your price.';
+    } else if (k.kind === 'easier') {
+      out.title = 'Make the ' + P + ' routine easier for your dog';
+      out.body = 'Most dogs need a week or two to accept something new. Shorter, calmer sessions usually work better than pushing through the full routine — and you can slow the deliveries down while you build it up.';
+      var pk = null;
+      for (var li = 0; li < lines.length && !pk; li++) pk = retainProductKey(lines[li].title);
+      out.tips = RETAIN_TIPS[pk || 'fresh'];
+      out.points = [
+        'Nothing about your subscription changes.',
+        'Move, skip or pause your next delivery below while you take it slowly.'
+      ];
+      out.foot = 'If it still is not working, the 100-day guarantee covers you.';
+    } else {
+      var isOther = d.reason === 'other';
+      out.title = isOther ? 'Tell us what would help' : 'There may be a better fit than cancelling';
+      out.body = 'There is usually an adjustment that fits better than cancelling — a longer gap, a skipped delivery, or a pause. ' +
+        (isOther ? 'Tell us what is going on and keep your routine active in the meantime.' : 'Keep your routine active in the meantime.');
+      out.points = [
+        'All four adjustments below are open to you.',
+        'Your RoutineCare price, free shipping and 100-day guarantee stay as they are.'
+      ];
+      out.foot = 'You can still continue to cancellation at any point.';
+    }
+    return out;
+  };
+
+  /**
+   * The billing date a secondary adjustment would produce, or null while it
+   * is not yet determined. Skip is one interval; move/frequency is 7/15/30
+   * days (the server-permitted delays); pause is a date the customer picks.
+   */
+  Portal.prototype.retainAdjTarget = function () {
+    var sub = this.state.data;
+    var d = this.state.draft;
+    if (!sub || !sub.nextOrderDate) return null;
+    if (d.retainAdj === 'skip') {
+      return sub.intervalDays > 0 ? NS.dates.addDays(sub.nextOrderDate, sub.intervalDays) : null;
+    }
+    if (d.retainAdj === 'move' || d.retainAdj === 'freq') {
+      var n = d.retainTile ? parseInt(d.retainTile.slice(1), 10) : 0;
+      return n > 0 ? NS.dates.addDays(sub.nextOrderDate, n) : null;
+    }
+    if (d.retainAdj === 'pause') return d.retainDate || null;
+    return null;
+  };
+
+  /** Why the chosen pause date cannot be submitted, or null. */
+  Portal.prototype.retainAdjProblem = function () {
+    var sub = this.state.data;
+    var d = this.state.draft;
+    if (d.retainAdj !== 'pause') return null;
+    if (!d.retainDate) return 'Choose the date your deliveries should resume.';
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(d.retainDate)) return 'That date could not be read.';
+    var b = this.rescheduleBounds();
+    if (d.retainDate < b.min) return 'Choose a date from today onwards.';
+    if (d.retainDate > b.max) return 'Choose a date within the next year.';
+    if (sub && sub.nextOrderDate && d.retainDate <= sub.nextOrderDate) {
+      return 'Choose a date after your current next delivery (' + this.fmtDate(sub.nextOrderDate, 'short') + ').';
+    }
+    return null;
+  };
+
+  /**
+   * THE PERSISTENCE CHECK. A schedule change is only reported as done when a
+   * FRESH read of the subscription shows the state the customer asked for:
+   * still active, next billing date exactly the target. Anything else throws
+   * `unverified`, which the customer sees as a clear, non-destructive message
+   * — and which never counts as a save.
+   */
+  Portal.prototype.retainVerify = function (targetIso, result) {
+    var self = this;
+    var fresh = this.adapter.refetchSubscription
+      ? this.adapter.refetchSubscription()
+      : Promise.resolve(result);
+    return fresh.then(function (st) {
+      var ok = st && st.status === 'active' && st.nextOrderDate === targetIso;
+      if (!ok) throw NS.PortalError('unverified', 'We could not confirm that change.');
+      self.state.data = st;
+      return st;
+    });
+  };
+
+  /**
+   * ONE mutation, whichever button started it. `doMutation(opts)` performs
+   * exactly one adapter write (skip / delay / reschedule) — the same proven
+   * update-next-billing-date operation the dashboard uses — carrying the
+   * retention journey id and action key so the server, and only the server,
+   * records the save after Phoenix confirms.
+   */
+  Portal.prototype.retainRun = function (pendingKey, action, targetIso, doMutation) {
+    var self = this;
+    var sub = this.state.data;
+    if (!sub || this.state.pending) return;
+    this.state.retainError = null;
+    var before = sub.nextOrderDate;
+    this.trackRetention('recommendation_attempted', action);
+
+    this.run(pendingKey, function (attemptKey) {
+      return doMutation({
+        idempotencyKey: attemptKey,
+        expectedNextBillingDate: before,
+        retentionJourneyId: self.state.retentionJourneyId,
+        retentionAction: action
+      }).then(function (result) {
+        // The write applied but the server could not re-read Phoenix: the
+        // change is real, but it is NOT verified — run() shows the refresh
+        // prompt and this is not reported as a completed save.
+        if (result && result.refreshRequired) return result;
+        return self.retainVerify(targetIso, result);
+      });
+    }, {
+      attempt: pendingKey,
+      // run() hands these (state, result): the verified subscription is `result`.
+      then: function (state, result) {
+        state.retainSaved = { action: action, next: result && result.nextOrderDate };
+        self.show('dashboard');
+      },
+      toast: function (state, result) {
+        var nx = result && result.nextOrderDate;
+        return nx ? 'Done — your next delivery is ' + self.fmtDate(nx, 'medium') : 'Your delivery has been updated';
+      }
+    });
+  };
+
+  /** Render step 6: which recommendation block, which panel, what errors. */
+  Portal.prototype.renderRetain = function () {
+    var card = this.root.querySelector('[data-spp-retain]');
+    if (!card) return;
+    var d = this.state.draft;
+    var c = this.retainContent();
+    var i;
+
+    // Step-6 text fields. Filled here, not in viewModel(), so the shared view
+    // model stays free of step-6 logic.
+    var sub = this.state.data;
+    var s = this.state;
+    var vm = {};
+    var rc = c;
+    vm['retain.title'] = rc.title;
+    vm['retain.body'] = rc.body;
+    vm['retain.cta'] = s.pending === 'acceptOffer' || s.pending === 'retainPrimary' ? 'Working\u2026' : rc.cta;
+    vm['retain.foot'] = rc.foot;
+    vm['retain.dateNow'] = rc.dateNow;
+    vm['retain.dateAfter'] = rc.dateAfter;
+    vm['retain.careLabel'] = rc.careLabel;
+    vm['retain.productNote'] = rc.productNote;
+    vm['retain.reviewQuote'] = rc.review ? '\u201C' + rc.review.quote + '\u201D' : '';
+    vm['retain.reviewName'] = rc.review ? rc.review.name : '';
+    vm['retain.reviewCategory'] = rc.review ? rc.review.category : '';
+    var adjTarget = this.retainAdjTarget();
+    vm['retain.adjFrom'] = sub && sub.nextOrderDate ? this.fmtDate(sub.nextOrderDate, 'short') : '';
+    vm['retain.adjTo'] = adjTarget ? this.fmtDate(adjTarget, 'short') : '';
+    var adjLeads = {
+      skip: 'Nothing ships on your next delivery date. Your routine picks up again with the delivery after \u2014 you will not be charged for the skipped one.',
+      move: 'Pick how far to move your next delivery. Later deliveries follow from the new date.',
+      freq: 'Your recurring schedule cannot be changed from the portal yet, so this moves your next delivery later instead. Your delivery cadence itself stays as it is.',
+      pause: 'Nothing ships or is charged until the date you choose, when your deliveries resume. This moves your next delivery to that date and keeps your subscription active.'
+    };
+    vm['retain.adjLead'] = adjLeads[d.retainAdj] || '';
+    vm['label.retainAdjust'] = s.pending === 'retainAdjust' ? 'Updating\u2026' : (
+      d.retainAdj === 'skip' ? 'Skip this delivery'
+      : d.retainAdj === 'pause' ? (adjTarget ? 'Pause until ' + this.fmtDate(adjTarget, 'short') : 'Choose a resume date')
+      : (adjTarget ? 'Move to ' + this.fmtDate(adjTarget, 'short') : 'Choose how far'));
+    var fields = card.querySelectorAll('[data-spp-field]');
+    for (i = 0; i < fields.length; i++) {
+      var fk = fields[i].getAttribute('data-spp-field');
+      if (Object.prototype.hasOwnProperty.call(vm, fk)) fields[i].textContent = vm[fk];
+    }
+    var panelEl = this.root.querySelector('[data-spp-retain-panel]');
+    if (panelEl) {
+      var pf = panelEl.querySelectorAll('[data-spp-field]');
+      for (i = 0; i < pf.length; i++) {
+        var pk = pf[i].getAttribute('data-spp-field');
+        if (Object.prototype.hasOwnProperty.call(vm, pk)) pf[i].textContent = vm[pk];
+      }
+    }
+
+    var blocks = card.querySelectorAll('[data-spp-retain-block]');
+    for (i = 0; i < blocks.length; i++) {
+      blocks[i].hidden = blocks[i].getAttribute('data-spp-retain-block') !== c.kind;
+    }
+
+    var review = card.querySelector('[data-spp-retain-review]');
+    if (review) review.hidden = !c.review;
+
+    var err = card.querySelector('[data-spp-retain-error]');
+    if (err) {
+      err.textContent = this.state.retainError || '';
+      err.hidden = !this.state.retainError;
+    }
+
+    this.syncBeforeAfter(card, c);
+
+    var panel = this.root.querySelector('[data-spp-retain-panel]');
+    if (!panel) return;
+    panel.hidden = !d.retainAdj;
+    if (!d.retainAdj) return;
+
+    var tiles = panel.querySelector('[data-spp-retain-tiles]');
+    if (tiles) tiles.hidden = d.retainAdj === 'skip';
+    var dateWrap = panel.querySelector('[data-spp-retain-date-wrap]');
+    if (dateWrap) {
+      dateWrap.hidden = d.retainAdj !== 'pause';
+      var input = dateWrap.querySelector('[data-spp-retain-date]');
+      if (input && d.retainAdj === 'pause') {
+        var b = this.rescheduleBounds();
+        input.min = b.min;
+        input.max = b.max;
+        if (document.activeElement !== input) input.value = d.retainDate || '';
+      }
+    }
+
+    var target = this.retainAdjTarget();
+    var fromTo = panel.querySelector('[data-spp-retain-fromto]');
+    if (fromTo) fromTo.hidden = !target;
+
+    var problem = this.retainAdjProblem();
+    var pErr = panel.querySelector('[data-spp-retain-adj-error]');
+    if (pErr) {
+      var msg = (d.retainAdj === 'pause' && d.retainDate && problem) ? problem : '';
+      pErr.textContent = msg;
+      pErr.hidden = !msg;
+    }
+  };
+
+  /**
+   * Dental / Eye / Ear may show an approved before/after image; Coat, Paw and
+   * Other never do. The column stays hidden until the image has really loaded,
+   * so a missing asset can never leave an empty slot or a placeholder — the
+   * timeline simply stays full width.
+   */
+  Portal.prototype.syncBeforeAfter = function (card, c) {
+    var col = card.querySelector('[data-spp-ba]');
+    var img = card.querySelector('[data-spp-ba-img]');
+    if (!col || !img) return;
+    var key = c.kind === 'keep' ? c.imageKey : null;
+    if (!key) {
+      col.hidden = true;
+      img.removeAttribute('src');
+      img.removeAttribute('data-spp-ba-key');
+      return;
+    }
+    if (img.getAttribute('data-spp-ba-key') === key) return;
+    img.setAttribute('data-spp-ba-key', key);
+    col.hidden = true;
+    var base = card.getAttribute('data-spp-asset-base') || '';
+    var url = base.replace(/spp-cancel-benefits-mobile\.jpg/, 'spp-before-after-' + key + '.jpg');
+    if (!url || url === base) return;
+    img.onload = function () {
+      if (img.getAttribute('data-spp-ba-key') === key) {
+        img.alt = 'Before and after ' + c.careLabel.toLowerCase();
+        col.hidden = false;
+      }
+    };
+    img.onerror = function () { col.hidden = true; };
+    img.src = url;
   };
 
   var CONFIRMED_ACTIONS = { skip: 1, delay: 1, reschedule: 1, cancel: 1, reactivate: 1 };
@@ -2415,6 +2939,52 @@
       }
 
       /* --- Cancellation Retention V2 ------------------------------- */
+
+      /**
+       * Step 6's primary button. What it does depends on the recommendation:
+       *  - offer  -> the proven 40% next-delivery offer (acceptOffer, untouched)
+       *  - delay  -> move the next delivery 30 days later (verified)
+       *  - other  -> "Keep my RoutineCare active": NO Phoenix change, so it is
+       *              tracked as kept and is never counted as a save.
+       */
+      case 'retainPrimary': {
+        var rk = this.retainKind();
+        if (rk.kind === 'offer') { this.act('acceptOffer', el); return; }
+        if (rk.kind === 'delay') {
+          if (!sub || !sub.nextOrderDate) return;
+          var moveTo = NS.dates.addDays(sub.nextOrderDate, RETAIN_MOVE_DAYS);
+          this.retainRun('retainPrimary', rk.action, moveTo, function (opts) {
+            return self.adapter.delayNextDelivery(id, RETAIN_MOVE_DAYS, opts);
+          });
+          return;
+        }
+        // Keep: nothing to write. Recorded, then back to the dashboard.
+        this.trackRetention('recommendation_kept', rk.action);
+        this.show('dashboard');
+        this.toast('Your ' + (sub && sub.lines && sub.lines.length === 1
+          ? sub.lines[0].title.replace(/ (jar|pack).*$/, '') : 'RoutineCare') + ' routine continues');
+        return;
+      }
+
+      /** A secondary adjustment (skip / move / frequency / pause), all via update-next-billing-date. */
+      case 'retainAdjust': {
+        var adj = d.retainAdj;
+        if (!adj || !sub) return;
+        var problem2 = this.retainAdjProblem();
+        var target2 = this.retainAdjTarget();
+        if (problem2 || !target2) {
+          this.state.retainError = problem2 || 'Choose an option first.';
+          this.render();
+          return;
+        }
+        var adjAction = RETAIN_ADJ_ACTION[adj];
+        this.retainRun('retainAdjust', adjAction, target2, function (opts) {
+          if (adj === 'skip') return self.adapter.skipNextDelivery(id, opts);
+          if (adj === 'pause') return self.adapter.rescheduleNextDelivery(id, target2, opts);
+          return self.adapter.delayNextDelivery(id, parseInt(d.retainTile.slice(1), 10), opts);
+        });
+        return;
+      }
 
       /**
        * Leaving the reason screen. The answer is recorded on the way past,

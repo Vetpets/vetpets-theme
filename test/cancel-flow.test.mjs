@@ -63,6 +63,8 @@ const releaseAttempt = method('releaseAttempt');
 // The SAME method the page calls on initial open — used below to prove the
 // post-offer refresh goes through it rather than a smaller, partial one.
 const load = method('load');
+// Step 6's reason -> recommendation table drives whether the offer is ever shown.
+const retainKind = method('retainKind', ['RETAIN_BY_REASON'], [constant('RETAIN_BY_REASON')]);
 // listData closes over the journey's module-scope tables.
 const listData = method(
   'listData',
@@ -631,14 +633,14 @@ describe('step 2 — why are you cancelling', () => {
     assert.match(keep, /data-spp-go="subscription"/);
   });
 
-  test('all eight approved reasons are offered', () => {
+  test('all eight original reasons are preserved, plus "My dog doesn\u2019t like it"', () => {
     const reasons = listData.call(
       { state: { data: {}, loyalty: null, inactive: [], draft: {} }, fmtDate: (x) => String(x) },
       'reasons',
     );
-    assert.equal(reasons.length, 8);
+    assert.equal(reasons.length, 9);
     const labels = reasons.map((r) => r.label).join(' | ');
-    for (const claim of ['Too expensive', 'too much product', 'not using it enough', 'results I expected', 'no longer needs it', 'issue with my order', 'taking a break', 'Something else']) {
+    for (const claim of ['Too expensive', 'too much product', 'not using it enough', 'results I expected', 'no longer needs it', 'issue with my order', 'taking a break', 'Something else', 'My dog doesn\u2019t like it']) {
       assert.ok(labels.includes(claim), `missing reason: ${claim}`);
     }
   });
@@ -769,49 +771,41 @@ describe('step 3 — longer gap', () => {
   });
 });
 
-describe('step 4 — the retention offer', () => {
+describe('step 6 — Adjust your routine (the reason-personalized retention step)', () => {
   const step = screen('cancel-offer');
 
-  test('renders the approved offer exactly', () => {
-    assert.match(step, /One-time offer/i);
-    assert.match(step, /Before you go,/);
-    // "Routine Care" is cancel.focusName's fallback text — a single-product
-    // account (the vast majority) reads exactly this; a multi-product
-    // account that named a product on step 1 sees that product's name in
-    // its place instead (see viewModel()). The binding sits between "next"
-    // and "delivery", so this tolerates it without requiring one exact
-    // product name.
-    assert.match(step, /off your next[\s\S]*?Routine Care[\s\S]*?delivery/);
-    assert.match(step, /data-spp-field="cancel\.focusName"/);
-    assert.match(step, /One delivery only/);
-    assert.match(step, /returns to your usual\s+Routine Care pricing/);
+  test('carries the approved shell: step label, heading, told-us row, recommended card, other ways', () => {
+    assert.match(step, /Cancel &middot; Step 6 of 7/);
+    assert.match(step, /<h1[^>]*>Adjust your routine<\/h1>/);
+    assert.match(step, /Cancelling is one option\. Based on what you told us/);
+    assert.match(step, /You told us/);
+    assert.match(step, /data-spp-field="reason\.label"/);
+    assert.match(step, /Recommended for you/);
+    assert.match(step, /Other ways to adjust your routine/);
+    // The generic one-size offer chrome is gone.
+    assert.ok(!/One-time offer/i.test(step));
+    assert.ok(!/spp-cancel-offer\.png/.test(step));
   });
 
-  test('uses the approved image, not generated packaging', () => {
-    assert.match(step, /spp-cancel-offer\.png/);
-    assert.match(step, /spp__media-16x9/);
-  });
-
-  test('the primary CTA is the approved brand blue', () => {
-    const cta = buttonWith(step, 'Apply 40% to my next delivery');
+  test('the primary CTA is the approved brand blue and is a real, live button', () => {
+    const cta = buttonWith(step, 'Keep my RoutineCare active');
     assert.match(cta, /spp__btn--primary/);
+    assert.match(cta, /data-spp-act="retainPrimary"/);
+    assert.ok(!/disabled/.test(cta));
     assert.match(css, /--spp-primary:\s*#47B5E9/i);
-    // The legacy blue must not appear in the new journey.
     assert.ok(!/#128FCB/i.test(cancelScreens), 'legacy #128FCB must not be used here');
   });
 
-  test('declining is the quiet action', () => {
-    const no = buttonWith(step, 'No thanks, continue cancelling');
+  test('continuing to cancel is the quiet action and stays one tap away', () => {
+    const no = buttonWith(step, 'Continue cancellation');
     assert.match(no, /spp__btn--link/);
     assert.match(no, /data-spp-go="cancel-confirm"/);
   });
 
-  test('the acceptance action is live, not disabled — and gated server-side', () => {
-    const cta = buttonWith(step, 'Apply 40% to my next delivery');
-    // A disabled button teaches the customer nothing. The request goes out and
-    // the server refuses it honestly.
-    assert.ok(!/disabled/.test(cta));
-    assert.match(cta, /data-spp-act="acceptOffer"/);
+  test('the 40% offer is still accepted through the proven acceptOffer path — live, not disabled', () => {
+    // retainPrimary hands the "Too expensive" recommendation to acceptOffer,
+    // which is unchanged: same adapter call, same server verification.
+    assert.match(src, /case 'retainPrimary'[\s\S]{0,400}this\.act\('acceptOffer'/);
     assert.match(src, /case 'acceptOffer'/);
     assert.match(src, /acceptRetentionOffer/);
   });
@@ -1419,15 +1413,27 @@ describe('an already-redeemed customer never sees the offer screen', () => {
       state: {
         screen: 'cancel-alt', history: [],
         data: { retentionOfferRedeemed },
+        // The 40% offer is the "Too expensive" recommendation; only that
+        // reason is ever redirected past step 6 once redeemed.
+        draft: { reason: 'price' },
       },
       root,
       closeSheet() {},
       render() {},
       markCurrentNav() {},
       beaconScreenView() {},
+      retainKind() { return retainKind.call(this); },
       show(v) { return show.call(this, v); },
     };
   }
+
+  test('a redeemed customer with a NON-price reason still gets their recommendation', () => {
+    // The 40% offer is one-time; the other recommendations are not offers.
+    const p = shownPortal(true);
+    p.state.draft.reason = 'too_much';
+    p.show('cancel-offer');
+    assert.equal(p.state.screen, 'cancel-offer');
+  });
 
   test('redirects straight to Final Confirmation once redeemed', () => {
     const p = shownPortal(true);
@@ -1488,7 +1494,7 @@ describe('Back on Final Confirmation goes to the right previous step', () => {
     const portal = {
       state: {
         screen: 'cancel-confirm', history: [],
-        draft: { delay: 7, reason: null, restart: 0, date: null, note: '', gap: null },
+        draft: { delay: 7, reason: 'price', restart: 0, date: null, note: '', gap: null },
         reasonError: null,
         data: { retentionOfferRedeemed },
       },
@@ -1497,6 +1503,7 @@ describe('Back on Final Confirmation goes to the right previous step', () => {
       render() {},
       markCurrentNav() {},
       beaconScreenView() {},
+      retainKind() { return retainKind.call(this); },
       reasonProblem: () => null,
       show(v) { return show.call(this, v); },
       renderCancelJourney() { return renderCancelJourney.call(this); },
@@ -1540,6 +1547,11 @@ describe('Back on Final Confirmation goes to the right previous step', () => {
     const { portal, backBtn } = confirmScreenPortal(true);
     portal.state.draft.reason = 'other';
     portal.state.draft.note = 'something';
+    portal.renderCancelJourney();
+    // A non-price reason never saw the (one-time) offer, so Back returns to
+    // the adjust-your-routine step it DID see.
+    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-offer');
+    portal.state.draft.reason = 'price';
     portal.renderCancelJourney();
     assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-reason');
     assert.equal(backBtn.disabled, undefined, 'the button must never become disabled');
