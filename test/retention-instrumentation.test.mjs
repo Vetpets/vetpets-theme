@@ -61,6 +61,8 @@ const AUTH_FAILURE_CODES = constant('AUTH_FAILURE_CODES');
 
 const beaconScreenView = method('beaconScreenView', ['RETENTION_SCREEN_EVENTS'], [RETENTION_SCREEN_EVENTS]);
 const show = method('show', ['DISABLED_SCREENS', 'SCREENS_WITH_CHROME'], [DISABLED_SCREENS, SCREENS_WITH_CHROME]);
+const retainKind = method('retainKind', ['RETAIN_BY_REASON'], [constant('RETAIN_BY_REASON')]);
+const trackRetention = method('trackRetention');
 const attemptKey = method('attemptKey');
 const releaseAttempt = method('releaseAttempt');
 const run = method('run', ['INDETERMINATE', 'AUTH_FAILURE_CODES'], [INDETERMINATE, AUTH_FAILURE_CODES]);
@@ -122,7 +124,8 @@ describe('screen-view beacons name the right event and share one journey', () =>
       querySelector() { return null; },
     };
     const p = {
-      state: { screen: 'dashboard', history: [], retentionJourneyId: null, data: { retentionOfferRedeemed } },
+      // Step 6 is reason-personalized; the 40% offer is the "Too expensive" one.
+      state: { screen: 'dashboard', history: [], retentionJourneyId: null, data: { retentionOfferRedeemed }, draft: { reason: 'price' } },
       root,
       events,
       closeSheet() {},
@@ -135,6 +138,8 @@ describe('screen-view beacons name the right event and share one journey', () =>
         },
       },
       beaconScreenView(v) { return beaconScreenView.call(this, v); },
+      retainKind() { return retainKind.call(this); },
+      trackRetention(e, a) { return trackRetention.call(this, e, a); },
       show(v) { return show.call(this, v); },
     };
     return p;
@@ -161,8 +166,30 @@ describe('screen-view beacons name the right event and share one journey', () =>
     const p = portal({ retentionOfferRedeemed: false });
     p.show('cancel-offer');
     await Promise.resolve().then(() => {});
-    assert.deepEqual(p.events.map((e) => e.eventType), ['offer_shown']);
+    // offer_shown keeps its historical meaning; the additive
+    // recommendation_shown rides alongside it, typed by the action key.
+    assert.deepEqual(p.events.map((e) => e.eventType), ['offer_shown', 'recommendation_shown']);
     assert.equal(p.state.screen, 'cancel-offer');
+  });
+
+  test('a NON-price reason fires recommendation_shown ONLY — offer_shown stays the 40% offer\'s alone', async () => {
+    for (const [reason, action] of [
+      ['too_much', 'move_delivery_30'], ['no_results', 'keep_results'], ['dislike', 'routine_guidance'],
+      ['other', 'adjust_options'], ['not_using', 'adjust_options'], ['not_needed', 'adjust_options'],
+      ['order_issue', 'adjust_options'], ['break', 'adjust_options'],
+    ]) {
+      const offerTypes = [];
+      const p = portal({
+        recordRetentionEvent(eventType, journeyId, offerType) {
+          offerTypes.push([eventType, offerType]);
+          return Promise.resolve({ journeyId: journeyId || 'j' });
+        },
+      });
+      p.state.draft.reason = reason;
+      p.show('cancel-offer');
+      await Promise.resolve().then(() => {});
+      assert.deepEqual(offerTypes, [['recommendation_shown', action]], reason);
+    }
   });
 
   test('a REDEEMED customer never triggers offer_shown — they land on confirm, which beacons that instead', async () => {
@@ -206,17 +233,19 @@ describe('screen-view beacons name the right event and share one journey', () =>
  * ================================================================== */
 
 describe('offer_declined fires exactly when the customer walks away from the offer', () => {
-  function portal({ screen = 'cancel-offer', retentionJourneyId = 'j-1' } = {}) {
+  function portal({ screen = 'cancel-offer', retentionJourneyId = 'j-1', reason = 'price' } = {}) {
     const events = [];
     return {
       events,
-      state: { screen, retentionJourneyId, data: {} },
+      state: { screen, retentionJourneyId, data: {}, draft: { reason } },
       adapter: {
         recordRetentionEvent: (eventType, journeyId) => {
           events.push({ eventType, journeyId });
           return Promise.resolve(null);
         },
       },
+      retainKind() { return retainKind.call(this); },
+      trackRetention(e, a) { return trackRetention.call(this, e, a); },
       show(v) { this.state.screen = v; },
     };
   }
@@ -225,8 +254,17 @@ describe('offer_declined fires exactly when the customer walks away from the off
     const p = portal();
     const link = el('a', { 'data-spp-go': 'cancel-confirm' });
     onClick(p, { target: link, preventDefault() {} });
-    assert.deepEqual(p.events, [{ eventType: 'offer_declined', journeyId: 'j-1' }]);
+    assert.deepEqual(p.events, [
+      { eventType: 'offer_declined', journeyId: 'j-1' },
+      { eventType: 'recommendation_declined', journeyId: 'j-1' },
+    ]);
     assert.equal(p.state.screen, 'cancel-confirm');
+  });
+
+  test('a non-price reason declines with recommendation_declined only — never offer_declined', () => {
+    const p = portal({ reason: 'too_much' });
+    onClick(p, { target: el('a', { 'data-spp-go': 'cancel-confirm' }), preventDefault() {} });
+    assert.deepEqual(p.events, [{ eventType: 'recommendation_declined', journeyId: 'j-1' }]);
   });
 
   test('leaving cancel-offer for any OTHER destination is not a decline', () => {

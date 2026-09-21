@@ -196,7 +196,7 @@
    * --------------------------------------------------------------- */
   VetPetsPortal.CONTRACT = {
     reads: ['getCustomer', 'getSubscription', 'listSubscriptions', 'listDeliveries',
-            'getLoyalty', 'listRewards'],
+            'getLoyalty', 'listRewards', 'refetchSubscription'],
     retention: ['recordCancelReason', 'recordRetentionEvent', 'acceptRetentionOffer'],
     mutations: ['skipNextDelivery', 'delayNextDelivery', 'rescheduleNextDelivery',
                 'cancel', 'reactivate', 'requestRedemption'],
@@ -428,6 +428,8 @@
         });
       },
       getSubscription: function () { return respond(function () { return projectSubscription(); }); },
+      // A fresh read that bypasses any cache — used to VERIFY a write persisted.
+      refetchSubscription: function () { return respond(function () { return projectSubscription(); }); },
       listDeliveries: function () {
         return respond(function () {
           var s = state.subscription, p = pricing(s);
@@ -813,6 +815,11 @@
         // trusting it; see settleRetentionOutcome's explicitJourneyId.
         if (opts && typeof opts.retentionJourneyId === 'string' && opts.retentionJourneyId) {
           body.retentionJourneyId = opts.retentionJourneyId;
+          // Which recommended action this was — analytics typing only. The
+          // server validates it against a fixed list and ignores anything else.
+          if (typeof opts.retentionAction === 'string' && opts.retentionAction) {
+            body.retentionAction = opts.retentionAction;
+          }
         }
       } catch (e) {
         // Rejected, never thrown synchronously. Every caller handles these
@@ -1165,6 +1172,20 @@
 
       getSubscription: function () {
         return readPortal().then(function (view) {
+          var projected = projectSubscription(view);
+          if (!projected) throw PortalError('no_subscription', 'No active subscription found.');
+          return projected;
+        });
+      },
+
+      /**
+       * A FRESH read of the subscription from Phoenix (via the server),
+       * bypassing the per-load cache. Used only to verify that a write
+       * persisted before the portal says it did — the mutation's own response
+       * is the server's re-read, this is an independent second one.
+       */
+      refetchSubscription: function () {
+        return readPortal(true).then(function (view) {
           var projected = projectSubscription(view);
           if (!projected) throw PortalError('no_subscription', 'No active subscription found.');
           return projected;

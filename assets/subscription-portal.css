@@ -1753,3 +1753,186 @@
   .spp__media-16x9 { border-radius: 12px; }
   .spp__vet-video { border-radius: 12px; }
 }
+
+/* ==========================================================================
+   Cancel step 6 — "Adjust your routine" (reason-personalized recommendation)
+   Scoped to .spp__retain*; nothing outside the cancel-offer screen uses these.
+   ========================================================================== */
+.spp__retain-told {
+  background: var(--spp-surface-tint);
+  border-radius: 14px;
+  padding: 14px 15px;
+  margin: 0 0 16px;
+}
+.spp__retain { padding: 18px; margin-bottom: 4px; }
+.spp__retain .spp__eyebrow { margin-bottom: 8px; }
+.spp__retain-title { margin: 0 0 8px; }
+.spp__retain-body { margin: 0 0 14px; font-size: 15px; line-height: 1.55; }
+.spp__retain-block { margin: 0 0 14px; }
+.spp__retain-block[hidden], .spp__retain-panel[hidden] { display: none; }
+.spp__retain-pair {
+  background: var(--spp-surface);
+  border: 1px solid var(--spp-border);
+  border-radius: 14px;
+  padding: 14px 15px;
+}
+
+.spp__retain-points {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  display: grid;
+  gap: 9px;
+}
+.spp__retain-points li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font: 500 14px/1.5 var(--spp-font);
+  color: var(--spp-body);
+}
+.spp__retain-points li svg { flex: 0 0 auto; margin-top: 2px; color: var(--spp-accent); }
+
+.spp__retain-error {
+  margin: 0 0 12px;
+  font: 500 13.5px/1.45 var(--spp-font);
+  color: var(--spp-danger, #B42318);
+}
+.spp__retain-foot { margin: 10px 0 0; text-align: center; }
+
+/* Guidance tips */
+.spp__retain-tips {
+  background: var(--spp-surface-tint);
+  border-radius: 14px;
+  padding: 14px 15px;
+}
+.spp__retain-tips-title { font: 700 14px/1.3 var(--spp-font); color: var(--spp-ink); margin-bottom: 8px; }
+.spp__retain-tips ul { margin: 0; padding-left: 18px; display: grid; gap: 7px; }
+.spp__retain-tips li { font: 500 14px/1.5 var(--spp-font); color: var(--spp-body); }
+
+/* Not seeing results */
+.spp__retain-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: var(--spp-light);
+  font: 600 13px/1 var(--spp-font);
+  color: var(--spp-ink);
+  margin-bottom: 14px;
+}
+.spp__retain-chip-note { font-weight: 500; color: var(--spp-muted); }
+
+/* Image column (Dental/Eye/Ear, once loaded) beside a timeline; otherwise the
+   timeline is the only child and takes the full width. */
+.spp__retain-tlwrap { display: flex; gap: 14px; align-items: flex-start; }
+/* The supplied image is ONE square with BEFORE stacked over AFTER, so the
+   column is a 1:1 box — no crop — with a label over each half. */
+.spp__retain-ba {
+  position: relative;
+  flex: 0 0 124px;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--spp-surface-tint);
+}
+.spp__retain-ba::before,
+.spp__retain-ba::after {
+  position: absolute;
+  left: 6px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, .72);
+  color: #fff;
+  font: 700 10px/1 var(--spp-font);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+.spp__retain-ba::before { content: "Before"; top: 6px; }
+.spp__retain-ba::after { content: "After"; top: calc(50% + 6px); }
+.spp__retain-ba[hidden] { display: none; }
+.spp__retain-ba img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.spp__retain-tl {
+  flex: 1 1 auto;
+  min-width: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+.spp__retain-tl-item { display: flex; gap: 11px; align-items: flex-start; }
+.spp__retain-tl-dot {
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  margin-top: 3px;
+  border-radius: 50%;
+  border: 2px solid var(--spp-accent);
+  background: #fff;
+}
+.spp__retain-tl-item:first-child .spp__retain-tl-dot { background: var(--spp-accent); }
+.spp__retain-tl-text { display: grid; gap: 2px; min-width: 0; font: 500 14.5px/1.5 var(--spp-font); color: var(--spp-body); }
+.spp__retain-tl-text b { color: var(--spp-ink); font-weight: 700; }
+.spp__retain-ba:not([hidden]) ~ .spp__retain-tl .spp__retain-tl-text { font-size: 13.5px; }
+.spp__retain-note { margin: 14px 0; font: 500 14px/1.5 var(--spp-font); color: var(--spp-body); }
+
+.spp__retain-warn {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  background: #FEF3F2;
+  border: 1px solid rgba(217, 45, 32, .26);
+  border-left: 4px solid #D92D20;
+  border-radius: 12px;
+  padding: 13px 14px;
+  margin: 0 0 14px;
+}
+.spp__retain-warn-icon { flex: 0 0 auto; color: #D92D20; margin-top: 1px; }
+.spp__retain-warn b { display: block; color: #912018; font: 700 14.5px/1.35 var(--spp-font); margin-bottom: 3px; }
+.spp__retain-warn span span { color: #7A271A; font: 500 13.5px/1.5 var(--spp-font); }
+
+.spp__retain-review {
+  margin: 0 0 14px;
+  background: var(--spp-surface);
+  border: 1px solid var(--spp-border);
+  border-radius: 14px;
+  padding: 14px 15px;
+}
+.spp__retain-review[hidden] { display: none; }
+.spp__retain-review blockquote { margin: 0 0 9px; font: 500 14.5px/1.55 var(--spp-font); color: var(--spp-ink); }
+.spp__retain-review figcaption { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font: 500 13px/1.3 var(--spp-font); color: var(--spp-muted); }
+.spp__retain-review figcaption b { color: var(--spp-ink); }
+
+.spp__retain-guarantee {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  background: var(--spp-light);
+  border-radius: 12px;
+  padding: 13px 14px;
+  margin: 0 0 16px;
+  font: 500 14px/1.5 var(--spp-font);
+  color: var(--spp-ink);
+}
+.spp__retain-guarantee svg { flex: 0 0 auto; margin-top: 1px; color: var(--spp-accent); }
+
+/* Secondary adjustment panel */
+.spp__retain-panel {
+  margin-top: 12px;
+  background: var(--spp-surface);
+  border: 1.5px solid var(--spp-accent);
+  border-radius: 16px;
+  padding: 15px;
+}
+.spp__retain-panel-lead { margin: 0 0 12px; font: 500 14px/1.5 var(--spp-font); color: var(--spp-body); }
+
+@media (max-width: 480px) {
+  .spp__retain { padding: 15px; }
+  .spp__retain-ba { flex-basis: 96px; }
+  .spp__retain-ba::before, .spp__retain-ba::after { left: 4px; padding: 2px 5px; font-size: 9px; }
+  .spp__retain-ba::before { top: 4px; }
+  .spp__retain-ba::after { top: calc(50% + 4px); }
+}
