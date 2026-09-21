@@ -516,16 +516,17 @@
         </span>
 
         {%- comment -%}
-          The before/after column exists ONLY for Dental, Eye and Ear, and only
+          The before/after column exists ONLY for Dental and Eye, and only
           once its approved image has actually loaded (JS un-hides it from the
           <img> load event). Until then — and always for Coat, Paw and Other —
           there is no column, no empty slot and no placeholder, and the
-          timeline is full width. Image files (not yet supplied):
-          spp-before-after-dental.jpg / -eye.jpg / -ear.jpg
+          timeline is full width. Files: spp-before-after-dental.jpg and
+          spp-before-after-eye.jpg (1:1, BEFORE stacked over AFTER). Temporary
+          DEV visual assets — not verified customer results. No Ear image.
         {%- endcomment -%}
         <div class="spp__retain-tlwrap" data-spp-ba-wrap>
           <div class="spp__retain-ba" data-spp-ba hidden>
-            <img data-spp-ba-img alt="" width="100" height="112" decoding="async">
+            <img data-spp-ba-img alt="" width="720" height="720" decoding="async">
           </div>
           <ol class="spp__retain-tl" data-spp-list="retainTimeline">
             <template data-spp-tpl="retainTimeline">

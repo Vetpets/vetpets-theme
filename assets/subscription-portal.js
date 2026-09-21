@@ -2280,7 +2280,8 @@
       stages: ['Your dog becomes more comfortable with wiping around the eyes.', 'Early improvement in tear-stain buildup may begin.', 'Meaningful results around the eye area build through consistency.']
     },
     ear: {
-      label: 'Ear care', img: true, note: 'EarWipes',
+      // No before/after image for Ear: none supplied, so none is requested.
+      label: 'Ear care', img: false, note: 'EarWipes',
       noteTail: ' works best on a steady weekly rhythm, and always after water.',
       stages: ['Your dog becomes more comfortable having their ears handled.', 'Early improvement in ear cleanliness may begin.', 'Meaningful ear results build through consistent weekly care.']
     },

@@ -311,9 +311,9 @@ describe('Too much product: move the next delivery 30 days later — never a cla
   });
 });
 
-describe('Dental / Eye / Ear may show a before/after image; Coat / Paw / Other never do', () => {
-  const HAS = ['dental', 'eye', 'ear'];
-  const NONE = ['skin', 'paw', 'other'];
+describe('only Dental and Eye show a before/after image; Ear / Coat / Paw / Other never do', () => {
+  const HAS = ['dental', 'eye'];
+  const NONE = ['ear', 'skin', 'paw', 'other'];
 
   for (const cat of HAS) {
     test(`${cat}: an image column is possible, keyed to spp-before-after-${cat}.jpg`, () => {
@@ -398,6 +398,48 @@ describe('Dental / Eye / Ear may show a before/after image; Coat / Paw / Other n
   test('the care label / timeline follow the "why you started" answer; unanswered falls back to general care', () => {
     assert.equal(makePortal({ reason: 'no_results', category: 'paw' }).retainContent().careLabel, 'Paw care');
     assert.equal(makePortal({ reason: 'no_results', category: null }).retainContent().careLabel, 'Long-term care');
+  });
+});
+
+describe('the two temporary DEV before/after assets', () => {
+  const file = (n) => readFileSync(resolve(here, '..', 'assets', n));
+  const jpegSize = (buf) => {
+    let i = 2;
+    while (i < buf.length) {
+      if (buf[i] !== 0xff) { i++; continue; }
+      const m = buf[i + 1];
+      if (m >= 0xc0 && m <= 0xc3) return [buf.readUInt16BE(i + 7), buf.readUInt16BE(i + 5)];
+      i += 2 + buf.readUInt16BE(i + 2);
+    }
+    return null;
+  };
+
+  for (const key of ['dental', 'eye']) {
+    test(`spp-before-after-${key}.jpg is a real, square, optimized JPEG`, () => {
+      const buf = file(`spp-before-after-${key}.jpg`);
+      assert.deepEqual([...buf.subarray(0, 2)], [0xff, 0xd8], 'JPEG signature');
+      assert.deepEqual(jpegSize(buf), [720, 720], '1:1');
+      assert.ok(buf.length < 200 * 1024, `optimized (${buf.length} bytes)`);
+    });
+  }
+
+  test('no Ear (or any other) before/after file exists', () => {
+    for (const k of ['ear', 'skin', 'paw', 'other', 'coat']) {
+      assert.throws(() => file(`spp-before-after-${k}.jpg`), /ENOENT/, k);
+    }
+  });
+
+  test('the image is only ever requested for a care key that has a file', () => {
+    const keys = Object.entries(CONSTS.CARE_STORIES).filter(([, v]) => v.img).map(([k]) => k).sort();
+    assert.deepEqual(keys, ['dental', 'eye']);
+  });
+
+  test('the column is a 1:1 box with BEFORE over AFTER labels, and the alt text claims no results', () => {
+    assert.match(css, /\.spp__retain-ba \{[^}]*aspect-ratio: 1 \/ 1/);
+    assert.match(css, /\.spp__retain-ba::before \{ content: "Before"; top: 6px; \}/);
+    assert.match(css, /\.spp__retain-ba::after \{ content: "After"; top: calc\(50% \+ 6px\); \}/);
+    const alt = /img\.alt = '([^']*)'/.exec(src)[1];
+    assert.ok(!/verified|result|proof|guarantee/i.test(alt), alt);
   });
 });
 
@@ -727,7 +769,7 @@ describe('mobile and desktop', () => {
   test('a small-screen rule narrows the image column and card padding', () => {
     const tail = css.slice(css.lastIndexOf('@media (max-width: 480px)'));
     assert.match(tail, /\.spp__retain \{ padding: 15px; \}/);
-    assert.match(tail, /\.spp__retain-ba \{ flex-basis: 84px; \}/);
+    assert.match(tail, /\.spp__retain-ba \{ flex-basis: 96px; \}/);
   });
   test('the image + timeline row and the warning box use flex layouts that reflow', () => {
     assert.match(css, /\.spp__retain-tlwrap\s*\{[^}]*display:\s*flex/);
