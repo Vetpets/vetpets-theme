@@ -295,7 +295,7 @@
       if (sub && !sub.querySelector('.fwof-rc-note')) {
         var n = document.createElement('span');
         n.className = 'fwof-rc-note';
-        n.textContent = ' \u00b7 ' + CFG.rc_note;
+        n.textContent = ' · ' + CFG.rc_note;
         sub.appendChild(n);
       }
     }
