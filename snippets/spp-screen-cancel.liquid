@@ -1,8 +1,16 @@
 {%- comment -%}
   Screens: cancellation flow (1 choose subscription → 2 before you cancel →
   3 why you started → 4 facts & alternatives → 5 cancellation reason →
-  6 retention → 7 confirm → 8 cancelled), reactivation, inactive list,
-  empty account.
+  6 adjust your routine → 7 40% off next delivery → 8 confirm →
+  9 cancelled), reactivation, inactive list, empty account.
+
+  Step 7 (cancel-savings) is the ONE place the 40% offer is ever shown, for
+  every reason the backend marks eligible (retentionOfferRedeemed false) —
+  not just "Too expensive" as before. Step 6 (cancel-offer, "Adjust your
+  routine") keeps its reason-personalized recommendation but no longer
+  shows the offer itself, so it appears exactly once in the journey. A
+  customer who already redeemed it skips step 7 only — show() redirects
+  straight to cancel-confirm — and still reaches Final Confirmation.
 
   Ported from the approved Claude Design mockup ("VetPets Portal V2"),
   which frames step 1 as choosing WHICH SUBSCRIPTION to cancel, on the
@@ -90,7 +98,7 @@
       <button type="button" class="spp__back" data-spp-go="cancel-choose">
         {% render 'spp-icon', icon: 'chevron-left' %}Back
       </button>
-      <span class="spp__cancel-step">Before you cancel &middot; Step 2 of 7</span>
+      <span class="spp__cancel-step">Before you cancel &middot; Step 2 of 8</span>
     </div>
 
     <div class="spp__cancel-important">
@@ -436,11 +444,16 @@
   `cancel-offer` (and so every existing back/forward/tracking hook that
   names it), but what it SHOWS now depends on the reason chosen on step 5:
 
-    Too expensive        -> the 40% next-delivery offer (unchanged Phoenix path)
     Too much product     -> move my next delivery 30 days later
     Not seeing results   -> "Give the routine time to work"
     Dog doesn't like it  -> routine guidance
-    Other / the rest     -> the adjustment options
+    Too expensive / other / the rest -> the adjustment options
+
+  The 40% offer is NOT one of this screen's recommendations any more — it
+  used to be "Too expensive"'s answer here, but it now shows exactly once,
+  on its own screen (cancel-savings, step 7), for every reason the backend
+  marks eligible. "Too expensive" falls back to the same adjustment-options
+  content "Something else" already used.
 
   Every block below is rendered hidden and switched by renderRetain() in
   subscription-portal.js — nothing here is a decision.
@@ -459,7 +472,7 @@
       <button type="button" class="spp__back" data-spp-go="cancel-reason">
         {% render 'spp-icon', icon: 'chevron-left' %}Back
       </button>
-      <span class="spp__cancel-step">Cancel &middot; Step 6 of 7</span>
+      <span class="spp__cancel-step">Cancel &middot; Step 6 of 8</span>
     </div>
 
     <h1 class="spp__h1" id="spp-co-h">Adjust your routine</h1>
@@ -487,20 +500,6 @@
       <div class="spp__eyebrow">Recommended for you</div>
       <h2 class="spp__h2 spp__retain-title" data-spp-field="retain.title">Take 40% off your next delivery</h2>
       <p class="spp__lede spp__retain-body" data-spp-field="retain.body"></p>
-
-      {%- comment -%} offer: this delivery vs every delivery after {%- endcomment -%}
-      <div class="spp__retain-block" data-spp-retain-block="offer" hidden>
-        <div class="spp__retain-pair">
-          <div class="spp__line" style="padding:0 0 12px;border-bottom:1px solid var(--spp-hair);">
-            <span><b data-spp-field="cancel.focusName">Routine Care</b> &middot; <span data-spp-field="subscription.nextOrderShort">Sep 8</span></span>
-            <b style="color:var(--spp-primary);font-size:19px;"><span data-spp-field="offer.percent">40</span>% off</b>
-          </div>
-          <div class="spp__line" style="padding:12px 0 0;">
-            <span>Every delivery after that</span>
-            <b>RoutineCare price, <span data-spp-field="offer.standard">20</span>% saving</b>
-          </div>
-        </div>
-      </div>
 
       {%- comment -%} move: the date now vs the date after the change {%- endcomment -%}
       <div class="spp__retain-block" data-spp-retain-block="delay" hidden>
@@ -648,23 +647,89 @@
     </div>
 
     <div class="spp__quiet-row">
-      <button type="button" class="spp__btn spp__btn--link" data-spp-go="cancel-confirm">Continue cancellation</button>
+      <button type="button" class="spp__btn spp__btn--link" data-spp-go="cancel-savings">Continue cancellation</button>
     </div>
   </div>
 </section>
 
-{%- comment -%} ---------- 7 · Confirm ---------- {%- endcomment -%}
+{%- comment -%} ---------- 7 · 40% off next delivery ---------- {%- endcomment -%}
+{%- comment -%}
+  The ONE place the retention offer is shown, for every cancellation
+  reason the backend marks eligible — not gated by which reason was
+  picked on step 5. show() in subscription-portal.js redirects this
+  screen straight to cancel-confirm the moment
+  subscription.retentionOfferRedeemed is true, exactly like the old
+  reason-gated version did, so a customer who already redeemed it skips
+  ONLY this screen and still reaches Final Confirmation.
+
+  Every field below (offer.percent, offer.standard, offer.currentPrice,
+  offer.price, cancel.focusName, subscription.nextOrderShort,
+  label.acceptOffer) is already populated globally by viewModel()/render()
+  — the same fields the old embedded "offer" block on cancel-offer used —
+  so this screen needs no new JS plumbing beyond act('acceptOffer'), which
+  is unchanged.
+{%- endcomment -%}
+<section class="spp__screen" data-spp-screen="cancel-savings" hidden aria-labelledby="spp-csv-h">
+  <div class="spp__narrow">
+    <div class="spp__step-row">
+      <button type="button" class="spp__back" data-spp-go="cancel-offer">
+        {% render 'spp-icon', icon: 'chevron-left' %}Back
+      </button>
+      <span class="spp__cancel-step">Cancel &middot; Step 7 of 8</span>
+    </div>
+
+    <div class="spp__eyebrow">Recommended for you</div>
+    <h1 class="spp__h1" id="spp-csv-h">Take <span data-spp-field="offer.percent">40</span>% off your next delivery</h1>
+    <p class="spp__lede">
+      Keep the routine going for less this time. Once that delivery ships, your normal
+      RoutineCare pricing and the usual <span data-spp-field="offer.standard">20</span>% saving
+      resume automatically &mdash; nothing to remember, nothing to cancel later.
+    </p>
+
+    <div class="spp__card spp__retain">
+      <div class="spp__retain-pair">
+        <div class="spp__line" style="padding:0 0 12px;border-bottom:1px solid var(--spp-hair);">
+          <span><b data-spp-field="cancel.focusName">Routine Care</b> &middot; <span data-spp-field="subscription.nextOrderShort">Sep 8</span></span>
+          <b style="color:var(--spp-primary);font-size:19px;"><span data-spp-field="offer.percent">40</span>% off</b>
+        </div>
+        <div class="spp__line" style="padding:12px 0 0;">
+          <span>Every delivery after that</span>
+          <b>RoutineCare price, <span data-spp-field="offer.standard">20</span>% saving</b>
+        </div>
+      </div>
+
+      <ul class="spp__retain-points" style="margin-top:16px;">
+        <li>{% render 'spp-icon', icon: 'check-circle', size: 16 %}<span>Applies to your <span data-spp-field="subscription.nextOrderShort">Sep 8</span> delivery only.</span></li>
+        <li>{% render 'spp-icon', icon: 'check-circle', size: 16 %}<span>Normal RoutineCare pricing and the <span data-spp-field="offer.standard">20</span>% saving resume automatically after it.</span></li>
+        <li>{% render 'spp-icon', icon: 'check-circle', size: 16 %}<span>Free shipping, flexible deliveries and the 100-day guarantee are unchanged.</span></li>
+      </ul>
+
+      <p class="spp__retain-error" data-spp-offer-error role="alert" hidden></p>
+
+      <button type="button" class="spp__btn spp__btn--primary" data-spp-act="acceptOffer">
+        <span data-spp-field="label.acceptOffer">Apply 40% to my next delivery</span>
+      </button>
+      <p class="spp__fine spp__retain-foot">One delivery only. No code to enter.</p>
+    </div>
+
+    <div class="spp__quiet-row">
+      <button type="button" class="spp__btn spp__btn--link" data-spp-go="cancel-confirm">No thanks, continue cancelling</button>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ---------- 8 · Confirm ---------- {%- endcomment -%}
 <section class="spp__screen" data-spp-screen="cancel-confirm" hidden aria-labelledby="spp-cc-h">
   {%- comment -%}
     data-spp-go is a fallback for a customer who somehow never eligible for
     JS at all; the real target is decided every render in
     renderCancelJourney(), because it depends on retentionOfferRedeemed,
     which can only be known once the subscription has loaded. A redeemed
-    customer must land on the reason screen — the one immediately before
-    the offer in the approved order — never back on the offer screen
+    customer must land on Adjust your routine — the screen immediately
+    before the offer in the new order — never back on the offer screen
     show() already refuses to display.
   {%- endcomment -%}
-  <button type="button" class="spp__back" data-spp-confirm-back data-spp-go="cancel-offer">
+  <button type="button" class="spp__back" data-spp-confirm-back data-spp-go="cancel-savings">
     {% render 'spp-icon', icon: 'chevron-left' %}Back
   </button>
 
@@ -722,7 +787,7 @@
   </div>
 </section>
 
-{%- comment -%} ---------- 8 · Cancelled ---------- {%- endcomment -%}
+{%- comment -%} ---------- 9 · Cancelled ---------- {%- endcomment -%}
 <section class="spp__screen spp__centred" data-spp-screen="cancel-done" hidden aria-labelledby="spp-cd-h">
   <div style="padding:26px 0;">
     <div class="spp__disc spp__disc--neutral">

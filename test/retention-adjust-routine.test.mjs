@@ -209,7 +209,12 @@ async function settle(p) { for (let i = 0; i < 8; i++) await tick(); return p; }
 
 describe('every cancellation reason gets its approved recommendation', () => {
   const EXPECT = {
-    price: ['offer', 'next_delivery_40'],
+    // 'price' has no explicit entry — the 40% offer moved to its own
+    // standalone screen (cancel-savings), shown for every reason the
+    // backend marks eligible, not just "Too expensive". Adjust your
+    // routine falls back to the same 'note'/'adjust_options' content every
+    // other unmapped reason gets.
+    price: ['note', 'adjust_options'],
     too_much: ['delay', 'move_delivery_30'],
     no_results: ['keep', 'keep_results'],
     dislike: ['easier', 'routine_guidance'],
@@ -221,10 +226,10 @@ describe('every cancellation reason gets its approved recommendation', () => {
     'break': ['note', 'adjust_options'],
   };
 
-  test('the table covers exactly the reasons the picker offers — none dropped, none unmapped', () => {
+  test('the table covers every reason the picker offers except "price", which relies on the same fallback', () => {
     const offered = CONSTS.REASONS.map((r) => r[0]).sort();
-    assert.deepEqual(Object.keys(RETAIN_BY_REASON).sort(), offered);
-    assert.deepEqual(offered, Object.keys(EXPECT).sort());
+    assert.deepEqual(Object.keys(RETAIN_BY_REASON).sort(), offered.filter((r) => r !== 'price'));
+    assert.ok(!('price' in RETAIN_BY_REASON), '"price" must not map to \'offer\' on this screen any more');
   });
 
   for (const [reason, [kind, action]] of Object.entries(EXPECT)) {
@@ -235,17 +240,17 @@ describe('every cancellation reason gets its approved recommendation', () => {
   }
 
   test('no two different reasons show the same generic content by accident', () => {
-    const titles = new Set(['price', 'too_much', 'no_results', 'dislike', 'other'].map((r) => makePortal({ reason: r }).retainContent().title));
-    assert.equal(titles.size, 5);
+    // 'price' now shares its content with 'other' and the legacy reasons —
+    // that is the point, so it is excluded from this uniqueness check.
+    const titles = new Set(['too_much', 'no_results', 'dislike', 'other'].map((r) => makePortal({ reason: r }).retainContent().title));
+    assert.equal(titles.size, 4);
   });
 
-  test('Too expensive: 40% off the next delivery only, normal pricing and 20% saving after', () => {
+  test('Too expensive no longer shows the 40% offer on Adjust your routine — it falls back to the adjustment-options content', () => {
     const c = makePortal({ reason: 'price' }).retainContent();
-    assert.equal(c.title, 'Take 40% off your next FreshWipes delivery');
-    assert.match(c.body, /normal RoutineCare pricing and the usual 20% saving resume automatically/);
-    assert.ok(c.points.some((t) => /delivery only\./.test(t)));
-    assert.equal(c.cta, 'Apply 40% to my next delivery');
-    assert.equal(c.foot, 'One delivery only. No code to enter.');
+    assert.equal(c.title, 'There may be a better fit than cancelling');
+    assert.ok(c.points.includes('All four adjustments below are open to you.'));
+    assert.ok(!/40%/.test(c.title + c.body + c.cta), 'the offer must not surface here any more');
   });
 
   test('Not seeing results: the approved commitment copy', () => {
@@ -563,8 +568,8 @@ describe('secondary options remain available exactly as approved', () => {
     assert.equal(ad.calls.writes[0].opts.retentionAction, 'pause_until_date');
   });
 
-  test('Continue cancellation stays reachable from step 6', () => {
-    assert.match(screenMarkup('cancel-offer'), /data-spp-go="cancel-confirm">Continue cancellation</);
+  test('Continue cancellation stays reachable from step 6, leading to the standalone offer screen', () => {
+    assert.match(screenMarkup('cancel-offer'), /data-spp-go="cancel-savings">Continue cancellation</);
   });
 });
 
@@ -673,33 +678,55 @@ describe('tracking: shown / attempted / declined / kept, and who may say "saved"
     }
   });
 
-  test('the price reason hands off to the proven acceptOffer path (no delay/skip write)', async () => {
+  test('retainPrimary no longer hands "price" off to acceptOffer — it is "note"/kept, like any other unmapped reason', () => {
+    // The 40% offer left this screen entirely; cancel-savings' own "Apply
+    // X%" button is wired directly to data-spp-act="acceptOffer" instead
+    // (see the acceptOffer describe block below).
     const ad = scriptedAdapter({});
-    let accepted = 0;
-    ad.acceptRetentionOffer = () => { accepted += 1; return Promise.resolve({ verified: true, refreshRequired: false }); };
-    ad.getSubscription = () => Promise.resolve({});
     const p = makePortal({ reason: 'price', adapter: ad });
-    const seen = [];
-    p.act = function (name, el) { seen.push(name); return act.call(this, name, el); };
     p.act('retainPrimary', {});
-    await settle();
-    assert.equal(seen[1], 'acceptOffer');
     assert.equal(ad.calls.writes.length, 0);
+    assert.equal(p.events[0][0], 'recommendation_kept');
+    assert.deepEqual(p.screens, ['dashboard']);
   });
 
-  test('offer_shown is the 40% offer’s alone; every recommendation is recommendation_shown with its key', () => {
+  test('acceptOffer (cancel-savings’ own button) is independent of the chosen reason', async () => {
+    for (const reason of ['price', 'too_much', 'other']) {
+      const ad = scriptedAdapter({});
+      let accepted = 0;
+      ad.acceptRetentionOffer = () => { accepted += 1; return Promise.resolve({ verified: true, refreshRequired: false }); };
+      ad.getSubscription = () => Promise.resolve({});
+      const p = makePortal({ reason, adapter: ad });
+      p.act('acceptOffer', {});
+      await settle();
+      assert.equal(accepted, 1, reason);
+      assert.equal(ad.calls.writes.length, 0, reason);
+    }
+  });
+
+  test('offer_shown fires for cancel-savings alone, for EVERY reason; cancel-offer only ever fires recommendation_shown', () => {
     for (const [reason, kind, action] of [
-      ['price', 'offer', 'next_delivery_40'], ['too_much', 'delay', 'move_delivery_30'],
+      ['price', 'note', 'adjust_options'], ['too_much', 'delay', 'move_delivery_30'],
     ]) {
       const p = makePortal({ reason });
       const calls = [];
       p.adapter.recordRetentionEvent = (e, j, o) => { calls.push([e, o]); return Promise.resolve(null); };
       p.trackRetention = function (e, a) { return trackRetention.call(this, e, a); };
       beaconScreenView.call(p, 'cancel-offer');
-      const expected = kind === 'offer'
-        ? [['offer_shown', 'next_delivery_40'], ['recommendation_shown', action]]
-        : [['recommendation_shown', action]];
-      assert.deepEqual(calls, expected, reason);
+      assert.deepEqual(calls, [['recommendation_shown', action]], reason);
+    }
+
+    // cancel-savings always represents the offer, regardless of reason.
+    for (const reason of ['price', 'too_much', 'other']) {
+      const p = makePortal({ reason });
+      const calls = [];
+      p.adapter.recordRetentionEvent = (e, j, o) => { calls.push([e, o]); return Promise.resolve(null); };
+      p.trackRetention = function (e, a) { return trackRetention.call(this, e, a); };
+      beaconScreenView.call(p, 'cancel-savings');
+      assert.deepEqual(calls, [
+        ['offer_shown', 'next_delivery_40'],
+        ['recommendation_shown', 'next_delivery_40'],
+      ], reason);
     }
   });
 
@@ -716,7 +743,7 @@ describe('tracking: shown / attempted / declined / kept, and who may say "saved"
 describe('40% offer: one delivery only, and never resurfaced once redeemed', () => {
   function showPortal({ redeemed, reason }) {
     const screens = {};
-    for (const n of ['cancel-reason', 'cancel-offer', 'cancel-confirm', 'dashboard']) {
+    for (const n of ['cancel-reason', 'cancel-offer', 'cancel-savings', 'cancel-confirm', 'dashboard']) {
       screens[n] = { hidden: true, getAttribute: () => n, setAttribute() {}, focus() {} };
     }
     return {
@@ -728,14 +755,16 @@ describe('40% offer: one delivery only, and never resurfaced once redeemed', () 
     };
   }
 
-  test('a redeemed customer who said "Too expensive" is sent straight to final confirmation', () => {
-    const p = showPortal({ redeemed: true, reason: 'price' });
-    p.show('cancel-offer');
-    assert.equal(p.state.screen, 'cancel-confirm');
+  test('a redeemed customer is sent straight to final confirmation from the offer screen, for EVERY reason', () => {
+    for (const reason of ['price', 'too_much', 'no_results', 'dislike', 'other']) {
+      const p = showPortal({ redeemed: true, reason });
+      p.show('cancel-savings');
+      assert.equal(p.state.screen, 'cancel-confirm', reason);
+    }
   });
 
-  test('a redeemed customer with any OTHER reason still sees their (non-offer) recommendation', () => {
-    for (const reason of ['too_much', 'no_results', 'dislike', 'other']) {
+  test('Adjust your routine (cancel-offer) is unaffected by redemption status, for any reason', () => {
+    for (const reason of ['price', 'too_much', 'no_results', 'dislike', 'other']) {
       const p = showPortal({ redeemed: true, reason });
       p.show('cancel-offer');
       assert.equal(p.state.screen, 'cancel-offer', reason);
@@ -756,8 +785,11 @@ describe('final cancellation path is untouched', () => {
   test('the reason screen still advances to step 6 (cancel-offer) after saving the reason', () => {
     assert.match(src, /self\.show\('cancel-offer'\)/);
   });
-  test('step 6 links forward to confirmation with "Continue cancellation"', () => {
-    assert.match(screenMarkup('cancel-offer'), /class="spp__btn spp__btn--link" data-spp-go="cancel-confirm"/);
+  test('step 6 links forward to the standalone 40% offer screen with "Continue cancellation"', () => {
+    assert.match(screenMarkup('cancel-offer'), /class="spp__btn spp__btn--link" data-spp-go="cancel-savings"/);
+  });
+  test('step 7 (cancel-savings) links forward to Final Confirmation', () => {
+    assert.match(screenMarkup('cancel-savings'), /data-spp-go="cancel-confirm">No thanks, continue cancelling</);
   });
 });
 

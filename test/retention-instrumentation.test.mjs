@@ -116,7 +116,7 @@ describe('screen-view beacons name the right event and share one journey', () =>
   function portal({ retentionOfferRedeemed = false, recordRetentionEvent } = {}) {
     const events = [];
     const screens = {};
-    for (const name of ['cancel-reason', 'cancel-alt', 'cancel-offer', 'cancel-confirm', 'dashboard']) {
+    for (const name of ['cancel-reason', 'cancel-alt', 'cancel-offer', 'cancel-savings', 'cancel-confirm', 'dashboard']) {
       screens[name] = { hidden: true, getAttribute: () => name, setAttribute() {}, focus() {} };
     }
     const root = {
@@ -124,7 +124,8 @@ describe('screen-view beacons name the right event and share one journey', () =>
       querySelector() { return null; },
     };
     const p = {
-      // Step 6 is reason-personalized; the 40% offer is the "Too expensive" one.
+      // Step 6 is reason-personalized; step 7 (cancel-savings) is the
+      // standalone 40% offer, shown for every reason.
       state: { screen: 'dashboard', history: [], retentionJourneyId: null, data: { retentionOfferRedeemed }, draft: { reason: 'price' } },
       root,
       events,
@@ -162,21 +163,31 @@ describe('screen-view beacons name the right event and share one journey', () =>
     assert.equal(p.state.retentionJourneyId, 'j-existing', 'a beacon must never displace an id already held');
   });
 
-  test('an eligible customer viewing the offer fires offer_shown', async () => {
+  test('an eligible customer viewing the standalone offer screen (cancel-savings) fires offer_shown', async () => {
     const p = portal({ retentionOfferRedeemed: false });
-    p.show('cancel-offer');
+    p.show('cancel-savings');
     await Promise.resolve().then(() => {});
     // offer_shown keeps its historical meaning; the additive
     // recommendation_shown rides alongside it, typed by the action key.
     assert.deepEqual(p.events.map((e) => e.eventType), ['offer_shown', 'recommendation_shown']);
-    assert.equal(p.state.screen, 'cancel-offer');
+    assert.equal(p.state.screen, 'cancel-savings');
   });
 
-  test('a NON-price reason fires recommendation_shown ONLY — offer_shown stays the 40% offer\'s alone', async () => {
+  test('cancel-savings fires offer_shown for EVERY reason — eligibility is no longer reason-gated', async () => {
+    for (const reason of ['price', 'too_much', 'no_results', 'dislike', 'other']) {
+      const p = portal({ retentionOfferRedeemed: false });
+      p.state.draft.reason = reason;
+      p.show('cancel-savings');
+      await Promise.resolve().then(() => {});
+      assert.deepEqual(p.events.map((e) => e.eventType), ['offer_shown', 'recommendation_shown'], reason);
+    }
+  });
+
+  test('Adjust your routine (cancel-offer) fires recommendation_shown ONLY, for every reason — never offer_shown', async () => {
     for (const [reason, action] of [
-      ['too_much', 'move_delivery_30'], ['no_results', 'keep_results'], ['dislike', 'routine_guidance'],
-      ['other', 'adjust_options'], ['not_using', 'adjust_options'], ['not_needed', 'adjust_options'],
-      ['order_issue', 'adjust_options'], ['break', 'adjust_options'],
+      ['price', 'adjust_options'], ['too_much', 'move_delivery_30'], ['no_results', 'keep_results'],
+      ['dislike', 'routine_guidance'], ['other', 'adjust_options'], ['not_using', 'adjust_options'],
+      ['not_needed', 'adjust_options'], ['order_issue', 'adjust_options'], ['break', 'adjust_options'],
     ]) {
       const offerTypes = [];
       const p = portal({
@@ -194,10 +205,17 @@ describe('screen-view beacons name the right event and share one journey', () =>
 
   test('a REDEEMED customer never triggers offer_shown — they land on confirm, which beacons that instead', async () => {
     const p = portal({ retentionOfferRedeemed: true });
-    p.show('cancel-offer');
+    p.show('cancel-savings');
     await Promise.resolve().then(() => {});
     assert.deepEqual(p.events.map((e) => e.eventType), ['final_confirmation_reached']);
     assert.equal(p.state.screen, 'cancel-confirm');
+  });
+
+  test('a REDEEMED customer still reaches Adjust your routine normally — only cancel-savings is gated', async () => {
+    const p = portal({ retentionOfferRedeemed: true });
+    p.show('cancel-offer');
+    await Promise.resolve().then(() => {});
+    assert.equal(p.state.screen, 'cancel-offer');
   });
 
   test('final_confirmation_reached fires on reaching the confirm screen directly', async () => {
@@ -233,7 +251,7 @@ describe('screen-view beacons name the right event and share one journey', () =>
  * ================================================================== */
 
 describe('offer_declined fires exactly when the customer walks away from the offer', () => {
-  function portal({ screen = 'cancel-offer', retentionJourneyId = 'j-1', reason = 'price' } = {}) {
+  function portal({ screen = 'cancel-savings', retentionJourneyId = 'j-1', reason = 'price' } = {}) {
     const events = [];
     return {
       events,
@@ -250,7 +268,7 @@ describe('offer_declined fires exactly when the customer walks away from the off
     };
   }
 
-  test('continuing from cancel-offer to cancel-confirm emits offer_declined once, on the held journey', () => {
+  test('continuing from cancel-savings to cancel-confirm emits offer_declined once, on the held journey', () => {
     const p = portal();
     const link = el('a', { 'data-spp-go': 'cancel-confirm' });
     onClick(p, { target: link, preventDefault() {} });
@@ -261,19 +279,38 @@ describe('offer_declined fires exactly when the customer walks away from the off
     assert.equal(p.state.screen, 'cancel-confirm');
   });
 
-  test('a non-price reason declines with recommendation_declined only — never offer_declined', () => {
-    const p = portal({ reason: 'too_much' });
-    onClick(p, { target: el('a', { 'data-spp-go': 'cancel-confirm' }), preventDefault() {} });
-    assert.deepEqual(p.events, [{ eventType: 'recommendation_declined', journeyId: 'j-1' }]);
+  test('offer_declined fires from cancel-savings regardless of reason — eligibility is no longer reason-gated', () => {
+    for (const reason of ['price', 'too_much', 'other']) {
+      const p = portal({ reason });
+      onClick(p, { target: el('a', { 'data-spp-go': 'cancel-confirm' }), preventDefault() {} });
+      assert.deepEqual(p.events, [
+        { eventType: 'offer_declined', journeyId: 'j-1' },
+        { eventType: 'recommendation_declined', journeyId: 'j-1' },
+      ], reason);
+    }
+  });
+
+  test('continuing from cancel-offer to cancel-savings declines only that screen\'s own recommendation — never offer_declined', () => {
+    for (const [reason, action] of [['price', 'adjust_options'], ['too_much', 'move_delivery_30']]) {
+      const p = portal({ screen: 'cancel-offer', reason });
+      onClick(p, { target: el('a', { 'data-spp-go': 'cancel-savings' }), preventDefault() {} });
+      assert.deepEqual(p.events, [{ eventType: 'recommendation_declined', journeyId: 'j-1' }], reason);
+    }
   });
 
   test('leaving cancel-offer for any OTHER destination is not a decline', () => {
-    const p = portal();
+    const p = portal({ screen: 'cancel-offer' });
     onClick(p, { target: el('a', { 'data-spp-go': 'dashboard' }), preventDefault() {} });
     assert.deepEqual(p.events, []);
   });
 
-  test('reaching cancel-confirm from a screen other than cancel-offer is not a decline', () => {
+  test('leaving cancel-savings for any OTHER destination is not a decline', () => {
+    const p = portal({ screen: 'cancel-savings' });
+    onClick(p, { target: el('a', { 'data-spp-go': 'cancel-offer' }), preventDefault() {} });
+    assert.deepEqual(p.events, []);
+  });
+
+  test('reaching cancel-confirm from a screen other than cancel-savings is not a decline', () => {
     const p = portal({ screen: 'cancel-alt' });
     onClick(p, { target: el('a', { 'data-spp-go': 'cancel-confirm' }), preventDefault() {} });
     assert.deepEqual(p.events, []);

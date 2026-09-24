@@ -487,10 +487,10 @@
      * decides that — this only keeps the customer from ever being shown an
      * offer the server has already refused. Checked here, not just on the
      * one button that used to link to it, so a deep link, browser back/
-     * forward, or a future caller cannot resurface it either. Per the
-     * approved journey: Longer Gap goes straight to Final Confirmation. */
-    if (screen === 'cancel-offer' && this.state.data && this.state.data.retentionOfferRedeemed &&
-        this.retainKind().kind === 'offer') {
+     * forward, or a future caller cannot resurface it either. Applies for
+     * every cancellation reason now that the offer has its own screen
+     * (cancel-savings), not just whichever reason used to earn it. */
+    if (screen === 'cancel-savings' && this.state.data && this.state.data.retentionOfferRedeemed) {
       screen = 'cancel-confirm';
     }
 
@@ -514,8 +514,9 @@
      * sheet is. Navigation is the customer asking again.
      */
     this.state.confirmSpent = false;
-    // A step-6 failure message belongs to the attempt that produced it.
+    // A step-6/step-7 failure message belongs to the attempt that produced it.
     this.state.retainError = null;
+    this.state.offerError = null;
 
     var sections = this.root.querySelectorAll('[data-spp-screen]');
     for (var i = 0; i < sections.length; i++) {
@@ -547,8 +548,8 @@
    * already are — telemetry must never block or slow navigation. Called
    * with the FINAL resolved screen (after the already-redeemed redirect
    * above has run), so a redeemed customer who never actually sees
-   * cancel-offer never triggers offer_shown for it — they land straight on
-   * cancel-confirm, which fires final_confirmation_reached instead.
+   * cancel-savings never triggers offer_shown for it — they land straight
+   * on cancel-confirm, which fires final_confirmation_reached instead.
    *
    * Server-side dedup ((journey_id, event_type) is unique) means firing
    * this on every re-render of the same screen — a refresh, a browser
@@ -559,32 +560,35 @@
    * Center's funnel, by NAME, not by their position in the approved
    * Portal V2 order — cancel-reason now sits at step 5, after cancel-alt's
    * step 4, but each event still means exactly what its name says
-   * regardless of when the customer reaches it.
+   * regardless of when the customer reaches it. offer_shown now names
+   * cancel-savings (step 7), the one standalone offer screen, rather than
+   * cancel-offer (step 6, "Adjust your routine"), which no longer shows
+   * the offer at all.
    */
   var RETENTION_SCREEN_EVENTS = {
     'cancel-reason': 'cancellation_started',
     'cancel-alt': 'longer_gap_reached',
-    'cancel-offer': 'offer_shown',
+    'cancel-savings': 'offer_shown',
     'cancel-confirm': 'final_confirmation_reached'
   };
 
   Portal.prototype.beaconScreenView = function (screen) {
     var self = this;
     var eventType = RETENTION_SCREEN_EVENTS[screen];
-    if (!eventType || !self.adapter.recordRetentionEvent) return;
 
-    /* cancel-offer is now the reason-personalized step. offer_shown keeps
-     * meaning exactly what it always did — "the customer was shown the 40%
-     * offer" — so it fires only when the recommendation IS that offer. Every
-     * recommendation, offer included, is additionally reported through the
-     * additive recommendation_shown event, typed by its action key. */
+    /* Additive tracking, independent of the named RCC funnel above:
+     * cancel-offer's reason-personalized recommendation (whatever kind it
+     * is now — never 'offer') and cancel-savings' fixed offer
+     * recommendation are both reported through recommendation_shown,
+     * typed by action key. */
     var rec = null;
     if (screen === 'cancel-offer') {
       rec = self.retainKind();
-      if (rec.kind !== 'offer') eventType = null;
+    } else if (screen === 'cancel-savings') {
+      rec = { kind: 'offer', action: 'next_delivery_40' };
     }
 
-    if (eventType) {
+    if (eventType && self.adapter.recordRetentionEvent) {
       self.adapter.recordRetentionEvent(eventType, self.state.retentionJourneyId, 'next_delivery_40')
         .then(function (result) {
           // Adopt the journey id only if we did not already have one — the
@@ -872,9 +876,10 @@
       message = 'That did not go through. Nothing has changed — please try again.';
     }
 
-    // Step 6 keeps its failure ON the screen, next to the button that
-    // failed, as well as in the toast — the customer is still on the screen.
+    // Step 6/step 7 keep their failure ON the screen, next to the button
+    // that failed, as well as in the toast — the customer is still there.
     if (this.state.screen === 'cancel-offer') this.state.retainError = message;
+    else if (this.state.screen === 'cancel-savings') this.state.offerError = message;
     this.toast(message);
     this.render();
   };
@@ -1242,6 +1247,13 @@
     var row = this.root.querySelector('[data-spp-reason-row]');
     if (row) row.hidden = !d.reason;
 
+    // Step 7's own failure slot — see actionFailed()'s offerError branch.
+    var offerErr = this.root.querySelector('[data-spp-offer-error]');
+    if (offerErr) {
+      offerErr.textContent = this.state.offerError || '';
+      offerErr.hidden = !this.state.offerError;
+    }
+
     // The message disappears as soon as the problem does, rather than sitting
     // there contradicting what the customer has just put right. A save
     // failure is a DIFFERENT kind of message — the selection is already
@@ -1259,8 +1271,8 @@
     /* THE BUG THIS EXISTS FOR:
      *
      * The confirmation screen's Back button was wired to a fixed
-     * data-spp-go="cancel-offer" in the markup. For a customer who has
-     * already redeemed the 40% offer, show('cancel-offer') immediately
+     * data-spp-go="cancel-savings" in the markup. For a customer who has
+     * already redeemed the 40% offer, show('cancel-savings') immediately
      * redirects back to 'cancel-confirm' — the SAME screen the customer is
      * already on — so the button appeared to do nothing at all. It was
      * never dead; it was navigating to a screen that refuses to be shown,
@@ -1269,15 +1281,15 @@
      * The target is decided fresh on every render because eligibility is
      * server truth that can change mid-session — most obviously the moment
      * a successful offer's post-write load() lands and flips
-     * retentionOfferRedeemed from false to true. */
+     * retentionOfferRedeemed from false to true. Applies to every reason
+     * now, not just whichever one used to earn the offer. */
     var confirmBack = this.root.querySelector('[data-spp-confirm-back]');
     if (confirmBack) {
-      var redeemed = this.state.data && this.state.data.retentionOfferRedeemed &&
-        this.retainKind().kind === 'offer';
-      // Reason (not alt) is the screen immediately before the offer in the
-      // approved Portal V2 order — that is the safe fallback once the offer
-      // screen itself refuses to show.
-      confirmBack.setAttribute('data-spp-go', redeemed ? 'cancel-reason' : 'cancel-offer');
+      var redeemed = !!(this.state.data && this.state.data.retentionOfferRedeemed);
+      // Adjust your routine (not the reason screen) is the screen
+      // immediately before the offer in the new order — that is the safe
+      // fallback once the offer screen itself refuses to show.
+      confirmBack.setAttribute('data-spp-go', redeemed ? 'cancel-offer' : 'cancel-savings');
     }
   };
 
@@ -1862,18 +1874,24 @@
       if ((el = e.target.closest('[data-spp-go]'))) {
         e.preventDefault();
         var goTarget = el.getAttribute('data-spp-go');
-        /* Declining the offer has no dedicated action — it is just
-         * navigating away from cancel-offer without having accepted it.
-         * Checked BEFORE show() changes the screen, so "leaving cancel-offer
-         * toward cancel-confirm" is exactly what distinguishes a decline
-         * from every other way of reaching cancel-confirm (the Longer Gap
-         * path, or the already-redeemed redirect show() itself performs). */
-        if (self.state.screen === 'cancel-offer' && goTarget === 'cancel-confirm' && self.adapter.recordRetentionEvent) {
-          var declined = self.retainKind();
-          if (declined.kind === 'offer') {
-            self.adapter.recordRetentionEvent('offer_declined', self.state.retentionJourneyId, 'next_delivery_40').catch(function () {});
-          }
-          self.trackRetention('recommendation_declined', declined.action);
+        /* Declining a recommendation has no dedicated action — it is just
+         * navigating on without having accepted it. Checked BEFORE show()
+         * changes the screen, so "leaving X toward Y" is exactly what
+         * distinguishes a decline from every other way of reaching the
+         * next screen (the Longer Gap path, or the already-redeemed
+         * redirect show() itself performs).
+         *
+         * Two separate declines now: leaving cancel-offer ("Adjust your
+         * routine") toward cancel-savings declines whatever reason-
+         * personalized recommendation was shown there (never 'offer' any
+         * more); leaving cancel-savings toward cancel-confirm declines the
+         * 40% offer itself, which is the only place offer_declined can
+         * still fire from. */
+        if (self.state.screen === 'cancel-offer' && goTarget === 'cancel-savings' && self.adapter.recordRetentionEvent) {
+          self.trackRetention('recommendation_declined', self.retainKind().action);
+        } else if (self.state.screen === 'cancel-savings' && goTarget === 'cancel-confirm' && self.adapter.recordRetentionEvent) {
+          self.adapter.recordRetentionEvent('offer_declined', self.state.retentionJourneyId, 'next_delivery_40').catch(function () {});
+          self.trackRetention('recommendation_declined', 'next_delivery_40');
         }
         self.show(goTarget);
         return;
@@ -2238,9 +2256,14 @@
    * The four legacy reasons the approved design does not list (not_using,
    * not_needed, order_issue, break) are preserved and share the approved
    * "adjustment options" recommendation.
+   *
+   * 'price' has no entry: the 40% offer is no longer "Too expensive"'s
+   * recommendation on THIS screen (see cancel-savings for where it now
+   * lives, unconditionally, for every reason). retainKind() below falls
+   * through to the same 'note'/'adjust_options' default every other
+   * unmapped reason gets.
    */
   var RETAIN_BY_REASON = {
-    price: ['offer', 'next_delivery_40'],
     too_much: ['delay', 'move_delivery_30'],
     no_results: ['keep', 'keep_results'],
     dislike: ['easier', 'routine_guidance'],
@@ -2464,7 +2487,6 @@
     var P = lines.length === 1 ? lines[0].title.replace(/ (jar|pack).*$/, '') : 'Routine Care';
     var next = sub && sub.nextOrderDate;
     var freq = sub && sub.intervalDays;
-    var nextMedium = next ? this.fmtDate(next, 'medium') : 'next';
     var out = {
       kind: k.kind, action: k.action, title: '', body: '', points: [], tips: [], timeline: [],
       cta: 'Keep my RoutineCare active', foot: '',
@@ -2472,18 +2494,7 @@
       dateNow: next ? this.fmtDate(next, 'short') : '', dateAfter: ''
     };
 
-    if (k.kind === 'offer') {
-      out.title = 'Take ' + OFFER_PERCENT + '% off your next ' + P + ' delivery';
-      out.body = 'Keep the routine going for less this time. Once that delivery ships, your normal RoutineCare pricing and the usual ' +
-        STANDARD_PERCENT + '% saving resume automatically — nothing to remember, nothing to cancel later.';
-      out.points = [
-        'Applies to your ' + nextMedium + ' delivery only.',
-        'Normal RoutineCare pricing and the ' + STANDARD_PERCENT + '% saving resume automatically after it.',
-        'Free shipping, flexible deliveries and the 100-day guarantee are unchanged.'
-      ];
-      out.cta = 'Apply ' + OFFER_PERCENT + '% to my next delivery';
-      out.foot = 'One delivery only. No code to enter.';
-    } else if (k.kind === 'delay') {
+    if (k.kind === 'delay') {
       var moved = next ? NS.dates.addDays(next, RETAIN_MOVE_DAYS) : null;
       out.dateAfter = moved ? this.fmtDate(moved, 'short') : '';
       out.title = 'Move your next delivery ' + RETAIN_MOVE_DAYS + ' days later';
@@ -2943,14 +2954,15 @@
 
       /**
        * Step 6's primary button. What it does depends on the recommendation:
-       *  - offer  -> the proven 40% next-delivery offer (acceptOffer, untouched)
        *  - delay  -> move the next delivery 30 days later (verified)
        *  - other  -> "Keep my RoutineCare active": NO Phoenix change, so it is
        *              tracked as kept and is never counted as a save.
+       * The 40% offer is no longer one of this screen's recommendations —
+       * see cancel-savings' own "Apply X% to my next delivery" button,
+       * wired directly to data-spp-act="acceptOffer".
        */
       case 'retainPrimary': {
         var rk = this.retainKind();
-        if (rk.kind === 'offer') { this.act('acceptOffer', el); return; }
         if (rk.kind === 'delay') {
           if (!sub || !sub.nextOrderDate) return;
           var moveTo = NS.dates.addDays(sub.nextOrderDate, RETAIN_MOVE_DAYS);

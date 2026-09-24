@@ -410,7 +410,7 @@ describe('step 2 — before you cancel', () => {
   test('has the wide layout, the correct back target, and the design’s own step indicator', () => {
     assert.match(step, /spp__cancel-wide/, 'this screen must not use the narrow centred layout');
     assert.ok(!/spp__narrow/.test(step), 'the narrow column class must not appear on this screen');
-    assert.match(step, /Before you cancel\s*&middot;\s*Step 2 of 7/);
+    assert.match(step, /Before you cancel\s*&middot;\s*Step 2 of 8/);
     const back = buttonWith(step, 'Back');
     assert.match(back, /data-spp-go="cancel-choose"/, 'Back must return to step 1, not jump out of the flow');
   });
@@ -775,7 +775,7 @@ describe('step 6 — Adjust your routine (the reason-personalized retention step
   const step = screen('cancel-offer');
 
   test('carries the approved shell: step label, heading, told-us row, recommended card, other ways', () => {
-    assert.match(step, /Cancel &middot; Step 6 of 7/);
+    assert.match(step, /Cancel &middot; Step 6 of 8/);
     assert.match(step, /<h1[^>]*>Adjust your routine<\/h1>/);
     assert.match(step, /Cancelling is one option\. Based on what you told us/);
     assert.match(step, /You told us/);
@@ -796,16 +796,46 @@ describe('step 6 — Adjust your routine (the reason-personalized retention step
     assert.ok(!/#128FCB/i.test(cancelScreens), 'legacy #128FCB must not be used here');
   });
 
-  test('continuing to cancel is the quiet action and stays one tap away', () => {
+  test('continuing to cancel goes to the standalone 40% offer screen, and stays one tap away', () => {
     const no = buttonWith(step, 'Continue cancellation');
+    assert.match(no, /spp__btn--link/);
+    assert.match(no, /data-spp-go="cancel-savings"/);
+  });
+
+  test('the 40% offer is no longer one of this screen’s recommendations', () => {
+    // 'price' has no entry in RETAIN_BY_REASON any more, so retainKind()
+    // can never resolve to 'offer' here — see the standalone cancel-savings
+    // screen below for the one place the offer still lives.
+    assert.ok(!/price:\s*\['offer'/.test(src));
+    assert.match(src, /RETAIN_BY_REASON = \{\s*too_much:/);
+  });
+});
+
+describe('step 7 — the standalone 40% off next delivery screen', () => {
+  const step = screen('cancel-savings');
+
+  test('shows the offer for EVERY reason, not just "Too expensive"', () => {
+    assert.match(step, /Cancel &middot; Step 7 of 8/);
+    assert.match(step, /Take <span data-spp-field="offer\.percent">40<\/span>% off your next delivery/);
+    assert.match(step, /Recommended for you/);
+  });
+
+  test('the back button returns to Adjust your routine', () => {
+    const back = buttonWith(step, 'Back');
+    assert.match(back, /data-spp-go="cancel-offer"/);
+  });
+
+  test('declining goes straight to Final Confirmation, not back to the reason step', () => {
+    const no = buttonWith(step, 'No thanks, continue cancelling');
     assert.match(no, /spp__btn--link/);
     assert.match(no, /data-spp-go="cancel-confirm"/);
   });
 
   test('the 40% offer is still accepted through the proven acceptOffer path — live, not disabled', () => {
-    // retainPrimary hands the "Too expensive" recommendation to acceptOffer,
-    // which is unchanged: same adapter call, same server verification.
-    assert.match(src, /case 'retainPrimary'[\s\S]{0,400}this\.act\('acceptOffer'/);
+    const cta = buttonWith(step, 'Apply 40% to my next delivery');
+    assert.match(cta, /spp__btn--primary/);
+    assert.match(cta, /data-spp-act="acceptOffer"/);
+    assert.ok(!/disabled/.test(cta));
     assert.match(src, /case 'acceptOffer'/);
     assert.match(src, /acceptRetentionOffer/);
   });
@@ -1007,7 +1037,7 @@ describe('the corrected V2 journey', () => {
     assert.ok(!/data-spp-go="cancel-reason"/.test(cancel));
   });
 
-  test('the eight approved Portal V2 screens run in order', () => {
+  test('the nine cancel-flow screens run in order', () => {
     const order = [
       'cancel-choose',
       'cancel-benefits',
@@ -1015,6 +1045,7 @@ describe('the corrected V2 journey', () => {
       'cancel-alt',
       'cancel-reason',
       'cancel-offer',
+      'cancel-savings',
       'cancel-confirm',
       'cancel-done',
     ];
@@ -1040,7 +1071,8 @@ describe('the corrected V2 journey', () => {
     hop('cancel-started', 'cancel-alt');
     hop('cancel-alt', 'cancel-reason');
     hop('cancel-reason', 'cancel-offer'); // via data-spp-act="reasonContinue"
-    hop('cancel-offer', 'cancel-confirm');
+    hop('cancel-offer', 'cancel-savings');
+    hop('cancel-savings', 'cancel-confirm');
   });
 
   test('cancel-choose shows the real subscription as one card, never a per-product picker', () => {
@@ -1399,7 +1431,7 @@ describe('an already-redeemed customer never sees the offer screen', () => {
 
   function shownPortal(retentionOfferRedeemed) {
     const screens = {};
-    for (const name of ['cancel-alt', 'cancel-offer', 'cancel-confirm', 'dashboard']) {
+    for (const name of ['cancel-alt', 'cancel-offer', 'cancel-savings', 'cancel-confirm', 'dashboard']) {
       screens[name] = { hidden: true, getAttribute: () => name, setAttribute() {}, focus() {} };
     }
     const root = {
@@ -1413,8 +1445,6 @@ describe('an already-redeemed customer never sees the offer screen', () => {
       state: {
         screen: 'cancel-alt', history: [],
         data: { retentionOfferRedeemed },
-        // The 40% offer is the "Too expensive" recommendation; only that
-        // reason is ever redirected past step 6 once redeemed.
         draft: { reason: 'price' },
       },
       root,
@@ -1427,24 +1457,36 @@ describe('an already-redeemed customer never sees the offer screen', () => {
     };
   }
 
-  test('a redeemed customer with a NON-price reason still gets their recommendation', () => {
-    // The 40% offer is one-time; the other recommendations are not offers.
-    const p = shownPortal(true);
-    p.state.draft.reason = 'too_much';
-    p.show('cancel-offer');
-    assert.equal(p.state.screen, 'cancel-offer');
+  test('Adjust your routine (cancel-offer) is never redirected, for any reason or redemption status', () => {
+    // The offer moved to its own screen (cancel-savings); cancel-offer no
+    // longer represents it at all, so show() must never bounce a customer
+    // away from it, regardless of the reason or whether the offer was
+    // already redeemed.
+    for (const reason of ['price', 'too_much', 'no_results', 'dislike', 'other']) {
+      for (const redeemed of [true, false]) {
+        const p = shownPortal(redeemed);
+        p.state.draft.reason = reason;
+        p.show('cancel-offer');
+        assert.equal(p.state.screen, 'cancel-offer');
+      }
+    }
   });
 
-  test('redirects straight to Final Confirmation once redeemed', () => {
-    const p = shownPortal(true);
-    p.show('cancel-offer');
-    assert.equal(p.state.screen, 'cancel-confirm');
+  test('redirects straight to Final Confirmation once redeemed, for EVERY reason', () => {
+    // Eligibility is server truth, not reason-gated any more — the offer
+    // is shown for every reason the backend marks eligible.
+    for (const reason of ['price', 'too_much', 'no_results', 'dislike', 'other']) {
+      const p = shownPortal(true);
+      p.state.draft.reason = reason;
+      p.show('cancel-savings');
+      assert.equal(p.state.screen, 'cancel-confirm');
+    }
   });
 
   test('an unredeemed customer still reaches the offer screen normally', () => {
     const p = shownPortal(false);
-    p.show('cancel-offer');
-    assert.equal(p.state.screen, 'cancel-offer');
+    p.show('cancel-savings');
+    assert.equal(p.state.screen, 'cancel-savings');
   });
 
   test('every other screen is unaffected by the flag', () => {
@@ -1457,8 +1499,8 @@ describe('an already-redeemed customer never sees the offer screen', () => {
     // this.state.data can be null between sign-in and the first load().
     const p = shownPortal(false);
     p.state.data = null;
-    assert.doesNotThrow(() => p.show('cancel-offer'));
-    assert.equal(p.state.screen, 'cancel-offer');
+    assert.doesNotThrow(() => p.show('cancel-savings'));
+    assert.equal(p.state.screen, 'cancel-savings');
   });
 });
 
@@ -1467,24 +1509,25 @@ describe('an already-redeemed customer never sees the offer screen', () => {
  * THE BUG THIS EXISTS FOR
  * ------------------------
  * The confirmation screen's Back button was wired to a fixed
- * data-spp-go="cancel-offer" in the markup. For a customer who has already
- * redeemed the 40% offer, show('cancel-offer') immediately redirects back to
- * 'cancel-confirm' — the screen the customer is already ON — so the button
- * looked completely dead. It was never unresponsive; it was navigating
- * somewhere that refuses to render and bounced straight back.
+ * data-spp-go="cancel-savings" in the markup. For a customer who has already
+ * redeemed the 40% offer, show('cancel-savings') immediately redirects back
+ * to 'cancel-confirm' — the screen the customer is already ON — so the
+ * button looked completely dead. It was never unresponsive; it was
+ * navigating somewhere that refuses to render and bounced straight back.
  *
  * The fix decides the target fresh on every render (renderCancelJourney),
  * because eligibility is server truth that can change mid-session — the
- * moment a successful offer's post-write load() lands.
+ * moment a successful offer's post-write load() lands. It applies to every
+ * reason now, not just whichever one used to earn the offer.
  */
 describe('Back on Final Confirmation goes to the right previous step', () => {
   const show = method('show', ['DISABLED_SCREENS', 'SCREENS_WITH_CHROME'], [{}, constant('SCREENS_WITH_CHROME')]);
   const renderCancelJourney = method('renderCancelJourney');
 
   function confirmScreenPortal(retentionOfferRedeemed) {
-    const backBtn = el('button', { class: 'spp__back', 'data-spp-confirm-back': '', 'data-spp-go': 'cancel-offer' });
+    const backBtn = el('button', { class: 'spp__back', 'data-spp-confirm-back': '', 'data-spp-go': 'cancel-savings' });
     const screens = {};
-    for (const name of ['cancel-reason', 'cancel-offer', 'cancel-confirm']) {
+    for (const name of ['cancel-reason', 'cancel-offer', 'cancel-savings', 'cancel-confirm']) {
       screens[name] = el('section', { 'data-spp-screen': name });
     }
     const root = el('div');
@@ -1514,20 +1557,20 @@ describe('Back on Final Confirmation goes to the right previous step', () => {
 
   test('an ELIGIBLE customer: Back goes to the retention offer', () => {
     const { portal, backBtn, click } = confirmScreenPortal(false);
+    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-savings');
+    click(backBtn);
+    assert.equal(portal.state.screen, 'cancel-savings');
+  });
+
+  test('a REDEEMED customer: Back goes to Adjust your routine, never the offer', () => {
+    // Adjust your routine is the screen immediately before the offer in the
+    // new order (choose → benefits → started → alt → reason → adjust
+    // routine → offer → confirm) — that is the safe fallback once the
+    // offer screen itself refuses to render.
+    const { portal, backBtn, click } = confirmScreenPortal(true);
     assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-offer');
     click(backBtn);
     assert.equal(portal.state.screen, 'cancel-offer');
-  });
-
-  test('a REDEEMED customer: Back goes to the reason screen, never the offer', () => {
-    // Reason is the screen immediately before the offer in the approved
-    // Portal V2 order (choose → benefits → started → alt → reason →
-    // offer → confirm) — that is the safe fallback once the offer screen
-    // itself refuses to render.
-    const { portal, backBtn, click } = confirmScreenPortal(true);
-    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-reason');
-    click(backBtn);
-    assert.equal(portal.state.screen, 'cancel-reason');
   });
 
   test('the target updates if redemption status changes mid-session', () => {
@@ -1535,25 +1578,23 @@ describe('Back on Final Confirmation goes to the right previous step', () => {
     // the offer, load() lands, and Final Confirmation must stop offering a
     // way back into a screen that would now refuse to render.
     const { portal, backBtn } = confirmScreenPortal(false);
-    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-offer');
+    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-savings');
     portal.state.data.retentionOfferRedeemed = true;
     portal.renderCancelJourney();
-    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-reason');
+    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-offer');
   });
 
-  test('Back stays wired correctly regardless of reason-screen state', () => {
-    // Proves the fix does not accidentally depend on which screen the
-    // customer passed through, or what they picked there.
+  test('Back stays wired correctly regardless of which reason was picked', () => {
+    // Proves the fix does not depend on which reason the customer picked —
+    // eligibility is server truth (retentionOfferRedeemed), not reason-gated.
     const { portal, backBtn } = confirmScreenPortal(true);
     portal.state.draft.reason = 'other';
     portal.state.draft.note = 'something';
     portal.renderCancelJourney();
-    // A non-price reason never saw the (one-time) offer, so Back returns to
-    // the adjust-your-routine step it DID see.
     assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-offer');
     portal.state.draft.reason = 'price';
     portal.renderCancelJourney();
-    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-reason');
+    assert.equal(backBtn.getAttribute('data-spp-go'), 'cancel-offer');
     assert.equal(backBtn.disabled, undefined, 'the button must never become disabled');
   });
 
@@ -1561,7 +1602,7 @@ describe('Back on Final Confirmation goes to the right previous step', () => {
     // Independent of the Back BUTTON fix above: show() itself refuses to
     // render the offer screen for a redeemed customer, from ANY caller.
     const { portal } = confirmScreenPortal(true);
-    portal.show('cancel-offer');
+    portal.show('cancel-savings');
     assert.equal(portal.state.screen, 'cancel-confirm');
   });
 });
