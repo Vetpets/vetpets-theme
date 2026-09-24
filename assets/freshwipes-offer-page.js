@@ -537,4 +537,32 @@
   window.addEventListener('resize', onScroll, { passive: true });
   window.addEventListener('load', paintSticky);
   paintSticky();
+
+  /* ---------------------------------------------------------------
+     8. World Animal Week countdown — fixed end date, no evergreen reset.
+     Campaign closes 4 October 2026, 23:59:59 local time. Every element
+     carrying data-cd="d|h|m|s" is updated (the event banner, the sticky
+     strip and the closing section all read from this one clock).
+     --------------------------------------------------------------- */
+  (function wawCountdown() {
+    var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+    var END = new Date(2026, 9, 4, 23, 59, 59).getTime(); // month 9 = October
+    function tick() {
+      var left = Math.max(0, Math.floor((END - Date.now()) / 1000));
+      var parts = {
+        d: Math.floor(left / 86400),
+        h: Math.floor((left % 86400) / 3600),
+        m: Math.floor((left % 3600) / 60),
+        s: left % 60
+      };
+      $$('[data-cd]').forEach(function (el) {
+        var k = el.getAttribute('data-cd');
+        if (parts[k] === undefined) return;
+        var txt = pad(parts[k]);
+        if (el.textContent !== txt) el.textContent = txt;
+      });
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
 })();

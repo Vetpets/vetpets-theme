@@ -1,8 +1,19 @@
 {%- comment -%}
-  EyeWipes offer page
+  EyeWipes offer page — World Animal Week 2026 campaign build
   ===================
-  Faithful Shopify implementation of the approved Claude Design page
-  "EyeWipes Offer Page v1" (project: VetPets EyeWipes Offer Page).
+  Faithful Shopify implementation of the approved Claude Design pages
+  "World Animal Week 2026 - Desktop" / "- Mobile" (project: VetPets EyeWipes
+  Offer Page). Campaign window is 28 Sep – 4 Oct 2026, 23:59:59 local time —
+  the fixed end date lives in the countdown clock at the bottom of
+  assets/eyewipes-offer-page.js. No charity or donation messaging anywhere
+  on this page.
+
+  The campaign narrows the plan picker to the two Kaching deals the design
+  shows (Start The Routine Kit / Complete Eye Care Routine); the third
+  ("Multi-Pet Relief Plan") deal stays fully configured in Kaching but its
+  bar is hidden with CSS for the duration of the campaign — see the
+  ".kaching-bundles" rules tagged WAW in assets/eyewipes-offer-page.css.
+  Nothing about Kaching's own config changes.
 
   Rendered only through templates/product.eyewipes-offer-page.json, assigned to
   the existing live EyeWipes product. The canonical product URL is unchanged.
@@ -29,22 +40,33 @@
 {{ 'eyewipes-offer-page.css' | asset_url | stylesheet_tag }}
 
 <link rel="preload" as="image" href="{{ 'ewof-tier-2jars.webp' | asset_url }}">
-<link rel="preload" as="image" href="{{ 'ewof-eyewipes-offer-approved.webp' | asset_url }}">
-<link rel="preload" as="image" href="{{ 'ewof-tier-6jars.webp' | asset_url }}">
+<link rel="preload" as="image" href="{{ 'ewof-tier-4jars-waw.webp' | asset_url }}">
 
-<div id="eyewipes-offer-page" data-rc="on" data-tier="build">
+<div id="eyewipes-offer-page" data-rc="on" data-tier="build" data-waw="on">
 
-  {%- comment -%} ---------- rotating announcement bar (no countdown, no scarcity copy) ---------- {%- endcomment -%}
-  <div class="topbar">
-    <div class="topbar-in">
-      <div class="announce" role="status" aria-label="Offer highlights">
-        <span class="announce-msg" data-announce-msg>
-          <svg class="announce-icon" data-announce-icon viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-            <path d="M11.5 3H5a2 2 0 0 0-2 2v6.5a2 2 0 0 0 .586 1.414l8.5 8.5a2 2 0 0 0 2.828 0l6.5-6.5a2 2 0 0 0 0-2.828l-8.5-8.5A2 2 0 0 0 11.5 3Z"></path>
-            <circle cx="7.25" cy="7.25" r="1.1" fill="currentColor" stroke="none"></circle>
-          </svg>
-          <span class="announce-text" data-announce-text>{{ section.settings.announce_msg1 }}</span>
-        </span>
+  {%- comment -%} ---------- World Animal Week event banner (replaces the evergreen rotating announcement bar) ---------- {%- endcomment -%}
+  <div class="waw-bar waw-paws">
+    <div class="waw-in">
+      <div class="waw-meta">
+        <div class="waw-meta-r1">
+          <span class="waw-mark" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.2" fill="#47B5E9"></circle><path d="M12 2.8c3 3.3 3 15 0 18.4M12 2.8c-3 3.3-3 15 0 18.4M3.2 9h17.6M3.2 15h17.6" stroke="#FFFFFF" stroke-width="1.5"></path></svg></span>
+          <span class="waw-label">World Animal Week Sale</span>
+          <span class="waw-ends-inline"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#D92D20" stroke-width="2.6"></circle><path d="M12 7.2V12l3.4 2.2" stroke="#D92D20" stroke-width="2.6" stroke-linecap="round"></path></svg>Ends Oct 4</span>
+        </div>
+        <span class="waw-dates">28 September – 4 October 2026</span>
+      </div>
+      <div class="waw-center">
+        <div class="waw-offer">Buy 2, Get 2 Free <span class="waw-plus">+ 3 Free Gifts</span></div>
+        <span class="waw-ends"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#D92D20" stroke-width="2.6"></circle><path d="M12 7.2V12l3.4 2.2" stroke="#D92D20" stroke-width="2.6" stroke-linecap="round"></path></svg>Ends October 4</span>
+      </div>
+      <div class="waw-timer" role="timer" aria-label="World Animal Week sale ends 4 October 2026">
+        <span class="waw-timer-l">Offer ends in</span>
+        <div class="waw-cd">
+          <div class="waw-cd-u"><div class="waw-cd-n" data-cd="d">00</div><div class="waw-cd-l">Days</div></div>
+          <div class="waw-cd-u"><div class="waw-cd-n" data-cd="h">00</div><div class="waw-cd-l">Hrs</div></div>
+          <div class="waw-cd-u"><div class="waw-cd-n" data-cd="m">00</div><div class="waw-cd-l">Min</div></div>
+          <div class="waw-cd-u"><div class="waw-cd-n" data-cd="s">00</div><div class="waw-cd-l">Sec</div></div>
+        </div>
       </div>
     </div>
   </div>
@@ -65,12 +87,12 @@
               <img
                 class="im im-fit"
                 id="ewof-tier-img"
-                src="{{ 'ewof-eyewipes-offer-approved.webp' | asset_url }}"
+                src="{{ 'ewof-tier-4jars-waw.webp' | asset_url }}"
                 width="900"
                 height="900"
                 fetchpriority="high"
                 decoding="async"
-                alt="Four jars of VetPets EyeWipes with the Tear Stain Comb, the Bright Eyes Routine Tracker and the Bright Eyes in 30 Days e-book">
+                alt="World Animal Week — Buy 2, Get 2 Free. Four jars of VetPets EyeWipes with the Tear Stain Comb, the Bright Eyes Routine Tracker and the Bright Eyes in 30 Days e-book">
             </div>
             {%- assign pdp_slides = 'ewof-pdp-2-daily-care.webp|EyeWipes daily eye-cleaning benefits for dogs;ewof-pdp-3-buildup-returns.webp|Why daily eye buildup and tear stains return;ewof-pdp-4-textured-pad.webp|Close-up of the textured EyeWipes pad;ewof-pdp-5-before-after.webp|EyeWipes daily routine before-and-after presentation;ewof-pdp-6-three-steps.webp|How to use EyeWipes in three steps;ewof-pdp-7-comparison.webp|EyeWipes product-feature comparison;ewof-pdp-8-ingredients.webp|EyeWipes gentle ingredient overview;ewof-pdp-9-guarantee.webp|100-Day Money-Back Guarantee — try EyeWipes risk-free' | split: ';' -%}
             {%- for s in pdp_slides -%}
@@ -92,7 +114,7 @@
 
         <div class="thumbs" role="tablist" aria-label="Gallery thumbnails">
           <button type="button" class="thumb on" aria-label="Selected kit bundle" aria-selected="true">
-            <img src="{{ 'ewof-eyewipes-offer-approved.webp' | asset_url }}" data-ewof-tier-thumb width="900" height="900" alt="">
+            <img src="{{ 'ewof-tier-4jars-waw.webp' | asset_url }}" data-ewof-tier-thumb width="900" height="900" alt="">
           </button>
           {%- for s in pdp_slides -%}
             {%- assign parts = s | split: '|' -%}
@@ -105,6 +127,15 @@
 
       {%- comment -%} purchase module {%- endcomment -%}
       <div class="buy">
+        <div class="waw-hb">
+          <span class="waw-hb-ic" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#FFFFFF" stroke-width="1.9"></circle><path d="M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18M3.2 9h17.6M3.2 15h17.6" stroke="#FFFFFF" stroke-width="1.6"></path></svg></span>
+          <span class="waw-hb-c">
+            <span class="waw-hb-t">World Animal Week</span>
+            <span class="waw-hb-s">Limited-Time Sale</span>
+          </span>
+          <span class="waw-hb-d"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#D92D20" stroke-width="2.6"></circle><path d="M12 7.2V12l3.4 2.2" stroke="#D92D20" stroke-width="2.6" stroke-linecap="round"></path></svg>Ends Oct 4</span>
+        </div>
+
         <h1 class="h1">{{ section.settings.heading }}
           <span class="h1-sub">{{ section.settings.subheading }}</span>
         </h1>
@@ -124,7 +155,13 @@
           {%- endfor -%}
         </div>
 
-        <div class="pick-h">{{ section.settings.picker_heading }}</div>
+        <div class="waw-plan-head">
+          <span class="pick-h">{{ section.settings.picker_heading }}</span>
+          <span class="waw-badges">
+            <span class="waw-badge waw-badge-teal"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#FFFFFF" stroke-width="2"></circle><path d="M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18M3.2 9h17.6M3.2 15h17.6" stroke="#FFFFFF" stroke-width="1.7"></path></svg>World Animal Week Offer</span>
+            <span class="waw-badge waw-badge-red"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#D92D20" stroke-width="2.6"></circle><path d="M12 7.2V12l3.4 2.2" stroke="#D92D20" stroke-width="2.6" stroke-linecap="round"></path></svg>Ends October 4</span>
+          </span>
+        </div>
 
         {%- comment -%}
           Kaching Bundles app block — the real tier radios, the real RoutineCare
@@ -265,13 +302,21 @@
           </div>
         </div>
 
+        <div class="waw-scar">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 22 20H2L12 3Z" fill="#D92D20"></path><path d="M12 9.5v4.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path><circle cx="12" cy="17" r="1.2" fill="#FFFFFF"></circle></svg>
+          <div>
+            <span class="waw-scar-t">High demand during World Animal Week</span>
+            <span class="waw-scar-s">Order now while this offer and available stock last.</span>
+          </div>
+        </div>
+
       </div>
 
     </div>
   </section>
 
   {%- comment -%} ---------- SECTION 2 — marquee ---------- {%- endcomment -%}
-  {%- assign claims = '45,000+ Happy Dog Owners|100-Day Money-Back Guarantee|Hypoallergenic &amp; Fragrance-Free|Works In 30 Seconds A Day' | split: '|' -%}
+  {%- assign claims = 'World Animal Week Sale · Ends October 4|Buy 2, Get 2 Free + Free Gifts|45,000+ Happy Dog Owners|100-Day Money-Back Guarantee|Hypoallergenic &amp; Fragrance-Free|A 30-Second Daily Routine' | split: '|' -%}
   <div class="mq">
     <ul class="ewof-sr">
       {%- for c in claims -%}<li>{{ c }}</li>{%- endfor -%}
@@ -304,7 +349,7 @@
         {%- endfor -%}
       </div>
       <p class="body-copy">That brown is what was sitting on your dog's skin. It's what baby wipes and home remedies slide straight over — and it's why the crust keeps coming back every morning.</p>
-      <a class="cta btn-outline" href="#ewof-hero">Get Buy 2, Get 2 Free ↑</a>
+      <a class="cta btn-outline" href="#ewof-hero">Get The World Animal Week Offer ↑</a>
     </div>
   </section>
 
@@ -352,7 +397,7 @@
         </div>
       </div>
 
-      <a class="cta btn-outline" href="#ewof-hero">Get Buy 2, Get 2 Free ↑</a>
+      <a class="cta btn-outline" href="#ewof-hero">Get The World Animal Week Offer ↑</a>
     </div>
   </section>
 
@@ -378,7 +423,7 @@
           </div>
         {%- endfor -%}
       </div>
-      <a class="cta btn-outline" href="#ewof-hero">Get Buy 2, Get 2 Free ↑</a>
+      <a class="cta btn-outline" href="#ewof-hero">Get The World Animal Week Offer ↑</a>
     </div>
   </section>
 
@@ -418,7 +463,7 @@
     </div>
 
     <div class="offer-wrap">
-      <div class="offer-badge">Buy 2, Get 2 Free + Free Gifts</div>
+      <div class="offer-badge">World Animal Week — Buy 2, Get 2 Free + Free Gifts</div>
       <div class="offer-card">
         <div class="offer-media"><img src="{{ 'ewpl-offer-jar.webp' | asset_url }}" width="800" height="800" loading="lazy" decoding="async" alt="An EyeWipes jar — gentle care for sensitive eyes, for dogs and cats"></div>
         <div class="offer-body">
@@ -428,15 +473,23 @@
           </div>
           <h3 class="offer-name">EyeWipes — Gentle Care for Sensitive Eyes</h3>
           <div class="offer-bullets">
-            {%- assign obullets = 'Removes the buildup that causes crusty eyes|Gentle enough for daily use — hypoallergenic &amp; fragrance-free|Visible difference in 3 weeks — or every penny back' | split: '|' -%}
+            {%- assign obullets = 'Removes the buildup that causes crusty eyes|Gentle enough for daily use — hypoallergenic &amp; fragrance-free|Backed by the 100-day money-back guarantee' | split: '|' -%}
             {%- for b in obullets -%}
               <div class="bullet">{% render 'ewof-check', size: 20 %}<span>{{ b }}</span></div>
             {%- endfor -%}
+          </div>
+          <div class="waw-note" style="margin-top:0">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#D92D20" stroke-width="2.4"></circle><path d="M12 7.2V12l3.4 2.2" stroke="#D92D20" stroke-width="2.4" stroke-linecap="round"></path></svg>
+            <div class="waw-note-t"><strong>Limited-time offer — ends October 4.</strong> Buy 2, Get 2 Free + Free Gifts until then.</div>
           </div>
           <button type="button" class="cta btn-buy" data-ewof-submit>
             <span><span data-ewof-cta-label>Add To Cart — Buy 2, Get 2 Free</span> <span aria-hidden="true">→</span></span>
           </button>
           <div class="trustline" style="text-align:left">100-Day Money-Back Guarantee · Free &amp; Fast Shipping</div>
+          <a class="routine" href="#ewof-hero">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9" stroke="#1F7FB8" stroke-width="2.4" stroke-linecap="round"></path><path d="M20 3.5V8h-4.5" stroke="#1F7FB8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            Save 20% with RoutineCare
+          </a>
           {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url -%}
         </div>
       </div>
@@ -471,18 +524,47 @@
     </div>
   </section>
 
+  {%- comment -%} ---------- SECTION 7B — final urgency ---------- {%- endcomment -%}
+  <section class="waw-final waw-final-grad">
+    <div class="waw-final-card">
+      <span class="waw-eyebrow waw-eyebrow-light">World Animal Week</span>
+      <h2 class="waw-final-h">Buy 2, Get 2 Free<br>+ Free Gifts</h2>
+      <p class="waw-final-p">A textured wipe around the eye area, once a day — the daily routine that keeps visible buildup from collecting. Stock four jars at the World Animal Week price and keep it going.</p>
+      <div class="waw-final-list">
+        <div class="waw-final-li waw-final-li-light"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="#FFFFFF"></circle><path d="m7.5 12.2 3 3 6-6.4" stroke="#13B6B5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Save 20% with RoutineCare</span></div>
+        <div class="waw-final-li waw-final-li-light"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="#FFFFFF"></circle><path d="m7.5 12.2 3 3 6-6.4" stroke="#13B6B5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Free shipping</span></div>
+        <div class="waw-final-li waw-final-li-light"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="#FFFFFF"></circle><path d="m7.5 12.2 3 3 6-6.4" stroke="#13B6B5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>100-day money-back guarantee</span></div>
+        <div class="waw-final-li waw-final-li-red"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#FFFFFF" stroke-width="2.4"></circle><path d="M12 7.2V12l3.4 2.2" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"></path></svg><span>Ends October 4</span></div>
+      </div>
+      <div class="waw-final-timer" role="timer" aria-label="World Animal Week sale ends 4 October 2026">
+        <span class="waw-timer-l">Sale ends in</span>
+        <div class="waw-cd">
+          <div class="waw-cd-u"><div class="waw-cd-n" data-cd="d">00</div><div class="waw-cd-l">Days</div></div>
+          <div class="waw-cd-u"><div class="waw-cd-n" data-cd="h">00</div><div class="waw-cd-l">Hrs</div></div>
+          <div class="waw-cd-u"><div class="waw-cd-n" data-cd="m">00</div><div class="waw-cd-l">Min</div></div>
+          <div class="waw-cd-u"><div class="waw-cd-n" data-cd="s">00</div><div class="waw-cd-l">Sec</div></div>
+        </div>
+      </div>
+      <a class="cta btn-buy waw-final-cta" href="#ewof-hero"><span>Get The World Animal Week Offer <span aria-hidden="true">→</span></span></a>
+    </div>
+  </section>
+
   {%- comment -%} ---------- SECTION 8 — footer ---------- {%- endcomment -%}
   <footer class="foot">
     <img class="foot-logo" src="{{ 'ewof-vetpets-logo.webp' | asset_url }}" width="290" height="110" loading="lazy" decoding="async" alt="VetPets">
   </footer>
 
   {%- comment -%} ---------- sticky purchase bar ---------- {%- endcomment -%}
-  <div class="sticky ewof-sticky" role="region" aria-label="EyeWipes offer">
+  <div class="sticky ewof-sticky" role="region" aria-label="EyeWipes World Animal Week offer">
+    <div class="waw-sticky-top">
+      <span class="waw-st-l">World Animal Week · Buy 2, Get 2 Free · Ends Oct 4</span>
+      <span class="waw-st-cd"><span data-cd="d">00</span>d <span data-cd="h">00</span>h <span data-cd="m">00</span>m</span>
+    </div>
     <div class="sticky-in">
       <div class="sticky-r1">
-        <div class="sticky-thumb"><img src="{{ 'ewof-eyewipes-offer-approved.webp' | asset_url }}" data-ewof-tier-thumb width="900" height="900" loading="lazy" alt=""></div>
+        <div class="sticky-thumb"><img src="{{ 'ewof-tier-4jars-waw.webp' | asset_url }}" data-ewof-tier-thumb width="900" height="900" loading="lazy" alt=""></div>
         <div class="sticky-copy">
-          <div class="sticky-offer">Build The Habit Kit</div>
+          <div class="sticky-offer">Complete Eye Care Routine</div>
           <div class="sticky-sub">
             <span class="sticky-price"></span>
             <span class="sticky-rc" hidden><span class="sticky-rc-short">RC −20%</span><span class="sticky-rc-full">RoutineCare −20%</span></span>
@@ -492,7 +574,7 @@
       </div>
       <button type="button" class="cta btn-buy" data-ewof-submit>
         <span class="sticky-cta-full"><span data-ewof-cta-label>Add To Cart — Buy 2, Get 2 Free</span> <span aria-hidden="true">→</span></span>
-        <span class="sticky-cta-short">Add To Cart <span aria-hidden="true">→</span></span>
+        <span class="sticky-cta-short">Get The Offer <span aria-hidden="true">→</span></span>
       </button>
     </div>
   </div>
@@ -501,18 +583,13 @@
   <script type="application/json" id="ewof-config">
     {
       "rc_note": {{ section.settings.rc_note | json }},
-      "announce": [
-        {{ section.settings.announce_msg1 | json }},
-        {{ section.settings.announce_msg2 | json }},
-        {{ section.settings.announce_msg3 | json }}
-      ],
       "error_text": "Something went wrong adding this to your cart. Please try again.",
       "tiers": [
         {
           "key": "start",
           "deal_id": {{ section.settings.deal_start | json }},
           "name": "Start The Routine Kit",
-          "cta": "Add To Cart — Start The Routine",
+          "cta": "Add To Cart — Starter Routine",
           "badge": "Start The Routine Kit · 2-Month Supply",
           "pill": "",
           "applied_label": "",
@@ -522,24 +599,13 @@
         {
           "key": "build",
           "deal_id": {{ section.settings.deal_build | json }},
-          "name": "Build The Habit Kit",
+          "name": "Complete Eye Care Routine",
           "cta": "Add To Cart — Buy 2, Get 2 Free",
           "badge": "Buy 2, Get 2 Free",
           "pill": "",
           "applied_label": "Your Buy 2, Get 2 Free discount is applied",
-          "image": {{ 'ewof-eyewipes-offer-approved.webp' | asset_url | json }},
-          "image_alt": "Four jars of VetPets EyeWipes with the Tear Stain Comb, the Bright Eyes Routine Tracker and the Bright Eyes in 30 Days e-book"
-        },
-        {
-          "key": "multi",
-          "deal_id": {{ section.settings.deal_multi | json }},
-          "name": "Multi-Pet Relief Plan",
-          "cta": "Add To Cart — Multi-Pet Relief Plan",
-          "badge": "Multi-Pet Relief Plan · 6-Month Supply",
-          "pill": "Best For Multi-Pet Households",
-          "applied_label": "Your Multi-Pet Relief Plan discount is applied",
-          "image": {{ 'ewof-tier-6jars.webp' | asset_url | json }},
-          "image_alt": "Six jars of VetPets EyeWipes with the Tear Stain Comb, the Bright Eyes Routine Tracker and the Bright Eyes in 30 Days e-book"
+          "image": {{ 'ewof-tier-4jars-waw.webp' | asset_url | json }},
+          "image_alt": "World Animal Week — Buy 2, Get 2 Free. Four jars of VetPets EyeWipes with the Tear Stain Comb, the Bright Eyes Routine Tracker and the Bright Eyes in 30 Days e-book"
         }
       ]
     }
@@ -559,10 +625,6 @@
       "type": "paragraph",
       "content": "Add the Kaching Bundles app block to this section. Kaching stays the source of truth for tier, quantity, selling plan and free gifts — this section only restyles it."
     },
-    { "type": "header", "content": "Top bar — rotating announcement messages" },
-    { "type": "text", "id": "announce_msg1", "label": "Message 1", "default": "Buy 2, Get 2 Free" },
-    { "type": "text", "id": "announce_msg2", "label": "Message 2", "default": "Free Shipping with RoutineCare" },
-    { "type": "text", "id": "announce_msg3", "label": "Message 3", "default": "Free Gifts Included" },
     { "type": "header", "content": "Hero" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "End The Crusty Eyes In 30 Seconds A Day" },
     { "type": "text", "id": "subheading", "label": "Subheading", "default": "Textured antibacterial wipes for dogs with gunk, discharge & crusty eyes" },
@@ -582,7 +644,10 @@
     },
     { "type": "text", "id": "deal_start", "label": "Start deal ID", "default": "4b8bf6d0-e6b1-4c44-af66-16e0ce39a9bb" },
     { "type": "text", "id": "deal_build", "label": "Build deal ID", "default": "508699d0-94c0-4818-af7b-59b2f44de961" },
-    { "type": "text", "id": "deal_multi", "label": "Multi-Pet deal ID", "default": "43fd589f-426a-4e6c-b650-a63de934f2d0" },
+    {
+      "type": "paragraph",
+      "content": "The Multi-Pet Relief Plan deal stays fully configured in Kaching. Its bar is hidden with CSS for the World Animal Week campaign, which narrows the picker to the two deals above — see the section file's header comment."
+    },
     { "type": "header", "content": "FAQ" },
     {
       "type": "textarea",
@@ -594,7 +659,7 @@
       "type": "textarea",
       "id": "faq_answers",
       "label": "Answers (one per line, same order)",
-      "default": "You may see the buildup EyeWipes removes on the pad from the very first use. How quickly the eye area looks cleaner depends on how much buildup is present, how long it has been there and how consistently you follow the routine. Older discoloration in the fur may take longer to fade or grow out.\nEyeWipes are designed for gentle external use around the eye area of dogs and cats, including puppies, when used as directed. Use a fresh pad for each eye and never wipe directly across the eyeball. If your pet has persistent redness, swelling, pain, an injury or unusual discharge, contact your veterinarian.\nEyeWipes help remove the daily residue and buildup collecting around the eyes, but they do not bleach already-discolored fur. Older staining may take time to fade or grow out. Because moisture and eye discharge can be ongoing, buildup may gradually return if the daily routine is stopped.\nUse EyeWipes once daily as part of your pet's regular care routine. With a fresh pad for each eye, gently wipe outward from the inner corner across the surrounding fur and skin, then discard the pad. No rinsing, mixing or preparation is needed.\nStart slowly and let your dog sniff the pad first. Choose a calm moment, keep the first sessions short and reward relaxed behavior afterward. Never force the routine. Most pets become more comfortable when the process stays gentle, predictable and quick.\nEach jar contains 100 pads. With one fresh pad per eye each day, one jar typically lasts approximately six to seven weeks for one pet. Start The Routine Kit is the smallest option, Build The Habit Kit provides a longer routine, and the Multi-Pet Relief Plan is best suited to longer use or homes with more than one pet. Actual duration depends on the number of pets and pads used.\nEyeWipes are made specifically for daily external care around the eyes. Their raised textured surface creates more contact with residue caught around the fur, while an ordinary smooth wipe can glide across the surface. EyeWipes are also pre-moistened, pH-balanced, fragrance-free and alcohol-free.\nRoutineCare saves 20% and includes free shipping on every recurring order. Deliveries can be skipped, changed or cancelled when needed. Your purchase is also protected by our 100-day money-back guarantee—if EyeWipes are not right for your pet, contact VetPets within 100 days of purchase for help with your refund."
+      "default": "You may see the buildup EyeWipes removes on the pad from the very first use. How quickly the eye area looks cleaner depends on how much buildup is present, how long it has been there and how consistently you follow the routine. Older discoloration in the fur may take longer to fade or grow out.\nEyeWipes are designed for gentle external use around the eye area of dogs and cats, including puppies, when used as directed. Use a fresh pad for each eye and never wipe directly across the eyeball. If your pet has persistent redness, swelling, pain, an injury or unusual discharge, contact your veterinarian.\nEyeWipes help remove the daily residue and buildup collecting around the eyes, but they do not bleach already-discolored fur. Older staining may take time to fade or grow out. Because moisture and eye discharge can be ongoing, buildup may gradually return if the daily routine is stopped.\nUse EyeWipes once daily as part of your pet's regular care routine. With a fresh pad for each eye, gently wipe outward from the inner corner across the surrounding fur and skin, then discard the pad. No rinsing, mixing or preparation is needed.\nStart slowly and let your dog sniff the pad first. Choose a calm moment, keep the first sessions short and reward relaxed behavior afterward. Never force the routine. Most pets become more comfortable when the process stays gentle, predictable and quick.\nEach jar contains 100 pads. With one fresh pad per eye each day, one jar typically lasts approximately six to seven weeks for one pet. Start The Routine Kit is the smaller option, and Complete Eye Care Routine provides a longer routine or supply for more than one pet. Actual duration depends on the number of pets and pads used.\nEyeWipes are made specifically for daily external care around the eyes. Their raised textured surface creates more contact with residue caught around the fur, while an ordinary smooth wipe can glide across the surface. EyeWipes are also pre-moistened, pH-balanced, fragrance-free and alcohol-free.\nRoutineCare saves 20% and includes free shipping on every recurring order. Deliveries can be skipped, changed or cancelled when needed. Your purchase is also protected by our 100-day money-back guarantee—if EyeWipes are not right for your pet, contact VetPets within 100 days of purchase for help with your refund."
     }
   ],
   "presets": [{ "name": "EyeWipes offer page" }]
