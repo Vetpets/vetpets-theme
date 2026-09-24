@@ -852,7 +852,7 @@
       // The server refused a duplicate. The change IS in place, so this is
       // never phrased as a failure — phrasing it as one is what would send a
       // customer round again and skip a second delivery.
-      message = 'That is already done — refresh to see the latest.';
+      message = 'That is already done \\u2014 refresh to see the latest.';
     } else if (code === 'offer_unavailable') {
       // Not a failure and not the customer's fault: the offer simply cannot be
       // performed yet. Saying so plainly is the whole reason the CTA is live
@@ -1670,7 +1670,7 @@
         var adjNext = sub && sub.nextOrderDate;
         var adjMeta = {
           skip: adjNext ? 'Nothing ships ' + self.fmtDate(adjNext, 'short') + '. The one after is unchanged.' : 'Nothing ships. The one after is unchanged.',
-          move: '7, 15 or 30 days later — your cadence stays the same',
+          move: '7, 15 or 30 days later \\u2014 your cadence stays the same',
           freq: sub && sub.intervalDays ? 'Currently every ' + sub.intervalDays + ' days' : 'Move your next delivery later',
           pause: 'Choose the date your deliveries resume'
         };
@@ -2180,9 +2180,9 @@
   var REASONS = [
     ['price', 'Too expensive'],
     ['too_much', 'I have too much product'],
-    ['not_using', 'I’m not using it enough'],
-    ['no_results', 'I didn’t see the results I expected'],
-    ['dislike', 'My dog doesn’t like it'],
+    ['not_using', 'I\\u2019m not using it enough'],
+    ['no_results', 'I didn\\u2019t see the results I expected'],
+    ['dislike', 'My dog doesn\\u2019t like it'],
     ['not_needed', 'My pet no longer needs it'],
     ['order_issue', 'I had an issue with my order'],
     ['break', 'Just taking a break'],
@@ -2661,26 +2661,26 @@
     var rc = c;
     vm['retain.title'] = rc.title;
     vm['retain.body'] = rc.body;
-    vm['retain.cta'] = s.pending === 'acceptOffer' || s.pending === 'retainPrimary' ? 'Working…' : rc.cta;
+    vm['retain.cta'] = s.pending === 'acceptOffer' || s.pending === 'retainPrimary' ? 'Working\\u2026' : rc.cta;
     vm['retain.foot'] = rc.foot;
     vm['retain.dateNow'] = rc.dateNow;
     vm['retain.dateAfter'] = rc.dateAfter;
     vm['retain.careLabel'] = rc.careLabel;
     vm['retain.productNote'] = rc.productNote;
-    vm['retain.reviewQuote'] = rc.review ? '“' + rc.review.quote + '”' : '';
+    vm['retain.reviewQuote'] = rc.review ? '\\u201C' + rc.review.quote + '\\u201D' : '';
     vm['retain.reviewName'] = rc.review ? rc.review.name : '';
     vm['retain.reviewCategory'] = rc.review ? rc.review.category : '';
     var adjTarget = this.retainAdjTarget();
     vm['retain.adjFrom'] = sub && sub.nextOrderDate ? this.fmtDate(sub.nextOrderDate, 'short') : '';
     vm['retain.adjTo'] = adjTarget ? this.fmtDate(adjTarget, 'short') : '';
     var adjLeads = {
-      skip: 'Nothing ships on your next delivery date. Your routine picks up again with the delivery after — you will not be charged for the skipped one.',
+      skip: 'Nothing ships on your next delivery date. Your routine picks up again with the delivery after \\u2014 you will not be charged for the skipped one.',
       move: 'Pick how far to move your next delivery. Later deliveries follow from the new date.',
       freq: 'Your recurring schedule cannot be changed from the portal yet, so this moves your next delivery later instead. Your delivery cadence itself stays as it is.',
       pause: 'Nothing ships or is charged until the date you choose, when your deliveries resume. This moves your next delivery to that date and keeps your subscription active.'
     };
     vm['retain.adjLead'] = adjLeads[d.retainAdj] || '';
-    vm['label.retainAdjust'] = s.pending === 'retainAdjust' ? 'Updating…' : (
+    vm['label.retainAdjust'] = s.pending === 'retainAdjust' ? 'Updating\\u2026' : (
       d.retainAdj === 'skip' ? 'Skip this delivery'
       : d.retainAdj === 'pause' ? (adjTarget ? 'Pause until ' + this.fmtDate(adjTarget, 'short') : 'Choose a resume date')
       : (adjTarget ? 'Move to ' + this.fmtDate(adjTarget, 'short') : 'Choose how far'));
@@ -3129,11 +3129,11 @@
           },
           toast: function (st, result) {
             if (result && result.refreshRequired) {
-              return 'Discount applied — refresh to see your new total.';
+              return 'Discount applied \\u2014 refresh to see your new total.';
             }
             var p = result && result.offerPrice;
             return p
-              ? 'Done — your next delivery is ' + self.fmtMoney({ amount: p, currencyCode: 'USD' })
+              ? 'Done \\u2014 your next delivery is ' + self.fmtMoney({ amount: p, currencyCode: 'USD' })
               : 'Discount applied to your next delivery';
           }
         });
