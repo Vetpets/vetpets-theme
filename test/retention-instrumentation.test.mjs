@@ -32,6 +32,7 @@ import { dirname, resolve } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const src = readFileSync(resolve(here, '..', 'assets', 'subscription-portal.js'), 'utf8');
+const adapterSrc = readFileSync(resolve(here, '..', 'assets', 'subscription-portal-adapter.js'), 'utf8');
 
 /** Pull a prototype method out of the shipped file and make it callable. */
 function method(name, extraNames = [], extraValues = []) {
@@ -116,7 +117,7 @@ describe('screen-view beacons name the right event and share one journey', () =>
   function portal({ retentionOfferRedeemed = false, recordRetentionEvent } = {}) {
     const events = [];
     const screens = {};
-    for (const name of ['cancel-reason', 'cancel-alt', 'cancel-offer', 'cancel-confirm', 'dashboard']) {
+    for (const name of ['cancel-reason', 'cancel-alt', 'cancel-offer', 'cancel-savings', 'cancel-confirm', 'dashboard']) {
       screens[name] = { hidden: true, getAttribute: () => name, setAttribute() {}, focus() {} };
     }
     const root = {
@@ -124,7 +125,8 @@ describe('screen-view beacons name the right event and share one journey', () =>
       querySelector() { return null; },
     };
     const p = {
-      // Step 6 is reason-personalized; the 40% offer is the "Too expensive" one.
+      // Step 6 is reason-personalized; step 7 (cancel-savings) is the
+      // standalone 40% offer, shown for every reason.
       state: { screen: 'dashboard', history: [], retentionJourneyId: null, data: { retentionOfferRedeemed }, draft: { reason: 'price' } },
       root,
       events,
@@ -162,21 +164,31 @@ describe('screen-view beacons name the right event and share one journey', () =>
     assert.equal(p.state.retentionJourneyId, 'j-existing', 'a beacon must never displace an id already held');
   });
 
-  test('an eligible customer viewing the offer fires offer_shown', async () => {
+  test('an eligible customer viewing the standalone offer screen (cancel-savings) fires offer_shown', async () => {
     const p = portal({ retentionOfferRedeemed: false });
-    p.show('cancel-offer');
+    p.show('cancel-savings');
     await Promise.resolve().then(() => {});
     // offer_shown keeps its historical meaning; the additive
     // recommendation_shown rides alongside it, typed by the action key.
     assert.deepEqual(p.events.map((e) => e.eventType), ['offer_shown', 'recommendation_shown']);
-    assert.equal(p.state.screen, 'cancel-offer');
+    assert.equal(p.state.screen, 'cancel-savings');
   });
 
-  test('a NON-price reason fires recommendation_shown ONLY — offer_shown stays the 40% offer\'s alone', async () => {
+  test('cancel-savings fires offer_shown for EVERY reason — eligibility is no longer reason-gated', async () => {
+    for (const reason of ['price', 'too_much', 'no_results', 'dislike', 'other']) {
+      const p = portal({ retentionOfferRedeemed: false });
+      p.state.draft.reason = reason;
+      p.show('cancel-savings');
+      await Promise.resolve().then(() => {});
+      assert.deepEqual(p.events.map((e) => e.eventType), ['offer_shown', 'recommendation_shown'], reason);
+    }
+  });
+
+  test('Adjust your routine (cancel-offer) fires recommendation_shown ONLY, for every reason — never offer_shown', async () => {
     for (const [reason, action] of [
-      ['too_much', 'move_delivery_30'], ['no_results', 'keep_results'], ['dislike', 'routine_guidance'],
-      ['other', 'adjust_options'], ['not_using', 'adjust_options'], ['not_needed', 'adjust_options'],
-      ['order_issue', 'adjust_options'], ['break', 'adjust_options'],
+      ['price', 'adjust_options'], ['too_much', 'move_delivery_30'], ['no_results', 'keep_results'],
+      ['dislike', 'routine_guidance'], ['other', 'adjust_options'], ['not_using', 'adjust_options'],
+      ['not_needed', 'adjust_options'], ['order_issue', 'adjust_options'], ['break', 'adjust_options'],
     ]) {
       const offerTypes = [];
       const p = portal({
@@ -194,10 +206,17 @@ describe('screen-view beacons name the right event and share one journey', () =>
 
   test('a REDEEMED customer never triggers offer_shown — they land on confirm, which beacons that instead', async () => {
     const p = portal({ retentionOfferRedeemed: true });
-    p.show('cancel-offer');
+    p.show('cancel-savings');
     await Promise.resolve().then(() => {});
     assert.deepEqual(p.events.map((e) => e.eventType), ['final_confirmation_reached']);
     assert.equal(p.state.screen, 'cancel-confirm');
+  });
+
+  test('a REDEEMED customer still reaches Adjust your routine normally — only cancel-savings is gated', async () => {
+    const p = portal({ retentionOfferRedeemed: true });
+    p.show('cancel-offer');
+    await Promise.resolve().then(() => {});
+    assert.equal(p.state.screen, 'cancel-offer');
   });
 
   test('final_confirmation_reached fires on reaching the confirm screen directly', async () => {
@@ -233,7 +252,7 @@ describe('screen-view beacons name the right event and share one journey', () =>
  * ================================================================== */
 
 describe('offer_declined fires exactly when the customer walks away from the offer', () => {
-  function portal({ screen = 'cancel-offer', retentionJourneyId = 'j-1', reason = 'price' } = {}) {
+  function portal({ screen = 'cancel-savings', retentionJourneyId = 'j-1', reason = 'price' } = {}) {
     const events = [];
     return {
       events,
@@ -250,7 +269,7 @@ describe('offer_declined fires exactly when the customer walks away from the off
     };
   }
 
-  test('continuing from cancel-offer to cancel-confirm emits offer_declined once, on the held journey', () => {
+  test('continuing from cancel-savings to cancel-confirm emits offer_declined once, on the held journey', () => {
     const p = portal();
     const link = el('a', { 'data-spp-go': 'cancel-confirm' });
     onClick(p, { target: link, preventDefault() {} });
@@ -261,19 +280,38 @@ describe('offer_declined fires exactly when the customer walks away from the off
     assert.equal(p.state.screen, 'cancel-confirm');
   });
 
-  test('a non-price reason declines with recommendation_declined only — never offer_declined', () => {
-    const p = portal({ reason: 'too_much' });
-    onClick(p, { target: el('a', { 'data-spp-go': 'cancel-confirm' }), preventDefault() {} });
-    assert.deepEqual(p.events, [{ eventType: 'recommendation_declined', journeyId: 'j-1' }]);
+  test('offer_declined fires from cancel-savings regardless of reason — eligibility is no longer reason-gated', () => {
+    for (const reason of ['price', 'too_much', 'other']) {
+      const p = portal({ reason });
+      onClick(p, { target: el('a', { 'data-spp-go': 'cancel-confirm' }), preventDefault() {} });
+      assert.deepEqual(p.events, [
+        { eventType: 'offer_declined', journeyId: 'j-1' },
+        { eventType: 'recommendation_declined', journeyId: 'j-1' },
+      ], reason);
+    }
+  });
+
+  test('continuing from cancel-offer to cancel-savings declines only that screen\'s own recommendation — never offer_declined', () => {
+    for (const [reason, action] of [['price', 'adjust_options'], ['too_much', 'move_delivery_30']]) {
+      const p = portal({ screen: 'cancel-offer', reason });
+      onClick(p, { target: el('a', { 'data-spp-go': 'cancel-savings' }), preventDefault() {} });
+      assert.deepEqual(p.events, [{ eventType: 'recommendation_declined', journeyId: 'j-1' }], reason);
+    }
   });
 
   test('leaving cancel-offer for any OTHER destination is not a decline', () => {
-    const p = portal();
+    const p = portal({ screen: 'cancel-offer' });
     onClick(p, { target: el('a', { 'data-spp-go': 'dashboard' }), preventDefault() {} });
     assert.deepEqual(p.events, []);
   });
 
-  test('reaching cancel-confirm from a screen other than cancel-offer is not a decline', () => {
+  test('leaving cancel-savings for any OTHER destination is not a decline', () => {
+    const p = portal({ screen: 'cancel-savings' });
+    onClick(p, { target: el('a', { 'data-spp-go': 'cancel-offer' }), preventDefault() {} });
+    assert.deepEqual(p.events, []);
+  });
+
+  test('reaching cancel-confirm from a screen other than cancel-savings is not a decline', () => {
     const p = portal({ screen: 'cancel-alt' });
     onClick(p, { target: el('a', { 'data-spp-go': 'cancel-confirm' }), preventDefault() {} });
     assert.deepEqual(p.events, []);
@@ -284,6 +322,126 @@ describe('offer_declined fires exactly when the customer walks away from the off
     p.adapter = {};
     const link = el('a', { 'data-spp-go': 'cancel-confirm' });
     assert.doesNotThrow(() => onClick(p, { target: link, preventDefault() {} }));
+  });
+});
+
+/**
+ * THE REQUIREMENT THIS EXISTS FOR
+ * --------------------------------
+ * The 40% offer screen must show as the LAST retention step for every
+ * cancellation reason whenever the backend has not marked the offer
+ * redeemed. A customer merely having SEEN the screen (offer_shown /
+ * recommendation_shown) or DECLINED it (offer_declined /
+ * recommendation_declined) must never itself hide the screen on a later
+ * visit — only a genuinely confirmed prior redemption
+ * (retentionOfferRedeemed === true, read fresh from Phoenix) may skip it.
+ *
+ * recordRetentionEvent writes ONLY to Retention Command Center's own
+ * analytics store (see the adapter's own comment: "None of
+ * recordCancelReason/recordRetentionEvent/recordCancelOutcome is a
+ * Phoenix mutation") — it has no way to reach, and never does reach, the
+ * subscription record's retentionOfferRedeemed field. These tests prove
+ * that at the integration level: viewing and declining the real screen,
+ * repeatedly, through the real show()/beaconScreenView()/click-handler
+ * code, never flips the redirect gate — only directly setting
+ * state.data.retentionOfferRedeemed (standing in for a fresh, server-
+ * confirmed subscription read) does.
+ */
+describe('viewing or declining the offer never marks it redeemed — only a confirmed prior redemption may skip it', () => {
+  function portal({ retentionOfferRedeemed = false, reason = 'price' } = {}) {
+    const events = [];
+    const screens = {};
+    for (const name of ['cancel-offer', 'cancel-savings', 'cancel-confirm', 'dashboard']) {
+      screens[name] = { hidden: true, getAttribute: () => name, setAttribute() {}, focus() {} };
+    }
+    const root = {
+      querySelectorAll(sel) { return sel === '[data-spp-screen]' ? Object.values(screens) : []; },
+      querySelector() { return null; },
+    };
+    const p = {
+      state: {
+        screen: 'cancel-offer', history: [], retentionJourneyId: null,
+        data: { retentionOfferRedeemed }, draft: { reason },
+      },
+      root,
+      events,
+      closeSheet() {},
+      render() {},
+      markCurrentNav() {},
+      adapter: {
+        recordRetentionEvent: (eventType, journeyId) => {
+          events.push(eventType);
+          return Promise.resolve({ journeyId: journeyId || 'j-minted' });
+        },
+      },
+      beaconScreenView(v) { return beaconScreenView.call(this, v); },
+      retainKind() { return retainKind.call(this); },
+      trackRetention(e, a) { return trackRetention.call(this, e, a); },
+      show(v) { return show.call(this, v); },
+    };
+    return p;
+  }
+
+  test('an unredeemed customer reaches cancel-savings, and merely SEEING it (offer_shown) never sets the flag', () => {
+    for (const reason of ['price', 'too_much', 'no_results', 'dislike', 'other']) {
+      const p = portal({ retentionOfferRedeemed: false, reason });
+      p.show('cancel-savings');
+      assert.equal(p.state.screen, 'cancel-savings', reason);
+      assert.equal(p.state.data.retentionOfferRedeemed, false, reason);
+      assert.ok(p.events.includes('offer_shown'), reason);
+    }
+  });
+
+  test('revisiting cancel-savings repeatedly (refresh, back/forward) never sets the flag either', () => {
+    const p = portal({ retentionOfferRedeemed: false });
+    for (let i = 0; i < 5; i++) {
+      p.show('cancel-offer');
+      p.show('cancel-savings');
+      assert.equal(p.state.screen, 'cancel-savings', `visit ${i}`);
+    }
+    assert.equal(p.state.data.retentionOfferRedeemed, false);
+  });
+
+  test('DECLINING the offer (offer_declined) never sets the flag — the customer still sees it again next time', () => {
+    const p = portal({ retentionOfferRedeemed: false });
+    p.show('cancel-savings');
+    onClick(p, { target: el('a', { 'data-spp-go': 'cancel-confirm' }), preventDefault() {} });
+    assert.equal(p.state.data.retentionOfferRedeemed, false);
+    assert.ok(p.events.includes('offer_declined'));
+
+    // Back on cancel-offer, continuing to cancel-savings again must still show it —
+    // a decline is not a redemption.
+    p.state.screen = 'cancel-offer';
+    p.show('cancel-savings');
+    assert.equal(p.state.screen, 'cancel-savings');
+  });
+
+  test('ONLY a fresh, server-confirmed retentionOfferRedeemed: true skips the screen — for every reason', () => {
+    for (const reason of ['price', 'too_much', 'no_results', 'dislike', 'other']) {
+      const p = portal({ retentionOfferRedeemed: true, reason });
+      p.show('cancel-savings');
+      assert.equal(p.state.screen, 'cancel-confirm', reason);
+    }
+  });
+
+  test('source contract: no client call ever assigns retentionOfferRedeemed except reading it fresh from the server response', () => {
+    // Everything from createHttpAdapter onward is the LIVE path — scope the
+    // search there so the mock adapter's OWN acceptRetentionOffer (which
+    // legitimately simulates a real redemption locally, see its own test
+    // in retention-offer-cache.test.mjs) is never what these assertions see.
+    const liveSrc = adapterSrc.slice(adapterSrc.indexOf('createHttpAdapter'));
+    // acceptRetentionOffer (live path) must never set it locally — only a
+    // subsequent load() re-reading Phoenix's own field may.
+    const liveAccept = /acceptRetentionOffer: function[\s\S]*?\n      \},/.exec(liveSrc)[0];
+    assert.ok(!/retentionOfferRedeemed\s*=\s*true/.test(liveAccept),
+      'the live acceptRetentionOffer must not set retentionOfferRedeemed itself');
+    // recordRetentionEvent (view/decline beacons) must never touch it at all.
+    const recordEvent = /recordRetentionEvent: function[\s\S]*?\n      \},/.exec(liveSrc)[0];
+    assert.ok(!/retentionOfferRedeemed/.test(recordEvent),
+      'recordRetentionEvent (offer_shown/offer_declined) must never reference retentionOfferRedeemed');
+    // The one and only assignment on the live path is the strict read from
+    // Phoenix's own response field.
+    assert.match(adapterSrc, /retentionOfferRedeemed:\s*sub\.retentionOfferRedeemed === true/);
   });
 });
 
