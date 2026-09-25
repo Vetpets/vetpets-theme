@@ -1756,9 +1756,7 @@
 
 /* ==========================================================================
    Cancel step 6 — "Adjust your routine" (reason-personalized recommendation)
-   — and step 7, the standalone 40% off screen, which reuses the same
-   .spp__retain* card styling for its offer pair/points/error/foot.
-   Scoped to .spp__retain*; nothing outside cancel-offer/cancel-savings uses these.
+   Scoped to .spp__retain*; nothing outside the cancel-offer screen uses these.
    ========================================================================== */
 .spp__retain-told {
   background: var(--spp-surface-tint);
