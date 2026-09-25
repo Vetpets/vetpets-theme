@@ -1,19 +1,13 @@
 {%- comment -%}
-  FreshWipes offer page — World Animal Week 2026 campaign build
+  FreshWipes offer page (deploy retry marker)
   ===================
   Faithful Shopify implementation of the approved Claude Design page
-  "FreshWipes Offer Page - World Animal Week 2026" (project: VetPets FreshWipes
-  Offer Page). Campaign window is 28 Sep – 4 Oct 2026, 23:59:59 local time —
-  the fixed end date lives in the countdown clock at the bottom of
-  assets/freshwipes-offer-page.js. No charity or donation messaging anywhere
-  on this page.
-
-  The campaign narrows the plan picker to the two Kaching deals the design
-  shows (Starter Routine / Complete Dental Routine); the third ("Full Family
-  Plan") deal stays fully configured in Kaching but its bar is hidden with
-  CSS for the duration of the campaign — see ".fwof-kaching" rules tagged
-  WAW in assets/freshwipes-offer-page.css. Nothing about Kaching's own
-  config changes.
+  "FreshWipes Offer Page v1" (evergreen) and, during the World Animal Week
+  campaign window (28 Sep – 4 Oct 2026 inclusive, store timezone), the
+  approved "FreshWipes Offer Page - World Animal Week 2026" design.
+  {{ waw_active }} below is the single switch between the two — no separate
+  template, no new URL. Outside the window this renders byte-for-byte the
+  same evergreen page it always has.
 
   Rendered only through templates/product.freshwipes-offer-page.json, assigned to
   the existing live FreshWipes product. The canonical product URL is unchanged.
@@ -25,6 +19,19 @@
   purchase module and its real controls stay authoritative — assets/freshwipes-offer-page.css
   restyles those exact nodes to the approved design rather than cloning them.
 
+  Live-Kaching-verified 2026-09-25: the "Complete Care Routine" deal's free-gift
+  list ships as TWO rows ("+ FREE Shipping" and "+ A Complete Dental Care System -
+  E-book + Routine Tracker") — the second row bundles both physical items (the
+  e-book and the routine tracker) into one Kaching line. That is 2 physical
+  gifts, matching the approved "+2 Free Gifts" copy locked into this page. The
+  on-page gift toggle/panel therefore shows a hand-authored two-row panel
+  (exact approved names, images and descriptions) rather than Kaching's own
+  combined row, which stays in the DOM (for correct add-to-cart behaviour) but
+  hidden from view. Kaching's own "most popular" badge text is currently
+  "Limited Time: Buy 2 Get 2" (no comma, no "Free") — a Kaching-dashboard-owned
+  string this theme cannot rewrite from here; see the README/report for the
+  exact optional dashboard fix.
+
   There is exactly ONE add-to-cart pathway: the theme's <product-form> rendered
   in `.fwof-form-host`. The sticky bar and the final offer CTA are proxies that
   submit that same form; they carry no quantity, gift or selling-plan logic.
@@ -35,41 +42,92 @@
 {%- liquid
   assign v = product.selected_or_first_available_variant
   assign product_form_id = 'fwof-product-form-' | append: section.id
+
+  # World Animal Week campaign window — 28 Sep through 4 Oct 2026 inclusive,
+  # evaluated in the shop's own timezone (Liquid's `now` is already shop-local).
+  assign today_str = 'now' | date: '%Y-%m-%d'
+  assign waw_active = false
+  if today_str >= '2026-09-28' and today_str <= '2026-10-04'
+    assign waw_active = true
+  endif
+
+  if waw_active
+    assign hero_heading = 'Clean Their Teeth In 30 Seconds A Day'
+    assign hero_sub = 'Textured finger wipes that lift plaque and food debris from accessible tooth surfaces and along the gumline.'
+    assign cta_scroll_text = 'Get The World Animal Week Offer ↑'
+    assign tier1_name = 'Complete Dental Routine'
+    assign tier1_cta = 'Add To Cart — Buy 2, Get 2 Free'
+    assign tier1_badge = 'Buy 2, Get 2 Free'
+    assign tier1_image = 'fwof-tier-4pack-waw.webp' | asset_url
+    assign tier1_image_alt = 'World Animal Week — Buy 2, Get 2 Free. Four containers of VetPets FreshWipes with the Fresh Breath in 30 Days e-book and the Fresh Breath Routine Tracker'
+    assign tier0_name = 'Starter Routine'
+    assign tier0_cta = 'Add To Cart — Starter Routine'
+    assign tier0_badge = 'Starter Routine · 2-Month Supply'
+  else
+    assign hero_heading = section.settings.heading
+    assign hero_sub = section.settings.subheading
+    assign cta_scroll_text = 'Get Buy 2, Get 2 Free ↑'
+    assign tier1_name = 'The Clean Smile Kit'
+    assign tier1_cta = 'Add To Cart — Buy 2, Get 2 Free'
+    assign tier1_badge = 'Buy 2, Get 2 Free'
+    assign tier1_image = 'fwof-tier-4pack.webp' | asset_url
+    assign tier1_image_alt = 'Four containers of VetPets FreshWipes with the Fresh Breath in 30 Days e-book'
+    assign tier0_name = 'Start The Routine Kit'
+    assign tier0_cta = 'Add To Cart — Start The Routine'
+    assign tier0_badge = 'Start The Routine Kit · 2-Month Supply'
+  endif
 -%}
 
 {{ 'freshwipes-offer-page.css' | asset_url | stylesheet_tag }}
 
 <link rel="preload" as="image" href="{{ 'fwof-tier-2pack.webp' | asset_url }}">
-<link rel="preload" as="image" href="{{ 'fwof-tier-4pack-waw.webp' | asset_url }}">
+<link rel="preload" as="image" href="{{ tier1_image }}">
 
-<div id="freshwipes-offer-page" data-rc="on" data-tier="clean" data-waw="on">
+<div id="freshwipes-offer-page" data-rc="on" data-tier="clean" data-waw="{% if waw_active %}on{% else %}off{% endif %}">
 
-  {%- comment -%} ---------- World Animal Week event banner (replaces the evergreen rotating announcement bar) ---------- {%- endcomment -%}
-  <div class="waw-bar waw-paws">
-    <div class="waw-in">
-      <div class="waw-meta">
-        <div class="waw-meta-r1">
-          <span class="waw-mark" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.2" fill="#47B5E9"></circle><path d="M12 2.8c3 3.3 3 15 0 18.4M12 2.8c-3 3.3-3 15 0 18.4M3.2 9h17.6M3.2 15h17.6" stroke="#FFFFFF" stroke-width="1.5"></path></svg></span>
-          <span class="waw-label">World Animal Week Sale</span>
-          <span class="waw-ends-inline"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#D92D20" stroke-width="2.6"></circle><path d="M12 7.2V12l3.4 2.2" stroke="#D92D20" stroke-width="2.6" stroke-linecap="round"></path></svg>Ends Oct 4</span>
+  {%- if waw_active -%}
+    {%- comment -%} ---------- World Animal Week event banner (replaces the evergreen rotating announcement bar) ---------- {%- endcomment -%}
+    <div class="waw-bar waw-paws">
+      <div class="waw-in">
+        <div class="waw-meta">
+          <div class="waw-meta-r1">
+            <span class="waw-mark" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.2" fill="#47B5E9"></circle><path d="M12 2.8c3 3.3 3 15 0 18.4M12 2.8c-3 3.3-3 15 0 18.4M3.2 9h17.6M3.2 15h17.6" stroke="#FFFFFF" stroke-width="1.5"></path></svg></span>
+            <span class="waw-label">World Animal Week Sale</span>
+            <span class="waw-ends-inline"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#D92D20" stroke-width="2.6"></circle><path d="M12 7.2V12l3.4 2.2" stroke="#D92D20" stroke-width="2.6" stroke-linecap="round"></path></svg>Ends Oct 4</span>
+          </div>
+          <span class="waw-dates">28 September – 4 October 2026</span>
         </div>
-        <span class="waw-dates">28 September – 4 October 2026</span>
-      </div>
-      <div class="waw-center">
-        <div class="waw-offer">Buy 2, Get 2 Free <span class="waw-plus">+ Free Gifts</span></div>
-        <span class="waw-ends"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#D92D20" stroke-width="2.6"></circle><path d="M12 7.2V12l3.4 2.2" stroke="#D92D20" stroke-width="2.6" stroke-linecap="round"></path></svg>Ends October 4</span>
-      </div>
-      <div class="waw-timer" role="timer" aria-label="World Animal Week sale ends 4 October 2026">
-        <span class="waw-timer-l">Offer ends in</span>
-        <div class="waw-cd">
-          <div class="waw-cd-u"><div class="waw-cd-n" data-cd="d">00</div><div class="waw-cd-l">Days</div></div>
-          <div class="waw-cd-u"><div class="waw-cd-n" data-cd="h">00</div><div class="waw-cd-l">Hrs</div></div>
-          <div class="waw-cd-u"><div class="waw-cd-n" data-cd="m">00</div><div class="waw-cd-l">Min</div></div>
-          <div class="waw-cd-u"><div class="waw-cd-n" data-cd="s">00</div><div class="waw-cd-l">Sec</div></div>
+        <div class="waw-center">
+          <div class="waw-offer">Buy 2, Get 2 Free <span class="waw-plus">+ Free Gifts</span></div>
+          <span class="waw-ends"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#D92D20" stroke-width="2.6"></circle><path d="M12 7.2V12l3.4 2.2" stroke="#D92D20" stroke-width="2.6" stroke-linecap="round"></path></svg>Ends October 4</span>
+        </div>
+        <div class="waw-timer" role="timer" aria-label="World Animal Week sale ends 4 October 2026">
+          <span class="waw-timer-l">Offer ends in</span>
+          <div class="waw-cd">
+            <div class="waw-cd-u"><div class="waw-cd-n" data-cd="d">00</div><div class="waw-cd-l">Days</div></div>
+            <div class="waw-cd-u"><div class="waw-cd-n" data-cd="h">00</div><div class="waw-cd-l">Hrs</div></div>
+            <div class="waw-cd-u"><div class="waw-cd-n" data-cd="m">00</div><div class="waw-cd-l">Min</div></div>
+            <div class="waw-cd-u"><div class="waw-cd-n" data-cd="s">00</div><div class="waw-cd-l">Sec</div></div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  {%- else -%}
+    {%- comment -%} ---------- evergreen rotating announcement bar (no countdown, no scarcity copy) ---------- {%- endcomment -%}
+    <div class="topbar">
+      <div class="topbar-in">
+        <div class="announce" role="status" aria-label="Offer highlights">
+          <span class="announce-msg" data-announce-msg>
+            <svg class="announce-icon" data-announce-icon viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M11.5 3H5a2 2 0 0 0-2 2v6.5a2 2 0 0 0 .586 1.414l8.5 8.5a2 2 0 0 0 2.828 0l6.5-6.5a2 2 0 0 0 0-2.828l-8.5-8.5A2 2 0 0 0 11.5 3Z"></path>
+              <circle cx="7.25" cy="7.25" r="1.1" fill="currentColor" stroke="none"></circle>
+            </svg>
+            <span class="announce-text" data-announce-text>{{ section.settings.announce_msg1 }}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
 
   {%- comment -%} ---------- SECTION 1 — above the fold ---------- {%- endcomment -%}
   <section class="hero" id="fwof-hero">
@@ -87,16 +145,18 @@
               <img
                 class="im im-fit"
                 id="fwof-tier-img"
-                src="{{ 'fwof-tier-4pack-waw.webp' | asset_url }}"
+                src="{{ tier1_image }}"
                 width="900"
                 height="900"
                 fetchpriority="high"
                 decoding="async"
-                alt="World Animal Week — Buy 2, Get 2 Free. Four containers of VetPets FreshWipes with the Fresh Breath in 30 Days e-book and the Fresh Breath Routine Tracker">
-              <div class="gift-badges" data-fwof-gift-badges aria-live="polite">
-                <span class="gift-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="9.5" width="18" height="11.5" rx="1.8" fill="#FFFFFF"></rect><rect x="2" y="6" width="20" height="4.5" rx="1.5" fill="#FFFFFF"></rect><path d="M12 6v15" stroke="#47B5E9" stroke-width="2"></path><path d="M12 6C10.5 2.8 6.6 3.2 7.2 5.4 7.6 6.9 10 6.6 12 6Zm0 0c1.5-3.2 5.4-2.8 4.8-.6-.4 1.5-2.8 1.2-4.8.6Z" fill="#FFFFFF"></path></svg>Free E-Book</span>
-                <span class="gift-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="9.5" width="18" height="11.5" rx="1.8" fill="#FFFFFF"></rect><rect x="2" y="6" width="20" height="4.5" rx="1.5" fill="#FFFFFF"></rect><path d="M12 6v15" stroke="#47B5E9" stroke-width="2"></path><path d="M12 6C10.5 2.8 6.6 3.2 7.2 5.4 7.6 6.9 10 6.6 12 6Zm0 0c1.5-3.2 5.4-2.8 4.8-.6-.4 1.5-2.8 1.2-4.8.6Z" fill="#FFFFFF"></path></svg>Free Routine Tracker</span>
-              </div>
+                alt="{{ tier1_image_alt }}">
+              {%- if waw_active -%}
+                <div class="gift-badges" data-fwof-gift-badges aria-live="polite">
+                  <span class="gift-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="9.5" width="18" height="11.5" rx="1.8" fill="#FFFFFF"></rect><rect x="2" y="6" width="20" height="4.5" rx="1.5" fill="#FFFFFF"></rect><path d="M12 6v15" stroke="#47B5E9" stroke-width="2"></path><path d="M12 6C10.5 2.8 6.6 3.2 7.2 5.4 7.6 6.9 10 6.6 12 6Zm0 0c1.5-3.2 5.4-2.8 4.8-.6-.4 1.5-2.8 1.2-4.8.6Z" fill="#FFFFFF"></path></svg>Free E-Book</span>
+                  <span class="gift-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="9.5" width="18" height="11.5" rx="1.8" fill="#FFFFFF"></rect><rect x="2" y="6" width="20" height="4.5" rx="1.5" fill="#FFFFFF"></rect><path d="M12 6v15" stroke="#47B5E9" stroke-width="2"></path><path d="M12 6C10.5 2.8 6.6 3.2 7.2 5.4 7.6 6.9 10 6.6 12 6Zm0 0c1.5-3.2 5.4-2.8 4.8-.6-.4 1.5-2.8 1.2-4.8.6Z" fill="#FFFFFF"></path></svg>Free Routine Tracker</span>
+                </div>
+              {%- endif -%}
             </div>
             {%- assign pdp_slides = 'fwof-pdp-before-after.webp|A dog’s teeth before and after a consistent FreshWipes routine;fwof-pdp-textured.webp|Close-up of the textured FreshWipes finger wipe surface;fwof-pdp-risk-free.webp|100-Day Money-Back Guarantee — try FreshWipes risk-free;fwof-pdp-how-to.webp|How to use FreshWipes in three steps;fwof-pdp-signs.webp|Signs a dog may need dental care — bad breath, yellow buildup and red gums;fwof-pdp-ingredients.webp|FreshWipes gentle ingredients — green tea extract, glycerin, citric acid and allantoin;fwof-pdp-stick-to-it.webp|A hand holding the FreshWipes container — dental care you can stick to;fwof-pdp-lifestyle.webp|A dog owner using FreshWipes as part of a simple daily habit' | split: ';' -%}
             {%- for s in pdp_slides -%}
@@ -118,7 +178,7 @@
 
         <div class="thumbs" role="tablist" aria-label="Gallery thumbnails">
           <button type="button" class="thumb on" aria-label="Selected kit bundle" aria-selected="true">
-            <img src="{{ 'fwof-tier-4pack-waw.webp' | asset_url }}" data-fwof-tier-thumb width="900" height="900" alt="">
+            <img src="{{ tier1_image }}" data-fwof-tier-thumb width="900" height="900" alt="">
           </button>
           {%- for s in pdp_slides -%}
             {%- assign parts = s | split: '|' -%}
@@ -131,17 +191,19 @@
 
       {%- comment -%} purchase module {%- endcomment -%}
       <div class="buy">
-        <div class="waw-hb">
-          <span class="waw-hb-ic" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#FFFFFF" stroke-width="1.9"></circle><path d="M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18M3.2 9h17.6M3.2 15h17.6" stroke="#FFFFFF" stroke-width="1.6"></path></svg></span>
-          <span class="waw-hb-c">
-            <span class="waw-hb-t">World Animal Week</span>
-            <span class="waw-hb-s">Limited-Time Sale</span>
-          </span>
-          <span class="waw-hb-d"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#D92D20" stroke-width="2.6"></circle><path d="M12 7.2V12l3.4 2.2" stroke="#D92D20" stroke-width="2.6" stroke-linecap="round"></path></svg>Ends Oct 4</span>
-        </div>
+        {%- if waw_active -%}
+          <div class="waw-hb">
+            <span class="waw-hb-ic" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#FFFFFF" stroke-width="1.9"></circle><path d="M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18M3.2 9h17.6M3.2 15h17.6" stroke="#FFFFFF" stroke-width="1.6"></path></svg></span>
+            <span class="waw-hb-c">
+              <span class="waw-hb-t">World Animal Week</span>
+              <span class="waw-hb-s">Limited-Time Sale</span>
+            </span>
+            <span class="waw-hb-d"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#D92D20" stroke-width="2.6"></circle><path d="M12 7.2V12l3.4 2.2" stroke="#D92D20" stroke-width="2.6" stroke-linecap="round"></path></svg>Ends Oct 4</span>
+          </div>
+        {%- endif -%}
 
-        <h1 class="h1">{{ section.settings.heading }}
-          <span class="h1-sub">{{ section.settings.subheading }}</span>
+        <h1 class="h1">{{ hero_heading }}
+          <span class="h1-sub">{{ hero_sub }}</span>
         </h1>
 
         <div class="rating" style="margin-top:11px">
@@ -159,13 +221,17 @@
           {%- endfor -%}
         </div>
 
-        <div class="waw-plan-head">
-          <span class="pick-h">{{ section.settings.picker_heading }}</span>
-          <span class="waw-badges">
-            <span class="waw-badge waw-badge-teal"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#FFFFFF" stroke-width="2"></circle><path d="M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18M3.2 9h17.6M3.2 15h17.6" stroke="#FFFFFF" stroke-width="1.7"></path></svg>World Animal Week Offer</span>
-            <span class="waw-badge waw-badge-red"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#D92D20" stroke-width="2.6"></circle><path d="M12 7.2V12l3.4 2.2" stroke="#D92D20" stroke-width="2.6" stroke-linecap="round"></path></svg>Ends October 4</span>
-          </span>
-        </div>
+        {%- if waw_active -%}
+          <div class="waw-plan-head">
+            <span class="pick-h">{{ section.settings.picker_heading }}</span>
+            <span class="waw-badges">
+              <span class="waw-badge waw-badge-teal"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#FFFFFF" stroke-width="2"></circle><path d="M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18M3.2 9h17.6M3.2 15h17.6" stroke="#FFFFFF" stroke-width="1.7"></path></svg>World Animal Week Offer</span>
+              <span class="waw-badge waw-badge-red"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#D92D20" stroke-width="2.6"></circle><path d="M12 7.2V12l3.4 2.2" stroke="#D92D20" stroke-width="2.6" stroke-linecap="round"></path></svg>Ends October 4</span>
+            </span>
+          </div>
+        {%- else -%}
+          <div class="pick-h">{{ section.settings.picker_heading }}</div>
+        {%- endif -%}
 
         {%- comment -%}
           Kaching Bundles app block — the real tier radios, the real RoutineCare
@@ -178,6 +244,27 @@
             {%- endif -%}
           {%- endfor -%}
         </div>
+
+        {%- if waw_active -%}
+          {%- comment -%}
+            Hand-authored gift panel — Kaching's real free-gift list ships the
+            e-book + tracker as ONE combined line ("A Complete Dental Care
+            System"), so the design's two-row panel with real names/images is
+            built here instead of revealed from Kaching's own DOM. Kaching's
+            real row stays in the markup (cart correctness) but hidden from
+            view — see assets/freshwipes-offer-page.css "WAW gift panel".
+          {%- endcomment -%}
+          <div class="waw-gift-panel" data-fwof-waw-gifts hidden>
+            <div class="gp-row">
+              <div class="gp-thumb"><img src="https://cdn.shopify.com/s/files/1/0735/4833/3323/files/Namnlosdesign-2026-05-12T150202.605.png?v=1778590950" width="140" height="140" loading="lazy" alt="The Fresh Breath in 30 Days e-book"></div>
+              <div><div class="gp-n">Fresh Breath in 30 Days</div><div class="gp-d">Your dog's complete guide to at-home dental care — no toothbrush needed.</div></div>
+            </div>
+            <div class="gp-row">
+              <div class="gp-thumb"><img src="https://cdn.shopify.com/s/files/1/0735/4833/3323/files/ROUTINETRACKER.pdf_1.png?v=1776102536" width="140" height="140" loading="lazy" alt="The Fresh Breath Routine Tracker"></div>
+              <div><div class="gp-n">Fresh Breath Routine Tracker</div><div class="gp-d">21-day tracker to keep the daily routine consistent.</div></div>
+            </div>
+          </div>
+        {%- endif -%}
 
         {%- comment -%} the ONE authoritative add-to-cart pathway {%- endcomment -%}
         <div class="fwof-form-host">
@@ -212,7 +299,7 @@
                 {%- endcomment -%}
                 <input type="hidden" name="properties[_vp_offer_source]" value="freshwipes-offer-page">
                 <input type="hidden" name="properties[_vp_bundle_tier]" id="fwof-prop-tier" value="4-pack">
-                <input type="hidden" name="properties[_vp_bundle_image]" id="fwof-prop-image" value="{{ 'fwof-tier-4pack-waw.webp' | asset_url }}">
+                <input type="hidden" name="properties[_vp_bundle_image]" id="fwof-prop-image" value="{{ tier1_image }}">
                 <button
                   id="ProductSubmitButton-{{ section.id }}"
                   type="submit"
@@ -221,26 +308,44 @@
                   class="atc-button product-form__submit main-product-atc cta btn-buy"
                   {% if v.available == false %}disabled{% endif %}
                 >
-                  <span><span data-fwof-cta-label>Add To Cart — Buy 2, Get 2 Free</span> <span aria-hidden="true">→</span></span>
+                  <span><span data-fwof-cta-label>{{ tier1_cta }}</span> <span aria-hidden="true">→</span></span>
                 </button>
               {%- endform -%}
             </product-form>
           {%- endif -%}
         </div>
 
-        <div class="guar-row">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#13B6B5"></circle><path d="m7.4 12.3 3 3 6.2-6.6" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-          <span>100-Day Money-Back Guarantee</span>
-        </div>
+        {%- if waw_active -%}
+          <div class="waw-assure">
+            <div class="waw-assure-g">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#13B6B5"></circle><path d="m7.4 12.3 3 3 6.2-6.6" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <div>
+                <div class="waw-assure-t">No more plaque buildup OR your money back</div>
+                <p class="waw-assure-p">Try FreshWipes for 100 days. If you don't see cleaner-looking teeth with consistent use, we'll refund you.</p>
+              </div>
+            </div>
+            <div class="waw-assure-s">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="2.2" fill="#54646F"></rect><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="#54646F" stroke-width="2.2" stroke-linecap="round"></path></svg>
+              <span>All transactions are secure and encrypted</span>
+            </div>
+          </div>
+        {%- else -%}
+          <div class="guar-row">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#13B6B5"></circle><path d="m7.4 12.3 3 3 6.2-6.6" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            <span>100-Day Money-Back Guarantee</span>
+          </div>
+        {%- endif -%}
 
         <div class="pay">
           <img class="pay-strip" src="{{ 'fwof-payment-badges.webp' | asset_url }}" width="700" height="64" loading="lazy" decoding="async" alt="Accepted payment methods: Mastercard, Visa, PayPal, American Express, Discover and Apple Pay">
         </div>
 
-        <div class="secure">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="2.2" fill="#6B7A85"></rect><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="#6B7A85" stroke-width="2.2" stroke-linecap="round"></path></svg>
-          <span>All transactions are secure and encrypted</span>
-        </div>
+        {%- unless waw_active -%}
+          <div class="secure">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="2.2" fill="#6B7A85"></rect><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="#6B7A85" stroke-width="2.2" stroke-linecap="round"></path></svg>
+            <span>All transactions are secure and encrypted</span>
+          </div>
+        {%- endunless -%}
 
         {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url -%}
 
@@ -314,13 +419,15 @@
           </div>
         </div>
 
-        <div class="waw-scar">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 22 20H2L12 3Z" fill="#D92D20"></path><path d="M12 9.5v4.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path><circle cx="12" cy="17" r="1.2" fill="#FFFFFF"></circle></svg>
-          <div>
-            <span class="waw-scar-t">High demand during World Animal Week</span>
-            <span class="waw-scar-s">Order now while this offer and available stock last.</span>
+        {%- if waw_active -%}
+          <div class="waw-scar">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 22 20H2L12 3Z" fill="#D92D20"></path><path d="M12 9.5v4.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path><circle cx="12" cy="17" r="1.2" fill="#FFFFFF"></circle></svg>
+            <div>
+              <span class="waw-scar-t">High demand during World Animal Week</span>
+              <span class="waw-scar-s">Order now while this offer and available stock last.</span>
+            </div>
           </div>
-        </div>
+        {%- endif -%}
 
       </div>
 
@@ -346,59 +453,61 @@
     </div>
   </div>
 
-  {%- comment -%} ---------- SECTION 2B — how the World Animal Week offer works ---------- {%- endcomment -%}
-  <section class="sec">
-    <div class="col-c">
-      <span class="waw-eyebrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#FFFFFF" stroke-width="1.9"></circle><path d="M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18M3.2 9h17.6M3.2 15h17.6" stroke="#FFFFFF" stroke-width="1.6"></path></svg>World Animal Week · 28 Sep – 4 Oct</span>
-      <h2 class="h2">Buy 2, Get 2 Free — <span class="accent">plus free gifts</span></h2>
-      <p class="lead">One week, one offer. Everything below applies until the sale closes on October 4.</p>
-      <div class="waw-steps">
-        <div class="waw-step">
-          <span class="waw-step-n">1</span>
-          <h3 class="waw-step-t">Choose your kit</h3>
-          <p class="waw-step-p">Pick the supply that fits your household. The Complete Dental Routine is the World Animal Week offer kit — 4 jars, two of them free.</p>
-        </div>
-        <div class="waw-step">
-          <span class="waw-step-n">2</span>
-          <h3 class="waw-step-t">The free jars are added</h3>
-          <p class="waw-step-p">Buy 2, Get 2 Free is applied to the kit you select, together with the free gifts listed for it. Shipping is free.</p>
-        </div>
-        <div class="waw-step">
-          <span class="waw-step-n">3</span>
-          <h3 class="waw-step-t">Add RoutineCare to save 20%</h3>
-          <p class="waw-step-p">Optional. RoutineCare takes 20% off and includes free shipping on every order. Skip, change or cancel anytime.</p>
-        </div>
-      </div>
-
-      <div class="waw-gifts">
-        <div class="waw-gifts-h">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="9.5" width="18" height="11.5" rx="1.8" fill="#13B6B5"></rect><rect x="2" y="6" width="20" height="4.5" rx="1.5" fill="#0E8F8E"></rect><path d="M12 6v15" stroke="#FFFFFF" stroke-width="1.8"></path><path d="M12 6C10.5 2.8 6.6 3.2 7.2 5.4 7.6 6.9 10 6.6 12 6Zm0 0c1.5-3.2 5.4-2.8 4.8-.6-.4 1.5-2.8 1.2-4.8.6Z" fill="#0E8F8E"></path></svg>
-          Free gifts included
-        </div>
-        <div class="waw-gift-grid">
-          <div class="waw-gift">
-            <div class="waw-gift-im"><img src="https://cdn.shopify.com/s/files/1/0735/4833/3323/files/Namnlosdesign-2026-05-12T150202.605.png?v=1778590950" width="140" height="140" loading="lazy" alt="The Fresh Breath in 30 Days e-book"></div>
-            <div>
-              <div class="waw-gift-n">Fresh Breath in 30 Days</div>
-              <div class="waw-gift-d">Your dog's complete guide to at-home dental care — no toothbrush needed.</div>
-              <span class="waw-gift-w">With The Complete Dental Routine</span>
-            </div>
+  {%- if waw_active -%}
+    {%- comment -%} ---------- SECTION 2B — how the World Animal Week offer works ---------- {%- endcomment -%}
+    <section class="sec">
+      <div class="col-c">
+        <span class="waw-eyebrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#FFFFFF" stroke-width="1.9"></circle><path d="M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18M3.2 9h17.6M3.2 15h17.6" stroke="#FFFFFF" stroke-width="1.6"></path></svg>World Animal Week · 28 Sep – 4 Oct</span>
+        <h2 class="h2">Buy 2, Get 2 Free — <span class="accent">plus free gifts</span></h2>
+        <p class="lead">One week, one offer. Everything below applies until the sale closes on October 4.</p>
+        <div class="waw-steps">
+          <div class="waw-step">
+            <span class="waw-step-n">1</span>
+            <h3 class="waw-step-t">Choose your kit</h3>
+            <p class="waw-step-p">Pick the supply that fits your household. The Complete Dental Routine is the World Animal Week offer kit — 4 jars, two of them free.</p>
           </div>
-          <div class="waw-gift">
-            <div class="waw-gift-im"><img src="https://cdn.shopify.com/s/files/1/0735/4833/3323/files/ROUTINETRACKER.pdf_1.png?v=1776102536" width="140" height="140" loading="lazy" alt="The Fresh Breath Routine Tracker"></div>
-            <div>
-              <div class="waw-gift-n">Fresh Breath Routine Tracker</div>
-              <div class="waw-gift-d">21-day tracker to keep the daily routine consistent.</div>
-              <span class="waw-gift-w">With The Complete Dental Routine</span>
-            </div>
+          <div class="waw-step">
+            <span class="waw-step-n">2</span>
+            <h3 class="waw-step-t">The free jars are added</h3>
+            <p class="waw-step-p">Buy 2, Get 2 Free is applied to the kit you select, together with the free gifts listed for it. Shipping is free.</p>
+          </div>
+          <div class="waw-step">
+            <span class="waw-step-n">3</span>
+            <h3 class="waw-step-t">Add RoutineCare to save 20%</h3>
+            <p class="waw-step-p">Optional. RoutineCare takes 20% off and includes free shipping on every order. Skip, change or cancel anytime.</p>
           </div>
         </div>
-        <div class="waw-gift-foot">Both gifts are added automatically to the Complete Dental Routine. Both are digital — delivered by email after checkout.</div>
-      </div>
 
-      <a class="cta btn-outline" href="#fwof-hero">Get The World Animal Week Offer ↑</a>
-    </div>
-  </section>
+        <div class="waw-gifts">
+          <div class="waw-gifts-h">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="9.5" width="18" height="11.5" rx="1.8" fill="#13B6B5"></rect><rect x="2" y="6" width="20" height="4.5" rx="1.5" fill="#0E8F8E"></rect><path d="M12 6v15" stroke="#FFFFFF" stroke-width="1.8"></path><path d="M12 6C10.5 2.8 6.6 3.2 7.2 5.4 7.6 6.9 10 6.6 12 6Zm0 0c1.5-3.2 5.4-2.8 4.8-.6-.4 1.5-2.8 1.2-4.8.6Z" fill="#0E8F8E"></path></svg>
+            Free gifts included
+          </div>
+          <div class="waw-gift-grid">
+            <div class="waw-gift">
+              <div class="waw-gift-im"><img src="https://cdn.shopify.com/s/files/1/0735/4833/3323/files/Namnlosdesign-2026-05-12T150202.605.png?v=1778590950" width="140" height="140" loading="lazy" alt="The Fresh Breath in 30 Days e-book"></div>
+              <div>
+                <div class="waw-gift-n">Fresh Breath in 30 Days</div>
+                <div class="waw-gift-d">Your dog's complete guide to at-home dental care — no toothbrush needed.</div>
+                <span class="waw-gift-w">With The Complete Dental Routine</span>
+              </div>
+            </div>
+            <div class="waw-gift">
+              <div class="waw-gift-im"><img src="https://cdn.shopify.com/s/files/1/0735/4833/3323/files/ROUTINETRACKER.pdf_1.png?v=1776102536" width="140" height="140" loading="lazy" alt="The Fresh Breath Routine Tracker"></div>
+              <div>
+                <div class="waw-gift-n">Fresh Breath Routine Tracker</div>
+                <div class="waw-gift-d">21-day tracker to keep the daily routine consistent.</div>
+                <span class="waw-gift-w">With The Complete Dental Routine</span>
+              </div>
+            </div>
+          </div>
+          <div class="waw-gift-foot">Both gifts are added automatically to the Complete Dental Routine. Both are digital — delivered by email after checkout.</div>
+        </div>
+
+        <a class="cta btn-outline" href="#fwof-hero">Get The World Animal Week Offer ↑</a>
+      </div>
+    </section>
+  {%- endif -%}
 
   {%- comment -%} ---------- SECTION 3 — proof ---------- {%- endcomment -%}
   <section class="sec">
@@ -416,7 +525,7 @@
         {%- endfor -%}
       </div>
       <p class="body-copy">What you see on the wipe is what the textured surface lifted away — the daily plaque and food debris that chews, powders and water additives never physically touch.</p>
-      <a class="cta btn-outline" href="#fwof-hero">Get The World Animal Week Offer ↑</a>
+      <a class="cta btn-outline" href="#fwof-hero">{{ cta_scroll_text }}</a>
     </div>
   </section>
 
@@ -464,7 +573,7 @@
         </div>
       </div>
 
-      <a class="cta btn-outline" href="#fwof-hero">Get The World Animal Week Offer ↑</a>
+      <a class="cta btn-outline" href="#fwof-hero">{{ cta_scroll_text }}</a>
     </div>
   </section>
 
@@ -490,7 +599,7 @@
           </div>
         {%- endfor -%}
       </div>
-      <a class="cta btn-outline" href="#fwof-hero">Get The World Animal Week Offer ↑</a>
+      <a class="cta btn-outline" href="#fwof-hero">{{ cta_scroll_text }}</a>
     </div>
   </section>
 
@@ -530,7 +639,7 @@
     </div>
 
     <div class="offer-wrap">
-      <div class="offer-badge">World Animal Week · Buy 2, Get 2 Free + Free Gifts</div>
+      <div class="offer-badge">{% if waw_active %}World Animal Week · Buy 2, Get 2 Free + Free Gifts{% else %}Buy 2, Get 2 Free + Free Gifts{% endif %}</div>
       <div class="offer-card">
         <div class="offer-media"><img src="{{ 'fwpl-offer-jar.webp' | asset_url }}" width="500" height="678" loading="lazy" decoding="async" alt="FreshWipes container with two textured finger sleeves"></div>
         <div class="offer-body">
@@ -545,23 +654,27 @@
               <div class="bullet">{% render 'fwof-check', size: 20 %}<span>{{ b }}</span></div>
             {%- endfor -%}
           </div>
-          <div class="waw-chips">
-            <span class="waw-chip waw-chip-blue">Limited time: Buy 2, Get 2 Free</span>
-            <span class="waw-chip waw-chip-teal">Free gifts included</span>
-            <span class="waw-chip waw-chip-red">Ends October 4</span>
-          </div>
-          <div class="waw-note" style="margin-top:0">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#D92D20" stroke-width="2.4"></circle><path d="M12 7.2V12l3.4 2.2" stroke="#D92D20" stroke-width="2.4" stroke-linecap="round"></path></svg>
-            <div class="waw-note-t"><strong>Ends October 4.</strong> Buy 2, Get 2 Free with free gifts and free shipping — or add RoutineCare to save 20% on every order.</div>
-          </div>
+          {%- if waw_active -%}
+            <div class="waw-chips">
+              <span class="waw-chip waw-chip-blue">Limited time: Buy 2, Get 2 Free</span>
+              <span class="waw-chip waw-chip-teal">Free gifts included</span>
+              <span class="waw-chip waw-chip-red">Ends October 4</span>
+            </div>
+            <div class="waw-note" style="margin-top:0">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#D92D20" stroke-width="2.4"></circle><path d="M12 7.2V12l3.4 2.2" stroke="#D92D20" stroke-width="2.4" stroke-linecap="round"></path></svg>
+              <div class="waw-note-t"><strong>Ends October 4.</strong> Buy 2, Get 2 Free with free gifts and free shipping — or add RoutineCare to save 20% on every order.</div>
+            </div>
+          {%- endif -%}
           <button type="button" class="cta btn-buy" data-fwof-submit>
-            <span><span data-fwof-cta-label>Add To Cart — Buy 2, Get 2 Free</span> <span aria-hidden="true">→</span></span>
+            <span><span data-fwof-cta-label>{{ tier1_cta }}</span> <span aria-hidden="true">→</span></span>
           </button>
           <div class="trustline" style="text-align:left">100-Day Money-Back Guarantee · Free &amp; Fast Shipping</div>
-          <a class="routine" href="#fwof-hero">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9" stroke="#1F7FB8" stroke-width="2.4" stroke-linecap="round"></path><path d="M20 3.5V8h-4.5" stroke="#1F7FB8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-            Save 20% with RoutineCare
-          </a>
+          {%- if waw_active -%}
+            <a class="routine" href="#fwof-hero">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9" stroke="#1F7FB8" stroke-width="2.4" stroke-linecap="round"></path><path d="M20 3.5V8h-4.5" stroke="#1F7FB8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              Save 20% with RoutineCare
+            </a>
+          {%- endif -%}
           {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url -%}
         </div>
       </div>
@@ -570,66 +683,87 @@
 
   {% render 'fwof-wave' %}
 
-  {%- comment -%} ---------- SECTION 7 — FAQ (8) ---------- {%- endcomment -%}
+  {%- comment -%} ---------- SECTION 7 — FAQ ---------- {%- endcomment -%}
   <section class="sec">
     <div class="col-c">
       <div class="eyebrow" style="white-space:nowrap">Questions, answered</div>
       <h2 class="h2">Everything you need to know <span class="accent">before starting</span></h2>
       <div class="faq">
-        {%- assign faq_q = section.settings.faq_questions | newline_to_br | split: '<br />' -%}
-        {%- assign faq_a = section.settings.faq_answers | newline_to_br | split: '<br />' -%}
-        {%- for q in faq_q -%}
-          {%- assign qt = q | strip_newlines | strip -%}
-          {%- if qt != blank -%}
-            {%- assign at = faq_a[forloop.index0] | strip_newlines | strip -%}
-            <div class="faq-row">
-              <button type="button" class="faq-q" aria-expanded="false" aria-controls="fwof-faq-a{{ forloop.index0 }}">
-                <span>{{ qt }}</span><span class="faq-ic" aria-hidden="true">+</span>
-              </button>
-              <div class="faq-wrap" id="fwof-faq-a{{ forloop.index0 }}">
-                <p class="faq-a">{{ at }}</p>
+        {%- if waw_active -%}
+          {%- assign faq_q = 'How soon will I see a difference?;Are FreshWipes safe for daily use, puppies and cats?;Will this remove tartar that is already there?;How often should I use FreshWipes, and do I need to rinse?;What if my dog hates having their mouth touched?;How long does one jar last, and which plan should I choose?;What makes FreshWipes different from dental chews, powders and water additives?;How do RoutineCare and the 100-day money-back guarantee work?;What is World Animal Week, and how does the offer work?' | split: ';' -%}
+          {%- assign faq_a_waw = 'You can see what the textured surface lifted away on the wipe from the very first use. How quickly the teeth look cleaner depends on how much buildup is present, how long it has been there and how consistently you keep the routine. Hardened tartar that is already bonded to the tooth needs a veterinary cleaning — FreshWipes works on the softer daily buildup before it gets to that stage.;FreshWipes are designed for gentle use in the mouth of dogs and cats and are pH-balanced and fragrance-free. Use one fresh wipe per session and stop if your pet shows signs of pain. If you notice persistent bad breath, bleeding gums, swelling or a broken tooth, contact your veterinarian.;No. FreshWipes physically lifts the soft daily plaque and food debris from accessible tooth surfaces before it hardens. Tartar that has already mineralised onto the tooth can only be removed by a veterinary cleaning. Keeping the daily routine is what slows new buildup down.;Slip one wipe over your index finger, clean the accessible outer tooth surfaces and gumline with small circular motions, then discard the wipe. No rinsing, brushing, mixing or toothpaste is needed. Consistency matters more than pressure.;Start slowly and let your dog sniff the wipe first. Choose a calm moment, clean just a few teeth on the first attempts and reward relaxed behaviour afterward. Because the wipe sits on your finger rather than a brush handle, many owners find their dog accepts it more readily than brushing.;Each jar holds 50 textured finger wipes — about a month of use for one dog. The Starter Routine is a 2-month supply and the Complete Dental Routine is a 4-month supply. Actual duration depends on the number of pets and wipes used.;Chews, powders and water additives work passively around the mouth. FreshWipes is the one you physically guide across the tooth surface and along the gumline — so you can see on the wipe exactly what came off.;RoutineCare saves 20% and includes free shipping on every recurring order. Deliveries can be skipped, changed or cancelled when needed. Your purchase is also protected by our 100-day money-back guarantee — if FreshWipes are not right for your pet, contact VetPets within 100 days of purchase for help with your refund.;World Animal Week runs 28 September to 4 October 2026. During the sale, Buy 2, Get 2 Free applies to the FreshWipes kits on this page and the free gifts listed with each kit are added to your order. You can also add RoutineCare to save 20% with free shipping on every order — skip, change or cancel anytime. The offer closes on October 4.' | split: ';' -%}
+          {%- for q in faq_q -%}
+            {%- assign qt = q | strip_newlines | strip -%}
+            {%- if qt != blank -%}
+              {%- assign at = faq_a_waw[forloop.index0] | strip_newlines | strip -%}
+              <div class="faq-row">
+                <button type="button" class="faq-q" aria-expanded="false" aria-controls="fwof-faq-a{{ forloop.index0 }}">
+                  <span>{{ qt }}</span><span class="faq-ic" aria-hidden="true">+</span>
+                </button>
+                <div class="faq-wrap" id="fwof-faq-a{{ forloop.index0 }}">
+                  <p class="faq-a">{{ at }}</p>
+                </div>
               </div>
-            </div>
-          {%- endif -%}
-        {%- endfor -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- else -%}
+          {%- assign faq_q = section.settings.faq_questions_evergreen | newline_to_br | split: '<br />' -%}
+          {%- assign faq_a = section.settings.faq_answers_evergreen | newline_to_br | split: '<br />' -%}
+          {%- for q in faq_q -%}
+            {%- assign qt = q | strip_newlines | strip -%}
+            {%- if qt != blank -%}
+              {%- assign at = faq_a[forloop.index0] | strip_newlines | strip -%}
+              <div class="faq-row">
+                <button type="button" class="faq-q" aria-expanded="false" aria-controls="fwof-faq-a{{ forloop.index0 }}">
+                  <span>{{ qt }}</span><span class="faq-ic" aria-hidden="true">+</span>
+                </button>
+                <div class="faq-wrap" id="fwof-faq-a{{ forloop.index0 }}">
+                  <p class="faq-a">{{ at }}</p>
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
       </div>
     </div>
   </section>
 
-  {%- comment -%} ---------- SECTION 7B — final urgency ---------- {%- endcomment -%}
-  <section class="waw-final waw-paws">
-    <div class="waw-final-card">
-      <span class="waw-eyebrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#FFFFFF" stroke-width="1.9"></circle><path d="M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18M3.2 9h17.6M3.2 15h17.6" stroke="#FFFFFF" stroke-width="1.6"></path></svg>World Animal Week</span>
-      <h2 class="waw-final-h">The sale closes October 4. <span class="accent">The routine starts tonight.</span></h2>
-      <p class="waw-final-p">FreshWipes is a textured finger wipe you guide across the accessible tooth surfaces and along the gumline — a 30-second daily habit, no brush and no toothpaste.</p>
-      <div class="waw-final-list">
-        <div class="waw-final-li"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="#47B5E9"></circle><path d="m7.5 12.2 3 3 6-6.4" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Buy 2, Get 2 Free + Free Gifts</span></div>
-        <div class="waw-final-li"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="#13B6B5"></circle><path d="m7.5 12.2 3 3 6-6.4" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Save 20% with RoutineCare</span></div>
-        <div class="waw-final-li"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="#47B5E9"></circle><path d="m7.5 12.2 3 3 6-6.4" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Free shipping on every kit</span></div>
-        <div class="waw-final-li"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#D92D20" stroke-width="2.4"></circle><path d="M12 7.2V12l3.4 2.2" stroke="#D92D20" stroke-width="2.4" stroke-linecap="round"></path></svg><span>Ends October 4</span></div>
-      </div>
-      <div class="waw-final-timer" role="timer" aria-label="World Animal Week sale ends 4 October 2026">
-        <span class="waw-timer-l">Offer ends in</span>
-        <div class="waw-cd">
-          <div class="waw-cd-u"><div class="waw-cd-n" data-cd="d">00</div><div class="waw-cd-l">Days</div></div>
-          <div class="waw-cd-u"><div class="waw-cd-n" data-cd="h">00</div><div class="waw-cd-l">Hrs</div></div>
-          <div class="waw-cd-u"><div class="waw-cd-n" data-cd="m">00</div><div class="waw-cd-l">Min</div></div>
-          <div class="waw-cd-u"><div class="waw-cd-n" data-cd="s">00</div><div class="waw-cd-l">Sec</div></div>
+  {%- if waw_active -%}
+    {%- comment -%} ---------- SECTION 7B — final urgency ---------- {%- endcomment -%}
+    <section class="waw-final waw-paws">
+      <div class="waw-final-card">
+        <span class="waw-eyebrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#FFFFFF" stroke-width="1.9"></circle><path d="M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18M3.2 9h17.6M3.2 15h17.6" stroke="#FFFFFF" stroke-width="1.6"></path></svg>World Animal Week</span>
+        <h2 class="waw-final-h">The sale closes October 4. <span class="accent">The routine starts tonight.</span></h2>
+        <p class="waw-final-p">FreshWipes is a textured finger wipe you guide across the accessible tooth surfaces and along the gumline — a 30-second daily habit, no brush and no toothpaste.</p>
+        <div class="waw-final-list">
+          <div class="waw-final-li"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="#47B5E9"></circle><path d="m7.5 12.2 3 3 6-6.4" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Buy 2, Get 2 Free + Free Gifts</span></div>
+          <div class="waw-final-li"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="#13B6B5"></circle><path d="m7.5 12.2 3 3 6-6.4" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Save 20% with RoutineCare</span></div>
+          <div class="waw-final-li"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="#47B5E9"></circle><path d="m7.5 12.2 3 3 6-6.4" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Free shipping on every kit</span></div>
+          <div class="waw-final-li"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#D92D20" stroke-width="2.4"></circle><path d="M12 7.2V12l3.4 2.2" stroke="#D92D20" stroke-width="2.4" stroke-linecap="round"></path></svg><span>Ends October 4</span></div>
+        </div>
+        <div class="waw-final-timer" role="timer" aria-label="World Animal Week sale ends 4 October 2026">
+          <span class="waw-timer-l">Offer ends in</span>
+          <div class="waw-cd">
+            <div class="waw-cd-u"><div class="waw-cd-n" data-cd="d">00</div><div class="waw-cd-l">Days</div></div>
+            <div class="waw-cd-u"><div class="waw-cd-n" data-cd="h">00</div><div class="waw-cd-l">Hrs</div></div>
+            <div class="waw-cd-u"><div class="waw-cd-n" data-cd="m">00</div><div class="waw-cd-l">Min</div></div>
+            <div class="waw-cd-u"><div class="waw-cd-n" data-cd="s">00</div><div class="waw-cd-l">Sec</div></div>
+          </div>
+        </div>
+        <button type="button" class="cta btn-buy" data-fwof-submit>
+          <span><span data-fwof-cta-label>{{ tier1_cta }}</span> <span aria-hidden="true">→</span></span>
+        </button>
+        <div class="waw-deadline-line">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#D92D20" stroke-width="2.4"></circle><path d="M12 7.2V12l3.4 2.2" stroke="#D92D20" stroke-width="2.4" stroke-linecap="round"></path></svg>
+          <span>Limited-time offer — ends October 4</span>
+        </div>
+        <div class="guar-row">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#13B6B5"></circle><path d="m7.4 12.3 3 3 6.2-6.6" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <span>100-Day Money-Back Guarantee</span>
         </div>
       </div>
-      <button type="button" class="cta btn-buy" data-fwof-submit>
-        <span><span data-fwof-cta-label>Add To Cart — Buy 2, Get 2 Free</span> <span aria-hidden="true">→</span></span>
-      </button>
-      <div class="waw-deadline-line">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#D92D20" stroke-width="2.4"></circle><path d="M12 7.2V12l3.4 2.2" stroke="#D92D20" stroke-width="2.4" stroke-linecap="round"></path></svg>
-        <span>Limited-time offer — ends October 4</span>
-      </div>
-      <div class="guar-row">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#13B6B5"></circle><path d="m7.4 12.3 3 3 6.2-6.6" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-        <span>100-Day Money-Back Guarantee</span>
-      </div>
-    </div>
-  </section>
+    </section>
+  {%- endif -%}
 
   {%- comment -%} ---------- SECTION 8 — footer ---------- {%- endcomment -%}
   <footer class="foot">
@@ -637,16 +771,18 @@
   </footer>
 
   {%- comment -%} ---------- sticky purchase bar ---------- {%- endcomment -%}
-  <div class="sticky fwof-sticky" role="region" aria-label="FreshWipes World Animal Week offer">
-    <div class="waw-sticky-top">
-      <span class="waw-st-l">World Animal Week · Buy 2, Get 2 Free · Ends Oct 4</span>
-      <span class="waw-st-cd"><span data-cd="d">00</span>d <span data-cd="h">00</span>h <span data-cd="m">00</span>m</span>
-    </div>
+  <div class="sticky fwof-sticky" role="region" aria-label="FreshWipes offer">
+    {%- if waw_active -%}
+      <div class="waw-sticky-top">
+        <span class="waw-st-l">World Animal Week · Buy 2, Get 2 Free · Ends Oct 4</span>
+        <span class="waw-st-cd"><span data-cd="d">00</span>d <span data-cd="h">00</span>h <span data-cd="m">00</span>m</span>
+      </div>
+    {%- endif -%}
     <div class="sticky-in">
       <div class="sticky-r1">
-        <div class="sticky-thumb"><img src="{{ 'fwof-tier-4pack-waw.webp' | asset_url }}" data-fwof-tier-thumb width="900" height="900" loading="lazy" alt=""></div>
+        <div class="sticky-thumb"><img src="{{ tier1_image }}" data-fwof-tier-thumb width="900" height="900" loading="lazy" alt=""></div>
         <div class="sticky-copy">
-          <div class="sticky-offer">Complete Dental Routine</div>
+          <div class="sticky-offer">{{ tier1_name }}</div>
           <div class="sticky-sub">
             <span class="sticky-price"></span>
             <span class="sticky-rc" hidden><span class="sticky-rc-short">RC −20%</span><span class="sticky-rc-full">RoutineCare −20%</span></span>
@@ -655,7 +791,7 @@
         </div>
       </div>
       <button type="button" class="cta btn-buy" data-fwof-submit>
-        <span class="sticky-cta-full"><span data-fwof-cta-label>Add To Cart — Buy 2, Get 2 Free</span> <span aria-hidden="true">→</span></span>
+        <span class="sticky-cta-full"><span data-fwof-cta-label>{{ tier1_cta }}</span> <span aria-hidden="true">→</span></span>
         <span class="sticky-cta-short">Add To Cart <span aria-hidden="true">→</span></span>
       </button>
     </div>
@@ -665,32 +801,56 @@
   <script type="application/json" id="fwof-config">
     {
       "rc_note": {{ section.settings.rc_note | json }},
+      "waw_active": {{ waw_active | json }},
+      "announce": [
+        {{ section.settings.announce_msg1 | json }},
+        {{ section.settings.announce_msg2 | json }},
+        {{ section.settings.announce_msg3 | json }}
+      ],
       "error_text": "Something went wrong adding this to your cart. Please try again.",
       "tiers": [
         {
           "key": "start",
           "deal_id": {{ section.settings.deal_start | json }},
-          "name": "Starter Routine",
-          "cta": "Add To Cart — Starter Routine",
-          "badge": "Starter Routine · 2-Month Supply",
+          "name": {{ tier0_name | json }},
+          "cta": {{ tier0_cta | json }},
+          "badge": {{ tier0_badge | json }},
           "pill": "",
           "applied_label": "",
           "prop_tier": "2-pack",
           "image": {{ 'fwof-tier-2pack.webp' | asset_url | json }},
-          "image_alt": "Two containers of VetPets FreshWipes"
+          "image_alt": "Two containers of VetPets FreshWipes",
+          "gift_label_override": ""
         },
         {
           "key": "clean",
           "deal_id": {{ section.settings.deal_clean | json }},
-          "name": "Complete Dental Routine",
-          "cta": "Add To Cart — Buy 2, Get 2 Free",
-          "badge": "Buy 2, Get 2 Free",
+          "name": {{ tier1_name | json }},
+          "cta": {{ tier1_cta | json }},
+          "badge": {{ tier1_badge | json }},
           "pill": "",
           "applied_label": "Your Buy 2, Get 2 Free discount is applied",
           "prop_tier": "4-pack",
-          "image": {{ 'fwof-tier-4pack-waw.webp' | asset_url | json }},
-          "image_alt": "World Animal Week — Buy 2, Get 2 Free. Four containers of VetPets FreshWipes with the Fresh Breath in 30 Days e-book and the Fresh Breath Routine Tracker"
+          "image": {{ tier1_image | json }},
+          "image_alt": {{ tier1_image_alt | json }},
+          "gift_label_override": {% if waw_active %}"+ 2 Free Gifts"{% else %}""{% endif %}
         }
+        {%- unless waw_active -%}
+        ,
+        {
+          "key": "family",
+          "deal_id": {{ section.settings.deal_family | json }},
+          "name": "The Full Family Plan",
+          "cta": "Add To Cart — Full Family Plan",
+          "badge": "Full Family Plan · 6-Month Supply",
+          "pill": "Best For Multi-Pet Households",
+          "applied_label": "Your Full Family Plan discount is applied",
+          "prop_tier": "6-pack",
+          "image": {{ 'fwof-tier-6pack.webp' | asset_url | json }},
+          "image_alt": "Six containers of VetPets FreshWipes with the Fresh Breath in 30 Days e-book and the Fresh Breath Routine Tracker",
+          "gift_label_override": ""
+        }
+        {%- endunless -%}
       ]
     }
   </script>
@@ -707,9 +867,17 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Add the Kaching Bundles app block to this section. Kaching stays the source of truth for tier, quantity, selling plan and free gifts — this section only restyles it."
+      "content": "Kaching Bundles owns tier, quantity, selling plan and free gifts."
     },
-    { "type": "header", "content": "Hero" },
+    {
+      "type": "paragraph",
+      "content": "Auto-switches to the World Animal Week design, 28 Sep to 4 Oct 2026."
+    },
+    { "type": "header", "content": "Top bar (evergreen only)" },
+    { "type": "text", "id": "announce_msg1", "label": "Message 1", "default": "Buy 2, Get 2 Free" },
+    { "type": "text", "id": "announce_msg2", "label": "Message 2", "default": "Free Shipping with RoutineCare" },
+    { "type": "text", "id": "announce_msg3", "label": "Message 3", "default": "Free Gifts Included" },
+    { "type": "header", "content": "Hero (evergreen only)" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Clean Their Teeth In 30 Seconds A Day" },
     { "type": "text", "id": "subheading", "label": "Subheading", "default": "Textured finger wipes that lift plaque and food debris from accessible tooth surfaces and along the gumline." },
     { "type": "text", "id": "picker_heading", "label": "Plan picker heading", "default": "Choose Your Plan" },
@@ -717,33 +885,31 @@
     { "type": "header", "content": "PayFac subscription disclosure" },
     {
       "type": "paragraph",
-      "content": "Resolved from the shared \"Save 20% with RoutineCare\" selling plan (gid://shopify/SellingPlan/10423959819): billing/delivery interval is 28 days, one flat percentage price policy with no after-cycle step (no trial). Update this text only if that selling plan's cadence changes."
+      "content": "Resolved from the RoutineCare selling plan cadence."
     },
     { "type": "text", "id": "rc_frequency_label", "label": "RoutineCare billing frequency", "default": "28 days" },
     { "type": "text", "id": "manage_subscription_url", "label": "Manage Subscription link", "default": "https://shopvetpets.com/pages/manage-subscription" },
     { "type": "header", "content": "Kaching deal IDs" },
     {
       "type": "paragraph",
-      "content": "Resolved from the live storefront. If a deal is rebuilt in Kaching, update the ID here — the page falls back to on-page order if an ID no longer matches."
+      "content": "Resolved from the live storefront deal configuration."
     },
     { "type": "text", "id": "deal_start", "label": "Starter Routine deal ID", "default": "f040c6e7-5e2a-4829-beb2-20ffae287ddd" },
     { "type": "text", "id": "deal_clean", "label": "Complete Dental Routine deal ID", "default": "179eaa84-019d-42c9-9d03-35e2b1bcacab" },
-    {
-      "type": "paragraph",
-      "content": "The Full Family Plan deal stays fully configured in Kaching. Its bar is hidden with CSS for the World Animal Week campaign, which narrows the picker to the two deals above — see the section file's header comment."
-    },
-    { "type": "header", "content": "FAQ" },
+    { "type": "text", "id": "deal_family", "label": "Full Family Plan deal ID (evergreen only)", "default": "be60c842-23bc-4d85-b7a7-8a67cddec0f7" },
+    { "type": "header", "content": "FAQ (evergreen, 8 questions)" },
     {
       "type": "textarea",
-      "id": "faq_questions",
-      "label": "Questions (one per line, max 9)",
-      "default": "How soon will I see a difference?\nAre FreshWipes safe for daily use, puppies and cats?\nWill this remove tartar that is already there?\nHow often should I use FreshWipes, and do I need to rinse?\nWhat if my dog hates having their mouth touched?\nHow long does one jar last, and which plan should I choose?\nWhat makes FreshWipes different from dental chews, powders and water additives?\nHow do RoutineCare and the 100-day money-back guarantee work?\nHow does the World Animal Week offer work?"
+      "id": "faq_questions_evergreen",
+      "label": "Questions (one per line, max 8)",
+      "default": "How soon will I see a difference?\nAre FreshWipes safe for daily use, puppies and cats?\nWill this remove tartar that is already there?\nHow often should I use FreshWipes, and do I need to rinse?\nWhat if my dog hates having their mouth touched?\nHow long does one jar last, and which plan should I choose?\nWhat makes FreshWipes different from dental chews, powders and water additives?\nHow do RoutineCare and the 100-day money-back guarantee work?"
     },
     {
       "type": "textarea",
-      "id": "faq_answers",
+      "id": "faq_answers_evergreen",
       "label": "Answers (one per line, same order)",
-      "default": "You can see what the textured surface lifted away on the wipe from the very first use. How quickly the teeth look cleaner depends on how much buildup is present, how long it has been there and how consistently you keep the routine. Hardened tartar that is already bonded to the tooth needs a veterinary cleaning — FreshWipes works on the softer daily buildup before it gets to that stage.\nFreshWipes are designed for gentle use in the mouth of dogs and cats and are pH-balanced and fragrance-free. Use one fresh wipe per session and stop if your pet shows signs of pain. If you notice persistent bad breath, bleeding gums, swelling or a broken tooth, contact your veterinarian.\nNo. FreshWipes physically lifts the soft daily plaque and food debris from accessible tooth surfaces before it hardens. Tartar that has already mineralised onto the tooth can only be removed by a veterinary cleaning. Keeping the daily routine is what slows new buildup down.\nSlip one wipe over your index finger, clean the accessible outer tooth surfaces and gumline with small circular motions, then discard the wipe. No rinsing, brushing, mixing or toothpaste is needed. Consistency matters more than pressure.\nStart slowly and let your dog sniff the wipe first. Choose a calm moment, clean just a few teeth on the first attempts and reward relaxed behaviour afterward. Because the wipe sits on your finger rather than a brush handle, many owners find their dog accepts it more readily than brushing.\nEach jar holds 50 textured finger wipes — about a month of use for one dog. The Starter Routine is a 2-month supply and the Complete Dental Routine is a 4-month supply. Actual duration depends on the number of pets and wipes used.\nChews, powders and water additives work passively around the mouth. FreshWipes is the one you physically guide across the tooth surface and along the gumline — so you can see on the wipe exactly what came off.\nRoutineCare saves 20% and includes free shipping on every recurring order. Deliveries can be skipped, changed or cancelled when needed. Your purchase is also protected by our 100-day money-back guarantee — if FreshWipes are not right for your pet, contact VetPets within 100 days of purchase for help with your refund.\nWorld Animal Week runs 28 September to 4 October 2026. During the sale, Buy 2, Get 2 Free applies to the FreshWipes kits on this page and the free gifts listed with each kit are added to your order. You can also add RoutineCare to save 20% with free shipping on every order — skip, change or cancel anytime. The offer closes on October 4."
+      "default": "You can see what the textured surface lifted away on the wipe from the very first use. How quickly the teeth look cleaner depends on how much buildup is present, how long it has been there and how consistently you keep the routine. Hardened tartar that is already bonded to the tooth needs a veterinary cleaning — FreshWipes works on the softer daily buildup before it gets to that stage.\nFreshWipes are designed for gentle use in the mouth of dogs and cats and are pH-balanced and fragrance-free. Use one fresh wipe per session and stop if your pet shows signs of pain. If you notice persistent bad breath, bleeding gums, swelling or a broken tooth, contact your veterinarian.\nNo. FreshWipes physically lifts the soft daily plaque and food debris from accessible tooth surfaces before it hardens. Tartar that has already mineralised onto the tooth can only be removed by a veterinary cleaning. Keeping the daily routine is what slows new buildup down.\nSlip one wipe over your index finger, clean the accessible outer tooth surfaces and gumline with small circular motions, then discard the wipe. No rinsing, brushing, mixing or toothpaste is needed. Consistency matters more than pressure.\nStart slowly and let your dog sniff the wipe first. Choose a calm moment, clean just a few teeth on the first attempts and reward relaxed behaviour afterward. Because the wipe sits on your finger rather than a brush handle, many owners find their dog accepts it more readily than brushing.\nEach jar holds 50 textured finger wipes — about a month of use for one dog. Start The Routine Kit is the smallest option, The Clean Smile Kit is long enough to see real results, and The Full Family Plan covers up to three pets. Actual duration depends on the number of pets and wipes used.\nChews, powders and water additives work passively around the mouth. FreshWipes is the one you physically guide across the tooth surface and along the gumline — so you can see on the wipe exactly what came off.\nRoutineCare saves 20% and includes free shipping on every recurring order. Deliveries can be skipped, changed or cancelled when needed. Your purchase is also protected by our 100-day money-back guarantee — if FreshWipes are not right for your pet, contact VetPets within 100 days of purchase for help with your refund.",
+      "info": "The World Animal Week FAQ is locked copy, not settings-driven."
     }
   ],
   "presets": [{ "name": "FreshWipes offer page" }]
