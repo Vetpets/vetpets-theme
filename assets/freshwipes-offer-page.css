@@ -481,6 +481,14 @@ body:has(#freshwipes-offer-page){overflow-x:hidden}
 #freshwipes-offer-page .kaching-bundles__bar-most-popular__content::before,
 #freshwipes-offer-page .kaching-bundles__bar-most-popular__content::after{display:none!important;content:none!important}
 #freshwipes-offer-page .kaching-bundles__bar-most-popular__content{display:inline-block!important;background:var(--blue)!important;color:#FFFFFF!important;font-size:10px!important;font-weight:800!important;letter-spacing:.1em!important;text-transform:uppercase!important;padding:4px 11px!important;border-radius:999px!important;box-shadow:0 4px 10px rgba(71,181,233,.4)!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;max-width:100%!important;line-height:1.3!important}
+/* World Animal Week: Kaching's own native "most popular" badge (currently
+   rendering its live, un-editable "Limited Time: Buy 2 Get 2" text) stacks
+   on top of the theme's own "World Animal Week Offer" badge (::after on
+   .kaching-bundles__bar-container, above) in the same top-right corner.
+   Hide Kaching's copy of it; the theme's own badges (this one plus the
+   left-side "Best Value" ::before) are the only ones meant to show here.
+   Desktop and mobile both use this same selector, so both are covered. */
+#freshwipes-offer-page[data-waw="on"] .kaching-bundles__bar-most-popular{display:none!important}
 
 /* free-gift rows -> the design's perks row + expandable gift panel */
 #freshwipes-offer-page .kaching-bundles__free-gift{display:flex!important;align-items:center!important;gap:8px!important;margin:0!important;padding:0!important;background:transparent!important;border:0!important}
