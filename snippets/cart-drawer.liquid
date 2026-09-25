@@ -149,17 +149,17 @@
                               <div class="cart-item__media" role="cell">
                                 {%- comment -%}
                                   VetPets offer-page bundle image.
-                                  The FreshWipes offer page (?view=freshwipes-offer-page) and the EarWipes
-                                  offer page (?view=earwipes-offer-page) tag only their MAIN product line
-                                  with private _vp_* properties so this drawer can show the 2/4/6-jar bundle
-                                  the customer actually selected instead of the single-jar product image.
-                                  Free-gift lines and every other product carry no _vp_offer_source, so they
-                                  fall through to the unchanged item.image path. EyeWipes does not set these
-                                  properties, so it is unaffected by this check either way.
+                                  The FreshWipes (?view=freshwipes-offer-page), EarWipes
+                                  (?view=earwipes-offer-page) and EyeWipes (?view=eyewipes-offer-page)
+                                  offer pages tag only their MAIN product line with private _vp_*
+                                  properties so this drawer can show the 2/4/6-jar bundle the customer
+                                  actually selected instead of the single-jar product image.
+                                  Free-gift lines and every other product carry no _vp_offer_source, so
+                                  they fall through to the unchanged item.image path.
                                 {%- endcomment -%}
                                 {%- assign vp_bundle_image = '' -%}
                                 {%- if item.properties._vp_bundle_image != blank -%}
-                                  {%- if item.properties._vp_offer_source == 'freshwipes-offer-page' or item.properties._vp_offer_source == 'earwipes-offer-page' -%}
+                                  {%- if item.properties._vp_offer_source == 'freshwipes-offer-page' or item.properties._vp_offer_source == 'earwipes-offer-page' or item.properties._vp_offer_source == 'eyewipes-offer-page' -%}
                                     {%- assign vp_bundle_image = item.properties._vp_bundle_image -%}
                                   {%- endif -%}
                                 {%- endif -%}

@@ -235,7 +235,14 @@
       var existing = bar.querySelector('.fwof-gift-toggle');
       if (!product.length) { if (existing) existing.remove(); return; }
 
-      var label = '+ ' + product.length + ' Free Gift' + (product.length === 1 ? '' : 's');
+      // A locked, hand-authored tier (World Animal Week's "+2 Free Gifts") always
+      // wins over the computed count: Kaching ships the e-book + tracker as ONE
+      // combined free-gift row, so counting real rows undercounts the true
+      // physical gift total these tiers promise.
+      var tierOverride = tierForBar(bar);
+      var label = (tierOverride && tierOverride.gift_label_override)
+        ? tierOverride.gift_label_override
+        : '+ ' + product.length + ' Free Gift' + (product.length === 1 ? '' : 's');
       if (existing) {
         existing.querySelector('.fwof-gift-label').textContent = label;
         return;
@@ -260,6 +267,11 @@
         var open = bar.getAttribute('data-fwof-gifts') === 'open';
         bar.setAttribute('data-fwof-gifts', open ? 'closed' : 'open');
         btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+        // World Animal Week: this tier's true gift list is the hand-authored
+        // panel, not Kaching's own combined row — see decorateGifts() above.
+        var wawPanel = $('[data-fwof-waw-gifts]');
+        var tierNow = tierForBar(bar);
+        if (wawPanel && tierNow && tierNow.gift_label_override) wawPanel.hidden = open;
       });
       // place it directly after the shipping perk row, before the gift rows
       var firstGift = product[0];
@@ -295,7 +307,7 @@
       if (sub && !sub.querySelector('.fwof-rc-note')) {
         var n = document.createElement('span');
         n.className = 'fwof-rc-note';
-        n.textContent = ' · ' + CFG.rc_note;
+        n.textContent = ' \u00b7 ' + CFG.rc_note;
         sub.appendChild(n);
       }
     }
@@ -338,21 +350,29 @@
       $$('[data-fwof-tier-thumb]').forEach(function (img) {
         if (img.getAttribute('src') !== tier.image) img.setAttribute('src', tier.image);
       });
-      // the offer pill may only claim gifts Kaching actually adds
+      // the offer pill may only claim gifts Kaching actually adds; a locked
+      // gift_label_override (World Animal Week's true physical gift count)
+      // always wins over the live DOM row count — see decorateGifts().
       var giftCount = bar
         ? bar.querySelectorAll('.kaching-bundles__free-gift[data-fwof-gift="product"]').length
         : 0;
       var pill = $('.g-pill');
       if (pill) {
-        pill.textContent = giftCount
-          ? tier.badge + ' + ' + giftCount + ' Free Gift' + (giftCount === 1 ? '' : 's')
-          : tier.badge;
+        if (tier.gift_label_override) {
+          pill.textContent = tier.badge + ' ' + tier.gift_label_override;
+        } else {
+          pill.textContent = giftCount
+            ? tier.badge + ' + ' + giftCount + ' Free Gift' + (giftCount === 1 ? '' : 's')
+            : tier.badge;
+        }
       }
       var pill2 = $('.g-pill2');
       if (pill2) {
         pill2.textContent = tier.pill || '';
         pill2.hidden = !tier.pill;
       }
+      var giftBadges = $('[data-fwof-gift-badges]');
+      if (giftBadges) giftBadges.hidden = !tier.gift_label_override;
       // keep the MAIN item's private line-item properties in step with the tier so
       // the cart drawer can show the matching bundle image. Gift lines are added by
       // Kaching as separate lines and never inherit these.

@@ -39,8 +39,8 @@ body:has(#eyewipes-offer-page){overflow-x:hidden}
   --blue:#47B5E9; --blue-dark:#2E9FD8; --pale:#D5F7FF; --mist:#EDFAFF;
   --ink:#1A1A1A; --muted:#6B7A85; --star:#F5A623; --teal:#13B6B5;
   --red:#D64545; --red-ink:#B32020; --red-bg:#FDECEC; --orange:#F5921E;
-  --blue-ink:#1F7FB8;
-  --sticky-h:102px;
+  --blue-ink:#1F7FB8; --waw-ink:#0F172A; --waw-red:#D92D20; --waw-teal-dark:#0E8F8E;
+  --sticky-h:80px;
 
   background:#FFFFFF;
   color:var(--ink);
@@ -78,94 +78,118 @@ body:has(#eyewipes-offer-page){overflow-x:hidden}
 #eyewipes-offer-page .im-fit{object-fit:contain}
 #eyewipes-offer-page .imw{position:relative;overflow:hidden;background:var(--mist)}
 
-/* ---------- World Animal Week event banner (replaces the evergreen rotating
-   announcement bar for the duration of the campaign) ---------- */
-#eyewipes-offer-page{--waw-ink:#0F172A; --waw-red:#D92D20; --waw-teal-dark:#0E8F8E}
-#eyewipes-offer-page .waw-bar{position:relative;background:var(--blue);overflow:hidden;border-bottom:3px solid var(--blue-dark)}
-#eyewipes-offer-page .waw-paws::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cg fill='%23FFFFFF'%3E%3Cellipse cx='14' cy='20' rx='3.2' ry='4.2'/%3E%3Cellipse cx='21' cy='17' rx='3.2' ry='4.2'/%3E%3Cellipse cx='28' cy='20' rx='3.2' ry='4.2'/%3E%3Cpath d='M21 24c4.4 0 7.6 3.4 7.6 6.8 0 2.8-2.4 4.2-4.9 3.8-1-.2-1.9-.4-2.7-.4s-1.7.2-2.7.4c-2.5.4-4.9-1-4.9-3.8C13.4 27.4 16.6 24 21 24Z'/%3E%3Cellipse cx='54' cy='60' rx='3.2' ry='4.2'/%3E%3Cellipse cx='61' cy='57' rx='3.2' ry='4.2'/%3E%3Cellipse cx='68' cy='60' rx='3.2' ry='4.2'/%3E%3Cpath d='M61 64c4.4 0 7.6 3.4 7.6 6.8 0 2.8-2.4 4.2-4.9 3.8-1-.2-1.9-.4-2.7-.4s-1.7.2-2.7.4c-2.5.4-4.9-1-4.9-3.8C53.4 67.4 56.6 64 61 64Z'/%3E%3C/g%3E%3C/svg%3E");background-size:64px 64px;opacity:.1}
-#eyewipes-offer-page .waw-in{position:relative;z-index:1;max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:6px;padding:7px 12px 8px}
-#eyewipes-offer-page .waw-meta{display:flex;align-items:center;justify-content:center;gap:7px;flex-wrap:wrap}
-#eyewipes-offer-page .waw-meta-r1{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:nowrap;min-width:0}
-#eyewipes-offer-page .waw-mark{width:18px;height:18px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#FFFFFF;border-radius:50%;box-shadow:0 2px 5px rgba(15,23,42,.18)}
-#eyewipes-offer-page .waw-label{color:#FFFFFF;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;line-height:1.2;white-space:nowrap}
-#eyewipes-offer-page .waw-dates{display:none;color:rgba(255,255,255,.92);font-size:11.5px;font-weight:600;letter-spacing:.02em}
-#eyewipes-offer-page .waw-ends-inline{display:inline-flex;align-items:center;gap:4px;background:#FFFFFF;color:var(--waw-red);font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;line-height:1;padding:3px 8px;border-radius:999px}
-#eyewipes-offer-page .waw-center{display:none;flex-direction:column;align-items:center;gap:7px;min-width:0}
-#eyewipes-offer-page .waw-offer{display:none;text-align:center;color:#FFFFFF;font-size:clamp(17px,5.3vw,24px);font-weight:800;letter-spacing:-0.01em;line-height:1.08;text-transform:uppercase;text-shadow:0 1px 2px rgba(15,23,42,.16);text-wrap:balance}
-#eyewipes-offer-page .waw-offer .waw-plus{display:block;font-size:.72em;letter-spacing:.02em}
-#eyewipes-offer-page .waw-ends{display:none}
-#eyewipes-offer-page .waw-timer{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:6px}
-#eyewipes-offer-page .waw-timer-l{display:none;color:#FFFFFF;font-size:9.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;opacity:.95}
-#eyewipes-offer-page .waw-cd{display:flex;justify-content:center;gap:4px}
-#eyewipes-offer-page .waw-cd-u{min-width:42px;background:#FFFFFF;border-radius:8px;padding:4px 6px;text-align:center;box-shadow:0 2px 7px rgba(15,23,42,.18)}
-#eyewipes-offer-page .waw-cd-n{font-size:16px;font-weight:800;color:var(--waw-ink);font-variant-numeric:tabular-nums;line-height:1.05;letter-spacing:-0.02em}
-#eyewipes-offer-page .waw-cd-l{font-size:7.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#6B7A85;margin-top:1px}
+/* ---------- evergreen rotating announcement bar (WAW off) ----------
+   Single centered message, cross-faded + slid on a 4s interval by the
+   "announcement bar" behaviour in eyewipes-offer-page.js. */
+#eyewipes-offer-page .topbar{background:var(--blue)}
+#eyewipes-offer-page .topbar-in{max-width:1280px;margin:0 auto;padding:0 14px}
+#eyewipes-offer-page .announce{display:flex;align-items:center;justify-content:center;min-height:20px;padding:10px 0;overflow:hidden}
+#eyewipes-offer-page .announce-msg{display:block;max-width:100%;color:#FFFFFF;font-size:clamp(12px,3.2vw,15px);font-weight:800;letter-spacing:.01em;line-height:1.3;text-align:center;text-wrap:balance;text-shadow:0 1px 2px rgba(0,0,0,.12);opacity:1;transform:translateX(0);transition:opacity 240ms ease,transform 240ms ease}
+#eyewipes-offer-page .announce-msg.is-out{opacity:0;transform:translateX(-8px)}
+#eyewipes-offer-page .announce-msg.is-in{opacity:0;transform:translateX(8px);transition:none}
+
+/* ---------- World Animal Week countdown top bar (WAW on) ----------
+   Real class names verified against the approved design's own CSS
+   ("EyeWipes World Animal Week 2026", .wtop*) — not FreshWipes' .waw-bar. */
+#eyewipes-offer-page .wtop{position:relative;background-color:var(--blue);background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='%23FFFFFF' fill-opacity='0.16'%3E%3Cg transform='translate(6 5)'%3E%3Cellipse cx='3' cy='4' rx='1.6' ry='2.1'/%3E%3Cellipse cx='7' cy='2.6' rx='1.6' ry='2.1'/%3E%3Cellipse cx='11' cy='4' rx='1.6' ry='2.1'/%3E%3Cpath d='M7 6.6c2.3 0 4 1.8 4 3.6 0 1.5-1.2 2.2-2.5 2-.6-.1-1-.2-1.5-.2s-.9.1-1.5.2C4.2 12.4 3 11.7 3 10.2c0-1.8 1.7-3.6 4-3.6Z'/%3E%3C/g%3E%3Cg transform='translate(34 33)'%3E%3Cellipse cx='3' cy='4' rx='1.6' ry='2.1'/%3E%3Cellipse cx='7' cy='2.6' rx='1.6' ry='2.1'/%3E%3Cellipse cx='11' cy='4' rx='1.6' ry='2.1'/%3E%3Cpath d='M7 6.6c2.3 0 4 1.8 4 3.6 0 1.5-1.2 2.2-2.5 2-.6-.1-1-.2-1.5-.2s-.9.1-1.5.2C4.2 12.4 3 11.7 3 10.2c0-1.8 1.7-3.6 4-3.6Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");background-repeat:repeat;background-size:56px 56px;color:#FFFFFF;margin:0;border:0}
+#eyewipes-offer-page .wtop-in{display:flex;flex-direction:column;align-items:stretch;gap:6px;padding:7px 12px 8px}
+#eyewipes-offer-page .wtop-in>*{flex-shrink:0}
+#eyewipes-offer-page .wtop-l{display:flex;justify-content:center;align-items:center;gap:10px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;line-height:1;white-space:nowrap}
+#eyewipes-offer-page .wtop-ic{width:15px;height:15px;flex-shrink:0}
+#eyewipes-offer-page .wtop-lt{display:flex;flex-direction:column;align-items:flex-start;gap:3px}
+#eyewipes-offer-page .wtop-date{font-size:10px;font-weight:600;letter-spacing:0;text-transform:none;line-height:1.1;white-space:nowrap}
+#eyewipes-offer-page .wtop-mid{display:none;align-items:center;justify-content:center;gap:14px;white-space:nowrap}
+#eyewipes-offer-page .wtop-offer{font-size:20px;font-weight:800;letter-spacing:-0.005em;line-height:1.1}
+#eyewipes-offer-page .wtop-dead{display:inline-flex;align-items:center;flex-shrink:0;background:#FFFFFF;border:1.5px solid #D92D20;color:#C22A1E;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;line-height:1;padding:5px 11px;border-radius:999px;white-space:nowrap}
+#eyewipes-offer-page .wtop-r{display:flex;align-items:center;justify-content:center;gap:12px}
+#eyewipes-offer-page .wtop-lab{display:none;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+#eyewipes-offer-page .wtop-cd{display:flex;gap:4px;width:100%;max-width:340px}
+#eyewipes-offer-page .wtop-c1{display:flex;flex:1;min-width:0;flex-direction:row;align-items:center;justify-content:center;gap:4px;height:30px;background:#FFFFFF;border-radius:8px;box-shadow:0 1px 3px rgba(13,35,64,.14)}
+#eyewipes-offer-page .wtop-n{font-size:14px;font-weight:800;color:#0D2340;line-height:1;font-variant-numeric:tabular-nums}
+#eyewipes-offer-page .wtop-u{margin-top:0;font-size:7.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#4F5F6B;line-height:1}
 
 /* hero campaign badge, above the H1 */
-#eyewipes-offer-page .waw-hb{display:flex;align-items:center;gap:10px;align-self:stretch;background:#F2FCFC;border:1.5px solid rgba(19,182,181,.45);border-radius:16px;padding:9px 12px;margin-bottom:12px}
-#eyewipes-offer-page .waw-hb-ic{width:32px;height:32px;border-radius:50%;background:var(--teal);flex-shrink:0;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(19,182,181,.4)}
-#eyewipes-offer-page .waw-hb-c{display:flex;flex-direction:column;gap:2px;min-width:0}
-#eyewipes-offer-page .waw-hb-t{font-size:10.5px;font-weight:800;letter-spacing:.17em;text-transform:uppercase;color:#0E8F8E;line-height:1.2}
-#eyewipes-offer-page .waw-hb-s{font-size:13px;font-weight:800;color:var(--waw-ink);line-height:1.2;letter-spacing:-0.01em}
-#eyewipes-offer-page .waw-hb-d{margin-left:auto;flex-shrink:0;display:inline-flex;align-items:center;gap:5px;background:#FFFFFF;border:1.5px solid rgba(217,45,32,.35);color:var(--waw-red);font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:5px 9px;border-radius:999px;line-height:1}
+#eyewipes-offer-page .waw-hero-lab{display:flex !important;align-items:center;width:100%;align-self:stretch !important;gap:12px !important;background:var(--pale);border:1.5px solid rgba(19,182,181,.45);border-radius:14px !important;padding:11px 14px 11px 11px !important;margin-bottom:12px}
+#eyewipes-offer-page .waw-hero-lab-i{width:38px !important;height:38px !important;border-radius:50%;background:linear-gradient(120deg,#47B5E9,#13B6B5);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+#eyewipes-offer-page .waw-hero-lab-i svg{width:21px !important;height:21px !important;fill:#FFFFFF}
+#eyewipes-offer-page .waw-hero-lab-t{display:flex;flex-direction:column;gap:4px !important;line-height:1;flex:1;min-width:0}
+#eyewipes-offer-page .waw-hero-lab-1{font-size:13px !important;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--waw-teal-dark)}
+#eyewipes-offer-page .waw-hero-lab-2{font-size:11px !important;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--blue-ink)}
+#eyewipes-offer-page .waw-hero-lab-dead{flex-shrink:0;margin-left:auto;display:inline-flex;align-items:center;background:#FFFFFF;border:1.5px solid #D92D20;color:#C22A1E;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;line-height:1;padding:6px 11px;border-radius:999px;white-space:nowrap}
 
-/* compact campaign badges above the plan selector */
-#eyewipes-offer-page .waw-plan-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin-top:15px}
-#eyewipes-offer-page .waw-plan-head .pick-h{margin-top:0}
-#eyewipes-offer-page .waw-badges{display:flex;flex-wrap:wrap;gap:6px}
-#eyewipes-offer-page .waw-badge{display:inline-flex;align-items:center;gap:5px;font-size:9.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;line-height:1;padding:5px 10px;border-radius:999px}
-#eyewipes-offer-page .waw-badge-teal{background:var(--teal);color:#FFFFFF;box-shadow:0 4px 11px rgba(19,182,181,.35)}
-#eyewipes-offer-page .waw-badge-red{background:#FFFFFF;border:1.5px solid rgba(217,45,32,.35);color:var(--waw-red)}
+/* campaign badge row above the plan selector */
+#eyewipes-offer-page .waw-selhead{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:17px}
+#eyewipes-offer-page .waw-selchip{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(100deg,#47B5E9,#13B6B5);color:#FFFFFF;font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;line-height:1;padding:7px 13px;border-radius:999px}
+#eyewipes-offer-page .waw-selchip svg{width:13px;height:13px;fill:#FFFFFF;flex-shrink:0}
+#eyewipes-offer-page .waw-seldead{display:inline-flex;align-items:center;gap:6px;color:var(--waw-red);font-size:11px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;line-height:1;background:#FDECEC;border:1px solid rgba(217,45,32,.35);padding:6px 11px;border-radius:999px}
 
-/* red scarcity box — used once, beneath the information panel */
-#eyewipes-offer-page .waw-scar{display:flex;align-items:flex-start;gap:11px;width:100%;background:var(--red-bg);border:1.5px solid rgba(217,45,32,.45);border-radius:14px;padding:13px 14px;margin-top:12px}
-#eyewipes-offer-page .waw-scar svg{flex-shrink:0;margin-top:1px}
-#eyewipes-offer-page .waw-scar-t{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--red-ink);line-height:1.2}
-#eyewipes-offer-page .waw-scar-s{display:block;font-size:13.5px;font-weight:600;line-height:1.4;color:var(--waw-ink);margin-top:4px;text-wrap:pretty}
+/* World Animal Week — Kaching's own live "most popular" badge text */
+#eyewipes-offer-page[data-waw="on"] .kaching-bundles__bars > .kaching-bundles__bar:nth-of-type(2) .kaching-bundles__bar-container{position:relative}
+#eyewipes-offer-page[data-waw="on"] .kaching-bundles__bars > .kaching-bundles__bar:nth-of-type(2) .kaching-bundles__bar-container::before{content:"Limited Time: Buy 2, Get 2 Free";position:absolute;top:-9px;right:14px;z-index:2;background:linear-gradient(100deg,#13B6B5,#0EA5A4);color:#FFFFFF;font-size:10.5px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;padding:5px 13px;border-radius:999px;box-shadow:0 5px 14px rgba(19,182,181,.45);white-space:nowrap}
 
-/* campaign eyebrow chip */
-#eyewipes-offer-page .waw-eyebrow{display:inline-flex;align-items:center;gap:7px;background:var(--blue);color:#FFFFFF;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:7px 14px;border-radius:999px}
-#eyewipes-offer-page .waw-eyebrow svg{flex-shrink:0}
-#eyewipes-offer-page .waw-eyebrow-light{background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.5)}
+/* hand-authored gift panel — Kaching's real free-gift list combines these
+   physical items into fewer rows than the three the design promises */
+#eyewipes-offer-page .gifts-panel{margin-top:9px;background:#FFFFFF;border:1.5px solid rgba(71,181,233,.4);border-radius:14px;padding:11px 12px;display:flex;flex-direction:column;gap:10px}
+#eyewipes-offer-page .gifts-panel[hidden]{display:none}
+#eyewipes-offer-page .gp-row{display:flex;align-items:center;gap:10px}
+#eyewipes-offer-page .gp-thumb{width:44px;height:44px;border-radius:9px;overflow:hidden;background:var(--mist);flex-shrink:0}
+#eyewipes-offer-page .gp-thumb img{width:100%;height:100%;object-fit:contain;display:block;padding:2px}
+#eyewipes-offer-page .gp-n{font-size:13px;font-weight:700;color:var(--ink);line-height:1.25}
+#eyewipes-offer-page .gp-d{font-size:11.5px;color:var(--muted);line-height:1.35;margin-top:2px;text-wrap:pretty}
 
-/* offer-card campaign urgency note + secondary RoutineCare link */
-#eyewipes-offer-page .waw-note{display:flex;align-items:flex-start;gap:11px;width:100%;background:#EAF7FD;border:1.5px solid rgba(71,181,233,.45);border-radius:14px;padding:13px 14px;margin-top:12px}
-#eyewipes-offer-page .waw-note svg{flex-shrink:0;margin-top:1px}
-#eyewipes-offer-page .waw-note-t{font-size:13.5px;line-height:1.45;color:var(--waw-ink);text-wrap:pretty}
-#eyewipes-offer-page .waw-note-t strong{font-weight:800}
+/* World Animal Week guarantee card — replaces .guar-row + .secure while active.
+   .pay (payment badges, unchanged) sits centered directly below it; the
+   RoutineCare disclosure sits below that in the existing .pfd-disclosure grey text. */
+#eyewipes-offer-page .assure{margin-top:12px;background:#FFFFFF;border:1px solid rgba(19,182,181,.35);border-radius:14px;padding:13px 14px 11px;display:flex;flex-direction:column;gap:10px}
+#eyewipes-offer-page .assure-g{display:flex;align-items:flex-start;gap:10px;text-align:left}
+#eyewipes-offer-page .assure-g svg{flex-shrink:0;margin-top:1px}
+#eyewipes-offer-page .assure-t{font-size:14.5px;font-weight:800;color:var(--ink);line-height:1.25;letter-spacing:-0.01em}
+#eyewipes-offer-page .assure-c{margin:3px 0 0;font-size:12.5px;line-height:1.5;color:var(--ink);text-wrap:pretty}
+#eyewipes-offer-page .assure-s{display:flex;align-items:center;justify-content:center;gap:6px;border-top:1px solid rgba(19,182,181,.22);padding-top:9px;font-size:11.5px;font-weight:600;color:#4F5F6B}
 
-/* final urgency section — full-bleed gradient panel (this page's own
-   treatment; distinct from FreshWipes' white-card final section) */
+/* red scarcity box, beneath the information panel */
+#eyewipes-offer-page .waw-hd{display:flex;align-items:center;gap:10px;width:100%;margin-top:12px;background:#FDECEC;border:1.5px solid rgba(217,45,32,.45);border-radius:12px;padding:10px 12px}
+#eyewipes-offer-page .waw-hd svg{width:22px;height:22px;flex-shrink:0}
+#eyewipes-offer-page .waw-hd-c{display:flex;flex-direction:column;gap:2px;min-width:0}
+#eyewipes-offer-page .waw-hd-t{font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#B32020;line-height:1.2}
+#eyewipes-offer-page .waw-hd-s{font-size:12.5px;font-weight:500;color:var(--waw-ink);line-height:1.35;text-wrap:pretty}
+
+/* offer-section scarcity note — base (evergreen offer section doesn't use
+   this class; only rendered when waw_active, with inline color overrides) */
+#eyewipes-offer-page .scarcity{display:flex;align-items:center;gap:10px;width:100%;background:var(--red-bg);border:2px solid var(--red);border-radius:12px;padding:13px 14px;font-size:14px;font-weight:700;line-height:1.4;color:var(--red-ink);text-wrap:pretty}
+#eyewipes-offer-page .scarcity svg{flex-shrink:0}
+
+/* final urgency section — full-bleed gradient panel with paw/globe motifs */
 #eyewipes-offer-page .waw-final{position:relative;overflow:hidden;background:linear-gradient(104deg,#47B5E9 0%,#3BBBD9 50%,#13B6B5 100%);padding:46px 16px 50px}
-#eyewipes-offer-page .waw-final.waw-paws::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cg fill='%23FFFFFF'%3E%3Cellipse cx='14' cy='20' rx='3.2' ry='4.2'/%3E%3Cellipse cx='21' cy='17' rx='3.2' ry='4.2'/%3E%3Cellipse cx='28' cy='20' rx='3.2' ry='4.2'/%3E%3Cpath d='M21 24c4.4 0 7.6 3.4 7.6 6.8 0 2.8-2.4 4.2-4.9 3.8-1-.2-1.9-.4-2.7-.4s-1.7.2-2.7.4c-2.5.4-4.9-1-4.9-3.8C13.4 27.4 16.6 24 21 24Z'/%3E%3Cellipse cx='54' cy='60' rx='3.2' ry='4.2'/%3E%3Cellipse cx='61' cy='57' rx='3.2' ry='4.2'/%3E%3Cpath d='M61 64c4.4 0 7.6 3.4 7.6 6.8 0 2.8-2.4 4.2-4.9 3.8-1-.2-1.9-.4-2.7-.4s-1.7.2-2.7.4c-2.5.4-4.9-1-4.9-3.8C53.4 67.4 56.6 64 61 64Z'/%3E%3C/g%3E%3C/svg%3E");opacity:.14}
-#eyewipes-offer-page .waw-final-card{position:relative;z-index:1;max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center;gap:15px}
-#eyewipes-offer-page .waw-final-h{margin:0;color:#FFFFFF;font-size:26px;font-weight:800;letter-spacing:-0.02em;line-height:1.08;text-transform:uppercase;text-wrap:pretty}
-#eyewipes-offer-page .waw-final-p{margin:0;color:#FFFFFF;font-size:14.5px;line-height:1.5;max-width:56ch;text-wrap:pretty}
-#eyewipes-offer-page .waw-final-list{display:grid;grid-template-columns:1fr;gap:8px;width:100%;max-width:560px;text-align:left}
-#eyewipes-offer-page .waw-final-li{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:12px;padding:10px 12px;font-size:13px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:#FFFFFF;line-height:1.25}
-#eyewipes-offer-page .waw-final-li svg{flex-shrink:0}
-#eyewipes-offer-page .waw-final-li-red{background:rgba(15,23,42,.22)}
-#eyewipes-offer-page .waw-final-timer{display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;max-width:400px}
-#eyewipes-offer-page .waw-final-timer .waw-timer-l{display:block;color:#FFFFFF}
-#eyewipes-offer-page .waw-final-timer .waw-cd{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%}
-#eyewipes-offer-page .waw-final-timer .waw-cd-u{min-width:0;background:rgba(255,255,255,.92);box-shadow:none;border:1px solid rgba(255,255,255,.6);border-radius:11px;padding:7px 4px 6px}
-#eyewipes-offer-page .waw-final-timer .waw-cd-n{font-size:21px}
-#eyewipes-offer-page .waw-final-timer .waw-cd-l{font-size:8.5px;margin-top:2px}
-#eyewipes-offer-page .waw-final .waw-final-cta{background:#FFFFFF;color:var(--waw-teal-dark);width:100%;max-width:440px;align-self:center;min-height:58px;font-size:15px;box-shadow:0 14px 32px rgba(13,35,64,.24)}
-#eyewipes-offer-page .waw-final .waw-final-cta:hover{background:#F2FEFF;color:var(--waw-teal-dark)}
+#eyewipes-offer-page .waw-paw{position:absolute;fill:#FFFFFF;opacity:.14;pointer-events:none}
+#eyewipes-offer-page .waw-globe{position:absolute;stroke:#FFFFFF;fill:none;opacity:.15;pointer-events:none}
+#eyewipes-offer-page .waw-final-in{position:relative;z-index:1;max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center;gap:15px}
+#eyewipes-offer-page .waw-chip{display:inline-flex;align-items:center;gap:8px;background:#FFFFFF;color:var(--waw-teal-dark);font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;line-height:1;padding:7px 14px;border-radius:999px;box-shadow:0 3px 10px rgba(13,35,64,.14)}
+#eyewipes-offer-page .waw-chip svg{width:14px;height:14px;fill:#13B6B5;flex-shrink:0}
+#eyewipes-offer-page .waw-final-h{margin:0;color:#FFFFFF;font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.06;text-transform:uppercase;text-wrap:pretty}
+#eyewipes-offer-page .waw-final-p{margin:0;color:#FFFFFF;font-size:14.5px;line-height:1.5;max-width:620px;text-wrap:pretty}
+#eyewipes-offer-page .waw-final-facts{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:9px}
+#eyewipes-offer-page .waw-fact{display:inline-flex;align-items:center;gap:7px;background:#FFFFFF;color:var(--waw-ink);font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;line-height:1.2;padding:9px 15px;border-radius:999px}
+#eyewipes-offer-page .waw-fact-red{color:var(--waw-red)}
+#eyewipes-offer-page .waw-cd{display:flex;flex-direction:column;align-items:stretch;gap:7px;flex-shrink:0}
+#eyewipes-offer-page .waw-cd-final{align-items:center;margin-top:3px}
+#eyewipes-offer-page .waw-cd-lab{text-align:center;color:#FFFFFF;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+#eyewipes-offer-page .waw-cd-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+#eyewipes-offer-page .waw-cd-c{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;background:#FFFFFF;border-radius:12px;padding:7px 4px 6px;box-shadow:0 4px 14px rgba(13,35,64,.2)}
+#eyewipes-offer-page .waw-cd-n{font-size:22px;font-weight:800;line-height:1;color:var(--waw-ink);font-variant-numeric:tabular-nums}
+#eyewipes-offer-page .waw-cd-u{margin-top:5px;font-size:9px;font-weight:800;letter-spacing:.14em;color:var(--waw-teal-dark)}
+#eyewipes-offer-page .waw-final .btn-buy{background:#FFFFFF;color:var(--waw-teal-dark);align-self:center;width:100%;max-width:440px;font-size:15px;box-shadow:0 14px 32px rgba(13,35,64,.24)}
+#eyewipes-offer-page .waw-final .btn-buy:hover{background:#F2FEFF;color:var(--waw-teal-dark)}
 
-/* sticky bar — extra top strip carrying the countdown */
-#eyewipes-offer-page .sticky{border-top-width:3px}
-#eyewipes-offer-page .waw-sticky-top{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--blue);padding:5px 12px}
-#eyewipes-offer-page .waw-sticky-top .waw-st-l{color:#FFFFFF;font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#eyewipes-offer-page .waw-sticky-top .waw-st-cd{display:inline-flex;align-items:center;gap:3px;background:#FFFFFF;border-radius:999px;padding:2px 9px;font-size:10.5px;font-weight:800;color:var(--waw-ink);font-variant-numeric:tabular-nums;flex-shrink:0;line-height:1.3}
+/* sticky bar — small inline campaign tag, no extra top strip */
+#eyewipes-offer-page .waw-sticky-tag{display:inline-flex;align-items:center;gap:5px;font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--waw-teal-dark);line-height:1;margin-bottom:3px}
+#eyewipes-offer-page .waw-sticky-tag svg{width:11px;height:11px;fill:#13B6B5;flex-shrink:0}
+#eyewipes-offer-page .waw-sticky-dead{color:var(--waw-red);font-weight:800}
 
 /* ---------- WAW campaign: narrow the picker to the two campaign deals ----------
    Kaching's own config still has all three deals; this hides the Multi-Pet
    Relief Plan bar for the campaign only. Nothing about Kaching's config changes. */
 #eyewipes-offer-page[data-waw="on"] .kaching-bundles__bars > .kaching-bundles__bar:nth-of-type(3){display:none!important}
-#eyewipes-offer-page[data-waw="on"] .kaching-bundles__bars > .kaching-bundles__bar:nth-of-type(2) .kaching-bundles__bar-container{position:relative;border-width:2.5px!important}
-#eyewipes-offer-page[data-waw="on"] .kaching-bundles__bars > .kaching-bundles__bar:nth-of-type(2) .kaching-bundles__bar-container::before{content:"World Animal Week Offer";position:absolute;top:-11px;right:12px;background:var(--teal);color:#FFFFFF;font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;padding:5px 12px;border-radius:999px;box-shadow:0 4px 11px rgba(19,182,181,.35);white-space:nowrap}
 
 /* ---------- above the fold ---------- */
 #eyewipes-offer-page .hero{background:linear-gradient(180deg,#FFFFFF 0%,#FFFFFF 46%,var(--mist) 100%)}
@@ -570,45 +594,29 @@ body:has(#eyewipes-offer-page) product-sticky-atc{display:none!important}
   #eyewipes-offer-page .sticky-rc-full{display:inline}
   #eyewipes-offer-page .sticky-rc-short{display:none}
 
-  /* ---------- World Animal Week — desktop ---------- */
-  #eyewipes-offer-page .waw-in{flex-direction:row;align-items:center;justify-content:space-between;gap:26px;padding:13px 32px 14px}
-  #eyewipes-offer-page .waw-paws::before{background-size:80px 80px;opacity:.12}
-  #eyewipes-offer-page .waw-meta{flex-direction:column;align-items:flex-start;gap:5px;flex-shrink:0}
-  #eyewipes-offer-page .waw-meta-r1{display:flex;align-items:center;gap:8px}
-  #eyewipes-offer-page .waw-mark{width:26px;height:26px}
-  #eyewipes-offer-page .waw-label{font-size:13px;letter-spacing:.15em}
-  #eyewipes-offer-page .waw-dates{display:block}
-  #eyewipes-offer-page .waw-ends-inline{display:none}
-  #eyewipes-offer-page .waw-center{display:flex;flex:1 1 auto;min-width:0;gap:9px}
-  #eyewipes-offer-page .waw-offer{display:block;flex:0 1 auto;text-align:center;font-size:clamp(17px,2vw,26px)}
-  #eyewipes-offer-page .waw-offer .waw-plus{display:inline;font-size:1em;letter-spacing:-0.01em}
-  #eyewipes-offer-page .waw-ends{display:inline-flex;align-items:center;gap:6px;flex-shrink:0;background:#FFFFFF;color:var(--waw-red);font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;line-height:1;padding:8px 13px;border-radius:999px;box-shadow:0 3px 10px rgba(15,23,42,.14)}
-  #eyewipes-offer-page .waw-timer{flex-shrink:0;flex-direction:column;gap:6px}
-  #eyewipes-offer-page .waw-timer-l{display:block}
-  #eyewipes-offer-page .waw-cd{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;max-width:none}
-  #eyewipes-offer-page .waw-cd-u{min-width:52px;padding:8px 6px 7px;border-radius:11px;box-shadow:0 4px 12px rgba(15,23,42,.2)}
-  #eyewipes-offer-page .waw-cd-n{font-size:25px;line-height:1}
-  #eyewipes-offer-page .waw-cd-l{font-size:9px;margin-top:3px}
-  #eyewipes-offer-page .waw-hb{padding:10px 14px;margin-bottom:14px}
-  #eyewipes-offer-page .waw-hb-ic{width:38px;height:38px}
-  #eyewipes-offer-page .waw-hb-t{font-size:11.5px}
-  #eyewipes-offer-page .waw-hb-s{font-size:15px}
-  #eyewipes-offer-page .waw-hb-d{font-size:10.5px;padding:6px 11px}
-  #eyewipes-offer-page .waw-badge{font-size:10px;padding:6px 11px}
-  #eyewipes-offer-page .waw-scar-t{font-size:11.5px}
-  #eyewipes-offer-page .waw-scar-s{font-size:14.5px}
-  #eyewipes-offer-page .waw-note-t{font-size:14.5px}
-  #eyewipes-offer-page .waw-final{padding:64px 32px 70px}
-  #eyewipes-offer-page .waw-final-h{font-size:38px}
-  #eyewipes-offer-page .waw-final-p{font-size:16px}
-  #eyewipes-offer-page .waw-final-list{grid-template-columns:1fr 1fr;max-width:720px;gap:10px}
-  #eyewipes-offer-page .waw-final-li{font-size:13.5px;padding:11px 14px}
-  #eyewipes-offer-page .waw-sticky-top{display:none}
-}
+  #eyewipes-offer-page .topbar-in{padding:0 32px}
+  #eyewipes-offer-page .announce{padding:13px 0}
 
-/* Mobile only */
-@media (max-width:899px){
-  #eyewipes-offer-page .waw-bar{border-bottom:0;margin-bottom:0}
+  /* ---------- World Animal Week — desktop ---------- */
+  #eyewipes-offer-page .wtop-in{flex-direction:row;align-items:center;justify-content:center;gap:28px;max-width:1200px;margin:0 auto;padding:9px 32px}
+  #eyewipes-offer-page .wtop-l{font-size:14px;justify-content:flex-start}
+  #eyewipes-offer-page .wtop-ic{width:20px;height:20px}
+  #eyewipes-offer-page .wtop-date{font-size:12px}
+  #eyewipes-offer-page .wtop-mid{display:flex}
+  #eyewipes-offer-page .wtop-r{justify-content:flex-end;gap:12px}
+  #eyewipes-offer-page .wtop-lab{display:block}
+  #eyewipes-offer-page .wtop-cd{gap:7px;width:auto;max-width:none}
+  #eyewipes-offer-page .wtop-c1{flex-direction:column;min-width:54px;height:46px;gap:0}
+  #eyewipes-offer-page .wtop-n{font-size:22px}
+  #eyewipes-offer-page .wtop-u{font-size:9.5px;margin-top:3px}
+  #eyewipes-offer-page .waw-hero-lab{display:inline-flex !important;width:auto;align-self:flex-start !important;gap:10px;border-radius:999px !important;padding:6px 16px 6px 7px !important;margin-bottom:12px}
+  #eyewipes-offer-page .waw-hero-lab-i{width:28px !important;height:28px !important}
+  #eyewipes-offer-page .waw-hero-lab-i svg{width:15px !important;height:15px !important}
+  #eyewipes-offer-page .waw-hero-lab-t{gap:2px !important;flex:none}
+  #eyewipes-offer-page .waw-hero-lab-1{font-size:11px !important}
+  #eyewipes-offer-page .waw-hero-lab-2{font-size:9.5px !important}
+  #eyewipes-offer-page .gp-n{font-size:14px}
+  #eyewipes-offer-page .gp-d{font-size:12.5px}
 }
 
 @media (prefers-reduced-motion:reduce){
