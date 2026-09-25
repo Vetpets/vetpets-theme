@@ -359,7 +359,10 @@
       var pill = $('.g-pill');
       if (pill) {
         if (tier.gift_label_override) {
-          pill.textContent = tier.badge + ' ' + tier.gift_label_override;
+          // tier.badge already spells out the gift claim in full for locked
+          // World Animal Week tiers (e.g. "Buy 2, Get 2 Free + Free Gifts") —
+          // gift_label_override is for the toggle button's exact count only.
+          pill.textContent = tier.badge;
         } else {
           pill.textContent = giftCount
             ? tier.badge + ' + ' + giftCount + ' Free Gift' + (giftCount === 1 ? '' : 's')

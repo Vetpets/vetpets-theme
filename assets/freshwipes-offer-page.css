@@ -40,7 +40,7 @@ body:has(#freshwipes-offer-page){overflow-x:hidden}
   --ink:#1A1A1A; --muted:#6B7A85; --star:#F5A623; --teal:#13B6B5;
   --red:#D64545; --red-ink:#B32020; --red-bg:#FDECEC; --orange:#F5921E;
   --blue-ink:#1F7FB8; --waw-ink:#0F172A; --waw-red:#D92D20;
-  --sticky-h:102px;
+  --sticky-h:80px;
 
   background:#FFFFFF;
   color:var(--ink);
@@ -49,6 +49,7 @@ body:has(#freshwipes-offer-page){overflow-x:hidden}
   padding-bottom:var(--sticky-h);
   overflow-x:hidden;
 }
+#freshwipes-offer-page[data-waw="on"]{--sticky-h:102px}
 #freshwipes-offer-page *,#freshwipes-offer-page *::before,#freshwipes-offer-page *::after{box-sizing:border-box}
 #freshwipes-offer-page img,#freshwipes-offer-page svg{max-width:100%}
 #freshwipes-offer-page a{color:var(--blue);text-decoration:none}
@@ -205,11 +206,15 @@ body:has(#freshwipes-offer-page){overflow-x:hidden}
    Kaching's own config still has all three deals; this hides the Full Family
    Plan bar for the campaign only. Nothing about Kaching's config changes. */
 #freshwipes-offer-page[data-waw="on"] .kaching-bundles__bars > .kaching-bundles__bar:nth-of-type(3){display:none!important}
-/* the flagship bar (2nd) gets the campaign pill + a free-gifts chip, added
-   with generated content so no extra JS injection is needed */
-#freshwipes-offer-page[data-waw="on"] .kaching-bundles__bars > .kaching-bundles__bar:nth-of-type(2) .kaching-bundles__bar-container{position:relative;border-width:2.5px!important}
-#freshwipes-offer-page[data-waw="on"] .kaching-bundles__bars > .kaching-bundles__bar:nth-of-type(2) .kaching-bundles__bar-container::before{content:"World Animal Week Offer";position:absolute;top:-11px;right:12px;background:var(--teal);color:#FFFFFF;font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;padding:5px 12px;border-radius:999px;box-shadow:0 4px 11px rgba(19,182,181,.35);white-space:nowrap}
-#freshwipes-offer-page[data-waw="on"] .kaching-bundles__bars > .kaching-bundles__bar:nth-of-type(2) .kaching-bundles__bar-container::after{content:"Best Value: Buy 2, Get 2 Free";position:absolute;top:-11px;left:12px;background:var(--blue);color:#FFFFFF;font-size:10px;font-weight:800;letter-spacing:.03em;padding:5px 12px;border-radius:999px;box-shadow:0 4px 11px rgba(71,181,233,.35);white-space:nowrap}
+/* the flagship bar (2nd) gets a .waw-tier-top row (Best Value + World Animal
+   Week Offer, matching the approved design's own .waw-tier-top/.waw-best/
+   .tier-badge.waw) at the top of the card. Kaching's real bar-container has
+   no editable child to hold real markup, so the row is CSS-generated content
+   sitting inside the card's own top padding — visually equivalent to the
+   design's in-flow row, not a floating pill over the border. */
+#freshwipes-offer-page[data-waw="on"] .kaching-bundles__bars > .kaching-bundles__bar:nth-of-type(2) .kaching-bundles__bar-container{position:relative;border-width:2.5px!important;padding-top:38px!important}
+#freshwipes-offer-page[data-waw="on"] .kaching-bundles__bars > .kaching-bundles__bar:nth-of-type(2) .kaching-bundles__bar-container::before{content:"Best Value: Buy 2, Get 2 Free";position:absolute;top:12px;left:14px;background:var(--blue);color:#FFFFFF;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:5px 11px;border-radius:999px;white-space:nowrap}
+#freshwipes-offer-page[data-waw="on"] .kaching-bundles__bars > .kaching-bundles__bar:nth-of-type(2) .kaching-bundles__bar-container::after{content:"World Animal Week Offer";position:absolute;top:12px;right:14px;background:var(--teal);color:#FFFFFF;font-size:10px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;padding:5px 12px;border-radius:999px;white-space:nowrap}
 
 /* ---------- above the fold ---------- */
 #freshwipes-offer-page .hero{background:linear-gradient(180deg,#FFFFFF 0%,#FFFFFF 46%,var(--mist) 100%)}
@@ -256,12 +261,12 @@ body:has(#freshwipes-offer-page){overflow-x:hidden}
    Replaces .guar-row + .secure while the campaign is active. Payment badges
    (.pay, unchanged) sit centered directly below it; the RoutineCare billing
    disclosure sits below that, in the existing .pfd-disclosure grey text. */
-#freshwipes-offer-page .waw-assure{margin-top:11px;background:#FFFFFF;border:1.5px solid #E3E8EC;border-radius:16px;padding:15px 17px;box-shadow:0 2px 10px rgba(15,23,42,.05)}
+#freshwipes-offer-page .waw-assure{margin-top:12px;background:#F4FBFF;border:1px solid rgba(71,181,233,.28);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:11px}
 #freshwipes-offer-page .waw-assure-g{display:flex;align-items:flex-start;gap:11px}
 #freshwipes-offer-page .waw-assure-g svg{flex-shrink:0;margin-top:1px}
-#freshwipes-offer-page .waw-assure-t{font-size:14.5px;font-weight:800;color:var(--waw-ink);line-height:1.3;letter-spacing:-0.01em}
-#freshwipes-offer-page .waw-assure-p{margin:4px 0 0;font-size:12.5px;font-weight:500;color:var(--muted);line-height:1.45}
-#freshwipes-offer-page .waw-assure-s{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:12px;padding-top:12px;border-top:1px solid #EDF1F4;font-size:11px;font-weight:500;color:#8B9AA6;text-align:center}
+#freshwipes-offer-page .waw-assure-t{font-size:15px;font-weight:800;color:var(--ink);line-height:1.3}
+#freshwipes-offer-page .waw-assure-p{margin:3px 0 0;font-size:13px;line-height:1.5;color:#3E4C57;text-wrap:pretty}
+#freshwipes-offer-page .waw-assure-s{display:flex;align-items:center;justify-content:center;gap:6px;padding-top:10px;border-top:1px solid rgba(71,181,233,.22);font-size:12px;font-weight:600;color:#54646F}
 
 /* ---------- World Animal Week hand-authored gift panel ----------
    Two named gifts with real images — Kaching's own free-gift list ships them
@@ -572,7 +577,8 @@ body:has(#freshwipes-offer-page) product-sticky-atc{display:none!important}
    DESKTOP — derived from the mobile layout. 1280px container.
    ============================================================ */
 @media (min-width:900px){
-  #freshwipes-offer-page{--sticky-h:96px}
+  #freshwipes-offer-page{--sticky-h:84px}
+  #freshwipes-offer-page[data-waw="on"]{--sticky-h:96px}
 
   #freshwipes-offer-page .hero-in{grid-template-columns:minmax(0,53fr) minmax(0,47fr);gap:36px;padding:28px 32px 46px;align-items:start}
   #freshwipes-offer-page .gal{position:sticky;top:20px}
