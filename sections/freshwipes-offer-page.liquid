@@ -51,18 +51,27 @@
     assign waw_active = true
   endif
 
+  # TEMPORARY: forced on for Draft-theme QA per explicit request while it's
+  # still Sep 25, ahead of the real 28 Sep window. Remove this line to
+  # restore real date-gating — the evergreen {% else %} branches below are
+  # untouched and become reachable again the moment this line is removed.
+  assign waw_active = true
+
   if waw_active
     assign hero_heading = 'Clean Their Teeth In 30 Seconds A Day'
     assign hero_sub = 'Textured finger wipes that lift plaque and food debris from accessible tooth surfaces and along the gumline.'
     assign cta_scroll_text = 'Get The World Animal Week Offer ↑'
     assign tier1_name = 'Complete Dental Routine'
     assign tier1_cta = 'Add To Cart — Buy 2, Get 2 Free'
-    assign tier1_badge = 'Buy 2, Get 2 Free'
+    assign tier1_badge = 'Buy 2, Get 2 Free + Free Gifts'
     assign tier1_image = 'fwof-tier-4pack-waw.webp' | asset_url
-    assign tier1_image_alt = 'World Animal Week — Buy 2, Get 2 Free. Four containers of VetPets FreshWipes with the Fresh Breath in 30 Days e-book and the Fresh Breath Routine Tracker'
+    assign tier1_image_alt = 'Four containers of VetPets FreshWipes with the Fresh Breath in 30 Days e-book and the Fresh Breath Routine Tracker'
     assign tier0_name = 'Starter Routine'
     assign tier0_cta = 'Add To Cart — Starter Routine'
     assign tier0_badge = 'Starter Routine · 2-Month Supply'
+    assign guar_t_pre = 'Try the routine for 100 days —'
+    assign guar_t_accent = 'or every penny back'
+    assign guar_c = "Use FreshWipes as part of your dog's daily routine for up to 100 days. If it isn't right for you and your dog, contact us for a full refund. No questions, no forms, no hassle."
   else
     assign hero_heading = section.settings.heading
     assign hero_sub = section.settings.subheading
@@ -75,6 +84,9 @@
     assign tier0_name = 'Start The Routine Kit'
     assign tier0_cta = 'Add To Cart — Start The Routine'
     assign tier0_badge = 'Start The Routine Kit · 2-Month Supply'
+    assign guar_t_pre = 'See less visible plaque —'
+    assign guar_t_accent = 'or every penny back'
+    assign guar_c = "Use FreshWipes consistently for up to 100 days. If you don't see a cleaner-looking difference, you get a full refund. No questions, no forms, no hassle."
   endif
 -%}
 
@@ -212,7 +224,11 @@
         </div>
 
         <div class="bullets">
-          {%- assign bullets = 'Textured surface lifts away plaque|Antibacterial ingredients help stop buildup|Gentle on gums — fits over one finger, no brush' | split: '|' -%}
+          {%- if waw_active -%}
+            {%- assign bullets = 'Textured surface lifts away plaque|pH-balanced and fragrance-free — made for use in the mouth|Gentle on gums — fits over one finger, no brush' | split: '|' -%}
+          {%- else -%}
+            {%- assign bullets = 'Textured surface lifts away plaque|Antibacterial ingredients help stop buildup|Gentle on gums — fits over one finger, no brush' | split: '|' -%}
+          {%- endif -%}
           {%- for b in bullets -%}
             <div class="bullet">
               {% render 'fwof-check', size: 19 %}
@@ -632,8 +648,8 @@
     <div class="guar">
       <div class="guar-card">
         <svg width="40" height="45" viewBox="0 0 44 50" fill="none" aria-hidden="true"><path d="M22 1.5 41.5 8.8v14.4c0 11.6-8.3 20.4-19.5 24.8C10.8 43.6 2.5 34.8 2.5 23.2V8.8L22 1.5Z" fill="#47B5E9"></path><path d="m13.5 24.5 5.5 5.5 11.5-11.5" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></svg>
-        <h3 class="guar-t">See less visible plaque — or <span class="accent">every penny back</span></h3>
-        <p class="guar-c">Use FreshWipes consistently for up to 100 days. If you don't see a cleaner-looking difference, you get a full refund. No questions, no forms, no hassle.</p>
+        <h3 class="guar-t">{{ guar_t_pre }} <span class="accent">{{ guar_t_accent }}</span></h3>
+        <p class="guar-c">{{ guar_c }}</p>
       </div>
       <div class="guar-media"><img src="{{ 'fwpl-guarantee.webp' | asset_url }}" width="1098" height="618" loading="lazy" decoding="async" alt="FreshWipes owners and their dogs at home"></div>
     </div>
@@ -690,7 +706,7 @@
       <h2 class="h2">Everything you need to know <span class="accent">before starting</span></h2>
       <div class="faq">
         {%- if waw_active -%}
-          {%- assign faq_q = 'How soon will I see a difference?;Are FreshWipes safe for daily use, puppies and cats?;Will this remove tartar that is already there?;How often should I use FreshWipes, and do I need to rinse?;What if my dog hates having their mouth touched?;How long does one jar last, and which plan should I choose?;What makes FreshWipes different from dental chews, powders and water additives?;How do RoutineCare and the 100-day money-back guarantee work?;What is World Animal Week, and how does the offer work?' | split: ';' -%}
+          {%- assign faq_q = 'How soon will I see a difference?;Are FreshWipes safe for daily use, puppies and cats?;Will this remove tartar that is already there?;How often should I use FreshWipes, and do I need to rinse?;What if my dog hates having their mouth touched?;How long does one jar last, and which plan should I choose?;What makes FreshWipes different from dental chews, powders and water additives?;How do RoutineCare and the 100-day money-back guarantee work?;How does the World Animal Week offer work?' | split: ';' -%}
           {%- assign faq_a_waw = 'You can see what the textured surface lifted away on the wipe from the very first use. How quickly the teeth look cleaner depends on how much buildup is present, how long it has been there and how consistently you keep the routine. Hardened tartar that is already bonded to the tooth needs a veterinary cleaning — FreshWipes works on the softer daily buildup before it gets to that stage.;FreshWipes are designed for gentle use in the mouth of dogs and cats and are pH-balanced and fragrance-free. Use one fresh wipe per session and stop if your pet shows signs of pain. If you notice persistent bad breath, bleeding gums, swelling or a broken tooth, contact your veterinarian.;No. FreshWipes physically lifts the soft daily plaque and food debris from accessible tooth surfaces before it hardens. Tartar that has already mineralised onto the tooth can only be removed by a veterinary cleaning. Keeping the daily routine is what slows new buildup down.;Slip one wipe over your index finger, clean the accessible outer tooth surfaces and gumline with small circular motions, then discard the wipe. No rinsing, brushing, mixing or toothpaste is needed. Consistency matters more than pressure.;Start slowly and let your dog sniff the wipe first. Choose a calm moment, clean just a few teeth on the first attempts and reward relaxed behaviour afterward. Because the wipe sits on your finger rather than a brush handle, many owners find their dog accepts it more readily than brushing.;Each jar holds 50 textured finger wipes — about a month of use for one dog. The Starter Routine is a 2-month supply and the Complete Dental Routine is a 4-month supply. Actual duration depends on the number of pets and wipes used.;Chews, powders and water additives work passively around the mouth. FreshWipes is the one you physically guide across the tooth surface and along the gumline — so you can see on the wipe exactly what came off.;RoutineCare saves 20% and includes free shipping on every recurring order. Deliveries can be skipped, changed or cancelled when needed. Your purchase is also protected by our 100-day money-back guarantee — if FreshWipes are not right for your pet, contact VetPets within 100 days of purchase for help with your refund.;World Animal Week runs 28 September to 4 October 2026. During the sale, Buy 2, Get 2 Free applies to the FreshWipes kits on this page and the free gifts listed with each kit are added to your order. You can also add RoutineCare to save 20% with free shipping on every order — skip, change or cancel anytime. The offer closes on October 4.' | split: ';' -%}
           {%- for q in faq_q -%}
             {%- assign qt = q | strip_newlines | strip -%}
@@ -815,7 +831,7 @@
           "name": {{ tier0_name | json }},
           "cta": {{ tier0_cta | json }},
           "badge": {{ tier0_badge | json }},
-          "pill": "",
+          "pill": {% if waw_active %}"World Animal Week · Ends Oct 4"{% else %}""{% endif %},
           "applied_label": "",
           "prop_tier": "2-pack",
           "image": {{ 'fwof-tier-2pack.webp' | asset_url | json }},
@@ -828,7 +844,7 @@
           "name": {{ tier1_name | json }},
           "cta": {{ tier1_cta | json }},
           "badge": {{ tier1_badge | json }},
-          "pill": "",
+          "pill": {% if waw_active %}"World Animal Week · Ends Oct 4"{% else %}""{% endif %},
           "applied_label": "Your Buy 2, Get 2 Free discount is applied",
           "prop_tier": "4-pack",
           "image": {{ tier1_image | json }},
