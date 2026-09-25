@@ -52,7 +52,7 @@
   # World Animal Week campaign window — 28 Sep through 4 Oct 2026 inclusive,
   # evaluated in the shop's own timezone (Liquid's `now` is already shop-local).
   assign today_str = 'now' | date: '%Y-%m-%d'
-  assign waw_active = false
+  assign waw_active = true
   if today_str >= '2026-09-28' and today_str <= '2026-10-04'
     assign waw_active = true
   endif
