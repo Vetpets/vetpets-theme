@@ -100,6 +100,16 @@ body:has(#freshwipes-offer-page){overflow-x:hidden}
 #freshwipes-offer-page .waw-cd-n{font-size:16px;font-weight:800;color:var(--waw-ink);font-variant-numeric:tabular-nums;line-height:1.05;letter-spacing:-0.02em}
 #freshwipes-offer-page .waw-cd-l{font-size:7.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#6B7A85;margin-top:1px}
 
+/* ---------- evergreen rotating announcement bar (WAW off) ---------- */
+#freshwipes-offer-page .topbar{background:var(--waw-ink);padding:9px 20px}
+#freshwipes-offer-page .topbar-in{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:center}
+#freshwipes-offer-page .announce{display:flex;align-items:center;justify-content:center;min-height:18px}
+#freshwipes-offer-page .announce-msg{display:flex;align-items:center;gap:7px;color:#FFFFFF;transition:opacity .24s ease,transform .24s ease;opacity:1;transform:translateY(0)}
+#freshwipes-offer-page .announce-msg.is-out{opacity:0;transform:translateY(-4px)}
+#freshwipes-offer-page .announce-msg.is-in{opacity:0;transform:translateY(4px)}
+#freshwipes-offer-page .announce-icon{width:14px;height:14px;flex-shrink:0;color:#FFFFFF}
+#freshwipes-offer-page .announce-text{font-size:12px;font-weight:700;letter-spacing:.02em;white-space:nowrap}
+
 /* hero campaign badge, above the H1 */
 #freshwipes-offer-page .waw-hb{display:flex;align-items:center;gap:10px;align-self:stretch;background:#F2FCFC;border:1.5px solid rgba(19,182,181,.45);border-radius:16px;padding:9px 12px;margin-bottom:12px}
 #freshwipes-offer-page .waw-hb-ic{width:32px;height:32px;border-radius:50%;background:var(--teal);flex-shrink:0;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(19,182,181,.4)}
@@ -199,6 +209,7 @@ body:has(#freshwipes-offer-page){overflow-x:hidden}
    with generated content so no extra JS injection is needed */
 #freshwipes-offer-page[data-waw="on"] .kaching-bundles__bars > .kaching-bundles__bar:nth-of-type(2) .kaching-bundles__bar-container{position:relative;border-width:2.5px!important}
 #freshwipes-offer-page[data-waw="on"] .kaching-bundles__bars > .kaching-bundles__bar:nth-of-type(2) .kaching-bundles__bar-container::before{content:"World Animal Week Offer";position:absolute;top:-11px;right:12px;background:var(--teal);color:#FFFFFF;font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;padding:5px 12px;border-radius:999px;box-shadow:0 4px 11px rgba(19,182,181,.35);white-space:nowrap}
+#freshwipes-offer-page[data-waw="on"] .kaching-bundles__bars > .kaching-bundles__bar:nth-of-type(2) .kaching-bundles__bar-container::after{content:"Best Value: Buy 2, Get 2 Free";position:absolute;top:-11px;left:12px;background:var(--blue);color:#FFFFFF;font-size:10px;font-weight:800;letter-spacing:.03em;padding:5px 12px;border-radius:999px;box-shadow:0 4px 11px rgba(71,181,233,.35);white-space:nowrap}
 
 /* ---------- above the fold ---------- */
 #freshwipes-offer-page .hero{background:linear-gradient(180deg,#FFFFFF 0%,#FFFFFF 46%,var(--mist) 100%)}
@@ -240,6 +251,30 @@ body:has(#freshwipes-offer-page){overflow-x:hidden}
 #freshwipes-offer-page .pay{display:flex;align-items:center;justify-content:center;margin-top:11px}
 #freshwipes-offer-page .pay-strip{display:block;width:290px;max-width:calc(100% - 24px);height:auto}
 #freshwipes-offer-page .secure{display:flex;align-items:center;justify-content:center;gap:5px;margin-top:7px;font-size:10.5px;font-weight:400;color:#8B9AA6;text-align:center}
+
+/* ---------- World Animal Week guarantee card ----------
+   Replaces .guar-row + .secure while the campaign is active. Payment badges
+   (.pay, unchanged) sit centered directly below it; the RoutineCare billing
+   disclosure sits below that, in the existing .pfd-disclosure grey text. */
+#freshwipes-offer-page .waw-assure{margin-top:11px;background:#FFFFFF;border:1.5px solid #E3E8EC;border-radius:16px;padding:15px 17px;box-shadow:0 2px 10px rgba(15,23,42,.05)}
+#freshwipes-offer-page .waw-assure-g{display:flex;align-items:flex-start;gap:11px}
+#freshwipes-offer-page .waw-assure-g svg{flex-shrink:0;margin-top:1px}
+#freshwipes-offer-page .waw-assure-t{font-size:14.5px;font-weight:800;color:var(--waw-ink);line-height:1.3;letter-spacing:-0.01em}
+#freshwipes-offer-page .waw-assure-p{margin:4px 0 0;font-size:12.5px;font-weight:500;color:var(--muted);line-height:1.45}
+#freshwipes-offer-page .waw-assure-s{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:12px;padding-top:12px;border-top:1px solid #EDF1F4;font-size:11px;font-weight:500;color:#8B9AA6;text-align:center}
+
+/* ---------- World Animal Week hand-authored gift panel ----------
+   Two named gifts with real images — Kaching's own free-gift list ships them
+   as one combined row (see freshwipes-offer-page.js decorateGifts()), so this
+   panel is the truthful, locked-copy source shown to the customer. Toggled by
+   the same .fwof-gift-toggle button Kaching's row already renders. */
+#freshwipes-offer-page .waw-gift-panel{margin-top:2px;display:flex;flex-direction:column;gap:10px}
+#freshwipes-offer-page .waw-gift-panel[hidden]{display:none}
+#freshwipes-offer-page .gp-row{display:flex;align-items:center;gap:11px;background:#F7FAFB;border-radius:12px;padding:9px 11px}
+#freshwipes-offer-page .gp-thumb{flex-shrink:0;width:46px;height:46px;border-radius:9px;overflow:hidden;background:#FFFFFF;border:1px solid #E3E8EC}
+#freshwipes-offer-page .gp-thumb img{display:block;width:100%;height:100%;object-fit:cover}
+#freshwipes-offer-page .gp-n{font-size:12.5px;font-weight:800;color:var(--waw-ink);line-height:1.3}
+#freshwipes-offer-page .gp-d{font-size:11px;font-weight:500;color:var(--muted);line-height:1.35;margin-top:1px}
 
 /* ---------- PayFac subscription disclosure ----------
    Shown only while RoutineCare is selected (JS toggles [hidden]); price spans
@@ -453,6 +488,10 @@ body:has(#freshwipes-offer-page){overflow-x:hidden}
 #freshwipes-offer-page .kaching-bundles__bar-container > .kaching-bundles__free-gift:first-of-type{padding-top:8px!important;border-top:1px dashed rgba(71,181,233,.35)!important}
 #freshwipes-offer-page .kaching-bundles__free-gift[data-fwof-gift="product"]{display:none!important}
 #freshwipes-offer-page .kaching-bundles__bar[data-fwof-gifts="open"] .kaching-bundles__free-gift[data-fwof-gift="product"]{display:flex!important}
+/* World Animal Week: Kaching combines the e-book + tracker into one row, which
+   would duplicate/contradict the named .waw-gift-panel above — keep it hidden
+   even when the toggle is open; .waw-gift-panel is the only thing revealed. */
+#freshwipes-offer-page[data-waw="on"] .kaching-bundles__bar[data-fwof-gifts="open"] .kaching-bundles__free-gift[data-fwof-gift="product"]{display:none!important}
 
 /* injected gift toggle — progressive enhancement, appended by the theme JS */
 #freshwipes-offer-page .fwof-gift-toggle{display:inline-flex;align-items:center;gap:7px;align-self:flex-start;background:#EAF6FD;border:1px solid rgba(71,181,233,.35);color:var(--blue-ink);font-size:12px;font-weight:700;padding:6px 12px;border-radius:999px;font-family:inherit;cursor:pointer;margin:0}
