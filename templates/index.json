@@ -2282,7 +2282,7 @@
       "type": "vetpets-popup",
       "settings": {
         "enable": true,
-        "popup_theme": "world_animal_week",
+        "popup_theme": "evergreen",
         "trigger": "delay",
         "delay_seconds": 8,
         "scroll_percent": 40,
