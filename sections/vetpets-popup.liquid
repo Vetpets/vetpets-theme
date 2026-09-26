@@ -356,6 +356,10 @@
 
   #vpp-{{ uid }}.vetpets-popup--world-animal-week .vpp-panel { background: transparent; padding: 0; box-shadow: none; }
 
+  /* Once scratched, the approved design shows only the badge + revealed
+     card - not the pre-scratch headline/subtitle/countdown as well. */
+  #vpp-{{ uid }} .vpp-col:has(.vpp-card.vpp-revealed) .vpp-waw-prehead { display: none; }
+
   #vpp-{{ uid }} .vpp-waw-badge {
     display: inline-flex; align-items: center; gap: 7px;
     background: linear-gradient(100deg, var(--vpp-brand) 0%, #2E9FD8 100%);
@@ -528,27 +532,27 @@
             <span class="vpp-waw-week">Week</span>
           </span>
         </div>
+        <!-- Hidden once revealed (see .vpp-col:has(.vpp-card.vpp-revealed)) - the
+             approved design shows only the badge + revealed card afterward. -->
+        <div class="vpp-waw-prehead">
+          <h1 class="vpp-title">{{ popup_title }}</h1>
+          <p class="vpp-sub">Scratch the belly to reveal your World Animal Week offer.</p>
+          <div class="vpp-waw-countdown" data-vpp-waw-countdown>
+            <div class="vpp-waw-countdown-label">Offer ends in</div>
+            <div class="vpp-waw-countdown-tiles">
+              <div class="vpp-waw-cd-tile"><div class="vpp-waw-cd-num" data-vpp-cd="d">00</div><div class="vpp-waw-cd-lbl">DAYS</div></div>
+              <div class="vpp-waw-cd-tile"><div class="vpp-waw-cd-num" data-vpp-cd="h">00</div><div class="vpp-waw-cd-lbl">HRS</div></div>
+              <div class="vpp-waw-cd-tile"><div class="vpp-waw-cd-num" data-vpp-cd="m">00</div><div class="vpp-waw-cd-lbl">MIN</div></div>
+              <div class="vpp-waw-cd-tile"><div class="vpp-waw-cd-num" data-vpp-cd="s">00</div><div class="vpp-waw-cd-lbl">SEC</div></div>
+            </div>
+          </div>
+        </div>
       {%- else -%}
         {%- if section.settings.logo != blank -%}
           {{ section.settings.logo | image_url: width: 400 | image_tag: class: 'vpp-logo', widths: '200, 300, 400', sizes: '170px', loading: 'lazy', alt: shop.name }}
         {%- endif -%}
         <div class="vpp-eyebrow">{{ section.settings.text_eyebrow }}</div>
-      {%- endif -%}
-
-      <h1 class="vpp-title">{{ popup_title }}</h1>
-
-      {%- if waw_active -%}
-        <p class="vpp-sub">Scratch the belly to reveal your World Animal Week offer.</p>
-        <div class="vpp-waw-countdown" data-vpp-waw-countdown>
-          <div class="vpp-waw-countdown-label">Offer ends in</div>
-          <div class="vpp-waw-countdown-tiles">
-            <div class="vpp-waw-cd-tile"><div class="vpp-waw-cd-num" data-vpp-cd="d">00</div><div class="vpp-waw-cd-lbl">DAYS</div></div>
-            <div class="vpp-waw-cd-tile"><div class="vpp-waw-cd-num" data-vpp-cd="h">00</div><div class="vpp-waw-cd-lbl">HRS</div></div>
-            <div class="vpp-waw-cd-tile"><div class="vpp-waw-cd-num" data-vpp-cd="m">00</div><div class="vpp-waw-cd-lbl">MIN</div></div>
-            <div class="vpp-waw-cd-tile"><div class="vpp-waw-cd-num" data-vpp-cd="s">00</div><div class="vpp-waw-cd-lbl">SEC</div></div>
-          </div>
-        </div>
-      {%- else -%}
+        <h1 class="vpp-title">{{ popup_title }}</h1>
         <p class="vpp-sub">{{ section.settings.text_subtitle }}</p>
       {%- endif -%}
 
