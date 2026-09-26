@@ -22,11 +22,37 @@
 {%- liquid
   assign uid = section.id
   assign paw = "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35zM10.4 6.4h3.2v2.9h2.9v3.2h-2.9v2.9h-3.2v-2.9H7.5V9.3h2.9z"
+
+  comment
+    World Animal Week gate. 1791172799 is the fixed Unix-epoch instant for
+    2026-10-04 23:59:59 America/New_York (EDT, UTC-4). 'now' | date: '%s' is
+    always a UTC epoch regardless of shop timezone, so this comparison needs
+    no timezone conversion and no external time/IP service. Deciding this
+    server-side (not after a client-side check) is what keeps an expired
+    campaign from ever flashing on screen.
+  endcomment
+  assign waw_deadline_epoch = 1791172799
+  assign waw_now_epoch = 'now' | date: '%s' | plus: 0
+  assign waw_expired = false
+  if waw_now_epoch >= waw_deadline_epoch
+    assign waw_expired = true
+  endif
+  assign waw_active = false
+  if section.settings.popup_theme == 'world_animal_week' and waw_expired == false
+    assign waw_active = true
+  endif
+
+  assign popup_title = section.settings.text_title
+  assign popup_decline_text = section.settings.text_decline
+  if waw_active
+    assign popup_title = 'SCRATCH TO UNLOCK EXTRA SAVINGS'
+    assign popup_decline_text = "No thanks, I'll miss the offer"
+  endif
 -%}
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800{% if waw_active %}&family=Caveat:wght@700{% endif %}&display=swap">
 
 <style>
   .vetpets-popup-section { margin: 0 !important; padding: 0 !important; }
@@ -322,9 +348,140 @@
     #vpp-{{ uid }} .vpp-step { animation: none; }
     #vpp-{{ uid }} .vpp-pill { transition: none; }
   }
+
+  /* ================= World Animal Week skin =================
+     Everything below is scoped behind the .vetpets-popup--world-animal-week
+     modifier class (always paired with the section's own #vpp-{{ uid }} id),
+     so it can never affect the evergreen popup or any other section. */
+
+  #vpp-{{ uid }}.vetpets-popup--world-animal-week .vpp-panel { background: transparent; padding: 0; box-shadow: none; }
+
+  /* Once scratched, the approved design shows only the badge + revealed
+     card - not the pre-scratch headline/subtitle/countdown as well. */
+  #vpp-{{ uid }} .vpp-col:has(.vpp-card.vpp-revealed) .vpp-waw-prehead { display: none; }
+
+  #vpp-{{ uid }} .vpp-waw-badge {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: linear-gradient(100deg, var(--vpp-brand) 0%, #2E9FD8 100%);
+    border: 2px solid #FFFFFF; border-radius: 999px; padding: 4px 15px 4px 4px;
+    box-shadow: 0 8px 18px rgba(31,127,184,.28); margin-bottom: 8px;
+  }
+  #vpp-{{ uid }} .vpp-waw-badge-globe {
+    width: 26px; height: 26px; border-radius: 50%; background: #FFFFFF;
+    display: flex; align-items: center; justify-content: center; flex: none;
+  }
+  #vpp-{{ uid }} .vpp-waw-badge-globe svg { width: 20px; height: 20px; }
+  #vpp-{{ uid }} .vpp-waw-badge-text {
+    display: flex; align-items: baseline; gap: 6px; color: #FFFFFF;
+    font-size: 15px; font-weight: 800; letter-spacing: .01em; text-transform: uppercase;
+    line-height: 1; white-space: nowrap;
+  }
+  #vpp-{{ uid }} .vpp-waw-strike { position: relative; display: inline-block; color: #FFE1DE; }
+  #vpp-{{ uid }} .vpp-waw-strike svg {
+    position: absolute; left: -4px; top: 2px; width: calc(100% + 8px); height: 13px; overflow: visible;
+  }
+  #vpp-{{ uid }} .vpp-waw-week {
+    font-family: 'Caveat', cursive; font-size: 26px; font-weight: 700; text-transform: none;
+    letter-spacing: 0; transform: rotate(-5deg) translateY(2px); display: inline-block; color: #FFFFFF;
+  }
+
+  #vpp-{{ uid }}.vetpets-popup--world-animal-week .vpp-title { font-size: 32px; }
+  #vpp-{{ uid }}.vetpets-popup--world-animal-week .vpp-sub { margin-top: 8px; font-size: 15px; line-height: 1.4; }
+
+  #vpp-{{ uid }} .vpp-waw-countdown { margin-top: 10px; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+  #vpp-{{ uid }} .vpp-waw-countdown-label {
+    font-size: 10px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase;
+    line-height: 1; color: #0E8F8E; white-space: nowrap;
+  }
+  #vpp-{{ uid }} .vpp-waw-countdown-tiles { display: flex; gap: 6px; }
+  #vpp-{{ uid }} .vpp-waw-cd-tile {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    width: 54px; height: 40px; background: #FFFFFF; border: 1px solid rgba(71,181,233,.22);
+    border-radius: 9px; box-shadow: 0 4px 12px rgba(71,181,233,.26);
+  }
+  #vpp-{{ uid }} .vpp-waw-cd-num { font-size: 17px; font-weight: 800; line-height: 1; color: #0D2340; font-variant-numeric: tabular-nums; }
+  #vpp-{{ uid }} .vpp-waw-cd-lbl { margin-top: 3px; font-size: 8px; font-weight: 800; letter-spacing: .14em; line-height: 1; color: #4F5F6B; }
+
+  #vpp-{{ uid }} .vpp-waw-ends {
+    margin-top: 14px; display: inline-flex; align-items: center; gap: 7px;
+    background: #FFFFFF; border: 1.5px solid #D92D20; color: #C22A1E;
+    font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+    line-height: 1; padding: 8px 12px; border-radius: 999px; white-space: nowrap;
+  }
+  #vpp-{{ uid }} .vpp-waw-ends-dot { width: 6px; height: 6px; border-radius: 50%; background: #D92D20; flex: none; }
+
+  #vpp-{{ uid }}.vetpets-popup--world-animal-week .vpp-decline {
+    font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+    text-underline-offset: 3px; min-height: 44px; display: flex; align-items: center;
+  }
+
+  #vpp-{{ uid }} .vpp-waw-kicker {
+    display: flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 800;
+    letter-spacing: .18em; text-transform: uppercase; line-height: 1; color: var(--vpp-brand); white-space: nowrap;
+  }
+  #vpp-{{ uid }} .vpp-waw-kicker svg { width: 13px; height: 13px; flex: none; }
+  #vpp-{{ uid }}.vetpets-popup--world-animal-week .vpp-offer { margin-top: 10px; font-size: 32px; }
+  #vpp-{{ uid }}.vetpets-popup--world-animal-week .vpp-ask { margin-top: 10px; font-size: 14px; line-height: 1.4; }
+  #vpp-{{ uid }} .vpp-waw-urgency {
+    margin-top: 12px; display: flex; align-items: center; justify-content: center; gap: 6px;
+    font-size: 12px; font-weight: 700; color: #C22A1E; text-align: center; white-space: nowrap;
+  }
+  #vpp-{{ uid }} .vpp-waw-urgency svg { width: 13px; height: 13px; flex: none; }
+
+  /* product cutouts reuse the evergreen photo slots/positions, restyled as
+     floating transparent cutouts instead of rounded photo cards */
+  #vpp-{{ uid }}.vetpets-popup--world-animal-week .vpp-photo { border-radius: 0; object-fit: contain; }
+
+  @media (min-width: 1280px) {
+    #vpp-{{ uid }} .vpp-waw-badge { gap: 10px; padding: 5px 20px 5px 6px; box-shadow: 0 10px 24px rgba(31,127,184,.28); margin-bottom: 20px; }
+    #vpp-{{ uid }} .vpp-waw-badge-globe { width: 32px; height: 32px; }
+    #vpp-{{ uid }} .vpp-waw-badge-globe svg { width: 24px; height: 24px; }
+    #vpp-{{ uid }} .vpp-waw-badge-text { font-size: 19px; gap: 8px; }
+    #vpp-{{ uid }} .vpp-waw-strike svg { left: -5px; top: 2px; width: calc(100% + 10px); height: 17px; }
+    #vpp-{{ uid }} .vpp-waw-week { font-size: 33px; }
+
+    #vpp-{{ uid }}.vetpets-popup--world-animal-week .vpp-title { font-size: 42px; }
+    #vpp-{{ uid }}.vetpets-popup--world-animal-week .vpp-sub { margin-top: 12px; font-size: 16px; }
+
+    #vpp-{{ uid }} .vpp-waw-countdown { margin-top: 18px; gap: 6px; }
+    #vpp-{{ uid }} .vpp-waw-countdown-label { font-size: 10.5px; }
+    #vpp-{{ uid }} .vpp-waw-cd-tile { width: 58px; height: 46px; border-radius: 10px; box-shadow: 0 4px 14px rgba(71,181,233,.26); }
+    #vpp-{{ uid }} .vpp-waw-cd-num { font-size: 20px; }
+    #vpp-{{ uid }} .vpp-waw-cd-lbl { margin-top: 4px; font-size: 8.5px; }
+
+    #vpp-{{ uid }} .vpp-waw-ends { margin-top: 18px; gap: 10px; font-size: 12px; padding: 8px 14px; }
+    #vpp-{{ uid }} .vpp-waw-ends-dot { width: 7px; height: 7px; }
+
+    #vpp-{{ uid }}.vetpets-popup--world-animal-week .vpp-decline { margin-top: 10px; font-size: 13px; }
+
+    #vpp-{{ uid }} .vpp-waw-kicker { gap: 8px; font-size: 12px; letter-spacing: .2em; }
+    #vpp-{{ uid }} .vpp-waw-kicker svg { width: 14px; height: 14px; }
+    #vpp-{{ uid }}.vetpets-popup--world-animal-week .vpp-offer { margin-top: 12px; font-size: 40px; }
+    #vpp-{{ uid }}.vetpets-popup--world-animal-week .vpp-ask { margin-top: 12px; font-size: 15px; line-height: 1.45; }
+    #vpp-{{ uid }} .vpp-waw-urgency { margin-top: 14px; font-size: 12.5px; }
+    #vpp-{{ uid }} .vpp-waw-urgency svg { width: 14px; height: 14px; }
+
+    /* Same conversion technique the evergreen photos already use: left/width
+       as % of the 1400px wrap cap, vertical placement anchored to the
+       wrap's own centre via top:50% + translateY(own-height %) so it holds
+       regardless of actual viewport height. Source frame was 1440x900;
+       EyeWipes 640,80,448x560 and FreshWipes 940,300,448x560. */
+    #vpp-{{ uid }}.vetpets-popup--world-animal-week .vpp-photo--a {
+      left: 45.71%; width: 32%; aspect-ratio: 448 / 560;
+      top: 50%; transform: translateY(-66.1%);
+      box-shadow: none;
+      filter: drop-shadow(0 30px 34px rgba(13,35,64,.20)) drop-shadow(0 8px 12px rgba(13,35,64,.10));
+    }
+    #vpp-{{ uid }}.vetpets-popup--world-animal-week .vpp-photo--b {
+      left: 67.14%; width: 32%; aspect-ratio: 448 / 560;
+      top: 50%; transform: translateY(-26.8%);
+      box-shadow: none;
+      filter: drop-shadow(0 34px 36px rgba(13,35,64,.22)) drop-shadow(0 8px 12px rgba(13,35,64,.10));
+    }
+  }
 </style>
 
-<div id="vpp-{{ uid }}" class="vpp-root" data-vpp-root role="dialog" aria-modal="true" aria-label="{{ section.settings.text_title | escape }}" aria-hidden="true">
+<div id="vpp-{{ uid }}" class="vpp-root{% if waw_active %} vetpets-popup--world-animal-week{% endif %}" data-vpp-root role="dialog" aria-modal="true" aria-label="{{ popup_title | escape }}" aria-hidden="true">
 
   <svg class="vpp-tile" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
     <defs>
@@ -352,37 +509,93 @@
   </button>
 
   <div class="vpp-wrap" data-vpp-wrap>
-    {%- if section.settings.photo_primary != blank -%}
-      {{ section.settings.photo_primary | image_url: width: 800 | image_tag: class: 'vpp-photo vpp-photo--a', widths: '400, 600, 800', sizes: '400px', loading: 'lazy', alt: section.settings.photo_primary_alt }}
-    {%- endif -%}
-    {%- if section.settings.photo_secondary != blank -%}
-      {{ section.settings.photo_secondary | image_url: width: 800 | image_tag: class: 'vpp-photo vpp-photo--b', widths: '400, 600, 800', sizes: '400px', loading: 'lazy', alt: section.settings.photo_secondary_alt }}
+    {%- if waw_active -%}
+      <img src="{{ 'waw-popup-eyewipes-cutout.webp' | asset_url }}" alt="VetPets EyeWipes jar with wipes" class="vpp-photo vpp-photo--a" loading="lazy">
+      <img src="{{ 'waw-popup-freshwipes-cutout.webp' | asset_url }}" alt="VetPets FreshWipes jar with wipes" class="vpp-photo vpp-photo--b" loading="lazy">
+    {%- else -%}
+      {%- if section.settings.photo_primary != blank -%}
+        {{ section.settings.photo_primary | image_url: width: 800 | image_tag: class: 'vpp-photo vpp-photo--a', widths: '400, 600, 800', sizes: '400px', loading: 'lazy', alt: section.settings.photo_primary_alt }}
+      {%- endif -%}
+      {%- if section.settings.photo_secondary != blank -%}
+        {{ section.settings.photo_secondary | image_url: width: 800 | image_tag: class: 'vpp-photo vpp-photo--b', widths: '400, 600, 800', sizes: '400px', loading: 'lazy', alt: section.settings.photo_secondary_alt }}
+      {%- endif -%}
     {%- endif -%}
 
     <div class="vpp-col">
-      {%- if section.settings.logo != blank -%}
-        {{ section.settings.logo | image_url: width: 400 | image_tag: class: 'vpp-logo', widths: '200, 300, 400', sizes: '170px', loading: 'lazy', alt: shop.name }}
+      {%- if waw_active -%}
+        <div class="vpp-waw-badge">
+          <span class="vpp-waw-badge-globe">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="{{ section.settings.color_accent }}"></circle><circle cx="12" cy="12" r="7.6" fill="none" stroke="#FFFFFF" stroke-width="1.5"></circle><path d="M4.4 12h15.2M12 4.4c2.1 2.1 3.2 4.8 3.2 7.6s-1.1 5.5-3.2 7.6c-2.1-2.1-3.2-4.8-3.2-7.6s1.1-5.5 3.2-7.6Z" fill="none" stroke="#FFFFFF" stroke-width="1.4"></path></svg>
+          </span>
+          <span class="vpp-waw-badge-text">World Animal
+            <span class="vpp-waw-strike">Day<svg viewBox="0 0 70 22" preserveAspectRatio="none" aria-hidden="true"><path d="M2 15 C 16 11, 30 13, 44 8 S 62 6, 68 5" fill="none" stroke="#E0301E" stroke-width="4.4" stroke-linecap="round"></path></svg></span>
+            <span class="vpp-waw-week">Week</span>
+          </span>
+        </div>
+        <!-- Hidden once revealed (see .vpp-col:has(.vpp-card.vpp-revealed)) - the
+             approved design shows only the badge + revealed card afterward. -->
+        <div class="vpp-waw-prehead">
+          <h1 class="vpp-title">{{ popup_title }}</h1>
+          <p class="vpp-sub">Scratch the belly to reveal your World Animal Week offer.</p>
+          <div class="vpp-waw-countdown" data-vpp-waw-countdown>
+            <div class="vpp-waw-countdown-label">Offer ends in</div>
+            <div class="vpp-waw-countdown-tiles">
+              <div class="vpp-waw-cd-tile"><div class="vpp-waw-cd-num" data-vpp-cd="d">00</div><div class="vpp-waw-cd-lbl">DAYS</div></div>
+              <div class="vpp-waw-cd-tile"><div class="vpp-waw-cd-num" data-vpp-cd="h">00</div><div class="vpp-waw-cd-lbl">HRS</div></div>
+              <div class="vpp-waw-cd-tile"><div class="vpp-waw-cd-num" data-vpp-cd="m">00</div><div class="vpp-waw-cd-lbl">MIN</div></div>
+              <div class="vpp-waw-cd-tile"><div class="vpp-waw-cd-num" data-vpp-cd="s">00</div><div class="vpp-waw-cd-lbl">SEC</div></div>
+            </div>
+          </div>
+        </div>
+      {%- else -%}
+        {%- if section.settings.logo != blank -%}
+          {{ section.settings.logo | image_url: width: 400 | image_tag: class: 'vpp-logo', widths: '200, 300, 400', sizes: '170px', loading: 'lazy', alt: shop.name }}
+        {%- endif -%}
+        <div class="vpp-eyebrow">{{ section.settings.text_eyebrow }}</div>
+        <h1 class="vpp-title">{{ popup_title }}</h1>
+        <p class="vpp-sub">{{ section.settings.text_subtitle }}</p>
       {%- endif -%}
-
-      <div class="vpp-eyebrow">{{ section.settings.text_eyebrow }}</div>
-      <h1 class="vpp-title">{{ section.settings.text_title }}</h1>
-      <p class="vpp-sub">{{ section.settings.text_subtitle }}</p>
 
       <div class="vpp-stack">
         <div class="vpp-panel">
         <div class="vpp-card">
 
           <div class="vpp-step" data-vpp-step="email">
-            <div class="vpp-check">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
-            </div>
-            <div class="vpp-kicker">{{ section.settings.text_unlocked }}</div>
-            <div class="vpp-offer">{{ section.settings.text_offer }}</div>
-            <div class="vpp-ask">{{ section.settings.text_email_ask }}</div>
+            {%- if waw_active -%}
+              <div class="vpp-waw-kicker">
+                <svg viewBox="0 0 24 24" fill="{{ section.settings.color_accent }}" aria-hidden="true"><ellipse cx="7" cy="8" rx="2.1" ry="2.7"></ellipse><ellipse cx="12" cy="6.4" rx="2.1" ry="2.7"></ellipse><ellipse cx="17" cy="8" rx="2.1" ry="2.7"></ellipse><path d="M12 11c3 0 5.2 2.4 5.2 4.7 0 1.9-1.6 2.9-3.3 2.6-.7-.1-1.3-.3-1.9-.3s-1.2.2-1.9.3c-1.7.3-3.3-.7-3.3-2.6C6.8 13.4 9 11 12 11Z"></path></svg>
+                Your World Animal Week offer
+              </div>
+              <div class="vpp-offer">{{ section.settings.text_offer }}</div>
+              <p class="vpp-ask">Enter your email to claim your limited-time savings.</p>
+              <div class="vpp-waw-countdown" data-vpp-waw-countdown>
+                <div class="vpp-waw-countdown-label">Claim before time runs out</div>
+                <div class="vpp-waw-countdown-tiles">
+                  <div class="vpp-waw-cd-tile"><div class="vpp-waw-cd-num" data-vpp-cd="d">00</div><div class="vpp-waw-cd-lbl">DAYS</div></div>
+                  <div class="vpp-waw-cd-tile"><div class="vpp-waw-cd-num" data-vpp-cd="h">00</div><div class="vpp-waw-cd-lbl">HRS</div></div>
+                  <div class="vpp-waw-cd-tile"><div class="vpp-waw-cd-num" data-vpp-cd="m">00</div><div class="vpp-waw-cd-lbl">MIN</div></div>
+                  <div class="vpp-waw-cd-tile"><div class="vpp-waw-cd-num" data-vpp-cd="s">00</div><div class="vpp-waw-cd-lbl">SEC</div></div>
+                </div>
+              </div>
+            {%- else -%}
+              <div class="vpp-check">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+              </div>
+              <div class="vpp-kicker">{{ section.settings.text_unlocked }}</div>
+              <div class="vpp-offer">{{ section.settings.text_offer }}</div>
+              <div class="vpp-ask">{{ section.settings.text_email_ask }}</div>
+            {%- endif -%}
             <input class="vpp-input" data-vpp-email type="email" inputmode="email" autocomplete="email" aria-label="{{ section.settings.text_email_ask | escape }}" placeholder="{{ section.settings.text_email_placeholder | escape }}">
             <div class="vpp-error" data-vpp-email-error hidden role="alert"></div>
-            <button type="button" class="vpp-submit" data-vpp-email-submit>{{ section.settings.text_claim_button }}</button>
-            <div class="vpp-fine">{{ section.settings.text_email_fine_print }}</div>
+            <button type="button" class="vpp-submit" data-vpp-email-submit>{% if waw_active %}Claim my offer{% else %}{{ section.settings.text_claim_button }}{% endif %}</button>
+            {%- if waw_active -%}
+              <div class="vpp-waw-urgency">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#D92D20" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                Ends October 4 or while supplies last.
+              </div>
+            {%- else -%}
+              <div class="vpp-fine">{{ section.settings.text_email_fine_print }}</div>
+            {%- endif -%}
           </div>
 
           {%- if section.settings.enable_sms_step -%}
@@ -435,7 +648,14 @@
         </div>
         </div>
 
-        <button type="button" class="vpp-decline" data-vpp-close>{{ section.settings.text_decline }}</button>
+        {%- if waw_active -%}
+          <span class="vpp-waw-ends">
+            <span class="vpp-waw-ends-dot"></span>
+            Ends October 4 · Limited supply
+          </span>
+        {%- endif -%}
+
+        <button type="button" class="vpp-decline" data-vpp-close>{{ popup_decline_text }}</button>
       </div>
     </div>
   </div>
@@ -455,7 +675,8 @@
   "smsEnabled": {{ section.settings.enable_sms_step | json }},
   "errEmail": {{ section.settings.text_error_email | json }},
   "errPhone": {{ section.settings.text_error_phone | json }},
-  "errGeneric": {{ section.settings.text_error_generic | json }}
+  "errGeneric": {{ section.settings.text_error_generic | json }},
+  "wawActive": {{ waw_active | json }}
 }
 </script>
 
@@ -491,6 +712,30 @@
   var isOpen = false;
   var scrollY = 0;
   var scratchedOnce = false;
+
+  /* World Animal Week countdown. Fixed epoch, ticks both the pre-scratch
+     and post-reveal tile sets (there are two in the DOM; only one is
+     visible at a time) via the shared [data-vpp-cd] hooks. Server-side
+     Liquid already decided cfg.wawActive using this same fixed deadline,
+     so there is nothing here to reconcile - this only drives the display. */
+  if (cfg.wawActive) {
+    var WAW_DEADLINE_MS = 1791172799000; /* 2026-10-04 23:59:59 America/New_York (EDT, UTC-4) */
+    var vppPad2 = function (n) { return String(n).padStart(2, '0'); };
+    var tickWawCountdown = function () {
+      var left = Math.max(0, Math.floor((WAW_DEADLINE_MS - Date.now()) / 1000));
+      var vals = {
+        d: vppPad2(Math.floor(left / 86400)),
+        h: vppPad2(Math.floor(left % 86400 / 3600)),
+        m: vppPad2(Math.floor(left % 3600 / 60)),
+        s: vppPad2(left % 60)
+      };
+      Object.keys(vals).forEach(function (key) {
+        qa('[data-vpp-cd="' + key + '"]').forEach(function (el) { el.textContent = vals[key]; });
+      });
+    };
+    tickWawCountdown();
+    window.setInterval(tickWawCountdown, 1000);
+  }
 
   function track(event, props) {
     if (!window.klaviyo || typeof window.klaviyo.push !== 'function') return;
@@ -865,6 +1110,19 @@
   "presets": [{ "name": "VetPets Welcome Popup" }],
   "settings": [
     { "type": "checkbox", "id": "enable", "label": "Enable popup", "default": true },
+
+    { "type": "header", "content": "Popup theme" },
+    {
+      "type": "select",
+      "id": "popup_theme",
+      "label": "Popup theme",
+      "options": [
+        { "value": "evergreen", "label": "Evergreen" },
+        { "value": "world_animal_week", "label": "World Animal Week" }
+      ],
+      "default": "evergreen",
+      "info": "World Animal Week automatically falls back to Evergreen after Oct 4 2026 11:59:59 PM America/New York, even if left selected."
+    },
 
     { "type": "header", "content": "Trigger" },
     {
