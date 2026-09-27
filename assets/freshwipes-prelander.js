@@ -64,6 +64,36 @@
   }());
 
   /* ---------------------------------------------------------------
+     1b. World Animal Week countdown
+
+     Only present in the DOM when Liquid decided waw_active is true (see the
+     date-gate in sections/freshwipes-prelander.liquid) - two instances share
+     the same [data-fwpl-cd] hooks (top bar + final-offer section), both
+     ticked from one fixed deadline. No-ops harmlessly outside the campaign.
+     --------------------------------------------------------------- */
+  (function wawCountdown() {
+    var nodes = root.querySelectorAll('[data-fwpl-cd]');
+    if (!nodes.length) return;
+    var WAW_DEADLINE_MS = 1791172799000; /* 2026-10-04 23:59:59 America/New_York (EDT, UTC-4) */
+    function pad2(n) { return String(n).padStart(2, '0'); }
+    function tick() {
+      var left = Math.max(0, Math.floor((WAW_DEADLINE_MS - Date.now()) / 1000));
+      var vals = {
+        d: pad2(Math.floor(left / 86400)),
+        h: pad2(Math.floor(left % 86400 / 3600)),
+        m: pad2(Math.floor(left % 3600 / 60)),
+        s: pad2(left % 60)
+      };
+      root.querySelectorAll('[data-fwpl-cd]').forEach(function (el) {
+        var key = el.getAttribute('data-fwpl-cd');
+        if (vals[key] !== undefined) el.textContent = vals[key];
+      });
+    }
+    tick();
+    setInterval(tick, 1000);
+  }());
+
+  /* ---------------------------------------------------------------
      2. Mobile comparison tabs
      --------------------------------------------------------------- */
   (function comparisonTabs() {
@@ -150,7 +180,7 @@
       'fbclid', 'gclid', 'gbraid', 'wbraid', 'gad_source', 'gclsrc',
       'msclkid', 'ttclid', 'twclid', 'li_fat_id', 'epik', 'irclickid',
       'rdt_cid', 'sccid', 'yclid', 'ScCid',
-      'preview_theme_id'
+      'preview_theme_id', 'waw_preview'
     ];
 
     var incoming;
