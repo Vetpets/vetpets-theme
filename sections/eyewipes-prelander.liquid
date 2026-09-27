@@ -78,7 +78,7 @@
   endif
 -%}
 
-<div id="eyewipes-prelander">
+<div id="eyewipes-prelander" data-debug-qs="{{ request.query_string }}" data-debug-active="{{ waw_active }}" data-debug-preview="{{ waw_preview }}" data-debug-window="{{ waw_in_window }}" data-debug-now="{{ waw_now_epoch }}">
 
   {%- if waw_active -%}
     {%- comment -%}
