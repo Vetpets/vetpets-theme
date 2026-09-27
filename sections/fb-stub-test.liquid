@@ -1,0 +1,14 @@
+<div id="fb-stub-test">
+<div class="fb-heatmap" aria-hidden="true">
+{%- for d in (1..30) -%}<span style="background:{% if d < 1 %}#47B5E9{% elsif d <= 7 %}#13B6B5{% else %}#EAF6FD{% endif %};"></span>{%- endfor -%}
+</div>
+</div>
+{% schema %}
+{
+  "name": "FB Stub Test",
+  "tag": "div",
+  "class": "fb-stub-test-section",
+  "settings": [],
+  "presets": [{ "name": "FB Stub Test" }]
+}
+{% endschema %}
