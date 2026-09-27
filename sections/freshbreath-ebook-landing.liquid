@@ -1,0 +1,429 @@
+{%- comment -%}
+  Fresh Breath in 30 Days — eBook landing page
+  =============================================
+  Faithful Shopify implementation of the approved Claude Design page
+  "Fresh Breath eBook Landing" (project: eBook design requirements).
+
+  Rendered only through templates/page.freshbreath-ebook-landing.json,
+  assigned to a dedicated draft Page. Does not touch any shared template.
+
+  Every CTA links to the real Shopify PDP
+  (/products/fresh-breath-in-30-days-no-toothbrush-needed) — there is no
+  inline add-to-cart on this page. Price is pulled live from Shopify.
+
+  Everything is scoped under #freshbreath-ebook-landing.
+{%- endcomment -%}
+
+{%- liquid
+  assign ebook = all_products['fresh-breath-in-30-days-no-toothbrush-needed']
+  assign product_url = '/products/fresh-breath-in-30-days-no-toothbrush-needed'
+  assign freshwipes_url = '/products/freshwipes-30sec-routine'
+-%}
+
+{{ 'freshbreath-ebook-landing.css' | asset_url | stylesheet_tag }}
+<link rel="preload" as="image" href="{{ 'freshbreath-ebook-cover.jpg' | asset_url }}">
+
+<div id="freshbreath-ebook-landing">
+
+  {%- comment -%} ---------- 1. HERO ---------- {%- endcomment -%}
+  <section class="fb-hero" data-fb-hero>
+    <div class="fb-hero-wrap">
+      <div class="fb-hero-copy">
+        <p class="fb-eyebrow">The VetPets eBook · 50 pages</p>
+        <h1 class="fb-h1">Finally, a dental routine <span>you can picture doing with your dog.</span></h1>
+        <p class="fb-hero-sub">A short, daily finger-wipe routine, learned one week at a time. No toothbrush, no wrestling, and clear signs for when it's time to call the vet.</p>
+        <div class="fb-hero-ctas">
+          <a href="{{ product_url }}" class="fb-btn">Explore the Guide <span aria-hidden="true">→</span></a>
+          <a href="#preview" class="fb-see-inside">See what's inside</a>
+        </div>
+        {%- if ebook != blank -%}
+          <div class="fb-price-line"><strong>{{ ebook.price | money }}</strong> · Digital eBook (PDF)</div>
+        {%- endif -%}
+      </div>
+      <div class="fb-hero-art">
+        <div class="fb-hero-art-in">
+          <img class="fb-hero-fan" src="{{ 'freshbreath-ebook-page-21.jpg' | asset_url }}" alt="" aria-hidden="true" width="565" height="800">
+          <div class="fb-hero-cover-wrap">
+            <img src="{{ 'freshbreath-ebook-cover.jpg' | asset_url }}" width="1414" height="2000" fetchpriority="high" alt="Cover of Fresh Breath in 30 Days by VetPets: a golden retriever having its teeth wiped with a finger wipe">
+          </div>
+          <div class="fb-pages-badge"><b>50</b><span>pages</span></div>
+        </div>
+      </div>
+    </div>
+    <svg class="fb-wave fb-wave-bottom" aria-hidden="true" viewBox="0 0 1440 120" preserveAspectRatio="none"><path fill="#47B5E9" fill-opacity=".16" d="M0,40 C240,92 500,110 740,80 C980,50 1210,18 1440,40 L1440,120 L0,120 Z"></path><path fill="#FFFFFF" fill-opacity=".6" d="M0,62 C250,104 520,116 760,92 C1000,68 1220,44 1440,60 L1440,120 L0,120 Z"></path><path fill="#FFFFFF" d="M0,84 C270,118 540,122 780,104 C1020,86 1240,74 1440,86 L1440,120 L0,120 Z"></path></svg>
+  </section>
+
+  {%- comment -%} ---------- 2. THE FAMILIAR STRUGGLE ---------- {%- endcomment -%}
+  <section class="fb-struggle">
+    <div class="fb-struggle-wrap">
+      <div class="fb-struggle-art">
+        <img src="{{ 'freshbreath-ebook-page-03.jpg' | asset_url }}" width="565" height="800" loading="lazy" alt="The introduction page of the eBook, titled The toothbrush battle ends here">
+        <div class="fb-quote">
+          <div class="fb-quote-txt">"You're trying to help them, but it feels like you're fighting them."</div>
+          <div class="fb-quote-src">From the introduction</div>
+        </div>
+      </div>
+      <div class="fb-struggle-copy">
+        <h2 class="fb-h2">You get the toothbrush out. <span>They back away.</span></h2>
+        <p>Some dogs hide. Some clamp their mouth shut. Some let you reach one tooth before wriggling free. So you try dental chews, a water additive, a tip you found online at midnight, and you're still not sure any of it reaches the back teeth.</p>
+        <p>None of that makes you a bad owner. It usually means the method didn't suit your dog. This guide starts from there, with a routine built around your finger instead of a brush.</p>
+        <svg class="fb-heart-divider" viewBox="0 0 160 14" fill="none" aria-hidden="true"><path d="M2 7c20-10 30 10 40 0s20-10 40 0 20 10 40 0 20-10 36 0" stroke="#47B5E9" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ---------- 3. WHAT'S INSIDE ---------- {%- endcomment -%}
+  <section id="inside" class="fb-inside">
+    <svg class="fb-wave fb-wave-top" aria-hidden="true" viewBox="0 0 1440 120" preserveAspectRatio="none"><path fill="#47B5E9" fill-opacity=".14" d="M0,0 L1440,0 L1440,76 C1190,108 950,116 710,94 C470,72 230,54 0,82 Z"></path><path fill="#FFFFFF" fill-opacity=".6" d="M0,0 L1440,0 L1440,58 C1200,90 960,100 720,80 C480,60 240,44 0,66 Z"></path><path fill="#FFFFFF" d="M0,0 L1440,0 L1440,38 C1210,68 970,80 730,62 C490,44 250,30 0,48 Z"></path></svg>
+    <div class="fb-inside-wrap">
+      <div class="fb-inside-head">
+        <div class="fb-inside-head-l">
+          <p class="fb-eyebrow">What's inside</p>
+          <h2 class="fb-h2">Five chapters, each answering a question you've probably asked.</h2>
+        </div>
+        <p class="fb-inside-head-r">Plus an introduction and a closing chapter. Page numbers are from the book's contents page.</p>
+      </div>
+      <div class="fb-chapter-list">
+        <div class="fb-chapter-row">
+          <span class="fb-chapter-num">01</span>
+          <div class="fb-chapter-body">
+            <div class="fb-chapter-text"><h3>Why nothing you've tried has worked</h3><p>Toothbrushes, dental chews, water additives, coconut oil, frozen carrots: what each one does, where it tends to fall short, and what a routine needs to reach every tooth.</p></div>
+            <div class="fb-chapter-pages">From p. 8</div>
+          </div>
+        </div>
+        <div class="fb-chapter-row">
+          <span class="fb-chapter-num">02</span>
+          <div class="fb-chapter-body">
+            <div class="fb-chapter-text"><h3>The 30-day fresh-breath routine</h3><p>The finger-wipe method in five steps, the best time of day to do it, and how to ease a hesitant dog in: front teeth first, a little further back each day.</p></div>
+            <div class="fb-chapter-pages">From p. 20</div>
+          </div>
+        </div>
+        <div class="fb-chapter-row">
+          <span class="fb-chapter-num">03</span>
+          <div class="fb-chapter-body">
+            <div class="fb-chapter-text"><h3>Your dog's size, age &amp; breed</h3><p>What to adjust for small breeds with crowded teeth, larger dogs, seniors with tender gums, and breeds known for dental trouble.</p></div>
+            <div class="fb-chapter-pages">From p. 29</div>
+          </div>
+        </div>
+        <div class="fb-chapter-row">
+          <span class="fb-chapter-num">04</span>
+          <div class="fb-chapter-body">
+            <div class="fb-chapter-text"><h3>Is this normal?</h3><p>What's typical in the first weeks, and the specific signs that mean it's time to book a vet visit rather than wait.</p></div>
+            <div class="fb-chapter-pages">From p. 36</div>
+          </div>
+        </div>
+        <div class="fb-chapter-row">
+          <span class="fb-chapter-num">05</span>
+          <div class="fb-chapter-body">
+            <div class="fb-chapter-text"><h3>Year-round dental care</h3><p>Keeping the habit going through holidays, summer swims, treats and wet food, plus where chews and an annual vet check fit in.</p></div>
+            <div class="fb-chapter-pages">From p. 41</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ---------- 4. 30-DAY ROADMAP ---------- {%- endcomment -%}
+  <section id="roadmap" class="fb-roadmap">
+    <div class="fb-roadmap-wrap">
+      <div class="fb-roadmap-head">
+        <span class="fb-roadmap-pill">The 30-day plan</span>
+        <h2 class="fb-h2" style="color:#fff;">Three stages, one small habit.</h2>
+        <p>The guide breaks the first month into stages, so you always know what to focus on this week.</p>
+      </div>
+      <div class="fb-roadmap-grid">
+        {%- comment -%} Stage 1 {%- endcomment -%}
+        <article class="fb-stage-card">
+          <div class="fb-stage-top">
+            <div class="fb-stage-meta">
+              <span class="fb-stage-kicker">Stage 1</span>
+              <span class="fb-stage-range">Days 1–7</span>
+              <span class="fb-stage-name">The reset</span>
+            </div>
+            <div class="fb-heatmap" aria-hidden="true">
+              {%- for d in (1..30) -%}<span style="background:{% if d < 1 %}#47B5E9{% elsif d <= 7 %}#13B6B5{% else %}#EAF6FD{% endif %};"></span>{%- endfor -%}
+            </div>
+          </div>
+          <div class="fb-stage-block"><span class="fb-stage-label">What you do</span><p>Pick one time each day (the book suggests evening, after the last meal). Start with the front teeth only, and follow every session with a treat.</p></div>
+          <div class="fb-stage-block"><span class="fb-stage-label">What you learn</span><p>The five steps, how to lift the lip without a struggle, and how to read your dog's comfort as you go a little further back each day.</p></div>
+        </article>
+        {%- comment -%} Stage 2 {%- endcomment -%}
+        <article class="fb-stage-card">
+          <div class="fb-stage-top">
+            <div class="fb-stage-meta">
+              <span class="fb-stage-kicker">Stage 2</span>
+              <span class="fb-stage-range">Days 8–21</span>
+              <span class="fb-stage-name">The shift</span>
+            </div>
+            <div class="fb-heatmap" aria-hidden="true">
+              {%- for d in (1..30) -%}<span style="background:{% if d < 8 %}#47B5E9{% elsif d <= 21 %}#13B6B5{% else %}#EAF6FD{% endif %};"></span>{%- endfor -%}
+            </div>
+          </div>
+          <div class="fb-stage-block"><span class="fb-stage-label">What you do</span><p>Reach the back teeth on both sides, where buildup tends to collect. Keep the same time of day so it becomes part of the evening.</p></div>
+          <div class="fb-stage-block"><span class="fb-stage-label">What you learn</span><p>How to use the wipe itself as a check on what you're removing, and why yellowing that doesn't change may be tartar for your vet to look at.</p></div>
+        </article>
+        {%- comment -%} Stage 3 {%- endcomment -%}
+        <article class="fb-stage-card">
+          <div class="fb-stage-top">
+            <div class="fb-stage-meta">
+              <span class="fb-stage-kicker">Stage 3</span>
+              <span class="fb-stage-range">Days 22–30</span>
+              <span class="fb-stage-name">The new normal</span>
+            </div>
+            <div class="fb-heatmap" aria-hidden="true">
+              {%- for d in (1..30) -%}<span style="background:{% if d < 22 %}#47B5E9{% elsif d <= 30 %}#13B6B5{% else %}#EAF6FD{% endif %};"></span>{%- endfor -%}
+            </div>
+          </div>
+          <div class="fb-stage-block"><span class="fb-stage-label">What you do</span><p>Treat it as maintenance rather than a project: the same short routine, most evenings, even on busy ones.</p></div>
+          <div class="fb-stage-block"><span class="fb-stage-label">What you learn</span><p>Why consistency matters more than intensity, what to keep an eye on, and what to raise at your dog's next checkup.</p></div>
+        </article>
+      </div>
+      <p class="fb-roadmap-note">This is a plan for learning the routine, not a timetable for results. Every dog's mouth is different, and some changes need a vet to assess.</p>
+    </div>
+  </section>
+
+  {%- comment -%} ---------- FRESHWIPES CONTEXT STRIP ---------- {%- endcomment -%}
+  <section class="fb-fw-strip">
+    <div class="fb-fw-wrap">
+      <div class="fb-fw-art">
+        <img src="{{ 'freshbreath-ebook-freshwipes-packshot.jpg' | asset_url }}" width="2304" height="1856" loading="lazy" alt="A jar of VetPets FreshWipes with one finger wipe draped over the rim">
+      </div>
+      <div class="fb-fw-copy">
+        <div class="fb-fw-kicker">The tool in the routine</div>
+        <h3>The steps are written around VetPets FreshWipes.</h3>
+        <p>A textured wipe that slips over your index finger. The guide covers the part a jar can't: when to do it, how to ease your dog in, and what to watch for as the weeks go on. Already have a jar? This is the how-to that goes with it.</p>
+        <a href="{{ freshwipes_url }}">About FreshWipes</a>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ---------- 5. LOOK INSIDE ---------- {%- endcomment -%}
+  <section id="preview" class="fb-look">
+    <div class="fb-look-wrap">
+      <div class="fb-look-head">
+        <p class="fb-eyebrow">Look inside</p>
+        <h2 class="fb-h2">Real pages from the book.</h2>
+        <p>Pick a section, then tap any page to read it full size.</p>
+      </div>
+      <div class="fb-tabs" role="tablist" aria-label="Book sections">
+        <button type="button" class="fb-tab" data-fb-tab role="tab" aria-selected="true">Contents &amp; intro</button>
+        <button type="button" class="fb-tab" data-fb-tab role="tab" aria-selected="false">The daily routine</button>
+        <button type="button" class="fb-tab" data-fb-tab role="tab" aria-selected="false">Size &amp; age</button>
+        <button type="button" class="fb-tab" data-fb-tab role="tab" aria-selected="false">When to see a vet</button>
+      </div>
+      <div class="fb-look-body">
+        <div class="fb-look-pages" data-fb-spread-pages></div>
+        <div class="fb-look-info">
+          <div class="fb-look-pages-label" data-fb-spread-label></div>
+          <h3 data-fb-spread-title></h3>
+          <p data-fb-spread-text></p>
+          <div class="fb-look-nav">
+            <button type="button" class="fb-round-btn" data-fb-prev-tab aria-label="Previous section">←</button>
+            <button type="button" class="fb-round-btn" data-fb-next-tab aria-label="Next section">→</button>
+          </div>
+        </div>
+      </div>
+      <script type="application/json" id="fb-spreads-data">
+        [
+          {"label": "Contents & intro", "title": "Where the book begins", "text": "The contents page maps all seven parts of the guide. The introduction opens with a moment most owners know well: the toothbrush comes out, and the dog backs away.", "pages": [
+            {"n": 2, "src": {{ 'freshbreath-ebook-page-02.jpg' | asset_url | json }}},
+            {"n": 3, "src": {{ 'freshbreath-ebook-page-03.jpg' | asset_url | json }}}
+          ]},
+          {"label": "The daily routine", "title": "Days 1–7, step by step", "text": "Five numbered steps: slip a FreshWipe onto your index finger, gently lift the lip, work in small circles along the teeth and gum line, move to the back teeth on both sides, then discard the wipe. The book suggests the evening, after your dog’s last meal.", "pages": [
+            {"n": 21, "src": {{ 'freshbreath-ebook-page-21.jpg' | asset_url | json }}},
+            {"n": 22, "src": {{ 'freshbreath-ebook-page-22.jpg' | asset_url | json }}}
+          ]},
+          {"label": "Size & age", "title": "Larger dogs and seniors", "text": "Chapter 3 adapts the routine by size and age. For older dogs it recommends light pressure, and noting any tooth your dog reacts to so you can mention it to your vet.", "pages": [
+            {"n": 33, "src": {{ 'freshbreath-ebook-page-33.jpg' | asset_url | json }}},
+            {"n": 34, "src": {{ 'freshbreath-ebook-page-34.jpg' | asset_url | json }}}
+          ]},
+          {"label": "When to see a vet", "title": "Signs that need a vet", "text": "Chapter 4 separates normal settling-in from signs that need professional attention: breath that isn’t improving after two weeks of consistent care, hard buildup, gums still red or bleeding after the first week, loose teeth, dropping food, or facial swelling.", "pages": [
+            {"n": 38, "src": {{ 'freshbreath-ebook-page-38.jpg' | asset_url | json }}},
+            {"n": 39, "src": {{ 'freshbreath-ebook-page-39.jpg' | asset_url | json }}},
+            {"n": 40, "src": {{ 'freshbreath-ebook-page-40.jpg' | asset_url | json }}}
+          ]}
+        ]
+      </script>
+    </div>
+  </section>
+
+  {%- comment -%} ---------- 6. MADE FOR REAL DOGS ---------- {%- endcomment -%}
+  <section class="fb-dogs">
+    <div class="fb-dogs-wrap">
+      <div class="fb-dogs-head">
+        <div class="fb-dogs-head-l">
+          <p class="fb-eyebrow">Made for real dogs</p>
+          <h2 class="fb-h2">Small, large, young or grey around the muzzle.</h2>
+          <p>Chapter 3 adjusts the same routine for your dog's size and age, with extra notes for breeds known for crowded or delicate teeth.</p>
+        </div>
+        <div class="fb-dogs-art">
+          <img src="{{ 'freshbreath-ebook-page-30.jpg' | asset_url }}" width="565" height="360" loading="lazy" alt="Five dogs of different sizes sitting together on grass, from chapter 3 of the eBook">
+        </div>
+      </div>
+      <div class="fb-dogs-grid">
+        <div class="fb-dog-col">
+          <span class="fb-dog-tag">Small breeds</span>
+          <h3>Tight spaces, gentle reach</h3>
+          <p>Small mouths often mean crowded teeth. The guide explains why a flexible fingertip can work into tight spaces more easily than a rigid brush, and why daily consistency matters here.</p>
+          <span class="fb-dog-rule"></span>
+        </div>
+        <div class="fb-dog-col">
+          <span class="fb-dog-tag">Medium to large dogs</span>
+          <h3>Don't skip the back</h3>
+          <p>More room between teeth is not the same as no buildup. The guide points you to the back molars and gum line, where plaque tends to collect in bigger mouths.</p>
+          <span class="fb-dog-rule"></span>
+        </div>
+        <div class="fb-dog-col">
+          <span class="fb-dog-tag">Seniors (7+)</span>
+          <h3>Light pressure, close attention</h3>
+          <p>Older dogs may have tender gums. Start gently, let the wipe do the work, and if your dog reacts to one particular tooth, note it and mention it to your vet.</p>
+          <span class="fb-dog-rule"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ---------- 7. A RESPONSIBLE ROUTINE ---------- {%- endcomment -%}
+  <section class="fb-resp">
+    <svg class="fb-wave fb-wave-top" aria-hidden="true" viewBox="0 0 1440 120" preserveAspectRatio="none"><path fill="#47B5E9" fill-opacity=".14" d="M0,0 L1440,0 L1440,76 C1190,108 950,116 710,94 C470,72 230,54 0,82 Z"></path><path fill="#FFFFFF" fill-opacity=".6" d="M0,0 L1440,0 L1440,58 C1200,90 960,100 720,80 C480,60 240,44 0,66 Z"></path><path fill="#FFFFFF" d="M0,0 L1440,0 L1440,38 C1210,68 970,80 730,62 C490,44 250,30 0,48 Z"></path></svg>
+    <div class="fb-resp-wrap">
+      <div class="fb-resp-head">
+        <p class="fb-eyebrow">A responsible routine</p>
+        <h2 class="fb-h2">Home care and vet care do different jobs.</h2>
+        <p>The book puts it simply: the daily routine handles prevention, and your vet handles anything beyond that.</p>
+      </div>
+      <div class="fb-resp-grid">
+        <div class="fb-resp-card">
+          <h3>What a daily routine at home is for</h3>
+          <ul>
+            <li>Wiping away soft, fresh plaque before it has time to build up</li>
+            <li>Helping keep breath fresher day to day</li>
+            <li>Getting familiar with your dog's mouth, so you notice changes early</li>
+          </ul>
+        </div>
+        <div class="fb-resp-card">
+          <h3>When your vet comes first</h3>
+          <ul>
+            <li>Hardened tartar. No wipe, chew or eBook can remove it; a professional cleaning can.</li>
+            <li>Breath that isn't improving, red or bleeding gums, loose or discoloured teeth, dropping food, or swelling around the face</li>
+            <li>Regular dental checks, which can spot problems below the gum line</li>
+          </ul>
+        </div>
+      </div>
+      <p class="fb-resp-note">If you're worried about your dog's mouth right now, please speak to your vet before starting any new routine.</p>
+    </div>
+  </section>
+
+  {%- comment -%} ---------- 8. FINAL CTA + FAQ ---------- {%- endcomment -%}
+  <section class="fb-final" data-fb-final>
+    <div class="fb-final-wrap">
+      <div class="fb-final-art">
+        <div class="fb-final-art-in">
+          <img src="{{ 'freshbreath-ebook-cover.jpg' | asset_url }}" width="1414" height="2000" loading="lazy" alt="Cover of Fresh Breath in 30 Days">
+        </div>
+      </div>
+      <div class="fb-final-copy">
+        <h2 class="fb-final-h2">Start learning the routine <span>today.</span></h2>
+        <p>Fifty pages, five chapters, one small daily habit. Read it this evening, and start with just the front teeth tomorrow.</p>
+        {%- if ebook != blank -%}
+          <div class="fb-price-line"><strong>{{ ebook.price | money }}</strong> · Digital eBook (PDF)</div>
+        {%- endif -%}
+        <div><a href="{{ product_url }}" class="fb-btn">Explore the Guide <span aria-hidden="true">→</span></a></div>
+        <div class="fb-final-note">Digital eBook. The download link is sent to your email.</div>
+      </div>
+    </div>
+
+    <div id="faq" class="fb-faq-wrap">
+      <h2 class="fb-faq-title">Questions, answered</h2>
+      <div class="fb-faq-list">
+        <div class="fb-faq-item" data-fb-faq-item data-open="true">
+          <button type="button" class="fb-faq-q" data-fb-faq-toggle aria-expanded="true">
+            <span>What does the guide contain?</span>
+            <span class="fb-faq-sign" data-fb-faq-sign aria-hidden="true">−</span>
+          </button>
+          <p class="fb-faq-a">Fifty pages: an introduction, five chapters and a conclusion. It covers why common approaches can fall short, the day-by-day routine, adjustments for size, age and breed, the signs that mean you should see a vet, and keeping the habit going year-round.</p>
+        </div>
+        <div class="fb-faq-item" data-fb-faq-item data-open="false">
+          <button type="button" class="fb-faq-q" data-fb-faq-toggle aria-expanded="false">
+            <span>Do I need a toothbrush?</span>
+            <span class="fb-faq-sign" data-fb-faq-sign aria-hidden="true">+</span>
+          </button>
+          <p class="fb-faq-a">No. The routine in the guide uses a textured finger wipe instead of a brush and paste. The steps are written around VetPets FreshWipes.</p>
+        </div>
+        <div class="fb-faq-item" data-fb-faq-item data-open="false">
+          <button type="button" class="fb-faq-q" data-fb-faq-toggle aria-expanded="false">
+            <span>Is it suitable for older dogs?</span>
+            <span class="fb-faq-sign" data-fb-faq-sign aria-hidden="true">+</span>
+          </button>
+          <p class="fb-faq-a">Yes, there's a dedicated section on senior dogs (7+), including starting gently on tender gums and when to mention a sensitive tooth to your vet. If your older dog already has visible tartar or any mouth pain, see your vet first.</p>
+        </div>
+        <div class="fb-faq-item" data-fb-faq-item data-open="false">
+          <button type="button" class="fb-faq-q" data-fb-faq-toggle aria-expanded="false">
+            <span>How is the eBook delivered?</span>
+            <span class="fb-faq-sign" data-fb-faq-sign aria-hidden="true">+</span>
+          </button>
+          <p class="fb-faq-a">It's a digital eBook (PDF), not a printed book. After you order, a download link is sent to your email address.</p>
+        </div>
+        <div class="fb-faq-item" data-fb-faq-item data-open="false">
+          <button type="button" class="fb-faq-q" data-fb-faq-toggle aria-expanded="false">
+            <span>How do FreshWipes fit in?</span>
+            <span class="fb-faq-sign" data-fb-faq-sign aria-hidden="true">+</span>
+          </button>
+          <p class="fb-faq-a">The guide teaches the routine and FreshWipes are the tool it uses, so it's most useful with a jar to hand. Neither the guide nor the wipes replace a vet's examination or a professional cleaning when one is needed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="fb-footer">
+    <div class="fb-footer-wrap" data-sticky-pad="true">
+      <img class="fb-footer-logo" src="{{ 'ewof-vetpets-logo.webp' | asset_url }}" alt="VetPets">
+      <svg class="fb-heart-divider" viewBox="0 0 200 14" fill="none" aria-hidden="true" style="width:200px;"><path d="M2 7c25-10 38 10 50 0s25-10 50 0 25 10 50 0 25-10 46 0" stroke="#47B5E9" stroke-width="2" stroke-linecap="round"/></svg>
+      <p class="fb-footer-copy">VetPets is the daily care routine brand for responsible pet owners. We believe the right tool, used daily, prevents what reactive care never could — no chasing problems after they show up. Simple routines. Proven ingredients. 30 seconds a day. Your pet gives you everything; we help you give it back.</p>
+      <div class="fb-footer-links">
+        <a href="/pages/contact">Contact</a>
+        <a href="/pages/frequently-asked-questions-faq">Store FAQ</a>
+        <a href="/policies/refund-policy">Refund policy</a>
+        <a href="/policies/privacy-policy">Privacy policy</a>
+      </div>
+      <div class="fb-footer-fine">© {{ 'now' | date: '%Y' }} VetPets · info@shopvetpets.com</div>
+    </div>
+  </footer>
+
+  {%- comment -%} ---------- STICKY BAR ---------- {%- endcomment -%}
+  <div class="fb-sticky" data-fb-sticky data-visible="false">
+    <div class="fb-sticky-in">
+      <img class="fb-sticky-cover" src="{{ 'freshbreath-ebook-cover.jpg' | asset_url }}" alt="" aria-hidden="true">
+      <div class="fb-sticky-info">
+        <span class="fb-sticky-title">Fresh Breath in 30 Days</span>
+        <span class="fb-sticky-sub">50-page eBook</span>
+      </div>
+      <a href="{{ product_url }}" class="fb-btn fb-btn-sm">Explore the Guide</a>
+    </div>
+  </div>
+
+  {%- comment -%} ---------- LIGHTBOX ---------- {%- endcomment -%}
+  <div class="fb-lightbox" data-fb-lightbox data-open="false" role="dialog" aria-modal="true">
+    <div class="fb-lightbox-bar">
+      <span data-fb-lb-caption></span>
+      <div class="fb-lightbox-btns">
+        <button type="button" class="fb-lightbox-btn" data-fb-lb-prev aria-label="Previous page">←</button>
+        <button type="button" class="fb-lightbox-btn" data-fb-lb-next aria-label="Next page">→</button>
+        <button type="button" class="fb-lightbox-btn fb-close" data-fb-lb-close aria-label="Close">×</button>
+      </div>
+    </div>
+    <img src="" alt="">
+  </div>
+</div>
+
+<script src="{{ 'freshbreath-ebook-landing.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Fresh Breath eBook Landing",
+  "tag": "div",
+  "class": "freshbreath-ebook-landing-section",
+  "settings": [],
+  "presets": [{ "name": "Fresh Breath eBook Landing" }]
+}
+{% endschema %}
