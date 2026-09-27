@@ -9,6 +9,31 @@
   Everything Shopify needs is still here: content_for_header, content_for_layout,
   viewport metadata, title/meta and canonical.
 {%- endcomment -%}
+{%- liquid
+  # World Animal Week automatic date gate + ?waw_preview=1 QA override.
+  # Fixed UTC epochs, not the visitor's local timezone: start 2026-09-28T04:00:00Z
+  # (midnight America/New_York), end 2026-10-05T03:59:59Z (11:59:59 PM America/
+  # New_York on Oct 4) - identical logic to sections/eyewipes-prelander.liquid so
+  # the server-rendered <head> (font choice) and body never disagree on state.
+  assign waw_start_epoch = 1790568000
+  assign waw_end_epoch = 1791172799
+  assign waw_now_epoch = 'now' | date: '%s' | times: 1
+  assign waw_in_window = false
+  if waw_now_epoch >= waw_start_epoch and waw_now_epoch <= waw_end_epoch
+    assign waw_in_window = true
+  endif
+  assign waw_preview = false
+  assign waw_qs_parts = request.query_string | split: '&'
+  for waw_qs_part in waw_qs_parts
+    if waw_qs_part == 'waw_preview=1'
+      assign waw_preview = true
+    endif
+  endfor
+  assign waw_active = false
+  if waw_in_window or waw_preview
+    assign waw_active = true
+  endif
+-%}
 <html class="eyewipes-prelander-html" lang="{{ request.locale.iso_code }}">
   <head>
     <meta charset="utf-8">
@@ -30,6 +55,12 @@
     {%- comment -%} Preload the two assets that gate the first paint. {%- endcomment -%}
     <link rel="preload" as="font" type="font/woff2" href="{{ 'ewpl-geist-bold.woff2' | asset_url }}" crossorigin>
     <link rel="preload" as="font" type="font/woff2" href="{{ 'ewpl-geist-regular.woff2' | asset_url }}" crossorigin>
+    {%- if waw_active -%}
+      {%- comment -%} Caveat: the World Animal Week "Week" script lockup only. {%- endcomment -%}
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap">
+    {%- endif -%}
     <link rel="stylesheet" href="{{ 'eyewipes-prelander.css' | asset_url }}">
 
     <style>
