@@ -232,7 +232,14 @@
       var existing = bar.querySelector('.ewof-gift-toggle');
       if (!product.length) { if (existing) existing.remove(); return; }
 
-      var label = '+ ' + product.length + ' Free Gift' + (product.length === 1 ? '' : 's');
+      // A locked, hand-authored tier (World Animal Week's "+3 Free Gifts") always
+      // wins over the computed count: Kaching ships these three physical gifts
+      // as fewer combined free-gift rows, so counting real rows undercounts
+      // the true physical gift total this tier promises.
+      var tierOverride = tierForBar(bar);
+      var label = (tierOverride && tierOverride.gift_label_override)
+        ? tierOverride.gift_label_override
+        : '+ ' + product.length + ' Free Gift' + (product.length === 1 ? '' : 's');
       if (existing) {
         existing.querySelector('.ewof-gift-label').textContent = label;
         return;
@@ -257,6 +264,11 @@
         var open = bar.getAttribute('data-ewof-gifts') === 'open';
         bar.setAttribute('data-ewof-gifts', open ? 'closed' : 'open');
         btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+        // World Animal Week: this tier's true gift list is the hand-authored
+        // panel, not Kaching's own combined row — see decorateGifts() above.
+        var wawPanel = $('[data-ewof-waw-gifts]');
+        var tierNow = tierForBar(bar);
+        if (wawPanel && tierNow && tierNow.gift_label_override) wawPanel.hidden = open;
       });
       // place it directly after the shipping perk row, before the gift rows
       var firstGift = product[0];
@@ -335,21 +347,36 @@
       $$('[data-ewof-tier-thumb]').forEach(function (img) {
         if (img.getAttribute('src') !== tier.image) img.setAttribute('src', tier.image);
       });
-      // the offer pill may only claim gifts Kaching actually adds
+      // the offer pill may only claim gifts Kaching actually adds; a locked
+      // gift_label_override (World Animal Week's true physical gift count)
+      // always wins over the live DOM row count — see decorateGifts().
       var giftCount = bar
         ? bar.querySelectorAll('.kaching-bundles__free-gift[data-ewof-gift="product"]').length
         : 0;
       var pill = $('.g-pill');
       if (pill) {
-        pill.textContent = giftCount
-          ? tier.badge + ' + ' + giftCount + ' Free Gift' + (giftCount === 1 ? '' : 's')
-          : tier.badge;
+        if (tier.gift_label_override) {
+          pill.textContent = tier.badge + ' ' + tier.gift_label_override;
+        } else {
+          pill.textContent = giftCount
+            ? tier.badge + ' + ' + giftCount + ' Free Gift' + (giftCount === 1 ? '' : 's')
+            : tier.badge;
+        }
       }
       var pill2 = $('.g-pill2');
       if (pill2) {
         pill2.textContent = tier.pill || '';
         pill2.hidden = !tier.pill;
       }
+
+      // keep the MAIN item's private line-item properties in step with the tier so
+      // the cart drawer can show the matching bundle image. Gift lines are added by
+      // Kaching as separate lines and never inherit these.
+      var propTier = document.getElementById('ewof-prop-tier');
+      var propImg = document.getElementById('ewof-prop-image');
+      if (propTier && tier.prop_tier && propTier.value !== tier.prop_tier) propTier.value = tier.prop_tier;
+      if (propImg && tier.image && propImg.value !== tier.image) propImg.value = tier.image;
+
       $$('[data-ewof-cta-label]').forEach(function (el) { el.textContent = tier.cta; });
       var so = $('.sticky-offer');
       if (so) so.textContent = tier.name;
@@ -526,4 +553,32 @@
   window.addEventListener('resize', onScroll, { passive: true });
   window.addEventListener('load', paintSticky);
   paintSticky();
+
+  /* ---------------------------------------------------------------
+     8. World Animal Week countdown — fixed end date, no evergreen reset.
+     Campaign closes 4 October 2026, 23:59:59 local time. Every element
+     carrying data-cd="d|h|m|s" is updated (the event banner, the sticky
+     strip and the closing section all read from this one clock).
+     --------------------------------------------------------------- */
+  (function wawCountdown() {
+    var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+    var END = new Date(2026, 9, 4, 23, 59, 59).getTime(); // month 9 = October
+    function tick() {
+      var left = Math.max(0, Math.floor((END - Date.now()) / 1000));
+      var parts = {
+        d: Math.floor(left / 86400),
+        h: Math.floor((left % 86400) / 3600),
+        m: Math.floor((left % 3600) / 60),
+        s: left % 60
+      };
+      $$('[data-cd]').forEach(function (el) {
+        var k = el.getAttribute('data-cd');
+        if (parts[k] === undefined) return;
+        var txt = pad(parts[k]);
+        if (el.textContent !== txt) el.textContent = txt;
+      });
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
 })();

@@ -1,8 +1,20 @@
 {%- comment -%}
-  EyeWipes offer page
+  EyeWipes offer page (deploy retry marker)
   ===================
   Faithful Shopify implementation of the approved Claude Design page
-  "EyeWipes Offer Page v1" (project: VetPets EyeWipes Offer Page).
+  "EyeWipes Offer Page v1" (evergreen) and, during the World Animal Week
+  campaign window (28 Sep – 4 Oct 2026 inclusive, store timezone), the
+  approved "EyeWipes World Animal Week 2026" design. {{ waw_active }} below
+  is the single switch between the two — no separate template, no new URL.
+  Outside the window this renders byte-for-byte the same evergreen page it
+  always has.
+
+  The WAW design narrows the plan picker to the two Kaching deals it shows
+  (Start The Routine Kit / Complete Eye Care Routine); the third ("Multi-Pet
+  Relief Plan") deal stays fully configured in Kaching but its bar is hidden
+  with CSS for the duration of the campaign — see the ".kaching-bundles"
+  rules tagged WAW in assets/eyewipes-offer-page.css. Nothing about Kaching's
+  own config changes.
 
   Rendered only through templates/product.eyewipes-offer-page.json, assigned to
   the existing live EyeWipes product. The canonical product URL is unchanged.
@@ -14,6 +26,18 @@
   purchase module and its real controls stay authoritative — assets/eyewipes-offer-page.css
   restyles those exact nodes to the approved design rather than cloning them.
 
+  The "Complete Eye Care Routine" deal's free-gift list ships as combined
+  Kaching line-items rather than three separate rows for the three physical
+  gifts (Tear Stain Comb / Bright Eyes in 30 Days e-book / Bright Eyes
+  Routine Tracker) — mirrors the FreshWipes finding of the same shape. The
+  on-page gift toggle therefore shows a hand-authored three-row panel (exact
+  approved names, images and descriptions) rather than Kaching's own row,
+  which stays in the DOM (for correct add-to-cart behaviour) but hidden from
+  view. Kaching's own "most popular" badge text is a Kaching-dashboard-owned
+  string this theme cannot rewrite from here — verify it live and, if it
+  reads anything other than "Limited Time: Buy 2, Get 2 Free", that is an
+  optional Kaching-admin fix, not a theme bug.
+
   There is exactly ONE add-to-cart pathway: the theme's <product-form> rendered
   in `.ewof-form-host`. The sticky bar and the final offer CTA are proxies that
   submit that same form; they carry no quantity, gift or selling-plan logic.
@@ -24,30 +48,89 @@
 {%- liquid
   assign v = product.selected_or_first_available_variant
   assign product_form_id = 'ewof-product-form-' | append: section.id
+
+  # World Animal Week campaign window — 28 Sep through 4 Oct 2026 inclusive,
+  # evaluated in the shop's own timezone (Liquid's `now` is already shop-local).
+  assign today_str = 'now' | date: '%Y-%m-%d'
+  assign waw_active = false
+  if today_str >= '2026-09-28' and today_str <= '2026-10-04'
+    assign waw_active = true
+  endif
+
+  # TEMPORARY: forced on for Draft-theme QA per explicit request while it's still Sep 25,
+  # ahead of the real 28 Sep window. Remove this line to restore real date-gating.
+  assign waw_active = true
+
+  if waw_active
+    assign hero_heading = 'Clear The Buildup Around Their Eyes In 30 Seconds A Day'
+    assign hero_sub = 'Textured, pre-moistened wipes for daily eye-area care — for dogs and cats with gunk, discharge and crusty eyes'
+    assign bullet2 = 'Aloe and chamomile, chosen to be gentle on the skin around the eyes'
+    assign cta_scroll_text = 'Get The World Animal Week Offer ↑'
+    assign tier1_name = 'Complete Eye Care Routine'
+    assign tier1_cta = 'Add To Cart — Buy 2, Get 2 Free'
+    assign tier1_badge = 'Buy 2, Get 2 Free'
+    assign tier1_image = 'ewof-tier-4jars-waw.webp' | asset_url
+    assign tier1_image_alt = 'World Animal Week — Buy 2, Get 2 Free. Four jars of VetPets EyeWipes with the Tear Stain Comb, the Bright Eyes Routine Tracker and the Bright Eyes in 30 Days e-book'
+    assign offer_badge_text = 'World Animal Week — Buy 2, Get 2 Free + Free Gifts'
+    assign guar_t = 'Try the routine for 100 days — or <span class="accent">every penny back</span>'
+    assign guar_c = "Use EyeWipes daily for up to 100 days. If they are not right for your pet, contact VetPets for a full refund. No questions, no forms, no hassle."
+    assign offer_bullet3 = 'Backed by the 100-day money-back guarantee'
+  else
+    assign hero_heading = section.settings.heading
+    assign hero_sub = section.settings.subheading
+    assign bullet2 = 'Aloe + chamomile stop it growing back overnight'
+    assign cta_scroll_text = 'Get Buy 2, Get 2 Free ↑'
+    assign tier1_name = 'Build The Habit Kit'
+    assign tier1_cta = 'Add To Cart — Buy 2, Get 2 Free'
+    assign tier1_badge = 'Buy 2, Get 2 Free'
+    assign tier1_image = 'ewof-eyewipes-offer-approved.webp' | asset_url
+    assign tier1_image_alt = 'Four jars of VetPets EyeWipes with the Tear Stain Comb, the Bright Eyes Routine Tracker and the Bright Eyes in 30 Days e-book'
+    assign offer_badge_text = 'Buy 2, Get 2 Free + Free Gifts'
+    assign guar_t = 'Healthy, clear eyes — or <span class="accent">every penny back</span>'
+    assign guar_c = "Use EyeWipes daily for up to 100 days. If you don't see the difference, you get a full refund. No questions, no forms, no hassle."
+    assign offer_bullet3 = 'Visible difference in 3 weeks — or every penny back'
+  endif
 -%}
 
 {{ 'eyewipes-offer-page.css' | asset_url | stylesheet_tag }}
 
 <link rel="preload" as="image" href="{{ 'ewof-tier-2jars.webp' | asset_url }}">
-<link rel="preload" as="image" href="{{ 'ewof-eyewipes-offer-approved.webp' | asset_url }}">
-<link rel="preload" as="image" href="{{ 'ewof-tier-6jars.webp' | asset_url }}">
+<link rel="preload" as="image" href="{{ tier1_image }}">
 
-<div id="eyewipes-offer-page" data-rc="on" data-tier="build">
+<div id="eyewipes-offer-page" data-rc="on" data-tier="build" data-waw="{% if waw_active %}on{% else %}off{% endif %}">
 
-  {%- comment -%} ---------- rotating announcement bar (no countdown, no scarcity copy) ---------- {%- endcomment -%}
-  <div class="topbar">
-    <div class="topbar-in">
-      <div class="announce" role="status" aria-label="Offer highlights">
-        <span class="announce-msg" data-announce-msg>
-          <svg class="announce-icon" data-announce-icon viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-            <path d="M11.5 3H5a2 2 0 0 0-2 2v6.5a2 2 0 0 0 .586 1.414l8.5 8.5a2 2 0 0 0 2.828 0l6.5-6.5a2 2 0 0 0 0-2.828l-8.5-8.5A2 2 0 0 0 11.5 3Z"></path>
-            <circle cx="7.25" cy="7.25" r="1.1" fill="currentColor" stroke="none"></circle>
-          </svg>
-          <span class="announce-text" data-announce-text>{{ section.settings.announce_msg1 }}</span>
-        </span>
+  {%- if waw_active -%}
+    {%- comment -%} ---------- World Animal Week countdown top bar ---------- {%- endcomment -%}
+    <div class="wtop" data-screen-label="World Animal Week countdown">
+      <div class="wtop-in">
+        <div class="wtop-l"><svg class="wtop-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.4" fill="none" stroke="#FFFFFF" stroke-width="1.7"></circle><path d="M2.6 12h18.8M12 2.6c2.6 2.6 4 5.9 4 9.4s-1.4 6.8-4 9.4c-2.6-2.6-4-5.9-4-9.4s1.4-6.8 4-9.4Z" fill="none" stroke="#FFFFFF" stroke-width="1.5"></path></svg><span class="wtop-lt"><span class="wtop-t">World Animal Week Sale</span><span class="wtop-date">28 September – 4 October 2026</span></span></div>
+        <div class="wtop-mid"><span class="wtop-offer">Buy 2, Get 2 Free + 3 Free Gifts</span><span class="wtop-dead">Ends Oct 4</span></div>
+        <div class="wtop-r"><span class="wtop-lab">Ends in</span>
+          <div class="wtop-cd" role="timer" aria-label="World Animal Week sale ends in">
+            <div class="wtop-c1"><span class="wtop-n" data-cd="d">00</span><span class="wtop-u">Days</span></div>
+            <div class="wtop-c1"><span class="wtop-n" data-cd="h">00</span><span class="wtop-u">Hrs</span></div>
+            <div class="wtop-c1"><span class="wtop-n" data-cd="m">00</span><span class="wtop-u">Min</span></div>
+            <div class="wtop-c1"><span class="wtop-n" data-cd="s">00</span><span class="wtop-u">Sec</span></div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  {%- else -%}
+    {%- comment -%} ---------- evergreen rotating announcement bar (no countdown, no scarcity copy) ---------- {%- endcomment -%}
+    <div class="topbar">
+      <div class="topbar-in">
+        <div class="announce" role="status" aria-label="Offer highlights">
+          <span class="announce-msg" data-announce-msg>
+            <svg class="announce-icon" data-announce-icon viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M11.5 3H5a2 2 0 0 0-2 2v6.5a2 2 0 0 0 .586 1.414l8.5 8.5a2 2 0 0 0 2.828 0l6.5-6.5a2 2 0 0 0 0-2.828l-8.5-8.5A2 2 0 0 0 11.5 3Z"></path>
+              <circle cx="7.25" cy="7.25" r="1.1" fill="currentColor" stroke="none"></circle>
+            </svg>
+            <span class="announce-text" data-announce-text>{{ section.settings.announce_msg1 }}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
 
   {%- comment -%} ---------- SECTION 1 — above the fold ---------- {%- endcomment -%}
   <section class="hero" id="ewof-hero">
@@ -65,12 +148,12 @@
               <img
                 class="im im-fit"
                 id="ewof-tier-img"
-                src="{{ 'ewof-eyewipes-offer-approved.webp' | asset_url }}"
+                src="{{ tier1_image }}"
                 width="900"
                 height="900"
                 fetchpriority="high"
                 decoding="async"
-                alt="Four jars of VetPets EyeWipes with the Tear Stain Comb, the Bright Eyes Routine Tracker and the Bright Eyes in 30 Days e-book">
+                alt="{{ tier1_image_alt }}">
             </div>
             {%- assign pdp_slides = 'ewof-pdp-2-daily-care.webp|EyeWipes daily eye-cleaning benefits for dogs;ewof-pdp-3-buildup-returns.webp|Why daily eye buildup and tear stains return;ewof-pdp-4-textured-pad.webp|Close-up of the textured EyeWipes pad;ewof-pdp-5-before-after.webp|EyeWipes daily routine before-and-after presentation;ewof-pdp-6-three-steps.webp|How to use EyeWipes in three steps;ewof-pdp-7-comparison.webp|EyeWipes product-feature comparison;ewof-pdp-8-ingredients.webp|EyeWipes gentle ingredient overview;ewof-pdp-9-guarantee.webp|100-Day Money-Back Guarantee — try EyeWipes risk-free' | split: ';' -%}
             {%- for s in pdp_slides -%}
@@ -92,7 +175,7 @@
 
         <div class="thumbs" role="tablist" aria-label="Gallery thumbnails">
           <button type="button" class="thumb on" aria-label="Selected kit bundle" aria-selected="true">
-            <img src="{{ 'ewof-eyewipes-offer-approved.webp' | asset_url }}" data-ewof-tier-thumb width="900" height="900" alt="">
+            <img src="{{ tier1_image }}" data-ewof-tier-thumb width="900" height="900" alt="">
           </button>
           {%- for s in pdp_slides -%}
             {%- assign parts = s | split: '|' -%}
@@ -105,8 +188,19 @@
 
       {%- comment -%} purchase module {%- endcomment -%}
       <div class="buy">
-        <h1 class="h1">{{ section.settings.heading }}
-          <span class="h1-sub">{{ section.settings.subheading }}</span>
+        {%- if waw_active -%}
+          <div class="waw-hero-lab">
+            <span class="waw-hero-lab-i" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" style="fill:none"><circle cx="12" cy="12" r="9.4" fill="none" stroke="#FFFFFF" stroke-width="1.8"></circle><path d="M2.6 12h18.8M12 2.6c2.6 2.6 4 5.9 4 9.4s-1.4 6.8-4 9.4c-2.6-2.6-4-5.9-4-9.4s1.4-6.8 4-9.4Z" fill="none" stroke="#FFFFFF" stroke-width="1.6"></path></svg></span>
+            <span class="waw-hero-lab-t">
+              <span class="waw-hero-lab-1">World Animal Week</span>
+              <span class="waw-hero-lab-2">Limited-Time Sale</span>
+            </span>
+            <span class="waw-hero-lab-dead">Ends Oct 4</span>
+          </div>
+        {%- endif -%}
+
+        <h1 class="h1">{{ hero_heading }}
+          <span class="h1-sub">{{ hero_sub }}</span>
         </h1>
 
         <div class="rating" style="margin-top:11px">
@@ -115,14 +209,26 @@
         </div>
 
         <div class="bullets">
-          {%- assign bullets = 'Textured surface lifts the buildup off the skin|Aloe + chamomile stop it growing back overnight|30 seconds a day — no rinsing, no mixing, no fight' | split: '|' -%}
-          {%- for b in bullets -%}
-            <div class="bullet">
-              {% render 'ewof-check', size: 19 %}
-              <span>{{ b }}</span>
-            </div>
-          {%- endfor -%}
+          <div class="bullet">
+            {% render 'ewof-check', size: 19 %}
+            <span>Textured surface lifts the buildup off the skin</span>
+          </div>
+          <div class="bullet">
+            {% render 'ewof-check', size: 19 %}
+            <span>{{ bullet2 }}</span>
+          </div>
+          <div class="bullet">
+            {% render 'ewof-check', size: 19 %}
+            <span>30 seconds a day — no rinsing, no mixing, no fight</span>
+          </div>
         </div>
+
+        {%- if waw_active -%}
+          <div class="waw-selhead">
+            <span class="waw-selchip"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="7" cy="8" rx="2.1" ry="2.7"></ellipse><ellipse cx="12" cy="6.4" rx="2.1" ry="2.7"></ellipse><ellipse cx="17" cy="8" rx="2.1" ry="2.7"></ellipse><path d="M12 11c3 0 5.2 2.4 5.2 4.7 0 1.9-1.6 2.9-3.3 2.6-.7-.1-1.3-.3-1.9-.3s-1.2.2-1.9.3c-1.7.3-3.3-.7-3.3-2.6C6.8 13.4 9 11 12 11Z"></path></svg> World Animal Week Offer</span>
+            <span class="waw-seldead">Ends October 4</span>
+          </div>
+        {%- endif -%}
 
         <div class="pick-h">{{ section.settings.picker_heading }}</div>
 
@@ -137,6 +243,30 @@
             {%- endif -%}
           {%- endfor -%}
         </div>
+
+        {%- if waw_active -%}
+          {%- comment -%}
+            Hand-authored gift panel — Kaching's real free-gift list combines
+            these physical items into fewer rows than the three gifts the
+            approved design promises, so this panel (real names/images) is
+            the truthful source shown to the customer. Toggled by the same
+            .ewof-gift-toggle button Kaching's row already renders.
+          {%- endcomment -%}
+          <div class="gifts-panel" data-ewof-waw-gifts hidden>
+            <div class="gp-row">
+              <div class="gp-thumb"><img src="{{ 'ewof-gift-comb.webp' | asset_url }}" alt="The Tear Stain Comb"></div>
+              <div><div class="gp-n">Tear Stain Comb</div><div class="gp-d">Fine teeth lift debris that wipes can't reach deep in the fur.</div></div>
+            </div>
+            <div class="gp-row">
+              <div class="gp-thumb"><img src="{{ 'ewof-gift-ebook.webp' | asset_url }}" alt="The Bright Eyes in 30 Days e-book"></div>
+              <div><div class="gp-n">Bright Eyes in 30 Days</div><div class="gp-d">Your dog's complete guide to clear eyes and tear stain prevention.</div></div>
+            </div>
+            <div class="gp-row">
+              <div class="gp-thumb"><img src="{{ 'ewof-gift-tracker.webp' | asset_url }}" alt="The Bright Eyes Routine Tracker"></div>
+              <div><div class="gp-n">Bright Eyes Routine Tracker</div><div class="gp-d">21-day habit tracker to keep your routine consistent.</div></div>
+            </div>
+          </div>
+        {%- endif -%}
 
         {%- comment -%} the ONE authoritative add-to-cart pathway {%- endcomment -%}
         <div class="ewof-form-host">
@@ -163,6 +293,15 @@
                 data-type: 'add-to-cart-form'
               -%}
                 <input type="hidden" name="id" value="{{ v.id }}" class="product-variant-id">
+                {%- comment -%}
+                  Private line-item properties for the cart drawer's bundle image.
+                  These ride the MAIN EyeWipes item only. Kaching adds free gifts as
+                  separate lines and its `propagate_line_properties` flag is false, so
+                  gift lines never inherit them. The JS keeps tier/image in sync.
+                {%- endcomment -%}
+                <input type="hidden" name="properties[_vp_offer_source]" value="eyewipes-offer-page">
+                <input type="hidden" name="properties[_vp_bundle_tier]" id="ewof-prop-tier" value="4-jars">
+                <input type="hidden" name="properties[_vp_bundle_image]" id="ewof-prop-image" value="{{ tier1_image }}">
                 <button
                   id="ProductSubmitButton-{{ section.id }}"
                   type="submit"
@@ -171,28 +310,46 @@
                   class="atc-button product-form__submit main-product-atc cta btn-buy"
                   {% if v.available == false %}disabled{% endif %}
                 >
-                  <span><span data-ewof-cta-label>Add To Cart — Buy 2, Get 2 Free</span> <span aria-hidden="true">→</span></span>
+                  <span><span data-ewof-cta-label>{{ tier1_cta }}</span> <span aria-hidden="true">→</span></span>
                 </button>
               {%- endform -%}
             </product-form>
           {%- endif -%}
         </div>
 
-        <div class="guar-row">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#13B6B5"></circle><path d="m7.4 12.3 3 3 6.2-6.6" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-          <span>100-Day Money-Back Guarantee</span>
-        </div>
+        {%- if waw_active -%}
+          <div class="assure">
+            <div class="assure-g">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#13B6B5"></circle><path d="m7.4 12.3 3 3 6.2-6.6" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <div>
+                <div class="assure-t">Healthy clear eyes OR your money back</div>
+                <p class="assure-c">Try EyeWipes for 100 days. If you don't see a cleaner-looking eye area with consistent use, we'll refund you.</p>
+              </div>
+            </div>
+            <div class="assure-s">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="2.2" fill="#4F5F6B"></rect><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="#4F5F6B" stroke-width="2.2" stroke-linecap="round"></path></svg>
+              <span>All transactions are secure and encrypted</span>
+            </div>
+          </div>
+        {%- else -%}
+          <div class="guar-row">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#13B6B5"></circle><path d="m7.4 12.3 3 3 6.2-6.6" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            <span>100-Day Money-Back Guarantee</span>
+          </div>
+        {%- endif -%}
 
         <div class="pay">
           <img class="pay-strip" src="{{ 'ewof-payment-badges.webp' | asset_url }}" width="700" height="64" loading="lazy" decoding="async" alt="Accepted payment methods: Mastercard, Visa, PayPal, American Express, Discover and Apple Pay">
         </div>
 
-        <div class="secure">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="2.2" fill="#6B7A85"></rect><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="#6B7A85" stroke-width="2.2" stroke-linecap="round"></path></svg>
-          <span>All transactions are secure and encrypted</span>
-        </div>
+        {%- unless waw_active -%}
+          <div class="secure">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="2.2" fill="#6B7A85"></rect><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="#6B7A85" stroke-width="2.2" stroke-linecap="round"></path></svg>
+            <span>All transactions are secure and encrypted</span>
+          </div>
+        {%- endunless -%}
 
-        {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url -%}
+        {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url, recurring_copy: 'again in one month and every month thereafter' -%}
 
         {%- comment -%} information panel {%- endcomment -%}
         <div class="info">
@@ -211,7 +368,7 @@
                 </div>
                 <h3 class="vet-h">A Practical Approach to Daily Eye Care</h3>
                 <div class="vet-grid">
-                  <p class="vet-p">EyeWipes gives pet owners a simple, controlled way to remove the buildup that collects around the eyes each day. The textured pads help lift residue from the fur and skin without rinsing or complicated grooming, making the routine easy to repeat consistently.</p>
+                  <p class="vet-p">EyeWipes gives pet owners a simple, controlled way to help remove the visible buildup that collects around the eyes each day. The textured pads help lift residue from the fur and skin without rinsing or complicated grooming, making the routine easy to repeat consistently.</p>
                   <div class="vet-row">
                     <div class="vet-por"><img src="{{ 'ewof-vet-dr-michael-thompson.webp' | asset_url }}" width="200" height="200" loading="lazy" alt="Dr. Michael Thompson, veterinarian at VetPets"></div>
                     <div class="vet-who">
@@ -231,11 +388,11 @@
               <div class="info-ing">
                 <div class="info-ing-r"><strong>EDI-purified water</strong> — base solution</div>
                 <div class="info-ing-r"><strong>Aloe Vera (Aloe Barbadensis)</strong> — soothes and moisturizes the skin around the eyes</div>
-                <div class="info-ing-r"><strong>Chamomile (Chamomilla Recutita)</strong> — known for its mild, anti-inflammatory properties</div>
+                <div class="info-ing-r"><strong>Chamomile (Chamomilla Recutita)</strong> — traditionally used for its mild, soothing properties</div>
                 <div class="info-ing-r"><strong>Glycerin</strong> — binds moisture and protects the skin</div>
-                <div class="info-ing-r"><strong>Ethylhexylglycerin</strong> — gentle preservation and antibacterial effect</div>
+                <div class="info-ing-r"><strong>Ethylhexylglycerin</strong> — gentle preservation</div>
                 <div class="info-ing-r"><strong>Decyl Glucoside</strong> — mild cleansing surfactant from plants</div>
-                <div class="info-ing-r"><strong>Polyhexamethylene Biguanide Hydrochloride</strong> — antibacterial, counteracts irritation</div>
+                <div class="info-ing-r"><strong>Polyhexamethylene Biguanide Hydrochloride</strong> — part of the preservative system</div>
                 <div class="info-ing-r"><strong>Vitamin E</strong> — strengthens and protects sensitive skin</div>
               </div>
               <div class="info-free">
@@ -256,7 +413,7 @@
 
             <div class="info-panel" role="tabpanel" hidden>
               <ul class="info-list">
-                {%- assign benefits = 'Textured surface lifts away buildup instead of moving it around.|Antibacterial ingredients help prevent regrowth between wipes.|Safe for sensitive eyes and puppies — pH-balanced and hypoallergenic.|A 30-second routine you can actually keep up with.|Safe for cats as well as dogs.' | split: '|' -%}
+                {%- assign benefits = 'Textured surface lifts away buildup instead of moving it around.|Pre-moistened with aloe, chamomile and glycerin for gentle daily use.|Made for sensitive eyes and puppies — pH-balanced and hypoallergenic.|A 30-second routine you can actually keep up with.|Suitable for cats as well as dogs.' | split: '|' -%}
                 {%- for b in benefits -%}
                   <li class="info-li">{% render 'ewof-check', size: 16 %}<span>{{ b }}</span></li>
                 {%- endfor -%}
@@ -265,13 +422,27 @@
           </div>
         </div>
 
+        {%- if waw_active -%}
+          <div class="waw-hd">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 22 20H2L12 3Z" fill="#D92D20"></path><path d="M12 9.5v4.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path><circle cx="12" cy="17" r="1.2" fill="#FFFFFF"></circle></svg>
+            <div class="waw-hd-c">
+              <span class="waw-hd-t">High demand during World Animal Week</span>
+              <span class="waw-hd-s">Order now while this offer and available stock last.</span>
+            </div>
+          </div>
+        {%- endif -%}
+
       </div>
 
     </div>
   </section>
 
   {%- comment -%} ---------- SECTION 2 — marquee ---------- {%- endcomment -%}
-  {%- assign claims = '45,000+ Happy Dog Owners|100-Day Money-Back Guarantee|Hypoallergenic &amp; Fragrance-Free|Works In 30 Seconds A Day' | split: '|' -%}
+  {%- if waw_active -%}
+    {%- assign claims = 'World Animal Week Sale — Ends October 4|Buy 2, Get 2 Free + Free Gifts|45,000+ Happy Dog Owners|100-Day Money-Back Guarantee|Hypoallergenic &amp; Fragrance-Free|A 30-Second Daily Routine' | split: '|' -%}
+  {%- else -%}
+    {%- assign claims = '45,000+ Happy Dog Owners|100-Day Money-Back Guarantee|Hypoallergenic &amp; Fragrance-Free|Works In 30 Seconds A Day' | split: '|' -%}
+  {%- endif -%}
   <div class="mq">
     <ul class="ewof-sr">
       {%- for c in claims -%}<li>{{ c }}</li>{%- endfor -%}
@@ -304,7 +475,7 @@
         {%- endfor -%}
       </div>
       <p class="body-copy">That brown is what was sitting on your dog's skin. It's what baby wipes and home remedies slide straight over — and it's why the crust keeps coming back every morning.</p>
-      <a class="cta btn-outline" href="#ewof-hero">Get Buy 2, Get 2 Free ↑</a>
+      <a class="cta btn-outline" href="#ewof-hero">{{ cta_scroll_text }}</a>
     </div>
   </section>
 
@@ -352,7 +523,7 @@
         </div>
       </div>
 
-      <a class="cta btn-outline" href="#ewof-hero">Get Buy 2, Get 2 Free ↑</a>
+      <a class="cta btn-outline" href="#ewof-hero">{{ cta_scroll_text }}</a>
     </div>
   </section>
 
@@ -361,10 +532,10 @@
   {%- comment -%} ---------- SECTION 4 — first three weeks ---------- {%- endcomment -%}
   <section class="sec sec-pale">
     <div class="col-c">
-      <h2 class="h2">What the <span class="accent">first three weeks</span> look like</h2>
+      <h2 class="h2">What a <span class="accent">consistent daily routine</span> looks like</h2>
       <div class="tl">
         <div class="tl-line" aria-hidden="true"></div>
-        {%- assign weeks = 'Week 1|Less gunk waiting for you each morning.|Week 1 — a Maltese with hard crust and a red, irritated eye area;Week 2|The discharge slows down. The fur around the eyes starts to brighten.|Week 2 — the same Maltese with less crust, some staining still visible;Week 3|Clean, bright, comfortable — she leans into your hand instead of bracing for it.|Week 3 — the same Maltese with a clear, bright eye area' | split: ';' -%}
+        {%- assign weeks = 'Week 1|One pass around the eye area with a fresh pad. Thirty seconds, no rinsing, no mixing.|Week 1 — a Maltese with hard crust and a red, irritated eye area;Week 2|The wipe becomes part of the day — you catch the buildup before it has time to dry on.|Week 2 — the same Maltese with less crust, some staining still visible;Week 3|The routine is a habit. Most dogs settle into it and lean into your hand instead of bracing for it.|Week 3 — the same Maltese with a clear, bright eye area' | split: ';' -%}
         {%- for w in weeks -%}
           {%- assign wp = w | split: '|' -%}
           {%- assign wi = forloop.index -%}
@@ -378,7 +549,8 @@
           </div>
         {%- endfor -%}
       </div>
-      <a class="cta btn-outline" href="#ewof-hero">Get Buy 2, Get 2 Free ↑</a>
+      <p class="body-copy" style="font-size:14px;color:#54626D">Every pet is different. How the eye area looks depends on how much buildup is present, how long it has been there, and how consistently the routine is kept.</p>
+      <a class="cta btn-outline" href="#ewof-hero">{{ cta_scroll_text }}</a>
     </div>
   </section>
 
@@ -405,20 +577,20 @@
   <section class="sec sec-pale" id="ewof-offer">
     <div class="col-c" style="gap:9px">
       <h2 class="h2">You're the kind of owner who notices. <span class="accent">The tools failed — not you.</span></h2>
-      <p class="lead" style="margin-bottom:8px">Three weeks from now you're not managing the gunk. You ended it.</p>
+      <p class="lead" style="margin-bottom:8px">{% if waw_active %}One textured wipe around the eye area, once a day. That is the whole routine.{% else %}Three weeks from now you're not managing the gunk. You ended it.{% endif %}</p>
     </div>
 
     <div class="guar">
       <div class="guar-card">
         <svg width="40" height="45" viewBox="0 0 44 50" fill="none" aria-hidden="true"><path d="M22 1.5 41.5 8.8v14.4c0 11.6-8.3 20.4-19.5 24.8C10.8 43.6 2.5 34.8 2.5 23.2V8.8L22 1.5Z" fill="#47B5E9"></path><path d="m13.5 24.5 5.5 5.5 11.5-11.5" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></svg>
-        <h3 class="guar-t">Healthy, clear eyes — or <span class="accent">every penny back</span></h3>
-        <p class="guar-c">Use EyeWipes daily for up to 100 days. If you don't see the difference, you get a full refund. No questions, no forms, no hassle.</p>
+        <h3 class="guar-t">{{ guar_t }}</h3>
+        <p class="guar-c">{{ guar_c }}</p>
       </div>
       <div class="guar-media"><img src="{{ 'ewpl-guarantee.webp' | asset_url }}" width="1098" height="618" loading="lazy" decoding="async" alt="A happy dog owner with her dog, jars of EyeWipes in frame"></div>
     </div>
 
     <div class="offer-wrap">
-      <div class="offer-badge">Buy 2, Get 2 Free + Free Gifts</div>
+      <div class="offer-badge">{{ offer_badge_text }}</div>
       <div class="offer-card">
         <div class="offer-media"><img src="{{ 'ewpl-offer-jar.webp' | asset_url }}" width="800" height="800" loading="lazy" decoding="async" alt="An EyeWipes jar — gentle care for sensitive eyes, for dogs and cats"></div>
         <div class="offer-body">
@@ -428,16 +600,27 @@
           </div>
           <h3 class="offer-name">EyeWipes — Gentle Care for Sensitive Eyes</h3>
           <div class="offer-bullets">
-            {%- assign obullets = 'Removes the buildup that causes crusty eyes|Gentle enough for daily use — hypoallergenic &amp; fragrance-free|Visible difference in 3 weeks — or every penny back' | split: '|' -%}
-            {%- for b in obullets -%}
-              <div class="bullet">{% render 'ewof-check', size: 20 %}<span>{{ b }}</span></div>
-            {%- endfor -%}
+            <div class="bullet">{% render 'ewof-check', size: 20 %}<span>Removes the buildup that causes crusty eyes</span></div>
+            <div class="bullet">{% render 'ewof-check', size: 20 %}<span>Gentle enough for daily use — hypoallergenic &amp; fragrance-free</span></div>
+            <div class="bullet">{% render 'ewof-check', size: 20 %}<span>{{ offer_bullet3 }}</span></div>
           </div>
+          {%- if waw_active -%}
+            <div class="scarcity" style="background:#FFFFFF;border-color:rgba(217,45,32,.45);color:#0F172A">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="#D92D20" stroke-width="2.2"></circle><path d="M12 7v5.2l3.6 2.2" stroke="#D92D20" stroke-width="2.2" stroke-linecap="round"></path></svg>
+              <span>Limited-time offer — ends October 4. Buy 2, Get 2 Free + Free Gifts until then.</span>
+            </div>
+          {%- endif -%}
           <button type="button" class="cta btn-buy" data-ewof-submit>
-            <span><span data-ewof-cta-label>Add To Cart — Buy 2, Get 2 Free</span> <span aria-hidden="true">→</span></span>
+            <span><span data-ewof-cta-label>{{ tier1_cta }}</span> <span aria-hidden="true">→</span></span>
           </button>
           <div class="trustline" style="text-align:left">100-Day Money-Back Guarantee · Free &amp; Fast Shipping</div>
-          {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url -%}
+          {%- if waw_active -%}
+            <button type="button" class="routine" onclick="document.querySelector('#ewof-hero').scrollIntoView({behavior:'smooth'})">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9" stroke="#1F7FB8" stroke-width="2.4" stroke-linecap="round"></path><path d="M20 3.5V8h-4.5" stroke="#1F7FB8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              Save 20% with RoutineCare
+            </button>
+          {%- endif -%}
+          {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url, recurring_copy: 'again in one month and every month thereafter' -%}
         </div>
       </div>
     </div>
@@ -471,6 +654,37 @@
     </div>
   </section>
 
+  {%- if waw_active -%}
+    {%- comment -%} ---------- final World Animal Week urgency section ---------- {%- endcomment -%}
+    <section class="waw-final" data-screen-label="Final World Animal Week urgency section">
+      <svg class="waw-globe" style="left:-40px;top:-30px;width:180px;height:180px" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="28" stroke-width="3"></circle><ellipse cx="32" cy="32" rx="12" ry="28" stroke-width="3"></ellipse><path d="M4 32h56" stroke-width="3"></path><path d="M9.5 18c13.5 5.6 31.5 5.6 45 0" stroke-width="3"></path><path d="M9.5 46c13.5-5.6 31.5-5.6 45 0" stroke-width="3"></path></svg>
+      <svg class="waw-globe" style="right:-46px;bottom:-56px;width:200px;height:200px" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="28" stroke-width="3"></circle><ellipse cx="32" cy="32" rx="12" ry="28" stroke-width="3"></ellipse><path d="M4 32h56" stroke-width="3"></path><path d="M9.5 18c13.5 5.6 31.5 5.6 45 0" stroke-width="3"></path><path d="M9.5 46c13.5-5.6 31.5-5.6 45 0" stroke-width="3"></path></svg>
+      <svg class="waw-paw" style="left:9%;bottom:16%;width:38px;height:38px;transform:rotate(-18deg)" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="7" cy="8" rx="2.1" ry="2.7"></ellipse><ellipse cx="12" cy="6.4" rx="2.1" ry="2.7"></ellipse><ellipse cx="17" cy="8" rx="2.1" ry="2.7"></ellipse><path d="M12 11c3 0 5.2 2.4 5.2 4.7 0 1.9-1.6 2.9-3.3 2.6-.7-.1-1.3-.3-1.9-.3s-1.2.2-1.9.3c-1.7.3-3.3-.7-3.3-2.6C6.8 13.4 9 11 12 11Z"></path></svg>
+      <svg class="waw-paw" style="right:12%;top:12%;width:30px;height:30px;transform:rotate(20deg)" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="7" cy="8" rx="2.1" ry="2.7"></ellipse><ellipse cx="12" cy="6.4" rx="2.1" ry="2.7"></ellipse><ellipse cx="17" cy="8" rx="2.1" ry="2.7"></ellipse><path d="M12 11c3 0 5.2 2.4 5.2 4.7 0 1.9-1.6 2.9-3.3 2.6-.7-.1-1.3-.3-1.9-.3s-1.2.2-1.9.3c-1.7.3-3.3-.7-3.3-2.6C6.8 13.4 9 11 12 11Z"></path></svg>
+      <div class="waw-final-in">
+        <span class="waw-chip"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="7" cy="8" rx="2.1" ry="2.7"></ellipse><ellipse cx="12" cy="6.4" rx="2.1" ry="2.7"></ellipse><ellipse cx="17" cy="8" rx="2.1" ry="2.7"></ellipse><path d="M12 11c3 0 5.2 2.4 5.2 4.7 0 1.9-1.6 2.9-3.3 2.6-.7-.1-1.3-.3-1.9-.3s-1.2.2-1.9.3c-1.7.3-3.3-.7-3.3-2.6C6.8 13.4 9 11 12 11Z"></path></svg> World Animal Week</span>
+        <h2 class="waw-final-h">Buy 2, Get 2 Free<br>+ Free Gifts</h2>
+        <p class="waw-final-p">A textured wipe around the eye area, once a day — the daily routine that keeps visible buildup from collecting. Stock four jars at the World Animal Week price and keep it going.</p>
+        <div class="waw-final-facts">
+          <span class="waw-fact">Save 20% with RoutineCare</span>
+          <span class="waw-fact">Free shipping</span>
+          <span class="waw-fact">100-day money-back guarantee</span>
+          <span class="waw-fact waw-fact-red">Ends October 4</span>
+        </div>
+        <div class="waw-cd waw-cd-final" role="timer" aria-label="World Animal Week sale ends in">
+          <div class="waw-cd-lab">Sale ends in</div>
+          <div class="waw-cd-row">
+            <div class="waw-cd-c"><div class="waw-cd-n" data-cd="d">00</div><div class="waw-cd-u">DAYS</div></div>
+            <div class="waw-cd-c"><div class="waw-cd-n" data-cd="h">00</div><div class="waw-cd-u">HRS</div></div>
+            <div class="waw-cd-c"><div class="waw-cd-n" data-cd="m">00</div><div class="waw-cd-u">MIN</div></div>
+            <div class="waw-cd-c"><div class="waw-cd-n" data-cd="s">00</div><div class="waw-cd-u">SEC</div></div>
+          </div>
+        </div>
+        <a class="cta btn-buy" href="#ewof-hero"><span>Get The World Animal Week Offer <span aria-hidden="true">→</span></span></a>
+      </div>
+    </section>
+  {%- endif -%}
+
   {%- comment -%} ---------- SECTION 8 — footer ---------- {%- endcomment -%}
   <footer class="foot">
     <img class="foot-logo" src="{{ 'ewof-vetpets-logo.webp' | asset_url }}" width="290" height="110" loading="lazy" decoding="async" alt="VetPets">
@@ -480,19 +694,26 @@
   <div class="sticky ewof-sticky" role="region" aria-label="EyeWipes offer">
     <div class="sticky-in">
       <div class="sticky-r1">
-        <div class="sticky-thumb"><img src="{{ 'ewof-eyewipes-offer-approved.webp' | asset_url }}" data-ewof-tier-thumb width="900" height="900" loading="lazy" alt=""></div>
+        <div class="sticky-thumb"><img src="{{ tier1_image }}" data-ewof-tier-thumb width="900" height="900" loading="lazy" alt=""></div>
         <div class="sticky-copy">
-          <div class="sticky-offer">Build The Habit Kit</div>
+          {%- if waw_active -%}
+            <div class="waw-sticky-tag"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="7" cy="8" rx="2.1" ry="2.7"></ellipse><ellipse cx="12" cy="6.4" rx="2.1" ry="2.7"></ellipse><ellipse cx="17" cy="8" rx="2.1" ry="2.7"></ellipse><path d="M12 11c3 0 5.2 2.4 5.2 4.7 0 1.9-1.6 2.9-3.3 2.6-.7-.1-1.3-.3-1.9-.3s-1.2.2-1.9.3c-1.7.3-3.3-.7-3.3-2.6C6.8 13.4 9 11 12 11Z"></path></svg> World Animal Week · Ends Oct 4</div>
+          {%- endif -%}
+          <div class="sticky-offer">{{ tier1_name }}</div>
           <div class="sticky-sub">
             <span class="sticky-price"></span>
             <span class="sticky-rc" hidden><span class="sticky-rc-short">RC −20%</span><span class="sticky-rc-full">RoutineCare −20%</span></span>
-            <span class="sticky-sub-full">· 4.8/5 · 45,000+ Happy Customers</span>
+            {%- if waw_active -%}
+              <span class="sticky-sub-full">· Buy 2, Get 2 Free + Free Gifts · <span class="waw-sticky-dead">Ends Oct 4</span></span>
+            {%- else -%}
+              <span class="sticky-sub-full">· 4.8/5 · 45,000+ Happy Customers</span>
+            {%- endif -%}
           </div>
         </div>
       </div>
       <button type="button" class="cta btn-buy" data-ewof-submit>
-        <span class="sticky-cta-full"><span data-ewof-cta-label>Add To Cart — Buy 2, Get 2 Free</span> <span aria-hidden="true">→</span></span>
-        <span class="sticky-cta-short">Add To Cart <span aria-hidden="true">→</span></span>
+        <span class="sticky-cta-full"><span data-ewof-cta-label>{{ tier1_cta }}</span> <span aria-hidden="true">→</span></span>
+        <span class="sticky-cta-short">{% if waw_active %}Get The Offer{% else %}Add To Cart{% endif %} <span aria-hidden="true">→</span></span>
       </button>
     </div>
   </div>
@@ -501,6 +722,7 @@
   <script type="application/json" id="ewof-config">
     {
       "rc_note": {{ section.settings.rc_note | json }},
+      "waw_active": {{ waw_active | json }},
       "announce": [
         {{ section.settings.announce_msg1 | json }},
         {{ section.settings.announce_msg2 | json }},
@@ -516,20 +738,26 @@
           "badge": "Start The Routine Kit · 2-Month Supply",
           "pill": "",
           "applied_label": "",
+          "prop_tier": "2-jars",
           "image": {{ 'ewof-tier-2jars.webp' | asset_url | json }},
-          "image_alt": "Two jars of VetPets EyeWipes"
+          "image_alt": "Two jars of VetPets EyeWipes",
+          "gift_label_override": ""
         },
         {
           "key": "build",
           "deal_id": {{ section.settings.deal_build | json }},
-          "name": "Build The Habit Kit",
-          "cta": "Add To Cart — Buy 2, Get 2 Free",
-          "badge": "Buy 2, Get 2 Free",
+          "name": {{ tier1_name | json }},
+          "cta": {{ tier1_cta | json }},
+          "badge": {{ tier1_badge | json }},
           "pill": "",
           "applied_label": "Your Buy 2, Get 2 Free discount is applied",
-          "image": {{ 'ewof-eyewipes-offer-approved.webp' | asset_url | json }},
-          "image_alt": "Four jars of VetPets EyeWipes with the Tear Stain Comb, the Bright Eyes Routine Tracker and the Bright Eyes in 30 Days e-book"
-        },
+          "prop_tier": "4-jars",
+          "image": {{ tier1_image | json }},
+          "image_alt": {{ tier1_image_alt | json }},
+          "gift_label_override": {% if waw_active %}"+ 3 Free Gifts"{% else %}""{% endif %}
+        }
+        {%- unless waw_active -%}
+        ,
         {
           "key": "multi",
           "deal_id": {{ section.settings.deal_multi | json }},
@@ -538,9 +766,12 @@
           "badge": "Multi-Pet Relief Plan · 6-Month Supply",
           "pill": "Best For Multi-Pet Households",
           "applied_label": "Your Multi-Pet Relief Plan discount is applied",
+          "prop_tier": "6-jars",
           "image": {{ 'ewof-tier-6jars.webp' | asset_url | json }},
-          "image_alt": "Six jars of VetPets EyeWipes with the Tear Stain Comb, the Bright Eyes Routine Tracker and the Bright Eyes in 30 Days e-book"
+          "image_alt": "Six jars of VetPets EyeWipes with the Tear Stain Comb, the Bright Eyes Routine Tracker and the Bright Eyes in 30 Days e-book",
+          "gift_label_override": ""
         }
+        {%- endunless -%}
       ]
     }
   </script>
@@ -557,13 +788,17 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Add the Kaching Bundles app block to this section. Kaching stays the source of truth for tier, quantity, selling plan and free gifts — this section only restyles it."
+      "content": "Kaching Bundles owns tier, quantity, selling plan and free gifts."
     },
-    { "type": "header", "content": "Top bar — rotating announcement messages" },
+    {
+      "type": "paragraph",
+      "content": "Auto-switches to the World Animal Week design, 28 Sep to 4 Oct 2026."
+    },
+    { "type": "header", "content": "Top bar (evergreen only)" },
     { "type": "text", "id": "announce_msg1", "label": "Message 1", "default": "Buy 2, Get 2 Free" },
     { "type": "text", "id": "announce_msg2", "label": "Message 2", "default": "Free Shipping with RoutineCare" },
     { "type": "text", "id": "announce_msg3", "label": "Message 3", "default": "Free Gifts Included" },
-    { "type": "header", "content": "Hero" },
+    { "type": "header", "content": "Hero (evergreen only)" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "End The Crusty Eyes In 30 Seconds A Day" },
     { "type": "text", "id": "subheading", "label": "Subheading", "default": "Textured antibacterial wipes for dogs with gunk, discharge & crusty eyes" },
     { "type": "text", "id": "picker_heading", "label": "Plan picker heading", "default": "Choose Your Plan" },
@@ -571,18 +806,18 @@
     { "type": "header", "content": "PayFac subscription disclosure" },
     {
       "type": "paragraph",
-      "content": "Resolved from the shared \"Save 20% with RoutineCare\" selling plan (gid://shopify/SellingPlan/10423959819): billing/delivery interval is 28 days, one flat percentage price policy with no after-cycle step (no trial). Update this text only if that selling plan's cadence changes."
+      "content": "Resolved from the RoutineCare selling plan cadence."
     },
     { "type": "text", "id": "rc_frequency_label", "label": "RoutineCare billing frequency", "default": "28 days" },
     { "type": "text", "id": "manage_subscription_url", "label": "Manage Subscription link", "default": "https://shopvetpets.com/pages/manage-subscription" },
     { "type": "header", "content": "Kaching deal IDs" },
     {
       "type": "paragraph",
-      "content": "Resolved from the live storefront. If a deal is rebuilt in Kaching, update the ID here — the page falls back to on-page order if an ID no longer matches."
+      "content": "Resolved from the live storefront deal configuration."
     },
     { "type": "text", "id": "deal_start", "label": "Start deal ID", "default": "4b8bf6d0-e6b1-4c44-af66-16e0ce39a9bb" },
-    { "type": "text", "id": "deal_build", "label": "Build deal ID", "default": "508699d0-94c0-4818-af7b-59b2f44de961" },
-    { "type": "text", "id": "deal_multi", "label": "Multi-Pet deal ID", "default": "43fd589f-426a-4e6c-b650-a63de934f2d0" },
+    { "type": "text", "id": "deal_build", "label": "Build/Complete deal ID", "default": "508699d0-94c0-4818-af7b-59b2f44de961" },
+    { "type": "text", "id": "deal_multi", "label": "Multi-Pet deal ID (evergreen only)", "default": "43fd589f-426a-4e6c-b650-a63de934f2d0" },
     { "type": "header", "content": "FAQ" },
     {
       "type": "textarea",
