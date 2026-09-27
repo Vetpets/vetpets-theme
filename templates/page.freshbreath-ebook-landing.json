@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "freshbreath-ebook-landing",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}
