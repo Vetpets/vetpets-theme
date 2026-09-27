@@ -349,7 +349,7 @@
           </div>
         {%- endunless -%}
 
-        {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url -%}
+        {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url, recurring_copy: 'again in one month and every month thereafter' -%}
 
         {%- comment -%} information panel {%- endcomment -%}
         <div class="info">
@@ -620,7 +620,7 @@
               Save 20% with RoutineCare
             </button>
           {%- endif -%}
-          {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url -%}
+          {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url, recurring_copy: 'again in one month and every month thereafter' -%}
         </div>
       </div>
     </div>

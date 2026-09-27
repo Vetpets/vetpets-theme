@@ -1,8 +1,8 @@
 {%- comment -%}
   Compact PayFac recurring-subscription disclosure.
   ==================================================
-  Shared by sections/eyewipes-offer-page.liquid and
-  sections/freshwipes-offer-page.liquid. Rendered once beside every purchase
+  Shared by sections/eyewipes-offer-page.liquid, sections/freshwipes-offer-page.liquid
+  and sections/earwipes-offer-page.liquid. Rendered once beside every purchase
   button that can submit the RoutineCare cart directly (the hero Add to Cart
   button and the bottom-of-page "final offer" button; NOT the anchors that only
   scroll back to the hero, and NOT the sticky bar, which is a shortcut for the
@@ -14,13 +14,19 @@
   sticky bar already uses. See "PAYFAC DISCLOSURE" in the page's .js file.
 
   Params:
-    frequency  — accepted for backward compatibility with existing render
-                 calls, but no longer used in the copy below (fixed wording:
-                 "again in one month and every month thereafter", matching
-                 the approved World Animal Week design's disclosure text).
-    manage_url — required. "Manage subscription" link target.
+    frequency      — accepted for backward compatibility with existing render
+                     calls, but no longer used in the copy below.
+    manage_url     — required. "Manage subscription" link target.
+    recurring_copy — optional. Overrides the "then [amount] ___ until cancelled"
+                     phrase. Defaults to the original wording ("with delivery
+                     every month") so callers that don't pass it (EarWipes) are
+                     unaffected. The World Animal Week EyeWipes/FreshWipes offer
+                     pages pass "again in one month and every month thereafter"
+                     to match the approved design's disclosure text.
 {%- endcomment -%}
 
+{%- assign recurring_copy = recurring_copy | default: 'with delivery every month' -%}
+
 <p class="pfd-disclosure" data-pfd-disclosure>
-  RoutineCare automatic refills. <span data-pfd-today>&nbsp;</span> charged today, then <span data-pfd-recurring>&nbsp;</span> again in one month and every month thereafter until cancelled. No trial. Cancel anytime: <a href="{{ manage_url }}" class="pfd-link" target="_blank" rel="noopener noreferrer">Manage subscription</a>.
+  RoutineCare automatic refills. <span data-pfd-today>&nbsp;</span> charged today, then <span data-pfd-recurring>&nbsp;</span> {{ recurring_copy }} until cancelled. No trial. Cancel anytime: <a href="{{ manage_url }}" class="pfd-link" target="_blank" rel="noopener noreferrer">Manage subscription</a>.
 </p>
