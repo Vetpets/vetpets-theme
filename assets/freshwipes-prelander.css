@@ -967,3 +967,14 @@
   #freshwipes-prelander .fwpl-waw-offer-sec__pill .fwpl-waw-bar__s { font-size: 20px; }
   #freshwipes-prelander .fwpl-waw-offer-headline { font-size: 23px; }
 }
+
+/* ---- ?waw_preview=1 QA override ----
+   Both variants are always in the DOM; waw_active (server, date-only) picks
+   which one starts visible via an inline style. A small blocking script in
+   layout/freshwipes-prelander.liquid's <head> sets data-waw-preview="1" on
+   <html> before first paint when ?waw_preview=1 is present, and these
+   !important rules then override the inline display - still zero flash,
+   since the script + this stylesheet both run/load before body paint. */
+html[data-waw-preview="1"] #freshwipes-prelander [data-waw-variant="evergreen"] { display: none !important; }
+html[data-waw-preview="1"] #freshwipes-prelander .fwpl-waw-bar[data-waw-variant="waw"] { display: block !important; }
+html[data-waw-preview="1"] #freshwipes-prelander .fwpl-waw-offer-sec[data-waw-variant="waw"] { display: block !important; }
