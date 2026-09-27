@@ -30,7 +30,37 @@
     {%- comment -%} Preload the two assets that gate the first paint. {%- endcomment -%}
     <link rel="preload" as="font" type="font/woff2" href="{{ 'ewpl-geist-bold.woff2' | asset_url }}" crossorigin>
     <link rel="preload" as="font" type="font/woff2" href="{{ 'ewpl-geist-regular.woff2' | asset_url }}" crossorigin>
+    {%- comment -%}
+      Caveat: the World Animal Week "Week" script lockup. Loaded
+      unconditionally (both the evergreen and WAW top-bar/offer-card variants
+      are always in the DOM - see sections/eyewipes-prelander.liquid - and
+      Shopify Liquid has no supported way to read ?waw_preview=1 server-side,
+      so there's no reliable signal here to gate this on). One extra small
+      font request, always paid, is simpler and safer than getting it wrong.
+    {%- endcomment -%}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap">
     <link rel="stylesheet" href="{{ 'eyewipes-prelander.css' | asset_url }}">
+
+    {%- comment -%}
+      ?waw_preview=1 QA override - forces the WAW variant visible with no
+      flash. Must run before first paint (blocking, in <head>, before the
+      stylesheet's data-waw-preview rules are needed) and Shopify Liquid
+      cannot read this query param server-side (request.query_string is not
+      a real property), so this is necessarily client-side. Reads
+      location.search directly rather than URLSearchParams so it still works
+      if this ever runs before that's available.
+    {%- endcomment -%}
+    <script>
+      (function () {
+        try {
+          if (/(?:^|[?&])waw_preview=1(?:&|$)/.test(window.location.search)) {
+            document.documentElement.setAttribute('data-waw-preview', '1');
+          }
+        } catch (e) {}
+      }());
+    </script>
 
     <style>
       @font-face { font-family: "GeistEwpl"; src: url("{{ 'ewpl-geist-regular.woff2' | asset_url }}") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }

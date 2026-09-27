@@ -6,9 +6,9 @@
   this file cannot affect any other page of the storefront.
 
   Progressive enhancement only. With JavaScript disabled the page still renders
-  and every link still works; only the ticking countdown, the mobile comparison
-  tabs, the review-rail arrows, exact sticky clearance and attribution
-  forwarding are lost.
+  and every link still works; only the announcement-bar rotation, the mobile
+  comparison tabs, the review-rail arrows, exact sticky clearance and
+  attribution forwarding are lost.
 */
 (function () {
   'use strict';
@@ -17,37 +17,80 @@
   if (!root) return;
 
   /* ---------------------------------------------------------------
-     1. Offer countdown
-
-     Mirrors the design: starts at 04:05:15, ticks down once a second and
-     rolls back to the start when it reaches zero.
+     1. rotating announcement bar — no countdown, no scarcity copy.
+     One message shown at a time, centered, cross-faded + slid every 4s,
+     looping. Icon + text swap together, one per message in the fixed
+     price-tag / truck / gift order — the same bar approved on the
+     EyeWipes and FreshWipes offer pages. prefers-reduced-motion drops
+     the transition but keeps the rotation itself, per WCAG guidance on
+     non-essential motion.
      --------------------------------------------------------------- */
-  (function countdown() {
-    var h = root.querySelector('[data-fwpl-cd="h"]');
-    var m = root.querySelector('[data-fwpl-cd="m"]');
-    var s = root.querySelector('[data-fwpl-cd="s"]');
-    if (!h || !m || !s) return;
+  (function announce() {
+    var el = root.querySelector('[data-fwpl-announce-msg]');
+    var iconEl = root.querySelector('[data-fwpl-announce-icon]');
+    var textEl = root.querySelector('[data-fwpl-announce-text]');
+    if (!el || !iconEl || !textEl) return;
+    var MESSAGES = ['Buy 2, Get 2 Free', 'Free Shipping with RoutineCare', 'Free Gifts Included'];
+    var ICONS = [
+      /* price tag — "Buy 2, Get 2 Free" */
+      '<path d="M11.5 3H5a2 2 0 0 0-2 2v6.5a2 2 0 0 0 .586 1.414l8.5 8.5a2 2 0 0 0 2.828 0l6.5-6.5a2 2 0 0 0 0-2.828l-8.5-8.5A2 2 0 0 0 11.5 3Z"></path><circle cx="7.25" cy="7.25" r="1.1" fill="currentColor" stroke="none"></circle>',
+      /* delivery truck — "Free Shipping with RoutineCare" */
+      '<rect x="1.5" y="6" width="12" height="8" rx="1"></rect><path d="M13.5 9h4l3 3.2V14h-7Z"></path><circle cx="6" cy="16.5" r="1.8" fill="currentColor" stroke="none"></circle><circle cx="17" cy="16.5" r="1.8" fill="currentColor" stroke="none"></circle>',
+      /* gift box — "Free Gifts Included" */
+      '<rect x="3" y="9" width="18" height="11" rx="1.2"></rect><path d="M3 13h18"></path><path d="M12 9v11"></path><path d="M8.2 9c-1.9 0-3-1-3-2.4C5.2 5.2 6.3 4 7.8 4 9.6 4 11 6 12 9"></path><path d="M15.8 9c1.9 0 3-1 3-2.4C18.8 5.2 17.7 4 16.2 4 14.4 4 13 6 12 9"></path>'
+    ];
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var i = 0;
+    var paint = function () {
+      textEl.textContent = MESSAGES[i];
+      iconEl.innerHTML = ICONS[i % ICONS.length];
+    };
+    var swap = function () {
+      i = (i + 1) % MESSAGES.length;
+      if (reduceMotion) {
+        paint();
+        return;
+      }
+      el.classList.add('is-out');
+      window.setTimeout(function () {
+        paint();
+        el.classList.remove('is-out');
+        el.classList.add('is-in');
+        void el.offsetWidth; /* force reflow so the entrance transition runs */
+        el.classList.remove('is-in');
+      }, 240);
+    };
+    setInterval(swap, 4000);
+  }());
 
-    var START = { hrs: 4, min: 5, sec: 15 };
-    var t = { hrs: START.hrs, min: START.min, sec: START.sec };
+  /* ---------------------------------------------------------------
+     1b. World Animal Week countdown
 
-    function pad(n) { return n < 10 ? '0' + n : '' + n; }
-
-    function paint() {
-      h.textContent = pad(t.hrs);
-      m.textContent = pad(t.min);
-      s.textContent = pad(t.sec);
+     Only present in the DOM when Liquid decided waw_active is true (see the
+     date-gate in sections/freshwipes-prelander.liquid) - two instances share
+     the same [data-fwpl-cd] hooks (top bar + final-offer section), both
+     ticked from one fixed deadline. No-ops harmlessly outside the campaign.
+     --------------------------------------------------------------- */
+  (function wawCountdown() {
+    var nodes = root.querySelectorAll('[data-fwpl-cd]');
+    if (!nodes.length) return;
+    var WAW_DEADLINE_MS = 1791172799000; /* 2026-10-04 23:59:59 America/New_York (EDT, UTC-4) */
+    function pad2(n) { return String(n).padStart(2, '0'); }
+    function tick() {
+      var left = Math.max(0, Math.floor((WAW_DEADLINE_MS - Date.now()) / 1000));
+      var vals = {
+        d: pad2(Math.floor(left / 86400)),
+        h: pad2(Math.floor(left % 86400 / 3600)),
+        m: pad2(Math.floor(left % 3600 / 60)),
+        s: pad2(left % 60)
+      };
+      root.querySelectorAll('[data-fwpl-cd]').forEach(function (el) {
+        var key = el.getAttribute('data-fwpl-cd');
+        if (vals[key] !== undefined) el.textContent = vals[key];
+      });
     }
-
-    setInterval(function () {
-      t.sec--;
-      if (t.sec < 0) { t.sec = 59; t.min--; }
-      if (t.min < 0) { t.min = 59; t.hrs--; }
-      if (t.hrs < 0) { t.hrs = START.hrs; t.min = START.min; t.sec = START.sec; }
-      paint();
-    }, 1000);
-
-    paint();
+    tick();
+    setInterval(tick, 1000);
   }());
 
   /* ---------------------------------------------------------------
@@ -137,7 +180,7 @@
       'fbclid', 'gclid', 'gbraid', 'wbraid', 'gad_source', 'gclsrc',
       'msclkid', 'ttclid', 'twclid', 'li_fat_id', 'epik', 'irclickid',
       'rdt_cid', 'sccid', 'yclid', 'ScCid',
-      'preview_theme_id'
+      'preview_theme_id', 'waw_preview'
     ];
 
     var incoming;

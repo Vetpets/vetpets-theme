@@ -10,8 +10,8 @@
 
   Everything is scoped under #eyewipes-prelander:
     assets/eyewipes-prelander.css   presentation
-    assets/eyewipes-prelander.js    countdown, comparison tabs, review rail,
-                                    attribution forwarding
+    assets/eyewipes-prelander.js    rotating announcement bar, comparison tabs,
+                                    review rail, attribution forwarding
 
   CTA routing: every purchase / availability CTA goes to the EyeWipes offer page
   (the product handle rendered through templates/product.eyewipes-offer-page.json
@@ -46,55 +46,77 @@
   assign offer_anchor = '#eyewipes-offer'
   assign proof_anchor = '#eyewipes-proof'
 
-  # server-rendered countdown seed (shop time). eyewipes-prelander.js corrects
-  # it to the visitor's own clock within a second.
-  assign now_h = 'now' | date: '%H' | times: 1
-  assign now_m = 'now' | date: '%M' | times: 1
-  assign now_s = 'now' | date: '%S' | times: 1
-  assign hour_seconds = now_h | times: 3600
-  assign minute_seconds = now_m | times: 60
-  assign elapsed = hour_seconds | plus: minute_seconds | plus: now_s
-  assign left = 86400 | minus: elapsed
-  assign cd_h = left | divided_by: 3600
-  assign cd_rem = left | modulo: 3600
-  assign cd_m = cd_rem | divided_by: 60
-  assign cd_s = cd_rem | modulo: 60
-  assign cd_h = cd_h | prepend: '0' | slice: -2, 2
-  assign cd_m = cd_m | prepend: '0' | slice: -2, 2
-  assign cd_s = cd_s | prepend: '0' | slice: -2, 2
-
   assign marquee_claims = '45,000+ Happy Dog Owners|100-Day Money-Back Guarantee|Hypoallergenic &amp; Fragrance-Free|Works In 30 Seconds A Day' | split: '|'
 
   assign cmp_rows = 'Physically removes the buildup~y~n~n~n~y||Textured surface lifts debris off the skin~y~n~n~n~n||Antibacterial — stops it coming back~y~n~d~n~n||Safe for daily use around the eyes~y~n~n~y~d||Works from day one~y~d~d~n~y||No struggle, no stress~y~d~n~y~n||Time per day~t:30 sec~t:1–2 min~t:5–10 min~t:—~t:—' | split: '||'
   assign cmp_rivals = 'Baby Wipes~ewpl-cmp-babywipes.webp~Baby wipes||Coconut Oil &amp; Home Remedies~ewpl-cmp-coconut.webp~Coconut oil and home remedies||Tear-Stain Supplements~ewpl-cmp-supplements.webp~Tear-stain supplements||Grooming Visits~ewpl-cmp-grooming.webp~Grooming visits' | split: '||'
 
   assign kit_name = 'EyeWipes Kit – Prevention That Keeps Eyes Clear'
+
+  # World Animal Week automatic date gate.
+  # Fixed UTC epochs, not the visitor's local timezone: start 2026-09-28T04:00:00Z
+  # (midnight America/New_York), end 2026-10-05T03:59:59Z (11:59:59 PM America/
+  # New_York on Oct 4). This is the ONLY thing that decides which variant's
+  # inline `display` starts visible - both variants are always in the DOM (see
+  # the top bar and final-offer markup below), so this is fully server-
+  # rendered with no flash for real visitors. Shopify Liquid has no supported
+  # way to read an arbitrary query string (request.query_string is not a real
+  # property - confirmed empty in testing), so the ?waw_preview=1 QA override
+  # is handled client-side instead: a small blocking script in
+  # layout/eyewipes-prelander.liquid's <head> reads location.search before
+  # first paint and, if present, sets data-waw-preview="1" on <html>, which a
+  # same-specificity !important rule in eyewipes-prelander.css uses to force
+  # the WAW variant visible - still no flash, since it runs before paint.
+  assign waw_start_epoch = 1790568000
+  assign waw_end_epoch = 1791172799
+  assign waw_now_epoch = 'now' | date: '%s' | times: 1
+  assign waw_active = false
+  if waw_now_epoch >= waw_start_epoch and waw_now_epoch <= waw_end_epoch
+    assign waw_active = true
+  endif
 -%}
 
 <div id="eyewipes-prelander">
 
-  {%- comment -%} ---------- top offer bar ---------- {%- endcomment -%}
-  <div class="ewpl-topbar">
-    <div class="ewpl-topbar__inner">
-      <div class="ewpl-topbar__text">
-        Buy 2, Get 2 Free + Free Gifts
-        <span class="ewpl-topbar__sub">· 100-Day Risk-Free Home Trial</span>
+  {%- comment -%}
+    ---------- top bar: both variants always rendered ----------
+    waw_active (date-only) decides which one starts visible via an inline
+    `display:none` - no Liquid if/else gating emission, so the client-side
+    ?waw_preview=1 override (see the layout's <head> script + the
+    [data-waw-preview] rules in eyewipes-prelander.css) can force the WAW
+    variant on without a second server round-trip, and without a flash.
+
+    WAW source of truth: Claude Design project "VetPets EyeWipes Pre-Lander",
+    file "EyeWipes Pre-Lander WAW.dc.html" (.wab / .wab-* rules).
+  {%- endcomment -%}
+  <div class="ewpl-waw-bar" data-waw-bar data-waw-variant="waw"{% unless waw_active %} style="display:none"{% endunless %}>
+    <div class="ewpl-waw-bar__in">
+      <div class="ewpl-waw-bar__top">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="flex-shrink:0"><circle cx="12" cy="12" r="9" stroke="#FFFFFF" stroke-width="2"></circle><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3Z" stroke="#FFFFFF" stroke-width="1.8"></path></svg>
+        <div class="ewpl-waw-bar__title">World Animal <span class="ewpl-waw-bar__strike">Day</span><span class="ewpl-waw-bar__script">Week</span> Sale</div>
+        <span class="ewpl-waw-bar__endpill ewpl-waw-bar__endpill--m">ENDS OCT 4</span>
       </div>
-      <div class="ewpl-countdown">
-        <div class="ewpl-countdown__box">
-          <div class="ewpl-countdown__num" data-ewpl-cd="h">{{ cd_h }}</div>
-          <div class="ewpl-countdown__label">HRS</div>
-        </div>
-        <div class="ewpl-countdown__sep" aria-hidden="true">:</div>
-        <div class="ewpl-countdown__box">
-          <div class="ewpl-countdown__num" data-ewpl-cd="m">{{ cd_m }}</div>
-          <div class="ewpl-countdown__label">MIN</div>
-        </div>
-        <div class="ewpl-countdown__sep" aria-hidden="true">:</div>
-        <div class="ewpl-countdown__box">
-          <div class="ewpl-countdown__num" data-ewpl-cd="s">{{ cd_s }}</div>
-          <div class="ewpl-countdown__label">SEC</div>
-        </div>
+      <div class="ewpl-waw-bar__offer">Buy 2, Get 2 Free + 3 Free Gifts</div>
+      <span class="ewpl-waw-bar__endpill ewpl-waw-bar__endpill--d">ENDS OCT 4</span>
+      <div class="ewpl-waw-bar__cd" data-waw-countdown>
+        <div class="ewpl-waw-bar__box"><div class="ewpl-waw-bar__num" data-ewpl-cd="d">00</div><div class="ewpl-waw-bar__lbl">DAYS</div></div>
+        <div class="ewpl-waw-bar__box"><div class="ewpl-waw-bar__num" data-ewpl-cd="h">00</div><div class="ewpl-waw-bar__lbl">HRS</div></div>
+        <div class="ewpl-waw-bar__box"><div class="ewpl-waw-bar__num" data-ewpl-cd="m">00</div><div class="ewpl-waw-bar__lbl">MIN</div></div>
+        <div class="ewpl-waw-bar__box"><div class="ewpl-waw-bar__num" data-ewpl-cd="s">00</div><div class="ewpl-waw-bar__lbl">SEC</div></div>
+      </div>
+    </div>
+  </div>
+  {%- comment -%} ---------- rotating announcement bar (no countdown, no scarcity copy) ---------- {%- endcomment -%}
+  <div class="ewpl-topbar" data-waw-variant="evergreen"{% if waw_active %} style="display:none"{% endif %}>
+    <div class="ewpl-topbar__inner">
+      <div class="ewpl-announce" role="status" aria-label="Offer highlights">
+        <span class="ewpl-announce__msg" data-ewpl-announce-msg>
+          <svg class="ewpl-announce__icon" data-ewpl-announce-icon viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M11.5 3H5a2 2 0 0 0-2 2v6.5a2 2 0 0 0 .586 1.414l8.5 8.5a2 2 0 0 0 2.828 0l6.5-6.5a2 2 0 0 0 0-2.828l-8.5-8.5A2 2 0 0 0 11.5 3Z"></path>
+            <circle cx="7.25" cy="7.25" r="1.1" fill="currentColor" stroke="none"></circle>
+          </svg>
+          <span class="ewpl-announce__text" data-ewpl-announce-text>Buy 2, Get 2 Free</span>
+        </span>
       </div>
     </div>
   </div>
@@ -427,7 +449,42 @@
         <p class="ewpl-offer__sub">Three weeks from now you're not managing the gunk. You ended it.</p>
       </div>
       <div class="ewpl-offer__cardwrap">
-        <div class="ewpl-offer__ribbon">Buy 2, Get 2 Free + Free Gifts (Limited Time!)</div>
+        {%- comment -%}
+          Both ribbon/offerhead variants always render; waw_active only picks
+          which starts visible (inline style), so ?waw_preview=1 can force the
+          WAW variant client-side with no flash - see the top-bar comment
+          above for the full mechanism.
+        {%- endcomment -%}
+        <div class="ewpl-offer__ribbon" data-waw-variant="waw"{% unless waw_active %} style="display:none"{% endunless %}>Buy 2, Get 2 Free + 3 Free Gifts (Limited Time!)</div>
+        <div class="ewpl-offer__ribbon" data-waw-variant="evergreen"{% if waw_active %} style="display:none"{% endif %}>Buy 2, Get 2 Free + Free Gifts (Limited Time!)</div>
+        {%- comment -%}
+          WAW wraps the (otherwise-unchanged) .ewpl-offer__card in an outer
+          shell that owns the rounded corners/shadow, so the header strip and
+          the card's own grid sit stacked inside one clipped box, matching
+          "EyeWipes Pre-Lander WAW.dc.html". This wrapper is always present
+          (harmless either way - .ewpl-offer__card's own radius/shadow are
+          suppressed by the .ewpl-waw-offercard descendant rule, so with the
+          offerhead hidden it looks identical to the evergreen card).
+        {%- endcomment -%}
+        <div class="ewpl-waw-offercard">
+        <div class="ewpl-waw-offerhead" data-waw-offerhead data-waw-variant="waw"{% unless waw_active %} style="display:none"{% endunless %}>
+          <div class="ewpl-waw-offerhead__lockwrap">
+            <div class="ewpl-waw-offerhead__lock">World Animal <span class="ewpl-waw-bar__strike">Day</span><span class="ewpl-waw-bar__script">Week</span></div>
+            <div class="ewpl-waw-offerhead__offer">Buy 2, Get 2 Free + 3 Free Gifts</div>
+          </div>
+          <div class="ewpl-waw-offerhead__right">
+            <div class="ewpl-waw-offerhead__cd" data-waw-countdown>
+              <div class="ewpl-waw-offerhead__box"><div class="ewpl-waw-offerhead__num" data-ewpl-cd="d">00</div><div class="ewpl-waw-offerhead__lbl">DAYS</div></div>
+              <div class="ewpl-waw-offerhead__box"><div class="ewpl-waw-offerhead__num" data-ewpl-cd="h">00</div><div class="ewpl-waw-offerhead__lbl">HRS</div></div>
+              <div class="ewpl-waw-offerhead__box"><div class="ewpl-waw-offerhead__num" data-ewpl-cd="m">00</div><div class="ewpl-waw-offerhead__lbl">MIN</div></div>
+              <div class="ewpl-waw-offerhead__box"><div class="ewpl-waw-offerhead__num" data-ewpl-cd="s">00</div><div class="ewpl-waw-offerhead__lbl">SEC</div></div>
+            </div>
+            <div class="ewpl-waw-offerhead__badges">
+              <span class="ewpl-waw-offerhead__ends">ENDS OCTOBER 4</span>
+              <span class="ewpl-waw-offerhead__limited">LIMITED SUPPLY</span>
+            </div>
+          </div>
+        </div>
         <div class="ewpl-offer__card">
           <div class="ewpl-offer__media">
             <div class="ewpl-offer__toprated"><span class="ewpl-offer__dot" aria-hidden="true"></span>Top rated</div>
@@ -450,7 +507,7 @@
                 <span>Visible difference in 3 weeks — or every penny back</span>
               </div>
             </div>
-            <div class="ewpl-offer__scarcity">
+            <div class="ewpl-offer__scarcity" data-waw-variant="waw"{% unless waw_active %} style="display:none"{% endunless %}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 22 20H2L12 3Z" fill="#D64545"/><path d="M12 9.5v4.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="17" r="1.2" fill="#FFFFFF"/></svg>
               <span>High demand — EyeWipes tend to sell out. If this page is live, they're still in stock.</span>
             </div>
@@ -461,6 +518,7 @@
               <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11" stroke="#47B5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Free &amp; Fast Shipping</span>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </div>
@@ -501,7 +559,7 @@
       "type": "text",
       "id": "cta_url",
       "label": "PDP link",
-      "info": "Leave empty to use /products/eyewipes-prevention-that-keeps-eyes-clear. view=eyewipes-offer-page is appended automatically, so paste a plain product URL here \u2014 existing query params and #anchors are preserved."
+      "info": "Leave empty to use /products/eyewipes-prevention-that-keeps-eyes-clear. view=eyewipes-offer-page is appended automatically, so paste a plain product URL here — existing query params and #anchors are preserved."
     },
     {
       "type": "header",

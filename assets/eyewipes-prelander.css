@@ -141,49 +141,51 @@
 #eyewipes-prelander .ewpl-skip:hover { background: rgba(71, 181, 233, .1); color: var(--ewpl-blue-dark); }
 #eyewipes-prelander .ewpl-skip--hero-gap { margin-top: 6px; }
 
-/* ---------- top offer bar ---------- */
+/* ---------- top offer bar — rotating announcement ----------
+   Single centered message, cross-faded + slid on a 4s interval by the
+   "announcement bar" behaviour in eyewipes-prelander.js. No countdown,
+   no scarcity copy — matches the approved offer-page bar exactly. */
 
 #eyewipes-prelander .ewpl-topbar { background: var(--ewpl-blue); }
 #eyewipes-prelander .ewpl-topbar__inner {
   max-width: 1280px;
   margin: 0 auto;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 10px 16px;
-  padding: 13px 16px;
+  padding: 10px 16px;
 }
-#eyewipes-prelander .ewpl-topbar__text {
+#eyewipes-prelander .ewpl-announce { display: flex; align-items: center; justify-content: center; min-height: 20px; width: 100%; overflow: hidden; }
+#eyewipes-prelander .ewpl-announce__msg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  max-width: 100%;
   color: #ffffff;
-  font-size: clamp(15px, 2vw, 19px);
-  font-weight: 800;
-  letter-spacing: .04em;
-  line-height: 1.25;
-  text-align: center;
-  text-transform: uppercase;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, .12);
-}
-#eyewipes-prelander .ewpl-topbar__sub {
+  font-size: 15px;
   font-weight: 600;
-  font-size: .78em;
-  text-transform: none;
-  letter-spacing: .02em;
-  opacity: .95;
+  letter-spacing: .01em;
+  line-height: 1.3;
+  text-wrap: balance;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .12);
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 240ms ease, transform 240ms ease;
 }
-#eyewipes-prelander .ewpl-countdown { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
-#eyewipes-prelander .ewpl-countdown__box {
-  background: #ffffff;
-  color: var(--ewpl-blue-dark);
-  border-radius: 8px;
-  padding: 5px 8px;
-  text-align: center;
-  min-width: 36px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, .12);
+#eyewipes-prelander .ewpl-announce__msg.is-out { opacity: 0; transform: translateX(-8px); }
+#eyewipes-prelander .ewpl-announce__msg.is-in { opacity: 0; transform: translateX(8px); transition: none; }
+#eyewipes-prelander .ewpl-announce__icon { width: 18px; height: 18px; flex-shrink: 0; }
+
+@media (min-width: 900px) {
+  #eyewipes-prelander .ewpl-topbar__inner { padding: 13px 16px; }
+  #eyewipes-prelander .ewpl-announce__msg { font-size: 17px; }
+  #eyewipes-prelander .ewpl-announce__icon { width: 20px; height: 20px; }
 }
-#eyewipes-prelander .ewpl-countdown__num { font-size: 15px; font-weight: 800; font-variant-numeric: tabular-nums; }
-#eyewipes-prelander .ewpl-countdown__label { font-size: 8px; font-weight: 700; letter-spacing: .1em; }
-#eyewipes-prelander .ewpl-countdown__sep { color: #ffffff; font-weight: 800; }
+
+@media (prefers-reduced-motion: reduce) {
+  #eyewipes-prelander .ewpl-announce__msg { transition: none; }
+}
 
 /* ---------- 1. hero ---------- */
 
@@ -901,22 +903,6 @@
   color: var(--ewpl-ink);
 }
 #eyewipes-prelander .ewpl-offer__bullet svg { flex-shrink: 0; margin-top: 1px; }
-#eyewipes-prelander .ewpl-offer__scarcity {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  width: 100%;
-  background: #fdecec;
-  border: 2px solid #d64545;
-  border-radius: 12px;
-  padding: 14px 16px;
-  font-size: 15.5px;
-  font-weight: 700;
-  line-height: 1.4;
-  color: #b32020;
-  text-wrap: pretty;
-}
-#eyewipes-prelander .ewpl-offer__scarcity svg { flex-shrink: 0; }
 #eyewipes-prelander .ewpl-offer__cta {
   display: flex;
   align-items: center;
@@ -1100,3 +1086,136 @@
   }
   #eyewipes-prelander .ewpl-sticky__head { white-space: normal; }
 }
+
+/* =========================================================================
+   World Animal Week — countdown bar + final-offer header strip
+   Source of truth: Claude Design project "VetPets EyeWipes Pre-Lander",
+   file "EyeWipes Pre-Lander WAW.dc.html". Only the top bar and the final
+   offer card change for the campaign; everything else is the evergreen page
+   above, untouched. Every rule here is scoped under #eyewipes-prelander, and
+   these classes only ever appear in the DOM when waw_active is true.
+   ========================================================================= */
+
+#eyewipes-prelander .ewpl-waw-bar {
+  background-color: var(--ewpl-blue);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='110' viewBox='0 0 110 110'%3E%3Cg transform='translate(10 10) rotate(-18 13 12) scale(.8)'%3E%3Cg fill='white' fill-opacity='0.09'%3E%3Cellipse cx='7' cy='8' rx='2.6' ry='3.3'/%3E%3Cellipse cx='13' cy='5.5' rx='2.6' ry='3.3'/%3E%3Cellipse cx='19' cy='8' rx='2.6' ry='3.3'/%3E%3Cpath d='M13 11c3.6 0 6.2 2.8 6.2 5.6 0 2.3-1.9 3.4-3.9 3.1-.8-.1-1.5-.4-2.3-.4s-1.5.3-2.3.4c-2 .3-3.9-.8-3.9-3.1C6.8 13.8 9.4 11 13 11Z'/%3E%3C/g%3E%3C/g%3E%3Cg transform='translate(66 62) rotate(24 13 12) scale(.8)'%3E%3Cg fill='white' fill-opacity='0.09'%3E%3Cellipse cx='7' cy='8' rx='2.6' ry='3.3'/%3E%3Cellipse cx='13' cy='5.5' rx='2.6' ry='3.3'/%3E%3Cellipse cx='19' cy='8' rx='2.6' ry='3.3'/%3E%3Cpath d='M13 11c3.6 0 6.2 2.8 6.2 5.6 0 2.3-1.9 3.4-3.9 3.1-.8-.1-1.5-.4-2.3-.4s-1.5.3-2.3.4c-2 .3-3.9-.8-3.9-3.1C6.8 13.8 9.4 11 13 11Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-size: 110px 110px;
+}
+#eyewipes-prelander .ewpl-waw-bar__in {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  gap: 5px;
+  padding: 8px 12px 9px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+#eyewipes-prelander .ewpl-waw-bar__top { display: flex; align-items: center; justify-content: center; gap: clamp(4px, 1.6vw, 8px); max-width: 100%; }
+#eyewipes-prelander .ewpl-waw-bar__title {
+  display: flex; align-items: baseline; gap: 5px;
+  color: #FFFFFF; font-weight: 800; letter-spacing: .05em; line-height: 1;
+  text-transform: uppercase; white-space: nowrap; text-shadow: 0 1px 2px rgba(0, 0, 0, .12);
+  font-size: clamp(10.5px, 3.5vw, 14px);
+}
+#eyewipes-prelander .ewpl-waw-bar__strike { text-decoration: line-through; text-decoration-color: #E5484D; text-decoration-thickness: .16em; }
+#eyewipes-prelander .ewpl-waw-bar__script {
+  font-family: 'Caveat', cursive; font-weight: 700; font-size: 1.45em; letter-spacing: 0;
+  text-transform: none; display: inline-block; transform: rotate(-5deg) translateY(1px);
+}
+#eyewipes-prelander .ewpl-waw-bar__endpill {
+  align-items: center; background: #FFFFFF; border: 1.5px solid #E5484D; color: #D12F35;
+  font-size: 10.5px; font-weight: 800; letter-spacing: .08em; line-height: 1;
+  padding: 4px 9px; border-radius: 999px; white-space: nowrap;
+}
+#eyewipes-prelander .ewpl-waw-bar__endpill--m { display: inline-flex; }
+#eyewipes-prelander .ewpl-waw-bar__endpill--d { display: none; }
+#eyewipes-prelander .ewpl-waw-bar__offer {
+  color: #FFFFFF; font-weight: 800; letter-spacing: .03em; line-height: 1.15;
+  text-transform: uppercase; white-space: nowrap; text-shadow: 0 1px 2px rgba(0, 0, 0, .12);
+  font-size: clamp(12px, 3.7vw, 14.5px);
+}
+#eyewipes-prelander .ewpl-waw-bar__cd { display: flex; align-items: center; gap: 5px; }
+#eyewipes-prelander .ewpl-waw-bar__box { width: 42px; padding: 3px 0 3px; background: #FFFFFF; border-radius: 8px; text-align: center; box-shadow: 0 1px 3px rgba(13, 35, 64, .12); }
+#eyewipes-prelander .ewpl-waw-bar__num { font-size: 16px; font-weight: 800; color: #0D2340; line-height: 1.1; font-variant-numeric: tabular-nums; }
+#eyewipes-prelander .ewpl-waw-bar__lbl { font-size: 8.5px; font-weight: 700; letter-spacing: .1em; color: #6B7A85; line-height: 1.2; }
+
+@media (min-width: 900px) {
+  #eyewipes-prelander .ewpl-waw-bar__in { display: flex; align-items: center; justify-content: center; gap: 28px; padding: 11px 24px; min-height: 64px; box-sizing: border-box; }
+  #eyewipes-prelander .ewpl-waw-bar__title { font-size: 17px; }
+  #eyewipes-prelander .ewpl-waw-bar__offer { font-size: 17px; }
+  #eyewipes-prelander .ewpl-waw-bar__box { width: 48px; padding: 4px 0 4px; }
+  #eyewipes-prelander .ewpl-waw-bar__num { font-size: 19px; }
+  #eyewipes-prelander .ewpl-waw-bar__endpill--m { display: none; }
+  #eyewipes-prelander .ewpl-waw-bar__endpill--d { display: inline-flex; }
+}
+
+/* ---- final-offer header strip (prepended above the evergreen card body) ---- */
+
+#eyewipes-prelander .ewpl-waw-offercard {
+  background: #ffffff;
+  border-radius: 22px;
+  box-shadow: 0 14px 40px rgba(71, 181, 233, .28);
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+#eyewipes-prelander .ewpl-waw-offercard .ewpl-offer__card {
+  border-radius: 0;
+  box-shadow: none;
+}
+#eyewipes-prelander .ewpl-waw-offerhead {
+  background-color: var(--ewpl-blue);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='132' height='132' viewBox='0 0 132 132'%3E%3Cg transform='translate(14 18) rotate(-18 13 12)'%3E%3Cg fill='white' fill-opacity='0.12'%3E%3Cellipse cx='7' cy='8' rx='2.6' ry='3.3'/%3E%3Cellipse cx='13' cy='5.5' rx='2.6' ry='3.3'/%3E%3Cellipse cx='19' cy='8' rx='2.6' ry='3.3'/%3E%3Cpath d='M13 11c3.6 0 6.2 2.8 6.2 5.6 0 2.3-1.9 3.4-3.9 3.1-.8-.1-1.5-.4-2.3-.4s-1.5.3-2.3.4c-2 .3-3.9-.8-3.9-3.1C6.8 13.8 9.4 11 13 11Z'/%3E%3C/g%3E%3C/g%3E%3Cg transform='translate(80 78) rotate(24 13 12)'%3E%3Cg fill='white' fill-opacity='0.12'%3E%3Cellipse cx='7' cy='8' rx='2.6' ry='3.3'/%3E%3Cellipse cx='13' cy='5.5' rx='2.6' ry='3.3'/%3E%3Cellipse cx='19' cy='8' rx='2.6' ry='3.3'/%3E%3Cpath d='M13 11c3.6 0 6.2 2.8 6.2 5.6 0 2.3-1.9 3.4-3.9 3.1-.8-.1-1.5-.4-2.3-.4s-1.5.3-2.3.4c-2 .3-3.9-.8-3.9-3.1C6.8 13.8 9.4 11 13 11Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-size: 132px 132px;
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px;
+  padding: 22px 20px 20px;
+}
+#eyewipes-prelander .ewpl-waw-offerhead__lockwrap { display: flex; flex-direction: column; gap: 8px; align-items: inherit; }
+#eyewipes-prelander .ewpl-waw-offerhead__lock {
+  display: flex; align-items: baseline; justify-content: center; gap: 8px; flex-wrap: nowrap;
+  color: #FFFFFF; font-weight: 800; letter-spacing: .04em; line-height: 1; text-transform: uppercase;
+  white-space: nowrap; font-size: 22px;
+}
+#eyewipes-prelander .ewpl-waw-offerhead__offer {
+  color: #FFFFFF; font-size: clamp(18px, 2vw, 24px); font-weight: 800; letter-spacing: .03em;
+  line-height: 1.2; text-transform: uppercase;
+}
+#eyewipes-prelander .ewpl-waw-offerhead__right { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+#eyewipes-prelander .ewpl-waw-offerhead__cd { display: flex; align-items: center; gap: 6px; }
+#eyewipes-prelander .ewpl-waw-offerhead__box { min-width: 50px; padding: 7px 6px 6px; background: #FFFFFF; border-radius: 12px; text-align: center; box-shadow: 0 1px 3px rgba(13, 35, 64, .12); }
+#eyewipes-prelander .ewpl-waw-offerhead__num { font-size: 21px; font-weight: 800; color: #0D2340; line-height: 1.05; font-variant-numeric: tabular-nums; }
+#eyewipes-prelander .ewpl-waw-offerhead__lbl { font-size: 9.5px; font-weight: 700; letter-spacing: .12em; color: #6B7A85; }
+#eyewipes-prelander .ewpl-waw-offerhead__badges { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; }
+#eyewipes-prelander .ewpl-waw-offerhead__ends { background: #FFFFFF; color: #D12F35; border: 1.5px solid #E5484D; font-size: 11.5px; font-weight: 800; letter-spacing: .1em; padding: 5px 11px; border-radius: 999px; }
+#eyewipes-prelander .ewpl-waw-offerhead__limited { background: #2CC3CE; color: #FFFFFF; font-size: 11.5px; font-weight: 800; letter-spacing: .1em; padding: 5px 11px; border-radius: 999px; }
+
+@media (min-width: 900px) {
+  #eyewipes-prelander .ewpl-waw-offerhead { flex-direction: row; justify-content: space-between; text-align: left; padding: 22px 36px; }
+  #eyewipes-prelander .ewpl-waw-offerhead__lock { font-size: 28px; }
+  #eyewipes-prelander .ewpl-waw-offerhead__box { min-width: 58px; padding: 8px 8px 7px; }
+  #eyewipes-prelander .ewpl-waw-offerhead__num { font-size: 24px; }
+}
+
+/* ---- scarcity row (evergreen dropped this line; WAW's approved card keeps it) ---- */
+
+#eyewipes-prelander .ewpl-offer__scarcity {
+  display: flex; align-items: center; gap: 11px; width: 100%; box-sizing: border-box;
+  background: #FDECEC; border: 2px solid #D64545; border-radius: 12px; padding: 14px 16px;
+  font-size: 15.5px; font-weight: 700; line-height: 1.4; color: #B32020; text-wrap: pretty;
+}
+#eyewipes-prelander .ewpl-offer__scarcity svg { flex-shrink: 0; }
+
+/* ---- ?waw_preview=1 QA override ----
+   Both variants are always in the DOM; waw_active (server, date-only) picks
+   which one starts visible via an inline style. A small blocking script in
+   layout/eyewipes-prelander.liquid's <head> sets data-waw-preview="1" on
+   <html> before first paint when ?waw_preview=1 is present, and these
+   !important rules then override the inline display - still zero flash,
+   since the script + this stylesheet both run/load before body paint. */
+html[data-waw-preview="1"] #eyewipes-prelander [data-waw-variant="evergreen"] { display: none !important; }
+html[data-waw-preview="1"] #eyewipes-prelander .ewpl-waw-bar[data-waw-variant="waw"] { display: block !important; }
+html[data-waw-preview="1"] #eyewipes-prelander .ewpl-offer__ribbon[data-waw-variant="waw"] { display: block !important; }
+html[data-waw-preview="1"] #eyewipes-prelander .ewpl-waw-offerhead[data-waw-variant="waw"] { display: flex !important; }
+html[data-waw-preview="1"] #eyewipes-prelander .ewpl-offer__scarcity[data-waw-variant="waw"] { display: flex !important; }

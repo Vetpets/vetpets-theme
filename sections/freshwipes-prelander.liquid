@@ -10,12 +10,16 @@
 
   Everything is scoped under #freshwipes-prelander:
     assets/freshwipes-prelander.css   presentation
-    assets/freshwipes-prelander.js    countdown, comparison tabs, review rail,
-                                      sticky clearance, attribution forwarding
+    assets/freshwipes-prelander.js    rotating announcement bar, comparison tabs,
+                                      review rail, sticky clearance, attribution
+                                      forwarding
 
-  CTA routing: every purchase / availability CTA goes to the FreshWipes PDP.
-  The two in-page buttons stay internal anchors: "See Why It Works" scrolls to
-  #freshwipes-proof and "Skip to the offer" scrolls to #freshwipes-offer.
+  CTA routing: every purchase / availability CTA goes to the FreshWipes offer
+  page (the product handle rendered through
+  templates/product.freshwipes-offer-page.json via ?view=freshwipes-offer-page
+  — not the control PDP). The two in-page buttons stay internal anchors:
+  "See Why It Works" scrolls to #freshwipes-proof and "Skip to the offer"
+  scrolls to #freshwipes-offer.
 
   Released 2026-08-19. The page was published a few minutes before the template
   reached the live theme, so some Shopify page-cache pods held the fallback
@@ -24,9 +28,53 @@
 {%- endcomment -%}
 
 {%- liquid
-  assign pdp_url = section.settings.cta_url | default: 'https://shopvetpets.com/products/freshwipes-kit-protects-against-dental-diseases'
+  assign cta_base = section.settings.cta_url | default: 'https://shopvetpets.com/products/freshwipes-kit-protects-against-dental-diseases'
+
+  # Every purchase CTA routes to the offer-page template, not the control PDP
+  # (see sections/eyewipes-prelander.liquid for the identical pattern). cta_url
+  # is merchant-editable, so build the URL rather than hardcoding it: keep any
+  # existing params, append with & when a query string is already present, and
+  # leave view= ahead of any #fragment.
+  assign cta_frag = ''
+  if cta_base contains '#'
+    assign cta_frag_parts = cta_base | split: '#'
+    assign cta_base = cta_frag_parts[0]
+    assign cta_frag = '#' | append: cta_frag_parts[1]
+  endif
+  if cta_base contains 'view='
+    assign pdp_url = cta_base | append: cta_frag
+  else
+    if cta_base contains '?'
+      assign cta_sep = '&'
+    else
+      assign cta_sep = '?'
+    endif
+    assign pdp_url = cta_base | append: cta_sep | append: 'view=freshwipes-offer-page' | append: cta_frag
+  endif
   assign proof_anchor = '#freshwipes-proof'
   assign offer_anchor = '#freshwipes-offer'
+
+  # World Animal Week automatic date gate.
+  # Fixed UTC epochs, not the visitor's local timezone: start 2026-09-28T04:00:00Z
+  # (midnight America/New_York), end 2026-10-05T03:59:59Z (11:59:59 PM America/
+  # New_York on Oct 4). This is the ONLY thing that decides which variant's
+  # inline `display` starts visible - both variants are always in the DOM (see
+  # the top bar and final-offer markup below), so this is fully server-
+  # rendered with no flash for real visitors. Shopify Liquid has no supported
+  # way to read an arbitrary query string (request.query_string is not a real
+  # property - confirmed empty in testing), so the ?waw_preview=1 QA override
+  # is handled client-side instead: a small blocking script in
+  # layout/freshwipes-prelander.liquid's <head> reads location.search before
+  # first paint and, if present, sets data-waw-preview="1" on <html>, which a
+  # same-specificity !important rule in freshwipes-prelander.css uses to force
+  # the WAW variant visible - still no flash, since it runs before paint.
+  assign waw_start_epoch = 1790568000
+  assign waw_end_epoch = 1791172799
+  assign waw_now_epoch = 'now' | date: '%s' | times: 1
+  assign waw_active = false
+  if waw_now_epoch >= waw_start_epoch and waw_now_epoch <= waw_end_epoch
+    assign waw_active = true
+  endif
 
   assign marquee_claims = '45,000+ HAPPY DOG OWNERS|100-DAY MONEY-BACK GUARANTEE|50 TEXTURED FINGER WIPES|BUY 2, GET 2 FREE + FREE GIFTS|FREE &amp; FAST SHIPPING' | split: '|'
 
@@ -56,20 +104,54 @@
 
 <div id="freshwipes-prelander">
 
-  {%- comment -%} ---------- top offer bar ---------- {%- endcomment -%}
-  <div class="fwpl-announce">
+  {%- comment -%}
+    ---------- top bar: both variants always rendered ----------
+    waw_active (date-only) decides which one starts visible via an inline
+    `display:none` - no Liquid if/else gating emission, so the client-side
+    ?waw_preview=1 override (see the layout's <head> script + the
+    [data-waw-preview] rules in freshwipes-prelander.css) can force the WAW
+    variant on without a second server round-trip, and without a flash.
+
+    WAW source of truth: Claude Design project "FreshWipes Pre-Lander v2",
+    file "FreshWipes Pre-Lander v2 - World Animal Week.dc.html" (#waw-bar
+    rules).
+  {%- endcomment -%}
+  <div class="fwpl-waw-bar" data-waw-bar data-waw-variant="waw"{% unless waw_active %} style="display:none"{% endunless %}>
+    <svg class="fwpl-waw-bar__pattern" width="100%" height="100%" aria-hidden="true"><defs><pattern id="fwplWawPawBar" width="96" height="96" patternUnits="userSpaceOnUse"><g fill="#ffffff" fill-opacity="0.16"><g transform="translate(8,10) rotate(-14) scale(0.62)"><ellipse cx="20" cy="27" rx="11.5" ry="9"/><circle cx="7.5" cy="14" r="4.4"/><circle cx="16" cy="8" r="4.6"/><circle cx="25.5" cy="8" r="4.6"/><circle cx="34" cy="14" r="4.4"/></g><g transform="translate(58,54) rotate(16) scale(0.56)"><ellipse cx="20" cy="27" rx="11.5" ry="9"/><circle cx="7.5" cy="14" r="4.4"/><circle cx="16" cy="8" r="4.6"/><circle cx="25.5" cy="8" r="4.6"/><circle cx="34" cy="14" r="4.4"/></g></g></pattern></defs><rect width="100%" height="100%" fill="url(#fwplWawPawBar)"/></svg>
+    <div class="fwpl-waw-bar__in">
+      <div class="fwpl-waw-bar__id">
+        <div class="fwpl-waw-bar__lockup" role="img" aria-label="World Animal Week">
+          <span class="fwpl-waw-bar__l">WORLD ANIMAL</span>
+          <span class="fwpl-waw-bar__l fwpl-waw-bar__day">DAY</span>
+          <span class="fwpl-waw-bar__s">Week</span>
+        </div>
+        <div class="fwpl-waw-bar__meta">
+          <span class="fwpl-waw-bar__sale-label">WORLD ANIMAL WEEK SALE</span><span class="fwpl-waw-bar__meta-dot" aria-hidden="true">·</span><span>28 SEPTEMBER–4 OCTOBER 2026</span>
+          <span class="fwpl-waw-bar__ends-m"><span class="fwpl-waw-bar__dot"></span>ENDS OCTOBER 4</span>
+        </div>
+      </div>
+      <div class="fwpl-waw-bar__mid">
+        <span class="fwpl-waw-bar__offer">BUY 2, GET 2 FREE + 2 FREE GIFTS</span>
+        <span class="fwpl-waw-bar__ends"><span class="fwpl-waw-bar__dot"></span>ENDS OCTOBER 4</span>
+      </div>
+      <div class="fwpl-waw-bar__timer" role="timer" aria-label="World Animal Week sale countdown" data-waw-countdown>
+        <div class="fwpl-waw-bar__tbox"><div class="fwpl-waw-bar__n" data-fwpl-cd="d">00</div><div class="fwpl-waw-bar__u">DAYS</div></div>
+        <div class="fwpl-waw-bar__tbox"><div class="fwpl-waw-bar__n" data-fwpl-cd="h">00</div><div class="fwpl-waw-bar__u">HRS</div></div>
+        <div class="fwpl-waw-bar__tbox"><div class="fwpl-waw-bar__n" data-fwpl-cd="m">00</div><div class="fwpl-waw-bar__u">MIN</div></div>
+        <div class="fwpl-waw-bar__tbox"><div class="fwpl-waw-bar__n" data-fwpl-cd="s">00</div><div class="fwpl-waw-bar__u">SEC</div></div>
+      </div>
+    </div>
+  </div>
+  {%- comment -%} ---------- rotating announcement bar (no countdown, no scarcity copy) ---------- {%- endcomment -%}
+  <div class="fwpl-announce" data-waw-variant="evergreen"{% if waw_active %} style="display:none"{% endif %}>
     <div class="fwpl-announce__inner">
-      <div class="fwpl-announce__text">
-        <span class="fwpl-announce__main">BUY 2, GET 2 FREE + FREE GIFTS</span>
-        <span class="fwpl-announce__sub"><span class="fwpl-announce__dot">· </span>100-Day Risk-Free Home Trial</span>
-      </div>
-      <div class="fwpl-announce__timer" aria-label="Offer countdown">
-        <div class="fwpl-timer__box"><div class="fwpl-timer__num" data-fwpl-cd="h">04</div><div class="fwpl-timer__label">HRS</div></div>
-        <span class="fwpl-timer__sep" aria-hidden="true">:</span>
-        <div class="fwpl-timer__box"><div class="fwpl-timer__num" data-fwpl-cd="m">05</div><div class="fwpl-timer__label">MIN</div></div>
-        <span class="fwpl-timer__sep" aria-hidden="true">:</span>
-        <div class="fwpl-timer__box"><div class="fwpl-timer__num" data-fwpl-cd="s">15</div><div class="fwpl-timer__label">SEC</div></div>
-      </div>
+      <span class="fwpl-announce__msg" data-fwpl-announce-msg>
+        <svg class="fwpl-announce__icon" data-fwpl-announce-icon viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M11.5 3H5a2 2 0 0 0-2 2v6.5a2 2 0 0 0 .586 1.414l8.5 8.5a2 2 0 0 0 2.828 0l6.5-6.5a2 2 0 0 0 0-2.828l-8.5-8.5A2 2 0 0 0 11.5 3Z"></path>
+          <circle cx="7.25" cy="7.25" r="1.1" fill="currentColor" stroke="none"></circle>
+        </svg>
+        <span class="fwpl-announce__text" data-fwpl-announce-text>Buy 2, Get 2 Free</span>
+      </span>
     </div>
   </div>
 
@@ -395,10 +477,82 @@
 
   <svg class="fwpl-wave" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 22C240 58 480 60 760 30S1200 -6 1440 26V64H0Z" fill="#D5F7FF"/></svg>
 
-  {%- comment -%} ---------- final offer ---------- {%- endcomment -%}
-  <section class="fwpl-offer" id="freshwipes-offer" aria-labelledby="fwpl-offer-title">
+  {%- comment -%}
+    ---------- final offer: both variants always rendered ----------
+    Both sit inside one #freshwipes-offer wrapper (the real anchor target -
+    two elements can't share an id) so "Skip to the offer" always lands
+    correctly regardless of which variant is visible. waw_active (date-only)
+    decides which one starts visible via an inline `display:none`; the
+    client-side ?waw_preview=1 override works the same way as the top bar
+    (see that comment above).
+  {%- endcomment -%}
+  <div id="freshwipes-offer" style="scroll-margin-top:8px">
+    {%- comment -%}
+      ---------- World Animal Week final offer ----------
+      Source of truth: Claude Design project "FreshWipes Pre-Lander v2",
+      file "FreshWipes Pre-Lander v2 - World Animal Week.dc.html"
+      (#offer-section rules). Full section redesign for the campaign - not
+      just a header strip like EyeWipes - reusing .fwpl-offer__card,
+      __media, __bestseller, __copy, __rating, __name, __bullets, __cta,
+      __perk and __trust verbatim from the evergreen card (same image, same
+      bullets, same CTA, same trust row); only the surrounding section
+      background/badge and the injected headline + scarcity row are new.
+    {%- endcomment -%}
+    <section class="fwpl-waw-offer-sec" aria-labelledby="fwpl-offer-title-waw" data-waw-variant="waw"{% unless waw_active %} style="display:none"{% endunless %}>
+      <svg class="fwpl-waw-offer-sec__pattern" width="100%" height="100%" aria-hidden="true"><defs><pattern id="fwplWawPawOffer" width="96" height="96" patternUnits="userSpaceOnUse"><g fill="#ffffff" fill-opacity="0.12"><g transform="translate(8,10) rotate(-14) scale(0.62)"><ellipse cx="20" cy="27" rx="11.5" ry="9"/><circle cx="7.5" cy="14" r="4.4"/><circle cx="16" cy="8" r="4.6"/><circle cx="25.5" cy="8" r="4.6"/><circle cx="34" cy="14" r="4.4"/></g><g transform="translate(58,54) rotate(16) scale(0.56)"><ellipse cx="20" cy="27" rx="11.5" ry="9"/><circle cx="7.5" cy="14" r="4.4"/><circle cx="16" cy="8" r="4.6"/><circle cx="25.5" cy="8" r="4.6"/><circle cx="34" cy="14" r="4.4"/></g></g></pattern></defs><rect width="100%" height="100%" fill="url(#fwplWawPawOffer)"/></svg>
+      <div class="fwpl-waw-offer-sec__inner">
+        <h2 class="fwpl-waw-offer-sec__title" id="fwpl-offer-title-waw">You're the Kind of Owner Who Notices. The Tools Failed — <u>Not You</u>.</h2>
+        <p class="fwpl-waw-offer-sec__sub">A better dental routine starts with direct, controlled contact.</p>
+        <div class="fwpl-waw-offer-sec__cardwrap">
+          <div class="fwpl-waw-offer-sec__pill" role="img" aria-label="World Animal Week">
+            <span class="fwpl-waw-bar__l">WORLD ANIMAL</span>
+            <span class="fwpl-waw-bar__l fwpl-waw-bar__day">DAY</span>
+            <span class="fwpl-waw-bar__s">Week</span>
+          </div>
+          <div class="fwpl-offer__card">
+            <div class="fwpl-offer__media">
+              <span class="fwpl-offer__bestseller"><span class="fwpl-offer__dot" aria-hidden="true"></span>Best seller</span>
+              <img src="{{ 'fwpl-offer-jar.webp' | asset_url }}" alt="FreshWipes container with two textured finger sleeves" width="500" height="678" loading="lazy" decoding="async">
+            </div>
+            <div class="fwpl-offer__copy">
+              <div class="fwpl-waw-offer-head">
+                <span class="fwpl-waw-offer-badge"><span class="fwpl-offer__dot" aria-hidden="true"></span>WORLD ANIMAL WEEK OFFER</span>
+                <div class="fwpl-waw-offer-headline">BUY 2, GET 2 FREE + 2 FREE GIFTS</div>
+              </div>
+              <div class="fwpl-offer__rating">
+                <span class="fwpl-stars" aria-hidden="true">{{ stars_row }}</span>
+                <span class="fwpl-rating__text">Rated 4.8/5 · Trusted by 45,000+ Dog Owners</span>
+              </div>
+              <h3 class="fwpl-offer__name">FreshWipes Plaque Relief Kit</h3>
+              <ul class="fwpl-offer__bullets">
+                {%- for bullet in offer_bullets -%}
+                  {%- assign bb = bullet | split: '~' -%}
+                  <li>
+                    {{ check_circle }}
+                    <span>{% if bb.size > 1 and bb[0] != blank %}<span class="fwpl-offer__lead">{{ bb[0] }}</span>{{ bb[1] }}{% else %}{{ bb | last }}{% endif %}</span>
+                  </li>
+                {%- endfor -%}
+              </ul>
+              <div class="fwpl-waw-offer-scarcity">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.2V12l3.4 2.2"/></svg>
+                <span><span class="fwpl-waw-offer-scarcity__label">ENDS OCTOBER 4 · LIMITED SUPPLY</span><span class="fwpl-waw-offer-scarcity__text">High demand — FreshWipes tend to sell out. If this page is live, they're still in stock.</span></span>
+              </div>
+              <a class="fwpl-offer__cta" href="{{ pdp_url }}" data-fwpl-pdp>APPLY DISCOUNT AND CHECK AVAILABILITY →</a>
+              {%- if section.settings.show_routinecare -%}
+                <span class="fwpl-offer__perk">🎁 Save 20% with RoutineCare</span>
+              {%- endif -%}
+              <div class="fwpl-offer__trust">
+                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#47B5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>100-Day Money-Back Guarantee</span>
+                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#47B5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>Free &amp; Fast Shipping</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="fwpl-offer" aria-labelledby="fwpl-offer-title-evergreen" data-waw-variant="evergreen"{% if waw_active %} style="display:none"{% endif %}>
     <div class="fwpl-offer__inner">
-      <h2 class="fwpl-h2 fwpl-offer__title" id="fwpl-offer-title">You're the Kind of Owner Who Notices. The Tools Failed — <span class="fwpl-accent">Not You</span>.</h2>
+      <h2 class="fwpl-h2 fwpl-offer__title" id="fwpl-offer-title-evergreen">You're the Kind of Owner Who Notices. The Tools Failed — <span class="fwpl-accent">Not You</span>.</h2>
       <p class="fwpl-offer__sub">A better dental routine starts with direct, controlled contact.</p>
       <div class="fwpl-offer__cardwrap">
         <div class="fwpl-offer__ribbon">BUY 2, GET 2 FREE + FREE GIFTS (LIMITED TIME!)</div>
@@ -422,10 +576,6 @@
                 </li>
               {%- endfor -%}
             </ul>
-            <div class="fwpl-offer__scarcity">
-              <span class="fwpl-offer__warn" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4"/><path d="M12 17h.01"/></svg></span>
-              <span class="fwpl-offer__warntext">High demand — FreshWipes tend to sell out. If this page is live, they're still in stock.</span>
-            </div>
             <a class="fwpl-offer__cta" href="{{ pdp_url }}" data-fwpl-pdp>APPLY DISCOUNT AND CHECK AVAILABILITY →</a>
             {%- if section.settings.show_routinecare -%}
               <span class="fwpl-offer__perk">🎁 Save 20% with RoutineCare</span>
@@ -438,7 +588,8 @@
         </div>
       </div>
     </div>
-  </section>
+    </section>
+  </div>
 
   {%- comment -%} ---------- sticky CTA ---------- {%- endcomment -%}
   {%- if section.settings.show_sticky_cta -%}
