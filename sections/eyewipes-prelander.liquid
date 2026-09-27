@@ -10,8 +10,8 @@
 
   Everything is scoped under #eyewipes-prelander:
     assets/eyewipes-prelander.css   presentation
-    assets/eyewipes-prelander.js    countdown, comparison tabs, review rail,
-                                    attribution forwarding
+    assets/eyewipes-prelander.js    rotating announcement bar, comparison tabs,
+                                    review rail, attribution forwarding
 
   CTA routing: every purchase / availability CTA goes to the EyeWipes offer page
   (the product handle rendered through templates/product.eyewipes-offer-page.json
@@ -46,23 +46,6 @@
   assign offer_anchor = '#eyewipes-offer'
   assign proof_anchor = '#eyewipes-proof'
 
-  # server-rendered countdown seed (shop time). eyewipes-prelander.js corrects
-  # it to the visitor's own clock within a second.
-  assign now_h = 'now' | date: '%H' | times: 1
-  assign now_m = 'now' | date: '%M' | times: 1
-  assign now_s = 'now' | date: '%S' | times: 1
-  assign hour_seconds = now_h | times: 3600
-  assign minute_seconds = now_m | times: 60
-  assign elapsed = hour_seconds | plus: minute_seconds | plus: now_s
-  assign left = 86400 | minus: elapsed
-  assign cd_h = left | divided_by: 3600
-  assign cd_rem = left | modulo: 3600
-  assign cd_m = cd_rem | divided_by: 60
-  assign cd_s = cd_rem | modulo: 60
-  assign cd_h = cd_h | prepend: '0' | slice: -2, 2
-  assign cd_m = cd_m | prepend: '0' | slice: -2, 2
-  assign cd_s = cd_s | prepend: '0' | slice: -2, 2
-
   assign marquee_claims = '45,000+ Happy Dog Owners|100-Day Money-Back Guarantee|Hypoallergenic &amp; Fragrance-Free|Works In 30 Seconds A Day' | split: '|'
 
   assign cmp_rows = 'Physically removes the buildup~y~n~n~n~y||Textured surface lifts debris off the skin~y~n~n~n~n||Antibacterial — stops it coming back~y~n~d~n~n||Safe for daily use around the eyes~y~n~n~y~d||Works from day one~y~d~d~n~y||No struggle, no stress~y~d~n~y~n||Time per day~t:30 sec~t:1–2 min~t:5–10 min~t:—~t:—' | split: '||'
@@ -73,28 +56,17 @@
 
 <div id="eyewipes-prelander">
 
-  {%- comment -%} ---------- top offer bar ---------- {%- endcomment -%}
+  {%- comment -%} ---------- rotating announcement bar (no countdown, no scarcity copy) ---------- {%- endcomment -%}
   <div class="ewpl-topbar">
     <div class="ewpl-topbar__inner">
-      <div class="ewpl-topbar__text">
-        Buy 2, Get 2 Free + Free Gifts
-        <span class="ewpl-topbar__sub">· 100-Day Risk-Free Home Trial</span>
-      </div>
-      <div class="ewpl-countdown">
-        <div class="ewpl-countdown__box">
-          <div class="ewpl-countdown__num" data-ewpl-cd="h">{{ cd_h }}</div>
-          <div class="ewpl-countdown__label">HRS</div>
-        </div>
-        <div class="ewpl-countdown__sep" aria-hidden="true">:</div>
-        <div class="ewpl-countdown__box">
-          <div class="ewpl-countdown__num" data-ewpl-cd="m">{{ cd_m }}</div>
-          <div class="ewpl-countdown__label">MIN</div>
-        </div>
-        <div class="ewpl-countdown__sep" aria-hidden="true">:</div>
-        <div class="ewpl-countdown__box">
-          <div class="ewpl-countdown__num" data-ewpl-cd="s">{{ cd_s }}</div>
-          <div class="ewpl-countdown__label">SEC</div>
-        </div>
+      <div class="ewpl-announce" role="status" aria-label="Offer highlights">
+        <span class="ewpl-announce__msg" data-ewpl-announce-msg>
+          <svg class="ewpl-announce__icon" data-ewpl-announce-icon viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M11.5 3H5a2 2 0 0 0-2 2v6.5a2 2 0 0 0 .586 1.414l8.5 8.5a2 2 0 0 0 2.828 0l6.5-6.5a2 2 0 0 0 0-2.828l-8.5-8.5A2 2 0 0 0 11.5 3Z"></path>
+            <circle cx="7.25" cy="7.25" r="1.1" fill="currentColor" stroke="none"></circle>
+          </svg>
+          <span class="ewpl-announce__text" data-ewpl-announce-text>Buy 2, Get 2 Free</span>
+        </span>
       </div>
     </div>
   </div>
@@ -450,10 +422,6 @@
                 <span>Visible difference in 3 weeks — or every penny back</span>
               </div>
             </div>
-            <div class="ewpl-offer__scarcity">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 22 20H2L12 3Z" fill="#D64545"/><path d="M12 9.5v4.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="17" r="1.2" fill="#FFFFFF"/></svg>
-              <span>High demand — EyeWipes tend to sell out. If this page is live, they're still in stock.</span>
-            </div>
             <a class="ewpl-cta ewpl-offer__cta" href="{{ pdp_url }}" data-ewpl-pdp>Apply Discount and Check Availability →</a>
             <div class="ewpl-offer__perkwrap"><span class="ewpl-offer__perk">🎁 Save 20% with RoutineCare</span></div>
             <div class="ewpl-offer__trust">
@@ -501,7 +469,7 @@
       "type": "text",
       "id": "cta_url",
       "label": "PDP link",
-      "info": "Leave empty to use /products/eyewipes-prevention-that-keeps-eyes-clear. view=eyewipes-offer-page is appended automatically, so paste a plain product URL here \u2014 existing query params and #anchors are preserved."
+      "info": "Leave empty to use /products/eyewipes-prevention-that-keeps-eyes-clear. view=eyewipes-offer-page is appended automatically, so paste a plain product URL here — existing query params and #anchors are preserved."
     },
     {
       "type": "header",
