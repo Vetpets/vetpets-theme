@@ -1,7 +1,16 @@
 <div id="fb-stub-test">
-<div class="fb-heatmap" aria-hidden="true">
-{%- for d in (1..30) -%}<span style="background:{% if d < 1 %}#47B5E9{% elsif d <= 7 %}#13B6B5{% else %}#EAF6FD{% endif %};"></span>{%- endfor -%}
-</div>
+<script type="application/json" id="fb-spreads-data">
+  [
+    {"label": "Contents & intro", "title": "Where the book begins", "text": "The contents page maps all seven parts of the guide. The introduction opens with a moment most owners know well: the toothbrush comes out, and the dog backs away.", "pages": [
+      {"n": 2, "src": {{ 'freshbreath-ebook-page-02.jpg' | asset_url | json }}},
+      {"n": 3, "src": {{ 'freshbreath-ebook-page-03.jpg' | asset_url | json }}}
+    ]},
+    {"label": "The daily routine", "title": "Days 1–7, step by step", "text": "Five numbered steps: slip a FreshWipe onto your index finger, gently lift the lip, work in small circles along the teeth and gum line, move to the back teeth on both sides, then discard the wipe. The book suggests the evening, after your dog’s last meal.", "pages": [
+      {"n": 21, "src": {{ 'freshbreath-ebook-page-21.jpg' | asset_url | json }}},
+      {"n": 22, "src": {{ 'freshbreath-ebook-page-22.jpg' | asset_url | json }}}
+    ]}
+  ]
+</script>
 </div>
 {% schema %}
 {
