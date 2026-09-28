@@ -101,7 +101,7 @@
       ],
       "name": "Hero review carousel",
       "settings": {
-        "waw_enabled": false,
+        "waw_enabled": true,
         "badge_text": "45.000+ Happy Pet Parents",
         "show_stars": true,
         "badge_bg": "#ffffff",
