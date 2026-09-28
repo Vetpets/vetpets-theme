@@ -1,0 +1,353 @@
+{%- comment -%}
+  Fresh Breath in 30 Days — eBook PDP
+  ===================================
+  Faithful Shopify implementation of the approved Claude Design page
+  "Fresh Breath eBook PDP" (project: eBook design requirements).
+
+  Rendered only through templates/product.freshbreath-ebook-pdp.json. Does not
+  touch templates/product.json or templates/product.ebook.json (shared files).
+
+  COMMERCE
+  --------
+  Single-variant digital product (no selling plan, no shipping). The one
+  add-to-cart pathway is the real <product-form> below; the sticky bar button
+  is a proxy that clicks it. Price/compare-at price render live from Shopify,
+  never hardcoded.
+
+  Everything is scoped under #freshbreath-ebook-pdp.
+{%- endcomment -%}
+
+{%- liquid
+  assign v = product.selected_or_first_available_variant
+  assign product_form_id = 'fb-pdp-product-form-' | append: section.id
+  assign bundle_url = '/products/freshwipes-kit-protects-against-dental-diseases'
+-%}
+
+{{ 'freshbreath-ebook-pdp.css' | asset_url | stylesheet_tag }}
+<link rel="preload" as="image" href="{{ 'freshbreath-ebook-cover.jpg' | asset_url }}">
+
+<div id="freshbreath-ebook-pdp">
+
+  {%- comment -%} ---------- BUY AREA ---------- {%- endcomment -%}
+  <section class="fb-buy-section" data-fb-buy-section>
+    <div class="fb-buy-wrap">
+
+      {%- comment -%} gallery {%- endcomment -%}
+      <div class="fb-gallery">
+        <div class="fb-gallery-main" data-fb-gallery-main>
+          <img class="fb-cover" src="{{ 'freshbreath-ebook-cover.jpg' | asset_url }}" width="1414" height="2000" fetchpriority="high" decoding="async" alt="Cover of Fresh Breath in 30 Days by VetPets">
+          <span class="fb-gallery-badge">Digital eBook · 50 pages</span>
+        </div>
+        <div class="fb-thumbs" role="tablist" aria-label="Product images">
+          <button type="button" class="fb-thumb" data-fb-thumb aria-selected="true" aria-label="Cover">
+            <img src="{{ 'freshbreath-ebook-cover.jpg' | asset_url }}" width="200" height="283" alt="">
+          </button>
+          <button type="button" class="fb-thumb" data-fb-thumb aria-selected="false" aria-label="Contents page">
+            <img src="{{ 'freshbreath-ebook-page-02.jpg' | asset_url }}" width="200" height="283" alt="">
+          </button>
+          <button type="button" class="fb-thumb" data-fb-thumb aria-selected="false" aria-label="Routine page">
+            <img src="{{ 'freshbreath-ebook-page-21.jpg' | asset_url }}" width="200" height="283" alt="">
+          </button>
+          <button type="button" class="fb-thumb" data-fb-thumb aria-selected="false" aria-label="FreshWipes bundle">
+            <img src="{{ 'fwof-tier-4pack.webp' | asset_url }}" width="200" height="200" alt="">
+          </button>
+        </div>
+        <script type="application/json" id="fb-gallery-data">
+          [
+            {"src": {{ 'freshbreath-ebook-cover.jpg' | asset_url | json }}, "alt": "Cover of Fresh Breath in 30 Days by VetPets", "kind": "cover"},
+            {"src": {{ 'freshbreath-ebook-page-02.jpg' | asset_url | json }}, "alt": "Table of contents page", "kind": "page"},
+            {"src": {{ 'freshbreath-ebook-page-21.jpg' | asset_url | json }}, "alt": "Days 1–7 routine page", "kind": "page"},
+            {"src": {{ 'fwof-tier-4pack.webp' | asset_url | json }}, "alt": "Four jars of FreshWipes with the eBook, the Buy 2 Get 2 bundle", "kind": "bundle"}
+          ]
+        </script>
+      </div>
+
+      {%- comment -%} buy box {%- endcomment -%}
+      <div class="fb-buybox">
+        <h1 class="fb-h1">Fresh Breath in 30 Days <span>— No Toothbrush Needed</span></h1>
+        <p class="fb-sub">A 50-page guide to a short daily finger-wipe routine, learned one week at a time.</p>
+
+        <div class="fb-price-row">
+          <span class="fb-price-now">{{ product.price | money }}</span>
+          {%- if product.compare_at_price > product.price -%}
+            <s class="fb-price-was">{{ product.compare_at_price | money }}</s>
+            <span class="fb-sale-badge">Sale</span>
+          {%- endif -%}
+        </div>
+
+        {%- if product != blank -%}
+          <product-form>
+            {%- form 'product', product, id: product_form_id, class: 'fb-form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+              <input type="hidden" name="id" value="{{ v.id }}" class="product-variant-id">
+              <input type="hidden" name="properties[_vp_offer_source]" value="freshbreath-ebook-pdp">
+              <button
+                type="submit"
+                name="add"
+                class="fb-atc"
+                data-fb-atc-real
+                {% if v.available == false %}disabled{% endif %}
+              >
+                {%- if v.available == false -%}Sold out{%- else -%}Add eBook to Cart{%- endif -%}
+              </button>
+            {%- endform -%}
+          </product-form>
+        {%- endif -%}
+
+        <div class="fb-delivery-tags">
+          <span>Digital PDF, no shipping</span>
+          <span>Download link sent by email</span>
+        </div>
+
+        {%- comment -%} bundle teaser + box: the verified FreshWipes Buy 2 Get 2 offer, ebook included {%- endcomment -%}
+        <a href="#fb-bundle" class="fb-bundle-teaser" data-fb-goto-bundle>
+          <span><strong>Using FreshWipes too?</strong> The eBook is included with Buy 2 Get 2.</span>
+          <span class="fb-arrow" aria-hidden="true">↓</span>
+        </a>
+
+        <div id="fb-bundle" class="fb-bundle-box">
+          <div class="fb-bundle-bar">
+            <span class="fb-bb-tag">Better value</span>
+            <span class="fb-bb-sub">Guide + tool</span>
+          </div>
+          <div class="fb-bundle-body">
+            <div class="fb-bundle-top">
+              <img src="{{ 'fwof-tier-4pack.webp' | asset_url }}" width="150" height="150" loading="lazy" alt="Four jars of VetPets FreshWipes next to the Fresh Breath in 30 Days eBook">
+              <div>
+                <h2>Want the guide <em>and</em> the routine?</h2>
+                <p>Get the eBook included with Buy 2 Get 2 FreshWipes.</p>
+              </div>
+            </div>
+            <div class="fb-compare" role="table" aria-label="What you receive">
+              <div class="fb-compare-row fb-compare-head" role="row">
+                <span role="columnheader">You receive</span>
+                <span role="columnheader" class="fb-col">eBook only</span>
+                <span role="columnheader" class="fb-col fb-col-b">Buy 2 Get 2</span>
+              </div>
+              <div class="fb-compare-row" role="row">
+                <span role="cell">Fresh Breath in 30 Days eBook</span>
+                <span role="cell" class="fb-col">✓</span>
+                <span role="cell" class="fb-col fb-col-b">✓ Included</span>
+              </div>
+              <div class="fb-compare-row" role="row">
+                <span role="cell">FreshWipes jars</span>
+                <span role="cell" class="fb-col">—</span>
+                <span role="cell" class="fb-col fb-col-b">4 jars</span>
+              </div>
+              <div class="fb-compare-row" role="row">
+                <span role="cell">Everything the routine uses</span>
+                <span role="cell" class="fb-col">—</span>
+                <span role="cell" class="fb-col fb-col-b">✓</span>
+              </div>
+            </div>
+            <a href="{{ bundle_url }}" class="fb-bundle-cta">See the FreshWipes Offer <span aria-hidden="true">→</span></a>
+            <p class="fb-bundle-note">Price, gifts and availability in your country are shown on the FreshWipes page.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <svg class="fb-wave fb-wave-bottom" aria-hidden="true" viewBox="0 0 1440 120" preserveAspectRatio="none"><path fill="#47B5E9" fill-opacity=".16" d="M0,40 C240,92 500,110 740,80 C980,50 1210,18 1440,40 L1440,120 L0,120 Z"></path><path fill="#FFFFFF" fill-opacity=".6" d="M0,62 C250,104 520,116 760,92 C1000,68 1220,44 1440,60 L1440,120 L0,120 Z"></path><path fill="#FFFFFF" d="M0,84 C270,118 540,122 780,104 C1020,86 1240,74 1440,86 L1440,120 L0,120 Z"></path></svg>
+  </section>
+
+  {%- comment -%} ---------- WHAT YOU'LL LEARN ---------- {%- endcomment -%}
+  <section class="fb-section">
+    <div class="fb-section-wrap">
+      <div class="fb-section-head">
+        <p class="fb-eyebrow">What you'll learn</p>
+        <h2 class="fb-h2">Five chapters, one routine you can keep.</h2>
+      </div>
+      <div class="fb-chapters">
+        <div class="fb-chapter">
+          <span class="fb-chapter-num">01</span>
+          <div>
+            <h3>Why nothing you've tried has worked</h3>
+            <p>Brushes, chews, water additives and coconut oil: what each does and where it tends to fall short.</p>
+          </div>
+        </div>
+        <div class="fb-chapter">
+          <span class="fb-chapter-num">02</span>
+          <div>
+            <h3>The 30-day fresh-breath routine</h3>
+            <p>The finger-wipe method in five steps, and how to ease a hesitant dog in.</p>
+          </div>
+        </div>
+        <div class="fb-chapter">
+          <span class="fb-chapter-num">03</span>
+          <div>
+            <h3>Your dog's size, age &amp; breed</h3>
+            <p>Adjustments for small breeds, larger dogs and seniors with tender gums.</p>
+          </div>
+        </div>
+        <div class="fb-chapter">
+          <span class="fb-chapter-num">04</span>
+          <div>
+            <h3>Is this normal?</h3>
+            <p>What's typical in the first weeks, and the signs that mean it's time to see a vet.</p>
+          </div>
+        </div>
+        <div class="fb-chapter">
+          <span class="fb-chapter-num">05</span>
+          <div>
+            <h3>Year-round dental care</h3>
+            <p>Keeping the habit going through holidays, busy weeks and changes in diet.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ---------- PREVIEW ---------- {%- endcomment -%}
+  <section class="fb-preview-section">
+    <svg class="fb-wave fb-wave-top" aria-hidden="true" viewBox="0 0 1440 120" preserveAspectRatio="none"><path fill="#47B5E9" fill-opacity=".14" d="M0,0 L1440,0 L1440,76 C1190,108 950,116 710,94 C470,72 230,54 0,82 Z"></path><path fill="#FFFFFF" fill-opacity=".6" d="M0,0 L1440,0 L1440,58 C1200,90 960,100 720,80 C480,60 240,44 0,66 Z"></path><path fill="#FFFFFF" d="M0,0 L1440,0 L1440,38 C1210,68 970,80 730,62 C490,44 250,30 0,48 Z"></path></svg>
+    <div class="fb-preview-wrap">
+      <div class="fb-section-head">
+        <p class="fb-eyebrow">Look inside</p>
+        <h2 class="fb-h2">Real pages from the book.</h2>
+        <p style="margin:0;font-size:16px;color:#3D4A5C;">Tap a page to read it full size.</p>
+      </div>
+      <div class="fb-preview-strip">
+        {%- assign preview_pages = '2|Contents|freshbreath-ebook-page-02.jpg,21|Days 1–7: the reset|freshbreath-ebook-page-21.jpg,22|The five steps|freshbreath-ebook-page-22.jpg,34|Senior dogs|freshbreath-ebook-page-34.jpg,38|When to see a vet|freshbreath-ebook-page-38.jpg' | split: ',' -%}
+        {%- for pg in preview_pages -%}
+          {%- assign parts = pg | split: '|' -%}
+          <button type="button" class="fb-preview-card" data-fb-open-page="{{ forloop.index0 }}" aria-label="Enlarge page {{ parts[0] }}, {{ parts[1] }}">
+            <img src="{{ parts[2] | asset_url }}" width="565" height="800" loading="lazy" alt="Page {{ parts[0] }}: {{ parts[1] }}">
+            <span class="fb-preview-cap"><span>{{ parts[1] }}</span><span>p. {{ parts[0] }}</span></span>
+          </button>
+        {%- endfor -%}
+        <script type="application/json" id="fb-pages-data">
+          [
+            {%- for pg in preview_pages -%}
+              {%- assign parts = pg | split: '|' -%}
+              {"num": {{ parts[0] }}, "label": {{ parts[1] | json }}, "src": {{ parts[2] | asset_url | json }}, "alt": {{ parts[1] | json }}}{% unless forloop.last %},{% endunless %}
+            {%- endfor -%}
+          ]
+        </script>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ---------- 30-DAY ROUTINE ---------- {%- endcomment -%}
+  <section class="fb-section">
+    <div class="fb-section-wrap">
+      <div class="fb-section-head">
+        <p class="fb-eyebrow">The 30-day plan</p>
+        <h2 class="fb-h2">Three stages, one small habit.</h2>
+      </div>
+      <ol class="fb-stages">
+        <li class="fb-stage">
+          <span class="fb-stage-range">Days 1–7</span>
+          <h3>The reset</h3>
+          <p>Pick one time each day, start with the front teeth, and follow every session with a treat.</p>
+        </li>
+        <li class="fb-stage">
+          <span class="fb-stage-range">Days 8–21</span>
+          <h3>The shift</h3>
+          <p>Reach the back teeth on both sides, and learn what to look for on the used wipe.</p>
+        </li>
+        <li class="fb-stage">
+          <span class="fb-stage-range">Days 22–30</span>
+          <h3>The new normal</h3>
+          <p>The same short routine most evenings, plus what to raise at your dog's next checkup.</p>
+        </li>
+      </ol>
+      <p class="fb-stage-note">A plan for learning the routine, not a timetable for results. A home routine doesn't remove existing tartar or replace a vet's examination; the guide lists the signs that mean you should book one.</p>
+    </div>
+  </section>
+
+  {%- comment -%} ---------- DELIVERY + FAQ ---------- {%- endcomment -%}
+  <section class="fb-delivery-section">
+    <svg class="fb-wave fb-wave-top" aria-hidden="true" viewBox="0 0 1440 120" preserveAspectRatio="none"><path fill="#47B5E9" fill-opacity=".14" d="M0,0 L1440,0 L1440,76 C1190,108 950,116 710,94 C470,72 230,54 0,82 Z"></path><path fill="#FFFFFF" fill-opacity=".6" d="M0,0 L1440,0 L1440,58 C1200,90 960,100 720,80 C480,60 240,44 0,66 Z"></path><path fill="#FFFFFF" d="M0,0 L1440,0 L1440,38 C1210,68 970,80 730,62 C490,44 250,30 0,48 Z"></path></svg>
+    <div class="fb-delivery-wrap">
+      <div class="fb-delivery-card">
+        <h2>How delivery works</h2>
+        <ol>
+          <li>Check out as normal. Nothing is shipped.</li>
+          <li>A download link is sent to the email address on your order.</li>
+          <li>Open the PDF on your phone, tablet or computer.</li>
+        </ol>
+        <p>Can't find the email? Contact <a href="mailto:info@shopvetpets.com">info@shopvetpets.com</a>.</p>
+      </div>
+      <div class="fb-faq-col">
+        <h2>Questions, answered</h2>
+        <div class="fb-faq-list">
+          <div class="fb-faq-item" data-fb-faq-item data-open="true">
+            <button type="button" class="fb-faq-q" data-fb-faq-toggle aria-expanded="true">
+              <span>Is this a physical book?</span>
+              <span class="fb-faq-sign" data-fb-faq-sign aria-hidden="true">−</span>
+            </button>
+            <p class="fb-faq-a">No. It's a 50-page digital eBook (PDF). Nothing is shipped; a download link is sent to your email after checkout.</p>
+          </div>
+          <div class="fb-faq-item" data-fb-faq-item data-open="false">
+            <button type="button" class="fb-faq-q" data-fb-faq-toggle aria-expanded="false">
+              <span>Do I need a toothbrush?</span>
+              <span class="fb-faq-sign" data-fb-faq-sign aria-hidden="true">+</span>
+            </button>
+            <p class="fb-faq-a">No. The routine uses a textured finger wipe instead of a brush and paste. The steps are written around VetPets FreshWipes.</p>
+          </div>
+          <div class="fb-faq-item" data-fb-faq-item data-open="false">
+            <button type="button" class="fb-faq-q" data-fb-faq-toggle aria-expanded="false">
+              <span>Do I need FreshWipes to use the guide?</span>
+              <span class="fb-faq-sign" data-fb-faq-sign aria-hidden="true">+</span>
+            </button>
+            <p class="fb-faq-a">The guide is most useful with a jar to hand, because its steps are written around them. If you don't have FreshWipes yet, the eBook is also included with the Buy 2 Get 2 FreshWipes offer.</p>
+          </div>
+          <div class="fb-faq-item" data-fb-faq-item data-open="false">
+            <button type="button" class="fb-faq-q" data-fb-faq-toggle aria-expanded="false">
+              <span>Is it suitable for older dogs?</span>
+              <span class="fb-faq-sign" data-fb-faq-sign aria-hidden="true">+</span>
+            </button>
+            <p class="fb-faq-a">Yes, there's a section on senior dogs, including starting gently on tender gums. If your dog already has visible tartar or mouth pain, see your vet first.</p>
+          </div>
+          <div class="fb-faq-item" data-fb-faq-item data-open="false">
+            <button type="button" class="fb-faq-q" data-fb-faq-toggle aria-expanded="false">
+              <span>Does it replace vet dental care?</span>
+              <span class="fb-faq-sign" data-fb-faq-sign aria-hidden="true">+</span>
+            </button>
+            <p class="fb-faq-a">No. A home routine can't remove hardened tartar or diagnose problems. The guide explains which signs mean you should book a vet visit.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ---------- STICKY BAR ---------- {%- endcomment -%}
+  <div class="fb-sticky" data-fb-sticky data-visible="false">
+    <div class="fb-sticky-in">
+      <img class="fb-sticky-cover" src="{{ 'freshbreath-ebook-cover.jpg' | asset_url }}" width="34" height="48" alt="" aria-hidden="true">
+      <div class="fb-sticky-info">
+        <span class="fb-sticky-title">Fresh Breath in 30 Days</span>
+        <span class="fb-sticky-price">
+          <strong>{{ product.price | money }}</strong>
+          {%- if product.compare_at_price > product.price %} <s>{{ product.compare_at_price | money }}</s>{% endif -%}
+        </span>
+      </div>
+      <button type="button" class="fb-sticky-atc" data-fb-atc-proxy {% if v.available == false %}disabled{% endif %}>
+        {%- if v.available == false -%}Sold out{%- else -%}Add to Cart{%- endif -%}
+      </button>
+    </div>
+  </div>
+
+  {%- comment -%} ---------- LIGHTBOX ---------- {%- endcomment -%}
+  <div class="fb-lightbox" data-fb-lightbox data-open="false" role="dialog" aria-modal="true">
+    <div class="fb-lightbox-bar">
+      <span data-fb-lb-caption></span>
+      <div class="fb-lightbox-btns">
+        <button type="button" class="fb-lightbox-btn" data-fb-lb-prev aria-label="Previous page">←</button>
+        <button type="button" class="fb-lightbox-btn" data-fb-lb-next aria-label="Next page">→</button>
+        <button type="button" class="fb-lightbox-btn fb-close" data-fb-lb-close aria-label="Close">×</button>
+      </div>
+    </div>
+    <img src="" alt="">
+  </div>
+</div>
+
+<script src="{{ 'freshbreath-ebook-pdp.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Fresh Breath eBook PDP",
+  "tag": "div",
+  "class": "freshbreath-ebook-pdp-section",
+  "settings": [],
+  "presets": [{ "name": "Fresh Breath eBook PDP" }]
+}
+{% endschema %}
