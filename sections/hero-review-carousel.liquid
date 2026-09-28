@@ -90,7 +90,28 @@
     assign inner_class = 'vp-hrc__inner page-width page-width--full'
   endif
   assign custom_max_width = st.custom_max_width | default: 1200
+
+  comment
+    World Animal Week: a separate on/off toggle from the section's own
+    settings (independent of the vetpets-popup section's own WAW toggle).
+    When off, nothing below the flag changes - same markup, same styles,
+    same behaviour as before this feature existed.
+  endcomment
+  assign waw_enabled = false
+  if st.waw_enabled
+    assign waw_enabled = true
+  endif
+  assign root_class = 'vp-hrc'
+  if waw_enabled
+    assign root_class = 'vp-hrc vp-hrc--waw'
+  endif
 -%}
+
+{%- if waw_enabled -%}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap">
+{%- endif -%}
 
 {%- capture star_icon -%}
   <svg class="vp-hrc__star" width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false"><path d="M10 1.5l2.47 5.2 5.53.79-4 4.02.95 5.72L10 14.53 5.05 17.23l.95-5.72-4-4.02 5.53-.79L10 1.5z"/></svg>
@@ -125,7 +146,7 @@
 {%- endcapture -%}
 
 <div
-  class="vp-hrc"
+  class="{{ root_class }}"
   data-vp-hrc="{{ section.id }}"
   style="
     --vp-hrc-bg: {{ st.bg_color }};
@@ -165,6 +186,26 @@
     --vp-hrc-pad-bottom: {{ st.padding_bottom }}px;
   "
 >
+  {%- if waw_enabled -%}
+    {%- comment -%}
+      Subtle heart/plus VetPets mark, tiled behind the whole section - same
+      technique as the vetpets-popup section's World Animal Week background
+      (a repeating heart-shaped path in an SVG <pattern>), independent markup
+      so this section has no dependency on that one.
+    {%- endcomment -%}
+    <svg class="vp-hrc__waw-tile" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="vp-hrc-mark-{{ section.id }}" width="120" height="120" patternUnits="userSpaceOnUse">
+          <g fill="#0D2340" fill-opacity="0.06" fill-rule="evenodd">
+            <g transform="translate(6 10) rotate(-10) scale(1.5)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></g>
+            <g transform="translate(70 28) rotate(-10) scale(0.95)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></g>
+            <g transform="translate(34 72) rotate(-10) scale(1.2)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></g>
+          </g>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#vp-hrc-mark-{{ section.id }})"></rect>
+    </svg>
+  {%- endif -%}
   <div
     class="{{ inner_class }}"
     {% if width_mode == 'custom' %}
@@ -172,6 +213,17 @@
     {% endif %}
   >
     <div class="vp-hrc__content">
+      {%- if waw_enabled -%}
+        <div class="vp-hrc__waw-badge">
+          <span class="vp-hrc__waw-badge-globe" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#13B6B5"></circle><circle cx="12" cy="12" r="7.6" fill="none" stroke="#FFFFFF" stroke-width="1.5"></circle><path d="M4.4 12h15.2M12 4.4c2.1 2.1 3.2 4.8 3.2 7.6s-1.1 5.5-3.2 7.6c-2.1-2.1-3.2-4.8-3.2-7.6s1.1-5.5 3.2-7.6Z" fill="none" stroke="#FFFFFF" stroke-width="1.4"></path></svg>
+          </span>
+          <span class="vp-hrc__waw-badge-text">World Animal
+            <span class="vp-hrc__waw-strike">Day<svg viewBox="0 0 70 22" preserveAspectRatio="none" aria-hidden="true"><path d="M2 15 C 16 11, 30 13, 44 8 S 62 6, 68 5" fill="none" stroke="#E0301E" stroke-width="4.4" stroke-linecap="round"></path></svg></span>
+            <span class="vp-hrc__waw-week">Week</span>
+          </span>
+        </div>
+      {%- endif -%}
       {%- if st.badge_text != blank -%}
         <p class="vp-hrc__badge">
           {%- if st.show_stars -%}
@@ -291,6 +343,100 @@
     overflow: hidden;
     font-family: var(--font-body-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
     font-weight: 400;
+    position: relative;
+  }
+
+  /* ---------- World Animal Week ---------- */
+
+  .vp-hrc__waw-tile {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Content/wall sit above the pattern tile. */
+  .vp-hrc--waw .vp-hrc__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .vp-hrc__waw-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: linear-gradient(100deg, #47B5E9 0%, #2E9FD8 100%);
+    border: 2px solid #FFFFFF;
+    border-radius: 999px;
+    padding: 4px 15px 4px 4px;
+    box-shadow: 0 8px 18px rgba(31, 127, 184, .28);
+    margin: 0 0 14px;
+  }
+
+  .vp-hrc__waw-badge-globe {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+  }
+
+  .vp-hrc__waw-badge-globe svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .vp-hrc__waw-badge-text {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .01em;
+    text-transform: uppercase;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .vp-hrc__waw-strike {
+    position: relative;
+    display: inline-block;
+    color: #FFE1DE;
+  }
+
+  .vp-hrc__waw-strike svg {
+    position: absolute;
+    left: -4px;
+    top: 2px;
+    width: calc(100% + 8px);
+    height: 12px;
+    overflow: visible;
+  }
+
+  .vp-hrc__waw-week {
+    font-family: 'Caveat', cursive;
+    font-size: 22px;
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: 0;
+    transform: rotate(-5deg) translateY(2px);
+    display: inline-block;
+    color: #FFFFFF;
+  }
+
+  @media screen and (min-width: 900px) {
+    .vp-hrc__waw-badge { gap: 9px; padding: 5px 18px 5px 5px; margin-bottom: 18px; }
+    .vp-hrc__waw-badge-globe { width: 28px; height: 28px; }
+    .vp-hrc__waw-badge-globe svg { width: 21px; height: 21px; }
+    .vp-hrc__waw-badge-text { font-size: 15px; gap: 6px; }
+    .vp-hrc__waw-strike svg { height: 14px; }
+    .vp-hrc__waw-week { font-size: 26px; }
   }
 
   /* max-width, margin and horizontal padding all come from .page-width. */
@@ -681,6 +827,17 @@
   "class": "section-hero-review-carousel",
   "max_blocks": 24,
   "settings": [
+    {
+      "type": "header",
+      "content": "World Animal Week"
+    },
+    {
+      "type": "checkbox",
+      "id": "waw_enabled",
+      "label": "Enable World Animal Week styling",
+      "default": false,
+      "info": "Adds a coordinated World Animal Week badge and a subtle background pattern above the existing badge. Everything else (imagery, headline, CTA) is unchanged. Independent from the vetpets-popup section's own World Animal Week toggle."
+    },
     {
       "type": "header",
       "content": "Badge"

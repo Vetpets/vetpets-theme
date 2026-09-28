@@ -59,11 +59,25 @@
     The vp-ticker__* child names are unrelated to that block's .vp-item /
     .vp-track / .vp-divider and stay as they are.
   endcomment
+  assign waw_enabled = false
+  if st.waw_enabled
+    assign waw_enabled = true
+  endif
+
   assign root_class = 'vp-tickerbar'
   if st.pause_on_hover
-    assign root_class = 'vp-tickerbar vp-tickerbar--pause-hover'
+    assign root_class = root_class | append: ' vp-tickerbar--pause-hover'
+  endif
+  if waw_enabled
+    assign root_class = root_class | append: ' vp-tickerbar--waw'
   endif
 -%}
+
+{%- if waw_enabled -%}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap">
+{%- endif -%}
 
 {%- capture divider_markup -%}
   <span class="vp-ticker__divider vp-ticker__divider--{{ st.divider_style }}" aria-hidden="true"></span>
@@ -93,6 +107,33 @@
       --vp-ticker-pad-bottom: {{ st.padding_bottom }}px;
     "
   >
+    {%- if waw_enabled -%}
+      {%- comment -%}
+        Subtle heart/plus VetPets mark tiled behind the bar, same technique
+        as the vetpets-popup section's World Animal Week background -
+        independent markup, no dependency on that section.
+      {%- endcomment -%}
+      <svg class="vp-ticker__waw-tile" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="vp-ticker-mark-{{ section.id }}" width="90" height="90" patternUnits="userSpaceOnUse">
+            <g fill="#FFFFFF" fill-opacity="0.14" fill-rule="evenodd">
+              <g transform="translate(4 8) rotate(-10) scale(1.05)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></g>
+              <g transform="translate(52 40) rotate(-10) scale(0.8)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></g>
+            </g>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#vp-ticker-mark-{{ section.id }})"></rect>
+      </svg>
+      <div class="vp-ticker__waw-badge">
+        <span class="vp-ticker__waw-badge-globe" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#13B6B5"></circle><circle cx="12" cy="12" r="7.6" fill="none" stroke="#FFFFFF" stroke-width="1.5"></circle><path d="M4.4 12h15.2M12 4.4c2.1 2.1 3.2 4.8 3.2 7.6s-1.1 5.5-3.2 7.6c-2.1-2.1-3.2-4.8-3.2-7.6s1.1-5.5 3.2-7.6Z" fill="none" stroke="#FFFFFF" stroke-width="1.4"></path></svg>
+        </span>
+        <span class="vp-ticker__waw-badge-text">World Animal
+          <span class="vp-ticker__waw-strike">Day<svg viewBox="0 0 70 22" preserveAspectRatio="none" aria-hidden="true"><path d="M2 15 C 16 11, 30 13, 44 8 S 62 6, 68 5" fill="none" stroke="#E0301E" stroke-width="4.4" stroke-linecap="round"></path></svg></span>
+          <span class="vp-ticker__waw-week">Week</span>
+        </span>
+      </div>
+    {%- endif -%}
     <div class="vp-ticker__viewport">
       <div class="vp-ticker__track">
         {%- for copy in (1..2) -%}
@@ -196,6 +237,105 @@
     background-color: var(--vp-ticker-bg, #47b5e9);
     padding-block: var(--vp-ticker-pad-top, 12px) var(--vp-ticker-pad-bottom, 12px);
     font-family: var(--font-body-family, 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+    position: relative;
+  }
+
+  /* ---------- World Animal Week ---------- */
+  /* Only this modifier turns the bar into a flex row (fixed badge + the
+     unchanged scrolling viewport); the evergreen bar stays a plain block. */
+
+  .vp-tickerbar--waw {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-inline: 12px;
+  }
+
+  .vp-ticker__waw-tile {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .vp-ticker__waw-badge {
+    position: relative;
+    z-index: 1;
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: linear-gradient(100deg, #0D2340 0%, #163A63 100%);
+    border: 2px solid #FFFFFF;
+    border-radius: 999px;
+    padding: 3px 12px 3px 3px;
+    box-shadow: 0 4px 10px rgba(13, 35, 64, .28);
+  }
+
+  .vp-ticker__waw-badge-globe {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+  }
+
+  .vp-ticker__waw-badge-globe svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .vp-ticker__waw-badge-text {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .01em;
+    text-transform: uppercase;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .vp-ticker__waw-strike {
+    position: relative;
+    display: inline-block;
+    color: #FFE1DE;
+  }
+
+  .vp-ticker__waw-strike svg {
+    position: absolute;
+    left: -3px;
+    top: 1px;
+    width: calc(100% + 6px);
+    height: 10px;
+    overflow: visible;
+  }
+
+  .vp-ticker__waw-week {
+    font-family: 'Caveat', cursive;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: 0;
+    transform: rotate(-5deg) translateY(1px);
+    display: inline-block;
+    color: #FFFFFF;
+  }
+
+  @media screen and (min-width: 750px) {
+    .vp-ticker__waw-badge { gap: 7px; padding: 4px 15px 4px 4px; }
+    .vp-ticker__waw-badge-globe { width: 24px; height: 24px; }
+    .vp-ticker__waw-badge-globe svg { width: 18px; height: 18px; }
+    .vp-ticker__waw-badge-text { font-size: 13px; gap: 5px; }
+    .vp-ticker__waw-strike svg { height: 11px; }
+    .vp-ticker__waw-week { font-size: 21px; }
   }
 
   /* Clips the overflowing track. overflow-x: hidden rather than auto so no
@@ -203,6 +343,8 @@
   .vp-ticker__viewport {
     overflow: hidden;
     width: 100%;
+    position: relative;
+    z-index: 1;
   }
 
   /* No flex gap here on purpose - see the note at the top of the file. */
@@ -444,6 +586,17 @@
   "class": "section-announcement-ticker",
   "max_blocks": 20,
   "settings": [
+    {
+      "type": "header",
+      "content": "World Animal Week"
+    },
+    {
+      "type": "checkbox",
+      "id": "waw_enabled",
+      "label": "Enable World Animal Week styling",
+      "default": false,
+      "info": "Adds a coordinated World Animal Week badge and a subtle background pattern to the bar, in front of the existing scrolling items. Everything else (items, colours, speed) is unchanged. Independent from the vetpets-popup section's own World Animal Week toggle."
+    },
     {
       "type": "header",
       "content": "Colours"
