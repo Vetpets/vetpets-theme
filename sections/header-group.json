@@ -177,6 +177,7 @@
       ],
       "name": "Announcement ticker",
       "settings": {
+        "waw_enabled": true,
         "bg_color": "#47B5E9",
         "text_color": "#FFFFFF",
         "icon_color": "#FFFFFF",
