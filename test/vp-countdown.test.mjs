@@ -166,6 +166,7 @@ describe('pages wire the shared module and keep no private timer maths', () => {
   test('all four Original pages mount the same attribute on the same clock -> identical value', () => {
     const snip = read('snippets/vp-daily-countdown.liquid');
     assert.equal((snip.match(/data-vp-dcd="[hms]"/g) || []).length, 3);
+    assert.match(snip, /#47B5E9/);
   });
   test('the module is loaded before the WAW page scripts', () => {
     for (const p of ['freshwipes', 'eyewipes']) {

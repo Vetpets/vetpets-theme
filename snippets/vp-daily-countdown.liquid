@@ -1,31 +1,61 @@
 {%- comment -%}
-  Original-mode evergreen daily countdown strip (all four sales pages).
-  Neutral copy only: no campaign name, date, gift or offer wording.
-  Counts down to 23:59:59 America/New_York and restarts every New York day.
-  The time maths lives in assets/vp-countdown.js (shared with every other
-  page); this snippet only renders the markup and mounts it, so every page
-  shows the identical value at the same moment. Never rendered in World
-  Animal Week mode, which keeps its own fixed-deadline countdown.
+  Original-mode top bar (all four sales pages): ONE combined blue bar =
+  promo text + evergreen daily countdown, in the original top position. It
+  replaces the legacy rotating announcement bar (which is removed from the
+  Original markup, not hidden). Layout ported from the FreshWipes Pre-Lander
+  v2 design: [BUY 2, GET 2 FREE + FREE GIFTS · 100-Day Risk-Free Home Trial]
+  [HRS : MIN : SEC]. No campaign name, date or deadline text.
+  Counts down to 23:59:59 America/New_York and restarts every New York day;
+  the maths lives in assets/vp-countdown.js (one shared clock for every page).
+  Never rendered in World Animal Week mode, which keeps its own bar.
 {%- endcomment -%}
 <!-- vp-dcd:start -->
 <style>
-  .vp-dcd { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; padding: 7px 12px; background: #EEF7FC; color: #0D2340; border-bottom: 1px solid #D3E8F5; font: 600 13px/1.2 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; text-align: center; }
-  .vp-dcd__label { letter-spacing: .01em; }
-  .vp-dcd__clock { display: inline-flex; align-items: center; gap: 4px; font-variant-numeric: tabular-nums; }
-  .vp-dcd__box { display: inline-flex; flex-direction: column; align-items: center; min-width: 38px; padding: 3px 5px; background: #fff; border: 1px solid #C9E2F2; border-radius: 6px; }
-  .vp-dcd__num { font-size: 16px; font-weight: 800; line-height: 1; }
-  .vp-dcd__unit { margin-top: 2px; font-size: 8px; font-weight: 700; letter-spacing: .12em; color: #4F5F6B; line-height: 1; }
-  .vp-dcd__sep { font-weight: 800; color: #4F5F6B; }
+  .vp-dcd { box-sizing: border-box; width: 100%; background: #47B5E9; color: #fff; display: flex; align-items: center; justify-content: center; min-height: 60px; padding: 8px 14px; font-family: inherit; }
+  .vp-dcd *, .vp-dcd *::before, .vp-dcd *::after { box-sizing: border-box; }
+  .vp-dcd__in { display: flex; align-items: center; justify-content: center; gap: 14px; width: 100%; max-width: 1280px; margin: 0 auto; }
+  .vp-dcd__text { display: flex; flex-direction: row; align-items: baseline; justify-content: center; flex-wrap: wrap; column-gap: 8px; min-width: 0; text-align: left; }
+  .vp-dcd__main { font-weight: 800; font-size: 20px; letter-spacing: .01em; line-height: 1.15; text-transform: uppercase; }
+  .vp-dcd__sub { font-weight: 400; font-size: 16px; line-height: 1.15; }
+  .vp-dcd__timer { display: flex; align-items: center; gap: 5px; flex: none; }
+  .vp-dcd__box { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 48px; height: 42px; background: #fff; border-radius: 9px; }
+  .vp-dcd__num { color: #47B5E9; font-size: 19px; font-weight: 800; line-height: 1.05; font-variant-numeric: tabular-nums; }
+  .vp-dcd__unit { font-size: 9px; font-weight: 700; letter-spacing: .04em; line-height: 1.1; color: rgba(18, 18, 18, .55); }
+  .vp-dcd__sep { font-weight: 800; font-size: 18px; line-height: 1; }
+  @media (max-width: 767px) {
+    .vp-dcd { min-height: 70px; padding: 8px 12px; }
+    .vp-dcd__in { justify-content: space-between; gap: 10px; }
+    .vp-dcd__text { flex-direction: column; align-items: flex-start; row-gap: 3px; }
+    .vp-dcd__main { font-size: 14px; font-weight: 800; }
+    .vp-dcd__sub { font-size: 12px; }
+    .vp-dcd__dot { display: none; }
+    .vp-dcd__timer { gap: 3px; }
+    .vp-dcd__box { width: 38px; height: 40px; border-radius: 9px; }
+    .vp-dcd__num { font-size: 16px; }
+    .vp-dcd__unit { font-size: 7px; }
+    .vp-dcd__sep { font-size: 15px; }
+  }
+  @media (max-width: 359px) {
+    .vp-dcd__main { font-size: 12px; }
+    .vp-dcd__sub { font-size: 11px; }
+    .vp-dcd__box { width: 32px; height: 36px; }
+    .vp-dcd__num { font-size: 14px; }
+  }
 </style>
-<div class="vp-dcd" role="timer" aria-label="Today's offer ends in">
-  <span class="vp-dcd__label">Today's offer ends in</span>
-  <span class="vp-dcd__clock">
-    <span class="vp-dcd__box"><span class="vp-dcd__num" data-vp-dcd="h">--</span><span class="vp-dcd__unit">HRS</span></span>
-    <span class="vp-dcd__sep" aria-hidden="true">:</span>
-    <span class="vp-dcd__box"><span class="vp-dcd__num" data-vp-dcd="m">--</span><span class="vp-dcd__unit">MIN</span></span>
-    <span class="vp-dcd__sep" aria-hidden="true">:</span>
-    <span class="vp-dcd__box"><span class="vp-dcd__num" data-vp-dcd="s">--</span><span class="vp-dcd__unit">SEC</span></span>
-  </span>
+<div class="vp-dcd" role="timer" aria-label="Offer countdown">
+  <div class="vp-dcd__in">
+    <div class="vp-dcd__text">
+      <span class="vp-dcd__main">Buy 2, Get 2 Free + Free Gifts</span>
+      <span class="vp-dcd__sub"><span class="vp-dcd__dot">· </span>100-Day Risk-Free Home Trial</span>
+    </div>
+    <div class="vp-dcd__timer">
+      <div class="vp-dcd__box"><div class="vp-dcd__num" data-vp-dcd="h">--</div><div class="vp-dcd__unit">HRS</div></div>
+      <span class="vp-dcd__sep" aria-hidden="true">:</span>
+      <div class="vp-dcd__box"><div class="vp-dcd__num" data-vp-dcd="m">--</div><div class="vp-dcd__unit">MIN</div></div>
+      <span class="vp-dcd__sep" aria-hidden="true">:</span>
+      <div class="vp-dcd__box"><div class="vp-dcd__num" data-vp-dcd="s">--</div><div class="vp-dcd__unit">SEC</div></div>
+    </div>
+  </div>
 </div>
 <script src="{{ 'vp-countdown.js' | asset_url }}" defer></script>
 <script src="{{ 'vp-daily-countdown.js' | asset_url }}" defer></script>

@@ -48,6 +48,15 @@ const visible = (html) => html
 const DCD = /<!-- vp-dcd:start -->[\s\S]*?<!-- vp-dcd:end -->/g;
 const norm = (s) => s.replace(/\s+/g, ' ').replace(/> </g, '><').trim();
 const noDcd = (s) => s.replace(DCD, '');
+// remove the legacy rotating announcement bar (balanced <div>) from a pre-WAW render: Original no longer has it
+function noLegacyBar(html) {
+  const m = /<div class="(?:topbar|ewpl-topbar|fwpl-announce)">/.exec(html);
+  if (!m) return html;
+  let depth = 0; const re = /<div\b|<\/div>/g; re.lastIndex = m.index; let e;
+  while ((e = re.exec(html))) { depth += e[0] === '</div>' ? -1 : 1; if (depth === 0) return html.slice(0, m.index) + html.slice(re.lastIndex); }
+  return html;
+}
+const LEGACY = /class="(?:topbar|ewpl-topbar|fwpl-announce)"|data-(?:fwpl-)?(?:ewpl-)?announce-(?:msg|text|icon)/;
 
 let engine = null;
 const canRender = () => engine !== null && git('cat-file', '-e', PRE_OFFER + ':README-eyewipes-prelander.md') !== null;
@@ -140,18 +149,24 @@ describe('sales pages: offer pages and pre-landers (render)', () => {
         const b = await renderSrc(pre, baseCtx('original'));
         // pre-landers: the ONLY intended differences are the countdown seed placeholders
         const fix = (s) => norm(s).replace(/data-ewpl-cd="([hms])">\s*(?:\d\d|--)\s*</g, 'data-ewpl-cd="$1">##<').replace(/data-fwpl-cd="([hms])">\s*(?:\d\d|--)\s*</g, 'data-fwpl-cd="$1">##<');
-        assert.equal(fix(noDcd(a)), fix(noDcd(b)));
+        assert.equal(fix(noDcd(a)), fix(noDcd(noLegacyBar(b))));
       });
-      test('Original renders the shared daily countdown with neutral copy; WAW mode never does', async (t) => {
+      test('Original has exactly ONE top bar: the combined countdown bar; legacy bar removed from the markup', async (t) => {
         if (!canRender()) return t.skip('liquidjs or git history unavailable');
         for (const mode of ['original', ...INVALID]) {
           const html = await renderSrc(readText(file), baseCtx(mode));
           const strip = html.match(DCD);
-          assert.equal(strip && strip.length, 1, `${file} mode=${String(mode)} must render exactly one strip`);
-          const text = strip[0].replace(/<style[\s\S]*?<\/style>/g, '').replace(/<script[\s\S]*?<\/script>/g, '').replace(/<[^>]+>/g, ' ');
-          assert.match(text, /Today's offer ends in/);
-          assert.doesNotMatch(strip[0], /World Animal|\bWAW\b|Oct|gift|Buy 2|Get 2|1791172799/i);
+          assert.equal(strip && strip.length, 1, `${file} mode=${String(mode)} must render exactly one bar`);
+          assert.doesNotMatch(html.replace(DCD, ''), LEGACY, `${file} mode=${String(mode)}: legacy bar must not exist`);
+          const text = strip[0].replace(/<style[\s\S]*?<\/style>/g, '').replace(/<script[\s\S]*?<\/script>/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+          assert.match(text, /Buy 2, Get 2 Free \+ Free Gifts/);
+          assert.match(text, /100-Day Risk-Free Home Trial/);
+          assert.match(text, /HRS .*MIN .*SEC/);
+          assert.doesNotMatch(strip[0], /World Animal|\bWAW\b|Oct|1791172799|Today's offer/i);
+          assert.match(strip[0], /#47B5E9/);
           assert.match(strip[0], /vp-countdown\.js/);
+          // the bar is the first thing inside the page wrapper, before the hero
+          assert.ok(html.indexOf('vp-dcd:start') < html.search(/class="(?:hero|ewpl-hero|fwpl-hero)"/), `${file}: bar must precede hero`);
         }
         const waw = await renderSrc(readText(file), baseCtx('world_animal_week'));
         assert.doesNotMatch(waw, /vp-dcd/);
@@ -246,7 +261,7 @@ describe('cart behaviour: Original offer pages keep the verified payload', () =>
       const fields = (html) => [...html.matchAll(/<(?:input|select|button|form)\b[^>]*>/gi)]
         .map((m) => m[0]).filter((x) => /name=|action=|type="submit"/.test(x)).map(norm).sort();
       const a = fields(noDcd(await renderSrc(readText(file), baseCtx('original'))));
-      const b = fields(await renderSrc(gitShow(PRE_OFFER, file), baseCtx('original')));
+      const b = fields(noLegacyBar(await renderSrc(gitShow(PRE_OFFER, file), baseCtx('original'))));
       assert.ok(a.length > 0);
       assert.deepEqual(a, b);
     });
