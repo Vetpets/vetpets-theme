@@ -22,8 +22,8 @@
         "type": "text",
         "id": "campaign_waw_ends_at",
         "label": "World Animal Week ends at (scheduled mode)",
-        "default": "2026-10-04T23:59:00-04:00",
-        "info": "ISO 8601 with an explicit UTC offset, e.g. 2026-10-04T23:59:00-04:00 (23:59 America/New_York = 05:59 Stockholm = 03:59 UTC on 5 Oct). World Animal Week is shown strictly before this instant, Original at and after. Blank or invalid = already ended (Original)."
+        "default": "2026-10-04T23:59:59-04:00",
+        "info": "ISO 8601 with an explicit UTC offset, e.g. 2026-10-04T23:59:59-04:00 (23:59:59 America/New_York = 05:59:59 Stockholm = 03:59:59 UTC on 5 Oct). The World Animal Week countdowns count to this same instant. World Animal Week is shown strictly before this instant, Original at and after. Blank or invalid = already ended (Original)."
       },
       {
         "type": "select",

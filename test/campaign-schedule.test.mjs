@@ -3,7 +3,7 @@
  *
  * Mechanism: server-side Liquid (snippets/campaign-mode.liquid) compares the render
  * time with the ISO-8601 instant in Theme setting "World Animal Week ends at"
- * (default 2026-10-04T23:59:00-04:00 = 05:59 Stockholm = 03:59 UTC on 5 Oct).
+ * (default 2026-10-04T23:59:59-04:00 = 05:59:59 Stockholm = 03:59:59 UTC on 5 Oct).
  * WAW is shown strictly BEFORE that instant, Original at and after. No theme is
  * replaced or published. A tiny head guard (snippets/campaign-guard.liquid) covers
  * stale cached HTML and mixed-surface pages.
@@ -16,7 +16,7 @@ import vm from 'node:vm';
 import { execFileSync } from 'node:child_process';
 import { loadLiquid, readText, repoRoot, campaignDefaults } from './helpers/render-liquid.mjs';
 
-const CUTOFF = Date.parse('2026-10-05T03:59:00Z'); // 2026-10-04 23:59 America/New_York
+const CUTOFF = Date.parse('2026-10-05T03:59:59Z'); // 2026-10-04 23:59:59 America/New_York
 const CUTOFF_S = CUTOFF / 1000;
 const LIVE = '1cc7431'; // origin/main while WAW was live (previous behaviour)
 
@@ -36,17 +36,17 @@ const mode = async (key, settings, at) => (await render("{%- render 'campaign-mo
 const defaults = campaignDefaults();
 
 describe('the cutoff instant is the same instant in all three zones', () => {
-  test('23:59 America/New_York = 05:59 Europe/Stockholm = 03:59 UTC (2026-10-05)', () => {
-    const f = (tz) => new Intl.DateTimeFormat('sv-SE', { timeZone: tz, dateStyle: 'short', timeStyle: 'short' }).format(CUTOFF);
-    assert.equal(f('America/New_York'), '2026-10-04 23:59');
-    assert.equal(f('Europe/Stockholm'), '2026-10-05 05:59');
-    assert.equal(f('UTC'), '2026-10-05 03:59');
-    assert.equal(CUTOFF_S, 1791172740);
+  test('23:59:59 America/New_York = 05:59:59 Europe/Stockholm = 03:59:59 UTC (2026-10-05)', () => {
+    const f = (tz) => new Intl.DateTimeFormat('sv-SE', { timeZone: tz, dateStyle: 'short', timeStyle: 'medium' }).format(CUTOFF);
+    assert.equal(f('America/New_York'), '2026-10-04 23:59:59');
+    assert.equal(f('Europe/Stockholm'), '2026-10-05 05:59:59');
+    assert.equal(f('UTC'), '2026-10-05 03:59:59');
+    assert.equal(CUTOFF_S, 1791172799);
   });
   test('the shipped default is exactly that instant', async () => {
-    assert.equal(defaults.campaign_waw_ends_at, '2026-10-04T23:59:00-04:00');
+    assert.equal(defaults.campaign_waw_ends_at, '2026-10-04T23:59:59-04:00');
     e.setClock(0);
-    assert.equal((await e.render(e.parse("{{ '2026-10-04T23:59:00-04:00' | date: '%s' }}"), {})).trim(), String(CUTOFF_S));
+    assert.equal((await e.render(e.parse("{{ '2026-10-04T23:59:59-04:00' | date: '%s' }}"), {})).trim(), String(CUTOFF_S));
   });
   test('all four default selectors are "scheduled" (so deploying before the cutoff changes nothing)', () => {
     for (const k of KEYS) assert.equal(defaults[`${k}_campaign_mode`], 'scheduled');
@@ -56,9 +56,9 @@ describe('the cutoff instant is the same instant in all three zones', () => {
 describe('resolver: before / exactly at / after the cutoff, every surface', () => {
   const cases = [
     ['1 hour before', CUTOFF - 3600e3, 'world_animal_week'],
-    ['1 second before (23:58:59)', CUTOFF - 1000, 'world_animal_week'],
+    ['1 second before (23:59:58)', CUTOFF - 1000, 'world_animal_week'],
     ['1 millisecond before', CUTOFF - 1, 'world_animal_week'],
-    ['exactly at the cutoff (23:59:00)', CUTOFF, 'original'],
+    ['exactly at the cutoff (23:59:59)', CUTOFF, 'original'],
     ['1 millisecond after', CUTOFF + 1, 'original'],
     ['1 second after', CUTOFF + 1000, 'original'],
     ['06:00 Stockholm the next morning', Date.parse('2026-10-05T04:00:00Z'), 'original'],
@@ -104,7 +104,7 @@ describe('resolver: before / exactly at / after the cutoff, every surface', () =
 describe('DST / timezone behaviour', () => {
   test('the same instant written with Stockholm, UTC or New York offsets switches identically', async (t) => {
     if (!e) return t.skip('liquidjs unavailable');
-    for (const iso of ['2026-10-04T23:59:00-04:00', '2026-10-05T05:59:00+02:00', '2026-10-05T03:59:00Z']) {
+    for (const iso of ['2026-10-04T23:59:59-04:00', '2026-10-05T05:59:59+02:00', '2026-10-05T03:59:59Z']) {
       const s = { ...defaults, campaign_waw_ends_at: iso };
       assert.equal(await mode('sales', s, CUTOFF - 1000), 'world_animal_week', iso);
       assert.equal(await mode('sales', s, CUTOFF), 'original', iso);
@@ -112,7 +112,7 @@ describe('DST / timezone behaviour', () => {
   });
   test('the offset is honoured: mis-stating New York as EST (-05:00) would switch an hour LATE', async (t) => {
     if (!e) return t.skip('liquidjs unavailable');
-    const s = { ...defaults, campaign_waw_ends_at: '2026-10-04T23:59:00-05:00' };
+    const s = { ...defaults, campaign_waw_ends_at: '2026-10-04T23:59:59-05:00' };
     assert.equal(await mode('sales', s, CUTOFF), 'world_animal_week'); // wrong offset => 04:59Z
     assert.equal(await mode('sales', s, CUTOFF + 3600e3), 'original');
     // 2026-10-04 is still daylight time in New York (DST ends 2026-11-01), so -04:00 is the correct offset
@@ -190,6 +190,8 @@ describe('deploying BEFORE the cutoff changes nothing visible (new code == previ
     .replace(/-waw\.(css|js)/g, '.$1')
     .replace(/<script src="\/assets\/vp-countdown\.js"[^>]*><\/script>/g, '')
     .replace(/<script>\s*\(function \(\) \{\s*var ENDS[\s\S]*?<\/script>/g, '')
+    .replace(/<script>window\.VPCampaignEnds = \d+;<\/script>/g, '')
+    .replace(/var WAW_DEADLINE_MS = [^;]*;[^\n]*/g, 'var WAW_DEADLINE_MS = X;')
     .replace(/<span hidden data-vp-campaign=[^>]*><\/span>/g, '');
   const pairs = [
     'sections/hero-review-carousel.liquid', 'sections/announcement-ticker.liquid', 'sections/vetpets-popup.liquid',
@@ -215,10 +217,29 @@ describe('deploying BEFORE the cutoff changes nothing visible (new code == previ
   });
 });
 
+describe('the WAW countdowns and the switch share ONE instant', () => {
+  test('the head exposes window.VPCampaignEnds = the cutoff epoch (even with manual selectors)', async (t) => {
+    if (!e) return t.skip('liquidjs unavailable');
+    for (const s of [{ ...defaults }, { ...defaults, sales_campaign_mode: 'world_animal_week', homepage_campaign_mode: 'original', announcement_campaign_mode: 'original', popup_campaign_mode: 'original' }]) {
+      const out = await render("{%- render 'campaign-guard' -%}", { settings: s }, CUTOFF - 1000);
+      assert.match(out, new RegExp(`window\\.VPCampaignEnds = ${CUTOFF_S};`));
+    }
+    const none = await render("{%- render 'campaign-guard' -%}", { settings: { ...defaults, campaign_waw_ends_at: 'garbage' } }, CUTOFF - 1000);
+    assert.doesNotMatch(none, /VPCampaignEnds/);
+  });
+  test('every WAW countdown reads window.VPCampaignEnds, with the same instant as the fallback', () => {
+    for (const f of ['assets/eyewipes-offer-page-waw.js', 'assets/freshwipes-offer-page-waw.js', 'assets/eyewipes-prelander-waw.js', 'assets/freshwipes-prelander-waw.js']) {
+      assert.match(readText(f), new RegExp(`window\\.VPCampaignEnds \\? window\\.VPCampaignEnds \\* 1000 : ${CUTOFF_S}000`), f);
+    }
+    assert.match(readText('sections/vetpets-popup.liquid'), new RegExp(`window\\.VPCampaignEnds \\? window\\.VPCampaignEnds \\* 1000 : ${CUTOFF_S}000`));
+    assert.equal(CUTOFF_S * 1000, 1791172799000);
+  });
+});
+
 describe('head guard: stale HTML and mixed surfaces', () => {
   async function guardCode(settings, at) {
     const out = await render("{%- render 'campaign-guard' -%}", { settings }, at);
-    const m = out.match(/<script>([\s\S]*?)<\/script>/);
+    const m = out.match(/<script>(\s*\(function[\s\S]*?)<\/script>/);
     return m ? m[1] : null;
   }
   function run(code, { clientNow: initial, now: nowFn, markers = [], search = '' }) {
@@ -237,7 +258,7 @@ describe('head guard: stale HTML and mixed surfaces', () => {
   test('no script at all unless a surface is scheduled with a valid end instant', async (t) => {
     if (!e) return t.skip('liquidjs unavailable');
     const manual = { ...defaults, homepage_campaign_mode: 'original', announcement_campaign_mode: 'world_animal_week', popup_campaign_mode: 'original', sales_campaign_mode: 'original' };
-    assert.equal(await guardCode(manual, CUTOFF - 1000), null);
+    assert.equal(await guardCode(manual, CUTOFF - 1000), null); // (only the VPCampaignEnds one-liner is emitted)
     assert.equal(await guardCode({ ...defaults, campaign_waw_ends_at: 'garbage' }, CUTOFF - 1000), null);
     assert.ok(await guardCode({ ...defaults }, CUTOFF - 1000));
   });

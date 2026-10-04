@@ -13,7 +13,7 @@
                           nothing is published or replaced at the switch.
   Anything else (missing / invalid value) -> Original.
   "WAW ends at" (settings.campaign_waw_ends_at) is ISO-8601 WITH an explicit offset, e.g.
-  2026-10-04T23:59:00-04:00. Blank or unparseable -> the schedule counts as already
+  2026-10-04T23:59:59-04:00. Blank or unparseable -> the schedule counts as already
   ended (fail safe to Original). WAW is active strictly BEFORE that instant; at the
   instant and after, Original.
 {%- endcomment -%}

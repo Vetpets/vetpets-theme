@@ -1,6 +1,9 @@
 {%- comment -%}
   Campaign switch safety net (rendered once per page, in <head>).
-  Only active when at least one surface is set to "scheduled" and the end instant is valid.
+  1. Always exposes window.VPCampaignEnds (epoch seconds of the end instant) so every World Animal
+     Week countdown counts to the SAME instant that switches the page.
+  2. The refresh guard below is only active when at least one surface is set to "scheduled"
+     and the end instant is valid.
   Server HTML is already correct for the moment it was rendered; this guard covers the
   two ways a visitor could still see a stale or mixed page:
     1. HTML rendered BEFORE the end instant but displayed AFTER it (edge cache, bfcache,
@@ -21,6 +24,9 @@
   endif
   assign guard_now = 'now' | date: '%s' | plus: 0
 -%}
+{%- if guard_ends > 0 -%}
+<script>window.VPCampaignEnds = {{ guard_ends }};</script>
+{%- endif -%}
 {%- if any_sched and guard_ends > 0 -%}
 <script>
 (function () {

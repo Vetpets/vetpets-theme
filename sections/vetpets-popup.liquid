@@ -717,7 +717,7 @@
      Liquid already decided cfg.wawActive using this same fixed deadline,
      so there is nothing here to reconcile - this only drives the display. */
   if (cfg.wawActive) {
-    var WAW_DEADLINE_MS = 1791172799000; /* 2026-10-04 23:59:59 America/New_York (EDT, UTC-4) */
+    var WAW_DEADLINE_MS = window.VPCampaignEnds ? window.VPCampaignEnds * 1000 : 1791172799000; /* same instant as the mode switch (Theme setting); fallback 2026-10-04 23:59:59 America/New_York */
     var vppPad2 = function (n) { return String(n).padStart(2, '0'); };
     var tickWawCountdown = function () {
       var left = Math.max(0, Math.floor((WAW_DEADLINE_MS - Date.now()) / 1000));

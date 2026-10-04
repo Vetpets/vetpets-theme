@@ -564,6 +564,6 @@
     /* World Animal Week: fixed deadline 2026-10-04 23:59:59 America/New_York,
        driven by the same shared clock as every other page. */
     if (!window.VPCountdown) return;
-    VPCountdown.mount(document.querySelectorAll('[data-cd]'), { attr: 'data-cd', mode: 'fixed', deadlineMs: 1791172799000 });
+    VPCountdown.mount(document.querySelectorAll('[data-cd]'), { attr: 'data-cd', mode: 'fixed', deadlineMs: (window.VPCampaignEnds ? window.VPCampaignEnds * 1000 : 1791172799000) });
   })();
 })();

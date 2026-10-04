@@ -80,7 +80,7 @@ describe('Theme settings: Campaign presentation', () => {
     assert.deepEqual(sels.map((s) => s.id), KEYS);
     const ends = group.settings.find((s) => s.id === 'campaign_waw_ends_at');
     assert.equal(ends.type, 'text');
-    assert.equal(ends.default, '2026-10-04T23:59:00-04:00');
+    assert.equal(ends.default, '2026-10-04T23:59:59-04:00');
     for (const s of sels) {
       assert.equal(s.type, 'select');
       assert.deepEqual(s.options.map((o) => o.value).sort(), ['original', 'scheduled', 'world_animal_week']);

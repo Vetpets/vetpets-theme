@@ -147,7 +147,7 @@ describe('pages wire the shared module and keep no private timer maths', () => {
   for (const f of wawPages) {
     test(`${f} -> VPCountdown.mount(fixed), no private maths`, () => {
       const s = read(f);
-      assert.match(s, /VPCountdown\.mount\([^\n]*mode: 'fixed', deadlineMs: 1791172799000/);
+      assert.match(s, /VPCountdown\.mount\([^\n]*mode: 'fixed', deadlineMs: \(window\.VPCampaignEnds \? window\.VPCampaignEnds \* 1000 : 1791172799000\)/);
       assert.doesNotMatch(s, /setHours\(24|new Date\(2026,\s*9,\s*4|WAW_DEADLINE_MS/);
     });
   }

@@ -73,9 +73,9 @@
      --------------------------------------------------------------- */
   (function wawCountdown() {
     /* World Animal Week: fixed deadline 2026-10-04 23:59:59 America/New_York,
-       driven by the shared clock (assets/vp-countdown.js) so every page agrees. */
+       driven by the shared clock; deadline = the campaign end instant (window.VPCampaignEnds, from the same Theme setting that switches the page) (assets/vp-countdown.js) so every page agrees. */
     if (!window.VPCountdown) return;
-    VPCountdown.mount(root.querySelectorAll('[data-fwpl-cd]'), { attr: 'data-fwpl-cd', mode: 'fixed', deadlineMs: 1791172799000 });
+    VPCountdown.mount(root.querySelectorAll('[data-fwpl-cd]'), { attr: 'data-fwpl-cd', mode: 'fixed', deadlineMs: (window.VPCampaignEnds ? window.VPCampaignEnds * 1000 : 1791172799000) });
   }());
 
   /* ---------------------------------------------------------------
