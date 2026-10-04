@@ -4,7 +4,9 @@
   verified pre-WAW body (byte-identical to git 327c8c3^ / 7e5e701). The two bodies share no
   variables or assets: WAW uses *-waw.css / *-waw.js, Original uses the unsuffixed assets.
 {%- endcomment -%}
-{%- if settings.sales_campaign_mode == 'world_animal_week' -%}
+{%- capture campaign_mode -%}{%- render 'campaign-mode', key: 'sales' -%}{%- endcapture -%}
+{%- render 'campaign-mode', key: 'sales', marker: true -%}
+{%- if campaign_mode == 'world_animal_week' -%}
 {%- comment -%}
   EyeWipes offer page (deploy retry marker)
   ===================
@@ -58,7 +60,7 @@
 
   # Campaign mode (Theme settings > Campaign presentation > Sales pages campaign mode) is the
   # sole gate for this body: no date window, no forced override. The surrounding
-  # `settings.sales_campaign_mode == 'world_animal_week'` branch already decided this.
+  # `campaign_mode == 'world_animal_week'` (snippets/campaign-mode.liquid) already decided this.
   assign waw_active = true
 
   if waw_active

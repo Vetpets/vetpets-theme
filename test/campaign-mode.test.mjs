@@ -66,7 +66,8 @@ before(async () => { engine = await loadLiquid(); });
 const stripComments = (src) => src
   .replace(/\{%-?\s*comment\s*-?%\}[\s\S]*?\{%-?\s*endcomment\s*-?%\}/g, '')
   .replace(/^[ \t]*comment[ \t]*\n[\s\S]*?^[ \t]*endcomment[ \t]*$/gm, '');
-async function renderSrc(src, ctx) { return engine.render(engine.parse(stripComments(src)), ctx); }
+const MARKER = /<span hidden data-vp-campaign=[^>]*><\/span>/g;
+async function renderSrc(src, ctx, keepMarkers = false) { const out = await engine.render(engine.parse(stripComments(src)), ctx, { globals: { settings: ctx.settings || {} } }); return keepMarkers ? out : out.replace(MARKER, ''); }
 
 describe('Theme settings: Campaign presentation', () => {
   const schema = JSON.parse(readText('config/settings_schema.json'));
@@ -75,13 +76,16 @@ describe('Theme settings: Campaign presentation', () => {
 
   test('the group exists with exactly the four single-select settings', () => {
     assert.ok(group);
-    const sels = group.settings.filter((s) => s.id);
+    const sels = group.settings.filter((s) => s.id && s.type === 'select');
     assert.deepEqual(sels.map((s) => s.id), KEYS);
+    const ends = group.settings.find((s) => s.id === 'campaign_waw_ends_at');
+    assert.equal(ends.type, 'text');
+    assert.equal(ends.default, '2026-10-04T23:59:00-04:00');
     for (const s of sels) {
       assert.equal(s.type, 'select');
-      assert.deepEqual(s.options.map((o) => o.value), ['original', 'world_animal_week']);
-      assert.deepEqual(s.options.map((o) => o.label), ['Original', 'World Animal Week']);
-      assert.equal(s.default, 'original');
+      assert.deepEqual(s.options.map((o) => o.value).sort(), ['original', 'scheduled', 'world_animal_week']);
+      assert.ok(s.options.some((o) => o.value === 'original' && o.label === 'Original'));
+      assert.equal(s.default, 'scheduled');
     }
   });
   test('no ambiguous per-section duplicate toggles remain', () => {
@@ -93,24 +97,24 @@ describe('Theme settings: Campaign presentation', () => {
       assert.doesNotMatch(readText(f), /waw_enabled|popup_theme/, f);
     }
   });
-  test('each surface reads only its own setting', () => {
-    const reads = (f) => [...new Set(readText(f).match(/settings\.\w+_campaign_mode/g) || [])];
-    assert.deepEqual(reads('sections/hero-review-carousel.liquid'), ['settings.homepage_campaign_mode']);
-    assert.deepEqual(reads('sections/announcement-ticker.liquid'), ['settings.announcement_campaign_mode']);
-    assert.deepEqual(reads('sections/vetpets-popup.liquid'), ['settings.popup_campaign_mode']);
+  test('each surface resolves its mode ONLY through the shared resolver with its own key', () => {
+    const keys = (f) => [...new Set([...readText(f).matchAll(/render 'campaign-mode', key: '(\w+)'/g)].map((m) => m[1]))];
+    assert.deepEqual(keys('sections/hero-review-carousel.liquid'), ['homepage']);
+    assert.deepEqual(keys('sections/announcement-ticker.liquid'), ['announcement']);
+    assert.deepEqual(keys('sections/vetpets-popup.liquid'), ['popup']);
     for (const p of ['freshwipes', 'eyewipes']) {
-      for (const f of [`sections/${p}-offer-page.liquid`, `sections/${p}-prelander.liquid`, `layout/${p}-prelander.liquid`]) {
-        assert.deepEqual(reads(f), ['settings.sales_campaign_mode'], f);
-      }
+      for (const f of [`sections/${p}-offer-page.liquid`, `sections/${p}-prelander.liquid`, `layout/${p}-prelander.liquid`]) assert.deepEqual(keys(f), ['sales'], f);
+    }
+    for (const f of ['homepage', 'announcement', 'popup', 'sales']) assert.match(readText('snippets/campaign-mode.liquid'), new RegExp(`settings\\.${f}_campaign_mode`));
+    // no surface reads a *_campaign_mode setting directly any more
+    for (const f of ['sections/hero-review-carousel.liquid', 'sections/announcement-ticker.liquid', 'sections/vetpets-popup.liquid', 'sections/freshwipes-offer-page.liquid', 'sections/eyewipes-offer-page.liquid', 'sections/freshwipes-prelander.liquid', 'sections/eyewipes-prelander.liquid', 'layout/freshwipes-prelander.liquid', 'layout/eyewipes-prelander.liquid']) {
+      assert.doesNotMatch(readText(f).replace(/\{%-?\s*comment[\s\S]*?endcomment\s*-?%\}/g, ''), /settings\.\w+_campaign_mode/, f);
     }
   });
   test('every gate compares against the exact string (fail-safe to Original)', () => {
     for (const f of ['sections/hero-review-carousel.liquid', 'sections/announcement-ticker.liquid', 'sections/vetpets-popup.liquid',
-      'sections/freshwipes-offer-page.liquid', 'sections/eyewipes-offer-page.liquid', 'sections/freshwipes-prelander.liquid', 'sections/eyewipes-prelander.liquid']) {
-      const src = readText(f);
-      for (const m of src.matchAll(/settings\.\w+_campaign_mode\s*([!=]=)\s*'([^']*)'/g)) {
-        assert.equal(m[1], '==', f); assert.equal(m[2], 'world_animal_week', f);
-      }
+      'sections/freshwipes-offer-page.liquid', 'sections/eyewipes-offer-page.liquid', 'sections/freshwipes-prelander.liquid', 'sections/eyewipes-prelander.liquid', 'layout/freshwipes-prelander.liquid', 'layout/eyewipes-prelander.liquid']) {
+      for (const m of readText(f).matchAll(/campaign_mode\s*([!=]=)\s*'([^']*)'/g)) { assert.equal(m[1], '==', f); assert.equal(m[2], 'world_animal_week', f); }
     }
   });
   test('no date window or forced-on override survives in the offer pages / pre-landers', () => {

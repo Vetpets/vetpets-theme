@@ -56,6 +56,13 @@ export async function loadLiquid() {
     }
   });
   passthrough('form'); passthrough('paginate'); passthrough('style');
+  // controllable clock: 'now' | date renders as engine.setClock(ms)
+  let clock = Date.now();
+  engine.setClock = (ms) => { clock = ms; };
+  const origDate = typeof engine.filters.get === 'function' ? engine.filters.get('date') : engine.filters.date;
+  const dateImpl = typeof origDate === 'function' ? origDate : origDate.handler;
+  engine.registerFilter('date', function (v, ...a) { return dateImpl.call(this, v === 'now' || v === 'today' ? new Date(clock) : v, ...a); });
+  engine.registerFilter('strip', (v) => String(v ?? '').trim());
   engine.registerFilter('asset_url', (v) => `/assets/${v}`);
   engine.registerFilter('stylesheet_tag', (v) => `<link rel="stylesheet" href="${v}">`);
   engine.registerFilter('script_tag', (v) => `<script src="${v}"></script>`);
@@ -70,3 +77,9 @@ export async function loadLiquid() {
 
 export function readText(rel) { return readFileSync(resolve(root, rel), 'utf8'); }
 export const repoRoot = root;
+
+/** Schema defaults of the Campaign presentation group (what Shopify applies when settings_data.json has no value). */
+export function campaignDefaults() {
+  const g = JSON.parse(readText('config/settings_schema.json')).find((x) => x.name === 'Campaign presentation');
+  return Object.fromEntries(g.settings.filter((x) => x.id).map((x) => [x.id, x.default]));
+}

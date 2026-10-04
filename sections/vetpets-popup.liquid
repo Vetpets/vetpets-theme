@@ -29,7 +29,10 @@
     invalid value renders the Original popup. No date logic here - the mode is the sole gate.
   endcomment
   assign waw_active = false
-  if settings.popup_campaign_mode == 'world_animal_week'
+  capture campaign_mode
+    render 'campaign-mode', key: 'popup'
+  endcapture
+  if campaign_mode == 'world_animal_week'
     assign waw_active = true
   endif
 
@@ -41,6 +44,7 @@
   endif
 -%}
 
+{%- render 'campaign-mode', key: 'popup', marker: true -%}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800{% if waw_active %}&family=Caveat:wght@700{% endif %}&display=swap">

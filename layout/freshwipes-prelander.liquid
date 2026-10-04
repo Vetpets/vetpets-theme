@@ -29,7 +29,8 @@
 
     <link rel="preload" as="font" type="font/woff2" href="{{ 'fwpl-geist-bold.woff2' | asset_url }}" crossorigin>
     <link rel="preload" as="font" type="font/woff2" href="{{ 'fwpl-geist-regular.woff2' | asset_url }}" crossorigin>
-    {%- if settings.sales_campaign_mode == 'world_animal_week' -%}
+    {%- capture campaign_mode -%}{%- render 'campaign-mode', key: 'sales' -%}{%- endcapture -%}
+    {%- if campaign_mode == 'world_animal_week' -%}
     {%- comment -%}
       Permanent Marker: the World Animal Week "Week" script lockup. Loaded
       unconditionally (both the evergreen and WAW top-bar/offer variants are
@@ -43,9 +44,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap">
     {%- endif -%}
     {%- assign pl_suffix = '' -%}
-    {%- if settings.sales_campaign_mode == 'world_animal_week' -%}{%- assign pl_suffix = '-waw' -%}{%- endif -%}
+    {%- if campaign_mode == 'world_animal_week' -%}{%- assign pl_suffix = '-waw' -%}{%- endif -%}
     <link rel="stylesheet" href="{{ 'freshwipes-prelander' | append: pl_suffix | append: '.css' | asset_url }}">
-    {%- if settings.sales_campaign_mode == 'world_animal_week' -%}
+    {%- if campaign_mode == 'world_animal_week' -%}
 
     {%- comment -%}
       ?waw_preview=1 QA override - forces the WAW variant visible with no
@@ -70,13 +71,14 @@
       @font-face { font-family: "GeistFwpl"; src: url("{{ 'fwpl-geist-extrabold.woff2' | asset_url }}") format("woff2"); font-weight: 800; font-style: normal; font-display: swap; }
     </style>
 
+    {%- render 'campaign-guard' -%}
     {{ content_for_header }}
   </head>
 
   <body class="freshwipes-prelander-body">
     {{ content_for_layout }}
 
-    {%- if settings.sales_campaign_mode == 'world_animal_week' -%}
+    {%- if campaign_mode == 'world_animal_week' -%}
     <script src="{{ 'vp-countdown.js' | asset_url }}" defer></script>
     {%- endif -%}
     <script src="{{ 'freshwipes-prelander' | append: pl_suffix | append: '.js' | asset_url }}" defer></script>

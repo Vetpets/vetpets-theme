@@ -60,7 +60,10 @@
     .vp-track / .vp-divider and stay as they are.
   endcomment
   assign waw_enabled = false
-  if settings.announcement_campaign_mode == 'world_animal_week'
+  capture campaign_mode
+    render 'campaign-mode', key: 'announcement'
+  endcapture
+  if campaign_mode == 'world_animal_week'
     assign waw_enabled = true
   endif
 
@@ -73,6 +76,7 @@
   endif
 -%}
 
+{%- render 'campaign-mode', key: 'announcement', marker: true -%}
 {%- if waw_enabled -%}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
