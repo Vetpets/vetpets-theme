@@ -602,21 +602,7 @@
 
 <div id="eyewipes-prelander">
 
-  {%- comment -%} ---------- rotating announcement bar (no countdown, no scarcity copy) ---------- {%- endcomment -%}
-  <div class="ewpl-topbar">
-    <div class="ewpl-topbar__inner">
-      <div class="ewpl-announce" role="status" aria-label="Offer highlights">
-        <span class="ewpl-announce__msg" data-ewpl-announce-msg>
-          <svg class="ewpl-announce__icon" data-ewpl-announce-icon viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-            <path d="M11.5 3H5a2 2 0 0 0-2 2v6.5a2 2 0 0 0 .586 1.414l8.5 8.5a2 2 0 0 0 2.828 0l6.5-6.5a2 2 0 0 0 0-2.828l-8.5-8.5A2 2 0 0 0 11.5 3Z"></path>
-            <circle cx="7.25" cy="7.25" r="1.1" fill="currentColor" stroke="none"></circle>
-          </svg>
-          <span class="ewpl-announce__text" data-ewpl-announce-text>Buy 2, Get 2 Free</span>
-        </span>
-      </div>
-    </div>
-  </div>
-
+  {%- comment -%} ---------- single combined top bar: promo text + shared evergreen countdown (replaces the legacy rotating bar in Original mode) ---------- {%- endcomment -%}
   {%- render 'vp-daily-countdown' -%}
 
   {%- comment -%} ---------- 1. hero ---------- {%- endcomment -%}
