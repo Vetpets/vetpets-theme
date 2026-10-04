@@ -154,10 +154,18 @@ describe('pages wire the shared module and keep no private timer maths', () => {
   test('all four WAW pages share the identical deadline instant', () => {
     assert.equal(new Date('2026-10-04T23:59:59-04:00').getTime(), 1791172799000);
   });
-  test('Original pages load no countdown module and carry no deadline', () => {
+  test('Original page scripts carry no WAW deadline; the Original strip uses the shared daily-et clock', () => {
     for (const f of ['assets/freshwipes-prelander.js', 'assets/eyewipes-prelander.js', 'assets/freshwipes-offer-page.js', 'assets/eyewipes-offer-page.js']) {
       assert.doesNotMatch(read(f), /VPCountdown|1791172799|WAW|World Animal/i, f);
     }
+    assert.match(read('assets/vp-daily-countdown.js'), /mode: 'daily-et'/);
+    for (const f of ['freshwipes-offer-page', 'eyewipes-offer-page', 'freshwipes-prelander', 'eyewipes-prelander']) {
+      assert.match(read(`sections/${f}.liquid`), /render 'vp-daily-countdown'/, f);
+    }
+  });
+  test('all four Original pages mount the same attribute on the same clock -> identical value', () => {
+    const snip = read('snippets/vp-daily-countdown.liquid');
+    assert.equal((snip.match(/data-vp-dcd="[hms]"/g) || []).length, 3);
   });
   test('the module is loaded before the WAW page scripts', () => {
     for (const p of ['freshwipes', 'eyewipes']) {
