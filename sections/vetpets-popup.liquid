@@ -24,21 +24,15 @@
   assign paw = "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35zM10.4 6.4h3.2v2.9h2.9v3.2h-2.9v2.9h-3.2v-2.9H7.5V9.3h2.9z"
 
   comment
-    World Animal Week gate. 1791172799 is the fixed Unix-epoch instant for
-    2026-10-04 23:59:59 America/New_York (EDT, UTC-4). 'now' | date: '%s' is
-    always a UTC epoch regardless of shop timezone, so this comparison needs
-    no timezone conversion and no external time/IP service. Deciding this
-    server-side (not after a client-side check) is what keeps an expired
-    campaign from ever flashing on screen.
+    World Animal Week gate: Theme settings > Campaign presentation > Popup campaign mode.
+    Only the exact value 'world_animal_week' enables it; Original, a missing value or any
+    invalid value renders the Original popup. No date logic here - the mode is the sole gate.
   endcomment
-  assign waw_deadline_epoch = 1791172799
-  assign waw_now_epoch = 'now' | date: '%s' | plus: 0
-  assign waw_expired = false
-  if waw_now_epoch >= waw_deadline_epoch
-    assign waw_expired = true
-  endif
   assign waw_active = false
-  if section.settings.popup_theme == 'world_animal_week' and waw_expired == false
+  capture campaign_mode
+    render 'campaign-mode', key: 'popup'
+  endcapture
+  if campaign_mode == 'world_animal_week'
     assign waw_active = true
   endif
 
@@ -50,6 +44,7 @@
   endif
 -%}
 
+{%- render 'campaign-mode', key: 'popup', marker: true -%}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800{% if waw_active %}&family=Caveat:wght@700{% endif %}&display=swap">
@@ -722,7 +717,7 @@
      Liquid already decided cfg.wawActive using this same fixed deadline,
      so there is nothing here to reconcile - this only drives the display. */
   if (cfg.wawActive) {
-    var WAW_DEADLINE_MS = 1791172799000; /* 2026-10-04 23:59:59 America/New_York (EDT, UTC-4) */
+    var WAW_DEADLINE_MS = window.VPCampaignEnds ? window.VPCampaignEnds * 1000 : 1791172799000; /* same instant as the mode switch (Theme setting); fallback 2026-10-04 23:59:59 America/New_York */
     var vppPad2 = function (n) { return String(n).padStart(2, '0'); };
     var tickWawCountdown = function () {
       var left = Math.max(0, Math.floor((WAW_DEADLINE_MS - Date.now()) / 1000));
@@ -1113,19 +1108,6 @@
   "presets": [{ "name": "VetPets Welcome Popup" }],
   "settings": [
     { "type": "checkbox", "id": "enable", "label": "Enable popup", "default": true },
-
-    { "type": "header", "content": "Popup theme" },
-    {
-      "type": "select",
-      "id": "popup_theme",
-      "label": "Popup theme",
-      "options": [
-        { "value": "evergreen", "label": "Evergreen" },
-        { "value": "world_animal_week", "label": "World Animal Week" }
-      ],
-      "default": "evergreen",
-      "info": "World Animal Week automatically falls back to Evergreen after Oct 4 2026 11:59:59 PM America/New York, even if left selected."
-    },
 
     { "type": "header", "content": "Trigger" },
     {

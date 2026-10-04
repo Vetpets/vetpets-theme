@@ -92,13 +92,16 @@
   assign custom_max_width = st.custom_max_width | default: 1200
 
   comment
-    World Animal Week: a separate on/off toggle from the section's own
-    settings (independent of the vetpets-popup section's own WAW toggle).
+    World Animal Week: driven by Theme settings > Campaign presentation >
+    Homepage campaign mode (anything other than 'world_animal_week' = Original).
     When off, nothing below the flag changes - same markup, same styles,
     same behaviour as before this feature existed.
   endcomment
   assign waw_enabled = false
-  if st.waw_enabled
+  capture campaign_mode
+    render 'campaign-mode', key: 'homepage'
+  endcapture
+  if campaign_mode == 'world_animal_week'
     assign waw_enabled = true
   endif
   assign root_class = 'vp-hrc'
@@ -107,6 +110,7 @@
   endif
 -%}
 
+{%- render 'campaign-mode', key: 'homepage', marker: true -%}
 {%- if waw_enabled -%}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -827,17 +831,6 @@
   "class": "section-hero-review-carousel",
   "max_blocks": 24,
   "settings": [
-    {
-      "type": "header",
-      "content": "World Animal Week"
-    },
-    {
-      "type": "checkbox",
-      "id": "waw_enabled",
-      "label": "Enable World Animal Week styling",
-      "default": false,
-      "info": "Adds a coordinated World Animal Week badge and a subtle background pattern above the existing badge. Everything else (imagery, headline, CTA) is unchanged. Independent from the vetpets-popup section's own World Animal Week toggle."
-    },
     {
       "type": "header",
       "content": "Badge"
