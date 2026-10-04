@@ -60,7 +60,7 @@
     .vp-track / .vp-divider and stay as they are.
   endcomment
   assign waw_enabled = false
-  if st.waw_enabled
+  if settings.announcement_campaign_mode == 'world_animal_week'
     assign waw_enabled = true
   endif
 
@@ -586,17 +586,6 @@
   "class": "section-announcement-ticker",
   "max_blocks": 20,
   "settings": [
-    {
-      "type": "header",
-      "content": "World Animal Week"
-    },
-    {
-      "type": "checkbox",
-      "id": "waw_enabled",
-      "label": "Enable World Animal Week styling",
-      "default": false,
-      "info": "Adds a coordinated World Animal Week badge and a subtle background pattern to the bar, in front of the existing scrolling items. Everything else (items, colours, speed) is unchanged. Independent from the vetpets-popup section's own World Animal Week toggle."
-    },
     {
       "type": "header",
       "content": "Colours"

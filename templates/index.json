@@ -101,7 +101,6 @@
       ],
       "name": "Hero review carousel",
       "settings": {
-        "waw_enabled": true,
         "badge_text": "45.000+ Happy Pet Parents",
         "show_stars": true,
         "badge_bg": "#ffffff",
@@ -2283,7 +2282,6 @@
       "type": "vetpets-popup",
       "settings": {
         "enable": true,
-        "popup_theme": "world_animal_week",
         "trigger": "delay",
         "delay_seconds": 8,
         "scroll_percent": 40,

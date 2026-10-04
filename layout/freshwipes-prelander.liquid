@@ -29,6 +29,7 @@
 
     <link rel="preload" as="font" type="font/woff2" href="{{ 'fwpl-geist-bold.woff2' | asset_url }}" crossorigin>
     <link rel="preload" as="font" type="font/woff2" href="{{ 'fwpl-geist-regular.woff2' | asset_url }}" crossorigin>
+    {%- if settings.sales_campaign_mode == 'world_animal_week' -%}
     {%- comment -%}
       Permanent Marker: the World Animal Week "Week" script lockup. Loaded
       unconditionally (both the evergreen and WAW top-bar/offer variants are
@@ -40,7 +41,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap">
-    <link rel="stylesheet" href="{{ 'freshwipes-prelander.css' | asset_url }}">
+    {%- endif -%}
+    {%- assign pl_suffix = '' -%}
+    {%- if settings.sales_campaign_mode == 'world_animal_week' -%}{%- assign pl_suffix = '-waw' -%}{%- endif -%}
+    <link rel="stylesheet" href="{{ 'freshwipes-prelander' | append: pl_suffix | append: '.css' | asset_url }}">
+    {%- if settings.sales_campaign_mode == 'world_animal_week' -%}
 
     {%- comment -%}
       ?waw_preview=1 QA override - forces the WAW variant visible with no
@@ -56,6 +61,7 @@
         } catch (e) {}
       }());
     </script>
+    {%- endif -%}
 
     <style>
       @font-face { font-family: "GeistFwpl"; src: url("{{ 'fwpl-geist-regular.woff2' | asset_url }}") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
@@ -70,6 +76,9 @@
   <body class="freshwipes-prelander-body">
     {{ content_for_layout }}
 
-    <script src="{{ 'freshwipes-prelander.js' | asset_url }}" defer></script>
+    {%- if settings.sales_campaign_mode == 'world_animal_week' -%}
+    <script src="{{ 'vp-countdown.js' | asset_url }}" defer></script>
+    {%- endif -%}
+    <script src="{{ 'freshwipes-prelander' | append: pl_suffix | append: '.js' | asset_url }}" defer></script>
   </body>
 </html>
