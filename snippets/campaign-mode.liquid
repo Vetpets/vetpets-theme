@@ -1,0 +1,53 @@
+{%- comment -%}
+  Campaign mode resolver — the ONE place that decides Original vs World Animal Week.
+
+  Params:  key    'homepage' | 'announcement' | 'popup' | 'sales'
+           marker true -> emit a hidden marker element instead of the mode string
+  Output:  the string 'world_animal_week' or 'original' (use via capture), or the marker.
+
+  Each surface has a Theme setting (Campaign presentation):
+    original           -> Original, always
+    world_animal_week  -> World Animal Week, until someone changes the setting
+    scheduled          -> World Animal Week while now < "WAW ends at", then Original
+                          automatically. Pure server-side Liquid on the existing theme;
+                          nothing is published or replaced at the switch.
+  Anything else (missing / invalid value) -> Original.
+  "WAW ends at" (settings.campaign_waw_ends_at) is ISO-8601 WITH an explicit offset, e.g.
+  2026-10-04T23:59:59-04:00. Blank or unparseable -> the schedule counts as already
+  ended (fail safe to Original). WAW is active strictly BEFORE that instant; at the
+  instant and after, Original.
+{%- endcomment -%}
+{%- liquid
+  case key
+    when 'homepage'
+      assign sel = settings.homepage_campaign_mode
+    when 'announcement'
+      assign sel = settings.announcement_campaign_mode
+    when 'popup'
+      assign sel = settings.popup_campaign_mode
+    when 'sales'
+      assign sel = settings.sales_campaign_mode
+    else
+      assign sel = ''
+  endcase
+
+  assign mode = 'original'
+  if sel == 'world_animal_week'
+    assign mode = 'world_animal_week'
+  elsif sel == 'scheduled'
+    assign ends_raw = settings.campaign_waw_ends_at | strip
+    assign ends_epoch = 0
+    if ends_raw != blank
+      assign ends_epoch = ends_raw | date: '%s' | plus: 0
+    endif
+    assign now_epoch = 'now' | date: '%s' | plus: 0
+    if ends_epoch > 0 and now_epoch < ends_epoch
+      assign mode = 'world_animal_week'
+    endif
+  endif
+-%}
+{%- if marker -%}
+  <span hidden data-vp-campaign="{{ key }}" data-vp-campaign-mode="{{ mode }}" data-vp-campaign-source="{{ sel | escape }}"></span>
+{%- else -%}
+  {{- mode -}}
+{%- endif -%}

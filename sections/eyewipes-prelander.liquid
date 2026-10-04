@@ -3,7 +3,9 @@
   'world_animal_week' renders the WAW body; ANYTHING ELSE (original, missing, invalid) renders the verified
   pre-WAW body (byte-identical to git 8adabae^, the DEV baseline immediately before the WAW layer).
 {%- endcomment -%}
-{%- if settings.sales_campaign_mode == 'world_animal_week' -%}
+{%- capture campaign_mode -%}{%- render 'campaign-mode', key: 'sales' -%}{%- endcapture -%}
+{%- render 'campaign-mode', key: 'sales', marker: true -%}
+{%- if campaign_mode == 'world_animal_week' -%}
 {%- comment -%}
   EyeWipes pre-lander
   ===================

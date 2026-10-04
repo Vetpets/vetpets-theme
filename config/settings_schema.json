@@ -16,7 +16,14 @@
       },
       {
         "type": "paragraph",
-        "content": "Each surface switches on its own. Original is the normal storefront; World Animal Week is the preserved campaign design. A missing or invalid value always falls back to Original."
+        "content": "Each surface switches on its own. Original is the normal storefront; World Animal Week is the preserved campaign design. 'Scheduled' shows World Animal Week until the end instant below, then switches to Original automatically on this same theme. A missing or invalid value always falls back to Original."
+      },
+      {
+        "type": "text",
+        "id": "campaign_waw_ends_at",
+        "label": "World Animal Week ends at (scheduled mode)",
+        "default": "2026-10-04T23:59:59-04:00",
+        "info": "ISO 8601 with an explicit UTC offset, e.g. 2026-10-04T23:59:59-04:00 (23:59:59 America/New_York = 05:59:59 Stockholm = 03:59:59 UTC on 5 Oct). The World Animal Week countdowns count to this same instant. World Animal Week is shown strictly before this instant, Original at and after. Blank or invalid = already ended (Original)."
       },
       {
         "type": "select",
@@ -24,15 +31,19 @@
         "label": "Homepage campaign mode",
         "options": [
           {
+            "value": "scheduled",
+            "label": "Scheduled: World Animal Week, then Original automatically"
+          },
+          {
             "value": "original",
             "label": "Original"
           },
           {
             "value": "world_animal_week",
-            "label": "World Animal Week"
+            "label": "World Animal Week (stays on until changed)"
           }
         ],
-        "default": "original",
+        "default": "scheduled",
         "info": "Homepage hero review carousel (World Animal Week badge and pattern)."
       },
       {
@@ -41,15 +52,19 @@
         "label": "Announcement bar campaign mode",
         "options": [
           {
+            "value": "scheduled",
+            "label": "Scheduled: World Animal Week, then Original automatically"
+          },
+          {
             "value": "original",
             "label": "Original"
           },
           {
             "value": "world_animal_week",
-            "label": "World Animal Week"
+            "label": "World Animal Week (stays on until changed)"
           }
         ],
-        "default": "original",
+        "default": "scheduled",
         "info": "The rolling announcement bar in the header."
       },
       {
@@ -58,15 +73,19 @@
         "label": "Popup campaign mode",
         "options": [
           {
+            "value": "scheduled",
+            "label": "Scheduled: World Animal Week, then Original automatically"
+          },
+          {
             "value": "original",
             "label": "Original"
           },
           {
             "value": "world_animal_week",
-            "label": "World Animal Week"
+            "label": "World Animal Week (stays on until changed)"
           }
         ],
-        "default": "original",
+        "default": "scheduled",
         "info": "The welcome / scratch popup."
       },
       {
@@ -75,15 +94,19 @@
         "label": "Sales pages campaign mode",
         "options": [
           {
+            "value": "scheduled",
+            "label": "Scheduled: World Animal Week, then Original automatically"
+          },
+          {
             "value": "original",
             "label": "Original"
           },
           {
             "value": "world_animal_week",
-            "label": "World Animal Week"
+            "label": "World Animal Week (stays on until changed)"
           }
         ],
-        "default": "original",
+        "default": "scheduled",
         "info": "FreshWipes and EyeWipes pre-landers and offer pages. Original renders the verified normal pages; World Animal Week renders the campaign pages (Buy 2 Get 2 Free + gifts, fixed Oct 4 deadline)."
       }
     ]

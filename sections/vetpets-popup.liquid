@@ -29,7 +29,10 @@
     invalid value renders the Original popup. No date logic here - the mode is the sole gate.
   endcomment
   assign waw_active = false
-  if settings.popup_campaign_mode == 'world_animal_week'
+  capture campaign_mode
+    render 'campaign-mode', key: 'popup'
+  endcapture
+  if campaign_mode == 'world_animal_week'
     assign waw_active = true
   endif
 
@@ -41,6 +44,7 @@
   endif
 -%}
 
+{%- render 'campaign-mode', key: 'popup', marker: true -%}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800{% if waw_active %}&family=Caveat:wght@700{% endif %}&display=swap">
@@ -713,7 +717,7 @@
      Liquid already decided cfg.wawActive using this same fixed deadline,
      so there is nothing here to reconcile - this only drives the display. */
   if (cfg.wawActive) {
-    var WAW_DEADLINE_MS = 1791172799000; /* 2026-10-04 23:59:59 America/New_York (EDT, UTC-4) */
+    var WAW_DEADLINE_MS = window.VPCampaignEnds ? window.VPCampaignEnds * 1000 : 1791172799000; /* same instant as the mode switch (Theme setting); fallback 2026-10-04 23:59:59 America/New_York */
     var vppPad2 = function (n) { return String(n).padStart(2, '0'); };
     var tickWawCountdown = function () {
       var left = Math.max(0, Math.floor((WAW_DEADLINE_MS - Date.now()) / 1000));
