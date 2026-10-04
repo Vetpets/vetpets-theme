@@ -1,7 +1,7 @@
 /*
-  FreshWipes offer page — scoped behaviour
+  EyeWipes offer page — scoped behaviour
   -------------------------------------
-  Everything is queried inside #freshwipes-offer-page and nothing is written to
+  Everything is queried inside #eyewipes-offer-page and nothing is written to
   the global scope.
 
   Kaching Bundles owns the commerce state. This file NEVER sets a tier, a
@@ -11,18 +11,15 @@
   badges, CTA labels and the sticky bar.
 
   The only writes are presentational: data-attributes, label text, image src,
-  one injected gift-toggle button per tier, and the two private line-item
-  property inputs (_vp_bundle_tier / _vp_bundle_image) that let the cart drawer
-  show the bundle image for the tier the customer actually bought. Those never
-  touch tier, quantity or selling plan.
+  and one injected gift-toggle button per tier.
 */
 (function () {
   'use strict';
 
-  var root = document.getElementById('freshwipes-offer-page');
+  var root = document.getElementById('eyewipes-offer-page');
   if (!root) return;
 
-  var cfgEl = document.getElementById('fwof-config');
+  var cfgEl = document.getElementById('ewof-config');
   var CFG = {};
   try { CFG = JSON.parse(cfgEl.textContent); } catch (e) { CFG = {}; }
   var TIERS = CFG.tiers || [];
@@ -80,7 +77,7 @@
   /* ---------------------------------------------------------------
      2. gallery
      --------------------------------------------------------------- */
-  var rail = $('#fwof-rail');
+  var rail = $('#ewof-rail');
   var slideCount = rail ? $$('.slide', rail).length : 0;
   var current = 0;
 
@@ -189,9 +186,9 @@
      5. KACHING OBSERVATION
      Kaching is authoritative. We read, we never set commerce state.
      =============================================================== */
-  var kBlock = function () { return document.querySelector('#freshwipes-offer-page .kaching-bundles__block'); };
+  var kBlock = function () { return document.querySelector('#eyewipes-offer-page .kaching-bundles__block'); };
   var theForm = function () {
-    var host = $('.fwof-form-host');
+    var host = $('.ewof-form-host');
     return host ? host.querySelector('form[action*="/cart/add"]') : null;
   };
   var submitBtn = function () {
@@ -207,7 +204,7 @@
   }
 
   function selectedBar() {
-    return document.querySelector('#freshwipes-offer-page .kaching-bundles__bar--selected');
+    return document.querySelector('#eyewipes-offer-page .kaching-bundles__bar--selected');
   }
 
   function tierForBar(bar) {
@@ -230,36 +227,48 @@
       var product = gifts.filter(function (g) {
         return !!g.querySelector('.kaching-bundles__free-gift__full-price');
       });
-      product.forEach(function (g) { g.setAttribute('data-fwof-gift', 'product'); });
+      product.forEach(function (g) { g.setAttribute('data-ewof-gift', 'product'); });
 
-      var existing = bar.querySelector('.fwof-gift-toggle');
+      var existing = bar.querySelector('.ewof-gift-toggle');
       if (!product.length) { if (existing) existing.remove(); return; }
 
-      var label = '+ ' + product.length + ' Free Gift' + (product.length === 1 ? '' : 's');
+      // A locked, hand-authored tier (World Animal Week's "+3 Free Gifts") always
+      // wins over the computed count: Kaching ships these three physical gifts
+      // as fewer combined free-gift rows, so counting real rows undercounts
+      // the true physical gift total this tier promises.
+      var tierOverride = tierForBar(bar);
+      var label = (tierOverride && tierOverride.gift_label_override)
+        ? tierOverride.gift_label_override
+        : '+ ' + product.length + ' Free Gift' + (product.length === 1 ? '' : 's');
       if (existing) {
-        existing.querySelector('.fwof-gift-label').textContent = label;
+        existing.querySelector('.ewof-gift-label').textContent = label;
         return;
       }
       var btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = 'fwof-gift-toggle';
+      btn.className = 'ewof-gift-toggle';
       btn.setAttribute('aria-expanded', 'false');
       btn.innerHTML =
         '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
         '<rect x="3" y="9.5" width="18" height="11.5" rx="1.8" fill="#47B5E9"></rect>' +
         '<rect x="2" y="6" width="20" height="4.5" rx="1.5" fill="#2E9FD8"></rect>' +
         '<path d="M12 6v15" stroke="#FFFFFF" stroke-width="1.8"></path></svg>' +
-        '<span class="fwof-gift-label"></span>' +
-        '<svg class="fwof-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+        '<span class="ewof-gift-label"></span>' +
+        '<svg class="ewof-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
         '<path d="m6 9.5 6 6 6-6" stroke="#1F7FB8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
-      btn.querySelector('.fwof-gift-label').textContent = label;
+      btn.querySelector('.ewof-gift-label').textContent = label;
       btn.addEventListener('click', function (e) {
         // the toggle sits inside Kaching's <label>; stop it from re-triggering the radio
         e.preventDefault();
         e.stopPropagation();
-        var open = bar.getAttribute('data-fwof-gifts') === 'open';
-        bar.setAttribute('data-fwof-gifts', open ? 'closed' : 'open');
+        var open = bar.getAttribute('data-ewof-gifts') === 'open';
+        bar.setAttribute('data-ewof-gifts', open ? 'closed' : 'open');
         btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+        // World Animal Week: this tier's true gift list is the hand-authored
+        // panel, not Kaching's own combined row — see decorateGifts() above.
+        var wawPanel = $('[data-ewof-waw-gifts]');
+        var tierNow = tierForBar(bar);
+        if (wawPanel && tierNow && tierNow.gift_label_override) wawPanel.hidden = open;
       });
       // place it directly after the shipping perk row, before the gift rows
       var firstGift = product[0];
@@ -272,12 +281,12 @@
     $$('.kaching-bundles__bar[data-deal-bar-id]').forEach(function (bar) {
       var tier = tierForBar(bar);
       if (!tier || !tier.applied_label) return;
-      if (bar.querySelector('.fwof-applied')) {
-        bar.querySelector('.fwof-applied span').textContent = tier.applied_label;
+      if (bar.querySelector('.ewof-applied')) {
+        bar.querySelector('.ewof-applied span').textContent = tier.applied_label;
         return;
       }
       var d = document.createElement('div');
-      d.className = 'fwof-applied';
+      d.className = 'ewof-applied';
       d.innerHTML =
         '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
         '<circle cx="12" cy="12" r="9.5" fill="#13B6B5"></circle>' +
@@ -289,12 +298,12 @@
     // The note is an inline continuation of Kaching's own subtitle, so the card
     // keeps two rows instead of three. Any copy left in an older position by a
     // previous render is removed first.
-    var sub = document.querySelector('#freshwipes-offer-page .kaching-bundles__subscriptions__subtitle');
+    var sub = document.querySelector('#eyewipes-offer-page .kaching-bundles__subscriptions__subtitle');
     if (CFG.rc_note) {
-      $$('.fwof-rc-note').forEach(function (n) { if (!sub || n.parentElement !== sub) n.remove(); });
-      if (sub && !sub.querySelector('.fwof-rc-note')) {
+      $$('.ewof-rc-note').forEach(function (n) { if (!sub || n.parentElement !== sub) n.remove(); });
+      if (sub && !sub.querySelector('.ewof-rc-note')) {
         var n = document.createElement('span');
-        n.className = 'fwof-rc-note';
+        n.className = 'ewof-rc-note';
         n.textContent = ' \u00b7 ' + CFG.rc_note;
         sub.appendChild(n);
       }
@@ -310,7 +319,7 @@
     var sig = (barNow ? barNow.getAttribute('data-deal-bar-id') : '-') + '|' +
       (fieldValue('selling_plan') || '-') + '|' + (fieldValue('quantity') || '-') + '|' +
       (barNow ? barNow.querySelectorAll('.kaching-bundles__free-gift').length : 0) + '|' +
-      (document.querySelector('#freshwipes-offer-page .fwof-rc-note') ? '1' : '0');
+      (document.querySelector('#eyewipes-offer-page .ewof-rc-note') ? '1' : '0');
     if (sig === lastSig) return;
     lastSig = sig;
 
@@ -330,38 +339,45 @@
 
     // hero image + thumbnails follow the tier
     if (tier) {
-      var hero = $('#fwof-tier-img');
+      var hero = $('#ewof-tier-img');
       if (hero && hero.getAttribute('src') !== tier.image) {
         hero.setAttribute('src', tier.image);
         hero.setAttribute('alt', tier.image_alt || '');
       }
-      $$('[data-fwof-tier-thumb]').forEach(function (img) {
+      $$('[data-ewof-tier-thumb]').forEach(function (img) {
         if (img.getAttribute('src') !== tier.image) img.setAttribute('src', tier.image);
       });
-      // the offer pill may only claim gifts Kaching actually adds
+      // the offer pill may only claim gifts Kaching actually adds; a locked
+      // gift_label_override (World Animal Week's true physical gift count)
+      // always wins over the live DOM row count — see decorateGifts().
       var giftCount = bar
-        ? bar.querySelectorAll('.kaching-bundles__free-gift[data-fwof-gift="product"]').length
+        ? bar.querySelectorAll('.kaching-bundles__free-gift[data-ewof-gift="product"]').length
         : 0;
       var pill = $('.g-pill');
       if (pill) {
-        pill.textContent = giftCount
-          ? tier.badge + ' + ' + giftCount + ' Free Gift' + (giftCount === 1 ? '' : 's')
-          : tier.badge;
+        if (tier.gift_label_override) {
+          pill.textContent = tier.badge + ' ' + tier.gift_label_override;
+        } else {
+          pill.textContent = giftCount
+            ? tier.badge + ' + ' + giftCount + ' Free Gift' + (giftCount === 1 ? '' : 's')
+            : tier.badge;
+        }
       }
       var pill2 = $('.g-pill2');
       if (pill2) {
         pill2.textContent = tier.pill || '';
         pill2.hidden = !tier.pill;
       }
+
       // keep the MAIN item's private line-item properties in step with the tier so
       // the cart drawer can show the matching bundle image. Gift lines are added by
       // Kaching as separate lines and never inherit these.
-      var propTier = document.getElementById('fwof-prop-tier');
-      var propImg = document.getElementById('fwof-prop-image');
+      var propTier = document.getElementById('ewof-prop-tier');
+      var propImg = document.getElementById('ewof-prop-image');
       if (propTier && tier.prop_tier && propTier.value !== tier.prop_tier) propTier.value = tier.prop_tier;
       if (propImg && tier.image && propImg.value !== tier.image) propImg.value = tier.image;
 
-      $$('[data-fwof-cta-label]').forEach(function (el) { el.textContent = tier.cta; });
+      $$('[data-ewof-cta-label]').forEach(function (el) { el.textContent = tier.cta; });
       var so = $('.sticky-offer');
       if (so) so.textContent = tier.name;
     }
@@ -413,7 +429,7 @@
     // An add-to-cart click cannot change Kaching's selection, so skip the
     // settle ladder entirely — it would otherwise run four full DOM passes
     // while the cart request and drawer render are competing for the main thread.
-    if (e.target.closest && e.target.closest('[data-fwof-submit], [name="add"]')) return;
+    if (e.target.closest && e.target.closest('[data-ewof-submit], [name="add"]')) return;
     settleSync();
   }, true);
   document.addEventListener('visibilitychange', queueSync);
@@ -427,11 +443,11 @@
 
   function releaseButtons() {
     pending = false;
-    $$('[data-fwof-submit]').forEach(function (b) { b.disabled = false; b.removeAttribute('aria-busy'); });
+    $$('[data-ewof-submit]').forEach(function (b) { b.disabled = false; b.removeAttribute('aria-busy'); });
   }
 
   function showError(msg) {
-    var w = $('.fwof-form-host .product-form__error-message-wrapper');
+    var w = $('.ewof-form-host .product-form__error-message-wrapper');
     if (!w) { return; }
     var t = w.querySelector('.product-form__error-message');
     if (t) t.textContent = msg;
@@ -444,8 +460,8 @@
     var b = submitBtn();
     if (!f || !b) { showError(CFG.error_text || 'Something went wrong. Please refresh and try again.'); return; }
     pending = true;
-    $$('[data-fwof-submit]').forEach(function (x) { x.disabled = true; x.setAttribute('aria-busy', 'true'); });
-    var w = $('.fwof-form-host .product-form__error-message-wrapper');
+    $$('[data-ewof-submit]').forEach(function (x) { x.disabled = true; x.setAttribute('aria-busy', 'true'); });
+    var w = $('.ewof-form-host .product-form__error-message-wrapper');
     if (w) w.hidden = true;
 
     // requestSubmit fires the submit event the theme's <product-form> listens for
@@ -469,8 +485,8 @@
   }
 
   // the sticky and final CTAs are proxies for the one real form
-  $$('[data-fwof-submit]').forEach(function (btn) {
-    if (btn.closest('.fwof-form-host')) return; // the real submit button submits itself
+  $$('[data-ewof-submit]').forEach(function (btn) {
+    if (btn.closest('.ewof-form-host')) return; // the real submit button submits itself
     btn.addEventListener('click', function (e) {
       e.preventDefault();
       submitAuthoritativeForm();
@@ -485,7 +501,7 @@
       pending = true;
       // Disabling on a later task so this click still produces the submit event.
       setTimeout(function () {
-        $$('[data-fwof-submit]').forEach(function (x) { x.disabled = true; x.setAttribute('aria-busy', 'true'); });
+        $$('[data-ewof-submit]').forEach(function (x) { x.disabled = true; x.setAttribute('aria-busy', 'true'); });
       }, 0);
       watchForDrawer();
     });
@@ -495,8 +511,8 @@
      7. sticky bar — genuinely viewport-fixed. Shown once the hero purchase
      controls have scrolled out, hidden again before the footer.
      --------------------------------------------------------------- */
-  var sticky = $('.fwof-sticky');
-  var anchor = $('.fwof-form-host');
+  var sticky = $('.ewof-sticky');
+  var anchor = $('.ewof-form-host');
   var footer = $('.foot');
 
   /* Shopify's theme-preview bar is fixed to the bottom of the viewport and
@@ -510,7 +526,7 @@
       var r = pb.getBoundingClientRect();
       if (r.height > 0 && r.bottom >= window.innerHeight - 4) h = Math.ceil(r.height);
     }
-    root.style.setProperty('--fwof-pbar', h + 'px');
+    root.style.setProperty('--ewof-pbar', h + 'px');
   }
   syncPreviewBarOffset();
   window.addEventListener('resize', syncPreviewBarOffset, { passive: true });
@@ -537,4 +553,17 @@
   window.addEventListener('resize', onScroll, { passive: true });
   window.addEventListener('load', paintSticky);
   paintSticky();
+
+  /* ---------------------------------------------------------------
+     8. World Animal Week countdown — fixed end date, no evergreen reset.
+     Campaign closes 4 October 2026, 23:59:59 local time. Every element
+     carrying data-cd="d|h|m|s" is updated (the event banner, the sticky
+     strip and the closing section all read from this one clock).
+     --------------------------------------------------------------- */
+  (function wawCountdown() {
+    /* World Animal Week: fixed deadline 2026-10-04 23:59:59 America/New_York,
+       driven by the same shared clock as every other page. */
+    if (!window.VPCountdown) return;
+    VPCountdown.mount(document.querySelectorAll('[data-cd]'), { attr: 'data-cd', mode: 'fixed', deadlineMs: 1791172799000 });
+  })();
 })();

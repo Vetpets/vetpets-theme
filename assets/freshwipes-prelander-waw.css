@@ -834,3 +834,147 @@
 @media (min-width: 1200px) {
   #freshwipes-prelander .fwpl-hero__inner { grid-template-columns: minmax(460px, 0.9fr) minmax(660px, 1.1fr); }
 }
+
+/* =========================================================================
+   World Animal Week — countdown bar + final-offer redesign
+   Source of truth: Claude Design project "FreshWipes Pre-Lander v2", file
+   "FreshWipes Pre-Lander v2 - World Animal Week.dc.html". Only the top bar
+   and the final offer section change for the campaign; everything else is
+   the evergreen page above, untouched. Every rule here is scoped under
+   #freshwipes-prelander, and these classes only ever appear in the DOM when
+   waw_active is true.
+   ========================================================================= */
+
+#freshwipes-prelander .fwpl-waw-bar { position: relative; overflow: hidden; background: var(--fw-blue); color: #ffffff; }
+#freshwipes-prelander .fwpl-waw-bar__pattern { position: absolute; inset: 0; pointer-events: none; }
+#freshwipes-prelander .fwpl-waw-bar__in {
+  position: relative; max-width: 1280px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; gap: 28px; padding: 14px 32px;
+}
+#freshwipes-prelander .fwpl-waw-bar__id { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; min-width: 0; }
+#freshwipes-prelander .fwpl-waw-bar__lockup { display: flex; align-items: center; gap: 9px; white-space: nowrap; line-height: 1; }
+#freshwipes-prelander .fwpl-waw-bar__l { font-size: 22px; font-weight: 800; letter-spacing: .02em; }
+#freshwipes-prelander .fwpl-waw-bar__day { position: relative; display: inline-block; }
+#freshwipes-prelander .fwpl-waw-bar__day::after {
+  content: ''; position: absolute; left: -4px; right: -4px; top: 50%; height: 3px; margin-top: -2px;
+  background: #D92D20; border-radius: 2px; transform: rotate(-7deg);
+}
+#freshwipes-prelander .fwpl-waw-bar__s {
+  display: inline-block; font-family: 'Permanent Marker', cursive; font-size: 31px; line-height: .9;
+  transform: rotate(-4deg); margin-top: -4px;
+}
+#freshwipes-prelander .fwpl-waw-bar__meta {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 6px;
+  font-size: 12px; font-weight: 700; letter-spacing: .12em; line-height: 1.2; white-space: nowrap;
+}
+#freshwipes-prelander .fwpl-waw-bar__ends-m {
+  display: none; align-items: center; gap: 6px; background: #FFFFFF; color: #C22A1E; border: 1.5px solid #D92D20;
+  font-size: 10px; font-weight: 800; letter-spacing: .08em; line-height: 1; padding: 4px 8px; border-radius: 999px; white-space: nowrap;
+}
+#freshwipes-prelander .fwpl-waw-bar__mid { display: flex; align-items: center; justify-content: center; gap: 12px; min-width: 0; }
+#freshwipes-prelander .fwpl-waw-bar__offer { font-size: 22px; font-weight: 800; letter-spacing: .01em; line-height: 1.1; white-space: nowrap; }
+#freshwipes-prelander .fwpl-waw-bar__ends {
+  display: inline-flex; align-items: center; gap: 6px; background: #FFFFFF; color: #C22A1E; border: 1.5px solid #D92D20;
+  font-size: 12px; font-weight: 800; letter-spacing: .08em; line-height: 1; padding: 6px 11px; border-radius: 999px; white-space: nowrap;
+}
+#freshwipes-prelander .fwpl-waw-bar__dot { width: 7px; height: 7px; border-radius: 50%; background: #D92D20; flex-shrink: 0; display: inline-block; }
+#freshwipes-prelander .fwpl-waw-bar__timer { display: flex; gap: 7px; flex-shrink: 0; }
+#freshwipes-prelander .fwpl-waw-bar__tbox {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-width: 56px; height: 50px; background: #FFFFFF; border-radius: 10px; box-shadow: 0 3px 10px rgba(15, 23, 42, .16);
+}
+#freshwipes-prelander .fwpl-waw-bar__n { font-size: 23px; font-weight: 800; line-height: 1; color: #0F172A; font-variant-numeric: tabular-nums; }
+#freshwipes-prelander .fwpl-waw-bar__u { margin-top: 4px; font-size: 9.5px; font-weight: 700; letter-spacing: .1em; color: #4F5F6B; line-height: 1; }
+
+@media (min-width: 768px) and (max-width: 1180px) {
+  #freshwipes-prelander .fwpl-waw-bar__in { gap: 18px; padding: 12px 20px; }
+  #freshwipes-prelander .fwpl-waw-bar__offer { font-size: 17px; white-space: normal; text-align: center; }
+  #freshwipes-prelander .fwpl-waw-bar__mid { flex-direction: column; gap: 6px; }
+  #freshwipes-prelander .fwpl-waw-bar__l { font-size: 18px; }
+  #freshwipes-prelander .fwpl-waw-bar__s { font-size: 26px; }
+  #freshwipes-prelander .fwpl-waw-bar__meta .fwpl-waw-bar__sale-label,
+  #freshwipes-prelander .fwpl-waw-bar__meta .fwpl-waw-bar__meta-dot { display: none; }
+  #freshwipes-prelander .fwpl-waw-bar__tbox { min-width: 46px; height: 44px; }
+  #freshwipes-prelander .fwpl-waw-bar__n { font-size: 19px; }
+}
+@media (max-width: 767px) {
+  #freshwipes-prelander .fwpl-waw-bar__in { flex-direction: column; gap: 8px; padding: 10px 12px 12px; }
+  #freshwipes-prelander .fwpl-waw-bar__id { align-items: center; gap: 6px; }
+  #freshwipes-prelander .fwpl-waw-bar__lockup { gap: 7px; }
+  #freshwipes-prelander .fwpl-waw-bar__l { font-size: 17px; }
+  #freshwipes-prelander .fwpl-waw-bar__s { font-size: 24px; }
+  #freshwipes-prelander .fwpl-waw-bar__meta { justify-content: center; font-size: 10.5px; letter-spacing: .08em; }
+  #freshwipes-prelander .fwpl-waw-bar__meta .fwpl-waw-bar__sale-label,
+  #freshwipes-prelander .fwpl-waw-bar__meta .fwpl-waw-bar__meta-dot { display: none; }
+  #freshwipes-prelander .fwpl-waw-bar__ends-m { display: inline-flex; }
+  #freshwipes-prelander .fwpl-waw-bar__ends { display: none; }
+  #freshwipes-prelander .fwpl-waw-bar__offer { font-size: 16px; }
+  #freshwipes-prelander .fwpl-waw-bar__timer { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; width: 100%; max-width: 320px; }
+  #freshwipes-prelander .fwpl-waw-bar__tbox { min-width: 0; height: 38px; border-radius: 8px; }
+  #freshwipes-prelander .fwpl-waw-bar__n { font-size: 16px; }
+  #freshwipes-prelander .fwpl-waw-bar__u { font-size: 7.5px; margin-top: 3px; }
+}
+
+/* ---- final offer — full section redesign ---- */
+
+#freshwipes-prelander .fwpl-waw-offer-sec {
+  position: relative; overflow: hidden; background: var(--fw-blue);
+  padding: clamp(24px, 3vw, 40px) clamp(20px, 4vw, 64px) clamp(48px, 5.5vw, 70px);
+  scroll-margin-top: 8px;
+}
+#freshwipes-prelander .fwpl-waw-offer-sec__pattern { position: absolute; inset: 0; pointer-events: none; }
+#freshwipes-prelander .fwpl-waw-offer-sec__inner { position: relative; max-width: 1280px; margin: 0 auto; }
+#freshwipes-prelander .fwpl-waw-offer-sec__title {
+  margin: 0 auto 8px; text-align: center; font-size: clamp(23px, 2.6vw, 32px); font-weight: 700;
+  line-height: 1.25; color: #FFFFFF; max-width: 32ch;
+}
+#freshwipes-prelander .fwpl-waw-offer-sec__title u { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 5px; }
+#freshwipes-prelander .fwpl-waw-offer-sec__sub { margin: 0 auto 36px; text-align: center; font-size: 16px; font-weight: 400; color: #FFFFFF; max-width: 52ch; }
+#freshwipes-prelander .fwpl-waw-offer-sec__cardwrap { position: relative; max-width: 1080px; margin: 0 auto; padding-top: 28px; }
+#freshwipes-prelander .fwpl-waw-offer-sec__pill {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%); z-index: 2;
+  display: flex; align-items: center; gap: 9px; white-space: nowrap; line-height: 1;
+  background: #FFFFFF; color: var(--fw-blue); padding: 13px 28px; border-radius: 999px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, .18);
+}
+#freshwipes-prelander .fwpl-waw-offer-sec__pill .fwpl-waw-bar__l { font-size: 19px; }
+#freshwipes-prelander .fwpl-waw-offer-sec__pill .fwpl-waw-bar__s { font-size: 27px; }
+
+/* Inside the WAW final offer, the card shell drops its own top ribbon/badge
+   spacing since the pill above now plays that role. */
+#freshwipes-prelander .fwpl-waw-offer-sec .fwpl-offer__card { margin: 0; }
+
+#freshwipes-prelander .fwpl-waw-offer-head { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+#freshwipes-prelander .fwpl-waw-offer-badge {
+  display: inline-flex; align-items: center; gap: 7px; background: var(--fw-teal); color: #FFFFFF;
+  font-size: 11.5px; font-weight: 800; letter-spacing: .12em; line-height: 1; padding: 7px 13px; border-radius: 999px;
+}
+#freshwipes-prelander .fwpl-waw-offer-headline {
+  font-size: clamp(24px, 2.5vw, 31px); font-weight: 800; line-height: 1.08; letter-spacing: -0.01em;
+  color: var(--fw-blue); text-wrap: balance;
+}
+#freshwipes-prelander .fwpl-waw-offer-scarcity {
+  display: flex; gap: 11px; align-items: flex-start; background: #FDECEC; border: 2px solid #E5484D;
+  border-radius: 12px; padding: 14px 16px;
+}
+#freshwipes-prelander .fwpl-waw-offer-scarcity svg { color: #B3252A; flex-shrink: 0; margin-top: 1px; }
+#freshwipes-prelander .fwpl-waw-offer-scarcity__label { display: block; font-size: 12.5px; line-height: 1.2; font-weight: 800; letter-spacing: .08em; color: #B3252A; }
+#freshwipes-prelander .fwpl-waw-offer-scarcity__text { display: block; margin-top: 4px; font-size: 14px; line-height: 1.45; font-weight: 600; color: #B3252A; }
+
+@media (max-width: 899px) {
+  #freshwipes-prelander .fwpl-waw-offer-sec__pill { padding: 10px 18px; gap: 6px; }
+  #freshwipes-prelander .fwpl-waw-offer-sec__pill .fwpl-waw-bar__l { font-size: 14px; }
+  #freshwipes-prelander .fwpl-waw-offer-sec__pill .fwpl-waw-bar__s { font-size: 20px; }
+  #freshwipes-prelander .fwpl-waw-offer-headline { font-size: 23px; }
+}
+
+/* ---- ?waw_preview=1 QA override ----
+   Both variants are always in the DOM; waw_active (server, date-only) picks
+   which one starts visible via an inline style. A small blocking script in
+   layout/freshwipes-prelander.liquid's <head> sets data-waw-preview="1" on
+   <html> before first paint when ?waw_preview=1 is present, and these
+   !important rules then override the inline display - still zero flash,
+   since the script + this stylesheet both run/load before body paint. */
+html[data-waw-preview="1"] #freshwipes-prelander [data-waw-variant="evergreen"] { display: none !important; }
+html[data-waw-preview="1"] #freshwipes-prelander .fwpl-waw-bar[data-waw-variant="waw"] { display: block !important; }
+html[data-waw-preview="1"] #freshwipes-prelander .fwpl-waw-offer-sec[data-waw-variant="waw"] { display: block !important; }

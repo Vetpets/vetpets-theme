@@ -64,6 +64,21 @@
   }());
 
   /* ---------------------------------------------------------------
+     1b. World Animal Week countdown
+
+     Only present in the DOM when Liquid decided waw_active is true (see the
+     date-gate in sections/freshwipes-prelander.liquid) - two instances share
+     the same [data-fwpl-cd] hooks (top bar + final-offer section), both
+     ticked from one fixed deadline. No-ops harmlessly outside the campaign.
+     --------------------------------------------------------------- */
+  (function wawCountdown() {
+    /* World Animal Week: fixed deadline 2026-10-04 23:59:59 America/New_York,
+       driven by the shared clock (assets/vp-countdown.js) so every page agrees. */
+    if (!window.VPCountdown) return;
+    VPCountdown.mount(root.querySelectorAll('[data-fwpl-cd]'), { attr: 'data-fwpl-cd', mode: 'fixed', deadlineMs: 1791172799000 });
+  }());
+
+  /* ---------------------------------------------------------------
      2. Mobile comparison tabs
      --------------------------------------------------------------- */
   (function comparisonTabs() {
@@ -150,7 +165,7 @@
       'fbclid', 'gclid', 'gbraid', 'wbraid', 'gad_source', 'gclsrc',
       'msclkid', 'ttclid', 'twclid', 'li_fat_id', 'epik', 'irclickid',
       'rdt_cid', 'sccid', 'yclid', 'ScCid',
-      'preview_theme_id'
+      'preview_theme_id', 'waw_preview'
     ];
 
     var incoming;

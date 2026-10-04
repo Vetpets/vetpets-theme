@@ -1,19 +1,19 @@
 /*
-  FreshWipes pre-lander — scoped behaviour.
+  EyeWipes pre-lander — scoped behaviour.
 
-  Loaded only by layout/freshwipes-prelander.liquid. Everything is looked up
-  inside #freshwipes-prelander and nothing is written to the global scope, so
+  Loaded only by layout/eyewipes-prelander.liquid. Everything is looked up
+  inside #eyewipes-prelander and nothing is written to the global scope, so
   this file cannot affect any other page of the storefront.
 
-  Progressive enhancement only. With JavaScript disabled the page still renders
-  and every link still works; only the announcement-bar rotation, the mobile
-  comparison tabs, the review-rail arrows, exact sticky clearance and
-  attribution forwarding are lost.
+  Progressive enhancement only. With JavaScript disabled the page still
+  renders and every link still works; only the announcement-bar rotation, the
+  mobile comparison tabs, the review-rail arrows and attribution forwarding
+  are lost.
 */
 (function () {
   'use strict';
 
-  var root = document.getElementById('freshwipes-prelander');
+  var root = document.getElementById('eyewipes-prelander');
   if (!root) return;
 
   /* ---------------------------------------------------------------
@@ -26,9 +26,9 @@
      non-essential motion.
      --------------------------------------------------------------- */
   (function announce() {
-    var el = root.querySelector('[data-fwpl-announce-msg]');
-    var iconEl = root.querySelector('[data-fwpl-announce-icon]');
-    var textEl = root.querySelector('[data-fwpl-announce-text]');
+    var el = root.querySelector('[data-ewpl-announce-msg]');
+    var iconEl = root.querySelector('[data-ewpl-announce-icon]');
+    var textEl = root.querySelector('[data-ewpl-announce-text]');
     if (!el || !iconEl || !textEl) return;
     var MESSAGES = ['Buy 2, Get 2 Free', 'Free Shipping with RoutineCare', 'Free Gifts Included'];
     var ICONS = [
@@ -64,11 +64,26 @@
   }());
 
   /* ---------------------------------------------------------------
+     1b. World Animal Week countdown
+
+     Only present in the DOM when Liquid decided waw_active is true (see the
+     date-gate in sections/eyewipes-prelander.liquid) - two instances share
+     the same [data-ewpl-cd] hooks (top bar + final-offer header), both
+     ticked from one fixed deadline. No-ops harmlessly outside the campaign.
+     --------------------------------------------------------------- */
+  (function wawCountdown() {
+    /* World Animal Week: fixed deadline 2026-10-04 23:59:59 America/New_York,
+       driven by the shared clock (assets/vp-countdown.js) so every page agrees. */
+    if (!window.VPCountdown) return;
+    VPCountdown.mount(root.querySelectorAll('[data-ewpl-cd]'), { attr: 'data-ewpl-cd', mode: 'fixed', deadlineMs: 1791172799000 });
+  }());
+
+  /* ---------------------------------------------------------------
      2. Mobile comparison tabs
      --------------------------------------------------------------- */
   (function comparisonTabs() {
-    var tabs = Array.prototype.slice.call(root.querySelectorAll('.fwpl-cmp__tab'));
-    var panels = Array.prototype.slice.call(root.querySelectorAll('.fwpl-cmp__panel'));
+    var tabs = Array.prototype.slice.call(root.querySelectorAll('.ewpl-cmp__tab'));
+    var panels = Array.prototype.slice.call(root.querySelectorAll('.ewpl-cmp__panel'));
     if (!tabs.length || !panels.length) return;
 
     function select(index) {
@@ -77,8 +92,11 @@
         tab.setAttribute('tabindex', i === index ? '0' : '-1');
       });
       panels.forEach(function (panel, i) {
-        if (i === index) panel.removeAttribute('hidden');
-        else panel.setAttribute('hidden', '');
+        if (i === index) {
+          panel.removeAttribute('hidden');
+        } else {
+          panel.setAttribute('hidden', '');
+        }
       });
     }
 
@@ -100,37 +118,40 @@
      3. Review rail arrows
      --------------------------------------------------------------- */
   (function reviewRail() {
-    var rail = root.querySelector('.fwpl-reviews__rail');
-    var prev = root.querySelector('[data-fwpl-rail="prev"]');
-    var next = root.querySelector('[data-fwpl-rail="next"]');
+    var rail = root.querySelector('.ewpl-reviews__rail');
+    var prev = root.querySelector('[data-ewpl-rail="prev"]');
+    var next = root.querySelector('[data-ewpl-rail="next"]');
     if (!rail || !prev || !next) return;
 
     var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    function nudge(direction) {
-      rail.scrollBy({ left: direction * 338, behavior: reduced ? 'auto' : 'smooth' });
+    function scrollBy(direction) {
+      rail.scrollBy({
+        left: direction * rail.clientWidth * 0.9,
+        behavior: reduced ? 'auto' : 'smooth'
+      });
     }
 
-    prev.addEventListener('click', function () { nudge(-1); });
-    next.addEventListener('click', function () { nudge(1); });
+    prev.addEventListener('click', function () { scrollBy(-1); });
+    next.addEventListener('click', function () { scrollBy(1); });
   }());
 
   /* ---------------------------------------------------------------
-     4. Sticky clearance
+     3b. Keep the page bottom clear of the sticky bar
 
-     The spacer reserves --fw-sticky-h + 16px. Measuring the real bar keeps
-     the offer card clear of it however the label wraps.
+     The design reserves a fixed 104px. Measuring the real bar keeps the last
+     section clear of it whatever the label wraps to.
      --------------------------------------------------------------- */
   (function stickyClearance() {
-    var bar = root.querySelector('.fwpl-sticky');
+    var bar = root.querySelector('.ewpl-sticky');
     if (!bar) {
-      root.style.setProperty('--fw-sticky-h', '0px');
+      root.style.setProperty('--ewpl-sticky-h', '0px');
       return;
     }
 
     function measure() {
       var height = Math.ceil(bar.getBoundingClientRect().height);
-      if (height > 0) root.style.setProperty('--fw-sticky-h', height + 'px');
+      if (height > 0) root.style.setProperty('--ewpl-sticky-h', height + 'px');
     }
 
     measure();
@@ -140,17 +161,17 @@
   }());
 
   /* ---------------------------------------------------------------
-     5. Forward advertising attribution to the PDP
+     4. Forward advertising attribution to the PDP
      --------------------------------------------------------------- */
   (function forwardAttribution() {
-    var links = Array.prototype.slice.call(root.querySelectorAll('a[data-fwpl-pdp]'));
+    var links = Array.prototype.slice.call(root.querySelectorAll('a[data-ewpl-pdp]'));
     if (!links.length) return;
 
     var CLICK_IDS = [
       'fbclid', 'gclid', 'gbraid', 'wbraid', 'gad_source', 'gclsrc',
       'msclkid', 'ttclid', 'twclid', 'li_fat_id', 'epik', 'irclickid',
       'rdt_cid', 'sccid', 'yclid', 'ScCid',
-      'preview_theme_id'
+      'preview_theme_id', 'waw_preview'
     ];
 
     var incoming;
@@ -163,7 +184,9 @@
     var carry = [];
     incoming.forEach(function (value, key) {
       if (!value) return;
-      if (key.indexOf('utm_') === 0 || CLICK_IDS.indexOf(key) !== -1) carry.push([key, value]);
+      if (key.indexOf('utm_') === 0 || CLICK_IDS.indexOf(key) !== -1) {
+        carry.push([key, value]);
+      }
     });
     if (!carry.length) return;
 
