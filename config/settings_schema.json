@@ -8,6 +8,87 @@
     "theme_support_url": "https://shrinesolutions.com/pages/contact"
   },
   {
+    "name": "Campaign presentation",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Campaign presentation"
+      },
+      {
+        "type": "paragraph",
+        "content": "Each surface switches on its own. Original is the normal storefront; World Animal Week is the preserved campaign design. A missing or invalid value always falls back to Original."
+      },
+      {
+        "type": "select",
+        "id": "homepage_campaign_mode",
+        "label": "Homepage campaign mode",
+        "options": [
+          {
+            "value": "original",
+            "label": "Original"
+          },
+          {
+            "value": "world_animal_week",
+            "label": "World Animal Week"
+          }
+        ],
+        "default": "original",
+        "info": "Homepage hero review carousel (World Animal Week badge and pattern)."
+      },
+      {
+        "type": "select",
+        "id": "announcement_campaign_mode",
+        "label": "Announcement bar campaign mode",
+        "options": [
+          {
+            "value": "original",
+            "label": "Original"
+          },
+          {
+            "value": "world_animal_week",
+            "label": "World Animal Week"
+          }
+        ],
+        "default": "original",
+        "info": "The rolling announcement bar in the header."
+      },
+      {
+        "type": "select",
+        "id": "popup_campaign_mode",
+        "label": "Popup campaign mode",
+        "options": [
+          {
+            "value": "original",
+            "label": "Original"
+          },
+          {
+            "value": "world_animal_week",
+            "label": "World Animal Week"
+          }
+        ],
+        "default": "original",
+        "info": "The welcome / scratch popup."
+      },
+      {
+        "type": "select",
+        "id": "sales_campaign_mode",
+        "label": "Sales pages campaign mode",
+        "options": [
+          {
+            "value": "original",
+            "label": "Original"
+          },
+          {
+            "value": "world_animal_week",
+            "label": "World Animal Week"
+          }
+        ],
+        "default": "original",
+        "info": "FreshWipes and EyeWipes pre-landers and offer pages. Original renders the verified normal pages; World Animal Week renders the campaign pages (Buy 2 Get 2 Free + gifts, fixed Oct 4 deadline)."
+      }
+    ]
+  },
+  {
     "name": "Authentication",
     "settings": [
       {

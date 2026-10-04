@@ -30,6 +30,7 @@
     {%- comment -%} Preload the two assets that gate the first paint. {%- endcomment -%}
     <link rel="preload" as="font" type="font/woff2" href="{{ 'ewpl-geist-bold.woff2' | asset_url }}" crossorigin>
     <link rel="preload" as="font" type="font/woff2" href="{{ 'ewpl-geist-regular.woff2' | asset_url }}" crossorigin>
+    {%- if settings.sales_campaign_mode == 'world_animal_week' -%}
     {%- comment -%}
       Caveat: the World Animal Week "Week" script lockup. Loaded
       unconditionally (both the evergreen and WAW top-bar/offer-card variants
@@ -41,7 +42,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap">
-    <link rel="stylesheet" href="{{ 'eyewipes-prelander.css' | asset_url }}">
+    {%- endif -%}
+    {%- assign pl_suffix = '' -%}
+    {%- if settings.sales_campaign_mode == 'world_animal_week' -%}{%- assign pl_suffix = '-waw' -%}{%- endif -%}
+    <link rel="stylesheet" href="{{ 'eyewipes-prelander' | append: pl_suffix | append: '.css' | asset_url }}">
+    {%- if settings.sales_campaign_mode == 'world_animal_week' -%}
 
     {%- comment -%}
       ?waw_preview=1 QA override - forces the WAW variant visible with no
@@ -61,6 +66,7 @@
         } catch (e) {}
       }());
     </script>
+    {%- endif -%}
 
     <style>
       @font-face { font-family: "GeistEwpl"; src: url("{{ 'ewpl-geist-regular.woff2' | asset_url }}") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
@@ -76,6 +82,9 @@
   <body class="eyewipes-prelander-body">
     {{ content_for_layout }}
 
-    <script src="{{ 'eyewipes-prelander.js' | asset_url }}" defer></script>
+    {%- if settings.sales_campaign_mode == 'world_animal_week' -%}
+    <script src="{{ 'vp-countdown.js' | asset_url }}" defer></script>
+    {%- endif -%}
+    <script src="{{ 'eyewipes-prelander' | append: pl_suffix | append: '.js' | asset_url }}" defer></script>
   </body>
 </html>
