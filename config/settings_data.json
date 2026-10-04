@@ -9,6 +9,11 @@
  */
 {
   "current": {
+    "homepage_campaign_mode": "scheduled",
+    "announcement_campaign_mode": "scheduled",
+    "popup_campaign_mode": "scheduled",
+    "sales_campaign_mode": "scheduled",
+    "campaign_waw_ends_at": "2026-10-04T16:53:59-04:00",
     "animations_type": "DTkBfILyHtYpmXK+h3Cdr1QY1Z2I4IEA458O9gMuGZCxPiZ5tP8Dhv8/XM3A10OJiJE3mkKhZm2/iDcg2HYLwKBT0YqIdWVQCXuzQsK+cAPMSUTZm3qEC72iyuK0k6KuUqcSiJOgyMZ6+cdDElGoo7owz0eDN+Kyq6hcUMXbaCd4I1x1LD1d4wFdA9OjDWMzln/1+qfKmIPPF4FnEGS0PasVubtXvxviw9tMbJ+xzd3v2GMUFjOQ+5iXZQo3POEXzfkc5Q+BOARlShtMaIJFAEf9QqaifL3bB+oPMCRGQsmOE5r071Gm34IsehR5dY6T2Bp+mP1jbFTub/ypszrqi86aayWyU4KXdZKdDzU94H8Xzjviqr4CDXQn/eNpYCCzgzLGpkQza0IF4ohADbcwoVpXsbylk2CKXd+BAjukc9C0SLP8yVUGafjXcAA2VsEC",
     "disable_inspect": false,
     "country_list_function": "block",
