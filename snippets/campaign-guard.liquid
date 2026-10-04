@@ -1,0 +1,61 @@
+{%- comment -%}
+  Campaign switch safety net (rendered once per page, in <head>).
+  1. Always exposes window.VPCampaignEnds (epoch seconds of the end instant) so every World Animal
+     Week countdown counts to the SAME instant that switches the page.
+  2. The refresh guard below is only active when at least one surface is set to "scheduled"
+     and the end instant is valid.
+  Server HTML is already correct for the moment it was rendered; this guard covers the
+  two ways a visitor could still see a stale or mixed page:
+    1. HTML rendered BEFORE the end instant but displayed AFTER it (edge cache, bfcache,
+       a tab left open) -> one cache-busting refresh at/after the instant.
+    2. Surfaces on the same page disagreeing (sections rendered either side of the
+       instant) -> one refresh.
+  It never loops: a refreshed URL carries vp_cb=<end epoch> and is never refreshed again.
+{%- endcomment -%}
+{%- liquid
+  assign any_sched = false
+  if settings.homepage_campaign_mode == 'scheduled' or settings.announcement_campaign_mode == 'scheduled' or settings.popup_campaign_mode == 'scheduled' or settings.sales_campaign_mode == 'scheduled'
+    assign any_sched = true
+  endif
+  assign guard_ends = 0
+  assign guard_ends_raw = settings.campaign_waw_ends_at | strip
+  if guard_ends_raw != blank
+    assign guard_ends = guard_ends_raw | date: '%s' | plus: 0
+  endif
+  assign guard_now = 'now' | date: '%s' | plus: 0
+-%}
+{%- if guard_ends > 0 -%}
+<script>window.VPCampaignEnds = {{ guard_ends }};</script>
+{%- endif -%}
+{%- if any_sched and guard_ends > 0 -%}
+<script>
+(function () {
+  var ENDS = {{ guard_ends }}, RENDERED = {{ guard_now }};
+  var done = false;
+  function refresh() {
+    if (done) return; done = true;
+    try {
+      if (location.search.indexOf('vp_cb=' + ENDS) !== -1) return;
+      var u = new URL(location.href);
+      u.searchParams.set('vp_cb', String(ENDS));
+      location.replace(u.toString());
+    } catch (e) {}
+  }
+  function check() {
+    if (RENDERED < ENDS && Date.now() / 1000 >= ENDS) refresh();
+  }
+  function mixed() {
+    var m = document.querySelectorAll('[data-vp-campaign-mode]'), seen = {}, n = 0, i;
+    for (i = 0; i < m.length; i++) { var v = m[i].getAttribute('data-vp-campaign-mode'); if (!seen[v]) { seen[v] = 1; n++; } }
+    if (n > 1) refresh();
+  }
+  check();
+  var wait = ENDS * 1000 - Date.now();
+  if (wait > 0 && wait < 2147483000) setTimeout(check, wait + 250);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) check(); });
+  window.addEventListener('pageshow', check);
+  document.addEventListener('DOMContentLoaded', mixed);
+  window.addEventListener('load', mixed);
+})();
+</script>
+{%- endif -%}
