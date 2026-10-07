@@ -98,7 +98,7 @@
   -%}
   <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
     <div class="grid__item product__media-wrapper{% if section.settings.media_position == 'right' %} medium-hide large-up-hide{% endif %}{% if section.settings.enable_sticky_info %} product__column-sticky{% endif %}">
-      {% render 'product-media-gallery', variant_images: variant_images, has_filtering: has_filtering, section %}
+      {% render 'product-media-gallery', variant_images: variant_images, has_filtering: has_filtering %}
     </div>
     <div class="product__info-wrapper grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if section.settings.enable_sticky_info %} product__column-sticky{% endif %}{% if section.settings.mobile_pagination == 'dots_overlay' or hide_mobile_slider %} product__info-wrapper--top-padding{% endif %}">
       <product-info
@@ -10144,3 +10144,15 @@ setTimeout(function(){
   });
 }, 1500);
 </script>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'product-media-gallery', variant_images: variant_images, has_filtering:
+    has_filtering, section %}"
+  to: "{% render 'product-media-gallery', variant_images: variant_images, has_filtering:
+    has_filtering %}"
+  position: 4347..4445
+{% endcomment %}
