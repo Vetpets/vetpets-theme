@@ -63,6 +63,7 @@ const beaconScreenView = method('beaconScreenView', ['RETENTION_SCREEN_EVENTS'],
 const show = method('show', ['DISABLED_SCREENS', 'SCREENS_WITH_CHROME'], [DISABLED_SCREENS, SCREENS_WITH_CHROME]);
 const retainKind = method('retainKind', ['RETAIN_BY_REASON'], [constant('RETAIN_BY_REASON')]);
 const trackRetention = method('trackRetention');
+const ensureRetentionJourney = method('ensureRetentionJourney');
 const attemptKey = method('attemptKey');
 const releaseAttempt = method('releaseAttempt');
 const run = method('run', ['INDETERMINATE', 'AUTH_FAILURE_CODES'], [INDETERMINATE, AUTH_FAILURE_CODES]);
@@ -416,11 +417,25 @@ describe('submitReason: retry-safe delivery that reuses the beacon-opened journe
  * ================================================================== */
 
 describe('applyGap sends the held retention journey id to the mutation, and only when one exists', () => {
-  function portal({ retentionJourneyId } = {}) {
+  function portal({ retentionJourneyId, recordRetentionEvent } = {}) {
     const calls = [];
+    const events = [];
+    const outcomes = [];
     const confirmBtn = { disabled: false, setAttribute() {}, removeAttribute() {} };
+    const adapter = {
+      skipNextDelivery(id, opts) { calls.push({ id, opts }); return Promise.resolve({ id: 'sub_1' }); },
+      recordCancelOutcome(outcome) { outcomes.push(outcome); return Promise.resolve(null); },
+    };
+    if (recordRetentionEvent) {
+      adapter.recordRetentionEvent = (type, journeyId, action) => {
+        events.push({ type, journeyId, action });
+        return recordRetentionEvent(type, journeyId, action);
+      };
+    }
     return {
       calls,
+      events,
+      outcomes,
       confirmBtn,
       cfg: { mode: 'live' },
       state: {
@@ -429,11 +444,9 @@ describe('applyGap sends the held retention journey id to the mutation, and only
         data: { id: 'sub_1', nextOrderDate: '2026-09-24' },
       },
       root: { querySelectorAll: () => [confirmBtn], querySelector: () => null },
-      adapter: {
-        skipNextDelivery(id, opts) { calls.push({ id, opts }); return Promise.resolve({ id: 'sub_1' }); },
-        recordCancelOutcome: () => Promise.resolve(null),
-      },
+      adapter,
       attemptKey(op) { return attemptKey.call(this, op); },
+      ensureRetentionJourney() { return ensureRetentionJourney.call(this); },
       releaseAttempt(op) { return releaseAttempt.call(this, op); },
       releaseAllAttempts() { this.state.attempts = {}; },
       run(key, work, o) { return run.call(this, key, work, o); },
@@ -466,5 +479,64 @@ describe('applyGap sends the held retention journey id to the mutation, and only
     await new Promise((r) => setTimeout(r, 0));
     assert.equal(p.calls.length, 1);
     assert.equal(p.calls[0].opts.retentionJourneyId, null, 'must not be misclassified as a retention save');
+  });
+
+  // Portal V2 puts the Longer Gap step (4) BEFORE the reason screen (5) that
+  // opens the journey, so a first-pass save used to arrive with no id and was
+  // never counted as saved_gap on the Retention Command Center.
+  const settle = () => new Promise((r) => setTimeout(r, 0));
+
+  test('with no held journey, the save opens one and sends the minted id — no id-less fallback', async () => {
+    const p = portal({ recordRetentionEvent: () => Promise.resolve({ journeyId: 'j-minted' }) });
+    p.act('applyGap');
+    await settle();
+    assert.equal(p.events.length, 1);
+    assert.equal(p.events[0].type, 'cancellation_started');
+    assert.equal(p.events[0].journeyId, null);
+    assert.equal(p.calls.length, 1);
+    assert.equal(p.calls[0].opts.retentionJourneyId, 'j-minted');
+    assert.deepEqual(p.outcomes, [], 'the server attributes saved_gap; the fallback could hit a stale journey');
+  });
+
+  test('if no journey can be opened, the schedule change still runs and the fallback records the outcome', async () => {
+    const p = portal({ recordRetentionEvent: () => Promise.resolve(null) });
+    p.act('applyGap');
+    await settle();
+    assert.equal(p.calls.length, 1);
+    assert.equal(p.calls[0].opts.retentionJourneyId, null);
+    assert.deepEqual(p.outcomes, ['saved_gap']);
+  });
+
+  test('a rejected journey write never blocks the schedule change', async () => {
+    const p = portal({ recordRetentionEvent: () => Promise.reject(new Error('network')) });
+    p.act('applyGap');
+    await settle();
+    assert.equal(p.calls.length, 1);
+    assert.equal(p.calls[0].opts.retentionJourneyId, null);
+    assert.deepEqual(p.outcomes, ['saved_gap']);
+  });
+
+  test('a held journey id is used as-is — nothing new is minted', async () => {
+    const p = portal({
+      retentionJourneyId: 'j-held',
+      recordRetentionEvent: () => Promise.resolve({ journeyId: 'j-other' }),
+    });
+    p.act('applyGap');
+    await settle();
+    assert.equal(p.events.length, 0);
+    assert.equal(p.calls[0].opts.retentionJourneyId, 'j-held');
+    assert.deepEqual(p.outcomes, []);
+  });
+
+  test('after a successful save the resolved journey is released, so a later attempt opens a new one', async () => {
+    const minted = portal({ recordRetentionEvent: () => Promise.resolve({ journeyId: 'j-minted' }) });
+    minted.act('applyGap');
+    await settle();
+    assert.equal(minted.state.retentionJourneyId, null);
+
+    const held = portal({ retentionJourneyId: 'j-held' });
+    held.act('applyGap');
+    await settle();
+    assert.equal(held.state.retentionJourneyId, null);
   });
 });
