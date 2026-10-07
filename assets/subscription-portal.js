@@ -2465,6 +2465,26 @@
       .catch(function () {});
   };
 
+  /**
+   * Resolve the cancellation journey id for a save, opening the journey when
+   * none is held yet (the Longer Gap step precedes the reason screen).
+   * Resolves the id, or null — never rejects: a failed analytics write must
+   * never block the customer's schedule change.
+   */
+  Portal.prototype.ensureRetentionJourney = function () {
+    var self = this;
+    if (this.state.retentionJourneyId) return Promise.resolve(this.state.retentionJourneyId);
+    if (!this.adapter || !this.adapter.recordRetentionEvent) return Promise.resolve(null);
+    return Promise.resolve(this.adapter.recordRetentionEvent('cancellation_started', null))
+      .then(function (result) {
+        var minted = result && typeof result.journeyId === 'string' && result.journeyId ? result.journeyId : null;
+        if (minted && !self.state.retentionJourneyId) self.state.retentionJourneyId = minted;
+        return self.state.retentionJourneyId || minted;
+      }, function () {
+        return self.state.retentionJourneyId || null;
+      });
+  };
+
   function retainProductKey(title) {
     var t = String(title || '').toLowerCase();
     return t.indexOf('fresh') !== -1 ? 'fresh'
@@ -3043,31 +3063,43 @@
         var before = sub.nextOrderDate;
         var target = d.gap;
 
+        var gapJourneyId = null;
+
         this.run('applyGap', function (attemptKey) {
-          // The SAME journey the reason screen opened — this is what lets
+          // The cancellation journey this save belongs to — this is what lets
           // the server mark saved_gap safely, scoped to exactly this
-          // cancellation attempt rather than guessing. Present only because
-          // this skip/delay/reschedule IS the Longer Gap step; every other
-          // caller of these same adapter methods (the ordinary dashboard
-          // buttons) never sets this, and never becomes a "save".
-          var opts = {
-            idempotencyKey: attemptKey,
-            expectedNextBillingDate: before,
-            retentionJourneyId: self.state.retentionJourneyId
-          };
-          if (target === 'skip') return self.adapter.skipNextDelivery(id, opts);
-          if (target === 'date') return self.adapter.rescheduleNextDelivery(id, d.date, opts);
-          return self.adapter.delayNextDelivery(id, parseInt(target.slice(1), 10), opts);
+          // cancellation attempt rather than guessing. Since Portal V2 the
+          // Longer Gap step (4) comes BEFORE the reason screen (5), which is
+          // where cancellation_started normally opens the journey, so on a
+          // first pass none is held yet: open it here. Minting happens inside
+          // run(), so the pending guard already blocks a double click. The
+          // ordinary dashboard buttons call these same adapter methods
+          // without this, and never become a "save".
+          return self.ensureRetentionJourney().then(function (journeyId) {
+            gapJourneyId = journeyId;
+            var opts = {
+              idempotencyKey: attemptKey,
+              expectedNextBillingDate: before,
+              retentionJourneyId: journeyId
+            };
+            if (target === 'skip') return self.adapter.skipNextDelivery(id, opts);
+            if (target === 'date') return self.adapter.rescheduleNextDelivery(id, d.date, opts);
+            return self.adapter.delayNextDelivery(id, parseInt(target.slice(1), 10), opts);
+          });
         }, {
           attempt: 'applyGap',
           then: function () {
-            // Kept as a fallback alongside the server's own attribution
-            // above (settleRetentionOutcome dedupes whichever arrives
-            // first): a customer whose retentionJourneyId is somehow still
-            // null still gets the outcome recorded, just without the
-            // longer_gap_reached/saved_gap EVENT pair this scoped path adds.
-            if (self.adapter.recordCancelOutcome) {
+            // With a journey id the server attributes saved_gap itself. The
+            // id-less fallback is ONLY for when no journey could be opened:
+            // sending it alongside would resolve whatever open journey the
+            // server finds — possibly a stale, unrelated one.
+            if (!gapJourneyId && self.adapter.recordCancelOutcome) {
               self.adapter.recordCancelOutcome('saved_gap').catch(function () {});
+            }
+            // That journey is now resolved as saved_gap; a later cancel
+            // attempt in this same page session must open a new one.
+            if (gapJourneyId && self.state.retentionJourneyId === gapJourneyId) {
+              self.state.retentionJourneyId = null;
             }
             self.show('dashboard');
           },
