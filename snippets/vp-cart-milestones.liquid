@@ -1,0 +1,125 @@
+{%- comment -%}
+  VetPets cart milestones: FREE shipping -> free gifts.
+
+  Free shipping follows the live Shopify delivery profiles (checked 2026-10-08):
+    - US + rest of world: free standard shipping from $49, in other currencies
+      converted at Shopify's own rate (window.Shopify.currency.rate).
+    - GB £37 · DK 269 kr · NO 399 kr, fixed in the local currency.
+    - Subscription items ship free (Subscription Shipping Profile) and do not
+      count toward the threshold; only one-time items do.
+  The amounts are block settings so they can follow a delivery-profile change.
+
+  Gifts come with the Kaching bundle tiers. Kaching tags a gift line with a
+  __kaching_bundles property that has a "gift" key; those lines are the gifts.
+  The gift step only shows when the cart holds a product that has a gift tier
+  (block setting gift_handles), so it never promises a gift that does not exist.
+
+  Usage: {% render 'vp-cart-milestones', block: block %}
+{%- endcomment -%}
+{%- liquid
+  assign vpcm_one_time = 0
+  assign vpcm_sub = false
+  assign vpcm_eligible = false
+  assign vpcm_gifts = ''
+  assign vpcm_handles = block.settings.gift_handles | remove: ' ' | split: ','
+  for item in cart.items
+    assign vpcm_kb = item.properties['__kaching_bundles'] | default: ''
+    if vpcm_kb contains '"gift"'
+      assign vpcm_gifts = vpcm_gifts | append: item.product.title | append: '|'
+      continue
+    endif
+    if vpcm_handles contains item.product.handle
+      assign vpcm_eligible = true
+    endif
+    if item.selling_plan_allocation or vpcm_kb contains '"sellingPlan"'
+      assign vpcm_sub = true
+    else
+      assign vpcm_one_time = vpcm_one_time | plus: item.final_line_price
+    endif
+  endfor
+-%}
+{%- if cart.item_count > 0 -%}
+  <style>
+    .vpcm{display:block;margin:var(--vpcm-mt,0) 0 var(--vpcm-mb,1.2rem);padding:12px 16px 8px;background:#fff;border:1px solid rgba(71,181,233,.28);border-radius:12px}
+    .vpcm__msg{margin:0 0 10px;font-size:1.35rem;line-height:1.35;text-align:center;color:#121212}
+    .vpcm__msg strong{font-weight:700}
+    .vpcm__steps{display:flex;align-items:center;margin-bottom:18px}
+    .vpcm__seg{flex:1;height:6px;border-radius:99px;background:#E3EEF4;overflow:hidden}
+    .vpcm__seg>i{display:block;height:100%;width:var(--p,0%);background:#47B5E9;border-radius:99px;transition:width .45s ease}
+    .vpcm__step{position:relative;flex:0 0 auto;width:30px;height:30px;margin:0 2px;border-radius:50%;display:grid;place-items:center;background:#fff;border:2px solid #CFDCE4;color:#8B9AA6}
+    .vpcm__step svg{width:15px;height:15px}
+    .vpcm__step.is-done{background:#47B5E9;border-color:#47B5E9;color:#fff}
+    .vpcm__lbl{position:absolute;top:calc(100% + 4px);right:50%;transform:translateX(50%);white-space:nowrap;font-size:1.05rem;font-weight:600;color:#54646F}
+    .vpcm__step.is-done .vpcm__lbl{color:#121212}
+    .vpcm__step:last-child .vpcm__lbl{right:0;transform:none}
+  </style>
+  <script>
+    (function () {
+      if (!window.customElements || customElements.get('vp-cart-milestones')) return;
+      var ICON = {
+        ship: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>',
+        gift: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/></svg>'
+      };
+      function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+      function fmt(cents, cur) {
+        try { return new Intl.NumberFormat('en-US', { style: 'currency', currency: cur, currencyDisplay: 'narrowSymbol' }).format(cents / 100); }
+        catch (e) { return (cents / 100).toFixed(2) + ' ' + cur; }
+      }
+      customElements.define('vp-cart-milestones', class extends HTMLElement {
+        connectedCallback() {
+          var d = this.dataset, cur = d.currency || 'USD';
+          // Threshold in the cart's (presentment) currency, in cents.
+          var fixed = { USD: +d.usd, GBP: +d.gbp, DKK: +d.dkk, NOK: +d.nok };
+          var threshold = fixed[cur];
+          if (!threshold) {
+            var rate = Number(window.Shopify && Shopify.currency && Shopify.currency.rate) || 0;
+            threshold = rate ? Math.round(+d.usd * rate) : 0;
+          }
+          var oneTime = +d.oneTime || 0, sub = d.sub === 'true';
+          var shipDone = oneTime === 0 ? sub : (threshold > 0 && oneTime >= threshold);
+          var gifts = (d.gifts || '').split('|').filter(Boolean);
+          var giftsDone = gifts.length > 0;
+          var showGift = giftsDone || d.eligible === 'true';
+          var p1 = shipDone ? 100 : (threshold ? Math.max(6, Math.min(96, oneTime / threshold * 100)) : 0);
+          var msg;
+          if (!shipDone && threshold) {
+            msg = "You're <strong>" + esc(fmt(threshold - oneTime, cur)) + '</strong> away from <strong>FREE shipping</strong>';
+          } else if (!shipDone) {
+            msg = '<strong>FREE shipping</strong> on qualifying orders';
+          } else if (!showGift) {
+            msg = (oneTime === 0 ? '<strong>FREE shipping</strong> with RoutineCare' : "You've unlocked <strong>FREE shipping</strong>") + ' ✓';
+          } else if (giftsDone) {
+            msg = 'Unlocked: <strong>FREE shipping</strong> + <strong>free gifts</strong> 🎉';
+          } else {
+            msg = '<strong>FREE shipping</strong> unlocked ✓ ' + esc(d.giftHint || '');
+          }
+          var html = '<p class="vpcm__msg" role="status">' + msg + '</p><div class="vpcm__steps">' +
+            '<div class="vpcm__seg"><i style="--p:' + p1.toFixed(1) + '%"></i></div>' +
+            '<div class="vpcm__step' + (shipDone ? ' is-done' : '') + '">' + ICON.ship + '<span class="vpcm__lbl">' + esc(d.shipLabel) + '</span></div>';
+          if (showGift) {
+            html += '<div class="vpcm__seg"><i style="--p:' + (giftsDone ? 100 : 0) + '%"></i></div>' +
+              '<div class="vpcm__step' + (giftsDone ? ' is-done' : '') + '"' + (giftsDone ? ' title="' + esc(gifts.join(' + ')) + '"' : '') + '>' + ICON.gift + '<span class="vpcm__lbl">' + esc(d.giftLabel) + '</span></div>';
+          }
+          this.innerHTML = html + '</div>';
+        }
+      });
+    })();
+  </script>
+  <vp-cart-milestones
+    class="vpcm"
+    style="--vpcm-mt: {{ block.settings.margin_top | divided_by: 10.0 }}rem; --vpcm-mb: {{ block.settings.margin_bottom | divided_by: 10.0 }}rem;"
+    data-currency="{{ cart.currency.iso_code }}"
+    data-one-time="{{ vpcm_one_time }}"
+    data-sub="{{ vpcm_sub }}"
+    data-eligible="{{ vpcm_eligible }}"
+    data-gifts="{{ vpcm_gifts | escape }}"
+    data-usd="{{ block.settings.free_usd | times: 100 | round }}"
+    data-gbp="{{ block.settings.free_gbp | times: 100 | round }}"
+    data-dkk="{{ block.settings.free_dkk | times: 100 | round }}"
+    data-nok="{{ block.settings.free_nok | times: 100 | round }}"
+    data-ship-label="{{ block.settings.ship_label | escape }}"
+    data-gift-label="{{ block.settings.gift_label | escape }}"
+    data-gift-hint="{{ block.settings.gift_hint | escape }}"
+    {{ block.shopify_attributes }}
+  ></vp-cart-milestones>
+{%- endif -%}

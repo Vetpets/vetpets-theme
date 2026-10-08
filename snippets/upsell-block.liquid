@@ -78,6 +78,12 @@
     <h3 class='upsell__outside-title center custom-font-size' style='--mobile-text-size: {{ block.settings.container_title_mobile_text_size | divided_by: 10.0 }}rem;--desktop-text-size: {{ block.settings.container_title_desktop_text_size | divided_by: 10.0 }}rem;color:{{ block.settings.container_title_color }}'>
       {{ block.settings.container_title }}
     </h3>
+    {%- if block.settings.vp_subtitle != blank -%}
+      <style>
+        .vpup-sub{margin:-.2rem 0 1.2rem;text-align:center;font-size:1.45rem;font-weight:700;line-height:1.3;color:#47B5E9;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+      </style>
+      <p class="vpup-sub">{{ block.settings.vp_subtitle }}</p>
+    {%- endif -%}
   {% endif %}
     {% if item_count > 1 and block.settings.stacking == 'slider' %}
       {% liquid

@@ -442,10 +442,10 @@
               "show_variant_picker": false,
               "update_prices": false,
               "skip_unavailable": false,
-              "container_title": "ADD FOR FASTER RESULTS",
+              "container_title": "ADD FOR FASTER RESULTS!",
               "container_title_position": "outside",
-              "container_title_mobile_text_size": 15,
-              "container_title_desktop_text_size": 16,
+              "container_title_mobile_text_size": 17,
+              "container_title_desktop_text_size": 18,
               "container_title_color": "#000000",
               "corner_radius": 10,
               "show_box_shadow": true,
@@ -462,7 +462,8 @@
               "transparent_arrows": false,
               "display_dots": false,
               "margin_top": 0,
-              "margin_bottom": 24
+              "margin_bottom": 24,
+              "vp_subtitle": "97% of customers order 2 or more jars"
             }
           },
           "4f3e2a5f-006d-40ed-8370-49b15e0e427d": {
@@ -499,7 +500,10 @@
               "icon_scale": 120,
               "icon_spacing": 10,
               "margin_top": 9,
-              "margin_bottom": 0
+              "margin_bottom": 0,
+              "vp_lock_icon": true,
+              "vp_sublabel": "100-Day Money-Back Guarantee",
+              "vp_below_text": "Orders dispatched within 24 hours"
             }
           },
           "text_with_icon_rNWJDi": {
@@ -532,7 +536,8 @@
               "border_color": "#b7b7b7",
               "margin_top": 6,
               "margin_bottom": 12
-            }
+            },
+            "disabled": true
           },
           "68fdc0a0-cd7c-40b9-97b3-a76eb7917a47": {
             "type": "payment_badges",
@@ -542,11 +547,27 @@
               "margin_top": 6,
               "margin_bottom": 6
             }
+          },
+          "vp_milestones_main": {
+            "type": "vp_milestones",
+            "settings": {
+              "free_usd": 49,
+              "free_gbp": 37,
+              "free_dkk": 269,
+              "free_nok": 399,
+              "ship_label": "Free Shipping",
+              "gift_label": "Free Gifts",
+              "gift_hint": "Choose the 4-Month Supply to get free gifts",
+              "gift_handles": "freshwipes-kit-protects-against-dental-diseases,eyewipes-prevention-that-keeps-eyes-clear,earwipes-kit-protects-against-ear-problems,freshwipe-kit-cats-protects-against-dental-problems",
+              "margin_top": 0,
+              "margin_bottom": 12
+            }
           }
         },
         "block_order": [
           "text_with_icon_hFExPy",
           "countdown_timer_DMkpaM",
+          "vp_milestones_main",
           "checkpoints_bar_Adei9q",
           "097b7b4f-c0b8-4073-a06b-e6d49a5aad20",
           "product_upsells_DpJyXd",
