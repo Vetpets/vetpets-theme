@@ -758,8 +758,8 @@ describe('40% offer: one delivery only, and never resurfaced once redeemed', () 
     }
   });
 
-  test('the offer figures stay the approved 40% / 20%', () => {
-    assert.match(src, /var OFFER_PERCENT = 40;/);
+  test('the offer figures stay the approved 50% / 20%', () => {
+    assert.match(src, /var OFFER_PERCENT = 50;/);
     assert.match(src, /var STANDARD_PERCENT = 20;/);
   });
 });

@@ -2248,7 +2248,7 @@
   ];
 
   /** The approved figures, stated once. */
-  var OFFER_PERCENT = 40;
+  var OFFER_PERCENT = 50;
   var STANDARD_PERCENT = 20;
 
   /** How much the customer must actually write for "Something else". */
