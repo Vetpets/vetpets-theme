@@ -588,7 +588,14 @@
       rec = { kind: 'offer', action: 'next_delivery_40' };
     }
 
-    if (eventType && self.adapter.recordRetentionEvent) {
+    // Sent with no journey id, every event except cancellation_started is
+    // attached server-side to the customer's newest OPEN journey — which can
+    // be a stale one from an earlier visit (e.g. cancel-alt, step 4, is
+    // reached before cancel-reason opens this visit's journey). Only
+    // cancellation_started may go out without one: it always opens a fresh
+    // journey. Everything else waits for this visit's own.
+    if (eventType && self.adapter.recordRetentionEvent &&
+        (eventType === 'cancellation_started' || self.state.retentionJourneyId)) {
       self.adapter.recordRetentionEvent(eventType, self.state.retentionJourneyId, 'next_delivery_40')
         .then(function (result) {
           // Adopt the journey id only if we did not already have one — the
@@ -1890,7 +1897,9 @@
         if (self.state.screen === 'cancel-offer' && goTarget === 'cancel-savings' && self.adapter.recordRetentionEvent) {
           self.trackRetention('recommendation_declined', self.retainKind().action);
         } else if (self.state.screen === 'cancel-savings' && goTarget === 'cancel-confirm' && self.adapter.recordRetentionEvent) {
-          self.adapter.recordRetentionEvent('offer_declined', self.state.retentionJourneyId, 'next_delivery_40').catch(function () {});
+          if (self.state.retentionJourneyId) {
+            self.adapter.recordRetentionEvent('offer_declined', self.state.retentionJourneyId, 'next_delivery_40').catch(function () {});
+          }
           self.trackRetention('recommendation_declined', 'next_delivery_40');
         }
         self.show(goTarget);
@@ -2452,16 +2461,15 @@
     return r ? { kind: r[0], action: r[1] } : { kind: 'note', action: 'adjust_options' };
   };
 
-  /** Best-effort retention beacon. Never blocks, never a mutation. */
+  /**
+   * Best-effort retention beacon. Never blocks, never a mutation. Only ever
+   * on the journey this visit holds: sent without one, the server would
+   * attach it to the customer's newest open journey, possibly a stale one.
+   */
   Portal.prototype.trackRetention = function (eventType, action) {
-    var self = this;
     if (!this.adapter || !this.adapter.recordRetentionEvent) return;
+    if (!this.state.retentionJourneyId) return;
     this.adapter.recordRetentionEvent(eventType, this.state.retentionJourneyId, action)
-      .then(function (result) {
-        if (result && result.journeyId && !self.state.retentionJourneyId) {
-          self.state.retentionJourneyId = result.journeyId;
-        }
-      })
       .catch(function () {});
   };
 
@@ -2636,13 +2644,14 @@
     if (!sub || this.state.pending) return;
     this.state.retainError = null;
     var before = sub.nextOrderDate;
+    var retainJourneyId = this.state.retentionJourneyId;
     this.trackRetention('recommendation_attempted', action);
 
     this.run(pendingKey, function (attemptKey) {
       return doMutation({
         idempotencyKey: attemptKey,
         expectedNextBillingDate: before,
-        retentionJourneyId: self.state.retentionJourneyId,
+        retentionJourneyId: retainJourneyId,
         retentionAction: action
       }).then(function (result) {
         // The write applied but the server could not re-read Phoenix: the
@@ -2656,6 +2665,11 @@
       // run() hands these (state, result): the verified subscription is `result`.
       then: function (state, result) {
         state.retainSaved = { action: action, next: result && result.nextOrderDate };
+        // The journey is now resolved as a save; a later cancel attempt in
+        // this same visit must open a new one.
+        if (retainJourneyId && self.state.retentionJourneyId === retainJourneyId) {
+          self.state.retentionJourneyId = null;
+        }
         self.show('dashboard');
       },
       toast: function (state, result) {
@@ -3089,13 +3103,11 @@
         }, {
           attempt: 'applyGap',
           then: function () {
-            // With a journey id the server attributes saved_gap itself. The
-            // id-less fallback is ONLY for when no journey could be opened:
-            // sending it alongside would resolve whatever open journey the
-            // server finds — possibly a stale, unrelated one.
-            if (!gapJourneyId && self.adapter.recordCancelOutcome) {
-              self.adapter.recordCancelOutcome('saved_gap').catch(function () {});
-            }
+            // With a journey id the server attributes saved_gap itself. With
+            // none (it could not be opened) nothing is recorded: the id-less
+            // recordCancelOutcome would resolve whatever open journey the
+            // server finds — possibly a stale one from an earlier visit. A
+            // missed save is better than one counted on the wrong journey.
             // That journey is now resolved as saved_gap; a later cancel
             // attempt in this same page session must open a new one.
             if (gapJourneyId && self.state.retentionJourneyId === gapJourneyId) {
@@ -3120,8 +3132,16 @@
        * applied that the next invoice would contradict.
        */
       case 'acceptOffer': {
+        var offerJourneyId = null;
         this.run('acceptOffer', function (attemptKey) {
-          return self.adapter.acceptRetentionOffer({ idempotencyKey: attemptKey });
+          // The offer route settles saved_offer on the customer's NEWEST open
+          // journey. Making sure this visit's journey exists (and is open)
+          // first is what makes that newest one this visit's, never a stale
+          // one from an earlier visit. Never blocks the offer itself.
+          return self.ensureRetentionJourney().then(function (journeyId) {
+            offerJourneyId = journeyId;
+            return self.adapter.acceptRetentionOffer({ idempotencyKey: attemptKey });
+          });
         }, {
           attempt: 'acceptOffer',
           /* THE BUG THIS EXISTS FOR:
@@ -3147,6 +3167,9 @@
           // not also write saved_offer — one fact, one writer.
           then: function (st, result) {
             self.state.offer = result || null;
+            if (offerJourneyId && self.state.retentionJourneyId === offerJourneyId) {
+              self.state.retentionJourneyId = null;
+            }
             self.load().then(function () {
               self.show('dashboard');
             }).catch(function () {
