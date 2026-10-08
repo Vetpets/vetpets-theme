@@ -3,6 +3,8 @@
   'world_animal_week' renders the WAW body below. ANYTHING ELSE (original, missing, invalid) renders the
   verified pre-WAW body (byte-identical to git 327c8c3^ / 7e5e701). The two bodies share no
   variables or assets: WAW uses *-waw.css / *-waw.js, Original uses the unsuffixed assets.
+  2026-10-08: Original now also carries the WAW risk-reversal card under the main CTA
+  (replacing the bare "100-Day Money-Back Guarantee" row + separate secure line).
 {%- endcomment -%}
 {%- capture campaign_mode -%}{%- render 'campaign-mode', key: 'sales' -%}{%- endcapture -%}
 {%- render 'campaign-mode', key: 'sales', marker: true -%}
@@ -951,18 +953,22 @@
           {%- endif -%}
         </div>
 
-        <div class="guar-row">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#13B6B5"></circle><path d="m7.4 12.3 3 3 6.2-6.6" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-          <span>100-Day Money-Back Guarantee</span>
+        <div class="assure">
+          <div class="assure-g">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#13B6B5"></circle><path d="m7.4 12.3 3 3 6.2-6.6" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            <div>
+              <div class="assure-t">Healthy clear eyes OR your money back</div>
+              <p class="assure-c">Try EyeWipes for 100 days. If you don't see a cleaner-looking eye area with consistent use, we'll refund you.</p>
+            </div>
+          </div>
+          <div class="assure-s">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="2.2" fill="#4F5F6B"></rect><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="#4F5F6B" stroke-width="2.2" stroke-linecap="round"></path></svg>
+            <span>All transactions are secure and encrypted</span>
+          </div>
         </div>
 
         <div class="pay">
           <img class="pay-strip" src="{{ 'ewof-payment-badges.webp' | asset_url }}" width="700" height="64" loading="lazy" decoding="async" alt="Accepted payment methods: Mastercard, Visa, PayPal, American Express, Discover and Apple Pay">
-        </div>
-
-        <div class="secure">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="2.2" fill="#6B7A85"></rect><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="#6B7A85" stroke-width="2.2" stroke-linecap="round"></path></svg>
-          <span>All transactions are secure and encrypted</span>
         </div>
 
         {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url -%}
