@@ -309,6 +309,23 @@ describe('Too much product: move the next delivery 30 days later — never a cla
     assert.equal(ad.calls.writes[0].opts.expectedNextBillingDate, '2026-09-08');
     assert.ok(ad.calls.writes[0].opts.idempotencyKey, 'a keyed write, so a retry cannot double-apply');
   });
+
+  test('a verified save releases the journey, so a later attempt this visit opens a new one', async () => {
+    const ad = scriptedAdapter({ after: { status: 'active', nextOrderDate: '2026-10-08' } });
+    const p = makePortal({ reason: 'too_much', adapter: ad });
+    p.act('retainPrimary', {});
+    await settle();
+    assert.equal(ad.calls.writes[0].opts.retentionJourneyId, 'j-1');
+    assert.equal(p.state.retentionJourneyId, null);
+  });
+
+  test('an unverified write keeps the journey — nothing was saved', async () => {
+    const ad = scriptedAdapter({ after: { status: 'active', nextOrderDate: '2026-01-01' } });
+    const p = makePortal({ reason: 'too_much', adapter: ad });
+    p.act('retainPrimary', {});
+    await settle();
+    assert.equal(p.state.retentionJourneyId, 'j-1');
+  });
 });
 
 describe('only Dental and Eye show a before/after image; Ear / Coat / Paw / Other never do', () => {

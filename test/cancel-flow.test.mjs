@@ -60,6 +60,7 @@ const act = method('act', ['CONFIRMED_ACTIONS'], [CONFIRMED_ACTIONS]);
 const run = method('run', ['INDETERMINATE', 'AUTH_FAILURE_CODES'], [INDETERMINATE, AUTH_FAILURE_CODES]);
 const attemptKey = method('attemptKey');
 const releaseAttempt = method('releaseAttempt');
+const ensureRetentionJourney = method('ensureRetentionJourney');
 // The SAME method the page calls on initial open — used below to prove the
 // post-offer refresh goes through it rather than a smaller, partial one.
 const load = method('load');
@@ -1294,6 +1295,7 @@ function offerPortal() {
 
     attemptKey(op) { return attemptKey.call(this, op); },
     releaseAttempt(op) { return releaseAttempt.call(this, op); },
+    ensureRetentionJourney() { return ensureRetentionJourney.call(this); },
     releaseAllAttempts() { this.state.attempts = {}; },
     run(k, w, o) { return run.call(this, k, w, o); },
     act(n, el) { return act.call(this, n, el); },
@@ -1314,6 +1316,45 @@ function offerPortal() {
     hasSession: () => true,
   };
 }
+
+// The offer route settles saved_offer on the customer's NEWEST open journey,
+// so this visit's journey must exist first — or an old one gets the save.
+describe('accepting the offer only ever settles this visit\'s journey', () => {
+  test('with no journey held, one is opened BEFORE the offer is accepted', async () => {
+    const p = offerPortal();
+    const order = [];
+    p.adapter.recordRetentionEvent = (type, journeyId) => {
+      order.push([type, journeyId]);
+      return Promise.resolve({ journeyId: 'j-visit' });
+    };
+    const accept = p.adapter.acceptRetentionOffer;
+    p.adapter.acceptRetentionOffer = (o) => { order.push(['accept']); return accept(o); };
+    p.act('acceptOffer');
+    for (let i = 0; i < 6; i++) await tick();
+    assert.deepEqual(order, [['cancellation_started', null], ['accept']]);
+    assert.equal(p.state.retentionJourneyId, null, 'the resolved journey is released after the save');
+  });
+
+  test('a held journey is kept as the newest open one — nothing new is opened', async () => {
+    const p = offerPortal();
+    p.state.retentionJourneyId = 'j-held';
+    let minted = 0;
+    p.adapter.recordRetentionEvent = () => { minted++; return Promise.resolve({ journeyId: 'x' }); };
+    p.act('acceptOffer');
+    for (let i = 0; i < 6; i++) await tick();
+    assert.equal(minted, 0);
+    assert.equal(p.calls.accept, 1);
+    assert.equal(p.state.retentionJourneyId, null);
+  });
+
+  test('a failed journey write never blocks the offer', async () => {
+    const p = offerPortal();
+    p.adapter.recordRetentionEvent = () => Promise.reject(new Error('network'));
+    p.act('acceptOffer');
+    for (let i = 0; i < 6; i++) await tick();
+    assert.equal(p.calls.accept, 1);
+  });
+});
 
 describe('the dashboard reflects the offer without a manual reload', () => {
   test('the primary subscription is refreshed through load(), not the small refresh', async () => {

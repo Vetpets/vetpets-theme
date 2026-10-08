@@ -187,6 +187,7 @@ describe('screen-view beacons name the right event and share one journey', () =>
         },
       });
       p.state.draft.reason = reason;
+      p.state.retentionJourneyId = 'j-open'; // step 5 opened it
       p.show('cancel-offer');
       await Promise.resolve().then(() => {});
       assert.deepEqual(offerTypes, [['recommendation_shown', action]], reason);
@@ -203,9 +204,36 @@ describe('screen-view beacons name the right event and share one journey', () =>
 
   test('final_confirmation_reached fires on reaching the confirm screen directly', async () => {
     const p = portal();
+    p.state.retentionJourneyId = 'j-open'; // step 5 opened it
     p.show('cancel-confirm');
     await Promise.resolve().then(() => {});
     assert.deepEqual(p.events.map((e) => e.eventType), ['final_confirmation_reached']);
+  });
+
+  // Sent without an id, the server attaches an event to the customer's
+  // newest open journey — possibly a stale one from an earlier visit.
+  test('step 4 reached first (no journey this visit) beacons nothing — never onto an old journey', async () => {
+    const p = portal();
+    p.show('cancel-alt');
+    await Promise.resolve().then(() => {});
+    assert.deepEqual(p.events, []);
+    assert.equal(p.state.retentionJourneyId, null);
+  });
+
+  test('no screen after step 5 beacons without this visit\'s journey', async () => {
+    for (const screen of ['cancel-offer', 'cancel-confirm']) {
+      const p = portal();
+      p.state.draft.reason = 'too_much';
+      p.show(screen);
+      await Promise.resolve().then(() => {});
+      assert.deepEqual(p.events, [], screen);
+    }
+  });
+
+  test('trackRetention sends nothing without this visit\'s journey', () => {
+    const p = portal();
+    p.trackRetention('recommendation_kept', 'keep_results');
+    assert.deepEqual(p.events, []);
   });
 
   test('a screen with no mapped retention event beacons nothing', async () => {
@@ -498,13 +526,13 @@ describe('applyGap sends the held retention journey id to the mutation, and only
     assert.deepEqual(p.outcomes, [], 'the server attributes saved_gap; the fallback could hit a stale journey');
   });
 
-  test('if no journey can be opened, the schedule change still runs and the fallback records the outcome', async () => {
+  test('if no journey can be opened, the schedule change still runs and NOTHING is recorded', async () => {
     const p = portal({ recordRetentionEvent: () => Promise.resolve(null) });
     p.act('applyGap');
     await settle();
     assert.equal(p.calls.length, 1);
     assert.equal(p.calls[0].opts.retentionJourneyId, null);
-    assert.deepEqual(p.outcomes, ['saved_gap']);
+    assert.deepEqual(p.outcomes, [], 'an id-less outcome would resolve a stale open journey');
   });
 
   test('a rejected journey write never blocks the schedule change', async () => {
@@ -513,7 +541,7 @@ describe('applyGap sends the held retention journey id to the mutation, and only
     await settle();
     assert.equal(p.calls.length, 1);
     assert.equal(p.calls[0].opts.retentionJourneyId, null);
-    assert.deepEqual(p.outcomes, ['saved_gap']);
+    assert.deepEqual(p.outcomes, []);
   });
 
   test('a held journey id is used as-is — nothing new is minted', async () => {
@@ -538,5 +566,9 @@ describe('applyGap sends the held retention journey id to the mutation, and only
     held.act('applyGap');
     await settle();
     assert.equal(held.state.retentionJourneyId, null);
+  });
+
+  test('source contract: no id-less saved_gap outcome is ever sent', () => {
+    assert.ok(!/recordCancelOutcome\('saved_gap'\)/.test(src));
   });
 });
