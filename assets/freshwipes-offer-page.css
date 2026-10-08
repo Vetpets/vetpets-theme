@@ -132,6 +132,15 @@ body:has(#freshwipes-offer-page){overflow-x:hidden}
 #freshwipes-offer-page .pay-strip{display:block;width:290px;max-width:calc(100% - 24px);height:auto}
 #freshwipes-offer-page .secure{display:flex;align-items:center;justify-content:center;gap:5px;margin-top:7px;font-size:10.5px;font-weight:400;color:#8B9AA6;text-align:center}
 
+/* Risk-reversal card under the main CTA — same card as the campaign stylesheet
+   (*-waw.css), so the evergreen page carries the explicit guarantee too. */
+#freshwipes-offer-page .waw-assure{margin-top:12px;background:#F4FBFF;border:1px solid rgba(71,181,233,.28);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:11px}
+#freshwipes-offer-page .waw-assure-g{display:flex;align-items:flex-start;gap:11px}
+#freshwipes-offer-page .waw-assure-g svg{flex-shrink:0;margin-top:1px}
+#freshwipes-offer-page .waw-assure-t{font-size:15px;font-weight:800;color:var(--ink);line-height:1.3}
+#freshwipes-offer-page .waw-assure-p{margin:3px 0 0;font-size:13px;line-height:1.5;color:#3E4C57;text-wrap:pretty}
+#freshwipes-offer-page .waw-assure-s{display:flex;align-items:center;justify-content:center;gap:6px;padding-top:10px;border-top:1px solid rgba(71,181,233,.22);font-size:12px;font-weight:600;color:#54646F}
+
 /* ---------- PayFac subscription disclosure ----------
    Shown only while RoutineCare is selected (JS toggles [hidden]); price spans
    are filled from the same Kaching-rendered string the sticky bar already
