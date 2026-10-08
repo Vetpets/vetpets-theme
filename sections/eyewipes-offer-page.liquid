@@ -1215,7 +1215,19 @@
           <button type="button" class="cta btn-buy" data-ewof-submit>
             <span><span data-ewof-cta-label>Add To Cart — Buy 2, Get 2 Free</span> <span aria-hidden="true">→</span></span>
           </button>
-          <div class="trustline" style="text-align:left">100-Day Money-Back Guarantee · Free &amp; Fast Shipping</div>
+          <div class="assure" style="margin-top:14px;text-align:left">
+            <div class="assure-g">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#13B6B5"></circle><path d="m7.4 12.3 3 3 6.2-6.6" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <div>
+                <div class="assure-t">Healthy clear eyes OR your money back</div>
+                <p class="assure-c">Try EyeWipes for 100 days. If you don't see a cleaner-looking eye area with consistent use, we'll refund you.</p>
+              </div>
+            </div>
+            <div class="assure-s">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="2.2" fill="#4F5F6B"></rect><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="#4F5F6B" stroke-width="2.2" stroke-linecap="round"></path></svg>
+              <span>All transactions are secure and encrypted</span>
+            </div>
+          </div>
           {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url -%}
         </div>
       </div>
