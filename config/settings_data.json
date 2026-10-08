@@ -442,10 +442,10 @@
               "show_variant_picker": false,
               "update_prices": false,
               "skip_unavailable": false,
-              "container_title": "82% OF CUSTOMERS ADDED 2 OR MORE",
+              "container_title": "ADD FOR FASTER RESULTS!",
               "container_title_position": "outside",
-              "container_title_mobile_text_size": 15,
-              "container_title_desktop_text_size": 16,
+              "container_title_mobile_text_size": 17,
+              "container_title_desktop_text_size": 18,
               "container_title_color": "#000000",
               "corner_radius": 10,
               "show_box_shadow": true,
@@ -462,7 +462,8 @@
               "transparent_arrows": false,
               "display_dots": false,
               "margin_top": 0,
-              "margin_bottom": 24
+              "margin_bottom": 24,
+              "vp_subtitle": "97% of customers order 2 or more jars"
             }
           },
           "4f3e2a5f-006d-40ed-8370-49b15e0e427d": {
