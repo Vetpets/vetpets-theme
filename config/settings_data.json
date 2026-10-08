@@ -499,7 +499,10 @@
               "icon_scale": 120,
               "icon_spacing": 10,
               "margin_top": 9,
-              "margin_bottom": 0
+              "margin_bottom": 0,
+              "vp_lock_icon": true,
+              "vp_sublabel": "100-Day Money-Back Guarantee",
+              "vp_below_text": "Orders dispatched within 24 hours"
             }
           },
           "text_with_icon_rNWJDi": {
@@ -532,7 +535,8 @@
               "border_color": "#b7b7b7",
               "margin_top": 6,
               "margin_bottom": 12
-            }
+            },
+            "disabled": true
           },
           "68fdc0a0-cd7c-40b9-97b3-a76eb7917a47": {
             "type": "payment_badges",
@@ -542,11 +546,27 @@
               "margin_top": 6,
               "margin_bottom": 6
             }
+          },
+          "vp_milestones_main": {
+            "type": "vp_milestones",
+            "settings": {
+              "free_usd": 49,
+              "free_gbp": 37,
+              "free_dkk": 269,
+              "free_nok": 399,
+              "ship_label": "Free Shipping",
+              "gift_label": "Free Gifts",
+              "gift_hint": "Choose the 4-Month Supply to get free gifts",
+              "gift_handles": "freshwipes-kit-protects-against-dental-diseases,eyewipes-prevention-that-keeps-eyes-clear,earwipes-kit-protects-against-ear-problems,freshwipe-kit-cats-protects-against-dental-problems",
+              "margin_top": 0,
+              "margin_bottom": 12
+            }
           }
         },
         "block_order": [
           "text_with_icon_hFExPy",
           "countdown_timer_DMkpaM",
+          "vp_milestones_main",
           "checkpoints_bar_Adei9q",
           "097b7b4f-c0b8-4073-a06b-e6d49a5aad20",
           "product_upsells_DpJyXd",

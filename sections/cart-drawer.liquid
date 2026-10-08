@@ -826,10 +826,124 @@ p.cart-drawer__totals__row.cart-drawer__totals__row--spaced.text-color-accent-2 
       ]
     },
     {
+      "type": "vp_milestones",
+      "name": "VetPets milestones",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Free shipping follows the Shopify delivery profiles: only one-time items count toward the threshold, subscription items always ship free. Gifts come from the Kaching bundle tiers."
+        },
+        {
+          "type": "header",
+          "content": "Free-shipping thresholds"
+        },
+        {
+          "type": "number",
+          "id": "free_usd",
+          "label": "US + rest of world (USD)",
+          "info": "Other currencies are converted at Shopify's own rate.",
+          "default": 49
+        },
+        {
+          "type": "number",
+          "id": "free_gbp",
+          "label": "United Kingdom (GBP)",
+          "default": 37
+        },
+        {
+          "type": "number",
+          "id": "free_dkk",
+          "label": "Denmark (DKK)",
+          "default": 269
+        },
+        {
+          "type": "number",
+          "id": "free_nok",
+          "label": "Norway (NOK)",
+          "default": 399
+        },
+        {
+          "type": "header",
+          "content": "Labels"
+        },
+        {
+          "type": "text",
+          "id": "ship_label",
+          "label": "Shipping step label",
+          "default": "Free Shipping"
+        },
+        {
+          "type": "text",
+          "id": "gift_label",
+          "label": "Gift step label",
+          "default": "Free Gifts"
+        },
+        {
+          "type": "text",
+          "id": "gift_hint",
+          "label": "Hint when gifts are not unlocked yet",
+          "default": "Choose the 4-Month Supply to get free gifts"
+        },
+        {
+          "type": "text",
+          "id": "gift_handles",
+          "label": "Products with a gift bundle (handles, comma separated)",
+          "default": "freshwipes-kit-protects-against-dental-diseases,eyewipes-prevention-that-keeps-eyes-clear,earwipes-kit-protects-against-ear-problems,freshwipe-kit-cats-protects-against-dental-problems"
+        },
+        {
+          "type": "header",
+          "content": "Block margin"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 45,
+          "step": 3,
+          "unit": "px",
+          "label": "Top margin",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 45,
+          "step": 3,
+          "unit": "px",
+          "label": "Bottom margin",
+          "default": 12
+        }
+      ]
+    },
+    {
       "type": "checkout_btn",
       "name": "Checkout button",
       "limit": 1,
       "settings": [
+        {
+          "type": "header",
+          "content": "VetPets trust"
+        },
+        {
+          "type": "checkbox",
+          "id": "vp_lock_icon",
+          "label": "Show filled lock icon in the button",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "vp_sublabel",
+          "label": "Second line inside the button",
+          "info": "Small, lighter text under the button label, e.g. 100-Day Money-Back Guarantee."
+        },
+        {
+          "type": "text",
+          "id": "vp_below_text",
+          "label": "Line under the button (with delivery icon)",
+          "info": "Only use a promise that is true for every order, e.g. Orders dispatched within 24 hours."
+        },
         {
           "type": "checkbox",
           "id": "show_additional_checkout_buttons",
