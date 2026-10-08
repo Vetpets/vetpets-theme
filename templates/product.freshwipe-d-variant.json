@@ -143,37 +143,6 @@
             "margin_bottom": 15
           }
         },
-        "text_UtRpPJ": {
-          "type": "text",
-          "settings": {
-            "mobile_text_size": 12,
-            "desktop_text_size": 14,
-            "alignment": "left",
-            "text_color": "#121212",
-            "text_1": "<em>More than one pet? We suggest the Full Family Plan – to make sure they all get healthy, clean teeth.</em>",
-            "text_2": "",
-            "text_3": "",
-            "icon_scale": 120,
-            "icon_color": "#47b5e9",
-            "icon_1": "pets",
-            "filled_icon_1": false,
-            "icon_2": "check_circle",
-            "filled_icon_2": false,
-            "icon_3": "check_circle",
-            "filled_icon_3": false,
-            "width": "100%",
-            "direction": "horizontal",
-            "column_gap": 3,
-            "enable_bg": true,
-            "bg_color": "#ffffff",
-            "corner_radius": 40,
-            "padding": 3,
-            "border_size": 1,
-            "border_color": "#47b5e9",
-            "margin_top": 15,
-            "margin_bottom": 15
-          }
-        },
         "5fcc0428-e768-4cb7-bea3-eb0274198dd1": {
           "type": "variant_picker",
           "disabled": true,
@@ -655,7 +624,6 @@
         "divider_i9d8VK",
         "text_cn7XQg",
         "text_kEd4Nj",
-        "text_UtRpPJ",
         "5fcc0428-e768-4cb7-bea3-eb0274198dd1",
         "kaching_bundles_app_block_f8NfBp",
         "04ba004e-2f54-4936-8b1c-8bcadf6573f6",
