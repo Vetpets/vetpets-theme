@@ -677,9 +677,11 @@
                 <div class='tnc-checkbox-warning tnc-checkbox-warning--above-button hidden' style='margin-bottom: 0.6em;'></div>
                 {%- if block.settings.vp_lock_icon or block.settings.vp_sublabel != blank or block.settings.vp_below_text != blank -%}
                   <style>
-                    #CartDrawer-Checkout.vpco-stacked{flex-direction:column;gap:2px;min-height:5.8rem;padding-top:.9rem;padding-bottom:.9rem}
-                    #CartDrawer-Checkout .vpco-lock{width:1.05em;height:1.05em;margin-right:.45em;vertical-align:-.13em;flex-shrink:0}
-                    #CartDrawer-Checkout .vpco-sub{display:block;font-size:1.15rem;font-weight:500;line-height:1.2;letter-spacing:.03em;text-transform:none;opacity:.8}
+                    {%- comment -%} Scoped by class: the checkout app re-creates this button without its id. {%- endcomment -%}
+                    .cart__checkout-button.vpco-stacked{flex-direction:column;gap:2px;min-height:5.8rem;padding-top:.9rem;padding-bottom:.9rem}
+                    .cart__checkout-button .button__label{display:inline-flex;align-items:center;justify-content:center}
+                    .cart__checkout-button .vpco-lock{width:1.05em;height:1.05em;margin-right:.45em;flex-shrink:0}
+                    .cart__checkout-button .vpco-sub{display:block;font-size:1.15rem;font-weight:500;line-height:1.2;letter-spacing:.03em;text-transform:none;opacity:.8}
                     .vpco-dispatch{display:flex;align-items:center;justify-content:center;gap:7px;margin:1rem 0 0;font-size:1.25rem;font-weight:600;line-height:1.3;color:#3E4C57}
                     .vpco-dispatch svg{width:18px;height:18px;flex-shrink:0;color:#47B5E9}
                   </style>
@@ -696,7 +698,7 @@
                 >
                   <span class='button__label'>
                     {%- if block.settings.vp_lock_icon -%}
-                      <svg class="vpco-lock" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.75a5 5 0 0 0-5 5V9.5H6.25A2.25 2.25 0 0 0 4 11.75v8A2.25 2.25 0 0 0 6.25 22h11.5A2.25 2.25 0 0 0 20 19.75v-8a2.25 2.25 0 0 0-2.25-2.25H17V6.75a5 5 0 0 0-5-5Zm3 7.75H9V6.75a3 3 0 1 1 6 0V9.5Z"/></svg>
+                      <svg class="vpco-lock" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.75a5 5 0 0 0-5 5V9.5H6.25A2.25 2.25 0 0 0 4 11.75v8A2.25 2.25 0 0 0 6.25 22h11.5A2.25 2.25 0 0 0 20 19.75v-8a2.25 2.25 0 0 0-2.25-2.25H17V6.75a5 5 0 0 0-5-5Zm3 7.75H9V6.75a3 3 0 1 1 6 0V9.5Z"/></svg>
                     {%- endif -%}
                     {{ 'sections.cart.checkout' | t }}
                     {% if block.settings.display_price %}
@@ -709,7 +711,7 @@
                 </button>
                 {%- if block.settings.vp_below_text != blank -%}
                   <p class="vpco-dispatch">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
                     <span>{{ block.settings.vp_below_text }}</span>
                   </p>
                 {%- endif -%}
