@@ -1366,6 +1366,11 @@
         if (opts && typeof opts.idempotencyKey === 'string') {
           body.idempotencyKey = opts.idempotencyKey;
         }
+        // This visit's cancellation journey — the only one the server will
+        // attribute the save to. The server re-checks ownership.
+        if (opts && typeof opts.journeyId === 'string' && opts.journeyId) {
+          body.journeyId = opts.journeyId;
+        }
         return post('/portal/retention-offer', body).then(function (r) {
           if (r.status === 401) {
             store.clear();

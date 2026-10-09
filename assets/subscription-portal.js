@@ -3134,13 +3134,13 @@
       case 'acceptOffer': {
         var offerJourneyId = null;
         this.run('acceptOffer', function (attemptKey) {
-          // The offer route settles saved_offer on the customer's NEWEST open
-          // journey. Making sure this visit's journey exists (and is open)
-          // first is what makes that newest one this visit's, never a stale
-          // one from an earlier visit. Never blocks the offer itself.
+          // The offer route attributes saved_offer ONLY to the journey sent
+          // here — this visit's, opened first if none is held yet. Never one
+          // from an earlier visit. Never blocks the offer itself: with no
+          // journey the offer still applies, just unattributed.
           return self.ensureRetentionJourney().then(function (journeyId) {
             offerJourneyId = journeyId;
-            return self.adapter.acceptRetentionOffer({ idempotencyKey: attemptKey });
+            return self.adapter.acceptRetentionOffer({ idempotencyKey: attemptKey, journeyId: journeyId });
           });
         }, {
           attempt: 'acceptOffer',

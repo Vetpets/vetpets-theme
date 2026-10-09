@@ -1360,10 +1360,10 @@ describe('accepting the offer only ever settles this visit\'s journey', () => {
       return Promise.resolve({ journeyId: 'j-visit' });
     };
     const accept = p.adapter.acceptRetentionOffer;
-    p.adapter.acceptRetentionOffer = (o) => { order.push(['accept']); return accept(o); };
+    p.adapter.acceptRetentionOffer = (o) => { order.push(['accept', o.journeyId]); return accept(o); };
     p.act('acceptOffer');
     for (let i = 0; i < 6; i++) await tick();
-    assert.deepEqual(order, [['cancellation_started', null], ['accept']]);
+    assert.deepEqual(order, [['cancellation_started', null], ['accept', 'j-visit']]);
     assert.equal(p.state.retentionJourneyId, null, 'the resolved journey is released after the save');
   });
 
@@ -1372,10 +1372,14 @@ describe('accepting the offer only ever settles this visit\'s journey', () => {
     p.state.retentionJourneyId = 'j-held';
     let minted = 0;
     p.adapter.recordRetentionEvent = () => { minted++; return Promise.resolve({ journeyId: 'x' }); };
+    let sent = null;
+    const accept = p.adapter.acceptRetentionOffer;
+    p.adapter.acceptRetentionOffer = (o) => { sent = o.journeyId; return accept(o); };
     p.act('acceptOffer');
     for (let i = 0; i < 6; i++) await tick();
     assert.equal(minted, 0);
     assert.equal(p.calls.accept, 1);
+    assert.equal(sent, 'j-held');
     assert.equal(p.state.retentionJourneyId, null);
   });
 
