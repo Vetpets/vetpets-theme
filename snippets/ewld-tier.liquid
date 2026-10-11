@@ -1,0 +1,62 @@
+{%- comment -%}
+  EyeWipes lander — one bundle card of the approved picker (sections/eyewipes-lander.liquid).
+  Prices are NOT authored here: [data-ewld-price] / [data-ewld-compare] are filled by
+  assets/eyewipes-lander.js from the matching Kaching deal bar.
+  The authored title / sub / badge / tagline / image / gifts are the approved offer
+  (Kaching A/B variant B). When Kaching serves a different variant, the JS fills the
+  same [data-ewld-*] slots from Kaching's own bar instead, so each A/B arm shows its
+  own offer.
+  gifts: comma list of ship | comb | guide | tracker — the approved gift rows, in order.
+{%- endcomment -%}
+{%- assign gift_keys = gifts | split: ',' -%}
+<button
+  type="button"
+  role="radio"
+  class="ewld-tier"
+  data-ewld-tier="{{ index }}"
+  data-cta="{{ cta | escape }}"
+  data-img="{{ img }}"
+  data-alt="{{ alt | escape }}"
+  data-gift-count="{{ gift_count }}"
+  data-gift-keys="{{ gifts }}"
+  {% if preview_on_hover %}data-preview-on-hover{% endif %}
+  aria-checked="{{ checked }}"
+  aria-expanded="{{ checked }}"
+  style="position:relative;display:flex;flex-direction:column;gap:10px;width:100%;box-sizing:border-box;padding:14px 14px 12px;border-width:2px;border-style:solid;border-radius:16px;font-family:inherit;text-align:left;cursor:pointer;color:#121212;transition:border-color 150ms ease-out,background 150ms ease-out"
+>
+  <span style="display:flex;align-items:center;gap:11px;width:100%">
+    <span style="width:22px;height:22px;box-sizing:border-box;border-radius:50%;border:2px solid #47B5E9;background:#FFFFFF;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span class="ewld-dot" style="width:11px;height:11px;border-radius:50%"></span></span>
+    <span style="width:58px;height:58px;border-radius:12px;overflow:hidden;background:#F4FBFF;flex-shrink:0"><img data-ewld-tier-img src="{{ img }}" alt="" width="1254" height="1254" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"></span>
+    <span style="flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:3px">
+      <span data-ewld-title style="font-size:15px;font-weight:800;line-height:1.25">The Clear Eyes Transformation Kit</span>
+      <span data-ewld-sub style="font-size:13px;font-weight:600;line-height:1.3;color:rgba(18,18,18,.66)">{{ sub }}</span>
+      <span data-ewld-badge style="margin-top:2px;background:#13B6B5;color:#FFFFFF;font-size:10.5px;font-weight:800;letter-spacing:.06em;padding:3px 8px;border-radius:999px;white-space:nowrap">{{ badge }}</span>
+    </span>
+    <span style="display:flex;flex-direction:column;align-items:flex-end;gap:1px;flex-shrink:0">
+      <span data-ewld-price style="font-size:18px;font-weight:800;line-height:1.2;min-width:3.2em;min-height:1.2em;text-align:right"></span>
+      <s data-ewld-compare style="font-size:13px;font-weight:600;color:rgba(18,18,18,.5)"></s>
+    </span>
+  </span>
+  <span data-ewld-gift-badge style="align-self:flex-start;display:flex;align-items:center;gap:6px;background:#FFF4D6;color:#8A5A00;font-size:12.5px;font-weight:800;padding:5px 10px;border-radius:999px">{{ gift_label }}</span>
+  <span data-ewld-tagline style="font-size:13.5px;font-weight:700;color:#2E9FD8">{{ tagline }}</span>
+  <span class="ewld-gifts" data-ewld-gift-list style="flex-direction:column;gap:8px;width:100%;padding-top:10px;border-top:1px dashed rgba(71,181,233,.4)">
+    {%- for k in gift_keys -%}
+      {%- case k -%}
+        {%- when 'ship' -%}{%- assign g_label = 'FREE Shipping' -%}{%- assign g_img = '' -%}{%- assign g_desc = '' -%}
+        {%- when 'comb' -%}{%- assign g_label = '🎁 FREE Tear Stain Comb' -%}{%- assign g_img = 'ewof-gift-comb.webp' -%}{%- assign g_desc = "Fine teeth lift debris that wipes can't reach deep in the fur." -%}
+        {%- when 'guide' -%}{%- assign g_label = '🎁 FREE Bright Eyes Guide E-book' -%}{%- assign g_img = 'ewof-gift-ebook.webp' -%}{%- assign g_desc = "Your dog's complete guide to clear eyes and tear stain prevention." -%}
+        {%- when 'tracker' -%}{%- assign g_label = '🎁 FREE Digital Routine Tracker' -%}{%- assign g_img = 'ewof-gift-tracker.webp' -%}{%- assign g_desc = '21-day habit tracker to keep your routine consistent.' -%}
+      {%- endcase -%}
+      <span style="display:flex;align-items:center;gap:10px">
+        <span style="width:38px;height:38px;border-radius:9px;overflow:hidden;background:#FFFFFF;border:1px solid rgba(71,181,233,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          {%- if g_img != blank -%}
+            <img src="{{ g_img | asset_url }}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+          {%- else -%}
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 6h11v9H2zM13 9h4.5l3.5 3.5V15h-8z" stroke="#2E9FD8" stroke-width="2" stroke-linejoin="round"></path><circle cx="6" cy="17.5" r="1.8" fill="#2E9FD8"></circle><circle cx="17" cy="17.5" r="1.8" fill="#2E9FD8"></circle></svg>
+          {%- endif -%}
+        </span>
+        <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px"><span style="font-size:13.5px;font-weight:700;line-height:1.3">{{ g_label }}</span>{%- if g_desc != blank -%}<span style="font-size:12px;font-weight:500;line-height:1.35;color:rgba(18,18,18,.62)">{{ g_desc }}</span>{%- endif -%}</span>
+      </span>
+    {%- endfor -%}
+  </span>
+</button>

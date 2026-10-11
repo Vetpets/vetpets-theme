@@ -1,0 +1,176 @@
+/* =====================================================================
+   EyeWipes lander — styles
+   Loaded only by sections/eyewipes-lander.liquid, which is used only by
+   templates/product.eyewipes-lander.json. Every rule is scoped under
+   #eyewipes-lander so nothing here reaches another storefront page.
+
+   Source: Claude Design "EyeWipes reference page and assets" →
+   "EyeWipes Listicle - 3 remedies v2.dc.html". The design's <helmet> CSS is
+   ported 1:1 below (same class names, same breakpoints); per-element styles
+   stay inline in the section exactly as the design has them.
+   ===================================================================== */
+
+/* ---------- self-hosted Geist (shared with the pre-lander / offer page) ---------- */
+@font-face{font-family:"GeistEwld";src:url("ewpl-geist-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"GeistEwld";src:url("ewpl-geist-medium.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"GeistEwld";src:url("ewpl-geist-semibold.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"GeistEwld";src:url("ewpl-geist-bold.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"GeistEwld";src:url("ewpl-geist-extrabold.woff2") format("woff2");font-weight:800;font-style:normal;font-display:swap}
+
+/* ---------- the approved design has no theme header, announcement bar or footer ---------- */
+body:has(#eyewipes-lander) .shopify-section-group-header-group,
+body:has(#eyewipes-lander) .shopify-section-group-footer-group,
+body:has(#eyewipes-lander) #shopify-section-header,
+body:has(#eyewipes-lander) #shopify-section-footer,
+body:has(#eyewipes-lander) .announcement-bar,
+body:has(#eyewipes-lander) #shopify-section-scroll-to-top-btn,
+body:has(#eyewipes-lander) #shopify-section-promo-popup,
+body:has(#eyewipes-lander) #shopify-section-global-music-player{display:none!important}
+body:has(#eyewipes-lander) main#MainContent{padding:0!important;margin:0!important}
+body:has(#eyewipes-lander){overflow-x:hidden;background:#FFFFFF}
+html:has(#eyewipes-lander){scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html:has(#eyewipes-lander){scroll-behavior:auto}}
+
+#eyewipes-lander{margin:0;background:#FFFFFF;font-family:"GeistEwld",'Helvetica Neue',Helvetica,Arial,sans-serif;color:#121212;-webkit-font-smoothing:antialiased;font-size:16px;line-height:normal;letter-spacing:normal;text-align:left}
+#eyewipes-lander *,#eyewipes-lander *::before,#eyewipes-lander *::after{box-sizing:border-box}
+#eyewipes-lander h1,#eyewipes-lander h2,#eyewipes-lander h3{font-family:inherit;text-transform:none}
+#eyewipes-lander a{color:#47B5E9;text-decoration:none}
+#eyewipes-lander a:hover{color:#2E9FD8}
+#eyewipes-lander button{font-family:inherit}
+#eyewipes-lander *:focus-visible{outline:3px solid #47B5E9;outline-offset:2px}
+#eyewipes-lander img{max-width:100%}
+#eyewipes-lander [id]{scroll-margin-top:0}
+
+/* style-hover from the design */
+#eyewipes-lander .cta{transition:background 150ms ease-out,transform 150ms ease-out}
+#eyewipes-lander .cta:active{transform:scale(.985)}
+#eyewipes-lander a.cta,#eyewipes-lander button.cta{color:#FFFFFF}
+#eyewipes-lander a.cta:hover,#eyewipes-lander button.cta:hover{background:#2E9FD8!important;color:#FFFFFF}
+#eyewipes-lander .ewld-skip:hover{color:#0F76C9}
+
+/* ---------- design helmet CSS, scoped ---------- */
+#eyewipes-lander .swipe{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:4px 20px 16px;margin:0 -20px}
+#eyewipes-lander .swipe::-webkit-scrollbar,#eyewipes-lander .cmp-scroll::-webkit-scrollbar{display:none}
+#eyewipes-lander .swipe > *{scroll-snap-align:center;flex-shrink:0}
+#eyewipes-lander .cmp-scroll{overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+#eyewipes-lander .hero-grid{display:flex;flex-direction:column;gap:12px}
+#eyewipes-lander .hero-media{order:3}
+#eyewipes-lander .hero-copy{display:contents}
+#eyewipes-lander .tp-track{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:4px 20px 14px;margin:0 -20px;scroll-padding:0 20px;overscroll-behavior-x:contain}
+#eyewipes-lander .tp-track::-webkit-scrollbar,#eyewipes-lander .ugc-track::-webkit-scrollbar{display:none}
+#eyewipes-lander .tp-track > *{flex:0 0 84%;max-width:340px;scroll-snap-align:start}
+#eyewipes-lander .ugc-track{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:2px 0 4px;overscroll-behavior-x:contain}
+#eyewipes-lander .ugc-track > *{flex:0 0 58%;scroll-snap-align:start}
+#eyewipes-lander .car-btn{transition:background 150ms ease-out,color 150ms ease-out}
+#eyewipes-lander .car-btn:hover{background:#47B5E9!important;color:#FFFFFF!important}
+#eyewipes-lander .gw-media{aspect-ratio:1 / 1}
+#eyewipes-lander .tp-wrap{position:relative}
+#eyewipes-lander .tp-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:4}
+#eyewipes-lander .tp-arrow-p{left:-10px}
+#eyewipes-lander .tp-arrow-n{right:-10px}
+#eyewipes-lander .of-top{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+#eyewipes-lander .of-gal{position:relative}
+#eyewipes-lander .of-main{aspect-ratio:1 / 1;max-height:360px}
+#eyewipes-lander .ba-tile{width:150px}
+#eyewipes-lander .offer-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+#eyewipes-lander .gr-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+#eyewipes-lander .paws{background-color:#47B5E9;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='132' height='132' viewBox='0 0 132 132'%3E%3Cg transform='translate(14 18) rotate(-18 13 12)'%3E%3Cg fill='white' fill-opacity='0.12'%3E%3Cellipse cx='7' cy='8' rx='2.6' ry='3.3'/%3E%3Cellipse cx='13' cy='5.5' rx='2.6' ry='3.3'/%3E%3Cellipse cx='19' cy='8' rx='2.6' ry='3.3'/%3E%3Cpath d='M13 11c3.6 0 6.2 2.8 6.2 5.6 0 2.3-1.9 3.4-3.9 3.1-.8-.1-1.5-.4-2.3-.4s-1.5.3-2.3.4c-2 .3-3.9-.8-3.9-3.1C6.8 13.8 9.4 11 13 11Z'/%3E%3C/g%3E%3C/g%3E%3Cg transform='translate(80 78) rotate(24 13 12)'%3E%3Cg fill='white' fill-opacity='0.12'%3E%3Cellipse cx='7' cy='8' rx='2.6' ry='3.3'/%3E%3Cellipse cx='13' cy='5.5' rx='2.6' ry='3.3'/%3E%3Cellipse cx='19' cy='8' rx='2.6' ry='3.3'/%3E%3Cpath d='M13 11c3.6 0 6.2 2.8 6.2 5.6 0 2.3-1.9 3.4-3.9 3.1-.8-.1-1.5-.4-2.3-.4s-1.5.3-2.3.4c-2 .3-3.9-.8-3.9-3.1C6.8 13.8 9.4 11 13 11Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");background-size:132px 132px}
+#eyewipes-lander .vt-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+#eyewipes-lander .vt-photo{display:none}
+#eyewipes-lander .vt-thumb{display:block}
+#eyewipes-lander .pf-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:center}
+#eyewipes-lander .pf-media{aspect-ratio:4 / 3}
+#eyewipes-lander .hw-steps{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+#eyewipes-lander .gr-collage{aspect-ratio:16 / 9}
+#eyewipes-lander .sb-inner{display:flex;flex-direction:column;align-items:stretch;gap:6px}
+#eyewipes-lander .sb-copy{display:none}
+#eyewipes-lander .swipe-hint{display:flex}
+@media (min-width: 900px){
+  #eyewipes-lander .hero-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.2fr);gap:36px;align-items:center}
+  #eyewipes-lander .hero-copy{display:flex;flex-direction:column;gap:16px}
+  #eyewipes-lander .hero-media{order:0;grid-column:2;grid-row:1}
+  #eyewipes-lander .swipe{overflow:visible;margin:0;padding:4px 0 0;display:grid}
+  #eyewipes-lander .ba-row{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+  #eyewipes-lander .ba-tile{width:auto;max-width:none}
+  #eyewipes-lander .tp-track{margin:0;padding:4px 0 12px;scroll-padding:0}
+  #eyewipes-lander .tp-track > *{flex:0 0 calc((100% - 28px) / 3);max-width:none}
+  #eyewipes-lander .ugc-track > *{flex:0 0 calc((100% - 20px) / 3);max-width:300px}
+  #eyewipes-lander .gw-media{aspect-ratio:16 / 9}
+  #eyewipes-lander .tp-wrap{padding:0 58px}
+  #eyewipes-lander .tp-arrow-p{left:0}
+  #eyewipes-lander .tp-arrow-n{right:0}
+  #eyewipes-lander .of-top{grid-template-columns:minmax(0,46fr) minmax(0,54fr);gap:34px;align-items:start}
+  #eyewipes-lander .of-main{max-height:none}
+  #eyewipes-lander .gr-grid{grid-template-columns:minmax(0,44fr) minmax(0,56fr);gap:28px;align-items:stretch}
+  #eyewipes-lander .gr-collage{aspect-ratio:auto;flex:1;min-height:0}
+  #eyewipes-lander .sb-inner{flex-direction:row;align-items:center;justify-content:space-between;gap:16px}
+  #eyewipes-lander .vt-grid{grid-template-columns:minmax(0,1.5fr) minmax(0,.62fr);gap:40px;align-items:center}
+  #eyewipes-lander .vt-photo{display:block}
+  #eyewipes-lander .vt-thumb{display:none}
+  #eyewipes-lander .pf-grid{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:36px}
+  #eyewipes-lander .pf-media{aspect-ratio:1 / 1}
+  #eyewipes-lander .hw-steps{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+  #eyewipes-lander .sb-copy{display:flex}
+  #eyewipes-lander .sb-btn{width:auto!important;flex-shrink:0;padding:0 34px!important}
+  #eyewipes-lander .swipe-hint{display:none}
+}
+
+/* ---------- interactive state (what the design's renderVals() computed) ---------- */
+
+/* tier cards: selected vs idle */
+#eyewipes-lander .ewld-tier{background:#FFFFFF;border-color:rgba(71,181,233,.28);box-shadow:none}
+#eyewipes-lander .ewld-tier[aria-checked="true"]{background:#EAF7FD;border-color:#47B5E9;box-shadow:0 8px 22px rgba(71,181,233,.22)}
+#eyewipes-lander .ewld-tier .ewld-dot{background:transparent}
+#eyewipes-lander .ewld-tier[aria-checked="true"] .ewld-dot{background:#47B5E9}
+/* gift expansion: the selected tier, plus hover/focus preview on bundle 1 */
+#eyewipes-lander .ewld-tier .ewld-gifts{display:none}
+#eyewipes-lander .ewld-tier[aria-expanded="true"] .ewld-gifts{display:flex}
+#eyewipes-lander .ewld-tier [data-ewld-compare]:empty,
+#eyewipes-lander .ewld-tier [data-ewld-tagline]:empty,
+#eyewipes-lander .ewld-tier [data-ewld-badge]:empty{display:none}
+/* The picker shows variant-specific offer content (Kaching A/B test), so it stays invisible
+   until Kaching has rendered and the JS knows which offer is being served. */
+#eyewipes-lander[data-offer="pending"] .ewld-tier,
+#eyewipes-lander[data-offer="pending"] [data-ewld-gal-main],
+#eyewipes-lander[data-offer="pending"] [data-ewld-thumb="0"] img{visibility:hidden}
+#eyewipes-lander .ewld-tier,#eyewipes-lander [data-ewld-gal-main]{transition:opacity 150ms ease-out}
+
+/* Routine Care checkbox */
+#eyewipes-lander .ewld-routine{border-color:rgba(71,181,233,.4)}
+#eyewipes-lander .ewld-routine .ewld-box{background:#FFFFFF}
+#eyewipes-lander .ewld-routine[aria-checked="true"]{border-color:#47B5E9}
+#eyewipes-lander .ewld-routine[aria-checked="true"] .ewld-box{background:#47B5E9}
+
+/* gallery thumbs */
+#eyewipes-lander .ewld-thumb{border-color:transparent}
+#eyewipes-lander .ewld-thumb[aria-selected="true"]{border-color:#47B5E9}
+
+/* buy button while Kaching initialises / while the cart request is in flight */
+#eyewipes-lander .ewld-atc[disabled]{opacity:.65;cursor:progress}
+#eyewipes-lander .ewld-atc[aria-busy="true"]{cursor:progress}
+#eyewipes-lander .ewld-form-host .product-form__error-message-wrapper{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;color:#8E1B1B;margin-top:8px}
+#eyewipes-lander .ewld-form-host .product-form__error-message-wrapper[hidden]{display:none}
+#eyewipes-lander .ewld-form-host form{margin:0}
+
+/* PayFac RoutineCare disclosure (shared snippet) — shown only while Routine Care is on */
+#eyewipes-lander .pfd-disclosure{margin:0;font-size:11.5px;line-height:1.45;font-weight:500;color:rgba(18,18,18,.62);text-align:center}
+#eyewipes-lander .pfd-disclosure[hidden]{display:none}
+#eyewipes-lander .pfd-link{color:#2E9FD8;text-decoration:underline;text-underline-offset:2px}
+
+/* video sound / demo / UGC toggles: one icon visible per state */
+#eyewipes-lander [data-ewld-when="on"],#eyewipes-lander [data-ewld-when="off"]{display:none}
+#eyewipes-lander [data-ewld-state="on"] > [data-ewld-when="on"],
+#eyewipes-lander [data-ewld-state="off"] > [data-ewld-when="off"]{display:inline-flex}
+
+/* sticky CTA bar */
+#eyewipes-lander .ewld-sticky{display:none}
+#eyewipes-lander .ewld-sticky.is-on{display:block}
+
+/* Kaching Bundles' own block: kept in the DOM and fully functional (it owns the deal,
+   quantity, selling plan, free gifts and cart rewrite), driven by the approved picker
+   above it, but not painted — the approved design draws the picker itself. */
+#eyewipes-lander .ewld-kaching{position:absolute!important;width:1px!important;height:1px!important;margin:-1px!important;padding:0!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;clip-path:inset(50%)!important;white-space:nowrap!important;border:0!important}
+
+@media (prefers-reduced-motion: reduce){
+  #eyewipes-lander .cta,#eyewipes-lander .car-btn,#eyewipes-lander .ewld-tier{transition:none}
+}

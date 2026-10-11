@@ -1,0 +1,19 @@
+{%- comment -%} EyeWipes lander — one "Reason #n" remedy section (sections/eyewipes-lander.liquid). {%- endcomment -%}
+<section data-screen-label="{{ label }}" style="padding:{{ pad }}">
+  <div style="max-width:680px;margin:0 auto;padding:0 20px;box-sizing:border-box">
+    <article style="display:flex;flex-direction:column;gap:14px">
+      <h2 style="margin:4px 0 0;font-size:clamp(26px,3.6vw,36px);line-height:1.12;letter-spacing:-0.025em;font-weight:800;color:#121212;text-wrap:pretty"><span style="color:#47B5E9">{{ kicker }}</span> {{ title }}</h2>
+      <p style="margin:0;font-size:17px;line-height:1.5;color:#121212;text-wrap:pretty">{{ intro }}</p>
+      <figure style="margin:0;display:flex;flex-direction:column;gap:6px">
+        <div style="position:relative;width:100%;aspect-ratio:3 / 2;border-radius:20px;overflow:hidden;background:#F4FBFF;box-shadow:0 14px 34px rgba(13,35,64,.12)">
+          <img src="{{ img | asset_url }}" alt="{{ alt | escape }}" width="1200" height="800" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block">
+        </div>
+      </figure>
+      <p style="margin:0;font-size:17px;line-height:1.5;color:#121212;text-wrap:pretty">{{ rest }}</p>
+      <div style="display:flex;align-items:flex-start;gap:10px;background:#EAF7FD;border:1px solid rgba(71,181,233,.3);border-radius:12px;padding:12px 14px;margin-top:2px;font-size:15.5px;font-weight:700;line-height:1.45;color:#121212">
+        {{ check }}
+        <span>{{ contrast }}</span>
+      </div>
+    </article>
+  </div>
+</section>
