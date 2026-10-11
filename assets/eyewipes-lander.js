@@ -70,55 +70,95 @@
   }
 
   /* ---------------------------------------------------------------
-     2. Gift-claim guard: the approved rows must match what Kaching adds
+     2. Which offer is Kaching serving? (Kaching runs its own A/B test on this
+        deal block.) The authored picker content is the approved offer; it is
+        shown only when Kaching's bars match it — same bundle title and the same
+        free gifts. Otherwise every variant-specific slot is filled from
+        Kaching's own bar, so each A/B arm shows exactly its own offer.
      --------------------------------------------------------------- */
+  var APPROVED_TITLE = 'the clear eyes transformation kit';
   var GIFT_RX = { comb: /comb/i, guide: /guide|e-?book/i, tracker: /tracker/i, ship: /shipping/i };
-  function giftsMatch(tierEl, i) {
-    var keys = (tierEl.getAttribute('data-gift-keys') || '').split(',').filter(Boolean);
-    var rows = kGiftRows(i).map(txt);
-    var productRows = rows.filter(function (r) { return !GIFT_RX.ship.test(r); });
-    var productKeys = keys.filter(function (k) { return k !== 'ship'; });
-    if (productRows.length !== productKeys.length) return { ok: false, rows: rows, productRows: productRows };
+  function kField(i, sel) { var b = kBar(i); return txt(b && b.querySelector(sel)); }
+  function giftText(row) {
+    var t = row.querySelector('.kaching-bundles__free-gift__text');
+    return txt(t || row).replace(/\s*[$€£]\s?[\d.,]+\s*$|\s*[\d.,]+\s?(kr|SEK|DKK|NOK)\s*$/i, '');
+  }
+  function matchesApproved(tierEl, i) {
+    if (kField(i, '.kaching-bundles__bar-title').toLowerCase() !== APPROVED_TITLE) return false;
+    var keys = (tierEl.getAttribute('data-gift-keys') || '').split(',').filter(function (k) { return k && k !== 'ship'; });
+    var rows = kGiftRows(i).map(giftText).filter(function (r) { return !GIFT_RX.ship.test(r); });
+    if (rows.length !== keys.length) return false;
     var used = [];
-    var ok = productKeys.every(function (k) {
-      for (var n = 0; n < productRows.length; n++) {
-        if (used.indexOf(n) === -1 && GIFT_RX[k].test(productRows[n])) { used.push(n); return true; }
+    return keys.every(function (k) {
+      for (var n = 0; n < rows.length; n++) {
+        if (used.indexOf(n) === -1 && GIFT_RX[k].test(rows[n])) { used.push(n); return true; }
       }
       return false;
     });
-    return { ok: ok, rows: rows, productRows: productRows };
   }
-  var fallbackApplied = {};
-  function applyGiftGuard() {
-    var allOk = true;
-    $$('[data-ewld-tier]').forEach(function (el) {
+  var lastSig = '';
+  function fillFromKaching(el, i) {
+    var bar = kBar(i);
+    var set = function (sel, v) { var n = el.querySelector(sel); if (n) n.textContent = v; };
+    set('[data-ewld-title]', kField(i, '.kaching-bundles__bar-title'));
+    set('[data-ewld-sub]', kField(i, '.kaching-bundles__bar-label'));
+    set('[data-ewld-badge]', kField(i, '.kaching-bundles__bar-most-popular__content'));
+    set('[data-ewld-tagline]', kField(i, '.kaching-bundles__bar-subtitle'));
+    var kImg = bar && bar.querySelector('.kaching-bundles__bar-image');
+    if (kImg && kImg.src) {
+      el.setAttribute('data-img', kImg.src);
+      el.setAttribute('data-alt', kField(i, '.kaching-bundles__bar-title') + ' — ' + kField(i, '.kaching-bundles__bar-label'));
+      var ti = el.querySelector('[data-ewld-tier-img]');
+      if (ti) ti.src = kImg.src;
+    }
+    var rows = kGiftRows(i);
+    var products = rows.filter(function (r) { return !GIFT_RX.ship.test(giftText(r)); }).length;
+    set('[data-ewld-gift-badge]', products ? '🎁 +' + products + ' FREE gift' + (products === 1 ? '' : 's') : '');
+    var gb = el.querySelector('[data-ewld-gift-badge]');
+    if (gb) gb.style.display = products ? '' : 'none';
+    var list = el.querySelector('[data-ewld-gift-list]');
+    if (list) {
+      list.innerHTML = '';
+      rows.forEach(function (r) {
+        var row = document.createElement('span');
+        row.style.cssText = 'display:flex;align-items:center;gap:10px';
+        var box = document.createElement('span');
+        box.style.cssText = 'width:38px;height:38px;border-radius:9px;overflow:hidden;background:#FFFFFF;border:1px solid rgba(71,181,233,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0';
+        var gi = r.querySelector('.kaching-bundles__free-gift__image');
+        if (gi && gi.src) {
+          var img = document.createElement('img');
+          img.src = gi.src; img.alt = ''; img.loading = 'lazy';
+          img.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block';
+          box.appendChild(img);
+        }
+        var col = document.createElement('span');
+        col.style.cssText = 'flex:1;min-width:0;display:flex;flex-direction:column;gap:1px';
+        var lab = document.createElement('span');
+        lab.style.cssText = 'font-size:13.5px;font-weight:700;line-height:1.3';
+        lab.textContent = giftText(r).replace(/^\+\s*/, '');
+        col.appendChild(lab);
+        row.appendChild(box); row.appendChild(col);
+        list.appendChild(row);
+      });
+      list.style.display = rows.length ? '' : 'none';
+    }
+    el.setAttribute('data-cta', 'Add to cart →');
+  }
+  function applyOfferMode() {
+    var approved = tiers.every(function (el) { return matchesApproved(el, +el.getAttribute('data-ewld-tier')); });
+    if (approved) {
+      if (root.getAttribute('data-offer') !== 'approved') root.setAttribute('data-offer', 'approved');
+      return;
+    }
+    var sig = tiers.map(function (el) {
       var i = +el.getAttribute('data-ewld-tier');
-      var res = giftsMatch(el, i);
-      if (res.ok) return;
-      allOk = false;
-      var sig = res.rows.join('|');
-      if (fallbackApplied[i] === sig) return;
-      fallbackApplied[i] = sig;
-      // Never claim a gift the cart will not contain: show Kaching's own gift rows instead.
-      var n = res.productRows.length;
-      var badge = el.querySelector('[data-ewld-gift-badge]');
-      if (badge) {
-        badge.textContent = '🎁 +' + n + ' FREE gift' + (n === 1 ? '' : 's');
-        badge.style.display = n ? '' : 'none';
-      }
-      var list = el.querySelector('[data-ewld-gift-list]');
-      if (list) {
-        list.innerHTML = '';
-        res.rows.forEach(function (r) {
-          var row = document.createElement('span');
-          row.style.cssText = 'font-size:13.5px;font-weight:700;line-height:1.3';
-          row.textContent = r.replace(/\s*[$€£]\s?[\d.,]+\s*$|\s*[\d.,]+\s?(kr|SEK|DKK|NOK)\s*$/i, '');
-          list.appendChild(row);
-        });
-      }
-      if (window.console) console.warn('[EyeWipes lander] Kaching gift rows for bundle ' + (i + 1) + ' differ from the approved offer; showing Kaching\'s rows.', res.rows);
-    });
-    root.setAttribute('data-offer', allOk ? 'approved' : 'mismatch');
+      return kField(i, '.kaching-bundles__bar-title') + kField(i, '.kaching-bundles__bar-label') + kField(i, '.kaching-bundles__bar-most-popular__content') + kGiftRows(i).map(giftText).join(',');
+    }).join('|');
+    if (sig !== lastSig) {
+      lastSig = sig;
+      tiers.forEach(function (el) { fillFromKaching(el, +el.getAttribute('data-ewld-tier')); });
+    }
+    root.setAttribute('data-offer', 'kaching');
   }
 
   /* ---------------------------------------------------------------
@@ -226,7 +266,7 @@
       $$('input, button, a, [tabindex]', kHost).forEach(function (el) {
         if (el.getAttribute('tabindex') !== '-1') el.setAttribute('tabindex', '-1');
       });
-      applyGiftGuard();
+      applyOfferMode();
       paint();
     }, 60);
   }
@@ -279,15 +319,15 @@
     return {
       bundle: 'bundle-' + (state.tier + 1),
       dealId: DEAL_IDS[state.tier],
-      title: 'The Clear Eyes Transformation Kit',
-      offer: state.tier === 1 ? 'BUY 2 GET 2 FREE' : 'BUY 1 GET 1 FREE',
+      title: t ? txt(t.querySelector('[data-ewld-title]')) : '',
+      offer: t ? txt(t.querySelector('[data-ewld-badge]')) : '',
       price: kPrice(state.tier),
       currency: (atc && atc.getAttribute('data-currency')) || 'USD',
       compareAt: kCompare(state.tier),
       purchaseType: state.routine ? 'subscription' : 'one-time',
       sellingPlanId: state.routine ? (sellingPlanField() || null) : null,
       gifts: gifts,
-      offerCheck: root.getAttribute('data-offer'),
+      offerVariant: root.getAttribute('data-offer'),
       page: 'eyewipes-lander'
     };
   }

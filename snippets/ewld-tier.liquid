@@ -2,6 +2,10 @@
   EyeWipes lander — one bundle card of the approved picker (sections/eyewipes-lander.liquid).
   Prices are NOT authored here: [data-ewld-price] / [data-ewld-compare] are filled by
   assets/eyewipes-lander.js from the matching Kaching deal bar.
+  The authored title / sub / badge / tagline / image / gifts are the approved offer
+  (Kaching A/B variant B). When Kaching serves a different variant, the JS fills the
+  same [data-ewld-*] slots from Kaching's own bar instead, so each A/B arm shows its
+  own offer.
   gifts: comma list of ship | comb | guide | tracker — the approved gift rows, in order.
 {%- endcomment -%}
 {%- assign gift_keys = gifts | split: ',' -%}
@@ -22,11 +26,11 @@
 >
   <span style="display:flex;align-items:center;gap:11px;width:100%">
     <span style="width:22px;height:22px;box-sizing:border-box;border-radius:50%;border:2px solid #47B5E9;background:#FFFFFF;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span class="ewld-dot" style="width:11px;height:11px;border-radius:50%"></span></span>
-    <span style="width:58px;height:58px;border-radius:12px;overflow:hidden;background:#F4FBFF;flex-shrink:0"><img src="{{ img }}" alt="" width="1254" height="1254" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"></span>
+    <span style="width:58px;height:58px;border-radius:12px;overflow:hidden;background:#F4FBFF;flex-shrink:0"><img data-ewld-tier-img src="{{ img }}" alt="" width="1254" height="1254" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"></span>
     <span style="flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:3px">
-      <span style="font-size:15px;font-weight:800;line-height:1.25">The Clear Eyes Transformation Kit</span>
-      <span style="font-size:13px;font-weight:600;line-height:1.3;color:rgba(18,18,18,.66)">{{ sub }}</span>
-      <span style="margin-top:2px;background:#13B6B5;color:#FFFFFF;font-size:10.5px;font-weight:800;letter-spacing:.06em;padding:3px 8px;border-radius:999px;white-space:nowrap">{{ badge }}</span>
+      <span data-ewld-title style="font-size:15px;font-weight:800;line-height:1.25">The Clear Eyes Transformation Kit</span>
+      <span data-ewld-sub style="font-size:13px;font-weight:600;line-height:1.3;color:rgba(18,18,18,.66)">{{ sub }}</span>
+      <span data-ewld-badge style="margin-top:2px;background:#13B6B5;color:#FFFFFF;font-size:10.5px;font-weight:800;letter-spacing:.06em;padding:3px 8px;border-radius:999px;white-space:nowrap">{{ badge }}</span>
     </span>
     <span style="display:flex;flex-direction:column;align-items:flex-end;gap:1px;flex-shrink:0">
       <span data-ewld-price style="font-size:18px;font-weight:800;line-height:1.2;min-width:3.2em;min-height:1.2em;text-align:right"></span>
@@ -34,9 +38,7 @@
     </span>
   </span>
   <span data-ewld-gift-badge style="align-self:flex-start;display:flex;align-items:center;gap:6px;background:#FFF4D6;color:#8A5A00;font-size:12.5px;font-weight:800;padding:5px 10px;border-radius:999px">{{ gift_label }}</span>
-  {%- if tagline != blank -%}
-    <span style="font-size:13.5px;font-weight:700;color:#2E9FD8">{{ tagline }}</span>
-  {%- endif -%}
+  <span data-ewld-tagline style="font-size:13.5px;font-weight:700;color:#2E9FD8">{{ tagline }}</span>
   <span class="ewld-gifts" data-ewld-gift-list style="flex-direction:column;gap:8px;width:100%;padding-top:10px;border-top:1px dashed rgba(71,181,233,.4)">
     {%- for k in gift_keys -%}
       {%- case k -%}
