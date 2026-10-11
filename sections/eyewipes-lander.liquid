@@ -1,0 +1,709 @@
+{%- comment -%}
+  EyeWipes lander
+  ===============
+  Shopify implementation of the founder-approved Claude Design page
+  "EyeWipes Listicle - 3 remedies v2" (project "EyeWipes reference page and assets").
+  Composition, copy, images and interactions are the design's own; per-element
+  styles are kept inline exactly as the design has them, the design's <helmet>
+  CSS lives in assets/eyewipes-lander.css and its component logic in
+  assets/eyewipes-lander.js.
+
+  Rendered only through templates/product.eyewipes-lander.json, an alternate view
+  of the existing EyeWipes product:
+    /products/eyewipes-prevention-that-keeps-eyes-clear?view=eyewipes-lander
+  The default PDP, the offer page (?view=eyewipes-offer-page) and the pre-lander
+  are untouched.
+
+  COMMERCE OWNERSHIP
+  ------------------
+  Kaching Bundles is the source of truth for the deal, quantity, price, selling
+  plan and free gifts. Its real app block is rendered inside `.ewld-kaching`
+  (kept in the DOM, not painted). The approved picker drives Kaching's own
+  controls — clicking a bundle selects that Kaching deal bar, the Routine Care
+  checkbox toggles Kaching's own subscription checkbox — and every price shown
+  in the picker is read back from Kaching's rendered bar, never typed here.
+  Kaching then rewrites the add-to-cart request (bundle quantity, selling plan,
+  gift lines), exactly as on the offer page.
+
+  The bundle names, badges and gift rows are the approved design's. The JS checks
+  them against the gifts Kaching actually renders for each bar; if Kaching serves a
+  different gift set (e.g. another A/B variant of the deal block), that tier's gift
+  badge and list fall back to Kaching's own gift rows so the page never claims a
+  gift the cart will not contain.
+
+  There is exactly ONE add-to-cart pathway: the theme's <product-form> in
+  `.ewld-form-host`, whose submit button is the offer CTA. The theme's cart drawer
+  opens as on every other product page.
+
+  Everything is scoped under #eyewipes-lander.
+{%- endcomment -%}
+
+{%- liquid
+  assign v = product.selected_or_first_available_variant
+  assign product_form_id = 'ewld-product-form-' | append: section.id
+
+  assign img_b1 = 'ewld-bundle-b1g1.webp' | asset_url
+  assign img_b2 = 'ewld-bundle-b2g2.webp' | asset_url
+  assign img_tick = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>'
+  assign tick_badge = '<span style="width:16px;height:16px;border-radius:50%;background:#13B6B5;display:flex;align-items:center;justify-content:center;flex-shrink:0">' | append: img_tick | append: '</span>'
+  assign tp_star = '<span style="width:20px;height:20px;background:#00B67A;display:flex;align-items:center;justify-content:center"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path fill="#FFFFFF" d="M12 1.5l2.6 7.9H23l-6.8 4.9 2.6 7.9L12 17.3l-6.8 4.9 2.6-7.9L1 9.4h8.4z"></path></svg></span>'
+  assign tp_stars = tp_star | append: tp_star | append: tp_star | append: tp_star | append: tp_star
+  assign big_check = '<span style="width:22px;height:22px;border-radius:50%;background:#13B6B5;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>'
+  assign payoff_check = '<span style="width:24px;height:24px;border-radius:50%;background:#13B6B5;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>'
+  assign cta_style = 'display:flex;align-items:center;justify-content:center;width:100%;max-width:460px;min-height:56px;box-sizing:border-box;background:#47B5E9;color:#FFFFFF;font-size:16px;font-weight:800;letter-spacing:.02em;text-transform:uppercase;padding:0 22px;border-radius:999px;box-shadow:0 10px 24px rgba(71,181,233,.42)'
+  assign skip_style = 'display:flex;align-items:center;min-height:44px;padding:0 12px;font-size:14px;font-weight:700;color:#2E9FD8;text-decoration:underline;text-underline-offset:3px'
+  assign guarantee_line = 'Healthy clear eyes OR your money back'
+
+  # Low-stock bar: production shows it only on verified Shopify inventory at or below the
+  # threshold. The design-preview toggle has no effect outside the theme editor.
+  assign show_low_stock = false
+  assign low_threshold = section.settings.low_stock_threshold | default: 0
+  if v.inventory_management == 'shopify' and low_threshold > 0 and v.inventory_quantity > 0 and v.inventory_quantity <= low_threshold
+    assign show_low_stock = true
+  endif
+  if request.design_mode and section.settings.preview_low_stock
+    assign show_low_stock = true
+  endif
+-%}
+
+{{ 'eyewipes-lander.css' | asset_url | stylesheet_tag }}
+<link rel="preload" as="image" href="{{ 'ewld-ba-maltese-before.webp' | asset_url }}">
+<link rel="preload" as="image" href="{{ 'ewld-ba-maltese-after.webp' | asset_url }}">
+
+<div
+  id="eyewipes-lander"
+  data-tier="1"
+  data-routine="on"
+  data-offer="pending"
+  data-deal-ids="{{ section.settings.deal_bundle_1 | escape }}|{{ section.settings.deal_bundle_2 | escape }}"
+  data-tp-auto="{{ section.settings.tp_auto_advance }}"
+  data-tp-sec="{{ section.settings.tp_interval_sec }}"
+>
+<div style="min-height:100vh;background:#FFFFFF;padding-bottom:96px">
+
+  <div data-screen-label="Brand bar" style="height:44px;display:flex;align-items:center;justify-content:center;background:#FFFFFF;border-bottom:1px solid rgba(71,181,233,.18)">
+    <img src="{{ 'ewld-vetpets-logo.webp' | asset_url }}" alt="VetPets" width="290" height="110" style="display:block;height:22px;width:auto">
+  </div>
+
+  {%- comment -%} 1 Above the fold {%- endcomment -%}
+  <section data-screen-label="1 Above the fold" style="background:linear-gradient(180deg,#FFFFFF 0%,#F2FCFF 60%,#D5F7FF 100%);padding:16px 0 0">
+    <div style="max-width:1080px;margin:0 auto;padding:0 20px;box-sizing:border-box">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div style="order:-1;display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;font-weight:600;color:#121212"><span style="color:#F5A623;letter-spacing:.06em" aria-hidden="true">★★★★★</span><span>60,000 happy pet owners</span></div>
+          <h1 style="margin:0;font-size:clamp(28px,4.2vw,46px);line-height:1.08;letter-spacing:-0.025em;font-weight:800;color:#121212;text-wrap:balance">Bring back <span style="color:#47B5E9">the bright little face</span> you fell in love with.</h1>
+          <p style="margin:0;font-size:clamp(16px,1.6vw,19px);line-height:1.45;font-weight:500;color:#121212;text-wrap:pretty">Less visible crust. Cleaner-looking under-eyes. A simple daily routine that helps you feel good about the care you give.</p>
+          <p style="order:4;margin:0;font-size:15px;line-height:1.45;font-weight:500;color:rgba(18,18,18,.74);text-wrap:pretty">EyeWipes pairs textured cleaning pads with aloe vera and chamomile — for a gentle, 30-second daily under-eye routine.</p>
+          <a class="cta" href="#why-different" data-ewld-hero-cta style="order:5;{{ cta_style }}">See why EyeWipes is different →</a>
+          <a class="ewld-skip" href="#final-offer" style="order:6;display:flex;align-items:center;justify-content:center;width:100%;max-width:460px;min-height:40px;margin-top:-6px;font-size:14px;font-weight:700;color:#2E9FD8;text-decoration:underline;text-underline-offset:3px">Skip to order →</a>
+          <div style="order:7;display:flex;align-items:center;justify-content:center;gap:6px;width:100%;max-width:460px;font-size:13px;font-weight:600;color:#121212">{{ tick_badge }}{{ guarantee_line }}</div>
+        </div>
+        <figure class="hero-media" style="margin:0;width:100%">
+        <div style="display:flex;align-items:center;width:100%;padding:10px 2px 12px;box-sizing:border-box">
+          <div style="position:relative;flex:0 0 54%;aspect-ratio:4 / 5;border-radius:18px;overflow:hidden;background:#FFFFFF;border:4px solid #FFFFFF;box-sizing:border-box;box-shadow:0 14px 34px rgba(13,35,64,.18);transform:rotate(-4deg);z-index:1">
+            <img src="{{ 'ewld-ba-maltese-before.webp' | asset_url }}" alt="AI-generated example: white Maltese with reddish-brown staining under the eyes" width="800" height="993" fetchpriority="high" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 22%;display:block">
+            <span style="position:absolute;left:50%;bottom:10px;transform:translateX(-50%);z-index:2;pointer-events:none;background:#FFFFFF;color:#121212;font-size:13px;font-weight:800;padding:5px 12px;border-radius:999px;box-shadow:0 4px 12px rgba(13,35,64,.18);white-space:nowrap">Before</span>
+          </div>
+          <div style="position:relative;flex:0 0 54%;margin-left:-8%;aspect-ratio:4 / 5;border-radius:18px;overflow:hidden;background:#FFFFFF;border:4px solid #FFFFFF;box-sizing:border-box;box-shadow:0 16px 38px rgba(13,35,64,.22);transform:rotate(3.5deg) translateY(6px);z-index:2">
+            <img src="{{ 'ewld-ba-maltese-after.webp' | asset_url }}" alt="AI-generated example: the same Maltese with cleaner-looking under-eye fur" width="800" height="993" fetchpriority="high" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 22%;display:block">
+            <span style="position:absolute;left:50%;bottom:10px;transform:translateX(-50%);z-index:2;pointer-events:none;background:#47B5E9;color:#FFFFFF;font-size:13px;font-weight:800;padding:5px 12px;border-radius:999px;box-shadow:0 4px 12px rgba(13,35,64,.18);white-space:nowrap">After 21 days</span>
+          </div>
+        </div>
+        <figcaption style="font-size:12px;font-weight:500;color:rgba(18,18,18,.58);text-align:center">AI-generated visual example — not customer results.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 2 Vet + customer confidence {%- endcomment -%}
+  <section id="why-different" data-screen-label="2 Vet + customer confidence" style="scroll-margin-top:0;background:#D5F7FF;padding:clamp(32px,4vw,48px) 0 clamp(28px,3.4vw,40px)">
+    <div style="max-width:980px;margin:0 auto;padding:0 16px;box-sizing:border-box;display:flex;flex-direction:column;gap:18px">
+      <h2 style="margin:0;font-size:clamp(25px,3vw,32px);line-height:1.14;letter-spacing:-0.02em;font-weight:800;color:#121212;text-wrap:balance;text-align:center;padding:0 4px">A face you love. <span style="color:#47B5E9">Care you can feel confident about.</span></h2>
+      <div class="paws" style="border-radius:24px;padding:clamp(24px,3.4vw,44px) clamp(20px,3.4vw,48px);box-shadow:0 16px 40px rgba(71,181,233,.28);overflow:hidden">
+        <div class="vt-grid">
+          <div style="display:flex;flex-direction:column;align-items:flex-start;gap:12px;color:#FFFFFF;min-width:0">
+            <span style="display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:#FFFFFF"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l8 3v6c0 5-3.4 8.7-8 11-4.6-2.3-8-6-8-11V5z"></path><path d="M9 12l2 2 4-4" stroke="#47B5E9" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>Veterinarian Reviewed</span>
+            <h3 style="margin:0;font-size:clamp(22px,2.6vw,28px);line-height:1.18;letter-spacing:-0.02em;font-weight:800;color:#FFFFFF;text-wrap:balance">A Practical Approach to Daily Eye Care</h3>
+            <p style="margin:0;font-size:clamp(16.5px,1.8vw,18.5px);line-height:1.55;font-weight:500;color:#FFFFFF;text-wrap:pretty">EyeWipes gives pet owners a simple, controlled way to remove the buildup that collects around the eyes each day. The textured pads help lift residue from the fur and skin without rinsing or complicated grooming, making the routine easy to repeat consistently.</p>
+            <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;width:100%;padding-top:14px;margin-top:4px;border-top:1px solid rgba(255,255,255,.42)">
+              <div class="vt-thumb" style="width:68px;height:68px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,.4);box-sizing:border-box;background:#FFFFFF;flex-shrink:0"><img src="{{ 'ewld-dr-michael-thompson.webp' | asset_url }}" alt="Dr. Michael Thompson, Veterinarian at VetPets" width="720" height="900" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 20%"></div>
+              <span style="display:flex;flex-direction:column;gap:3px;min-width:0">
+                <span style="font-size:17px;font-weight:700;line-height:1.25;color:#FFFFFF">Reviewed by Dr. Michael Thompson</span>
+                <span style="font-size:14.5px;color:#FFFFFF">Veterinarian · VetPets</span>
+              </span>
+              <span style="display:inline-flex;align-items:center;gap:6px;background:#FFFFFF;color:#13B6B5;font-size:11.5px;font-weight:800;letter-spacing:.08em;padding:7px 12px;border-radius:999px;white-space:nowrap"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l8 3v6c0 5-3.4 8.7-8 11-4.6-2.3-8-6-8-11V5z"></path><path d="M9 12l2 2 4-4" stroke="#FFFFFF" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>VET REVIEWED</span>
+            </div>
+          </div>
+          <div class="vt-photo" style="width:100%;max-width:300px;justify-self:center">
+            <div style="position:relative;width:100%;aspect-ratio:4 / 5;border-radius:48% 48% 42% 42% / 38% 38% 30% 30%;overflow:hidden;border:6px solid rgba(255,255,255,.28);box-sizing:border-box;box-shadow:0 18px 40px rgba(18,18,18,.16);background:#FFFFFF">
+              <img src="{{ 'ewld-dr-michael-thompson.webp' | asset_url }}" alt="Dr. Michael Thompson, Veterinarian at VetPets" width="720" height="900" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 22%">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <a href="{{ section.settings.trustpilot_url }}" target="_blank" rel="noopener" style="align-self:center;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:#191919"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="#00B67A" d="M12 1.5l2.6 7.9H23l-6.8 4.9 2.6 7.9L12 17.3l-6.8 4.9 2.6-7.9L1 9.4h8.4z"></path></svg>EyeWipes owners on Trustpilot</a>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px">
+          {%- render 'ewld-tp-review', variant: 'featured', name: 'Sharon D.', initials: 'SD', bg: '#D5F7FF', country: 'UK', date: 'Sep 2026', url: 'https://www.trustpilot.com/reviews/6a9b208887f92b4e7b374789', title: 'Tear stains virtually gone!', text: "Our 5 year old Bichon, Daisy, had really bad tear stains to the point that people thought she was older than our 9 year old Bichon. Nothing we tried worked until I saw the ad for VetPets eye wipes. I started using them daily in May 2026..... what a transformation! Our groomer said today that Daisy's tear stains had been the darkest she had seen and she could not believe that now they had virtually gone.", stars: tp_stars -%}
+          {%- render 'ewld-tp-review', variant: 'featured', name: 'Helene L.', initials: 'HL', bg: '#FCE6D6', country: 'US', date: 'Mar 2026', url: 'https://www.trustpilot.com/reviews/69c04b830c84d79365575ef8', title: 'Your product actually works!', text: "You have renewed my faith in advertising! Your product actually works! My poodle's tear stains have almost completely disappeared. I use it every day and it just keeps getting better. Thank you!!", stars: tp_stars -%}
+        </div>
+      </div>
+      <div data-screen-label="Skip after proof" style="display:flex;justify-content:center;padding:0"><a class="ewld-skip" href="#final-offer" style="{{ skip_style }}">Skip to order →</a></div>
+    </div>
+  </section>
+
+  {%- comment -%} 3 Remedy comparison intro {%- endcomment -%}
+  <section id="reasons" data-screen-label="3 Remedy comparison intro" style="padding:clamp(32px,4vw,48px) 0 10px;scroll-margin-top:8px">
+    <div style="max-width:680px;margin:0 auto;padding:0 20px;box-sizing:border-box;display:flex;flex-direction:column;gap:12px">
+      <h2 style="margin:0;font-size:clamp(25px,3vw,32px);line-height:1.14;letter-spacing:-0.02em;font-weight:800;color:#121212;text-wrap:balance">You've tried caring for the stain. <span style="color:#47B5E9">Now focus on what's sitting on the fur.</span></h2>
+      <p style="margin:0;font-size:17px;line-height:1.55;color:#121212;text-wrap:pretty">Oil on the fur. Blueberries in the bowl. Another scoop of powder. These approaches ask you to do different things — but none is the same step as gently wiping away the buildup you can see.</p>
+      <p style="margin:0;font-size:17px;line-height:1.5;font-weight:700;color:#121212">Here's the difference that matters in your daily routine.</p>
+    </div>
+  </section>
+
+  {%- render 'ewld-reason', label: '4 #1 Coconut oil', pad: '10px 0 24px', img: 'ewld-reason-coconut.webp', alt: "AI-generated scene: a fingertip applies coconut oil to the fur under a white Maltese's eye, a jar of coconut oil beside her", kicker: 'Reason #1:', title: "A greasy coating isn't the clean finish you're looking for.", intro: "You want cleaner-looking under-eyes — not another layer on the fur.", rest: "Applying coconut oil coats the area. It doesn't give you a cleaning surface to collect and carry away residue. Applying something and wiping something away are different steps.", contrast: 'With EyeWipes, you gently wipe the under-eye fur with a textured pad, then discard the used pad.', check: big_check -%}
+  {%- render 'ewld-reason', label: '5 #2 Blueberries', pad: '10px 0 24px', img: 'ewld-reason-blueberries.webp', alt: 'AI-generated scene: a white Maltese eats from a bowl of blueberries, purple juice on her muzzle', kicker: 'Reason #2:', title: 'Blueberries belong in the bowl. Your cleaning routine belongs on the fur.', intro: "A food choice isn't a wipe.", rest: 'Whatever you choose to feed your dog, the visible residue beneath their eyes is still on the outside. Eating blueberries and cleaning the under-eye fur are two different actions.', contrast: 'EyeWipes brings your routine directly to the area you want to clean — with one pad for each eye.', check: big_check -%}
+
+  <div data-screen-label="CTA after remedies 1–2" style="padding:6px 20px 26px;display:flex;flex-direction:column;align-items:center;gap:8px">
+    <a class="cta" href="#final-offer" style="{{ cta_style }}">See what lifts it off →</a>
+    <span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:rgba(18,18,18,.62)">{{ tick_badge }}{{ guarantee_line }}</span>
+  </div>
+
+  {%- render 'ewld-reason', label: '6 #3 Tear-stain supplements', pad: '12px 0 24px', img: 'ewld-reason-supplement.webp', alt: "AI-generated scene: a hand pours a scoop of tear-stain supplement onto a Maltese's food while she eats", kicker: 'Reason #3:', title: "Another scoop doesn't replace a hands-on clean.", intro: 'An inside-out approach still leaves an outside cleaning step.', rest: 'A tear-stain supplement is something your dog consumes. A pad is something you use to clean the fur. Even if you choose a supplement, wiping away surface buildup remains a separate part of the routine.', contrast: 'Keep the cleaning step simple: gently wipe the under-eye fur for 30 seconds each day.', check: big_check -%}
+
+  <div data-screen-label="Skip after reasons" style="display:flex;justify-content:center;padding:0 20px 4px"><a class="ewld-skip" href="#final-offer" style="{{ skip_style }}">Skip to order →</a></div>
+
+  {%- comment -%} 5b Comparison {%- endcomment -%}
+  {%- capture cmp_yes -%}<span style="width:30px;height:30px;border-radius:50%;background:#13B6B5;display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-label="Yes"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>{%- endcapture -%}
+  {%- capture cell_yes -%}<div style="display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-label="Yes"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#13B6B5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>{%- endcapture -%}
+  {%- capture cell_no -%}<div style="display:flex;align-items:center;justify-content:center"><span style="width:26px;height:26px;border-radius:50%;background:#E6EAED;display:flex;align-items:center;justify-content:center"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-label="No"><path d="M6 6l12 12M18 6 6 18" stroke="#8A969F" stroke-width="3.4" stroke-linecap="round"></path></svg></span></div>{%- endcapture -%}
+  {%- assign cmp_grid = 'display:grid;grid-template-columns:minmax(132px,1.4fr) minmax(104px,1.1fr) repeat(3,minmax(96px,1fr))' -%}
+  <section data-screen-label="5b Comparison" style="padding:18px 0 30px">
+    <div style="max-width:820px;margin:0 auto;padding:0 20px;box-sizing:border-box;display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px">
+        <span style="display:inline-block;background:#D5F7FF;color:#2E9FD8;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:7px 14px;border-radius:999px">Side by side</span>
+        <h2 style="margin:0;font-size:clamp(25px,3vw,32px);line-height:1.14;letter-spacing:-0.02em;font-weight:800;color:#121212;text-wrap:balance"><span style="color:#47B5E9">EyeWipes</span> vs. what you've already tried</h2>
+      </div>
+      <div style="background:#FFFFFF;border-radius:20px;box-shadow:0 14px 36px rgba(71,181,233,.2);border:1px solid rgba(71,181,233,.18);overflow:hidden">
+        <div class="cmp-scroll">
+          <div style="min-width:524px">
+            <div style="{{ cmp_grid }};align-items:stretch">
+              <div style="position:sticky;left:0;z-index:3;background:#FFFFFF;padding:16px 12px;display:flex;align-items:flex-end;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(18,18,18,.5)">Does it…</div>
+              <div style="position:sticky;left:132px;z-index:3;background:#D5F7FF;padding:14px 8px 12px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:6px;box-shadow:6px 0 10px -6px rgba(13,35,64,.18);border-radius:14px 14px 0 0">
+                <div style="width:72px;height:72px;border-radius:14px;background:#F4FBFF;border:2px solid #47B5E9;box-sizing:border-box;overflow:hidden;flex-shrink:0"><img src="{{ 'ewld-cmp-eyewipes-jar.webp' | asset_url }}" alt="VetPets EyeWipes jar with two textured pads" width="800" height="800" loading="lazy" style="display:block;width:100%;height:100%;object-fit:contain;object-position:50% 50%"></div>
+                <span style="font-size:14px;font-weight:800;color:#121212">EyeWipes</span>
+              </div>
+              {%- assign cmp_imgs = 'ewld-reason-coconut.webp|ewld-reason-blueberries.webp|ewld-reason-supplement.webp' | split: '|' -%}
+              {%- assign cmp_labels = 'Coconut oil|Blueberries|Tear-stain supplements' | split: '|' -%}
+              {%- for c in cmp_imgs -%}
+                <div style="padding:14px 8px 12px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:6px;text-align:center">
+                  <div style="position:relative;width:72px;height:72px;border-radius:14px;overflow:hidden;background:#F4FBFF;border:2px solid #E6EAED;box-sizing:border-box"><img src="{{ c | asset_url }}" alt="{{ cmp_labels[forloop.index0] }}" width="1200" height="800" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:58% 50%;display:block"></div>
+                  <span style="font-size:13.5px;font-weight:700;color:rgba(18,18,18,.7);line-height:1.2">{{ cmp_labels[forloop.index0] }}</span>
+                </div>
+              {%- endfor -%}
+            </div>
+            {%- assign cmp_rows = 'Go directly on the under-eye fur:ynn|Wipe visible buildup off the fur:nnn|Use a textured cleaning surface:nnn' | split: '|' -%}
+            {%- for row in cmp_rows -%}
+              {%- assign parts = row | split: ':' -%}
+              <div style="{{ cmp_grid }};min-height:66px;border-top:1px solid rgba(71,181,233,.18)">
+                <div style="position:sticky;left:0;z-index:2;background:#FFFFFF;padding:12px;display:flex;align-items:center;font-size:14.5px;font-weight:600;line-height:1.3;color:#121212">{{ parts[0] }}</div>
+                <div style="position:sticky;left:132px;z-index:2;background:#D5F7FF;display:flex;align-items:center;justify-content:center;box-shadow:6px 0 10px -6px rgba(13,35,64,.18)">{{ cmp_yes }}</div>
+                {%- assign cells = parts[1] | split: '' -%}
+                {%- for cell in cells -%}{%- if cell == 'y' -%}{{ cell_yes }}{%- else -%}{{ cell_no }}{%- endif -%}{%- endfor -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+      <div class="swipe-hint" style="justify-content:center;font-size:12.5px;font-weight:600;color:rgba(18,18,18,.5)">Swipe to compare →</div>
+    </div>
+  </section>
+
+  <div data-screen-label="CTA after remedy 3 + comparison" style="padding:0 20px 34px;display:flex;flex-direction:column;align-items:center;gap:8px">
+    <a class="cta" href="#final-offer" style="{{ cta_style }}">Try EyeWipes risk-free →</a>
+    <span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:rgba(18,18,18,.62)">{{ tick_badge }}{{ guarantee_line }}</span>
+  </div>
+
+  <div aria-hidden="true" style="line-height:0"><svg viewBox="0 0 1440 64" preserveAspectRatio="none" style="display:block;width:100%;height:44px"><path d="M0 40 C240 8 480 64 720 40 C960 16 1200 56 1440 28 L1440 64 L0 64 Z" fill="#D5F7FF"></path></svg></div>
+
+  {%- comment -%} 6 Product payoff + demo {%- endcomment -%}
+  <section data-screen-label="6 Product payoff + demo" style="background:#D5F7FF;padding:26px 0 40px">
+    <div style="max-width:720px;margin:0 auto;padding:0 20px;box-sizing:border-box;display:flex;flex-direction:column;gap:14px">
+      <h2 style="margin:0;font-size:clamp(25px,3vw,32px);line-height:1.14;letter-spacing:-0.02em;font-weight:800;color:#121212;text-wrap:balance">Less fuss. <span style="color:#47B5E9">Cleaner-looking under-eyes.</span> More moments enjoying that little face.</h2>
+      <p style="margin:0;font-size:17px;line-height:1.5;color:#121212;text-wrap:pretty">EyeWipes gives you a direct, repeatable cleaning step: a textured pad, a gentle wipe and a routine you can fit into everyday life.</p>
+      <figure style="margin:0;display:flex;flex-direction:column;gap:8px">
+        <div class="gw-media" style="position:relative;width:100%;border-radius:18px;overflow:hidden;background:#EAF7FD;box-shadow:0 12px 30px rgba(71,181,233,.24)">
+          <video data-ewld-demo src="{{ section.settings.demo_video_url }}" poster="{{ 'ewld-groomer-demo-poster.webp' | asset_url }}" muted loop playsinline webkit-playsinline preload="auto" aria-label="Demonstration: a groomer wipes the stained fur under a Maltese's eye with an EyeWipes pad, the EyeWipes jar on the table" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block"></video>
+          <button type="button" data-ewld-demo-toggle data-ewld-state="on" aria-label="Pause demonstration video" style="position:absolute;right:12px;bottom:12px;z-index:2;width:44px;height:44px;border-radius:50%;border:0;background:rgba(18,18,18,.62);color:#FFFFFF;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0">
+            <svg data-ewld-when="on" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1" fill="#FFFFFF"></rect><rect x="14" y="5" width="4" height="14" rx="1" fill="#FFFFFF"></rect></svg>
+            <svg data-ewld-when="off" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="#FFFFFF"></path></svg>
+          </button>
+        </div>
+        <figcaption style="display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center">
+          <span style="font-size:14.5px;line-height:1.45;font-weight:600;color:rgba(18,18,18,.78)">One pad, wiped down and out along the fur under the eye. Never on the eye itself.</span>
+          <span style="font-size:12px;line-height:1.4;font-weight:500;color:rgba(18,18,18,.58)">AI-generated demonstration</span>
+        </figcaption>
+      </figure>
+      <div style="display:flex;flex-direction:column;gap:12px;background:#FFFFFF;border-radius:16px;box-shadow:0 6px 18px rgba(71,181,233,.16);padding:16px 16px">
+        <div style="display:flex;align-items:flex-start;gap:12px;font-size:16.5px;font-weight:700;line-height:1.4;color:#121212">{{ payoff_check }}<span>Clean the area you can actually see.</span></div>
+        <div style="display:flex;align-items:flex-start;gap:12px;font-size:16.5px;font-weight:700;line-height:1.4;color:#121212">{{ payoff_check }}<span>Keep the routine short and consistent.</span></div>
+        <div style="display:flex;align-items:flex-start;gap:12px;font-size:16.5px;font-weight:700;line-height:1.4;color:#121212">{{ payoff_check }}<span>Spend less time fussing over the mess — and more time enjoying your dog.</span></div>
+      </div>
+      <p style="margin:0;font-size:13.5px;line-height:1.45;font-weight:500;color:rgba(18,18,18,.7)">EyeWipes cleans surface buildup. It doesn't treat the underlying cause of tearing.</p>
+    </div>
+  </section>
+
+  <div data-screen-label="CTA after product payoff" style="background:#D5F7FF;padding:0 20px 40px;display:flex;flex-direction:column;align-items:center;gap:8px">
+    <a class="cta" href="#final-offer" style="{{ cta_style }}">Try EyeWipes risk-free →</a>
+    <span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:rgba(18,18,18,.62)">{{ tick_badge }}{{ guarantee_line }}</span>
+  </div>
+
+  <div aria-hidden="true" style="line-height:0"><svg viewBox="0 0 1440 64" preserveAspectRatio="none" style="display:block;width:100%;height:44px"><path d="M0 28 C240 56 480 8 720 32 C960 56 1200 12 1440 36 L1440 0 L0 0 Z" fill="#D5F7FF"></path></svg></div>
+
+  {%- comment -%} 7 Proof on the pad {%- endcomment -%}
+  <section data-screen-label="7 Proof on the pad" style="padding:22px 0 26px">
+    <div style="max-width:900px;margin:0 auto;padding:0 20px;box-sizing:border-box">
+      <div class="pf-grid">
+        <figure style="margin:0;display:flex;flex-direction:column;gap:6px;min-width:0">
+          <div class="pf-media" style="position:relative;width:100%;border-radius:18px;overflow:hidden;background:#F4FBFF;box-shadow:0 14px 32px rgba(13,35,64,.12)">
+            <img src="{{ 'ewld-pad-residue.webp' | asset_url }}" alt="Illustration: a textured pad with reddish-brown residue and small dried flakes" width="1000" height="1000" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+          </div>
+        </figure>
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:10px">
+          <span style="display:inline-block;background:#D5F7FF;color:#2E9FD8;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:7px 14px;border-radius:999px">See it for yourself</span>
+          <h2 style="margin:0;font-size:clamp(25px,3vw,32px);line-height:1.14;letter-spacing:-0.02em;font-weight:800;color:#121212">The proof is <span style="color:#47B5E9">on the pad</span></h2>
+          <p style="margin:0;font-size:17px;line-height:1.5;color:#121212"><strong style="font-weight:800">Look at what collects on the pad after wiping the under-eye fur.</strong></p>
+          <p style="margin:0;font-size:16.5px;line-height:1.5;color:#121212">Oil, berries and supplements leave it where it is. The texture lifts it off.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 7b How it works {%- endcomment -%}
+  <section data-screen-label="7b How it works" style="padding:4px 0 26px">
+    <div style="max-width:980px;margin:0 auto;padding:0 20px;box-sizing:border-box;display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px">
+        <span style="display:inline-block;background:#D5F7FF;color:#2E9FD8;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:7px 14px;border-radius:999px">How it works</span>
+        <h2 style="margin:0;font-size:clamp(25px,3vw,32px);line-height:1.14;letter-spacing:-0.02em;font-weight:800;color:#121212">How it works, <span style="color:#47B5E9">in 30 seconds</span></h2>
+      </div>
+      <div class="hw-steps">
+        {%- assign how_imgs = 'ewld-jar-sm.webp|ewld-how-step2.webp|ewld-how-step3.webp' | split: '|' -%}
+        {%- assign how_fit = 'contain|cover|cover' | split: '|' -%}
+        {%- assign how_titles = 'Take one pad|Wipe down and out|New pad, other eye' | split: '|' -%}
+        {%- assign how_texts = 'One textured pad from the jar.|Gently along the fur under the eye. Never on the eye itself.|Thirty seconds, every day.' | split: '|' -%}
+        {%- for t in how_titles -%}
+          <div style="display:grid;grid-template-columns:84px minmax(0,1fr);gap:14px;align-items:center;background:#FFFFFF;border-radius:18px;box-shadow:0 8px 24px rgba(71,181,233,.16);padding:12px">
+            <div style="position:relative;width:84px;height:84px;border-radius:14px;overflow:hidden;background:#F4FBFF">
+              <img src="{{ how_imgs[forloop.index0] | asset_url }}" alt="{{ t }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:{{ how_fit[forloop.index0] }};display:block;border-radius:14px">
+            </div>
+            <div style="display:flex;flex-direction:column;gap:3px;min-width:0">
+              <div style="font-size:12px;font-weight:800;letter-spacing:.1em;color:#2E9FD8">STEP {{ forloop.index }}</div>
+              <div style="font-size:17px;font-weight:800;line-height:1.25;color:#121212">{{ t }}</div>
+              <div style="font-size:14.5px;line-height:1.45;color:rgba(18,18,18,.74)">{{ how_texts[forloop.index0] }}</div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  <div data-screen-label="CTA after proof + clips" style="padding:0 20px 36px;display:flex;flex-direction:column;align-items:center;gap:8px">
+    <a class="cta" href="#final-offer" style="{{ cta_style }}">See what lifts it off →</a>
+    <span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:rgba(18,18,18,.62)">{{ tick_badge }}{{ guarantee_line }}</span>
+  </div>
+
+  {%- comment -%} 8 What to expect {%- endcomment -%}
+  {%- assign pill_before = 'position:absolute;bottom:10px;transform:translateX(-50%);z-index:2;pointer-events:none;background:#FFFFFF;color:#121212;font-size:13px;font-weight:800;padding:5px 12px;border-radius:999px;box-shadow:0 4px 12px rgba(13,35,64,.18);white-space:nowrap' -%}
+  {%- assign pill_after = 'position:absolute;bottom:10px;transform:translateX(-50%);z-index:2;pointer-events:none;background:#47B5E9;color:#FFFFFF;font-size:13px;font-weight:800;padding:5px 12px;border-radius:999px;box-shadow:0 4px 12px rgba(13,35,64,.18);white-space:nowrap' -%}
+  <section data-screen-label="8 What to expect" style="background:#F4FBFF;padding:34px 0 34px">
+    <div style="max-width:980px;margin:0 auto;padding:0 20px;box-sizing:border-box;display:flex;flex-direction:column;gap:18px">
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px">
+        <h2 style="margin:0;font-size:clamp(25px,3vw,32px);line-height:1.14;letter-spacing:-0.02em;font-weight:800;color:#121212">What to <span style="color:#47B5E9">expect</span></h2>
+      </div>
+      <div class="ba-pairs" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:24px">
+        <figure style="margin:0;display:flex;flex-direction:column;gap:8px;min-width:0">
+          <h3 style="margin:0;font-size:19px;line-height:1.25;font-weight:800;color:#121212;text-align:center">From stained eyes to clear eyes</h3>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;aspect-ratio:2 / 1">
+          <div style="position:relative;min-height:0;border-radius:16px;overflow:hidden;background:#FFFFFF;box-shadow:0 12px 30px rgba(71,181,233,.22)">
+            <img src="{{ 'ewld-ba-maltese-before.webp' | asset_url }}" alt="AI-generated example: Maltese with tear staining" width="800" height="993" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 22%;display:block">
+            <span style="left:50%;{{ pill_before }}">Before</span>
+          </div>
+          <div style="position:relative;min-height:0;border-radius:16px;overflow:hidden;background:#FFFFFF;box-shadow:0 12px 30px rgba(71,181,233,.22)">
+            <img src="{{ 'ewld-ba-maltese-after.webp' | asset_url }}" alt="AI-generated example: same Maltese, cleaner-looking under-eye fur" width="800" height="993" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 22%;display:block">
+            <span style="left:50%;{{ pill_after }}">After</span>
+          </div>
+          </div>
+        </figure>
+        <figure style="margin:0;display:flex;flex-direction:column;gap:8px;min-width:0">
+          <h3 style="margin:0;font-size:19px;line-height:1.25;font-weight:800;color:#121212;text-align:center">From gunky to clear eyes</h3>
+          <div style="position:relative;width:100%;aspect-ratio:1774 / 887;border-radius:16px;overflow:hidden;background:#FFFFFF;box-shadow:0 12px 30px rgba(71,181,233,.22)">
+            <img src="{{ 'ewld-ba-frenchie-pair.webp' | asset_url }}" alt="AI-generated example: French Bulldog with brown crust under the eyes (left) and the same dog with cleaner-looking under-eye fur (right)" width="1400" height="700" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block">
+            <span style="left:25%;{{ pill_before }}">Before</span>
+            <span style="left:75%;{{ pill_after }}">After</span>
+          </div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 9 Trustpilot reviews {%- endcomment -%}
+  {%- assign arrow_btn = 'width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(71,181,233,.45);background:#FFFFFF;color:#2E9FD8;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;box-shadow:0 6px 16px rgba(13,35,64,.12)' -%}
+  <section data-screen-label="9 Trustpilot reviews" style="padding:34px 0 26px">
+    <div style="max-width:1080px;margin:0 auto;padding:0 20px;box-sizing:border-box;display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px">
+        <a href="{{ section.settings.trustpilot_url }}" target="_blank" rel="noopener" aria-label="VetPets on Trustpilot" style="display:flex;align-items:center;gap:6px;color:#191919">
+          <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path fill="#00B67A" d="M12 1.5l2.6 7.9H23l-6.8 4.9 2.6 7.9L12 17.3l-6.8 4.9 2.6-7.9L1 9.4h8.4z"></path></svg>
+          <span style="font-size:24px;font-weight:700;letter-spacing:-0.02em;color:#191919">Trustpilot</span>
+        </a>
+        <h2 style="margin:0;font-size:clamp(25px,3vw,32px);line-height:1.14;letter-spacing:-0.02em;font-weight:800;color:#121212">What EyeWipes owners say</h2>
+      </div>
+      <div class="tp-wrap" data-ewld-tp-wrap>
+        <button type="button" class="car-btn tp-arrow tp-arrow-p" data-ewld-tp-prev aria-label="Previous review" style="{{ arrow_btn }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+        <button type="button" class="car-btn tp-arrow tp-arrow-n" data-ewld-tp-next aria-label="Next review" style="{{ arrow_btn }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+        <div class="tp-track" data-ewld-tp role="region" aria-roledescription="carousel" aria-label="Trustpilot reviews of EyeWipes" tabindex="0">
+          {%- render 'ewld-tp-review', variant: 'card', name: 'Janice K.', initials: 'JK', bg: '#D5F7FF', country: 'US', date: 'Mar 2026', url: 'https://www.trustpilot.com/reviews/69ae1f25080c27feb65ec19b', title: 'Even my husband noticed', text: "Have tried so many things for my Yorkie's eye (he only has one) and this product has helped so much! Even my husband noticed.", stars: tp_stars -%}
+          {%- render 'ewld-tp-review', variant: 'card', name: 'Debra P.', initials: 'DP', bg: '#FCE6D6', country: 'US', date: 'Feb 2026', url: 'https://www.trustpilot.com/reviews/6990fa416d0c5ce035e8684d', title: 'Work well as advertised', text: 'The products I purchased—eye wipes work well as advertised for my little Pomeranian, who has mild tear staining.', stars: tp_stars -%}
+          {%- render 'ewld-tp-review', variant: 'card', name: 'Audrey S.', initials: 'AS', bg: '#E3F4E9', country: 'UK', date: 'May 2026', url: 'https://www.trustpilot.com/reviews/6a06fcf1815dd49c7a14249b', title: "My dog doesn't mind them", text: "very easy to use and my dog doesn't mind them, she is white so they do move tear stains", stars: tp_stars -%}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div data-screen-label="CTA after expect + reviews" style="padding:0 20px 36px;display:flex;flex-direction:column;align-items:center;gap:8px">
+    <a class="cta" href="#final-offer" style="{{ cta_style }}">Try EyeWipes risk-free →</a>
+    <span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:rgba(18,18,18,.62)">{{ tick_badge }}{{ guarantee_line }}</span>
+  </div>
+
+  {%- comment -%} 10 Guarantee {%- endcomment -%}
+  {%- assign tile = 'position:relative;border-radius:14px;overflow:hidden;background:#D5F7FF' -%}
+  {%- assign tile_img = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block' -%}
+  <section data-screen-label="10 Guarantee" style="background:#D5F7FF;padding:30px 0 6px">
+    <div style="max-width:980px;margin:0 auto;padding:0 20px;box-sizing:border-box">
+      <div class="gr-grid">
+        <div style="background:#FFFFFF;border:1px solid rgba(71,181,233,.3);border-radius:20px;box-shadow:0 10px 26px rgba(71,181,233,.18);padding:24px 20px;display:flex;flex-direction:column;gap:12px">
+          <svg width="40" height="46" viewBox="0 0 44 50" fill="none" aria-hidden="true"><path d="M22 1.5 41.5 8.8v14.4c0 11.6-8.3 20.4-19.5 24.8C10.8 43.6 2.5 34.8 2.5 23.2V8.8L22 1.5Z" fill="#47B5E9"></path><path d="m13.5 24.5 5.5 5.5 11.5-11.5" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></svg>
+          <h2 style="margin:0;font-size:clamp(23px,2.8vw,28px);line-height:1.16;letter-spacing:-0.02em;font-weight:800;color:#121212">Healthy clear eyes <span style="color:#47B5E9">OR your money back</span></h2>
+          <p style="margin:0;font-size:16px;line-height:1.5;color:#121212">Try EyeWipes for 100 days. If you don't see a cleaner-looking eye area with consistent use, we'll refund you.</p>
+        </div>
+        <figure style="margin:0;display:flex;flex-direction:column;gap:8px;min-width:0">
+          <div class="gr-collage" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:8px">
+            <div style="{{ tile }};grid-area:1 / 1 / 3 / 2"><img src="{{ 'ewld-owner-pug.webp' | asset_url }}" alt="Pug sitting next to a jar of EyeWipes" loading="lazy" style="{{ tile_img }};object-position:50% 25%"></div>
+            <div style="{{ tile }};grid-area:1 / 2 / 2 / 3"><img src="{{ 'ewld-owner-samoyed.webp' | asset_url }}" alt="Samoyed with an EyeWipes jar" loading="lazy" style="{{ tile_img }};object-position:50% 20%"></div>
+            <div style="{{ tile }};grid-area:2 / 2 / 3 / 3"><img src="{{ 'ewld-owner-poodle-note.webp' | asset_url }}" alt="Poodle with EyeWipes and a note: Finally! Clear eyes!" loading="lazy" style="{{ tile_img }};object-position:50% 25%"></div>
+            <div style="{{ tile }};grid-area:1 / 3 / 3 / 4"><img src="{{ 'ewld-owner-maltese.webp' | asset_url }}" alt="Maltese with VetPets jars" loading="lazy" style="{{ tile_img }};object-position:50% 35%"></div>
+            <div style="{{ tile }};grid-area:1 / 4 / 2 / 5"><img src="{{ 'ewld-owner-poodle-owner.webp' | asset_url }}" alt="Owner holding EyeWipes beside her poodle" loading="lazy" style="{{ tile_img }};object-position:30% 72%"></div>
+            <div style="{{ tile }};grid-area:2 / 4 / 3 / 5"><img src="{{ 'ewld-owner-frenchie.webp' | asset_url }}" alt="French bulldog with VetPets jars" loading="lazy" style="{{ tile_img }};object-position:50% 20%"></div>
+          </div>
+          <figcaption style="display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;font-weight:600;color:rgba(18,18,18,.62)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="3" stroke="#47B5E9" stroke-width="2.2"></rect><circle cx="12" cy="13" r="3.5" stroke="#47B5E9" stroke-width="2.2"></circle><path d="M9 6l1.5-2.5h3L15 6" stroke="#47B5E9" stroke-width="2.2" stroke-linejoin="round"></path></svg>Real EyeWipes owners</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 11 Final CTA — offer {%- endcomment -%}
+  <section id="final-offer" data-screen-label="11 Final CTA — offer" data-ewld-offer-section style="background:#D5F7FF;padding:26px 0 26px;scroll-margin-top:8px">
+    <div style="max-width:1040px;margin:0 auto;padding:0 16px;box-sizing:border-box;display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:0 4px">
+        <h2 style="margin:0;font-size:clamp(25px,3vw,32px);line-height:1.14;letter-spacing:-0.02em;font-weight:800;color:#121212;text-wrap:balance">Make cleaner-looking eyes part of <span style="color:#47B5E9">your everyday care</span></h2>
+        <p style="margin:0;font-size:16.5px;line-height:1.5;color:#121212">Choose your EyeWipes kit and start your 30-second daily routine.</p>
+      </div>
+      <div style="background:#FFFFFF;border-radius:24px;box-shadow:0 16px 44px rgba(71,181,233,.3);padding:18px 16px 22px;display:flex;flex-direction:column;gap:22px">
+        <div class="of-top">
+          <div class="of-gal" style="display:flex;flex-direction:column;gap:10px;min-width:0">
+            <div class="of-main" style="position:relative;width:100%;border-radius:18px;overflow:hidden;background:#EAF6FD">
+              <img data-ewld-gal-main src="{{ img_b2 }}" alt="Buy 2 Get 2 Free: four jars of VetPets EyeWipes with the free Tear Stain Comb, Bright Eyes Guide and Routine Tracker" width="1254" height="1254" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block">
+            </div>
+            <div role="tablist" aria-label="Product images" style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px">
+              {%- assign gal_srcs = 'ewld-bundle-b2g2.webp|ewof-pdp-2-daily-care.webp|ewof-pdp-4-textured-pad.webp|ewof-pdp-6-three-steps.webp|ewof-pdp-8-ingredients.webp' | split: '|' -%}
+              {%- assign gal_alts = 'Buy 2 Get 2 Free: four jars of VetPets EyeWipes with the free Tear Stain Comb, Bright Eyes Guide and Routine Tracker|EyeWipes daily eye-cleaning benefits for dogs|Close-up of the textured EyeWipes pad|How to use EyeWipes in three steps|EyeWipes gentle ingredient overview' | split: '|' -%}
+              {%- for g in gal_srcs -%}
+                <button type="button" role="tab" class="ewld-thumb" data-ewld-thumb="{{ forloop.index0 }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="{{ gal_alts[forloop.index0] }}" data-src="{{ g | asset_url }}" data-alt="{{ gal_alts[forloop.index0] }}" style="aspect-ratio:1 / 1;padding:0;border-radius:10px;overflow:hidden;border-width:2px;border-style:solid;background:#EAF6FD;cursor:pointer;display:block">
+                  <img src="{{ g | asset_url }}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+                </button>
+              {%- endfor -%}
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px;padding:6px 2px 0">
+              <div style="display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600"><span style="color:#F5A623;letter-spacing:.06em">★★★★★</span>60,000 happy pet owners</div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <h3 style="margin:0;font-size:clamp(21px,2.4vw,26px);line-height:1.18;letter-spacing:-0.02em;font-weight:800;color:#121212;text-wrap:balance">EyeWipes — From Crusty to Clear Eyes. <span style="color:#47B5E9">Or Your Money Back.</span></h3>
+                <p style="margin:0;font-size:15px;line-height:1.45;font-weight:500;color:rgba(18,18,18,.74)">A 30-second daily routine for cleaner-looking under-eyes.</p>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:9px">
+                {%- assign offer_bullets = 'Textured surface lifts crust and gunk off the fur|Aloe vera and chamomile. No fragrance, no alcohol.|Thirty seconds a day, one pad for each eye' | split: '|' -%}
+                {%- for b in offer_bullets -%}
+                  <div style="display:flex;align-items:flex-start;gap:10px;font-size:15px;line-height:1.45;color:#121212">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10" fill="#13B6B5"></circle><path d="m7.5 12.2 3 3 6-6.4" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></svg>
+                    <span>{{ b }}</span>
+                  </div>
+                {%- endfor -%}
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+          <div role="radiogroup" aria-label="Choose your kit" style="display:flex;flex-direction:column;gap:12px;margin-top:6px">
+            {%- render 'ewld-tier', index: 0, checked: false, sub: 'For 1 pet · 2 jars (200 wipes)', badge: 'BUY 1 GET 1 FREE', gift_label: '🎁 +2 FREE gifts', gift_count: 2, tagline: '', img: img_b1, alt: 'Buy 1 Get 1 Free: two jars of VetPets EyeWipes with the free Bright Eyes Guide and Routine Tracker', cta: 'Add to cart — Buy 1, Get 1 Free →', preview_on_hover: true, gifts: 'guide,tracker' -%}
+            {%- render 'ewld-tier', index: 1, checked: true, sub: 'For 2+ pets · 4 jars (400 wipes)', badge: 'BUY 2 GET 2 FREE', gift_label: '🎁 +3 FREE gifts', gift_count: 3, tagline: 'From crusty mornings to clean eyes', img: img_b2, alt: 'Buy 2 Get 2 Free: four jars of VetPets EyeWipes with the free Tear Stain Comb, Bright Eyes Guide and Routine Tracker', cta: 'Add to cart — Buy 2, Get 2 Free →', preview_on_hover: false, gifts: 'ship,comb,guide,tracker' -%}
+          </div>
+          <button type="button" role="checkbox" class="ewld-routine" data-ewld-routine aria-checked="true" style="display:flex;align-items:flex-start;gap:8px;width:100%;box-sizing:border-box;padding:7px 10px;background:#F4FBFF;border-width:1.5px;border-style:solid;border-radius:12px;font-family:inherit;text-align:left;cursor:pointer;color:#121212">
+            <span class="ewld-box" style="margin-top:1px;width:18px;height:18px;box-sizing:border-box;border-radius:5px;border:2px solid #47B5E9;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12.5 5 5 9-11" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span style="display:flex;flex-direction:column;gap:0;min-width:0;flex:1;container-type:inline-size">
+              <span style="font-size:clamp(12.5px,3.5vw,14px);line-height:1.3;font-weight:800;white-space:nowrap">Save 20% With Routine Care</span>
+              <span style="display:flex;flex-wrap:wrap;column-gap:5px;font-size:12px;font-weight:500;line-height:1.35;letter-spacing:-0.01em;color:rgba(18,18,18,.7)">
+                <span style="white-space:nowrap">Cancel, skip or change anytime — you're in control</span>
+                <span style="white-space:nowrap">· Free shipping on every order</span>
+              </span>
+            </span>
+          </button>
+          <div style="display:flex;flex-direction:column;gap:8px">
+          {%- if show_low_stock -%}
+            <div role="status" data-ewld-low-stock style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;box-sizing:border-box;padding:8px 12px;border-radius:10px;background:#FDEDED;border:1px solid rgba(201,42,42,.18);font-size:13.5px;font-weight:700;line-height:1.3;color:#8E1B1B;text-align:center"><span aria-hidden="true" style="width:8px;height:8px;border-radius:50%;background:#D93025;box-shadow:0 0 0 3px rgba(217,48,37,.16);flex-shrink:0"></span>Low stock — order while available</div>
+          {%- endif -%}
+
+          {%- comment -%} the ONE authoritative add-to-cart pathway — Kaching rewrites this request {%- endcomment -%}
+          <div class="ewld-form-host">
+            {%- if product != blank -%}
+              <product-form
+                id="ProductForm-{{ section.id }}"
+                class="product-form main-product-form"
+                data-section="{{ section.id }}"
+                data-main="true"
+              >
+                {%- form 'product',
+                  product,
+                  id: product_form_id,
+                  class: 'form',
+                  novalidate: 'novalidate',
+                  data-type: 'add-to-cart-form'
+                -%}
+                  <input type="hidden" name="id" value="{{ v.id }}" class="product-variant-id">
+                  <button
+                    id="ProductSubmitButton-{{ section.id }}"
+                    type="submit"
+                    name="add"
+                    class="cta ewld-atc product-form__submit main-product-atc"
+                    data-ewld-atc
+                    data-bundle="bundle-2"
+                    data-currency="{{ cart.currency.iso_code }}"
+                    data-purchase-type="subscription"
+                    disabled
+                    aria-busy="true"
+                    style="display:flex;align-items:center;justify-content:center;text-align:center;width:100%;min-height:58px;box-sizing:border-box;background:#47B5E9;color:#FFFFFF;font-family:inherit;font-size:16px;font-weight:800;letter-spacing:.02em;text-transform:uppercase;padding:8px 18px;border:0;border-radius:999px;box-shadow:0 10px 24px rgba(71,181,233,.42);cursor:pointer"
+                  ><span data-ewld-cta-label>Add to cart — Buy 2, Get 2 Free →</span></button>
+                {%- endform -%}
+                <div class="product-form__error-message-wrapper" role="alert" hidden>
+                  <span class="product-form__error-message"></span>
+                </div>
+              </product-form>
+            {%- endif -%}
+          </div>
+          {%- render 'subscription-disclosure', frequency: section.settings.rc_frequency_label, manage_url: section.settings.manage_subscription_url -%}
+          <div style="display:flex;align-items:center;justify-content:center;gap:7px;font-size:13px;font-weight:600;line-height:1.3;color:rgba(18,18,18,.74)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="flex-shrink:0"><path d="M2 6h11v9H2zM13 9h4.5l3.5 3.5V15h-8z" stroke="#2E9FD8" stroke-width="2" stroke-linejoin="round"></path><circle cx="6" cy="17.5" r="1.8" fill="#2E9FD8"></circle><circle cx="17" cy="17.5" r="1.8" fill="#2E9FD8"></circle></svg>Order dispatched within 24 hours</div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;border-radius:14px;background:#EAF7FD;border:1px solid rgba(71,181,233,.28)">
+            <svg width="34" height="38" viewBox="0 0 44 50" fill="none" aria-hidden="true" style="flex-shrink:0"><path d="M22 1.5 41.5 8.8v14.4c0 11.6-8.3 20.4-19.5 24.8C10.8 43.6 2.5 34.8 2.5 23.2V8.8L22 1.5Z" fill="#47B5E9"></path><path d="m13.5 24.5 5.5 5.5 11.5-11.5" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></svg>
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <span style="font-size:15.5px;font-weight:800;line-height:1.25;color:#121212">{{ guarantee_line }}</span>
+              <span style="font-size:13.5px;line-height:1.45;color:rgba(18,18,18,.78)">Try EyeWipes for 100 days. If you don't see a cleaner-looking eye area with consistent use, we'll refund you.</span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+            <img src="{{ 'ewof-payment-badges.webp' | asset_url }}" width="700" height="64" loading="lazy" alt="Accepted payment methods: Mastercard, Visa, PayPal, American Express, Discover and Apple Pay" style="display:block;width:100%;max-width:330px;height:auto">
+            <span style="display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:rgba(18,18,18,.66)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="2.2" fill="#6B7A85"></rect><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="#6B7A85" stroke-width="2.2" stroke-linecap="round"></path></svg>All transactions are secure and encrypted</span>
+          </div>
+
+          {%- comment -%} Kaching Bundles app block — real deal bars, subscription checkbox and gift rows {%- endcomment -%}
+          <div class="ewld-kaching" aria-hidden="true">
+            {%- for block in section.blocks -%}
+              {%- if block.type == '@app' -%}
+                {% render block %}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+          </div>
+        </div>
+
+          {%- comment -%} Offer — Hear it from dog owners {%- endcomment -%}
+          {%- assign car_sm = 'width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(71,181,233,.45);background:#FFFFFF;color:#2E9FD8;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex-shrink:0' -%}
+          <div data-screen-label="Offer — Hear it from dog owners" style="display:flex;flex-direction:column;gap:12px;padding-top:20px;border-top:1px solid rgba(71,181,233,.2)">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+              <h3 style="margin:0;font-size:19px;line-height:1.2;letter-spacing:-0.01em;font-weight:800;color:#121212">Hear it from dog owners</h3>
+              <div style="display:flex;gap:8px">
+                <button type="button" class="car-btn" data-ewld-ugc-auto data-ewld-state="on" aria-label="Pause video carousel" style="{{ car_sm }}"><svg data-ewld-when="on" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor"></rect><rect x="14" y="5" width="4" height="14" rx="1" fill="currentColor"></rect></svg><svg data-ewld-when="off" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"></path></svg></button>
+                <button type="button" class="car-btn" data-ewld-ugc-prev aria-label="Previous videos" style="{{ car_sm }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+                <button type="button" class="car-btn" data-ewld-ugc-next aria-label="Next videos" style="{{ car_sm }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+              </div>
+            </div>
+            <div class="ugc-track" data-ewld-ugc role="region" aria-label="Customer videos" tabindex="0">
+              {%- assign ugc_names = 'Janet|Debra & her Maltese|Kelly|EyeWipes owner' | split: '|' -%}
+              {%- assign ugc_srcs = section.settings.ugc_1_url | append: '|' | append: section.settings.ugc_2_url | append: '|' | append: section.settings.ugc_3_url | append: '|' | append: section.settings.ugc_4_url | split: '|' -%}
+              {%- for n in ugc_names -%}
+                {%- capture poster -%}ewld-ugc-{{ forloop.index }}.webp{%- endcapture -%}
+                <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+                  <div style="position:relative;width:100%;aspect-ratio:9 / 16;border-radius:14px;overflow:hidden;background:#121212">
+                    <video data-ewld-ugc-video="{{ forloop.index0 }}" src="{{ ugc_srcs[forloop.index0] }}" poster="{{ poster | asset_url }}" muted loop playsinline webkit-playsinline preload="none" aria-label="{{ n }} — EyeWipes customer video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></video>
+                    <button type="button" data-ewld-sound="{{ forloop.index0 }}" data-ewld-state="off" data-name="{{ n | escape }}" aria-label="Play {{ n | escape }}'s video with sound" aria-pressed="false" style="position:absolute;left:8px;bottom:8px;z-index:2;display:flex;align-items:center;gap:6px;min-height:36px;padding:0 12px 0 10px;border-radius:999px;border:0;background:rgba(18,18,18,.68);color:#FFFFFF;font-family:inherit;font-size:12.5px;font-weight:700;white-space:nowrap;cursor:pointer">
+                      <svg data-ewld-when="off" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="#FFFFFF"></path><path d="m16 9 5 6m0-6-5 6" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path></svg>
+                      <svg data-ewld-when="on" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="#FFFFFF"></path><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path></svg>
+                      <span data-ewld-sound-text>Tap for sound</span>
+                    </button>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:1px;padding:0 2px">
+                    <span style="font-size:13.5px;font-weight:800;color:#121212;line-height:1.25">{{ n }}</span>
+                    <span style="font-size:12px;font-weight:600;color:rgba(18,18,18,.6);line-height:1.3">EyeWipes</span>
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Sticky CTA bar {%- endcomment -%}
+  <div class="ewld-sticky" data-ewld-sticky data-screen-label="Sticky CTA bar" style="position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(255,255,255,.97);border-top:1px solid rgba(71,181,233,.35);box-shadow:0 -8px 24px rgba(13,35,64,.12)">
+    <div class="sb-inner" style="max-width:1040px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom))">
+      <div class="sb-copy" style="flex-direction:column;gap:2px;min-width:0">
+        <div style="font-size:16px;font-weight:800;line-height:1.25">Lift the crust off in 30 seconds</div>
+        <div style="font-size:12.5px;font-weight:600;line-height:1.2"><span style="color:#F5A623;letter-spacing:.06em">★★★★★</span>&nbsp; 60,000 happy pet owners</div>
+      </div>
+      <a class="cta sb-btn" href="#final-offer" style="display:flex;align-items:center;justify-content:center;width:100%;min-height:52px;box-sizing:border-box;background:#47B5E9;color:#FFFFFF;font-size:15px;font-weight:800;letter-spacing:.02em;text-transform:uppercase;padding:0 18px;border-radius:999px;white-space:nowrap;box-shadow:0 6px 16px rgba(71,181,233,.4)">Try EyeWipes risk-free →</a>
+      <div class="swipe-hint" style="justify-content:center;gap:6px;font-size:11.5px;font-weight:600;color:rgba(18,18,18,.7)"><span style="color:#F5A623;letter-spacing:.04em">★★★★★</span>60,000 happy pet owners · {{ guarantee_line }}</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="{{ 'eyewipes-lander.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "EyeWipes lander",
+  "tag": "div",
+  "class": "eyewipes-lander-section",
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Kaching Bundles owns deal, quantity, price, selling plan and free gifts."
+    },
+    {
+      "type": "header",
+      "content": "Kaching deal IDs"
+    },
+    {
+      "type": "text",
+      "id": "deal_bundle_1",
+      "label": "Bundle 1 (2 jars) deal ID",
+      "default": "4b8bf6d0-e6b1-4c44-af66-16e0ce39a9bb"
+    },
+    {
+      "type": "text",
+      "id": "deal_bundle_2",
+      "label": "Bundle 2 (4 jars) deal ID",
+      "default": "508699d0-94c0-4818-af7b-59b2f44de961"
+    },
+    {
+      "type": "header",
+      "content": "Stock status"
+    },
+    {
+      "type": "number",
+      "id": "low_stock_threshold",
+      "label": "Low-stock threshold (units)",
+      "info": "Bar shows only when tracked inventory is at or below this. 0 = never.",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "preview_low_stock",
+      "label": "Preview low-stock bar in editor",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Videos"
+    },
+    {
+      "type": "text",
+      "id": "demo_video_url",
+      "label": "Demo video URL",
+      "default": "https://cdn.shopify.com/videos/c/o/v/c6cbeb79dff346919721819404beee91.mp4"
+    },
+    {
+      "type": "text",
+      "id": "ugc_1_url",
+      "label": "Customer video 1 (Janet)",
+      "default": "https://cdn.shopify.com/videos/c/o/v/d278c65c993444b1a7e8cb40e258b04f.mp4"
+    },
+    {
+      "type": "text",
+      "id": "ugc_2_url",
+      "label": "Customer video 2 (Debra)",
+      "default": "https://cdn.shopify.com/videos/c/o/v/68fe8acf03544261b99bc2779d8a9ebb.mp4"
+    },
+    {
+      "type": "text",
+      "id": "ugc_3_url",
+      "label": "Customer video 3 (Kelly)",
+      "default": "https://cdn.shopify.com/videos/c/o/v/ad47e9acf18c4530af115c94046fd7df.mp4"
+    },
+    {
+      "type": "text",
+      "id": "ugc_4_url",
+      "label": "Customer video 4 (owner)",
+      "default": "https://cdn.shopify.com/videos/c/o/v/bfa09442282c44789fc22b737c99a7fc.mp4"
+    },
+    {
+      "type": "header",
+      "content": "Reviews carousel"
+    },
+    {
+      "type": "text",
+      "id": "trustpilot_url",
+      "label": "Trustpilot URL",
+      "default": "https://www.trustpilot.com/review/shopvetpets.com"
+    },
+    {
+      "type": "checkbox",
+      "id": "tp_auto_advance",
+      "label": "Auto-advance reviews",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "tp_interval_sec",
+      "label": "Auto-advance interval",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "PayFac subscription disclosure"
+    },
+    {
+      "type": "text",
+      "id": "rc_frequency_label",
+      "label": "RoutineCare billing frequency",
+      "default": "28 days"
+    },
+    {
+      "type": "text",
+      "id": "manage_subscription_url",
+      "label": "Manage Subscription link",
+      "default": "https://shopvetpets.com/pages/manage-subscription"
+    }
+  ],
+  "presets": [
+    {
+      "name": "EyeWipes lander"
+    }
+  ]
+}
+{% endschema %}
