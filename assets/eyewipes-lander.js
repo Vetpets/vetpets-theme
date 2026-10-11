@@ -105,7 +105,7 @@
     set('[data-ewld-badge]', kField(i, '.kaching-bundles__bar-most-popular__content'));
     set('[data-ewld-tagline]', kField(i, '.kaching-bundles__bar-subtitle'));
     var kImg = bar && bar.querySelector('.kaching-bundles__bar-image');
-    if (kImg && kImg.src) {
+    if (kImg && kImg.src && kImg.src.indexOf('data:') !== 0) {
       el.setAttribute('data-img', kImg.src);
       el.setAttribute('data-alt', kField(i, '.kaching-bundles__bar-title') + ' — ' + kField(i, '.kaching-bundles__bar-label'));
       var ti = el.querySelector('[data-ewld-tier-img]');
@@ -125,7 +125,7 @@
         var box = document.createElement('span');
         box.style.cssText = 'width:38px;height:38px;border-radius:9px;overflow:hidden;background:#FFFFFF;border:1px solid rgba(71,181,233,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0';
         var gi = r.querySelector('.kaching-bundles__free-gift__image');
-        if (gi && gi.src) {
+        if (gi && gi.src && gi.src.indexOf('data:') !== 0) {
           var img = document.createElement('img');
           img.src = gi.src; img.alt = ''; img.loading = 'lazy';
           img.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block';
@@ -152,7 +152,9 @@
     }
     var sig = tiers.map(function (el) {
       var i = +el.getAttribute('data-ewld-tier');
-      return kField(i, '.kaching-bundles__bar-title') + kField(i, '.kaching-bundles__bar-label') + kField(i, '.kaching-bundles__bar-most-popular__content') + kGiftRows(i).map(giftText).join(',');
+      var b = kBar(i);
+      var imgs = b ? $$('img', b).map(function (im) { return im.getAttribute('src') || ''; }).join(',') : '';
+      return kField(i, '.kaching-bundles__bar-title') + kField(i, '.kaching-bundles__bar-label') + kField(i, '.kaching-bundles__bar-most-popular__content') + kGiftRows(i).map(giftText).join(',') + imgs;
     }).join('|');
     if (sig !== lastSig) {
       lastSig = sig;
@@ -271,7 +273,7 @@
     }, 60);
   }
   if (kHost && 'MutationObserver' in window) {
-    new MutationObserver(onKachingChange).observe(kHost, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['class', 'aria-checked'] });
+    new MutationObserver(onKachingChange).observe(kHost, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['class', 'aria-checked', 'src'] });
   }
   onKachingChange();
   window.addEventListener('load', onKachingChange);
