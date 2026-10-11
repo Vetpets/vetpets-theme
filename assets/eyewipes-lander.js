@@ -37,14 +37,22 @@
     var b = kHost && kHost.querySelector('.kaching-bundles__bar--selected[data-deal-bar-id]');
     return b ? b.getAttribute('data-deal-bar-id') : null;
   }
+  // Kaching renders a [role=checkbox] card; the VetPets Whop storefront's native bundle
+  // widget (same class names) renders a real <input type=checkbox data-subscribe>.
   function kSubBox() {
-    return kHost ? kHost.querySelector('.kaching-bundles__subscriptions-wrapper [role="checkbox"]') : null;
+    return kHost ? kHost.querySelector('.kaching-bundles__subscriptions-wrapper [role="checkbox"], .kaching-bundles__subscriptions-wrapper input[data-subscribe]') : null;
   }
   function kSubOn() {
     var c = kSubBox();
-    return c ? c.getAttribute('aria-checked') === 'true' : null;
+    if (!c) return null;
+    return c.tagName === 'INPUT' ? !!c.checked : c.getAttribute('aria-checked') === 'true';
   }
-  function txt(el) { return el ? (el.textContent || '').replace(/\s+/g, ' ').trim() : ''; }
+  function txt(el) {
+    if (!el) return '';
+    var c = el.cloneNode(true);
+    $$('.vp-sr', c).forEach(function (n) { n.remove(); }); // screen-reader-only labels (Whop widget)
+    return (c.textContent || '').replace(/\s+/g, ' ').trim();
+  }
   function kPrice(i) { var b = kBar(i); return txt(b && b.querySelector('.kaching-bundles__bar-price')); }
   function kCompare(i) { var b = kBar(i); return txt(b && b.querySelector('.kaching-bundles__bar-full-price')); }
   function kGiftRows(i) {
