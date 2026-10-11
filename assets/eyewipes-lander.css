@@ -125,7 +125,15 @@ html:has(#eyewipes-lander){scroll-behavior:smooth}
 /* gift expansion: the selected tier, plus hover/focus preview on bundle 1 */
 #eyewipes-lander .ewld-tier .ewld-gifts{display:none}
 #eyewipes-lander .ewld-tier[aria-expanded="true"] .ewld-gifts{display:flex}
-#eyewipes-lander .ewld-tier [data-ewld-compare]:empty{display:none}
+#eyewipes-lander .ewld-tier [data-ewld-compare]:empty,
+#eyewipes-lander .ewld-tier [data-ewld-tagline]:empty,
+#eyewipes-lander .ewld-tier [data-ewld-badge]:empty{display:none}
+/* The picker shows variant-specific offer content (Kaching A/B test), so it stays invisible
+   until Kaching has rendered and the JS knows which offer is being served. */
+#eyewipes-lander[data-offer="pending"] .ewld-tier,
+#eyewipes-lander[data-offer="pending"] [data-ewld-gal-main],
+#eyewipes-lander[data-offer="pending"] [data-ewld-thumb="0"] img{visibility:hidden}
+#eyewipes-lander .ewld-tier,#eyewipes-lander [data-ewld-gal-main]{transition:opacity 150ms ease-out}
 
 /* Routine Care checkbox */
 #eyewipes-lander .ewld-routine{border-color:rgba(71,181,233,.4)}
