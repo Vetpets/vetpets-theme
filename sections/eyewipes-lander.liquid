@@ -54,14 +54,12 @@
   assign skip_style = 'display:flex;align-items:center;min-height:44px;padding:0 12px;font-size:14px;font-weight:700;color:#2E9FD8;text-decoration:underline;text-underline-offset:3px'
   assign guarantee_line = 'Healthy clear eyes OR your money back'
 
-  # Low-stock bar: production shows it only on verified Shopify inventory at or below the
-  # threshold. The design-preview toggle has no effect outside the theme editor.
-  assign show_low_stock = false
+  # Low-stock bar (approved design). On by default: Shopify's inventory count for EyeWipes
+  # is not the real warehouse stock (inventory policy "continue"), and the founder confirms
+  # stock is low. Alternatively it can switch itself on from a tracked-inventory threshold.
+  assign show_low_stock = section.settings.show_low_stock
   assign low_threshold = section.settings.low_stock_threshold | default: 0
   if v.inventory_management == 'shopify' and low_threshold > 0 and v.inventory_quantity > 0 and v.inventory_quantity <= low_threshold
-    assign show_low_stock = true
-  endif
-  if request.design_mode and section.settings.preview_low_stock
     assign show_low_stock = true
   endif
 -%}
@@ -611,17 +609,17 @@
       "content": "Stock status"
     },
     {
-      "type": "number",
-      "id": "low_stock_threshold",
-      "label": "Low-stock threshold (units)",
-      "info": "Bar shows only when tracked inventory is at or below this. 0 = never.",
-      "default": 0
+      "type": "checkbox",
+      "id": "show_low_stock",
+      "label": "Show low-stock bar",
+      "default": true
     },
     {
-      "type": "checkbox",
-      "id": "preview_low_stock",
-      "label": "Preview low-stock bar in editor",
-      "default": false
+      "type": "number",
+      "id": "low_stock_threshold",
+      "label": "Or: auto-show at/below (units)",
+      "info": "Uses tracked Shopify inventory. 0 = off.",
+      "default": 0
     },
     {
       "type": "header",
