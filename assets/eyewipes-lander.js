@@ -118,6 +118,7 @@
       el.setAttribute('data-alt', kField(i, '.kaching-bundles__bar-title') + ' — ' + kField(i, '.kaching-bundles__bar-label'));
       var ti = el.querySelector('[data-ewld-tier-img]');
       if (ti) ti.src = kImg.src;
+      root.setAttribute('data-kimg', 'ready');
     }
     var rows = kGiftRows(i);
     var products = rows.filter(function (r) { return !GIFT_RX.ship.test(giftText(r)); }).length;
@@ -192,8 +193,10 @@
       el.setAttribute('aria-expanded', sel || preview ? 'true' : 'false');
       var p = el.querySelector('[data-ewld-price]');
       var c = el.querySelector('[data-ewld-compare]');
-      if (p) p.textContent = kPrice(i);
-      if (c) c.textContent = kCompare(i);
+      // Kaching's rendered price once ready; until then the provisional price painted from
+      // Kaching's own config by snippets/ewld-instant-offer.liquid (button stays disabled).
+      if (p) p.textContent = kPrice(i) || el.getAttribute(state.routine ? 'data-early-sub' : 'data-early-one') || '';
+      if (c) c.textContent = kCompare(i) || el.getAttribute('data-early-compare') || '';
     });
     if (routineBtn) routineBtn.setAttribute('aria-checked', state.routine ? 'true' : 'false');
     root.setAttribute('data-tier', String(state.tier));
@@ -227,7 +230,7 @@
     }
     // PayFac disclosure: only while Routine Care is on, amounts straight from Kaching's bar
     if (disclosure) {
-      disclosure.hidden = !state.routine || !kPrice(state.tier);
+      disclosure.hidden = !ready || !state.routine || !kPrice(state.tier);
       var today = disclosure.querySelector('[data-pfd-today]');
       var rec = disclosure.querySelector('[data-pfd-recurring]');
       if (today) today.textContent = kPrice(state.tier);

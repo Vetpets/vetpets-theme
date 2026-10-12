@@ -134,6 +134,13 @@ html:has(#eyewipes-lander){scroll-behavior:smooth}
 #eyewipes-lander[data-offer="pending"] [data-ewld-gal-main],
 #eyewipes-lander[data-offer="pending"] [data-ewld-thumb="0"] img{visibility:hidden}
 #eyewipes-lander .ewld-tier,#eyewipes-lander [data-ewld-gal-main]{transition:opacity 150ms ease-out}
+/* Variant served by Kaching that is not the approved offer: its bundle images only exist in
+   Kaching's rendered bar, so the approved images are never shown in their place. */
+#eyewipes-lander[data-offer="kaching"]:not([data-kimg="ready"]) [data-ewld-tier-img],
+#eyewipes-lander[data-offer="kaching"]:not([data-kimg="ready"]) [data-ewld-gal-main],
+#eyewipes-lander[data-offer="kaching"]:not([data-kimg="ready"]) [data-ewld-thumb="0"] img{visibility:hidden}
+/* RoutineCare disclosure only once Kaching has rendered the real amounts */
+#eyewipes-lander:not([data-kaching="ready"]) .pfd-disclosure{display:none}
 
 /* Routine Care checkbox */
 #eyewipes-lander .ewld-routine{border-color:rgba(71,181,233,.4)}
