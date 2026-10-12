@@ -118,7 +118,7 @@ describe('screen-view beacons name the right event and share one journey', () =>
   function portal({ retentionOfferRedeemed = false, recordRetentionEvent } = {}) {
     const events = [];
     const screens = {};
-    for (const name of ['cancel-reason', 'cancel-alt', 'cancel-offer', 'cancel-savings', 'cancel-confirm', 'dashboard']) {
+    for (const name of ['cancel-choose', 'cancel-reason', 'cancel-alt', 'cancel-offer', 'cancel-savings', 'cancel-confirm', 'dashboard']) {
       screens[name] = { hidden: true, getAttribute: () => name, setAttribute() {}, focus() {} };
     }
     const root = {
@@ -147,6 +147,22 @@ describe('screen-view beacons name the right event and share one journey', () =>
     };
     return p;
   }
+
+  test('entering the cancel flow (step 1) opens the journey, so step 4 is measured on it', async () => {
+    const p = portal();
+    p.show('cancel-choose');
+    await Promise.resolve().then(() => {});
+    assert.deepEqual(p.events, [{ eventType: 'cancellation_started', journeyId: null }]);
+    assert.equal(p.state.retentionJourneyId, 'j-minted');
+
+    p.show('cancel-alt');
+    await Promise.resolve().then(() => {});
+    assert.deepEqual(p.events[1], { eventType: 'longer_gap_reached', journeyId: 'j-minted' });
+
+    p.show('cancel-reason');
+    await Promise.resolve().then(() => {});
+    assert.deepEqual(p.events[2], { eventType: 'cancellation_started', journeyId: 'j-minted' }, 'reuses, never a second journey');
+  });
 
   test('entering the reason screen fires cancellation_started and adopts the minted journey id', async () => {
     const p = portal();
