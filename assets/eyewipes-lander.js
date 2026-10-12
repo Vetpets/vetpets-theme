@@ -183,6 +183,7 @@
   var thumbs = $$('[data-ewld-thumb]');
   var disclosure = $('[data-pfd-disclosure]');
   var ready = false;
+  var queued = false;
 
   function paint() {
     tiers.forEach(function (el) {
@@ -204,7 +205,7 @@
 
     var t = tiers.filter(function (el) { return +el.getAttribute('data-ewld-tier') === state.tier; })[0];
     if (t) {
-      if (ctaLabel) ctaLabel.textContent = t.getAttribute('data-cta');
+      if (ctaLabel) ctaLabel.textContent = queued ? 'Loading…' : t.getAttribute('data-cta');
       // gallery: slot 0 is always the selected bundle image
       if (thumbs[0]) {
         thumbs[0].setAttribute('data-src', t.getAttribute('data-img'));
@@ -281,6 +282,7 @@
       });
       applyOfferMode();
       paint();
+      if (queued) { queued = false; setTimeout(function () { atc.click(); }, 300); }
     }, 60);
   }
   if (kHost && 'MutationObserver' in window) {
@@ -291,6 +293,7 @@
   setTimeout(function () {
     if (ready) return;
     root.setAttribute('data-kaching', 'failed');
+    if (queued) { queued = false; if (ctaLabel) ctaLabel.textContent = 'Add to cart →'; }
     showError('We couldn’t load the offer. Please refresh the page and try again.');
   }, 15000);
 
@@ -347,7 +350,15 @@
   var retries = 0;
   if (atc) {
     atc.addEventListener('click', function (e) {
-      if (pending || !ready) { e.preventDefault(); e.stopImmediatePropagation(); return; }
+      if (pending) { e.preventDefault(); e.stopImmediatePropagation(); return; }
+      // Kaching not rendered yet (it waits for the page's DOMContentLoaded): hold the click
+      // and submit the moment Kaching is ready — never a cart without Kaching's rewrite.
+      if (!ready) {
+        e.preventDefault(); e.stopImmediatePropagation();
+        queued = true; atc.setAttribute('aria-busy', 'true');
+        if (ctaLabel) ctaLabel.textContent = 'Loading…';
+        return;
+      }
       // Kaching must hold exactly the bundle + purchase type the shopper sees
       if (!inSync()) {
         e.preventDefault(); e.stopImmediatePropagation();
@@ -549,5 +560,7 @@
     });
   }
 
+  // The button is usable straight away; clicks before Kaching is ready are queued (above).
+  if (atc) atc.disabled = false;
   paint();
 })();
