@@ -1,0 +1,75 @@
+  {{- fwq_tpl | replace: './assets/', fwq_base | replace: '"assets/', fwq_qbase -}}
+  {{- fwq_logic | replace: './assets/', fwq_base -}}
+</div>
+
+{%- comment -%} Kaching Bundles + the ONE add-to-cart pathway (driven by assets/fwq-kaching.js, not painted) {%- endcomment -%}
+<div id="fwq-commerce" class="fwq-commerce" aria-hidden="true">
+  {%- for block in section.blocks -%}
+    {%- if block.type == '@app' -%}
+      {% render block %}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if product != blank -%}
+    <product-form id="ProductForm-{{ section.id }}" class="product-form main-product-form" data-section="{{ section.id }}" data-main="true">
+      {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+        <input type="hidden" name="id" value="{{ v.id }}" class="product-variant-id">
+        <button id="ProductSubmitButton-{{ section.id }}" type="submit" name="add" class="product-form__submit" tabindex="-1">Add to cart</button>
+      {%- endform -%}
+      <div class="product-form__error-message-wrapper" role="alert" hidden><span class="product-form__error-message"></span></div>
+    </product-form>
+  {%- endif -%}
+</div>
+
+<script>
+  // React for the design runtime comes from theme assets, not unpkg (the runtime maps
+  // its CDN URLs through window.__resources and then skips its own page re-fetch).
+  window.__resources = window.__resources || {};
+  window.__resources['https://unpkg.com/react@18.3.1/umd/react.production.min.js'] = {{ 'fwq-react.production.min.js' | asset_url | json }};
+  window.__resources['https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js'] = {{ 'fwq-react-dom.production.min.js' | asset_url | json }};
+  window.FWQK_PLAN = {{ section.settings.selling_plan_id | json }};
+</script>
+<script src="{{ 'fwq-kaching.js' | asset_url }}" async></script>
+<script src="{{ 'fwq-dc-runtime.js' | asset_url }}" async></script>
+
+{% schema %}
+{
+  "name": "FreshWipes quiz",
+  "tag": "div",
+  "class": "freshwipes-quiz-section",
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Generated from the approved Claude Design export. Kaching Bundles owns deal, price, selling plan and gifts."
+    },
+    {
+      "type": "text",
+      "id": "deal_bundle_1",
+      "label": "Bundle 1 (2 jars) deal ID",
+      "default": "f040c6e7-5e2a-4829-beb2-20ffae287ddd"
+    },
+    {
+      "type": "text",
+      "id": "deal_bundle_2",
+      "label": "Bundle 2 (4 jars) deal ID",
+      "default": "179eaa84-019d-42c9-9d03-35e2b1bcacab"
+    },
+    {
+      "type": "text",
+      "id": "selling_plan_id",
+      "label": "Routine Care selling plan ID",
+      "info": "Reported in analytics only; Kaching applies the plan.",
+      "default": "10423959819"
+    }
+  ],
+  "presets": [
+    {
+      "name": "FreshWipes quiz"
+    }
+  ]
+}
+{% endschema %}
