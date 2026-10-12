@@ -1,0 +1,36 @@
+/* FreshWipes quiz lander — page-level styles (sections/freshwipes-quiz.liquid).
+   Component styles come from the approved design's own <helmet> CSS, injected by the
+   design runtime. This file only covers what the theme page needs around it. */
+
+/* Geist, self-hosted (same files as the EyeWipes/FreshWipes landers); the design asks for 'Geist' */
+@font-face{font-family:"Geist";src:url("ewpl-geist-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist";src:url("ewpl-geist-medium.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist";src:url("ewpl-geist-semibold.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist";src:url("ewpl-geist-bold.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist";src:url("ewpl-geist-extrabold.woff2") format("woff2");font-weight:800;font-style:normal;font-display:swap}
+
+/* the approved design has its own header; no theme header, announcement bar or footer */
+body:has(#freshwipes-quiz) .shopify-section-group-header-group,
+body:has(#freshwipes-quiz) .shopify-section-group-footer-group,
+body:has(#freshwipes-quiz) #shopify-section-header,
+body:has(#freshwipes-quiz) #shopify-section-footer,
+body:has(#freshwipes-quiz) .announcement-bar,
+body:has(#freshwipes-quiz) #shopify-section-scroll-to-top-btn,
+body:has(#freshwipes-quiz) #shopify-section-promo-popup,
+body:has(#freshwipes-quiz) #shopify-section-global-music-player{display:none!important}
+body:has(#freshwipes-quiz) main#MainContent{padding:0!important;margin:0!important}
+body:has(#freshwipes-quiz){overflow-x:hidden;background:#FFFFFF;margin:0;font-family:'Geist','Helvetica Neue',Helvetica,Arial,sans-serif;color:#121212;-webkit-font-smoothing:antialiased}
+
+/* the runtime's full-page sizing is for standalone design previews, not a theme page */
+html:has(#freshwipes-quiz),body:has(#freshwipes-quiz){height:auto!important}
+#freshwipes-quiz #dc-root,#freshwipes-quiz #dc-root>.sc-host{height:auto!important}
+
+/* raw template is never shown; the static first screen stays until the quiz has mounted */
+#freshwipes-quiz x-dc{display:none!important}
+#freshwipes-quiz:has(#dc-root > *) .fwq-boot{display:none}
+#freshwipes-quiz .fwq-boot .wrap{max-width:560px;margin:0 auto;padding:0 20px;box-sizing:border-box;width:100%}
+#freshwipes-quiz .fwq-boot .lede{margin:0;font-size:16px;line-height:1.55;color:rgba(18,18,18,.72)}
+#freshwipes-quiz .fwq-boot img{max-width:100%}
+
+/* Kaching's widget + the theme product form: functional, never painted */
+#fwq-commerce{position:absolute!important;width:1px!important;height:1px!important;margin:-1px!important;padding:0!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;clip-path:inset(50%)!important;white-space:nowrap!important;border:0!important}
