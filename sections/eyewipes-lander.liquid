@@ -408,7 +408,7 @@
         <div class="of-top">
           <div class="of-gal" style="display:flex;flex-direction:column;gap:10px;min-width:0">
             <div class="of-main" style="position:relative;width:100%;border-radius:18px;overflow:hidden;background:#EAF6FD">
-              <img data-ewld-gal-main src="{{ img_b2 }}" alt="Buy 2 Get 2 Free: four jars of VetPets EyeWipes with the free Tear Stain Comb, Bright Eyes Guide and Routine Tracker" width="1254" height="1254" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block">
+              <img data-ewld-gal-main src="{{ img_b2 }}" alt="Buy 2 Get 2 Free: four jars of VetPets EyeWipes with the free Tear Stain Comb, Bright Eyes Guide and Routine Tracker" width="1254" height="1254" loading="eager" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block">
             </div>
             <div role="tablist" aria-label="Product images" style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px">
               {%- assign gal_srcs = 'ewld-bundle-b2g2.webp|ewof-pdp-2-daily-care.webp|ewof-pdp-4-textured-pad.webp|ewof-pdp-6-three-steps.webp|ewof-pdp-8-ingredients.webp' | split: '|' -%}
@@ -570,7 +570,8 @@
 </div>
 </div>
 
-<script src="{{ 'eyewipes-lander.js' | asset_url }}" defer="defer"></script>
+{%- render 'ewld-instant-offer' -%}
+<script src="{{ 'eyewipes-lander.js' | asset_url }}" async></script>
 
 {% schema %}
 {

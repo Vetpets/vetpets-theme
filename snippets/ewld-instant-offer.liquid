@@ -1,0 +1,104 @@
+{%- comment -%}
+  EyeWipes lander — instant offer paint (rendered at the end of sections/eyewipes-lander.liquid).
+
+  Kaching's widget only renders after the page's DOMContentLoaded, which on the live
+  storefront can take many seconds. This inline script paints the picker straight away
+  from Kaching's OWN server-rendered data (deal-block settings, product JSON, app config),
+  picking the A/B variant exactly the way Kaching does (kaching_session_id bucket against
+  abTestVariantRange; if the visitor has no id yet it is created with the same key and the
+  same random UUID Kaching would create, so Kaching adopts it).
+
+  Prices painted here are provisional and come only from Kaching's config; they are
+  replaced by the price Kaching renders, and the add-to-cart button stays disabled until
+  Kaching is ready (assets/eyewipes-lander.js). No cart state is touched here.
+{%- endcomment -%}
+<script>
+(function () {
+  var root = document.getElementById('eyewipes-lander');
+  if (!root) return;
+  try {
+    var host = root.querySelector('.ewld-kaching');
+    var J = function (el) { try { return el ? JSON.parse(el.textContent) : null; } catch (e) { return null; } };
+    var mainP = J(host && host.querySelector('script.kaching-bundles-product[data-main]'));
+    var cfg = J(document.getElementById('kaching-bundles-config')) || {};
+    var blocks = mainP ? Array.prototype.slice.call(host.querySelectorAll('script.kaching-bundles-deal-block-settings[data-product-id="' + mainP.id + '"]')).map(J).filter(Boolean) : [];
+    if (!blocks.length) { root.setAttribute('data-offer', 'approved'); return; }
+
+    // Kaching's own visitor id and bucket
+    var store; try { localStorage.setItem('ewld_t', '1'); localStorage.removeItem('ewld_t'); store = localStorage; } catch (e) { store = sessionStorage; }
+    var sid = store.getItem('kaching_session_id');
+    if (!sid) {
+      sid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : '10000000-1000-4000-8000-100000000000'.replace(/[018]/g, function (c) { return (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16); });
+      store.setItem('kaching_session_id', sid);
+    }
+    var bucket = Math.floor(parseInt(sid.replace(/-/g, '').slice(0, 4), 16) % 256 * 100 / 256);
+    var block = blocks.filter(function (b) { var r = b.abTestVariantRange; return r && bucket >= r[0] && bucket < r[1]; })[0] || blocks[0];
+
+    var ids = (root.getAttribute('data-deal-ids') || '').split('|');
+    var bars = ids.map(function (id) { return block.dealBars.filter(function (b) { return b.id === id; })[0]; });
+    if (bars.some(function (b) { return !b; })) { root.setAttribute('data-offer', 'approved'); return; }
+
+    var gid = function (g) { return g ? String(g).split('/').pop() : ''; };
+    var APPROVED = [['10924335169803', '10926446313739'], ['10919296729355', '10924335169803', '10926446313739']];
+    var approved = bars.every(function (b, i) {
+      var got = (b.freeGifts || []).map(function (g) { return gid(g.productGID); }).filter(Boolean).sort().join(',');
+      return b.title.trim().toLowerCase() === 'the clear eyes transformation kit' && got === APPROVED[i].slice().sort().join(',');
+    });
+
+    // provisional prices from Kaching's config (USD market only; otherwise wait for Kaching)
+    var v = mainP.variants && mainP.variants[0];
+    var fmt = cfg.moneyFormat || '';
+    var rate = cfg.currencyRate == null ? 1 : +cfg.currencyRate;
+    var money = function (n) {
+      return fmt.replace(/\{\{\s*amount\s*\}\}/, n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+    };
+    var canPrice = v && rate === 1 && /\{\{\s*amount\s*\}\}/.test(fmt);
+    var tiers = root.querySelectorAll('[data-ewld-tier]');
+    bars.forEach(function (b, i) {
+      var el = tiers[i]; if (!el) return;
+      if (canPrice && b.discountType === 'specific') {
+        var one = +b.discountValue;
+        var plan = (v.sellingPlans || []).filter(function (p) { return String(p.id) === gid(b.sellingPlanGid); })[0];
+        var sub = plan && v.price ? one * plan.price / v.price : null;
+        if (sub != null && block.priceRounding && block.priceRoundingPrecision === '.00') sub = Math.ceil(sub - 1e-9);
+        el.setAttribute('data-early-one', money(one));
+        if (sub != null) el.setAttribute('data-early-sub', money(sub));
+        if (block.useProductCompareAtPrice && v.compareAtPrice) el.setAttribute('data-early-compare', money(v.compareAtPrice * b.quantity / 100));
+        var p = el.querySelector('[data-ewld-price]'), c = el.querySelector('[data-ewld-compare]');
+        if (p) p.textContent = el.getAttribute('data-early-sub') || el.getAttribute('data-early-one') || '';
+        if (c) c.textContent = el.getAttribute('data-early-compare') || '';
+      }
+      if (approved) return;
+      // Not the approved offer: show this variant's own offer text from Kaching's config.
+      var set = function (sel, t) { var n = el.querySelector(sel); if (n) n.textContent = t || ''; };
+      set('[data-ewld-title]', b.title.trim());
+      set('[data-ewld-sub]', b.label);
+      set('[data-ewld-badge]', b.badgeText);
+      set('[data-ewld-tagline]', b.subtitle);
+      var gifts = (b.freeGifts || []).filter(function (g) { return !g.applyOnlyForSubscriptions; });
+      var products = gifts.filter(function (g) { return g.productGID; }).length;
+      set('[data-ewld-gift-badge]', products ? '🎁 +' + products + ' FREE gift' + (products === 1 ? '' : 's') : '');
+      var gb = el.querySelector('[data-ewld-gift-badge]'); if (gb) gb.style.display = products ? '' : 'none';
+      var list = el.querySelector('[data-ewld-gift-list]');
+      if (list) {
+        list.innerHTML = '';
+        (b.freeGifts || []).forEach(function (g) {
+          var row = document.createElement('span');
+          row.style.cssText = 'display:flex;align-items:center;gap:10px;min-height:38px';
+          var lab = document.createElement('span');
+          lab.style.cssText = 'font-size:13.5px;font-weight:700;line-height:1.3';
+          lab.textContent = String(g.text || '').replace(/^\+\s*/, '');
+          row.appendChild(lab); list.appendChild(row);
+        });
+      }
+      el.setAttribute('data-cta', 'Add to cart →');
+    });
+    root.setAttribute('data-offer', approved ? 'approved' : 'kaching');
+    if (!approved) {
+      var lbl = root.querySelector('[data-ewld-cta-label]'); if (lbl) lbl.textContent = 'Add to cart →';
+    }
+  } catch (e) {
+    root.setAttribute('data-offer', 'approved');
+  }
+})();
+</script>

@@ -118,6 +118,7 @@
       el.setAttribute('data-alt', kField(i, '.kaching-bundles__bar-title') + ' — ' + kField(i, '.kaching-bundles__bar-label'));
       var ti = el.querySelector('[data-ewld-tier-img]');
       if (ti) ti.src = kImg.src;
+      root.setAttribute('data-kimg', 'ready');
     }
     var rows = kGiftRows(i);
     var products = rows.filter(function (r) { return !GIFT_RX.ship.test(giftText(r)); }).length;
@@ -182,6 +183,7 @@
   var thumbs = $$('[data-ewld-thumb]');
   var disclosure = $('[data-pfd-disclosure]');
   var ready = false;
+  var queued = false;
 
   function paint() {
     tiers.forEach(function (el) {
@@ -192,8 +194,10 @@
       el.setAttribute('aria-expanded', sel || preview ? 'true' : 'false');
       var p = el.querySelector('[data-ewld-price]');
       var c = el.querySelector('[data-ewld-compare]');
-      if (p) p.textContent = kPrice(i);
-      if (c) c.textContent = kCompare(i);
+      // Kaching's rendered price once ready; until then the provisional price painted from
+      // Kaching's own config by snippets/ewld-instant-offer.liquid (button stays disabled).
+      if (p) p.textContent = kPrice(i) || el.getAttribute(state.routine ? 'data-early-sub' : 'data-early-one') || '';
+      if (c) c.textContent = kCompare(i) || el.getAttribute('data-early-compare') || '';
     });
     if (routineBtn) routineBtn.setAttribute('aria-checked', state.routine ? 'true' : 'false');
     root.setAttribute('data-tier', String(state.tier));
@@ -201,7 +205,7 @@
 
     var t = tiers.filter(function (el) { return +el.getAttribute('data-ewld-tier') === state.tier; })[0];
     if (t) {
-      if (ctaLabel) ctaLabel.textContent = t.getAttribute('data-cta');
+      if (ctaLabel) ctaLabel.textContent = queued ? 'Loading…' : t.getAttribute('data-cta');
       // gallery: slot 0 is always the selected bundle image
       if (thumbs[0]) {
         thumbs[0].setAttribute('data-src', t.getAttribute('data-img'));
@@ -227,7 +231,7 @@
     }
     // PayFac disclosure: only while Routine Care is on, amounts straight from Kaching's bar
     if (disclosure) {
-      disclosure.hidden = !state.routine || !kPrice(state.tier);
+      disclosure.hidden = !ready || !state.routine || !kPrice(state.tier);
       var today = disclosure.querySelector('[data-pfd-today]');
       var rec = disclosure.querySelector('[data-pfd-recurring]');
       if (today) today.textContent = kPrice(state.tier);
@@ -270,6 +274,8 @@
       if (!ready) {
         ready = true;
         root.setAttribute('data-kaching', 'ready');
+        var ew = $('.ewld-form-host .product-form__error-message-wrapper');
+        if (ew) ew.hidden = true; // Kaching arrived after the slow-load notice
         driveKaching();
       }
       // Kaching's controls are driven by the approved picker; keep them out of the tab order
@@ -278,6 +284,7 @@
       });
       applyOfferMode();
       paint();
+      if (queued) { queued = false; setTimeout(function () { atc.click(); }, 300); }
     }, 60);
   }
   if (kHost && 'MutationObserver' in window) {
@@ -288,6 +295,7 @@
   setTimeout(function () {
     if (ready) return;
     root.setAttribute('data-kaching', 'failed');
+    if (queued) { queued = false; if (ctaLabel) ctaLabel.textContent = 'Add to cart →'; }
     showError('We couldn’t load the offer. Please refresh the page and try again.');
   }, 15000);
 
@@ -344,7 +352,15 @@
   var retries = 0;
   if (atc) {
     atc.addEventListener('click', function (e) {
-      if (pending || !ready) { e.preventDefault(); e.stopImmediatePropagation(); return; }
+      if (pending) { e.preventDefault(); e.stopImmediatePropagation(); return; }
+      // Kaching not rendered yet (it waits for the page's DOMContentLoaded): hold the click
+      // and submit the moment Kaching is ready — never a cart without Kaching's rewrite.
+      if (!ready) {
+        e.preventDefault(); e.stopImmediatePropagation();
+        queued = true; atc.setAttribute('aria-busy', 'true');
+        if (ctaLabel) ctaLabel.textContent = 'Loading…';
+        return;
+      }
       // Kaching must hold exactly the bundle + purchase type the shopper sees
       if (!inSync()) {
         e.preventDefault(); e.stopImmediatePropagation();
@@ -546,5 +562,7 @@
     });
   }
 
+  // The button is usable straight away; clicks before Kaching is ready are queued (above).
+  if (atc) atc.disabled = false;
   paint();
 })();
