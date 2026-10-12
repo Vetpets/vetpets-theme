@@ -1169,8 +1169,8 @@ class Component extends DCLogic {
     // ---------- offer ----------
     const rec = 1;
     const tier = st.tier === 0 || st.tier === 1 ? st.tier : rec;
-    const G_EBOOK = { label: 'FREE E-book: The Toothbrush-Free Method', desc: "Your dog's complete guide to clean teeth and healthy gums.", img: FQ_SHOP + 'Kaching-Bundles-DigitalProduct_2FreshBreathin30Days.png?v=1777459254' };
-    const G_TRACK = { label: 'FREE Plaque Tracker', desc: '21-day habit tracker to keep your routine consistent.', img: FQ_SHOP + 'ROUTINETRACKER.pdf_1.png?v=1776102536' };
+    const G_EBOOK = { label: 'FREE E-book: The Toothbrush-Free Method', desc: "Your dog's complete guide to clean teeth and healthy gums.", img: FQ_SHOP + 'Kaching-Bundles-DigitalProduct_2FreshBreathin30Days.png?v=1777459254&width=120' };
+    const G_TRACK = { label: 'FREE Plaque Tracker', desc: '21-day habit tracker to keep your routine consistent.', img: FQ_SHOP + 'ROUTINETRACKER.pdf_1.png?v=1776102536&width=120' };
     const G_TOY = { label: 'FREE Dental Chew Toy', desc: 'Textured ball that scrubs teeth during playtime.', img: './assets/fq-gift-dental-chew-toy.webp' };
     const gifts = [G_EBOOK, G_TRACK];
     const giftsB2 = [G_EBOOK, G_TRACK, G_TOY];
@@ -1286,8 +1286,8 @@ class Component extends DCLogic {
       ex, tried, support: [], hasSupport: false, supportTitle: '',
       demoTitle: DEMO[goal].t,
       clips: DEMO[goal].order.map(i => [
-        { src: FQ_SHOP + 'fw-adv-M5-tooth.mp4?v=1790608649', poster: FQ_SHOP + 'fw-adv-M5-poster.png?v=1790608662', title: 'What builds up along the gumline', caption: 'Where plaque and food debris collect, and where the wipe goes.' },
-        { src: FQ_SHOP + 'fw-adv-M7-smooth-vs-textured.mp4?v=1790608649', poster: FQ_SHOP + 'fw-adv-M7-poster.png?v=1790608662', title: "Why FreshWipes isn't just another wipe", caption: 'A smooth surface slides over the tooth. The texture helps lift what\u2019s there.' }
+        { src: FQ_SHOP + 'fw-adv-M5-tooth.mp4?v=1790608649', poster: FQ_SHOP + 'fw-adv-M5-poster.png?v=1790608662&width=900', title: 'What builds up along the gumline', caption: 'Where plaque and food debris collect, and where the wipe goes.' },
+        { src: FQ_SHOP + 'fw-adv-M7-smooth-vs-textured.mp4?v=1790608649', poster: FQ_SHOP + 'fw-adv-M7-poster.png?v=1790608662&width=900', title: "Why FreshWipes isn't just another wipe", caption: 'A smooth surface slides over the tooth. The texture helps lift what\u2019s there.' }
       ][i]).map((cl, i) => Object.assign(cl, { playing: !!st.playing[i], idle: !st.playing[i], playLabel: 'Play video: ' + cl.title, onPlay: (e) => this._playClip(i, e) })),
       steps: [
         { slotId: 'fq-step-1', num: 'STEP 1', title: 'Slip it on', text: 'One soft wipe over your finger.', img: './assets/gen-step1.jpg' },

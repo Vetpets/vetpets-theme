@@ -77,6 +77,14 @@ def main():
     lg = sub1(lg, "src: (p['ugc' + i + 'Url'] || '').trim(),",
               "src: (p['ugc' + i + 'Url'] || '').trim() || FQ_UGC_DEF[i - 1][3] || '',", 'UGC src')
 
+    # performance only: let Shopify's CDN resize the large PNGs (same images; a 3.6 MB
+    # e-book PNG is shown at 38 px, the demo posters are ~4.5 MB)
+    for name, w in (('Kaching-Bundles-DigitalProduct_2FreshBreathin30Days.png?v=1777459254', 120),
+                    ('ROUTINETRACKER.pdf_1.png?v=1776102536', 120),
+                    ('fw-adv-M5-poster.png?v=1790608662', 900),
+                    ('fw-adv-M7-poster.png?v=1790608662', 900)):
+        lg = sub1(lg, name + "'", name + "&width=%d'" % w, name)
+
     # prices from Kaching
     a = lg.index('    const mk = (pre, d) => {')
     b = lg.index('    };', a) + len('    };')
