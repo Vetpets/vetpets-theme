@@ -274,6 +274,8 @@
       if (!ready) {
         ready = true;
         root.setAttribute('data-kaching', 'ready');
+        var ew = $('.ewld-form-host .product-form__error-message-wrapper');
+        if (ew) ew.hidden = true; // Kaching arrived after the slow-load notice
         driveKaching();
       }
       // Kaching's controls are driven by the approved picker; keep them out of the tab order
