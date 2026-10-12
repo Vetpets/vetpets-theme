@@ -564,8 +564,16 @@
    * cancel-savings (step 7), the one standalone offer screen, rather than
    * cancel-offer (step 6, "Adjust your routine"), which no longer shows
    * the offer at all.
+   *
+   * cancellation_started opens the journey on step 1 (cancel-choose), the
+   * flow's only entry: every customer who enters the cancel flow is counted,
+   * whichever step they leave on — founder decision 2026-10-12 ("in the
+   * flow and did not cancel" is a save). cancel-reason keeps it too, as the
+   * fallback if the step-1 beacon failed; with a journey already held it
+   * reuses that one and the server dedups the event.
    */
   var RETENTION_SCREEN_EVENTS = {
+    'cancel-choose': 'cancellation_started',
     'cancel-reason': 'cancellation_started',
     'cancel-alt': 'longer_gap_reached',
     'cancel-savings': 'offer_shown',
