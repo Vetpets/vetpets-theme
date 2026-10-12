@@ -217,7 +217,9 @@
     }
     thumbs.forEach(function (b, n) { b.setAttribute('aria-selected', n === state.gal ? 'true' : 'false'); });
     var g = thumbs[state.gal];
-    if (galMain && g && galMain.getAttribute('src') !== g.getAttribute('data-src')) {
+    // variant without the approved images: slot 0 has no image until Kaching renders its bar
+    var slot0Pending = state.gal === 0 && root.getAttribute('data-offer') === 'kaching' && root.getAttribute('data-kimg') !== 'ready';
+    if (galMain && g && !slot0Pending && galMain.getAttribute('src') !== g.getAttribute('data-src')) {
       galMain.setAttribute('src', g.getAttribute('data-src'));
       galMain.setAttribute('alt', g.getAttribute('data-alt'));
     }
@@ -274,6 +276,8 @@
       if (!ready) {
         ready = true;
         root.setAttribute('data-kaching', 'ready');
+        var ew = $('.ewld-form-host .product-form__error-message-wrapper');
+        if (ew) ew.hidden = true; // Kaching arrived after the slow-load notice
         driveKaching();
       }
       // Kaching's controls are driven by the approved picker; keep them out of the tab order
