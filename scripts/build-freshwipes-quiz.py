@@ -85,6 +85,27 @@ def main():
                     ('fw-adv-M7-poster.png?v=1790608662', 900)):
         lg = sub1(lg, name + "'", name + "&width=%d'" % w, name)
 
+    # ---- quiz answers: nothing preselected (founder request 2026-10-12) ----
+    # The count question used to preselect "1" for a named pet; every option now starts
+    # neutral and is only marked after the user picks it.
+    lg = sub1(lg, "const isOn = (k, v, dflt) => st.picked ? st.picked === v : (a[k] ? a[k] === v : v === dflt);",
+              "const isOn = (k, v) => st.picked ? st.picked === v : (a[k] != null && a[k] === v);", 'isOn')
+    lg = sub1(lg, "isOn('count', v, c.named ? '1' : null)", "isOn('count', v)", 'count default')
+    # Loading the quiz is a fresh start: answers from an earlier load of this tab are cleared
+    # (no restored or demo answers). Back/forward inside the quiz keeps chosen answers.
+    lg = sub1(lg, "if ((p.previewStep ?? 'quiz') === 'result') this._applyPreview(); else this._restore();",
+              "if ((p.previewStep ?? 'quiz') === 'result') this._applyPreview(); else this._freshStart();", 'restore on load')
+    lg = sub1(lg, "  _restore() {",
+              "  _freshStart() {\n"
+              "    try { sessionStorage.removeItem(FQ_STORE); FQ_STORE_LEGACY.forEach(k => sessionStorage.removeItem(k)); } catch (e) {}\n"
+              "    this.setState({ names: [''], a: {}, stepKey: 'dogs', editing: false, migrated: false, picked: null, tier: null, routine: true });\n"
+              "  }\n"
+              "  _restore() {", '_restore method')
+    # Browser back/forward can never land past the first unanswered question.
+    lg = sub1(lg, "const key = k === 'result' && !this._ready() ? this._firstOpen(this.state.names, this.state.a) : k;",
+              "const first = this._firstOpen(this.state.names, this.state.a), st0 = this._steps();\n"
+              "        const key = k === 'result' ? (this._ready() ? 'result' : first) : (first !== 'result' && st0.indexOf(k) > st0.indexOf(first) ? first : k);", 'popstate guard')
+
     # prices from Kaching
     a = lg.index('    const mk = (pre, d) => {')
     b = lg.index('    };', a) + len('    };')

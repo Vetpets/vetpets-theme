@@ -861,6 +861,10 @@ class Component extends DCLogic {
     const stepKey = s.stepKey === 'result' ? this._firstOpen(names, a) : (steps.includes(s.stepKey) ? s.stepKey : this._firstOpen(names, a));
     this.setState({ names, a, stepKey, migrated: !!s.migrated && stepKey !== 'result', tier: s.tier === 0 || s.tier === 1 ? s.tier : null, routine: s.routineOptOut !== true });
   }
+  _freshStart() {
+    try { sessionStorage.removeItem(FQ_STORE); FQ_STORE_LEGACY.forEach(k => sessionStorage.removeItem(k)); } catch (e) {}
+    this.setState({ names: [''], a: {}, stepKey: 'dogs', editing: false, migrated: false, picked: null, tier: null, routine: true });
+  }
   _restore() {
     try {
       const raw = sessionStorage.getItem(FQ_STORE);
@@ -1009,13 +1013,14 @@ class Component extends DCLogic {
     hookK();
     this._syncSrc();
     const p = this.props || {};
-    if ((p.previewStep ?? 'quiz') === 'result') this._applyPreview(); else this._restore();
+    if ((p.previewStep ?? 'quiz') === 'result') this._applyPreview(); else this._freshStart();
     setTimeout(() => { try { history.replaceState({ fwq: this.state.stepKey }, ''); } catch (e) {} }, 0);
     this._onPop = (e) => {
       const k = e.state && e.state.fwq;
       if (k) {
         if (this._t) clearTimeout(this._t);
-        const key = k === 'result' && !this._ready() ? this._firstOpen(this.state.names, this.state.a) : k;
+        const first = this._firstOpen(this.state.names, this.state.a), st0 = this._steps();
+        const key = k === 'result' ? (this._ready() ? 'result' : first) : (first !== 'result' && st0.indexOf(k) > st0.indexOf(first) ? first : k);
         this.setState({ stepKey: key, picked: null, editing: false }); window.scrollTo(0, 0);
       }
     };
@@ -1078,12 +1083,12 @@ class Component extends DCLogic {
       bg: on ? '#EAF7FD' : '#FFFFFF', border: on ? '#47B5E9' : 'rgba(71,181,233,.28)', dot: on ? '#47B5E9' : '#FFFFFF',
       radius: '50%', onPick
     });
-    const isOn = (k, v, dflt) => st.picked ? st.picked === v : (a[k] ? a[k] === v : v === dflt);
+    const isOn = (k, v) => st.picked ? st.picked === v : (a[k] != null && a[k] === v);
     const diffLabel = (v) => v === 'resists' ? c.subj + ' ' + c.verb + ' the toothbrush' : FQ_DIFF[v].label;
     const QD = {
       goal: { title: 'What would you most like to improve for ' + c.N + '?', helper: 'Pick the one that matters most.', options: FQ_GO.map(v => opt(FQ_GOAL[v].label, isOn('goal', v), () => this._pickSingle('goal', v))) },
       difficulty: { title: 'What has made dental care difficult?', helper: 'Pick the closest.', options: FQ_DO.map(v => opt(diffLabel(v), isOn('difficulty', v), () => this._pickSingle('difficulty', v))) },
-      count: { title: 'How many pets will share the routine?', helper: 'This sets the size of your kit.', options: ['1', '2', '3'].map(v => opt(FQ_COUNT[v].label, isOn('count', v, c.named ? '1' : null), () => this._pickSingle('count', v))) }
+      count: { title: 'How many pets will share the routine?', helper: 'This sets the size of your kit.', options: ['1', '2', '3'].map(v => opt(FQ_COUNT[v].label, isOn('count', v), () => this._pickSingle('count', v))) }
     };
     const qd = QD[key] || QD.goal;
     const q = { screenLabel: 'Question ' + (idx + 1) + ' — ' + key, eyebrow, title: qd.title, helper: qd.helper, options: qd.options, multi: false, contBg: '#47B5E9', contDisabled: 'false', onContinue: () => {} };
