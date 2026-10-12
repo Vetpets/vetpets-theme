@@ -96,6 +96,10 @@
     root.setAttribute('data-offer', approved ? 'approved' : 'kaching');
     if (!approved) {
       var lbl = root.querySelector('[data-ewld-cta-label]'); if (lbl) lbl.textContent = 'Add to cart →';
+      // This variant's bundle image only exists in Kaching's rendered bar; until it arrives the
+      // main gallery shows the first product image instead of an empty box.
+      var gm = root.querySelector('[data-ewld-gal-main]'), t1 = root.querySelector('[data-ewld-thumb="1"]');
+      if (gm && t1) { gm.src = t1.getAttribute('data-src'); gm.alt = t1.getAttribute('data-alt') || ''; }
     }
   } catch (e) {
     root.setAttribute('data-offer', 'approved');
