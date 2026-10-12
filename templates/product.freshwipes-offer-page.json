@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -11,9 +20,43 @@
           }
         }
       },
-      "block_order": ["kaching_bundles"],
-      "settings": {}
+      "block_order": [
+        "kaching_bundles"
+      ],
+      "settings": {
+        "announce_msg1": "Buy 2, Get 2 Free",
+        "announce_msg2": "Free Shipping with RoutineCare",
+        "announce_msg3": "Free Gifts Included",
+        "heading": "Clean Their Teeth In 30 Seconds A Day",
+        "subheading": "Textured finger wipes that lift plaque and food debris from accessible tooth surfaces and along the gumline.",
+        "picker_heading": "Choose Your Plan",
+        "rc_note": "Free shipping on every order",
+        "rc_frequency_label": "28 days",
+        "manage_subscription_url": "https://shopvetpets.com/pages/manage-subscription",
+        "deal_start": "f040c6e7-5e2a-4829-beb2-20ffae287ddd",
+        "deal_clean": "179eaa84-019d-42c9-9d03-35e2b1bcacab",
+        "deal_family": "be60c842-23bc-4d85-b7a7-8a67cddec0f7",
+        "faq_questions_evergreen": "How soon will I see a difference?\nAre FreshWipes safe for daily use, puppies and cats?\nWill this remove tartar that is already there?\nHow often should I use FreshWipes, and do I need to rinse?\nWhat if my dog hates having their mouth touched?\nHow long does one jar last, and which plan should I choose?\nWhat makes FreshWipes different from dental chews, powders and water additives?\nHow do RoutineCare and the 100-day money-back guarantee work?",
+        "faq_answers_evergreen": "You can see what the textured surface lifted away on the wipe from the very first use. How quickly the teeth look cleaner depends on how much buildup is present, how long it has been there and how consistently you keep the routine. Hardened tartar that is already bonded to the tooth needs a veterinary cleaning — FreshWipes works on the softer daily buildup before it gets to that stage.\nFreshWipes are designed for gentle use in the mouth of dogs and cats and are pH-balanced and fragrance-free. Use one fresh wipe per session and stop if your pet shows signs of pain. If you notice persistent bad breath, bleeding gums, swelling or a broken tooth, contact your veterinarian.\nNo. FreshWipes physically lifts the soft daily plaque and food debris from accessible tooth surfaces before it hardens. Tartar that has already mineralised onto the tooth can only be removed by a veterinary cleaning. Keeping the daily routine is what slows new buildup down.\nSlip one wipe over your index finger, clean the accessible outer tooth surfaces and gumline with small circular motions, then discard the wipe. No rinsing, brushing, mixing or toothpaste is needed. Consistency matters more than pressure.\nStart slowly and let your dog sniff the wipe first. Choose a calm moment, clean just a few teeth on the first attempts and reward relaxed behaviour afterward. Because the wipe sits on your finger rather than a brush handle, many owners find their dog accepts it more readily than brushing.\nEach jar holds 50 textured finger wipes — about a month of use for one dog. Start The Routine Kit is the smallest option, The Clean Smile Kit is long enough to see real results, and The Full Family Plan covers up to three pets. Actual duration depends on the number of pets and wipes used.\nChews, powders and water additives work passively around the mouth. FreshWipes is the one you physically guide across the tooth surface and along the gumline — so you can see on the wipe exactly what came off.\nRoutineCare saves 20% and includes free shipping on every recurring order. Deliveries can be skipped, changed or cancelled when needed. Your purchase is also protected by our 100-day money-back guarantee — if FreshWipes are not right for your pet, contact VetPets within 100 days of purchase for help with your refund.",
+        "faq_questions": "How soon will I see a difference?\nAre FreshWipes safe for daily use, puppies and cats?\nWill this remove tartar that is already there?\nHow often should I use FreshWipes, and do I need to rinse?\nWhat if my dog hates having their mouth touched?\nHow long does one jar last, and which plan should I choose?\nWhat makes FreshWipes different from dental chews, powders and water additives?\nHow do RoutineCare and the 100-day money-back guarantee work?",
+        "faq_answers": "You can see what the textured surface lifted away on the wipe from the very first use. How quickly the teeth look cleaner depends on how much buildup is present, how long it has been there and how consistently you keep the routine. Hardened tartar that is already bonded to the tooth needs a veterinary cleaning — FreshWipes works on the softer daily buildup before it gets to that stage.\nFreshWipes are designed for gentle use in the mouth of dogs and cats and are pH-balanced and fragrance-free. Use one fresh wipe per session and stop if your pet shows signs of pain. If you notice persistent bad breath, bleeding gums, swelling or a broken tooth, contact your veterinarian.\nNo. FreshWipes physically lifts the soft daily plaque and food debris from accessible tooth surfaces before it hardens. Tartar that has already mineralised onto the tooth can only be removed by a veterinary cleaning. Keeping the daily routine is what slows new buildup down.\nSlip one wipe over your index finger, clean the accessible outer tooth surfaces and gumline with small circular motions, then discard the wipe. No rinsing, brushing, mixing or toothpaste is needed. Consistency matters more than pressure.\nStart slowly and let your dog sniff the wipe first. Choose a calm moment, clean just a few teeth on the first attempts and reward relaxed behaviour afterward. Because the wipe sits on your finger rather than a brush handle, many owners find their dog accepts it more readily than brushing.\nEach jar holds 50 textured finger wipes — about a month of use for one dog. Start The Routine Kit is the smallest option, The Clean Smile Kit is long enough to see real results, and The Full Family Plan covers up to three pets. Actual duration depends on the number of pets and wipes used.\nChews, powders and water additives work passively around the mouth. FreshWipes is the one you physically guide across the tooth surface and along the gumline — so you can see on the wipe exactly what came off.\nRoutineCare saves 20% and includes free shipping on every recurring order. Deliveries can be skipped, changed or cancelled when needed. Your purchase is also protected by our 100-day money-back guarantee — if FreshWipes are not right for your pet, contact VetPets within 100 days of purchase for help with your refund."
+      }
+    },
+    "custom_liquid_gKK78n": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "custom_liquid": "<style>\n.vp-new5{display:block;width:100%;margin:0 0 12px;padding:12px 14px;border:1.5px dashed #13B6B5;border-radius:12px;background:#F0FBFB;color:#0F5F5E;font:700 15px/1.3 inherit;text-align:center;cursor:pointer}\n.vp-new5.is-on{border-style:solid;background:#13B6B5;color:#fff;cursor:default}\n</style>\n<script>\n(function(){\n  var CODE='NEWHERE5', KEY='vp_new5_applied';\n  function label(on){return on?'✓ 5% off applied — you\\'ll see it at checkout':'🎉 New here? Tap for 5% off your first order';}\n  function add(block){\n    if(document.querySelector('.vp-new5')) return;\n    var host=block.closest('kaching-bundles-block')||block, b=document.createElement('button');\n    var on=false; try{on=localStorage.getItem(KEY)==='1'}catch(e){}\n    b.type='button'; b.className='vp-new5'+(on?' is-on':''); b.textContent=label(on);\n    b.addEventListener('click',function(){\n      if(b.classList.contains('is-on')) return;\n      fetch('/discount/'+CODE,{credentials:'same-origin'}).then(function(){\n        b.classList.add('is-on'); b.textContent=label(true);\n        try{localStorage.setItem(KEY,'1')}catch(e){}\n      });\n    });\n    host.parentNode.insertBefore(b,host);\n  }\n  var tries=0, t=setInterval(function(){\n    var blk=document.querySelector('.kaching-bundles__block[data-ab-test-variant=\"B\"]');\n    if(blk){clearInterval(t);add(blk);}\n    else if(++tries>40 || document.querySelector('.kaching-bundles__block[data-ab-test-variant=\"A\"]')){clearInterval(t);}\n  },250);\n})();\n</script>",
+        "color_scheme": "background-1",
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main",
+    "custom_liquid_gKK78n"
+  ]
 }
