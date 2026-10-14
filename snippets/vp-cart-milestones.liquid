@@ -6,7 +6,9 @@
       converted at Shopify's own rate (window.Shopify.currency.rate).
     - GB £37 · DK 269 kr · NO 399 kr, fixed in the local currency.
     - Subscription items ship free (Subscription Shipping Profile) and do not
-      count toward the threshold; only one-time items do.
+      count toward the threshold; only one-time items do. A cart that holds a
+      subscription shows the shipping step as done ("FREE shipping with
+      RoutineCare") so the bar never contradicts the RoutineCare promise.
   The amounts are block settings so they can follow a delivery-profile change.
 
   Gifts come with the Kaching bundle tiers. Kaching tags a gift line with a
@@ -76,7 +78,7 @@
             threshold = rate ? Math.round(+d.usd * rate) : 0;
           }
           var oneTime = +d.oneTime || 0, sub = d.sub === 'true';
-          var shipDone = oneTime === 0 ? sub : (threshold > 0 && oneTime >= threshold);
+          var shipDone = sub || (threshold > 0 && oneTime >= threshold);
           var gifts = (d.gifts || '').split('|').filter(Boolean);
           var giftsDone = gifts.length > 0;
           var showGift = giftsDone || d.eligible === 'true';
@@ -87,7 +89,7 @@
           } else if (!shipDone) {
             msg = '<strong>FREE shipping</strong> on qualifying orders';
           } else if (!showGift) {
-            msg = (oneTime === 0 ? '<strong>FREE shipping</strong> with RoutineCare' : "You've unlocked <strong>FREE shipping</strong>") + ' ✓';
+            msg = (sub ? '<strong>FREE shipping</strong> with RoutineCare' : "You've unlocked <strong>FREE shipping</strong>") + ' ✓';
           } else if (giftsDone) {
             msg = 'Unlocked: <strong>FREE shipping</strong> + <strong>free gifts</strong> 🎉';
           } else {
