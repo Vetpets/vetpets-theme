@@ -11,8 +11,9 @@
       RoutineCare") so the bar never contradicts the RoutineCare promise.
   The amounts are block settings so they can follow a delivery-profile change.
 
-  Gifts come with the Kaching bundle tiers. Kaching tags a gift line with a
-  __kaching_bundles property that has a "gift" key; those lines are the gifts.
+  Gifts come with the Kaching bundle tiers. A gift line is a line Kaching adds at
+  $0 (final price 0, original price above 0); the __kaching_bundles property
+  check missed them in Liquid, so price is the signal.
   The gift step only shows when the cart holds a product that has a gift tier
   (block setting gift_handles), so it never promises a gift that does not exist.
 
@@ -26,7 +27,7 @@
   assign vpcm_handles = block.settings.gift_handles | remove: ' ' | split: ','
   for item in cart.items
     assign vpcm_kb = item.properties['__kaching_bundles'] | default: ''
-    if vpcm_kb contains '"gift"'
+    if item.final_line_price == 0 and item.original_line_price > 0
       assign vpcm_gifts = vpcm_gifts | append: item.product.title | append: '|'
       continue
     endif
@@ -40,8 +41,10 @@
     endif
   endfor
 -%}
-{%- if cart.item_count > 0 -%}
+{%- comment -%} Style + definition always load, so a drawer refreshed by AJAX after the
+  first add-to-cart can upgrade the element (scripts inside AJAX HTML never run). {%- endcomment -%}
   <style>
+    .vpcm:empty{display:none}
     .vpcm{display:block;margin:var(--vpcm-mt,0) 0 var(--vpcm-mb,1.2rem);padding:12px 16px 8px;background:#fff;border:1px solid rgba(71,181,233,.28);border-radius:12px}
     .vpcm__msg{margin:0 0 10px;font-size:1.35rem;line-height:1.35;text-align:center;color:#121212}
     .vpcm__msg strong{font-weight:700}
@@ -107,6 +110,7 @@
       });
     })();
   </script>
+{%- if cart.item_count > 0 -%}
   <vp-cart-milestones
     class="vpcm"
     style="--vpcm-mt: {{ block.settings.margin_top | divided_by: 10.0 }}rem; --vpcm-mb: {{ block.settings.margin_bottom | divided_by: 10.0 }}rem;"
