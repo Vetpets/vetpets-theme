@@ -74,7 +74,7 @@
                 <div class="rcb-ben-t">VetPoints on every order</div>
               </div>
               <p class="rcb-ben-p">Earn 100 VetPoints with each order and unlock free rewards for your dog.</p>
-                <a href="#rcb-vetpoints" style="font-size: 14.5px; font-weight: 700; text-decoration: none;">See the rewards →</a>
+                <a href="{{ section.settings.portal_url }}" style="font-size: 14.5px; font-weight: 700; text-decoration: none;">See the rewards →</a>
             </div>
           </div>
           <div class="rcb-ben">
@@ -107,7 +107,7 @@
                 <div class="rcb-ben-t">Routine support whenever you want it</div>
               </div>
               <p class="rcb-ben-p">Questions about your dog's routine? Reply to any of our emails or contact our team. We reply within 24 hours on weekdays.</p>
-                <a href="{{ section.settings.contact_url }}" style="font-size: 14.5px; font-weight: 700; text-decoration: none;">Contact our team →</a>
+                <a href="{{ section.settings.portal_url }}" style="font-size: 14.5px; font-weight: 700; text-decoration: none;">Contact our team →</a>
             </div>
           </div>
       </div>
@@ -327,7 +327,7 @@
             <summary><span>How does the 100-day money-back guarantee work?</span><span class="rcb-pm" aria-hidden="true">+</span></summary>
             <div class="rcb-a">
               <p class="rcb-ben-p">Your first order is covered for 100 days. If you're not satisfied, contact us within 100 days and we'll give you a full refund.</p>
-              <a href="{{ section.settings.contact_url }}" style="font-size: 14.5px; font-weight: 700; text-decoration: none;">Contact our team →</a>
+              <a href="{{ section.settings.portal_url }}" style="font-size: 14.5px; font-weight: 700; text-decoration: none;">Contact our team →</a>
             </div>
           </details>
           <details>
@@ -340,11 +340,11 @@
             <summary><span>Who can I ask about my dog's routine?</span><span class="rcb-pm" aria-hidden="true">+</span></summary>
             <div class="rcb-a">
               <p class="rcb-ben-p">Our team. Reply to any of our emails or use our contact page. We reply within 24 hours on weekdays.</p>
-              <a href="{{ section.settings.contact_url }}" style="font-size: 14.5px; font-weight: 700; text-decoration: none;">Contact our team →</a>
+              <a href="{{ section.settings.portal_url }}" style="font-size: 14.5px; font-weight: 700; text-decoration: none;">Contact our team →</a>
             </div>
           </details>
       </div>
-      <p class="rcb-ben-p" style="margin-top: 6px;">More questions? <a href="{{ section.settings.faq_url }}" style="font-weight: 700;">See our full FAQ</a> or <a href="{{ section.settings.contact_url }}" style="font-weight: 700;">contact our team</a>.</p>
+      <p class="rcb-ben-p" style="margin-top: 6px;">More questions? <a href="{{ section.settings.portal_url }}" style="font-weight: 700;">See our full FAQ</a> or <a href="{{ section.settings.portal_url }}" style="font-weight: 700;">contact our team</a>.</p>
     </div>
   </section>
   <section id="rcb-closing" style="background: rgb(213, 247, 255); padding: 52px 20px 56px;">
@@ -382,15 +382,10 @@
     },
     {
       "type": "text",
-      "id": "faq_url",
-      "label": "FAQ link",
-      "default": "https://shopvetpets.com/pages/frequently-asked-questions-faq"
-    },
-    {
-      "type": "text",
-      "id": "contact_url",
-      "label": "Contact link",
-      "default": "https://shopvetpets.com/pages/contact"
+      "id": "portal_url",
+      "label": "Member portal link",
+      "default": "/pages/manage-subscription",
+      "info": "Every link except the Pet Health Profile buttons opens the member portal (Phoenix portal on Shopify)."
     }
   ],
   "presets": [
