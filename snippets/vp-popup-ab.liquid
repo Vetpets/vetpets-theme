@@ -1,0 +1,50 @@
+{%- comment -%}
+  VetPets Welcome Popup A/B test (vp_popup_ab) - config + deferred loader for assets/vp-popup-ab.js.
+  Rendered before </body> in every storefront layout (theme, the two prelander layouts and
+  theme.gempages.blank); prelander/GemPages layouts pass lander: true.
+
+  Assignment: on the first page view, Math.random() < 0.5 -> "A" else "B", stored in the
+  first-party cookie vp_popup_ab (90 days from assignment) and localStorage vp_popup_ab
+  (+ vp_popup_ab_ts, the assignment time, so a cleared cookie is restored for the same
+  90 days). Never re-assigned inside that window. popup_ab_assigned {variant} fires once,
+  at assignment.
+
+  A (control): unchanged - the popup only where the theme already renders it, the home page
+    (sections/vetpets-popup.liquid placed in templates/index.json).
+  B: the same popup on every page except cart, checkout, account and thank-you (below:
+    vpab_ex). Off the home page it is the home page's own rendered section, fetched after
+    window load at idle (once per tab session, cached in sessionStorage) and injected, so
+    offer, design, code SCRATCH5 and the vetpets_welcome_popup closed/signed-up suppression
+    are identical. Nothing is fetched while suppressed.
+    PDPs and offer pages (vpab_slow): opens at 8 s after navigation start or at 40% scroll,
+    whichever comes first. Every other B page uses the section's own trigger setting.
+
+  Measurement: the section's events carry variant (and qa: true under the override) and go
+  to Klaviyo, dataLayer (GTM) and Shopify.analytics.publish (custom pixels). On email
+  submit the Klaviyo profile gets popup_ab_variant. Cart attribute popup_ab_variant is
+  written whenever the cart lacks the visitor's arm, so orders split by arm.
+
+  QA: ?vp_popup_ab=A or ?vp_popup_ab=B forces that arm for the tab session (sessionStorage,
+  real assignment untouched); ?vp_popup_ab=clear ends it.
+{%- endcomment -%}
+{%- liquid
+  assign vpab_ex = false
+  assign vpab_segs = request.path | downcase | split: '/'
+  if request.design_mode or request.page_type == 'cart' or request.page_type == 'password' or request.page_type contains 'customers/'
+    assign vpab_ex = true
+  elsif vpab_segs contains 'cart' or vpab_segs contains 'checkout' or vpab_segs contains 'checkouts' or vpab_segs contains 'account' or vpab_segs contains 'orders' or vpab_segs contains 'thank_you' or vpab_segs contains 'thank-you'
+    assign vpab_ex = true
+  endif
+
+  assign vpab_slow = false
+  if lander or request.page_type == 'product'
+    assign vpab_slow = true
+  elsif request.page_type == 'page'
+    assign vpab_suffix = template.suffix | default: '' | downcase
+    if vpab_suffix contains 'offer' or vpab_suffix contains 'lander' or vpab_suffix contains 'landing' or vpab_suffix contains 'quiz' or vpab_suffix contains 'gp-template'
+      assign vpab_slow = true
+    endif
+  endif
+-%}
+<script type="application/json" id="vp-popup-ab-config">{"ex":{{ vpab_ex | json }},"slow":{{ vpab_slow | json }},"cart":{{ cart.attributes.popup_ab_variant | default: '' | json }},"root":{{ routes.root_url | json }},"cartUpdate":{{ routes.cart_update_url | json }}}</script>
+<script src="{{ 'vp-popup-ab.js' | asset_url }}" defer></script>

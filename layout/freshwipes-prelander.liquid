@@ -82,5 +82,6 @@
     <script src="{{ 'vp-countdown.js' | asset_url }}" defer></script>
     {%- endif -%}
     <script src="{{ 'freshwipes-prelander' | append: pl_suffix | append: '.js' | asset_url }}" defer></script>
+    {%- render 'vp-popup-ab', lander: true -%}
   </body>
 </html>
