@@ -1,0 +1,397 @@
+{%- comment -%}
+  RoutineCare benefits page. See README-routinecare-benefits.md.
+  Native build of the approved Claude Design page (project f9387acf-40a4-437b-9dd2-6f02e03df41b).
+{%- endcomment -%}
+{{ 'routinecare-benefits.css' | asset_url | stylesheet_tag }}
+<div id="routinecare-benefits" class="rcb">
+<section style="background: linear-gradient(rgb(255, 255, 255) 0%, rgb(237, 250, 255) 60%, rgb(213, 247, 255) 100%); overflow: hidden;">
+    <div class="rcb-wrap rcb-hero-grid">
+      <div class="rcb-hero-copy">
+        <span class="rcb-chip">RoutineCare membership</span>
+        <h1 style="margin: 0px; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.08; letter-spacing: -0.025em; font-weight: 700; color: rgb(26, 26, 26); text-wrap: balance;">Here is what comes with your <span class="rcb-blue">RoutineCare membership.</span></h1>
+        <p class="rcb-lede" style="max-width: 460px;">Member savings, free shipping, VetPoints and our 100-day guarantee. All of it starts with your first order.</p>
+        <a class="rcb-cta" href="#rcb-benefits">See What You Get <span aria-hidden="true">↓</span></a>
+        <div class="rcb-assure">
+          <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11" stroke="#47B5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>100-day money-back guarantee</span>
+          <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11" stroke="#47B5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>Free shipping on every delivery</span>
+        </div>
+      </div>
+      <div class="rcb-hero-img">
+        <div class="rcb-hero-fade"></div>
+        <img src="{{ 'rcb-bp-hero.webp' | asset_url }}" alt="An owner lifting a FreshWipes jar out of a delivery box while a golden retriever looks in" width="1200" height="900" fetchpriority="high" decoding="async">
+      </div>
+    </div>
+  </section>
+  <div class="rcb-mq" aria-hidden="true">
+    <div class="rcb-mq-track">
+        <div style="display: flex; align-items: center; gap: 30px; padding-right: 30px; color: rgb(255, 255, 255); font-size: 14.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap;">
+            <span style="display: flex; align-items: center; gap: 30px;"><span>20% member savings</span><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><ellipse cx="7" cy="8" rx="2.1" ry="2.7"></ellipse><ellipse cx="12" cy="6.4" rx="2.1" ry="2.7"></ellipse><ellipse cx="17" cy="8" rx="2.1" ry="2.7"></ellipse><path d="M12 11c3 0 5.2 2.4 5.2 4.7 0 1.9-1.6 2.9-3.3 2.6-.7-.1-1.3-.3-1.9-.3s-1.2.2-1.9.3c-1.7.3-3.3-.7-3.3-2.6C6.8 13.4 9 11 12 11Z"></path></svg></span>
+            <span style="display: flex; align-items: center; gap: 30px;"><span>Free shipping</span><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><ellipse cx="7" cy="8" rx="2.1" ry="2.7"></ellipse><ellipse cx="12" cy="6.4" rx="2.1" ry="2.7"></ellipse><ellipse cx="17" cy="8" rx="2.1" ry="2.7"></ellipse><path d="M12 11c3 0 5.2 2.4 5.2 4.7 0 1.9-1.6 2.9-3.3 2.6-.7-.1-1.3-.3-1.9-.3s-1.2.2-1.9.3c-1.7.3-3.3-.7-3.3-2.6C6.8 13.4 9 11 12 11Z"></path></svg></span>
+            <span style="display: flex; align-items: center; gap: 30px;"><span>VetPoints on every order</span><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><ellipse cx="7" cy="8" rx="2.1" ry="2.7"></ellipse><ellipse cx="12" cy="6.4" rx="2.1" ry="2.7"></ellipse><ellipse cx="17" cy="8" rx="2.1" ry="2.7"></ellipse><path d="M12 11c3 0 5.2 2.4 5.2 4.7 0 1.9-1.6 2.9-3.3 2.6-.7-.1-1.3-.3-1.9-.3s-1.2.2-1.9.3c-1.7.3-3.3-.7-3.3-2.6C6.8 13.4 9 11 12 11Z"></path></svg></span>
+            <span style="display: flex; align-items: center; gap: 30px;"><span>Pet Health Profile</span><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><ellipse cx="7" cy="8" rx="2.1" ry="2.7"></ellipse><ellipse cx="12" cy="6.4" rx="2.1" ry="2.7"></ellipse><ellipse cx="17" cy="8" rx="2.1" ry="2.7"></ellipse><path d="M12 11c3 0 5.2 2.4 5.2 4.7 0 1.9-1.6 2.9-3.3 2.6-.7-.1-1.3-.3-1.9-.3s-1.2.2-1.9.3c-1.7.3-3.3-.7-3.3-2.6C6.8 13.4 9 11 12 11Z"></path></svg></span>
+            <span style="display: flex; align-items: center; gap: 30px;"><span>100-day money-back guarantee</span><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><ellipse cx="7" cy="8" rx="2.1" ry="2.7"></ellipse><ellipse cx="12" cy="6.4" rx="2.1" ry="2.7"></ellipse><ellipse cx="17" cy="8" rx="2.1" ry="2.7"></ellipse><path d="M12 11c3 0 5.2 2.4 5.2 4.7 0 1.9-1.6 2.9-3.3 2.6-.7-.1-1.3-.3-1.9-.3s-1.2.2-1.9.3c-1.7.3-3.3-.7-3.3-2.6C6.8 13.4 9 11 12 11Z"></path></svg></span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 30px; padding-right: 30px; color: rgb(255, 255, 255); font-size: 14.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap;">
+            <span style="display: flex; align-items: center; gap: 30px;"><span>20% member savings</span><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><ellipse cx="7" cy="8" rx="2.1" ry="2.7"></ellipse><ellipse cx="12" cy="6.4" rx="2.1" ry="2.7"></ellipse><ellipse cx="17" cy="8" rx="2.1" ry="2.7"></ellipse><path d="M12 11c3 0 5.2 2.4 5.2 4.7 0 1.9-1.6 2.9-3.3 2.6-.7-.1-1.3-.3-1.9-.3s-1.2.2-1.9.3c-1.7.3-3.3-.7-3.3-2.6C6.8 13.4 9 11 12 11Z"></path></svg></span>
+            <span style="display: flex; align-items: center; gap: 30px;"><span>Free shipping</span><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><ellipse cx="7" cy="8" rx="2.1" ry="2.7"></ellipse><ellipse cx="12" cy="6.4" rx="2.1" ry="2.7"></ellipse><ellipse cx="17" cy="8" rx="2.1" ry="2.7"></ellipse><path d="M12 11c3 0 5.2 2.4 5.2 4.7 0 1.9-1.6 2.9-3.3 2.6-.7-.1-1.3-.3-1.9-.3s-1.2.2-1.9.3c-1.7.3-3.3-.7-3.3-2.6C6.8 13.4 9 11 12 11Z"></path></svg></span>
+            <span style="display: flex; align-items: center; gap: 30px;"><span>VetPoints on every order</span><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><ellipse cx="7" cy="8" rx="2.1" ry="2.7"></ellipse><ellipse cx="12" cy="6.4" rx="2.1" ry="2.7"></ellipse><ellipse cx="17" cy="8" rx="2.1" ry="2.7"></ellipse><path d="M12 11c3 0 5.2 2.4 5.2 4.7 0 1.9-1.6 2.9-3.3 2.6-.7-.1-1.3-.3-1.9-.3s-1.2.2-1.9.3c-1.7.3-3.3-.7-3.3-2.6C6.8 13.4 9 11 12 11Z"></path></svg></span>
+            <span style="display: flex; align-items: center; gap: 30px;"><span>Pet Health Profile</span><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><ellipse cx="7" cy="8" rx="2.1" ry="2.7"></ellipse><ellipse cx="12" cy="6.4" rx="2.1" ry="2.7"></ellipse><ellipse cx="17" cy="8" rx="2.1" ry="2.7"></ellipse><path d="M12 11c3 0 5.2 2.4 5.2 4.7 0 1.9-1.6 2.9-3.3 2.6-.7-.1-1.3-.3-1.9-.3s-1.2.2-1.9.3c-1.7.3-3.3-.7-3.3-2.6C6.8 13.4 9 11 12 11Z"></path></svg></span>
+            <span style="display: flex; align-items: center; gap: 30px;"><span>100-day money-back guarantee</span><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><ellipse cx="7" cy="8" rx="2.1" ry="2.7"></ellipse><ellipse cx="12" cy="6.4" rx="2.1" ry="2.7"></ellipse><ellipse cx="17" cy="8" rx="2.1" ry="2.7"></ellipse><path d="M12 11c3 0 5.2 2.4 5.2 4.7 0 1.9-1.6 2.9-3.3 2.6-.7-.1-1.3-.3-1.9-.3s-1.2.2-1.9.3c-1.7.3-3.3-.7-3.3-2.6C6.8 13.4 9 11 12 11Z"></path></svg></span>
+        </div>
+    </div>
+  </div>
+  <section id="rcb-benefits" style="background: rgb(255, 255, 255); padding: 56px 20px 40px; scroll-margin-top: 8px;">
+    <div class="rcb-wrap" style="display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center;">
+      <span class="rcb-chip">Your membership</span>
+      <h2 class="rcb-h2">Six things your <span class="rcb-blue">membership</span> gives you</h2>
+      <p class="rcb-lede" style="max-width: 560px;">No codes to remember. Your member benefits apply to every order.</p>
+      <div class="rcb-ben-grid" style="margin-top: 14px; text-align: left;">
+          <div class="rcb-ben">
+            <div class="rcb-ben-img"><img src="{{ 'rcb-rc-cty-benefits.webp' | asset_url }}" alt="A happy puppy in a blue dog bed next to a gift box" width="1040" height="691" loading="lazy" decoding="async"></div>
+            <div class="rcb-ben-body">
+              <div class="rcb-ben-head">
+                <div class="rcb-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12.5V4.8A1.8 1.8 0 0 1 4.8 3h7.7l8.5 8.5-9.5 9.5L3 12.5Z" fill="#47B5E9"></path><circle cx="8" cy="8" r="1.8" fill="#FFFFFF"></circle></svg></div>
+                <div class="rcb-ben-t">20% member savings</div>
+              </div>
+              <p class="rcb-ben-p">Your member price on your VetPets products, on every order. No code to enter.</p>
+            </div>
+          </div>
+          <div class="rcb-ben">
+            <div class="rcb-ben-img"><img src="{{ 'rcb-rc-cty-next.webp' | asset_url }}" alt="A dachshund sitting in an opened delivery box" width="1040" height="691" loading="lazy" decoding="async"></div>
+            <div class="rcb-ben-body">
+              <div class="rcb-ben-head">
+                <div class="rcb-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="1.5" y="5" width="13" height="10" rx="1.5" fill="#47B5E9"></rect><path d="M14.5 8h4.5l3.5 4v3h-8V8Z" fill="#47B5E9"></path><circle cx="6" cy="17.5" r="2.2" fill="#47B5E9"></circle><circle cx="18" cy="17.5" r="2.2" fill="#47B5E9"></circle></svg></div>
+                <div class="rcb-ben-t">Free shipping</div>
+              </div>
+              <p class="rcb-ben-p">Every delivery ships free, whatever the order size.</p>
+            </div>
+          </div>
+          <div class="rcb-ben">
+            <div class="rcb-ben-img"><img src="{{ 'rcb-rc-e6-points.webp' | asset_url }}" alt="A golden retriever carrying a blue chew toy next to a gift box" width="1040" height="691" loading="lazy" decoding="async"></div>
+            <div class="rcb-ben-body">
+              <div class="rcb-ben-head">
+                <div class="rcb-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.8 14.8 8.6l6.3.8-4.6 4.4 1.2 6.3L12 17l-5.7 3.1 1.2-6.3-4.6-4.4 6.3-.8L12 2.8Z" fill="#47B5E9"></path></svg></div>
+                <div class="rcb-ben-t">VetPoints on every order</div>
+              </div>
+              <p class="rcb-ben-p">Earn 100 VetPoints with each order and unlock free rewards for your dog.</p>
+                <a href="{{ section.settings.portal_url }}" style="font-size: 14.5px; font-weight: 700; text-decoration: none;">See the rewards →</a>
+            </div>
+          </div>
+          <div class="rcb-ben">
+            <div class="rcb-ben-img"><img src="{{ 'rcb-bp-profile-phone.webp' | asset_url }}" alt="A goldendoodle next to a phone showing her Pet Health Profile with care focus and suggested routine order" width="1040" height="691" loading="lazy" decoding="async"></div>
+            <div class="rcb-ben-body">
+              <div class="rcb-ben-head">
+                <div class="rcb-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><ellipse cx="7" cy="8" rx="2.1" ry="2.7" fill="#47B5E9"></ellipse><ellipse cx="12" cy="6.4" rx="2.1" ry="2.7" fill="#47B5E9"></ellipse><ellipse cx="17" cy="8" rx="2.1" ry="2.7" fill="#47B5E9"></ellipse><path d="M12 11c3 0 5.2 2.4 5.2 4.7 0 1.9-1.6 2.9-3.3 2.6-.7-.1-1.3-.3-1.9-.3s-1.2.2-1.9.3c-1.7.3-3.3-.7-3.3-2.6C6.8 13.4 9 11 12 11Z" fill="#47B5E9"></path></svg></div>
+                <div class="rcb-ben-t">A Pet Health Profile for each pet</div>
+              </div>
+              <p class="rcb-ben-p">Answer a few quick questions, with an optional photo. You get your pet's care focus and a suggested routine order.</p>
+                <a href="{{ section.settings.profile_url }}" style="font-size: 14.5px; font-weight: 700; text-decoration: none;">Build your pet's profile →</a>
+                <p class="rcb-small">General care suggestions only. Not veterinary advice or a diagnosis.</p>
+            </div>
+          </div>
+          <div class="rcb-ben">
+            <div class="rcb-ben-img"><img src="{{ 'rcb-rc-e6-timeline.webp' | asset_url }}" alt="A smiling Labrador next to a calendar with the first days marked" width="1040" height="691" loading="lazy" decoding="async"></div>
+            <div class="rcb-ben-body">
+              <div class="rcb-ben-head">
+                <div class="rcb-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2 20.5 5.3v6.5c0 5.2-3.7 9.2-8.5 11.2-4.8-2-8.5-6-8.5-11.2V5.3L12 2Z" fill="#47B5E9"></path><path d="m8 12.2 2.8 2.8 5.4-5.6" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+                <div class="rcb-ben-t">100-day money-back guarantee</div>
+              </div>
+              <p class="rcb-ben-p">Your first order is covered for 100 days. Not happy with it? Contact us for a full refund.</p>
+            </div>
+          </div>
+          <div class="rcb-ben">
+            <div class="rcb-ben-img"><img src="{{ 'rcb-rc-e2-short.webp' | asset_url }}" alt="An owner gently holding a calm dog's chin with a treat in the other hand" width="1040" height="691" loading="lazy" decoding="async"></div>
+            <div class="rcb-ben-body">
+              <div class="rcb-ben-head">
+                <div class="rcb-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 3.5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-9l-5 4v-4H4a2 2 0 0 1-2-2v-10a2 2 0 0 1 2-2Z" fill="#47B5E9"></path></svg></div>
+                <div class="rcb-ben-t">Routine support whenever you want it</div>
+              </div>
+              <p class="rcb-ben-p">Questions about your dog's routine? Reply to any of our emails or contact our team. We reply within 24 hours on weekdays.</p>
+                <a href="{{ section.settings.portal_url }}" style="font-size: 14.5px; font-weight: 700; text-decoration: none;">Contact our team →</a>
+            </div>
+          </div>
+      </div>
+    </div>
+  </section>
+  <div aria-hidden="true" style="background: rgb(255, 255, 255); line-height: 0;"><svg class="rcb-wave" viewBox="0 0 1440 64" preserveAspectRatio="none"><path d="M0 40 C240 8 480 64 720 40 C960 16 1200 56 1440 28 L1440 64 L0 64 Z" fill="#D5F7FF"></path></svg></div>
+  <section id="rcb-vetpoints" style="background: rgb(213, 247, 255); padding: 36px 20px 52px;">
+    <div class="rcb-wrap" style="display: flex; flex-direction: column; gap: 30px;">
+      <div class="rcb-pts-grid">
+        <div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
+          <span class="rcb-chip" style="background: rgb(255, 255, 255);">VetPoints</span>
+          <h2 class="rcb-h2">Every order earns <span class="rcb-blue">VetPoints</span></h2>
+          <p class="rcb-lede">You earn 100 VetPoints with every order. Reach a milestone and the reward is added to your next delivery, free.</p>
+          <div class="rcb-pts-badge"><span style="font-size: 30px; font-weight: 800; color: rgb(19, 182, 181); letter-spacing: -0.02em;">+100</span><span style="font-size: 14.5px; font-weight: 700; color: rgb(26, 26, 26);">VetPoints with every order</span></div>
+        </div>
+        <div class="rcb-pts-img"><img src="{{ 'rcb-bp-vetpoints.webp' | asset_url }}" alt="A corgi meeting a new dental chew ball in an opened delivery box" width="1200" height="900" loading="lazy" decoding="async"></div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(19, 182, 181);">Your milestone rewards</div>
+        <div class="rcb-ms">
+            <div class="rcb-ms-item rcb-ms-first">
+              <div class="rcb-ms-img">
+                <div class="rcb-ms-pts">200 pts</div>
+                <img src="https://cdn.shopify.com/s/files/1/0735/4833/3323/files/DinHundsLeendespelarocksaroll-2026-08-25T093121.612.jpg?v=1787643088&amp;width=400" alt="Dental Chew Ball" width="400" height="400" loading="lazy" decoding="async" style="transform: scale(1); transform-origin: 50% 50%;">
+              </div>
+              <div class="rcb-ms-body">
+                <div class="rcb-ms-n">Dental Chew Ball</div>
+                <div class="rcb-ms-s">After 2 orders</div>
+              </div>
+            </div>
+            <div class="rcb-ms-item">
+              <div class="rcb-ms-img">
+                <div class="rcb-ms-pts">300 pts</div>
+                <img src="https://cdn.shopify.com/s/files/1/0735/4833/3323/files/Namnlosdesign-2026-09-13T144149.823.jpg?v=1789305530&amp;width=400" alt="Bite-Resistant Duck Toy" width="400" height="400" loading="lazy" decoding="async" style="transform: scale(1); transform-origin: 50% 50%;">
+              </div>
+              <div class="rcb-ms-body">
+                <div class="rcb-ms-n">Bite-Resistant Duck Toy</div>
+                <div class="rcb-ms-s">After 3 orders</div>
+              </div>
+            </div>
+            <div class="rcb-ms-item">
+              <div class="rcb-ms-img">
+                <div class="rcb-ms-pts">500 pts</div>
+                <img src="https://cdn.shopify.com/s/files/1/0735/4833/3323/files/GloveWipes.jpg?v=1780939144&amp;width=400" alt="GloveWipes" width="400" height="400" loading="lazy" decoding="async" style="transform: scale(1.5); transform-origin: 45% 70%;">
+              </div>
+              <div class="rcb-ms-body">
+                <div class="rcb-ms-n">GloveWipes</div>
+                <div class="rcb-ms-s">After 5 orders</div>
+              </div>
+            </div>
+            <div class="rcb-ms-item">
+              <div class="rcb-ms-img">
+                <div class="rcb-ms-pts">800 pts</div>
+                <img src="https://cdn.shopify.com/s/files/1/0735/4833/3323/files/1_fd2ab80a-51df-46ec-97a6-7f684ee410fe.png?v=1786032201&amp;width=400" alt="PawFoam" width="400" height="400" loading="lazy" decoding="async" style="transform: scale(1.6); transform-origin: 50% 74%;">
+              </div>
+              <div class="rcb-ms-body">
+                <div class="rcb-ms-n">PawFoam</div>
+                <div class="rcb-ms-s">After 8 orders</div>
+              </div>
+            </div>
+            <div class="rcb-ms-item">
+              <div class="rcb-ms-img">
+                <div class="rcb-ms-pts">1,200 pts</div>
+                <img src="https://cdn.shopify.com/s/files/1/0735/4833/3323/files/Namnlosdesign-2026-08-02T164842.665.jpg?v=1785682219&amp;width=400" alt="EarWipes" width="400" height="400" loading="lazy" decoding="async" style="transform: scale(1.65); transform-origin: 45% 62%;">
+              </div>
+              <div class="rcb-ms-body">
+                <div class="rcb-ms-n">EarWipes</div>
+                <div class="rcb-ms-s">After 12 orders</div>
+              </div>
+            </div>
+            <div class="rcb-ms-item">
+              <div class="rcb-ms-img">
+                <div class="rcb-ms-pts">1,600 pts</div>
+                <img src="https://cdn.shopify.com/s/files/1/0735/4833/3323/files/1_f6e51b71-ca0e-4691-af78-04bb1e7dc797.jpg?v=1769439993&amp;width=400" alt="FurEase Brush" width="400" height="400" loading="lazy" decoding="async" style="transform: scale(1); transform-origin: 50% 50%;">
+              </div>
+              <div class="rcb-ms-body">
+                <div class="rcb-ms-n">FurEase Brush</div>
+                <div class="rcb-ms-s">After 16 orders</div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div aria-hidden="true" style="background: rgb(255, 255, 255); line-height: 0;"><svg class="rcb-wave" viewBox="0 0 1440 64" preserveAspectRatio="none"><path d="M0 28 C240 56 480 8 720 32 C960 56 1200 12 1440 36 L1440 0 L0 0 Z" fill="#D5F7FF"></path></svg></div>
+  <section id="rcb-first-weeks" style="background: rgb(255, 255, 255); padding: 40px 20px 52px;">
+    <div class="rcb-wrap" style="display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center;">
+      <span class="rcb-chip">What happens next</span>
+      <h2 class="rcb-h2">What happens in your <span class="rcb-blue">first weeks</span></h2>
+      <p class="rcb-lede" style="max-width: 560px;">You never have to work it out alone. Here is what to expect after your first order.</p>
+      <div class="rcb-steps" style="margin-top: 14px; text-align: left;">
+          <div class="rcb-step">
+            <div class="rcb-step-img">
+              <img src="{{ 'rcb-bp-week-arrive.webp' | asset_url }}" alt="A beagle sniffing a delivery box on the doormat" width="1200" height="900" loading="lazy" decoding="async">
+              <div class="rcb-step-n">1</div>
+            </div>
+            <div class="rcb-step-body">
+              <div class="rcb-step-w">In a few days</div>
+              <div class="rcb-ben-t">Your box arrives</div>
+              <p class="rcb-ben-p">Your order ships free and arrives at your door. Everything you need for your dog's routine is inside.</p>
+            </div>
+          </div>
+          <div class="rcb-step">
+            <div class="rcb-step-img">
+              <img src="{{ 'rcb-bp-week-firstgo.webp' | asset_url }}" alt="A cavalier on its owner's lap, a wipe on the owner's fingertip and a treat ready" width="1200" height="900" loading="lazy" decoding="async">
+              <div class="rcb-step-n">2</div>
+            </div>
+            <div class="rcb-step-body">
+              <div class="rcb-step-w">Your first weeks</div>
+              <div class="rcb-ben-t">Short step-by-step emails</div>
+              <p class="rcb-ben-p">We send a short step-by-step for your first wipe, then a few tips that make it easier, like what to do if your dog isn't sure yet.</p>
+            </div>
+          </div>
+          <div class="rcb-step">
+            <div class="rcb-step-img">
+              <img src="{{ 'rcb-bp-week-reply.webp' | asset_url }}" alt="A dachshund resting its chin on its owner's knee while the owner types on a laptop" width="1200" height="900" loading="lazy" decoding="async">
+              <div class="rcb-step-n">3</div>
+            </div>
+            <div class="rcb-step-body">
+              <div class="rcb-step-w">Any time</div>
+              <div class="rcb-ben-t">Reply with any question</div>
+              <p class="rcb-ben-p">Not sure about something? Just reply to one of our emails and our team will help. We reply within 24 hours on weekdays.</p>
+            </div>
+          </div>
+      </div>
+    </div>
+  </section>
+  <div aria-hidden="true" style="background: rgb(255, 255, 255); line-height: 0;"><svg class="rcb-wave" viewBox="0 0 1440 64" preserveAspectRatio="none"><path d="M0 40 C240 8 480 64 720 40 C960 16 1200 56 1440 28 L1440 64 L0 64 Z" fill="#D5F7FF"></path></svg></div>
+  <section id="rcb-reviews" style="background: rgb(213, 247, 255); padding: 36px 20px 52px;">
+    <div class="rcb-wrap" style="display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center;">
+      <span class="rcb-chip" style="background: rgb(255, 255, 255);">Real dogs, real routines</span>
+      <h2 class="rcb-h2">What pet parents are saying</h2>
+      <div class="rcb-ugc" style="margin-top: 6px;">
+          <div class="rcb-ugc-i"><img src="{{ 'rcb-ugc-pug.webp' | asset_url }}" alt="A customer's pug on a sofa with FreshWipes, EarWipes and EyeWipes jars" width="900" height="900" loading="lazy" decoding="async" style="object-position: 50% 60%;"></div>
+          <div class="rcb-ugc-i"><img src="{{ 'rcb-ugc-whitedog.webp' | asset_url }}" alt="A customer's small white dog with bows next to three VetPets jars" width="900" height="900" loading="lazy" decoding="async" style="object-position: 50% 45%;"></div>
+          <div class="rcb-ugc-i"><img src="{{ 'rcb-ugc-dachshund.webp' | asset_url }}" alt="A customer's dachshund resting beside three VetPets jars on a blue blanket" width="900" height="900" loading="lazy" decoding="async" style="object-position: 50% 50%;"></div>
+      </div>
+      <p class="rcb-small">Photos shared by VetPets customers.</p>
+      <div class="rcb-rv-grid" style="margin-top: 8px; text-align: left;">
+          <div class="rcb-rv">
+            <div class="rcb-rv-b">
+              <div aria-label="5 out of 5 stars" style="color: rgb(245, 166, 35); font-size: 16px; letter-spacing: 0.08em;">★★★★★</div>
+              <p style="margin: 0px; font-size: 15px; line-height: 1.55; color: rgb(26, 26, 26);">"My dog - who previously hated having anything done to her teeth - ABSOLUTELY LOVES these wipes. She launches into my lap when I offer her 'teeth groomies' !!"</p>
+              <div style="display: inline-flex;"><span style="background: rgb(213, 247, 255); color: rgb(46, 159, 216); font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 999px;">FreshWipes</span></div>
+              <div class="rcb-rv-tail"></div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; padding: 16px 6px 0px;">
+              <span style="font-size: 14px; font-weight: 700; color: rgb(26, 26, 26);">Samantha C.</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="#47B5E9"></circle><path d="m7.5 12.2 3 3 6-6.4" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></svg>
+              <span style="font-size: 13px; font-weight: 600; color: rgb(46, 159, 216);">Verified buyer</span>
+            </div>
+          </div>
+          <div class="rcb-rv">
+            <div class="rcb-rv-b">
+              <div aria-label="5 out of 5 stars" style="color: rgb(245, 166, 35); font-size: 16px; letter-spacing: 0.08em;">★★★★★</div>
+              <p style="margin: 0px; font-size: 15px; line-height: 1.55; color: rgb(26, 26, 26);">"It is so much easier than brushing and he doesn't mind at all. It is so satisfying to see discolouration on the wipes after use."</p>
+              <div style="display: inline-flex;"><span style="background: rgb(213, 247, 255); color: rgb(46, 159, 216); font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 999px;">FreshWipes</span></div>
+              <div class="rcb-rv-tail"></div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; padding: 16px 6px 0px;">
+              <span style="font-size: 14px; font-weight: 700; color: rgb(26, 26, 26);">Linda P.</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="#47B5E9"></circle><path d="m7.5 12.2 3 3 6-6.4" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></svg>
+              <span style="font-size: 13px; font-weight: 600; color: rgb(46, 159, 216);">Verified buyer</span>
+            </div>
+          </div>
+          <div class="rcb-rv">
+            <div class="rcb-rv-b">
+              <div aria-label="5 out of 5 stars" style="color: rgb(245, 166, 35); font-size: 16px; letter-spacing: 0.08em;">★★★★★</div>
+              <p style="margin: 0px; font-size: 15px; line-height: 1.55; color: rgb(26, 26, 26);">"My Pom loves the wipes! Way less hassle than when I used to brush her teeth. Thank you!"</p>
+              <div style="display: inline-flex;"><span style="background: rgb(213, 247, 255); color: rgb(46, 159, 216); font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 999px;">FreshWipes</span></div>
+              <div class="rcb-rv-tail"></div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; padding: 16px 6px 0px;">
+              <span style="font-size: 14px; font-weight: 700; color: rgb(26, 26, 26);">Marilu P.</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="#47B5E9"></circle><path d="m7.5 12.2 3 3 6-6.4" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></svg>
+              <span style="font-size: 13px; font-weight: 600; color: rgb(46, 159, 216);">Verified buyer</span>
+            </div>
+          </div>
+          <div class="rcb-rv">
+            <div class="rcb-rv-b">
+              <div aria-label="5 out of 5 stars" style="color: rgb(245, 166, 35); font-size: 16px; letter-spacing: 0.08em;">★★★★★</div>
+              <p style="margin: 0px; font-size: 15px; line-height: 1.55; color: rgb(26, 26, 26);">"I'd tried other types of dental cleaners for dogs and was disappointed in them, but yours really works.  Very pleased with it."</p>
+              <div style="display: inline-flex;"><span style="background: rgb(213, 247, 255); color: rgb(46, 159, 216); font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 999px;">FreshWipes</span></div>
+              <div class="rcb-rv-tail"></div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; padding: 16px 6px 0px;">
+              <span style="font-size: 14px; font-weight: 700; color: rgb(26, 26, 26);">June D.</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="#47B5E9"></circle><path d="m7.5 12.2 3 3 6-6.4" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></svg>
+              <span style="font-size: 13px; font-weight: 600; color: rgb(46, 159, 216);">Verified buyer</span>
+            </div>
+          </div>
+      </div>
+      <p class="rcb-small" style="margin-top: 4px;">One owner's experience, not a promise.</p>
+    </div>
+  </section>
+  <div aria-hidden="true" style="background: rgb(255, 255, 255); line-height: 0;"><svg class="rcb-wave" viewBox="0 0 1440 64" preserveAspectRatio="none"><path d="M0 28 C240 56 480 8 720 32 C960 56 1200 12 1440 36 L1440 0 L0 0 Z" fill="#D5F7FF"></path></svg></div>
+  <section id="rcb-faq" style="background: rgb(255, 255, 255); padding: 40px 20px 52px;">
+    <div style="max-width: 780px; margin: 0px auto; display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center;">
+      <span class="rcb-chip">Questions</span>
+      <h2 class="rcb-h2">Good to <span class="rcb-blue">know</span></h2>
+      <div class="rcb-faq" style="text-align: left; margin-top: 6px;">
+          <details>
+            <summary><span>How do I earn VetPoints?</span><span class="rcb-pm" aria-hidden="true">+</span></summary>
+            <div class="rcb-a">
+              <p class="rcb-ben-p">You earn 100 VetPoints with every order. When you reach a milestone, the reward is added to your next delivery. Your first reward, a Dental Chew Ball, comes at 200 VetPoints.</p>
+            </div>
+          </details>
+          <details>
+            <summary><span>What is the Pet Health Profile?</span><span class="rcb-pm" aria-hidden="true">+</span></summary>
+            <div class="rcb-a">
+              <p class="rcb-ben-p">A few quick questions about your pet, with an optional photo. You get a profile with your pet's care focus and a suggested routine order. You can build one for each pet.</p>
+              <p class="rcb-small">General care suggestions only. Not veterinary advice or a diagnosis. Speak to your vet about anything that concerns you.</p>
+              <a href="{{ section.settings.profile_url }}" style="font-size: 14.5px; font-weight: 700; text-decoration: none;">Build your pet's profile →</a>
+            </div>
+          </details>
+          <details>
+            <summary><span>How does the 100-day money-back guarantee work?</span><span class="rcb-pm" aria-hidden="true">+</span></summary>
+            <div class="rcb-a">
+              <p class="rcb-ben-p">Your first order is covered for 100 days. If you're not satisfied, contact us within 100 days and we'll give you a full refund.</p>
+              <a href="{{ section.settings.portal_url }}" style="font-size: 14.5px; font-weight: 700; text-decoration: none;">Contact our team →</a>
+            </div>
+          </details>
+          <details>
+            <summary><span>Does shipping cost anything?</span><span class="rcb-pm" aria-hidden="true">+</span></summary>
+            <div class="rcb-a">
+              <p class="rcb-ben-p">No. Every RoutineCare delivery ships free, whatever the order size.</p>
+            </div>
+          </details>
+          <details>
+            <summary><span>Who can I ask about my dog's routine?</span><span class="rcb-pm" aria-hidden="true">+</span></summary>
+            <div class="rcb-a">
+              <p class="rcb-ben-p">Our team. Reply to any of our emails or use our contact page. We reply within 24 hours on weekdays.</p>
+              <a href="{{ section.settings.portal_url }}" style="font-size: 14.5px; font-weight: 700; text-decoration: none;">Contact our team →</a>
+            </div>
+          </details>
+      </div>
+      <p class="rcb-ben-p" style="margin-top: 6px;">More questions? <a href="{{ section.settings.portal_url }}" style="font-weight: 700;">See our full FAQ</a> or <a href="{{ section.settings.portal_url }}" style="font-weight: 700;">contact our team</a>.</p>
+    </div>
+  </section>
+  <section id="rcb-closing" style="background: rgb(213, 247, 255); padding: 52px 20px 56px;">
+    <div class="rcb-wrap rcb-close-card">
+      <div class="rcb-close-img"><img src="{{ 'rcb-bp-closing.webp' | asset_url }}" alt="A chocolate Labrador relaxing on the sofa next to its owner, a FreshWipes jar on the side table" width="1280" height="720" loading="lazy" decoding="async"></div>
+      <div class="rcb-close-copy">
+        <span class="rcb-chip">Your next step</span>
+        <h2 class="rcb-h2">Make the routine <span class="rcb-blue">fit your dog.</span></h2>
+        <p class="rcb-lede">Tell us about your dog in a few quick questions. You get a Pet Health Profile with a care focus and a suggested routine order, free with your membership.</p>
+        <a class="rcb-cta" href="{{ section.settings.profile_url }}">Build My Pet's Profile <span aria-hidden="true">→</span></a>
+        <p class="rcb-small">General care suggestions only. Not veterinary advice or a diagnosis. Speak to your vet about anything that concerns you.</p>
+      </div>
+    </div>
+  </section>
+  <section class="rcb-paws" style="padding: 22px 20px;">
+    <div class="rcb-wrap rcb-trust">
+      <div class="rcb-trust-i"><svg width="26" height="30" viewBox="0 0 44 50" fill="none" aria-hidden="true"><path d="M22 1.5 41.5 8.8v14.4c0 11.6-8.3 20.4-19.5 24.8C10.8 43.6 2.5 34.8 2.5 23.2V8.8L22 1.5Z" fill="#FFFFFF"></path><path d="m13.5 24.5 5.5 5.5 11.5-11.5" stroke="#47B5E9" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></svg>100-day money-back guarantee</div>
+      <div class="rcb-trust-i"><svg width="30" height="24" viewBox="0 0 30 24" fill="none" aria-hidden="true"><rect x="1" y="4" width="17" height="13" rx="2" fill="#FFFFFF"></rect><path d="M18 8h6l4 5v4h-10V8Z" fill="#FFFFFF"></path><circle cx="7" cy="19" r="3" fill="#FFFFFF" stroke="#47B5E9" stroke-width="2"></circle><circle cx="23" cy="19" r="3" fill="#FFFFFF" stroke="#47B5E9" stroke-width="2"></circle></svg>Free shipping on every delivery</div>
+      <div class="rcb-trust-i"><svg width="28" height="26" viewBox="0 0 28 26" fill="none" aria-hidden="true"><path d="M3 3h22a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H11l-6 5v-5H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" fill="#FFFFFF"></path></svg>Support Monday to Friday</div>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "RoutineCare benefits",
+  "tag": "section",
+  "class": "section-routinecare-benefits",
+  "settings": [
+    {
+      "type": "text",
+      "id": "profile_url",
+      "label": "Pet Health Profile link",
+      "default": "https://shopvetpets.whop.site/pet-health-profile"
+    },
+    {
+      "type": "text",
+      "id": "portal_url",
+      "label": "Member portal link",
+      "default": "/pages/manage-subscription",
+      "info": "Every link except the Pet Health Profile buttons opens the member portal (Phoenix portal on Shopify)."
+    }
+  ],
+  "presets": [
+    {
+      "name": "RoutineCare benefits"
+    }
+  ]
+}
+{% endschema %}

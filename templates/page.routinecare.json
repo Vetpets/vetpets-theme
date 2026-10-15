@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "routinecare-benefits": {
+      "type": "routinecare-benefits",
+      "settings": {}
+    }
+  },
+  "order": [
+    "routinecare-benefits"
+  ]
+}
