@@ -1,0 +1,111 @@
+/* RoutineCare benefits page (/pages/routinecare). Native build of the approved Claude Design page
+   "VetPets - RoutineCare Benefits Page (2026-10-15)", project f9387acf-40a4-437b-9dd2-6f02e03df41b.
+   Every rule is scoped to #routinecare-benefits; the page uses the theme's normal layout (header + footer). */
+#routinecare-benefits { font-family: 'Geist', system-ui, -apple-system, sans-serif; color: #1A1A1A; -webkit-font-smoothing: antialiased; background: #FFFFFF; }
+#routinecare-benefits *, #routinecare-benefits *::before, #routinecare-benefits *::after { box-sizing: border-box; }
+#routinecare-benefits h1, #routinecare-benefits h2 { font-family: inherit; }
+#routinecare-benefits p { margin: 0; }
+#routinecare-benefits svg { flex-shrink: 0; }
+#routinecare-benefits a { color: #2E9FD8; }
+#routinecare-benefits a:hover { color: #1E8AC2; }
+#routinecare-benefits img { display: block; max-width: 100%; }
+#routinecare-benefits .rcb-wrap { max-width: 1180px; margin: 0 auto; }
+#routinecare-benefits .rcb-cta { display: inline-flex; align-items: center; justify-content: center; gap: 8px; box-sizing: border-box; background: #47B5E9; color: #FFFFFF; text-decoration: none; font-size: 16.5px; font-weight: 700; padding: 16px 30px; border-radius: 999px; box-shadow: 0 8px 20px rgba(71,181,233,.4); text-align: center; transition: transform 140ms ease-out, background 140ms ease-out; }
+@media (max-width: 699px) {
+  #routinecare-benefits .rcb-cta { width: 100%; white-space: nowrap; }
+}
+#routinecare-benefits .rcb-cta:hover { background: #2E9FD8; color: #FFFFFF; transform: scale(1.02); }
+#routinecare-benefits .rcb-chip { display: inline-flex; align-items: center; gap: 7px; background: #D5F7FF; color: #2E9FD8; font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; padding: 7px 14px; border-radius: 999px; }
+#routinecare-benefits .rcb-h2 { margin: 0; font-size: clamp(26px, 3vw, 34px); line-height: 1.12; letter-spacing: -0.02em; font-weight: 700; color: #1A1A1A; text-wrap: pretty; }
+#routinecare-benefits .rcb-blue { color: #47B5E9; }
+#routinecare-benefits .rcb-lede { margin: 0; font-size: 16.5px; line-height: 1.55; color: #1A1A1A; text-wrap: pretty; }
+#routinecare-benefits .rcb-small { margin: 0; font-size: 12.5px; line-height: 1.5; color: #6B7A85; text-wrap: pretty; }
+#routinecare-benefits .rcb-wave { display: block; width: 100%; height: 48px; }
+#routinecare-benefits .rcb-hero-grid { display: grid; grid-template-columns: 1fr; }
+#routinecare-benefits .rcb-hero-copy { display: flex; flex-direction: column; gap: 18px; align-items: center; text-align: center; padding: 36px 20px 28px; }
+#routinecare-benefits .rcb-hero-img { position: relative; aspect-ratio: 4 / 3; overflow: hidden; }
+#routinecare-benefits .rcb-hero-img img { width: 100%; height: 100%; object-fit: cover; }
+#routinecare-benefits .rcb-hero-fade { display: none; }
+#routinecare-benefits .rcb-assure { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 18px; font-size: 13.5px; font-weight: 600; color: #1A1A1A; }
+#routinecare-benefits .rcb-assure span { display: inline-flex; align-items: center; gap: 6px; }
+#routinecare-benefits .rcb-mq { background: #47B5E9; overflow: hidden; padding: 14px 0; }
+#routinecare-benefits .rcb-mq-track { display: flex; width: max-content; animation: rcb-mq 38s linear infinite; }
+@keyframes rcb-mq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) {
+  #routinecare-benefits .rcb-mq-track { animation: none; }
+}
+#routinecare-benefits .rcb-ben-grid { display: grid; grid-template-columns: 1fr; gap: 16px; width: 100%; }
+#routinecare-benefits .rcb-ben { background: #FFFFFF; border-radius: 18px; box-shadow: 0 8px 22px rgba(71,181,233,.18); overflow: hidden; display: flex; flex-direction: column; }
+#routinecare-benefits .rcb-ben-img { aspect-ratio: 16 / 9; overflow: hidden; background: #EDFAFF; }
+#routinecare-benefits .rcb-ben-img img { width: 100%; height: 100%; object-fit: cover; }
+#routinecare-benefits .rcb-ben-body { padding: 18px 20px 22px; display: flex; flex-direction: column; gap: 9px; flex: 1; }
+#routinecare-benefits .rcb-ben-head { display: flex; align-items: center; gap: 12px; }
+#routinecare-benefits .rcb-ico { width: 40px; height: 40px; border-radius: 50%; background: #D5F7FF; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+#routinecare-benefits .rcb-ben-t { font-size: 18px; font-weight: 700; line-height: 1.25; color: #1A1A1A; }
+#routinecare-benefits .rcb-ben-p { margin: 0; font-size: 15px; line-height: 1.5; color: #1A1A1A; text-wrap: pretty; }
+#routinecare-benefits .rcb-pts-grid { display: grid; grid-template-columns: 1fr; gap: 24px; align-items: center; }
+#routinecare-benefits .rcb-pts-img { border-radius: 20px; overflow: hidden; aspect-ratio: 3 / 2; box-shadow: 0 10px 26px rgba(71,181,233,.22); }
+#routinecare-benefits .rcb-pts-img img { width: 100%; height: 100%; object-fit: cover; }
+#routinecare-benefits .rcb-pts-badge { display: inline-flex; align-items: baseline; gap: 8px; background: #FFFFFF; border: 1.5px solid rgba(19,182,181,.45); border-radius: 16px; padding: 12px 16px; box-shadow: 0 8px 20px rgba(19,182,181,.16); }
+#routinecare-benefits .rcb-ms { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; width: 100%; }
+#routinecare-benefits .rcb-ms-item { position: relative; display: flex; flex-direction: column; background: #FFFFFF; border: 1px solid rgba(71,181,233,.28); border-radius: 18px; overflow: hidden; box-shadow: 0 6px 16px rgba(71,181,233,.12); }
+#routinecare-benefits .rcb-ms-img { position: relative; aspect-ratio: 1 / 1; overflow: hidden; background: #FFFFFF; }
+#routinecare-benefits .rcb-ms-img img { width: 100%; height: 100%; object-fit: cover; }
+#routinecare-benefits .rcb-ms-pts { position: absolute; top: 10px; left: 10px; z-index: 1; background: #47B5E9; color: #FFFFFF; font-size: 13.5px; font-weight: 800; letter-spacing: -0.01em; padding: 6px 11px; border-radius: 999px; font-variant-numeric: tabular-nums; box-shadow: 0 4px 10px rgba(71,181,233,.35); }
+#routinecare-benefits .rcb-ms-first .rcb-ms-pts { background: #13B6B5; box-shadow: 0 4px 10px rgba(19,182,181,.35); }
+#routinecare-benefits .rcb-ms-body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 3px; border-top: 1px solid rgba(71,181,233,.16); }
+#routinecare-benefits .rcb-ms-n { font-size: 15px; font-weight: 700; color: #1A1A1A; line-height: 1.25; }
+#routinecare-benefits .rcb-ms-s { font-size: 12.5px; font-weight: 600; color: #2E9FD8; }
+#routinecare-benefits .rcb-steps { position: relative; display: grid; grid-template-columns: 1fr; gap: 18px; width: 100%; }
+#routinecare-benefits .rcb-step { background: #FFFFFF; border-radius: 18px; box-shadow: 0 8px 22px rgba(71,181,233,.16); overflow: hidden; display: flex; flex-direction: column; }
+#routinecare-benefits .rcb-step-img { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #EDFAFF; }
+#routinecare-benefits .rcb-step-img img { width: 100%; height: 100%; object-fit: cover; }
+#routinecare-benefits .rcb-step-n { position: absolute; top: 12px; left: 12px; width: 36px; height: 36px; border-radius: 50%; background: #47B5E9; color: #FFFFFF; font-size: 16px; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(71,181,233,.4); }
+#routinecare-benefits .rcb-step-body { padding: 16px 20px 22px; display: flex; flex-direction: column; gap: 8px; }
+#routinecare-benefits .rcb-step-w { font-size: 11.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #13B6B5; }
+#routinecare-benefits .rcb-ugc { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; width: 100%; }
+#routinecare-benefits .rcb-ugc-i { aspect-ratio: 1 / 1; border-radius: 16px; overflow: hidden; background: #FFFFFF; box-shadow: 0 6px 16px rgba(71,181,233,.16); }
+#routinecare-benefits .rcb-ugc-i img { width: 100%; height: 100%; object-fit: cover; }
+#routinecare-benefits .rcb-rv-grid { display: grid; grid-template-columns: 1fr; gap: 26px 16px; width: 100%; }
+#routinecare-benefits .rcb-rv { display: flex; flex-direction: column; }
+#routinecare-benefits .rcb-rv-b { position: relative; background: #FFFFFF; border: 1px solid rgba(71,181,233,.18); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; box-shadow: 0 6px 16px rgba(71,181,233,.14); }
+#routinecare-benefits .rcb-rv-tail { position: absolute; left: 28px; bottom: -10px; width: 20px; height: 20px; background: #FFFFFF; transform: rotate(45deg); border-right: 1px solid rgba(71,181,233,.18); border-bottom: 1px solid rgba(71,181,233,.18); }
+#routinecare-benefits .rcb-faq { width: 100%; display: flex; flex-direction: column; gap: 10px; }
+#routinecare-benefits .rcb-faq details { background: #FFFFFF; border: 1px solid rgba(71,181,233,.3); border-radius: 14px; overflow: hidden; }
+#routinecare-benefits .rcb-faq summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 17px 20px; font-size: 16px; font-weight: 700; color: #1A1A1A; line-height: 1.35; }
+#routinecare-benefits .rcb-faq summary::-webkit-details-marker { display: none; }
+#routinecare-benefits .rcb-faq .rcb-pm { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: #D5F7FF; color: #2E9FD8; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; line-height: 1; transition: transform 160ms ease-out; }
+#routinecare-benefits .rcb-faq details[open] .rcb-pm { transform: rotate(45deg); }
+#routinecare-benefits .rcb-faq .rcb-a { padding: 0 20px 18px; display: flex; flex-direction: column; gap: 8px; }
+#routinecare-benefits .rcb-close-card { position: relative; background: #FFFFFF; border-radius: 24px; box-shadow: 0 18px 44px rgba(71,181,233,.26); overflow: hidden; display: grid; grid-template-columns: 1fr; }
+#routinecare-benefits .rcb-close-img { aspect-ratio: 16 / 9; overflow: hidden; }
+#routinecare-benefits .rcb-close-img img { width: 100%; height: 100%; object-fit: cover; }
+#routinecare-benefits .rcb-close-copy { padding: 26px 20px 30px; display: flex; flex-direction: column; gap: 16px; align-items: center; text-align: center; }
+#routinecare-benefits .rcb-trust { display: grid; grid-template-columns: 1fr; gap: 14px; }
+#routinecare-benefits .rcb-trust-i { display: flex; align-items: center; justify-content: center; gap: 12px; color: #FFFFFF; font-size: 15px; font-weight: 700; }
+#routinecare-benefits .rcb-paws { background-color: #47B5E9; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='132' height='132' viewBox='0 0 132 132'%3E%3Cg transform='translate(14 18) rotate(-18 13 12)'%3E%3Cg fill='white' fill-opacity='0.12'%3E%3Cellipse cx='7' cy='8' rx='2.6' ry='3.3'/%3E%3Cellipse cx='13' cy='5.5' rx='2.6' ry='3.3'/%3E%3Cellipse cx='19' cy='8' rx='2.6' ry='3.3'/%3E%3Cpath d='M13 11c3.6 0 6.2 2.8 6.2 5.6 0 2.3-1.9 3.4-3.9 3.1-.8-.1-1.5-.4-2.3-.4s-1.5.3-2.3.4c-2 .3-3.9-.8-3.9-3.1C6.8 13.8 9.4 11 13 11Z'/%3E%3C/g%3E%3C/g%3E%3Cg transform='translate(80 78) rotate(24 13 12)'%3E%3Cg fill='white' fill-opacity='0.12'%3E%3Cellipse cx='7' cy='8' rx='2.6' ry='3.3'/%3E%3Cellipse cx='13' cy='5.5' rx='2.6' ry='3.3'/%3E%3Cellipse cx='19' cy='8' rx='2.6' ry='3.3'/%3E%3Cpath d='M13 11c3.6 0 6.2 2.8 6.2 5.6 0 2.3-1.9 3.4-3.9 3.1-.8-.1-1.5-.4-2.3-.4s-1.5.3-2.3.4c-2 .3-3.9-.8-3.9-3.1C6.8 13.8 9.4 11 13 11Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); background-size: 132px 132px; }
+@media (min-width: 700px) {
+  #routinecare-benefits .rcb-ben-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  #routinecare-benefits .rcb-ben-img { aspect-ratio: 3 / 2; }
+  #routinecare-benefits .rcb-ugc { gap: 16px; max-width: 900px; }
+  #routinecare-benefits .rcb-rv-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #routinecare-benefits .rcb-ms { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  #routinecare-benefits .rcb-trust { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 960px) {
+  #routinecare-benefits .rcb-hero-grid { grid-template-columns: 45fr 55fr; min-height: 560px; }
+  #routinecare-benefits .rcb-hero-copy { align-items: flex-start; text-align: left; justify-content: center; padding: 56px 48px 56px 40px; }
+  #routinecare-benefits .rcb-hero-img { aspect-ratio: auto; min-height: 560px; }
+  #routinecare-benefits .rcb-hero-img img { position: absolute; inset: 0; }
+  #routinecare-benefits .rcb-hero-fade { display: block; position: absolute; inset: 0 auto 0 0; width: 140px; background: linear-gradient(90deg, #EDFAFF 0%, rgba(237,250,255,0) 100%); z-index: 1; }
+  #routinecare-benefits .rcb-assure { justify-content: flex-start; }
+  #routinecare-benefits .rcb-ben-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+  #routinecare-benefits .rcb-pts-grid { grid-template-columns: 48fr 52fr; gap: 48px; }
+  #routinecare-benefits .rcb-ms { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; }
+  #routinecare-benefits .rcb-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+  #routinecare-benefits .rcb-rv-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  #routinecare-benefits .rcb-close-card { grid-template-columns: 50fr 50fr; align-items: stretch; }
+  #routinecare-benefits .rcb-close-img { aspect-ratio: auto; min-height: 420px; position: relative; }
+  #routinecare-benefits .rcb-close-img img { position: absolute; inset: 0; }
+  #routinecare-benefits .rcb-close-copy { align-items: flex-start; text-align: left; justify-content: center; padding: 44px 48px; }
+}
