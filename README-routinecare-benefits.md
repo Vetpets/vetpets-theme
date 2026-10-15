@@ -24,11 +24,12 @@ class with `rcb-`, so nothing here can reach another page. No JavaScript.
 
 ## Links (theme editor -> RoutineCare benefits)
 
-| Setting | Default |
-|---|---|
-| Pet Health Profile link | `https://shopvetpets.whop.site/pet-health-profile` |
-| FAQ link | `https://shopvetpets.com/pages/frequently-asked-questions-faq` |
-| Contact link | `https://shopvetpets.com/pages/contact` |
+| Setting | Default | Used by |
+|---|---|---|
+| Pet Health Profile link | `https://shopvetpets.whop.site/pet-health-profile` | "Build your pet's profile" (benefit card, FAQ) and "Build My Pet's Profile" (closing CTA) |
+| Member portal link | `/pages/manage-subscription` (Phoenix portal) | every other link: "See the rewards", "Contact our team", "See our full FAQ", "contact our team" |
+
+The hero button "See What You Get" scrolls to the benefits on the same page.
 
 ## Preview and go-live
 
