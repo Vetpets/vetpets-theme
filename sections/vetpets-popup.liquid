@@ -710,6 +710,7 @@
   var isOpen = false;
   var scrollY = 0;
   var scratchedOnce = false;
+  var step = 'email';
 
   /* World Animal Week countdown. Fixed epoch, ticks both the pre-scratch
      and post-reveal tile sets (there are two in the DOM; only one is
@@ -735,7 +736,10 @@
     window.setInterval(tickWawCountdown, 1000);
   }
 
+  /* A/B arm: assets/vp-popup-ab.js */
   function track(event, props) {
+    var ab = window.VPPopupAB;
+    if (ab) return ab.emit(event, props);
     if (!window.klaviyo || typeof window.klaviyo.push !== 'function') return;
     try { window.klaviyo.push(['track', event, props || {}]); } catch (e) {}
   }
@@ -788,6 +792,7 @@
     document.body.style.overflow = '';
     window.scrollTo(0, scrollY);
     suppress();
+    track('Popup Closed', { step: step });
   }
 
   qa('[data-vpp-close]').forEach(function (btn) { btn.addEventListener('click', close); });
@@ -975,6 +980,7 @@
   }
 
   function goStep(name) {
+    step = name;
     qa('[data-vpp-step]').forEach(function (s) { s.hidden = s.getAttribute('data-vpp-step') !== name; });
     /* "No thanks" reads wrong once they have signed up. */
     qa('.vpp-decline').forEach(function (b) { b.hidden = name === 'done'; });
@@ -1003,6 +1009,14 @@
         attributes: { email: val }
       }).then(function () {
         track('Popup Submitted', { channel: 'email' });
+        var ab = window.VPPopupAB;
+        if (ab) {
+          fetch('https://a.klaviyo.com/client/profiles/?company_id=' + encodeURIComponent(cfg.companyId), {
+            method: 'POST',
+            headers: { 'content-type': 'application/json', revision: '2024-10-15' },
+            body: JSON.stringify({ data: { type: 'profile', attributes: { email: val, properties: { popup_ab_variant: ab.variant } } } })
+          }).catch(function () {});
+        }
         suppress();
         goStep(cfg.smsEnabled ? 'sms' : 'done');
         if (cfg.smsEnabled && phoneInput) { try { phoneInput.focus({ preventScroll: true }); } catch (e) {} }
@@ -1054,6 +1068,8 @@
     loadBelly();
 
     if (designMode) { open(); return; }
+    var ab = window.VPPopupAB;
+    if (ab && ab.gate) { ab.gate(open); return; }
 
     var trigger = cfg.trigger || 'delay';
 
