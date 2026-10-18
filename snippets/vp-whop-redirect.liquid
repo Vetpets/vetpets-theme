@@ -1,0 +1,50 @@
+{%- comment -%}
+  Skickar storefront-besökare till Whop-butiken (shopvetpets.com), där alla bundles finns.
+  Kundkonto, PHX-portal, kassan, policys och temaeditorn stannar på Shopify.
+  Listorna = sidorna som finns i Whop-appens public/ (2026-10-18).
+{%- endcomment -%}
+{%- liquid
+  assign vp_to = ''
+  assign vp_products = 'bright-eyes-in-30-days-your-dogs-complete-guide,dentalchew-ball-stress-free-dental-care,dentalchew-ball,e-book-the-complete-dog-dental-care-guide,e-book-your-pet-could-be-suffering-without-you-knowing-it,earwipes-kit-protects-against-ear-problems-kopia,earwipes-kit-protects-against-ear-problems,eyecomb-tear-stain-removal-comb-set,eyewipes-kit-100-wipes,eyewipes-prevention-that-keeps-eyes-clear,freshcare-complete-health-kit,freshfoam-gentle-paw-cleanser-for-dogs-cats-1,freshsmile-3-in-1-kit-safe-tartar-remover,freshwipe-kit-cats-protects-against-dental-problems,freshwipes-30sec-routine,freshwipes-kit-protects-against-dental-diseases-1-month-supply,freshwipes-kit-protects-against-dental-diseases,furease-brush-effective-brushing,glovewipes-quick-clean-kit,kattstickan-friska-kattander-och-rolig-lek,pawfoam,precision-eye-brush,routine-tracker-daily-care-log-for-dogs,the-short-veterinary-guide-to-dog-ear-health,the-short-veterinary-guide-to-dog-eye-health,tovutredaren-effective-brushing,vetpets-gift-card,vetpets-precision-trimmer,vip-membership' | split: ','
+  assign vp_collections = 'all-products,all,finger-wipes,frontpage,guides,offers-subscription,valentine-sale-2026,vara-produkter,world-animal-week' | split: ','
+  assign vp_pages = '100-day-money-back-guarantee,5-reasons-why-cats,5-reasons-why-earwipes-kit,5-reasons-why-eyewipes,5-reasons-why-finland,5-reasons-why,advertorial-page,advertorial,agingdog,contact,copy-of-5-reasons-why-eyewipes,copy-of-5-reasons-why,dogs-tear-stains-gone-in-just-30-seconds,e-bok-hunden-din-kan-lide-uten-at-du-merker-det,e-book-the-short-veterinary-guide-to-dog-ear-health,earwipes1,eyewipes-prelander,eyewipes1-pdp,eyewipes1,eyewipes2-pdp,fingerwipes-listicle,free-digital-dog-dental-care-guide-freshsmile-kit,free-digital-dog-dental-care-guide,free-e-book-house-trained-in-4-weeks,frequently-asked-questions-faq,freshwipes-prelander,how-to-stop-tear-stains-in-30-seconds-a-day-without-baby-wipes-grooming-or-supplements,ilmainen-digitaalinen-opas-koiran-suun-terveyteen,kopia-av-e-bok-hunden-din-kan-lide-uten-at-du-merker-det,lander1-finland,lander1,lander1cats,lander1pdp,landing-page-jul-26-14-39-15,landing-page-jul-30-18-28-09,listiclepage,partnerships,pet-health-profile,quiz-eyewipes,quiz-page-rvsduu,quiz-page-vetpets,quiz-page,quiz,quiz3-finland,quiz3,remove-plaque-in-30-seconds-a-day-without-a-toothbrush,right-of-withdrawal,routinecare,sales-page-digestion,sales-page-testmonials,sales-page,say-goodbye-to-your-cats-dental-problems-in-just-30-seconds,say-goodbye-to-your-dogs-dental-problems-in-just-30-seconds,subscription-policy,the-short-veterinary-guide-to-dog-eye-health,tony-gempages-2-think-your-dogandamp-39-s-eyes-are-safe,vetpets-about-us,vetpets-full-cat-dental-care-guide,vetpets-full-dental-care-guide' | split: ','
+  case request.page_type
+    when 'index', 'list-collections', 'search', 'blog', 'article'
+      assign vp_to = '/'
+    when 'cart'
+      assign vp_to = '/cart'
+    when 'product'
+      assign vp_to = '/'
+      if vp_products contains product.handle
+        assign vp_to = '/products/' | append: product.handle
+      endif
+    when 'collection'
+      assign vp_to = '/'
+      if vp_collections contains collection.handle
+        assign vp_to = '/collections/' | append: collection.handle
+      endif
+    when 'page'
+      if page.handle != blank
+        assign vp_to = '/'
+      endif
+      if vp_pages contains page.handle
+        assign vp_to = '/pages/' | append: page.handle
+      endif
+      if page.handle == 'manage-subscription' or page.handle == 'spara-din-order'
+        assign vp_to = ''
+      endif
+  endcase
+  if request.design_mode or request.visual_preview_mode
+    assign vp_to = ''
+  endif
+  # App proxies (PHX/Loop portals: /apps/, /a/, /tools/) and accounts stay on Shopify,
+  # whatever page type they render with.
+  assign vp_path = request.path | append: '/'
+  if vp_path contains '/apps/' or vp_path contains '/a/' or vp_path contains '/tools/' or vp_path contains '/account'
+    assign vp_to = ''
+  endif
+-%}
+{%- if vp_to != '' -%}
+  <script>if (!window.__vpWhopGo) { window.__vpWhopGo = 1; location.replace('https://shopvetpets.com{{ vp_to }}' + location.search + location.hash); }</script>
+  <noscript><meta http-equiv="refresh" content="0; url=https://shopvetpets.com{{ vp_to }}"></noscript>
+{%- endif -%}
